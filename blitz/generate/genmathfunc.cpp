@@ -76,8 +76,8 @@ const int bsdflag = 4;
 const int cflag2 = 5;
 const int nofuncflag = 6;
 
-void one(char* applicName, char* specialization, char* funcName,
-    char* returnType, char* comment, int flag=0, int noCastFlag=0)
+void one(const char* applicName, const char* specialization, const char* funcName,
+    const char* returnType, const char* comment, int flag=0, int noCastFlag=0)
 {
     if (specialization != 0 && !strlen(specialization))
         specialization = 0;
@@ -197,8 +197,8 @@ void one(char* applicName, char* specialization, char* funcName,
     ofs << std::endl;
 }
 
-void two(char* applicName, char* specialization, char* funcName,
-    char* returnType, char* comment, int flag=0, int noCastFlag=0)
+void two(const char* applicName, const char* specialization, const char* funcName,
+    const char* returnType, const char* comment, int flag=0, int noCastFlag=0)
 {
     if (specialization != 0 && !strlen(specialization))
         specialization = 0;
