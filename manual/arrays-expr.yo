@@ -1,0 +1,1304 @@
+label(array-expressions)
+bzindex(expression templates)
+bzindex(Array!expressions)
+bzindex(Array!no temporaries)
+bzindex(temporaries)
+bzindex(Array!temporaries)
+
+Array expressions in Blitz++ are implemented using the em(expression
+templates) technique.  Unless otherwise noted, expression evaluation
+will never generate temporaries or multiple loops; an expression such
+as
+
+bzverb(\
+Array<int,1> A, B, C, D;    // ...
+
+A = B + C + D;
+)
+
+will result in code similar to
+
+bzverb(\
+for (int i=A.lbound(firstDim); i <= A.ubound(firstDim); ++i)
+    A[i] = B[i] + C[i] + D[i];
+)
+
+bzsect(Expression evaluation order)
+
+bzindex(Array!expression evaluation order)
+bzindex(expression evaluation order)
+bzindex(order of expression evaluation)
+bzindex(traversal order)
+
+A commonly asked question about Blitz++ is what order it uses
+to evaluate array expressions.  For example, in code such
+as
+
+bzverb(\
+A(Range(2,10)) = A(Range(1,9))
+)
+
+does the expression get evaluated at indices 1, 2, ..., 9 or
+at 9, 8, ..., 1?  This makes a big difference to the result:
+in one case, the array will be shifted to the right by one
+element; in the other case, most of the array elements will
+be set to the value in tt(A(1)).
+
+Blitz always selects the traversal order it thinks will be fastest.
+For 1D arrays, this means it will go from beginning to the end
+of the array in memory (see notes below).  For multidimensional arrays, it 
+will do one of two things:
+
+startit()
+
+it() try to go through the destination array in the order it is 
+laid out in memory (i.e.  row-major for row-major arrays, 
+column-major for column-major arrays).
+
+it() if the expression is a stencil, Blitz will do tiling to
+improve cache use.  Under some circumstances blitz will even use 
+a traversal based on a hilbert curve (a fractal) for 3D arrays.  
+
+endit()
+
+Because the traversal order is not always predictable, it is
+safest to put the result in a new array if you are doing a
+stencil-style expression.  Blitz guarantees this
+will always work correctly.  If you try to put the result in one
+of the operands, you have to guess correctly which traversal order
+blitz will choose.  This is easy for the 1D case, but hard for
+the multidimensional case.
+
+Some special notes about 1D array traversals:
+
+startit()
+
+it() if your array is stored in reverse order,
+  i.e. because of a A.reverse(firstDim) or funny storage order,
+  blitz will go through the array from end to beginning in
+  array coordinates, but from beginning to end in memory locations.
+
+it() many compilers/architecture combinations are equally
+  fast at reverse order.  But blitz has a specialized version
+  for stride = +1, and it would be wasteful to also specialize
+  for the case stride = -1.  So 1D arrays are traversed from
+  beginning to end (in memory storage order).
+
+endit()
+
+bzsect(Expression operands)
+
+bzindex(Array!expression operands)
+
+An expression can contain any mix of these operands:
+
+startit()
+
+it()    An array of any type, so long as it is of the same rank.  Expressions
+        which contain a mixture of array types are handled through the
+        type promotion mechanism described below.
+
+it()    Scalars of type tt(int), tt(float), tt(double), tt(long double),
+        or tt(complex<T>)
+
+it()    Index placeholders, described below
+
+it()    Other expressions (e.g. tt(A+(B+C)))
+
+endit()
+
+COMMENT(NEEDS_WORK: add support for Random)
+
+bzsect(Array operands)
+
+nsubsect(Using subarrays in an expression)
+
+bzindex(Array!using subarrays in expressions)
+
+Subarrays may be used in an expression.  For example, this code example
+performs a 5-point average on a two-dimensional array:
+
+bzverb(\
+Array<float,2> A(64,64), B(64,64);   // ...
+Range I(1,62), J(1,62);
+
+A(I,J) = (B(I,J) + B(I+1,J) + B(I-1,J) 
+                 + B(I,J+1) + B(I,J-1)) / 5;
+)
+
+nsubsect(Mixing arrays with different storage formats)
+
+bzindex(Array!expressions which mix arrays of different storage formats)
+Arrays with different storage formats (for example, C-style and
+Fortran-style) can be mixed in the same expression.  Blitz++
+will handle the different storage formats automatically.  However:
+
+startit()
+
+it()    Evaluation may be slower, since a different traversal order
+        may be used.
+
+it()    If you are using index placeholders (see below) or reductions
+        in the expression, you may bf(not) mix array objects with
+        different starting bases.  
+
+endit()
+
+
+bzsect(Expression operators)
+
+bzindex(operators, array expressions)
+bzindex(Array!operators)
+bzindex(Array!expression operators)
+
+These binary operators are supported:
+
+tt(+ - * / % > < >= <= == != && || ^ & | )
+
+Note: operator tt(<<) and tt(>>) are reserved for use in input/output.
+If you need a bit-shift operation on arrays, you may define one 
+yourself; see ref(user-et).
+
+These unary operators are supported:
+
+tt(- ~ !)
+
+The operators tt(> < >= <= == != && || !) result in a bool-valued
+expression.
+
+bzindex(Array!operators applied elementwise)
+All operators are applied em(elementwise).
+
+bzindex(Array!requirements for using operators)
+You can only use operators which are well-defined for the number type
+stored in the arrays.  For example, bitwise XOR (tt(^)) is meaningful
+for integers, so this code is all right:
+
+bzverb(\
+Array<int,3> A, B, C;   // ...
+A = B ^ C;
+)
+
+Bitwise XOR is em(not) meaningful on floating point types, so this
+code will generate a compiler error:
+
+bzverb(\
+Array<float,1> A, B, C;   // ...
+C = B ^ C;
+)
+
+Here's the compiler error generated by KAI C++ for the above code:
+
+bzexample(\
+"../../blitz/ops.h", line 85: error: expression must have integral or enum type
+  BZ_DEFINE_OP(BitwiseXor,^);
+  ^
+          detected during:
+            instantiation of "blitz::BitwiseXor<float, float>::T_numtype
+                      blitz::BitwiseXor<float, float>::apply(float, float)" at
+                      line 210 of "../../blitz/arrayexpr.h"
+            instantiation of ...
+                     .
+                     .
+)
+
+bzindex(Array!arrays of user type)
+If you are creating arrays using a type you have created yourself,
+you will need to overload whatever operators you want to use on
+arrays.
+For example, if I create a class tt(Polynomial), and want
+to write code such as:
+
+bzverb(\
+Array<Polynomial,2> A, B, C;   // ...
+C = A * B;
+)
+
+I would have to provide tt(operator*) for tt(Polynomial) by
+implementing
+
+bzverb(Polynomial Polynomial::operator*(Polynomial);)
+
+or
+
+bzverb(Polynomial operator*(Polynomial, Polynomial);)
+
+bzsect(Assignment operators)
+
+bzindex(Array!assignment operators)
+These assignment operators are supported:
+
+tt(= += -= *= /= %= ^= &= |= >>= <<=)
+
+An array object should appear on the left side of the operator.  The
+right side can be:
+
+startit()
+
+it()   A constant (or literal) of type tt(T_numtype)
+
+it()   An array of appropriate rank, possibly of a different numeric
+       type
+
+it()   An array expression, with appropriate rank and shape
+
+endit()
+
+COMMENT(NEEDS_WORK -- Index placeholder, Random)
+
+bzsect(Index placeholders) label(index-placeholders)
+
+bzindex(Array!index placeholders)
+bzindex(index placeholders)
+
+Blitz++ provides objects called em(index placeholders) which represent
+array indices.  They can be used directly in expressions.
+
+There is a distinct index placeholder type associated with each
+dimension of an array.  The types are called tt(firstIndex),
+tt(secondIndex), tt(thirdIndex), ..., tt(tenthIndex), tt(eleventhIndex).
+bzindex(firstIndex) bzindex(secondIndex) bzindex(thirdIndex)
+bzindex(fourthIndex)
+Here's an example of using an index placeholder:
+
+bzverb(\
+Array<float,1> A(10);
+firstIndex i;
+A = i;
+)
+
+This generates code which is similar to:
+
+bzverb(\
+for (int i=0; i < A.length(); ++i)
+    A(i) = i;
+)
+
+Here's an example which fills an array with a sampled sine wave:
+
+bzverb(\
+Array<float,1> A(16);
+firstIndex i;
+A = sin(2 * M_PI * i / 16.);
+)
+
+If your destination array has rank greater than 1, you may use
+multiple index placeholders:
+bzindex(index placeholders!multiple)
+
+bzexample(\
+// Fill a two-dimensional array with a radially
+// symmetric, decaying sinusoid
+
+// Create the array
+int N = 64;           
+Array<float,2> F(N,N);
+
+// Some parameters
+float midpoint = (N-1)/2.;
+int cycles = 3;
+float omega = 2.0 * M_PI * cycles / double(N);
+float tau = - 10.0 / N;
+
+// Index placeholders
+firstIndex i;
+secondIndex j;
+
+// Fill the array
+F = cos(omega * sqrt(pow2(i-midpoint) + pow2(j-midpoint)))
+    * exp(tau * sqrt(pow2(i-midpoint) + pow2(j-midpoint)));
+)
+
+Here's a plot of the resulting array:
+
+setlatexfigureext(.eps)
+figure(sinsoid)(Array filled using an index placeholder expression)(sinsoid)
+
+You can use index placeholder expressions in up to 11 dimensions.
+Here's a three dimensional example:
+
+bzverb(\
+// Fill a three-dimensional array with a Gaussian function
+Array<float,3> A(16,16,16);
+firstIndex i;
+secondIndex j;
+thirdIndex k;
+float midpoint = 15/2.;
+float c = - 1/3.0;
+A = exp(c * (sqr(i-midpoint) + sqr(j-midpoint) 
+    + sqr(k-midpoint)));
+)
+
+You can mix array operands and index placeholders:
+
+bzverb(\
+Array<int,1> A(5), B(5);
+firstIndex i;
+A = 0, 1, 1, 0, 2;
+B = i * A;          // Results in [ 0, 1, 2, 0, 8 ]
+)
+
+For your convenience, there is a namespace within blitz
+called tt(tensor) which declares all the index placeholders:
+bzindex(tensor namespace)
+bzindex(i (index placeholder))
+bzindex(j (index placeholder))
+bzindex(k (index placeholder))
+bzindex(l (index placeholder))
+bzindex(m (index placeholder))
+bzindex(n (index placeholder))
+
+bzverb(\
+namespace blitz {
+  namespace tensor {
+    firstIndex i;
+    secondIndex j;
+    thirdIndex k;
+     ...
+    eleventhIndex t;
+  }
+}
+)
+
+So instead of declaring your own index placeholder objects,
+you can just say 
+
+bzindex(blitz::tensor namespace)
+
+bzverb(\
+    using namespace blitz::tensor;
+)
+  
+when you would like to use them.  Alternately, you
+can just preface all the index placeholders with
+tt(tensor::), for example:
+
+
+bzverb(\
+    A = sin(2 * M_PI * tensor::i / 16.);
+)
+
+This will make your code more readable, since it
+is immediately clear that tt(i) is an index
+placeholder, rather than a scalar value.
+
+bzsect(Type promotion)
+
+bzindex(type promotion)
+bzindex(Array!type promotion)
+
+COMMENT(NEEDS_WORK)
+
+When operands of different numeric types are used in
+an expression, the result gets promoted according to the
+usual C-style type promotion.  For example, the result of
+adding an tt(Array<int>) to an tt(Arrray<float>) will be
+promoted to tt(float).  Generally, the result is promoted
+to whichever type has greater precision.
+
+nsubsect(Type promotion for user-defined types)
+
+bzindex(type promotion!for user-defined types)
+bzindex(Array!type promotion!for user-defined types)
+
+The rules for type promotion of user-defined types (or
+types from another library) are a bit complicated.
+Here's how a pair of operand types are promoted:
+
+startit()
+
+it()    If both types are intrinsic (e.g. bool, int, float)
+        then type promotion follows the standard C rules.
+        This generally means that the result will be promoted
+        to whichever type has greater precision.  In Blitz++,
+        these rules have been extended to incorporate
+        tt(complex<float>), tt(complex<double>), and
+        tt(complex<long double>).
+
+it()    If one of the types is intrinsic (or complex), and
+        the other is a user-defined type, then the result
+        is promoted to the user-defined type.
+
+it()    If both types are user-defined, then the result is
+        promoted to whichever type requires more storage space
+        (as determined by tt(sizeof())).  The rationale is that
+        more storage space probably indicates more precision.
+
+endit()
+
+If you wish to alter the default type promotion rules
+above, you have two choices:
+
+startit()
+
+bzindex(promote_trait)
+
+it()    If the type promotion behaviour isn't dependent on the
+        type of operation performed, then you can provide appropriate
+        specializations for the class tt(promote_trait<A,B>) which
+        is declared in tt(<blitz/promote.h>).
+
+it()    If type promotion does depend on the type of operation,
+        then you will need to specialize the appropriate function
+        objects in tt(<blitz/ops.h>).
+
+endit()
+
+Note that you can do these specializations in your own header
+files (you don't have to edit promote.h or ops.h).
+
+nsubsect(Manual casts)
+
+bzindex(casts)
+bzindex(Array!casts)
+
+There are some inconvenient aspects of C-style type promotion.  For
+example, when you divide two integers in C, the result gets truncated.
+The same problem occurs when dividing two integer arrays in Blitz++:
+
+bzverb(\
+Array<int,1> A(4), B(4);
+Array<float,1> C(4);
+
+A = 1, 2, 3, 5;
+B = 2, 2, 2, 7;
+
+C = A / B;      // Result:  [ 0  1  1  0 ]
+)
+
+The usual solution to this problem is to cast one of the operands to a floating
+type.  For this purpose, Blitz++ provides a function tt(cast(expr,type))
+which will cast the result of em(expr) as em(type):
+
+bzindex(cast())
+bzverb(\
+C = A / cast(B, float());   // Result: [ 0.5  1  1.5  0.714 ]
+)
+
+The first argument to tt(cast()) is an array or expression.  The second
+argument is a dummy object of the type to which you want to cast.
+Once compilers support templates more thoroughly, it will be possible
+to use this cast syntax:
+
+bzverb(\
+C = A / cast<float>(B);
+)
+
+But this is not yet supported.
+
+
+bzsect(Single-argument math functions)
+
+label(math-functions)
+
+All of the functions described in this section are em(element-wise). 
+For example, this code--
+
+bzverb(\
+Array<float,2> A, B;   //
+A = sin(B);
+)
+
+results in tt(A(i,j) = sin(B(i,j))) for all (i,j).
+
+nsubsect(ANSI C++ math functions)
+
+These math functions are available on all platforms:
+
+bzindex(math functions)
+bzindex(complex math functions)
+
+startdit()
+dit(abs()) Absolute value bzindex(abs())
+dit(acos()) Inverse cosine.  For real arguments, the return value is
+            in the range [0, pi].  bzindex(acos())
+dit(arg())  Argument of a complex number (atan2(Im,Re)). bzindex(arg())
+dit(asin()) Inverse sine.  For real arguments, the return value is
+            in the range [-pi/2, pi/2].  bzindex(asin())
+dit(atan()) Inverse tangent.  For real arguments, the return value is
+            in the range [-pi/2, pi/2].  See also tt(atan2()) in section 
+            ref(arrays-atan2).  bzindex(atan())
+dit(ceil()) Ceiling function: smallest floating-point integer value not less
+            than the argument. bzindex(ceil())
+dit(cexp()) Complex exponential; same as exp(). bzindex(cexp())
+dit(conj()) Conjugate of a complex number. bzindex(conj())
+dit(cos())  Cosine.  Works for tt(complex<T>).  bzindex(cos())
+dit(cosh()) Hyperbolic cosine.  Works for tt(complex<T>). bzindex(cosh())
+dit(csqrt()) Complex square root; same as sqrt(). bzindex(csqrt())
+dit(exp())  Exponential.  Works for tt(complex<T>). bzindex(exp())
+dit(fabs()) Same as abs().  bzindex(fabs())
+dit(floor()) Floor function: largest floating-point integer value not greater
+            than the argument. bzindex(floor())
+dit(log())  Natural logarithm.  Works for tt(complex<T>). bzindex(log())
+dit(log10()) Base 10 logarithm.  Works for tt(complex<T>). bzindex(log10())
+dit(pow2(), pow3(), pow4(), pow5(), pow6(), pow7(), pow8()) These functions
+            compute an integer power.  They expand to a series of 
+            multiplications, so they can be used on any type for
+            which multiplication is well-defined. bzindex(pow2())
+            bzindex(pow3()) bzindex(pow?())
+dit(sin())  Sine.  Works for tt(complex<T>). bzindex(sin())
+dit(sinh()) Hyperbolic sine.  Works for tt(complex<T>). bzindex(cos())
+dit(sqr())  Same as pow2().  Computes x*x. Works for tt(complex<T>). bzindex(sqr())
+dit(sqrt()) Square root.  Works for tt(complex<T>). bzindex(sqrt())
+dit(tan())  Tangent.  Works for tt(complex<T>). bzindex(tan())
+dit(tanh()) Hyperbolic tangent.  Works for tt(complex<T>). bzindex(tanh())
+
+enddit()
+
+nsubsect(IEEE/System V math functions)
+
+bzindex(IEEE math functions)
+bzindex(System V math functions)
+bzindex(libm.a)
+bzindex(libmsaa.a)
+
+These functions are only available on platforms which provide the
+IEEE Math library (libm.a) and/or System V Math Library (libmsaa.a).
+Apparently not all platforms provide all of these functions, so
+what you can use on your platform may be a subset of these.
+If you choose to use one of these functions, be aware that you
+may be limiting the portability of your code.
+
+bzindex(XOPEN_SOURCE)
+bzindex(XOPEN_SOURCE_EXTENDED)
+On some platforms, the preprocessor symbols tt(_XOPEN_SOURCE)
+and/or tt(_XOPEN_SOURCE_EXTENDED) need to be defined 
+to use these functions.  These symbols can be enabled
+by compiling with tt(-DBZ_ENABLE_XOPEN_SOURCE).
+(In previous version of Blitz++, tt(_XOPEN_SOURCE) and
+tt(_XOPEN_SOURCE_EXTENDED) were declared by default.
+This was found to cause too many problems, so users
+must manually enable them with tt(-DBZ_ENABLE_XOPEN_SOURCE).).
+
+COMMENT(NEEDS_WORK)
+In the current version, Blitz++ divides these functions into two
+groups: IEEE and System V.  This distinction is probably artificial.
+If one of the functions in a group is missing,
+Blitz++ won't allow you to use any of them.  You can see the
+division of these functions in the files tt(Blitz++/compiler/ieeemath.cpp)
+and tt(Blitz++/compiler/sysvmath.cpp).  This arrangement is
+unsatisfactory and will probably change in a future version.
+
+You may have to link with tt(-lm) and/or tt(-lmsaa) to use these
+functions.
+
+None of these functions are available for tt(complex<T>).
+
+startdit()
+
+dit(acosh())   Inverse hyperbolic cosine bzindex(acosh())
+dit(asinh())   Inverse hyperbolic sine bzindex(asinh())
+dit(atanh())   Inverse hyperbolic tangent bzindex(atanh())
+dit(_class())  Classification of floating point values.  The return type
+               is integer and will be one of: bzindex(_class())
+   startdit()
+      dit(FP_PLUS_NORM) Positive normalized, nonzero bzindex(FP_PLUS_NORM)
+      dit(FP_MINUS_NORM) Negative normalized, nonzero bzindex(FP_MINUS_NORM)
+      dit(FP_PLUS_DENORM) Positive denormalized, nonzero bzindex(FP_PLUS_DENORM)
+      dit(FP_MINUS_DENORM) Negative denormalized, nonzero bzindex(FP_MINUS_DENORM)
+      dit(FP_PLUS_ZERO) +0.0 bzindex(FP_PLUS_ZERO)
+      dit(FP_MINUS_ZERO) -0.0 bzindex(FP_MINUS_ZERO)
+      dit(FP_PLUS_INF)  Positive infinity  bzindex(FP_PLUS_INF)
+      dit(FP_MINUS_INF)  Negative infinity bzindex(FP_MINUS_INF)
+      dit(FP_NANS)      Signalling Not a Number (NaNS) bzindex(FP_NANS)
+      dit(FP_NANQ)      Quiet Not a Number (NaNQ) bzindex(FP_NANQ)
+   enddit()
+
+dit(cbrt())   Cubic root bzindex(cbrt())
+dit(expm1())  Computes exp(x)-1 bzindex(expm1())
+dit(erf())    Computes the error function:  bzindex(erf())
+              latexcommand(\begin{displaymath} \
+                 erf(x) = \frac{2}{\sqrt{\pi}} \int_{0}^x e^{-t^2} dt   \
+                 \end{displaymath})
+              htmlcommand(erf(x) = 2/sqrt(Pi) * integral(exp(-t^2), t=0..x))
+              Note that for large values of the parameter, calculating
+              latexcommand($1.0-erf(x)$) htmlcommand(1.0-erf(x))
+              can result in extreme loss of accuracy.  Instead, use erfc().
+dit(erfc())   Computes the complementary error function bzindex(erfc())
+              latexcommand($erfc(x) = 1.0 - erf(x)$)
+              htmlcommand(erfc(x) = 1.0 - erf(x)).  
+COMMENT(
+dit(finite()) Returns a nonzero integer if the parameter is a finite
+              number (i.e. not +INF, -INF, NaNQ or NaNS).
+)
+dit(ilogb())  Returns an integer which is equal to the unbiased exponent
+              of the parameter.               bzindex(ilogb())
+dit(isnan())  Returns a nonzero integer if the parameter is NaNQ or NaNS
+              (quiet or signalling Not a Number). bzindex(isnan())
+dit(itrunc()) Round a floating-point number to a signed integer.  Returns
+              the nearest signed integer to the parameter in the direction of
+              0. bzindex(itrunc())
+dit(j0())     Bessel function of the first kind, order 0. bzindex(Bessel functions) bzindex(j0())
+dit(j1())     Bessel function of the first kind, order 1. bzindex(j1())
+dit(lgamma()) Natural logarithm of the gamma function.  The gamma function
+              bzindex(lgamma()) bzindex(Gamma function)
+              latexcommand($\Gamma(x)$) htmlcommand(Gamma(x)) is defined as:
+              latexcommand(\begin{displaymath}
+                 \Gamma(x) = \int_{0}^{\infty} e^{-t} t^{x-1} dt
+                           \end{displaymath})
+              htmlcommand(
+                Gamma(x) = integral(e^(-t) * t^(x-1), t=0..infinity))
+dit(logb())   Returns a floating-point double that is equal to the
+              unbiased exponent of the parameter. bzindex(logb())
+dit(log1p())  Calculates log(1+x), where x is the parameter. bzindex(log1p())
+dit(nearest()) Returns the nearest floating-point integer value to the
+              parameter.  If the parameter is exactly halfway between
+              two integer values, an even value is returned. bzindex(nearest())
+dit(rint())   Rounds the parameter and returns a floating-point integer
+              value.  Whether tt(rint()) rounds up or down or to the nearest
+              integer depends on the current floating-point rounding mode.
+              If you haven't altered the rounding mode, tt(rint()) should be
+              equivalent to tt(nearest()).  If rounding mode is set to round
+              towards +INF, tt(rint()) is equivalent to tt(ceil()).  If the
+              mode is round toward -INF, tt(rint()) is equivalent to 
+              tt(floor()).  If the mode is round toward zero, tt(rint())
+              is equivalent to tt(trunc()). bzindex(rint())
+              bzindex(rounding: rint()))
+dit(rsqrt())  Reciprocal square root. bzindex(rsqrt())
+COMMENT(
+dit(trunc())  Returns the nearest floating-point integer value to the
+              parameter in the direction of 0.
+)
+dit(uitrunc()) Returns the nearest unsigned integer to the parameter in
+              the direction of zero. bzindex(uitrunc())
+dit(y0())     Bessel function of the second kind, order 0. bzindex(y0())
+dit(y1())     Bessel function of the second kind, order 1. bzindex(y1())
+
+enddit()
+
+There may be better descriptions of these functions in your
+system man pages.
+
+bzsect(Two-argument math functions)
+
+The math functions described in this section take two arguments.
+Most combinations of these types may be used as arguments:
+
+startit()
+
+it()    An Array object
+
+it()    An Array expression
+
+it()    An index placeholder
+
+it()    A scalar of type tt(float), tt(double), tt(long double),
+        or tt(complex<T>)
+
+endit()
+
+nsubsect(ANSI C++ math functions)
+
+These math functions are available on all platforms, and work for
+complex numbers.
+
+startdit()
+
+label(arrays-atan2)
+
+bzindex(math functions)
+bzindex(complex math functions)
+
+dit(atan2(x,y))  Inverse tangent of (y/x).  The signs of both
+                 parameters are used to determine the quadrant of the
+                 return value, which is in the range [-pi, pi].
+                 Works for tt(complex<T>). bzindex(atan2())
+dit(blitz::polar(r,t))      Computes latexcommand($r e^{i t}$)
+                     htmlcommand(r e<sup>it</sup>); i.e. converts
+                     polar-form to Cartesian form complex numbers.
+                 The tt(blitz::) scope qualifier is needed to
+                 disambiguate the ANSI C++ function template
+                 tt(polar(T,T)).  This qualifier will hopefully
+                 disappear in a future version. bzindex(polar())
+dit(pow(x,y))    Computes x to the exponent y.  Works for
+                 tt(complex<T>). bzindex(pow())
+
+enddit()
+
+nsubsect(IEEE/System V math functions)
+
+See the notes about IEEE/System V math functions in the previous
+section.  None of these functions work for complex numbers.
+They will all cast their arguments to double precision.
+
+startdit()
+
+dit(copysign(x,y))   Returns the x parameter with the same sign as
+                     the y parameter. bzindex(copysign())
+dit(drem(x,y))       Computes a floating point remainder.  The return
+                     value r is equal to r = x - n * y, where n is
+                     equal to tt(nearest(x/y)) (the nearest integer to
+                     x/y).  The return value will lie in the range
+                     [ -y/2, +y/2 ].  If y is zero or x is +INF or -INF,
+                     NaNQ is returned. bzindex(drem())
+                     bzindex(remainder, floating point drem())
+dit(fmod(x,y))       Computes a floating point modulo remainder.  The
+                     return value r is equal to r = x - n * y, where
+                     n is selected so that r has the same sign as x
+                     and magnitude less than abs(y).  In order words,
+                     if x > 0, r is in the range [0, |y|], and if x < 0,
+                     r is in the range [-|y|, 0]. bzindex(fmod())
+                     bzindex(modulo, floating point fmod())
+dit(hypot(x,y))      Computes latexcommand($\sqrt{x^2+y^2}$)
+                     htmlcommand(sqrt(x<sup>2</sup> + y<sup>2</sup>)) so
+                     that underflow does not occur and overflow occurs only
+                     if the final result warrants it. bzindex(hypot())
+dit(nextafter(x,y))  Returns the next representable number after 
+                     x in the direction of y. bzindex(nextafter())
+dit(remainder(x,y))  Equivalent to drem(x,y). bzindex(remainder())
+dit(scalb(x,y))      Calculates latexcommand($x * 2^y$) 
+                     htmlcommand(x * 2<sup>y</sup>). bzindex(scalb())
+dit(unordered(x,y))  Returns a nonzero value if a floating-point comparison
+                     between x and y would be unordered.  Otherwise, it
+                     returns zero. bzindex(unordered())
+
+enddit()
+
+bzsect(Declaring your own math functions on arrays)
+
+label(user-et)
+
+bzindex(math functions!declaring your own)
+bzindex(Array!declaring your own math functions on)
+
+There are four macros which make it easy to turn
+your own scalar functions into functions defined
+on arrays.  They are:
+
+bzindex(BZ_DECLARE_FUNCTION...)
+bzverb(
+BZ_DECLARE_FUNCTION(f)                   // 1
+BZ_DECLARE_FUNCTION_RET(f,return_type)   // 2
+BZ_DECLARE_FUNCTION2(f)                  // 3
+BZ_DECLARE_FUNCTION2_RET(f,return_type)  // 4
+)
+
+Use version 1 when you have a function which
+takes one argument and returns a result of the
+same type.  For example:
+
+bzverb(
+#include <blitz/array.h>
+
+using namespace blitz;
+
+double myFunction(double x)
+{ 
+    return 1.0 / (1 + x); 
+}
+
+BZ_DECLARE_FUNCTION(myFunction)
+
+int main()
+{
+    Array<double,2> A(4,4), B(4,4);  // ...
+    B = myFunction(A);
+}
+)
+
+Use version 2 when you have a one argument function
+whose return type is different than the argument
+type, such as
+
+bzverb(
+int g(double x);
+)
+
+Use version 3 for a function which takes two arguments
+and returns a result of the same type, such as:
+
+bzverb(
+double g(double x, double y);
+)
+
+Use version 4 for a function of two arguments which
+returns a different type, such as:
+
+bzverb(
+int g(double x, double y);
+)
+
+
+bzsect(Tensor notation)
+
+bzindex(tensor notation)
+bzindex(Array!tensor notation)
+
+Blitz++ arrays support a tensor-like notation.  Here's an example of
+real-world tensor notation:
+
+htmlcommand(
+<pre>
+ ijk    ij k
+A    = B  C
+</pre>
+)
+latexcommand(
+\begin{displaymath}
+A^{ijk} = B^{ij} C^k
+\end{displaymath}
+)
+
+A is a rank 3 tensor (a three dimensional array), B is a rank 2 tensor
+(a two dimensional array), and C is a rank 1 tensor (a one dimensional
+array).  The above expression sets 
+A(i,j,k) = B(i,j) * C(k).
+
+To implement this product using Blitz++, we'll need the arrays and some
+index placeholders:
+
+bzindex(index placeholders!used for tensor notation)
+
+bzverb(
+Array<float,3> A(4,4,4);
+Array<float,2> B(4,4);
+Array<float,1> C(4);
+
+firstIndex i;    // Alternately, could just say
+secondIndex j;   // using namespace blitz::tensor;
+thirdIndex k;
+)
+
+Here's the Blitz++ code which is equivalent to the tensor expression:
+
+bzverb(
+A = B(i,j) * C(k);
+)
+
+The index placeholder arguments tell an array how to map its dimensions
+onto the dimensions of the destination array.  
+For example, here's some real-world tensor notation:
+
+htmlcommand(
+<pre>
+ ijk    ij k    jk i
+C    = A  x  - A  y
+</pre>
+)
+latexcommand(
+\begin{displaymath}
+C^{ijk} = A^{ij}x^{k} - A^{jk}y^{i}
+\end{displaymath}
+)
+
+In Blitz++, this would be coded as:
+
+bzverb(
+    using namespace blitz::tensor;
+    C = A(i,j) * x(k) - A(j,k) * y(i);
+)
+
+This tensor expression can be visualized in the following way:
+
+figure(tensor1)(Examples of array indexing, subarrays, and slicing.)(tensor1)
+
+
+Here's an example which computes an outer product of two one-dimensional
+arrays:
+bzindex(outer product)
+bzindex(kronecker product)
+bzindex(tensor product)
+
+bzexamplefile(examples/outer.cpp)
+
+And the output:
+
+bzexamplefile(examples/outer.out)
+
+Index placeholders can em(not) be used on the left-hand side of an
+expression.  If you need to reorder the indices, you must do this
+on the right-hand side.
+
+In real-world tensor notation, repeated indices imply a contraction
+(or summation).  For example, this tensor expression computes 
+a matrix-matrix product:
+
+htmlcommand(
+<pre>
+ ij    ik  kj
+C   = A   B
+</pre>
+)
+latexcommand(
+\begin{displaymath}
+C^{ij} = A^{ik} B^{kj}
+\end{displaymath}
+)
+
+The repeated k index is interpreted as meaning
+
+htmlcommand(
+<pre>
+c    = sum of {a   * b  } over k
+ ij             ik    kj
+</pre>
+)
+
+latexcommand(
+\begin{equation}
+c_{ij} = \sum_{k} a_{ik} * b_{kj}
+\end{equation}
+)
+
+bzindex(contraction)
+bzindex(tensor contraction)
+
+In Blitz++, repeated indices do em(not) imply contraction.  If you
+want to contract (sum along) an index, you must use the tt(sum())
+function:
+
+bzverb(\
+Array<float,2> A, B, C;   // ...
+firstIndex i;
+secondIndex j;
+thirdIndex k;
+
+C = sum(A(i,k) * B(k,j), k);
+)
+
+The tt(sum()) function is an example of an em(array reduction), 
+described in the next section.
+
+Index placeholders can be used in any order in an expression.
+This example computes a kronecker product of a pair of
+two-dimensional arrays, and permutes the indices along the
+way:
+
+bzverb(\
+Array<float,2> A, B;   // ...
+Array<float,4> C;      // ...
+fourthIndex l;
+
+C = A(l,j) * B(k,i);
+)
+
+This is equivalent to the tensor notation
+
+htmlcommand(
+<pre>
+ ijkl    lj ki
+C     = A  B
+</pre>
+)
+latexcommand(
+\begin{displaymath}
+C^{ijkl} = A^{lj} B^{ki}
+\end{displaymath}
+)
+
+Tensor-like notation can be mixed with other array notations:
+
+bzverb(\
+Array<float,2> A, B;  // ...
+Array<double,4> C;    // ...
+
+C = cos(A(l,j)) * sin(B(k,i)) + 1./(i+j+k+l);
+)
+
+bzindex(tensor notation!efficiency issues)
+An important efficiency note about tensor-like notation: the
+right-hand side of an expression is em(completely evaluated)
+for em(every) element in the destination array.  For example,
+in this code:
+
+bzverb(\
+Array<float,1> x(4), y(4);
+Array<float,2> A(4,4):
+
+A = cos(x(i)) * sin(y(j));
+)
+
+The resulting implementation will look something like this:
+
+bzverb(\
+for (int n=0; n < 4; ++n)
+  for (int m=0; m < 4; ++m)
+    A(n,m) = cos(x(n)) * sin(y(m));
+)
+
+The functions tt(cos) and tt(sin) will be invoked sixteen times
+each.  It's possible that a good optimizing compiler could
+hoist the tt(cos) evaluation out of the inner loop, but don't
+hold your breath -- there's a lot of complicated machinery
+behind the scenes to handle tensor notation, and most optimizing
+compilers are easily confused.  In a situation like the above,
+you are probably best off manually creating temporaries for
+tt(cos(x)) and tt(sin(y)) first.
+
+bzsect(Array reductions)
+
+bzindex(Array!reductions)
+bzindex(reductions)
+
+Currently, Blitz++ arrays support two forms of reduction:+footnote(A
+future version will likely support block reductions.)
+
+startit()
+
+it()     Reductions which transform an array into a scalar (for example,
+         summing the elements).  These are referred to as
+         bf(complete reductions).
+
+it()     Reducing an N dimensional array (or array expression) to an N-1 
+         dimensional array expression.  These are called bf(partial
+         reductions).
+
+endit()
+
+bzindex(Array!reductions!complete)
+bzindex(complete reductions)
+bzindex(reductions!complete)
+
+bzsect(Complete reductions)
+
+Complete reductions transform an array (or array expression) into 
+a scalar.  Here are some examples:
+
+bzverb(\
+Array<float,2> A(3,3);
+A = 0, 1, 2,
+    3, 4, 5,
+    6, 7, 8;
+cout << sum(A) << endl          // 36
+     << min(A) << endl          // 0
+     << count(A >= 4) << endl;  // 5
+)
+
+Here are the available complete reductions:
+
+startdit()
+
+dit(sum())      Summation (may be promoted to a higher-precision type)
+                bzindex(sum() reduction)
+dit(product())  Product bzindex(product() reduction)
+dit(mean())     Arithmetic mean (promoted to floating-point type if necessary)
+                bzindex(mean() reduction)
+dit(min())      Minimum value bzindex(min() reduction)
+dit(max())      Maximum value bzindex(max() reduction)
+dit(minIndex()) Index of the minimum value (TinyVector<int,N_rank>)
+                bzindex(minIndex() reduction)
+dit(maxIndex()) Index of the maximum value (TinyVector<int,N_rank>)
+                bzindex(maxIndex() reduction)
+dit(count())    Counts the number of times the expression is logical true (int)
+                bzindex(count() reduction)
+dit(any())      True if the expression is true anywhere (bool)
+                bzindex(any() reduction)
+dit(all())      True if the expression is true everywhere (bool)
+                bzindex(all() reduction)
+
+enddit()
+
+bf(Note: minIndex() and maxIndex() return TinyVectors, even when
+the rank of the array (or array expression) is 1.)
+
+Reductions can be combined with tt(where) expressions (ref(where-expr))
+to reduce over some part of an array.  For example,
+tt(sum(where(A > 0, A, 0))) sums only the positive elements
+in an array.
+
+bzsect(Partial Reductions)
+
+bzindex(Array!reductions!partial)
+bzindex(partial reductions)
+bzindex(reductions!partial)
+
+Here's an example which computes the sum of each row of a two-dimensional
+array:
+
+bzverb(\
+Array<float,2> A;    // ...
+Array<float,1> rs;   // ...
+firstIndex i;
+secondIndex j;
+
+rs = sum(A, j);
+)
+
+The reduction tt(sum()) takes two arguments:
+
+startit()
+
+it()    The first argument is an array or array expression.
+
+it()    The second argument is an index placeholder indicating
+        the dimension over which the reduction is to occur.  
+
+endit()
+
+Reductions have an bf(important restriction): It is currently only 
+possible to reduce over the em(last) dimension of an array or array 
+expression.  Reducing a dimension other than the last would require
+Blitz++ to reorder the dimensions to fill the hole left behind.
+For example, in order for this reduction to work:
+
+bzverb(\
+Array<float,3> A;   // ...
+Array<float,2> B;   // ...
+secondIndex j;
+
+// Reduce over dimension 2 of a 3-D array?
+B = sum(A, j);
+)
+
+Blitz++ would have to remap the dimensions so that the third dimension
+became the second.  It's not currently smart enough to do this.
+
+However, there is a simple workaround which solves some of the
+problems created by this limitation: you can do the reordering
+manually, prior to the reduction:
+
+bzverb(\
+B = sum(A(i,k,j), k);
+)
+
+Writing tt(A(i,k,j)) interchanges the second and third dimensions,
+permitting you to reduce over the second dimension.
+Here's a list of the reduction operations currently supported:
+
+startdit()
+
+dit(sum())    Summation
+dit(product()) Product 
+dit(mean())   Arithmetic mean (promoted to floating-point type if necessary)
+dit(min())    Minimum value
+dit(max())    Maximum value
+dit(minIndex()) Index of the minimum value (int)
+dit(maxIndex()) Index of the maximum value (int)
+dit(count())    Counts the number of times the expression is logical true (int)
+dit(any())      True if the expression is true anywhere (bool)
+dit(all())      True if the expression is true everywhere (bool)
+dit(first())    First index at which the expression is logical true (int); if
+		the expression is logical true nowhere, then tt(tiny(int()))
+                (INT_MIN) is returned.
+dit(last())     Last index at which the expression is logical true (int); if
+                the expression is logical true nowhere, then tt(huge(int()))
+                (INT_MAX) is returned.
+enddit()
+
+The reductions tt(any()), tt(all()), and tt(first()) have short-circuit
+semantics: the reduction will halt as soon as the answer is known.  For
+example, if you use tt(any()), scanning of the expression will stop as
+soon as the first true value is encountered.
+
+To illustrate, here's an example:
+
+bzverb(\
+Array<int, 2> A(4,4);
+
+A =  3,   8,   0,   1,
+     1,  -1,   9,   3,
+     2,  -5,  -1,   1,
+     4,   3,   4,   2;
+
+Array<float, 1> z;
+firstIndex i;
+secondIndex j;
+
+z = sum(A(j,i), j);
+)
+
+The array tt(z) now contains the sum of tt(A) along each column:
+
+bzverb(\
+[ 10    5     12    7 ]
+)
+
+This table shows what the result stored in tt(z) would be if
+tt(sum()) were replaced with other reductions:
+
+bzverb(\
+sum                     [         10         5        12         7 ]
+mean                    [        2.5      1.25         3      1.75 ]
+min                     [          1        -5        -1         1 ]
+minIndex                [          1         2         2         0 ]
+max                     [          4         8         9         3 ]
+maxIndex                [          3         0         1         1 ]
+first((A < 0), j)       [ -2147483648        1         2 -2147483648 ]
+product                 [         24       120         0         6 ]
+count((A(j,i) > 0), j)  [          4         2         2         4 ]
+any(abs(A(j,i)) > 4, j) [          0         1         1         0 ]
+all(A(j,i) > 0, j)      [          1         0         0         1 ]
+)
+
+Note: the odd numbers for first() are tt(tiny(int())) i.e. the
+smallest number representable by an int.  The exact value is
+machine-dependent.
+
+bzindex(Array!reductions!chaining)
+bzindex(partial reductions!chaining)
+bzindex(reductions!chaining)
+
+The result of a reduction is an array expression, so reductions
+can be used as operands in an array expression:
+
+bzverb(\
+Array<int,3> A;
+Array<int,2> B;
+Array<int,1> C;   // ...
+
+secondIndex j;
+thirdIndex k;
+
+B = sqrt(sum(sqr(A), k));
+
+// Do two reductions in a row
+C = sum(sum(A, k), j);
+)
+
+Note that this is not allowed:
+
+bzverb(\
+Array<int,2> A;
+firstIndex i;
+secondIndex j;
+
+// Completely sum the array?
+int result = sum(sum(A, j), i);
+)
+
+You cannot reduce an array to zero dimensions!
+Instead, use one of the global functions described in the
+previous section.
+
+COMMENT(
+bzsect(Fast traversals)
+
+The Blitz++ library includes some special optimizations for doing
+stencil operations on 3-dimensional arrays.  It turns out that by
+following a special traversal order, you can significantly boost
+cache reuse. Blitz++ uses a traversal based on a Hilbert space-filling
+curve, which allows it to perform stencil operations faster than
+Fortran 77.
+
+In the current version, fast traversals are semi-automatic.  If
+you write an expression which looks to Blitz++ like a 3D stencil,
+it will use a fast traversal if one is available.  It is up to you
+to generate this fast traversal order by calling the function
+tt(generateFastTraversalOrder()).
+)
+
+bzsect(where statements)
+
+label(where-expr)
+
+bzindex(where statements)
+bzindex(functional if (where))
+bzindex(if (where))
+
+Blitz++ provides the "where" function as an array expression
+version of the "?:" operator.  The syntax is:
+
+bzverb(\
+where(array-expr1, array-expr2, array-expr3)
+)
+
+Wherever tt(array-expr1) is true, tt(array-expr2) is returned.
+Where tt(array-expr1) is false, tt(array-expr3) is returned.
+For example, suppose we wanted to sum the squares of only
+the positive elements of an array.  This can be implemented
+using a where function:
+
+bzverb(\
+double posSquareSum = sum(where(A > 0, pow2(A), 0));
+)
+
