@@ -2,6 +2,9 @@
 
 # Support doxygen documentation ?
 
+#docdir = $(datadir)/doc/$(PACKAGE)-$(VERSION)
+docdir = $(prefix)/doc/blitz/doxygen
+
 if DOC
 
 html/index.html: Doxyfile
@@ -72,13 +75,13 @@ clean-local:
 
 # Install hooks
 make-install-dirs:
-	@if test '!' -d $(datadir)/doc/$(PACKAGE)-$(VERSION); \
-		then mkdir -p $(datadir)/doc/$(PACKAGE)-$(VERSION); \
+	@if test '!' -d $(docdir) ; \
+		then mkdir -p $(docdir) ; \
 	fi
 
 install-data-hook: make-install-dirs
 	@if test -d html; then \
-		echo Installing documentations into $(datadir)/doc/$(PACKAGE)-$(VERSION) ; \
-		$(INSTALL_DATA) html/* $(datadir)/doc/$(PACKAGE)-$(VERSION) ; \
+		echo Installing documentations into $(docdir) ; \
+		$(INSTALL_DATA) html/* $(docdir) ; \
 	fi
 
