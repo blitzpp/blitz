@@ -23,6 +23,11 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.4  2002/03/06 15:50:41  patricg
+ *
+ * for (d=0; d < N_rank; ++d) replaced by for (int d=0; d < N_rank; ++d)
+ * (for scoping problem)
+ *
  * Revision 1.3  2001/02/11 15:43:39  tveldhui
  * Additions from Julian Cummings:
  *  - StridedDomain class
@@ -738,7 +743,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(
         if (numElements())
         {
           TinyVector<int,N_rank> ub;
-          for (d=0; d < N_rank; ++d)
+          for (int d=0; d < N_rank; ++d)
             ub(d) = minmax::min(B.ubound(d),ubound(d));
           RectDomain<N_rank> overlap(lbound(),ub);
           B(overlap) = (*this)(overlap);
