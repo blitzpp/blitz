@@ -3,7 +3,7 @@
 
 BZ_USING_NAMESPACE(blitz)
 
-template <class T>
+template <typename T>
 void subsample(Array<T, 2>& in, Array<T, 2>& sub1)
 {
     Range all = Range::all();

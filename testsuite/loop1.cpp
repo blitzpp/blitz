@@ -62,7 +62,7 @@ int main()
     return 0;
 }
 
-template<class T>
+template<typename T>
 void initializeRandomDouble(T data, int numElements, int stride = 1)
 {
     static Random<Uniform> rnd;
@@ -71,7 +71,7 @@ void initializeRandomDouble(T data, int numElements, int stride = 1)
         data[size_t(i*stride)] = rnd.random();
 }
 
-template<class T>
+template<typename T>
 void initializeArray(T& array, int numElements)
 {
     static Random<Uniform> rnd;
