@@ -65,9 +65,9 @@ if test "$enableval" = yes ; then
 		AR_FLAGS="-rv"
 		RANLIB="ar ts"
 	;;
-	g++) dnl GNU C++  http://gcc.gnu.org/
+	*g++) dnl GNU C++  http://gcc.gnu.org/
 		CXX_VENDOR="GNU" 
-		GCC_V=`g++ --version`
+		GCC_V=`$CXX --version`
 		gcc_version=`expr "$GCC_V" : '.* \(@<:@0-9@:>@\)\..*'`
 		gcc_release=`expr "$GCC_V" : '.* @<:@0-9@:>@\.\(@<:@0-9@:>@\).*'`
 		if test $gcc_version -lt "3" ; then
