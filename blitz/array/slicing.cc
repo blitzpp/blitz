@@ -281,12 +281,12 @@ cout << "slice(" << setRank << ", [" << r.first(array.lbound(sourceRank))
  * int parameters, which reduce the dimensionality by one.
  */
 template<class P_numtype, int N_rank> template<int N_rank2>
-void Array<P_numtype, N_rank>::slice(int& setRank, int i,
+void Array<P_numtype, N_rank>::slice(int&, int i,
     Array<T_numtype,N_rank2>& array, TinyVector<int,N_rank2>& rankMap,
     int sourceRank)
 {
 #ifdef BZ_DEBUG_SLICE
-    cout << "slice(" << setRank << ", " << i
+    cout << "slice(" << i
          << ", Array<T," << N_rank2 << ">, " << sourceRank << ")" << endl;
     cout << "Offset by " << (i * array.stride(sourceRank))
          << endl;
