@@ -1,3 +1,8 @@
+
+2003-03-31 Patrick Guio <patrick.guio@fys.uio.no>
+	* lib/Makefile.am: Enable required libtool library target libblitz.la since
+	AC_PROG_LIBTOOL is now in use.
+
 2003-03-28 Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
 
     * configure.in: Re-enable AC_PROG_LIBTOOL and disable AC_PROG_RANLIB
