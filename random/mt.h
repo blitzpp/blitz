@@ -38,6 +38,15 @@
 // 1999-01-25 adapted to STL-like idiom
 // allan@stokes.ca (Allan Stokes) www.stokes.ca
 
+/*
+ * $Id$
+ *
+ * $Log$
+ * Revision 1.2  2001/01/26 19:52:34  tveldhui
+ * Incorporated changes from Max Domeika for STL compatibility.
+ *
+ */
+
 #ifndef BZ_RAND_MT
 #define BZ_RAND_MT
 
@@ -95,7 +104,7 @@ enum { N = 624, PF = 397, reference_seed = 4357 };
   void initialize()
   {
     S.resize(N);
-    I = &S[N];
+    I = S.end();
   }
  
 public: 
@@ -132,7 +141,7 @@ public:
 
     enum { Knuth_A = 69069 }; 
     twist_int x = seed & 0xFFFFFFFF;
-    Iter s = &S[0];
+    Iter s = S.begin();
     twist_int mask = (seed == reference_seed) ? 0 : 0xFFFFFFFF;
     for (int j = 0; j < N; ++j) {
       // adding j here avoids the risk of all zeros 
@@ -150,18 +159,18 @@ public:
     // before the constructor.  See the note above about static
     // initialization.
 
-    Iter p0 = &S[0];
+    Iter p0 = S.begin();
     Iter pM = p0 + PF;
     BitMixer twist;
     twist (S[0]); // prime the pump
-    for (Iter pf_end = &S[N-PF]; p0 != pf_end; ++p0, ++pM)
+    for (Iter pf_end = (Iter)&S[N-PF]; p0 != pf_end; ++p0, ++pM)
       *p0 = *pM ^ twist (p0[1]);
     pM = S.begin();
-    for (Iter s_end = &S[N-1]; p0 != s_end; ++p0, ++pM)
+    for (Iter s_end = (Iter)&S[N-1]; p0 != s_end; ++p0, ++pM)
       *p0 = *pM ^ twist (p0[1]);
     *p0 = *pM ^ twist (S[0]);
 
-    I = &S[0];
+    I = S.begin();
   }
 
   inline twist_int random (void)
