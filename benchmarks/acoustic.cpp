@@ -12,21 +12,17 @@
 
 BZ_USING_NAMESPACE(blitz)
 
-#ifdef BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES
+#if defined(BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES)
  #define echo_f90           echo_f90_
  #define echo_f77           echo_f77_
  #define echo_f90_tuned     echo_f90_tuned_
  #define echo_f77tuned      echo_f77tuned_
-#endif
-
-#ifdef BZ_FORTRAN_SYMBOLS_WITH_DOUBLE_TRAILING_UNDERSCORES
+#elif defined(BZ_FORTRAN_SYMBOLS_WITH_DOUBLE_TRAILING_UNDERSCORES)
  #define echo_f90           echo_f90__
  #define echo_f77           echo_f77__
  #define echo_f90_tuned     echo_f90_tuned__
  #define echo_f77tuned      echo_f77tuned__
-#endif
-
-#ifdef BZ_FORTRAN_SYMBOLS_CAPS
+#elif defined(BZ_FORTRAN_SYMBOLS_CAPS)
  #define echo_f90           ECHO_F90
  #define echo_f77           ECHO_F77
  #define echo_f90_tuned     ECHO_F90_TUNED
@@ -40,7 +36,6 @@ void echo_f90_tuned(int& N, int& niters, float& check);
 void echo_f77tuned(int& N, int& niters, float& check);
 }
 
-//float echo_BlitzInterlaced(int N, int niters, float c);
 float echo_BlitzInterlacedCycled(int N, int niters);
 float echo_BlitzCycled(int N, int niters);
 float echo_BlitzRaw(int N, int niters);
@@ -92,9 +87,10 @@ int main()
     timer.stop();
     cout << "Blitz++ (interlaced & cycled): " << timer.elapsedSeconds()
          << " s check = " << check 
-         << " Mflops = " << (Mflops/timer.elapsedSeconds()) << endl << endl;
+         << " Mflops = " << (Mflops/timer.elapsedSeconds()) 
+				 << endl << endl;
 
-#ifndef NO_FORTRAN_90
+#ifdef FORTRAN_90
     timer.start();
     echo_f90(N, niters, check);
     timer.stop();
@@ -251,23 +247,23 @@ void setInitialConditions(Array<float,2>& c, Array<float,2>& P1,
 
     // Solid block with which the pulse collides
     int blockLeft = 0;
-    int blockRight = 2*N/5.0-1;
-    int blockTop = N/3-1;
-    int blockBottom = 2*N/3.0-1;
+    int blockRight = int(2*N/5.0-1);
+    int blockTop = int(N/3-1);
+    int blockBottom = int(2*N/3.0-1);
     c(Range(blockTop,blockBottom),Range(blockLeft,blockRight)) = 0.5;
 
     // Channel directing the pulse leftwards
-    int channelLeft = 4*N/5.0-1;
+    int channelLeft = int(4*N/5.0-1);
     int channelRight = N-1;
-    int channel1Height = 3*N/8.0-1;
-    int channel2Height = 5*N/8.0-1;
+    int channel1Height = int(3*N/8.0-1);
+    int channel2Height = int(5*N/8.0-1);
     c(channel1Height,Range(channelLeft,channelRight)) = 0.0;
     c(channel2Height,Range(channelLeft,channelRight)) = 0.0;
 
     // Initial pressure distribution: gaussian pulse inside the channel
     BZ_USING_NAMESPACE(blitz::tensor)
-    int cr = N/2-1;
-    int cc = 7.0*N/8.0-1;
+    int cr = int(N/2-1);
+    int cc = int(7.0*N/8.0-1);
     float s2 = 64.0 * 9.0 / pow2(N/2.0);
     cout << "cr = " << cr << " cc = " << cc << " s2 = " << s2 << endl;
     P1 = 0.0;
