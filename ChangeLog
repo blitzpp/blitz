@@ -1,3 +1,24 @@
+2003-06-25  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/array/fastiter.h: FastArrayIterator now uses
+	ConstPointerStack helper class.
+	* blitz/array/iter.h: Added helper class ConstPointerStack that
+	manages an array of saved const data pointers used in array
+	iterators.  Moving the array of saved pointers into a separate
+	class eliminates compiler warnings about potentially unsafe
+	assignments between restricted and unrestricted pointers in the
+	same scope.  ArrayIterator and ConstArrayIterator now have
+	ConstPointerStack data members.
+	* blitz/memblock.cc: Allocate memory block using unrestricted
+	pointer dataBlocxkAddress_ and then assign to restricted pointer
+	data_ to eliminate compiler warnings about assignments between
+	restricted pointers.
+	* blitz/memblock.h: Removed restrict label from dataBlockAddress_
+	pointer, since only the data_ pointer is used in expression
+	evaluation and needs to be restricted.
+	* configure.in: Added -qhot to list of C++ optimization flags for
+	IBM xlC compiler, since it now supports higher-order transforms as
+	of version 6.0.
 
 2003-06-16  Patrick Guio <patrick.guio@fys.uio.no>
 	* configure.in: Fixed 2 flags setting for CC/SGI. 
