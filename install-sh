@@ -53,9 +53,6 @@ mvcmd="$mvprog"
 src=""
 dst=""
 dir_arg=""
-# CYGNUS LOCAL: exeext variable
-exeext=""
-# END CYGNUS LOCAL
 
 while [ x"$1" != x ]; do
     case $1 in
@@ -94,16 +91,6 @@ while [ x"$1" != x ]; do
 	    shift
 	    continue;;
 
-	# CYGNUS LOCAL: -x option
-        -x=*) exeext=`echo $1 | sed 's/-x=//'`
-	    shift
-	    continue;;
-
-	-x) exeext=".exe"
-	    shift
-	    continue;;
-	# END CYGNUS LOCAL
-
 	*)  if [ x"$src" = x ]
 	    then
 		src=$1
@@ -122,7 +109,7 @@ then
 	echo "install:	no input file specified"
 	exit 1
 else
-	true
+	:
 fi
 
 if [ x"$dir_arg" != x ]; then
@@ -133,25 +120,9 @@ if [ x"$dir_arg" != x ]; then
 		instcmd=:
 		chmodcmd=""
 	else
-		instcmd=mkdir
+		instcmd=$mkdirprog
 	fi
 else
-
-# CYGNUS LOCAL noer
-# Win32-based gcc automatically appends .exe to produced executables,
-# whether asked for or not.  This breaks installs.  The following
-# changes the value of $src to $src.exe if $src is missing
-
-	if [ -f $src ]
-	then
-		true
-	elif [ -f $src.exe ]
-	then
-		echo "install:  $src does not exist, trying with .exe appended"
-		src="$src".exe
-	fi
-
-# end CYGNUS LOCAL noer
 
 # Waiting for this to be detected by the "$instcmd $src $dsttmp" command
 # might cause directories to be created, which would be especially bad 
@@ -159,7 +130,7 @@ else
 
 	if [ -f $src -o -d $src ]
 	then
-		true
+		:
 	else
 		echo "install:  $src does not exist"
 		exit 1
@@ -170,7 +141,7 @@ else
 		echo "install:	no destination specified"
 		exit 1
 	else
-		true
+		:
 	fi
 
 # If destination is a directory, append the input filename; if your system
@@ -180,15 +151,8 @@ else
 	then
 		dst="$dst"/`basename $src`
 	else
-		true
+		:
 	fi
-
-	# CYGNUS LOCAL: Use exeext
-	case "`basename $dst`" in
-	    *.*) ;;
-	    *) dst="$dst$exeext" ;;
-	esac
-	# END CYGNUS LOCAL
 fi
 
 ## this sed command emulates the dirname command
@@ -199,8 +163,8 @@ dstdir=`echo $dst | sed -e 's,[^/]*$,,;s,/$,,;s,^$,.,'`
 
 # Skip lots of stat calls in the usual case.
 if [ ! -d "$dstdir" ]; then
-defaultIFS='	
-'
+defaultIFS='
+	'
 IFS="${IFS-${defaultIFS}}"
 
 oIFS="${IFS}"
@@ -219,7 +183,7 @@ while [ $# -ne 0 ] ; do
         then
 		$mkdirprog "${pathcomp}"
 	else
-		true
+		:
 	fi
 
 	pathcomp="${pathcomp}/"
@@ -230,10 +194,10 @@ if [ x"$dir_arg" != x ]
 then
 	$doit $instcmd $dst &&
 
-	if [ x"$chowncmd" != x ]; then $doit $chowncmd $dst; else true ; fi &&
-	if [ x"$chgrpcmd" != x ]; then $doit $chgrpcmd $dst; else true ; fi &&
-	if [ x"$stripcmd" != x ]; then $doit $stripcmd $dst; else true ; fi &&
-	if [ x"$chmodcmd" != x ]; then $doit $chmodcmd $dst; else true ; fi
+	if [ x"$chowncmd" != x ]; then $doit $chowncmd $dst; else : ; fi &&
+	if [ x"$chgrpcmd" != x ]; then $doit $chgrpcmd $dst; else : ; fi &&
+	if [ x"$stripcmd" != x ]; then $doit $stripcmd $dst; else : ; fi &&
+	if [ x"$chmodcmd" != x ]; then $doit $chmodcmd $dst; else : ; fi
 else
 
 # If we're going to rename the final executable, determine the name now.
@@ -252,7 +216,7 @@ else
 	then
 		dstfile=`basename $dst`
 	else
-		true
+		:
 	fi
 
 # Make a temp file name in the proper directory.
@@ -271,10 +235,10 @@ else
 # ignore errors from any of these, just make sure not to ignore
 # errors from the above "$doit $instcmd $src $dsttmp" command.
 
-	if [ x"$chowncmd" != x ]; then $doit $chowncmd $dsttmp; else true;fi &&
-	if [ x"$chgrpcmd" != x ]; then $doit $chgrpcmd $dsttmp; else true;fi &&
-	if [ x"$stripcmd" != x ]; then $doit $stripcmd $dsttmp; else true;fi &&
-	if [ x"$chmodcmd" != x ]; then $doit $chmodcmd $dsttmp; else true;fi &&
+	if [ x"$chowncmd" != x ]; then $doit $chowncmd $dsttmp; else :;fi &&
+	if [ x"$chgrpcmd" != x ]; then $doit $chgrpcmd $dsttmp; else :;fi &&
+	if [ x"$stripcmd" != x ]; then $doit $stripcmd $dsttmp; else :;fi &&
+	if [ x"$chmodcmd" != x ]; then $doit $chmodcmd $dsttmp; else :;fi &&
 
 # Now rename the file to the real destination.
 
