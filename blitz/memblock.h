@@ -49,13 +49,13 @@ enum preexistingMemoryPolicy {
 };
 
 // Forward declaration of MemoryBlockReference
-template<class T_type> class MemoryBlockReference;
+template<typename T_type> class MemoryBlockReference;
 
 // Class MemoryBlock provides a reference-counted block of memory.  This block
 // may be referred to by multiple vector, matrix and array objects.  The memory
 // is automatically deallocated when the last referring object is destructed.
 // MemoryBlock may be subclassed to provide special allocators.
-template<class P_type>
+template<typename P_type>
 class MemoryBlock {
 
     friend class MemoryBlockReference<P_type>;
@@ -74,7 +74,7 @@ protected:
         BZ_MUTEX_INIT(mutex)
     }
 
-    _bz_explicit MemoryBlock(size_t items)
+    explicit MemoryBlock(size_t items)
     {
         length_ = items;
         allocate(length_);
@@ -91,7 +91,7 @@ protected:
         BZ_MUTEX_INIT(mutex)
     }
 
-    MemoryBlock(size_t length, T_type* _bz_restrict data)
+    MemoryBlock(size_t length, T_type* restrict data)
     {
         length_ = length;
         data_ = data;
@@ -130,12 +130,12 @@ protected:
 
     }
 
-    T_type* _bz_restrict      data() 
+    T_type* restrict      data() 
     { 
         return data_; 
     }
 
-    const T_type* _bz_restrict data()      const
+    const T_type* restrict data()      const
     { 
         return data_; 
     }
@@ -181,7 +181,7 @@ private:   // Disabled member functions
     { }
 
 private:   // Data members
-    T_type * _bz_restrict data_;
+    T_type * restrict data_;
     T_type *              dataBlockAddress_;
 
 #ifdef BZ_DEBUG_REFERENCE_ROLLOVER
@@ -194,10 +194,10 @@ private:   // Data members
     size_t  length_;
 };
 
-template<class P_type>
+template<typename P_type>
 class UnownedMemoryBlock : public MemoryBlock<P_type> {
 public:
-    UnownedMemoryBlock(size_t length, P_type* _bz_restrict data)
+    UnownedMemoryBlock(size_t length, P_type* restrict data)
         : MemoryBlock<P_type>(length,data)
     {
     }
@@ -207,7 +207,7 @@ public:
     }
 };
 
-template<class P_type>
+template<typename P_type>
 class NullMemoryBlock : public MemoryBlock<P_type> {
 public:
     NullMemoryBlock()
@@ -221,14 +221,14 @@ public:
     { }
 };
 
-template<class P_type>
+template<typename P_type>
 class MemoryBlockReference {
 
 public:
     typedef P_type T_type;
 
 protected:
-    T_type * _bz_restrict data_;
+    T_type * restrict data_;
 
 private:
     MemoryBlock<T_type>* block_;
@@ -282,7 +282,7 @@ public:
         data_ = data;
     }
 
-    _bz_explicit MemoryBlockReference(size_t items)
+    explicit MemoryBlockReference(size_t items)
     {
         block_ = new MemoryBlock<T_type>(items);
         block_->addReference();

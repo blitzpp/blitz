@@ -19,10 +19,10 @@
 BZ_NAMESPACE(blitz)
 
 // Null memory block for each (template) instantiation of MemoryBlockReference
-template<class P_type> 
+template<typename P_type> 
 NullMemoryBlock<P_type> MemoryBlockReference<P_type>::nullBlock_;
 
-template<class P_type>
+template<typename P_type>
 void MemoryBlock<P_type>::deallocate()
 {
 #ifndef BZ_ALIGN_BLOCKS_ON_CACHELINE_BOUNDARY
@@ -39,7 +39,7 @@ void MemoryBlock<P_type>::deallocate()
 #endif
 }
 
-template<class P_type>
+template<typename P_type>
 inline void MemoryBlock<P_type>::allocate(int length)
 {
     TAU_TYPE_STRING(p1, "MemoryBlock<T>::allocate() [T="
