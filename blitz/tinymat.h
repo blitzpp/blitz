@@ -23,6 +23,11 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.4  2002/06/26 23:52:04  jcumming
+ * Explicitly specify second template argument for ListInitializationSwitch,
+ * rather than relying on the default value.  This eliminates a compilation
+ * problem using the xlC compiler.
+ *
  * Revision 1.3  2002/05/22 22:39:41  jcumming
  * Added #include of <blitz/tinymatio.cc>.
  *
@@ -123,10 +128,10 @@ public:
     { return T_reference((T_numtype*)data_); }
 
     // Scalar operand
-    ListInitializationSwitch<T_matrix>
+    ListInitializationSwitch<T_matrix,T_numtype*>
     operator=(T_numtype x)
     {
-        return ListInitializationSwitch<T_matrix>(*this, x);
+        return ListInitializationSwitch<T_matrix,T_numtype*>(*this, x);
     }
 
     template<class T_expr>

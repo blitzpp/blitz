@@ -23,6 +23,11 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2002/06/26 23:51:13  jcumming
+ * Explicitly specify second template argument for ListInitializationSwitch,
+ * rather than relying on the default value.  This eliminates a compilation
+ * problem using the xlC compiler.
+ *
  * Revision 1.2  2001/01/24 20:22:50  tveldhui
  * Updated copyright date in headers.
  *
@@ -324,9 +329,9 @@ public:
     //////////////////////////////////////////////
 
     // Scalar operand
-    ListInitializationSwitch<T_vector> operator=(T_numtype x)
+    ListInitializationSwitch<T_vector,T_numtype*> operator=(T_numtype x)
     {
-        return ListInitializationSwitch<T_vector>(*this, x);
+        return ListInitializationSwitch<T_vector,T_numtype*>(*this, x);
     }
 
     T_vector& initialize(T_numtype);
