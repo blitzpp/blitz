@@ -6,8 +6,13 @@
  * conditions of use.
  *
  * $Log$
- * Revision 1.1  2000/06/19 12:26:09  tveldhui
- * Initial revision
+ * Revision 1.2  2002/03/06 16:27:40  patricg
+ *
+ * data_ replaced by this->data_ everywhere
+ * numReferences() by this->numReferences()
+ *
+ * Revision 1.1.1.1  2000/06/19 12:26:09  tveldhui
+ * Imported sources
  *
  * Revision 1.6  1998/03/14 00:04:47  tveldhui
  * 0.2-alpha-05
@@ -58,7 +63,7 @@ Vector<P_numtype> Vector<P_numtype>::copy() const
 template<class P_numtype>
 void Vector<P_numtype>::makeUnique()
 {
-    if ((stride_ != 1) || (numReferences() > 1))
+    if ((stride_ != 1) || (this->numReferences() > 1))
     {
         Vector<P_numtype> tmp = copy();
         reference(tmp);
@@ -114,14 +119,14 @@ void Vector<P_numtype>::_bz_assign(P_expr expr, P_updater)
     {
 #ifndef BZ_PARTIAL_LOOP_UNROLL
         for (int i=0; i < length_; ++i)
-            P_updater::update(data_[i], expr._bz_fastAccess(i));
+            P_updater::update(this->data_[i], expr._bz_fastAccess(i));
 #else
         // Unwind the inner loop, four elements at a time.
         int leftover = length_ & 0x03;
 
         int i=0;
         for (; i < leftover; ++i)
-            P_updater::update(data_[i], expr._bz_fastAccess(i));
+            P_updater::update(this->data_[i], expr._bz_fastAccess(i));
 
         for (; i < length_; i += 4)
         {
@@ -141,10 +146,10 @@ void Vector<P_numtype>::_bz_assign(P_expr expr, P_updater)
             tmp3 = expr._bz_fastAccess(BZ_NO_PROPAGATE(t2));
             tmp4 = expr._bz_fastAccess(BZ_NO_PROPAGATE(t3));
 
-            P_updater::update(data_[i], BZ_NO_PROPAGATE(tmp1));
-            P_updater::update(data_[t1], tmp2);
-            P_updater::update(data_[t2], tmp3);
-            P_updater::update(data_[t3], tmp4);
+            P_updater::update(this->data_[i], BZ_NO_PROPAGATE(tmp1));
+            P_updater::update(this->data_[t1], tmp2);
+            P_updater::update(this->data_[t2], tmp3);
+            P_updater::update(this->data_[t3], tmp4);
         }
 #endif
     }
@@ -168,14 +173,14 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator=(_bz_VecExpr<P_expr> expr)
     {
 #ifndef BZ_PARTIAL_LOOP_UNROLL
         for (int i=0; i < length_; ++i)
-            data_[i] = (P_numtype)expr._bz_fastAccess(i);
+            this->data_[i] = (P_numtype)expr._bz_fastAccess(i);
 #else
         // Unwind the inner loop, four elements at a time.
         int leftover = length_ & 3;
 
         int i=0;
         for (; i < leftover; ++i)
-            data_[i] = (P_numtype)expr._bz_fastAccess(i);
+            this->data_[i] = (P_numtype)expr._bz_fastAccess(i);
 
         for (; i < length_; i += 4)
         {
@@ -195,10 +200,10 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator=(_bz_VecExpr<P_expr> expr)
             tmp3 = expr._bz_fastAccess(BZ_NO_PROPAGATE(t2));
             tmp4 = expr._bz_fastAccess(BZ_NO_PROPAGATE(t3));
 
-            data_[i] = (P_numtype)BZ_NO_PROPAGATE(tmp1);
-            data_[t1] = (P_numtype)tmp2;
-            data_[t2] = (P_numtype)tmp3;
-            data_[t3] = (P_numtype)tmp4;
+            this->data_[i] = (P_numtype)BZ_NO_PROPAGATE(tmp1);
+            this->data_[t1] = (P_numtype)tmp2;
+            this->data_[t2] = (P_numtype)tmp3;
+            this->data_[t3] = (P_numtype)tmp4;
         }
 #endif
     }
@@ -225,7 +230,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::                           \
                                                                         \
         int i=0;                                                        \
         for (; i < leftover; ++i)                                       \
-            data_[i] op expr._bz_fastAccess(i);                         \
+            this->data_[i] op expr._bz_fastAccess(i);                   \
                                                                         \
         for (; i < length_; i += 4)                                     \
         {                                                               \
@@ -240,14 +245,14 @@ inline Vector<P_numtype>& Vector<P_numtype>::                           \
             tmp3 = expr._bz_fastAccess(t2);                             \
             tmp4 = expr._bz_fastAccess(t3);                             \
                                                                         \
-            data_[i] op tmp1;                                           \
-            data_[t1] op tmp2;                                          \
-            data_[t2] op tmp3;                                          \
-            data_[t3] op tmp4;                                          \
+            this->data_[i] op tmp1;                                     \
+            this->data_[t1] op tmp2;                                    \
+            this->data_[t2] op tmp3;                                    \
+            this->data_[t3] op tmp4;                                    \
         }                                                               \
     }                                                                   \
     else {                                                              \
-        for (int i=0; i < length_; ++i)                               \
+        for (int i=0; i < length_; ++i)                                 \
             (*this)[i] op expr[i];                                      \
     }                                                                   \
     return *this;                                                       \
@@ -273,14 +278,14 @@ inline Vector<P_numtype>& Vector<P_numtype>::                           \
     if ((stride_ == 1) && (expr._bz_hasFastAccess()))                   \
     {                                                                   \
         if (traversalOrder & 0x01)                                      \
-            for (int i=length_-1; i >= 0; --i)                        \
-                data_[i] op expr._bz_fastAccess(i);                     \
+            for (int i=length_-1; i >= 0; --i)                          \
+                this->data_[i] op expr._bz_fastAccess(i);               \
         else                                                            \
-            for (int i=0; i < length_; ++i)                           \
-                data_[i] op expr._bz_fastAccess(i);                     \
+            for (int i=0; i < length_; ++i)                             \
+                this->data_[i] op expr._bz_fastAccess(i);               \
     }                                                                   \
     else {                                                              \
-        for (int i=0; i < length_; ++i)                               \
+        for (int i=0; i < length_; ++i)                                 \
             (*this)[i] op expr[i];                                      \
     }                                                                   \
     traversalOrder ^= 0x01;                                             \
@@ -297,11 +302,11 @@ inline Vector<P_numtype>& Vector<P_numtype>::                           \
     BZPRECONDITION(expr.length(length_) == length_);                    \
     if ((stride_ == 1) && (expr._bz_hasFastAccess()))                   \
     {                                                                   \
-        for (int i=0; i < length_; ++i)                               \
-            data_[i] op expr._bz_fastAccess(i);                         \
+        for (int i=0; i < length_; ++i)                                 \
+            this->data_[i] op expr._bz_fastAccess(i);                   \
     }                                                                   \
     else {                                                              \
-        for (int i=0; i < length_; ++i)                               \
+        for (int i=0; i < length_; ++i)                                 \
             (*this)[i] op expr[i];                                      \
     }                                                                   \
     return *this;                                                       \
