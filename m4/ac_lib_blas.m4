@@ -27,7 +27,7 @@ AC_CHECK_LIB(blas, daxpy_,
        BLASLIB="-lblas"
      else
        BLASLIB="$BLASPATH -lblas"
-     fi],[],[$FORTLIBS])
+     fi],[],[$FLIBS])
 
 AC_CHECK_LIB(blas, daxpy,
    [ CXX_OPTIMIZE_FLAGS="$CXX_OPTIMIZE_FLAGS -DUSE_LIBBLAS"
@@ -36,7 +36,7 @@ AC_CHECK_LIB(blas, daxpy,
        BLASLIB="-lblas"
      else
        BLASLIB="$BLASPATH -lblas"
-     fi],[],[$FORTLIBS])
+     fi],[],[$FLIBS])
 
 AC_CHECK_LIB(blas, DAXPY,
    [ CXX_OPTIMIZE_FLAGS="$CXX_OPTIMIZE_FLAGS -DUSE_LIBBLAS"
@@ -45,7 +45,7 @@ AC_CHECK_LIB(blas, DAXPY,
        BLASLIB="-lblas"
      else
        BLASLIB="$BLASPATH -lblas"
-     fi],[],[$FORTLIBS])
+     fi],[],[$FLIBS])
 
 AC_CHECK_LIB(blas, daxpy__,
    [ CXX_OPTIMIZE_FLAGS="$CXX_OPTIMIZE_FLAGS -DUSE_LIBBLAS"
@@ -54,7 +54,7 @@ AC_CHECK_LIB(blas, daxpy__,
        BLASLIB="-lblas"
      else
        BLASLIB="$BLASPATH -lblas"
-     fi],[],[$FORTLIBS])
+     fi],[],[$FLIBS])
 
 LDFLAGS=$LDFLAGSsave
 
