@@ -23,6 +23,10 @@
  *
  *************************************************************************
  * $Log$
+ * Revision 1.3  2002/03/06 16:06:19  patricg
+ *
+ * os replaced by str in the BitwiseNot template
+ *
  * Revision 1.2  2001/01/24 20:22:50  tveldhui
  * Updated copyright date in headers.
  *
@@ -188,11 +192,11 @@ struct BitwiseNot {
     { return ~a; }
 
     template<class T1>
-    static void prettyPrint(string& os, prettyPrintFormat& format,
+    static void prettyPrint(string& str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "~";
-        a.prettyPrint(os,format);
+        a.prettyPrint(str,format);
     }
 };
 
