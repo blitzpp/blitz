@@ -78,7 +78,7 @@ ctime:
 	@echo Flags: $(CXXFLAGS)
 	@for benchmark in $(COMPILE_TIME_BENCHMARKS) ; do \
 	  echo Compile time for $$benchmark.cpp: ; \
-	  time $(CXX) $(AM_CXXFLAGS) $(CXXFLAGS) -c $(srcdir)/$$benchmark.cpp; \
+	  time $(CXX) $(AM_CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c $(srcdir)/$$benchmark.cpp; \
 	done
 
 check-benchmarks: run run-loops ctime
