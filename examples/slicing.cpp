@@ -4,9 +4,7 @@
 
 #include <blitz/array.h>
 
-#ifdef BZ_NAMESPACES
-using namespace blitz;
-#endif
+BZ_USING_NAMESPACE(blitz)
 
 int main()
 {
@@ -23,7 +21,7 @@ int main()
 
     // Set the fourth row to 1
 
-#ifdef BZ_PARTIAL_ORDERING
+#ifdef BZ_HAVE_PARTIAL_ORDERING
     A(3, Range::all()) = 1;
 #else
     cout << "Warning: your compiler does not support partial ordering of"
