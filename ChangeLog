@@ -1,4 +1,121 @@
+2004-10-06  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* random/mt.h: Changed BZ_NAMESPACES to BZ_HAVE_NAMESPACES.
+	* examples/cfd.cpp: Changed BZ_NAMESPACES to BZ_HAVE_NAMESPACES.
+	* examples/simple.cpp: Use blitz macro for using directive.
+	* examples/slicing.cpp: Use blitz macro for using directive.
+	Changed BZ_PARTIAL_ORDERING to BZ_HAVE_PARTIAL_ORDERING.
+	* examples/tiny.cpp: Use blitz macro for using directive.
+	* examples/transform.cpp: Use blitz macro for using directive.
+	* examples/where.cpp: Use blitz macro for using directive.
+	* testsuite/complex-test.cpp: Changed BZ_HAVE_COMPLEX_MATH to
+	BZ_HAVE_COMPLEX_FCNS.
+
+	* testsuite/promote.cpp: Changed to new form of preprocessor
+	symbols.
+
+	* blitz/generate/genvecuops.cpp: Changed to new form of
+	preprocessor symbol for complex<T> methods.
+
+	* blitz/generate/genmathfunc.cpp: Changed one more instance of
+	BZ_HAVE_COMPLEX_MATH to BZ_HAVE_COMPLEX.
+
+	* blitz/array/newet-macros.h: Changed preprocessor symbols to new
+	form.
+
+	* blitz/array/multi.h: Changed BZ_HAVE_COMPLEX_MATH to
+	BZ_HAVE_COMPLEX.
+
+	* blitz/array/funcs.h: Changed BZ_HAVE_COMPLEX_MATH to
+	BZ_HAVE_COMPLEX_FCNS.
+
+	* blitz/array/asexpr.h: Changed preprocessor symbols to new form.
+	* blitz/promote.h: Changed BZ_ preprocessor symbols to new form.
+	* blitz/numtrait.h: Changed BZ_BOOL to BZ_HAVE_BOOL.
+	* blitz/generate/genmathfunc.cpp: Fixed up usage of various
+	preprocessor symbols related to complex type and math functions.
+	* blitz/funcs.h: Fixed up usage of various preprocessor symbols
+	related to complex type and math functions.
+	* blitz/array-impl.h: Changed BZ_PARTIAL_ORDERING to
+	BZ_HAVE_PARTIAL_ORDERING.
+
+	* blitz/bzdebug.h: Changed BZ_RTTI to BZ_HAVE_RTTI and added use
+	of BZ_HAVE_STDLIB_H.
+
+	* blitz/Makefile.am: Replaced config.h with bzconfig.h in
+	blitz_HEADERS list.
+
+	* blitz/compiler.h: Use new master file <blitz/bzconfig.h> to
+	include a compiler-specific config file.  Use new version of
+	preprocessor symbols defined by autoconf macros.
+	* m4/ac_check_cxx_features.m4: Removed superfluous include guard
+	insertion into config.h file.  Autoconf already adds such an
+	include guard.
+
+	* m4/ac_cxx_general.m4: Changed AC_CXX_NAMESPACE to standard
+	AC_CXX_NAMESPACES.
+
+	* m4/ac_cxx_standard_library.m4: Replacing autoconf macro
+	AC_CXX_HAVE_COMPLEX_MATH with AC_CXX_HAVE_COMPLEX_FCNS and two
+	macros from the GNU autoconf macro archive,
+	AC_CXX_HAVE_COMPLEX_MATH1 and AC_CXX_HAVE_COMPLEX_MATH2.  The
+	AC_CXX_HAVE_COMPLEX_FCNS macro tests only for the standard methods
+	of the complex<T> class such as real() and conj().  The math
+	function tests are now handled by the standard macros from the GNU
+	autoconf macro archive.
+	* m4/ac_cxx_type_promotion.m4: Added a real program to properly
+	test for the vector type promotion mechanism.  Modified to follow
+	format of m4 macros in GNU autoconf macro archive.  Defines
+	HAVE_TYPE_PROMOTION instead of BZ_HAVE_TYPE_PROMOTION.  The BZ_
+	prefix will be added using the AX_PREFIX_CONFIG_H autoconf macro.
+
+	* m4/ac_cxx_nceg_restrict_egcs.m4: Modified to follow format of m4
+	macros in GNU autoconf macro archive.  The BZ_ prefix will be
+	added to the defined preprocessor symbol using the
+	AX_PREFIX_CONFIG_H autoconf macro.
+
+	* m4/ac_cxx_math_fn_in_namespace_std.m4: Modified to follow format
+	of m4 macros in GNU autoconf macro archive.  The BZ_ prefix will
+	be added to the defined preprocessor symbol using the
+	AX_PREFIX_CONFIG_H autoconf macro.
+
+	* m4/ac_cxx_have_rusage.m4: Modified to follow format of m4 macros
+	in GNU autoconf macro archive.  Defines HAVE_RUSAGE instead of
+	BZ_HAVE_RUSAGE.  The BZ_ prefix will be added using the
+	AX_PREFIX_CONFIG_H autoconf macro.
+
+	* m4/ac_cxx_have_climits.m4: Modified to follow format of m4
+	macros in GNU autoconf macro archive.  Defines HAVE_CLIMITS
+	instead of BZ_HAVE_CLIMITS.  The BZ_ prefix will be added using
+	the AX_PREFIX_CONFIG_H autoconf macro.
+
+	* m4/ac_cxx_flags_preset.m4: Added default flag settings for xlc++
+	compiler, which is a version of the IBM C++ compiler made for
+	Darwin systems.  Added -D flags for the IBM and Fujitsu compilers
+	so we can detect use of these compilers at compile time.  Most
+	other C++ compilers already define a distinctive preprocessor
+	symbol.
+
+2004-10-05  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* compiler/promote.cpp: This file contained an empty program, so I
+	wrote an actual test for the vector type promotion mechanism using
+	traits, as described in "Using C++ Traits Classes for Scientific
+	Computing" by Todd Veldhuizen (1996).
+2004-10-01  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/array/indirect.h: Changes corresponding to those recently
+	made in cartesian.h and eval.cc.  Extended indexSet() method to
+	accept up to 11 parameters.  Replaced data[i] with *data++ in
+	expression evaluation loops using unit stride.
+
 2004-09-17  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* manual/Makefile.am: Corrected name of arrays-types.yo file.
+	Added README file to EXTRA_DIST.  Moved all of the .yo files and
+	the helper files used to create the old blitz manual from doc_DATA
+	to EXTRA_DIST.  We install only the old blitz manual itself from
+	this directory.  It is no longer maintained.
 
 	* blitz/array/eval.cc: Replaced data[i] with *data++ in unit
 	stride loops over data inside various Array expression evaluation
