@@ -23,6 +23,13 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2002/05/10 14:32:08  patricg
+ *
+ * private constructor for template class ArrayIndexMapping did not had an
+ * explicit initialiser for the private member random_, added it.
+ * Compaq C++ V6.5-014 for Compaq Tru64 UNIX V5.1A (Rev. 1885) complained about
+ * this.
+ *
  * Revision 1.2  2001/01/24 20:22:51  tveldhui
  * Updated copyright date in headers.
  *
@@ -481,7 +488,7 @@ public:
     }
 
 private:
-    ArrayIndexMapping() { }
+    ArrayIndexMapping() : array_( Array<T_numtype, N_rank>() ) { }
 
     const Array<T_numtype, N_rank>& array_;
 };
