@@ -7,7 +7,7 @@ doc_DATA = fixed.cpp outer.log output.log simple.log storage.log
 
 EXTRA_DIST = $(doc_DATA)
 
-AM_CPPFLAGS = -I$(top_srcdir)
+AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir) -I$(top_builddir)
 AM_CXXFLAGS = @CXX_DEBUG_FLAGS@
 LDADD = -L$(top_builddir)/lib -lblitz
 
