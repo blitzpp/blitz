@@ -2,6 +2,9 @@
  * $Id$
  *
  * $Log$
+ * Revision 1.7  2002/12/19 20:38:15  julianc
+ * Several changes to eliminate compiler warnings about unused variables.
+ *
  * Revision 1.6  2002/05/27 19:48:57  jcumming
  * Removed use of this->.  Member data_ of templated base class is now declared
  * in derived class Array.
@@ -444,7 +447,7 @@ Array<T_numtype, N_rank>::evaluateWithStackTraversalN(
      */
 
     const int maxRank = ordering(0);
-    const int secondLastRank = ordering(1);
+    // const int secondLastRank = ordering(1);
 
     // Create an iterator for the array receiving the result
     FastArrayIterator<T_numtype, N_rank> iter(*this);
@@ -567,9 +570,6 @@ Array<T_numtype, N_rank>::evaluateWithStackTraversalN(
 
         if ((useUnitStride) || (useCommonStride))
         {
-            T_numtype * _bz_restrict end = const_cast<T_numtype*>(iter.data()) 
-                + lastLength;
-
 #ifdef BZ_USE_FAST_READ_ARRAY_EXPR
 
             /*
@@ -617,6 +617,9 @@ Array<T_numtype, N_rank>::evaluateWithStackTraversalN(
             // !BZ_USE_FAST_READ_ARRAY_EXPR
             // This bit of code not really needed; should remove at some
             // point, along with the test for BZ_USE_FAST_READ_ARRAY_EXPR 
+
+            T_numtype * _bz_restrict end = const_cast<T_numtype*>(iter.data()) 
+                + lastLength;
 
             while (iter.data() != end) 
             {
@@ -736,13 +739,13 @@ Array<T_numtype, N_rank>::evaluateWithIndexTraversalN(
     // index traversal for the source expression
    
     const int maxRank = ordering(0);
-    const int secondLastRank = ordering(1);
 
 #ifdef BZ_DEBUG_TRAVERSE
-cout << "Index traversal: N_rank = " << N_rank << endl;
-cout << "maxRank = " << maxRank << " secondLastRank = " << secondLastRank
-     << endl;
-cout.flush();
+    const int secondLastRank = ordering(1);
+    cout << "Index traversal: N_rank = " << N_rank << endl;
+    cout << "maxRank = " << maxRank << " secondLastRank = " << secondLastRank
+         << endl;
+    cout.flush();
 #endif
 
     FastArrayIterator<T_numtype, N_rank> iter(*this);
@@ -758,7 +761,7 @@ cout.flush();
     for (int i=0; i < N_rank; ++i)
       last(i) = storage_.base(i) + length_(i);
 
-    int lastLength = length(maxRank);
+    // int lastLength = length(maxRank);
 
     while (true) {
 
@@ -816,11 +819,11 @@ Array<T_numtype, N_rank>::evaluateWithFastTraversal(
     T_update)
 {
     const int maxRank = ordering(0);
-    const int secondLastRank = ordering(1);
 
 #ifdef BZ_DEBUG_TRAVERSE
-cerr << "maxRank = " << maxRank << " secondLastRank = " << secondLastRank
-     << endl;
+    const int secondLastRank = ordering(1);
+    cerr << "maxRank = " << maxRank << " secondLastRank = " << secondLastRank
+         << endl;
 #endif
 
     FastArrayIterator<T_numtype, N_rank> iter(*this);
