@@ -112,4 +112,11 @@ Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	MemoryBlock(size_t length, T_type* _bz_restrict data)
 	dataBlockAddress_ = data replaced by dataBlockAddress_ = 0
 	as it was before. (testsuite/extract does not crash then)
+	* testsuite/matthias-troyer-2.cpp: changed the statement
+	A = exp(c * (sqr(i-midpoint) + sqr(j-midpoint) + sqr(k-midpoint)));
+	by
+	A = zip( exp(c * (sqr(i-midpoint) + sqr(j-midpoint) + sqr(k-midpoint))),
+	0.0, complex<double>());
+	Still a problem with the complex stencil, right now the statement
+	applyStencil(kinEnergy(),A,B); is commented
 	
