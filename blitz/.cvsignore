@@ -7,6 +7,7 @@ Makefile.in
 config.h
 matbops.h
 mathfunc.h
+promote-old.h
 matuops.h
 vecbops.cc
 vecuops.cc
