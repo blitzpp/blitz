@@ -1,6 +1,7 @@
        subroutine stencilf(A, B, N, iters)
        integer N, iters
        double precision A(N,N,N), B(N,N,N)
+       integer i,j,k,z
        double precision c
        c = 1 / 7.
 
