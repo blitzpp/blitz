@@ -23,6 +23,10 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.10  2002/08/30 22:12:49  jcumming
+ * Added declaration of setStorage() method, which lets user set Array storage
+ * format after construction.
+ *
  * Revision 1.9  2002/06/28 01:33:03  jcumming
  * Modified the isInRange() methods to check that each index value is
  * greater than or equal to the base index value, rather than just
@@ -1192,7 +1196,9 @@ public:
 
     int                               rows() const
     { return length_[0]; }
-
+    
+    void                              setStorage(GeneralArrayStorage<N_rank>);
+    
     void                              slice(int rank, Range r);
 
     const TinyVector<int, N_rank>&    shape() const
