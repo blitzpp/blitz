@@ -15,3 +15,26 @@ forward11.yo forward12.yo forward21.yo forward22.yo forward31.yo forward32.yo \
 forward41.yo forward42.yo
 
 EXTRA_DIST = $(doc_DATA)
+
+INCLUDES = -I$(top_srcdir)
+CXXFLAGS = @CXXFLAGS@ @CXX_DEBUG_FLAGS@ -Dstenciltodump=Laplacian2D4
+LDADD = -L$(top_srcdir)/lib -lblitz
+
+SINGLE_TESTS = dump-stencil
+
+MULTIPLE_TESTS = modules
+
+EXTRA_PROGRAMS = $(SINGLE_TESTS)
+
+dump_stencil_SOURCES = dump-stencil.cpp
+
+check-examples: $(TESTS)
+	@echo Running test suite...
+	@for prog in $(EXTRA_PROGRAMS) ; do \
+		echo $$prog && (./$$prog > /dev/null 2>&1) || exit 1; \
+		done
+	@echo All tests passed.
+
+clean-local:
+	-rm -rf cxx_repository $(TESTS)
+
