@@ -18,9 +18,12 @@ all-am: check-compiler
 
 check-compiler: $(BZ_CONFIG_H)
 
-$(BZ_CONFIG_H):	$(srcdir)/bzconfig
+$(BZ_CONFIG_H):	config.h
+	cp -f config.h $(BZ_CONFIG_H)
+
+config.h:	$(srcdir)/bzconfig
 	$(srcdir)/bzconfig --compiler=$(CXX) --flags="$(CXXFLAGS)" --srcdir=$(srcdir)
-	cp config.h $(BZ_CONFIG_H)
 
 clean-local:
-	-rm -rf bzjunk bzjunk.cpp bztemp bztest config.h logfile cxx_repository
+	-rm -rf bzjunk bzjunk.cpp bztemp bztest config.h logfile \
+	cxx_repository ii_files
