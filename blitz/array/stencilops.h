@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/array/stencilops.h  Stencil operators
  *
@@ -818,7 +819,7 @@ template<typename T>
 inline _bz_typename T::T_numtype curl(T& A) {
   const int x = firstDim, y = secondDim, z = thirdDim;
 
-  return T::T_numtype(
+  return _bz_typename T::T_numtype(
     central12(A,z,y)-central12(A,y,z),
     central12(A,x,z)-central12(A,z,x),
     central12(A,y,x)-central12(A,x,y));
@@ -829,7 +830,7 @@ template<typename T>
 inline _bz_typename T::T_numtype curln(T& A) {
   const int x = firstDim, y = secondDim, z = thirdDim;
 
-  return T::T_numtype(
+  return _bz_typename T::T_numtype(
     (central12(A,z,y)-central12(A,y,z)) * recip_2,
     (central12(A,x,z)-central12(A,z,x)) * recip_2,
     (central12(A,y,x)-central12(A,x,y)) * recip_2);
@@ -853,7 +854,7 @@ inline _bz_typename T::T_numtype
 curl4(T& A) {
   const int x = firstDim, y = secondDim, z = thirdDim;
 
-  return T::T_numtype(
+  return _bz_typename T::T_numtype(
     central14(A,z,y)-central14(A,y,z),
     central14(A,x,z)-central14(A,z,x),
     central14(A,y,x)-central14(A,x,y));
@@ -877,7 +878,7 @@ inline _bz_typename T::T_numtype
 curl4n(T& A) {
   const int x = firstDim, y = secondDim, z = thirdDim;
 
-  return T::T_numtype(
+  return _bz_typename T::T_numtype(
     (central14(A,z,y)-central14(A,y,z)) * recip_2,
     (central14(A,x,z)-central14(A,z,x)) * recip_2,
     (central14(A,y,x)-central14(A,x,y)) * recip_2);
