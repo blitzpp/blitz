@@ -85,10 +85,10 @@ template<class T_extent, int N_rank,
     class T_array7, class T_array8, class T_array9, class T_array10,
     class T_array11>
 void calcStencilExtent(T_extent& At, const T_stencil& stencil, 
-    const Array<T_numtype1,N_rank>& A,
-    const T_array2& B, const T_array3& C, const T_array4& D, const T_array5& E, 
-    const T_array6& F, const T_array7& G, const T_array8& H, const T_array9& I, 
-    const T_array10& J, const T_array11& K)
+    const Array<T_numtype1,N_rank>&,
+    const T_array2&, const T_array3&, const T_array4&, const T_array5&, 
+    const T_array6&, const T_array7&, const T_array8&, const T_array9&, 
+    const T_array10&, const T_array11&)
 {
     // Interrogate the stencil to find out its extent
     _bz_typename stencilExtent_traits<T_array2>::T_stencilExtent Bt;
