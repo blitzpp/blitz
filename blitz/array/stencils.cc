@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2001/01/26 19:37:38  tveldhui
+ * Incorporated 1D stencil fix from Derrick Bass.
+ *
  * Revision 1.2  2001/01/25 00:25:55  tveldhui
  * Ensured that source files have cvs logs.
  *
@@ -462,6 +465,19 @@ void applyStencil_imp(const T_stencil& stencil, Array<T_numtype1,1>& A,
     Iiter.loadStride(0);
     Jiter.loadStride(0);
     Kiter.loadStride(0);
+
+    // Patch from Derrick Bass
+    Aiter.moveTo(lbound0);
+    Biter.moveTo(lbound0);
+    Citer.moveTo(lbound0);
+    Diter.moveTo(lbound0);
+    Eiter.moveTo(lbound0);
+    Fiter.moveTo(lbound0);
+    Giter.moveTo(lbound0);
+    Hiter.moveTo(lbound0);
+    Iiter.moveTo(lbound0);
+    Jiter.moveTo(lbound0);
+    Kiter.moveTo(lbound0);
 
     for (int i=lbound0; i <= ubound0; ++i)
     {
