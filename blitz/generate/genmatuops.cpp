@@ -2,24 +2,27 @@
  * $Id$
  *
  * $Log$
+ * Revision 1.2  2003/01/06 14:42:22  papadop
+ * Load of ISO C++ changes (some are necessary for the future g++-3.4).
+ *
  * Revision 1.1  2002/06/28 23:59:49  jcumming
  * Files for generating Matrix operators and math functions.
  *
  *
  */
 
-#include <fstream.h>
-#include <iostream.h>
-#include <iomanip.h>
+#include <fstream>
+#include <iostream>
+#include <iomanip>
 #include "optuple2.h"
 
 const int ieeeflag = 1, bsdflag = 2;
 
-ofstream ofs("matuops.h");
+std::ofstream ofs("matuops.h");
 
 void two(const char* fname, int flag=0, const char* apname = 0)
 {
-    cout << "genmatuops.cpp: two() not implemented" << endl;
+    std::cout << "genmatuops.cpp: two() not implemented" << std::endl;
 }
 
 void one(const char* fname, int flag=0, const char* apname = 0)
@@ -27,61 +30,61 @@ void one(const char* fname, int flag=0, const char* apname = 0)
     if (apname == 0)
         apname = fname;
 
-    ofs << "/****************************************************************************" << endl
-        << " * " << fname << endl
-        << " ****************************************************************************/" << endl << endl;
+    ofs << "/****************************************************************************" << std::endl
+        << " * " << fname << std::endl
+        << " ****************************************************************************/" << std::endl << std::endl;
 
     if (flag == ieeeflag)
-        ofs << "#ifdef BZ_HAVE_IEEE_MATH" << endl;
+        ofs << "#ifdef BZ_HAVE_IEEE_MATH" << std::endl;
     else if (flag == bsdflag)
-        ofs << "#ifdef BZ_HAVE_SYSTEM_V_MATH" << endl;
+        ofs << "#ifdef BZ_HAVE_SYSTEM_V_MATH" << std::endl;
 
     OperandTuple2 operands(1);
 
     do {
         operands.printTemplates(ofs);
-        ofs << endl << "inline" << endl
+        ofs << std::endl << "inline" << std::endl
             << "_bz_MatExpr<_bz_MatExprUnaryOp<";
         operands.printIterators(ofs);
-        ofs << "," << endl << "    _bz_" << apname << "<";
+        ofs << "," << std::endl << "    _bz_" << apname << "<";
         operands[0].printNumtype(ofs);
-        ofs << "> > >" << endl
+        ofs << "> > >" << std::endl
             << fname << "(";
         operands.printArgumentList(ofs);
-        ofs << ")" << endl
-            << "{" << endl
+        ofs << ")" << std::endl
+            << "{" << std::endl
             << "    typedef _bz_MatExprUnaryOp<";
         operands.printIterators(ofs);
-        ofs << "," << endl << "        _bz_" << apname << "<";
+        ofs << "," << std::endl << "        _bz_" << apname << "<";
         operands[0].printNumtype(ofs);
-        ofs << "> > T_expr;" << endl << endl
+        ofs << "> > T_expr;" << std::endl << std::endl
             << "    return _bz_MatExpr<T_expr>(T_expr(";
         operands.printInitializationList(ofs);
-        ofs << "));" << endl
-            << "}" << endl << endl;
+        ofs << "));" << std::endl
+            << "}" << std::endl << std::endl;
 
     } while (++operands);
     
     if (flag != 0)
-        ofs << "#endif" << endl;
+        ofs << "#endif" << std::endl;
 
-    ofs << endl;
+    ofs << std::endl;
 }
 
 int main()
 {
-    cout << "Generating <matuops.h>" << endl;
+    std::cout << "Generating <matuops.h>" << std::endl;
 
-    ofs << "// Generated source file.  Do not edit." << endl;
+    ofs << "// Generated source file.  Do not edit." << std::endl;
     ofs << "// Created by: " << __FILE__ << " " << __DATE__ 
-        << " " << __TIME__ << endl << endl;
+        << " " << __TIME__ << std::endl << std::endl;
 
-    ofs << "#ifndef BZ_MATUOPS_H" << endl
-        << "#define BZ_MATUOPS_H" << endl
-        << endl << "BZ_NAMESPACE(blitz)" << endl << endl
-        << "#ifndef BZ_MATEXPR_H" << endl
+    ofs << "#ifndef BZ_MATUOPS_H" << std::endl
+        << "#define BZ_MATUOPS_H" << std::endl
+        << std::endl << "BZ_NAMESPACE(blitz)" << std::endl << std::endl
+        << "#ifndef BZ_MATEXPR_H" << std::endl
         << " #error <blitz/matuops.h> must be included via <blitz/matexpr.h>" 
-        << endl << "#endif" << endl << endl;
+        << std::endl << "#endif" << std::endl << std::endl;
 
     one("abs");
     one("acos");
@@ -136,8 +139,8 @@ int main()
     one("y0", ieeeflag);
     one("y1", ieeeflag);
 
-    ofs << endl << "BZ_NAMESPACE_END" << endl << endl
-        << "#endif // BZ_MATUOPS_H" << endl;
+    ofs << std::endl << "BZ_NAMESPACE_END" << std::endl << std::endl
+        << "#endif // BZ_MATUOPS_H" << std::endl;
 
     return 0;
 }

@@ -1,4 +1,5 @@
-#include <fstream.h>
+#include <iostream>
+#include <fstream>
 
 struct {
     int priority;
@@ -28,9 +29,9 @@ const char *typeName = "T_promote";
 
 void generate()
 {
-    cout << "Generating <promote.h>" << endl;
+    std::cout << "Generating <promote.h>" << std::endl;
 
-    ofstream ofs("promote.h");
+    std::ofstream ofs("promote.h");
 
     ofs << "/***********************************************************************\n"
 " * promote.h   Arithmetic type promotion trait class\n"
@@ -43,14 +44,14 @@ void generate()
 " * Blitz++ Numerical Library Project, at URL http://monet.uwaterloo.ca/blitz/\n"
 " */\n"
 "\n"
-<< "// Generated: " << __FILE__ << " " << __DATE__ << " " << __TIME__ << endl <<endl <<
+<< "// Generated: " << __FILE__ << " " << __DATE__ << " " << __TIME__ << std::endl <<std::endl <<
 "#ifndef BZ_PROMOTE_H\n"
 "#define BZ_PROMOTE_H\n\n"
 "#include <blitz/blitz.h>\n"
 "#include <complex>\n\n"
 "BZ_NAMESPACE(blitz)\n\n"
 "#ifdef BZ_TEMPLATE_QUALIFIED_RETURN_TYPE\n"
-"    #define BZ_PROMOTE(A,B) _bz_typename promote_trait<A,B>::T_promote\n"
+"    #define BZ_PROMOTE(A,B) typename promote_trait<A,B>::T_promote\n"
 "#else\n"
 "    #define BZ_PROMOTE(A,B) A\n"
 "#endif\n";
@@ -95,23 +96,23 @@ ofs <<
 
 
             if ((i >= 11) || (j >= 11))
-                ofs << "#ifdef BZ_HAVE_COMPLEX" << endl;
+                ofs << "#ifdef BZ_HAVE_COMPLEX" << std::endl;
 
-            ofs << "template<>" << endl
+            ofs << "template<>" << std::endl
                 << "class " << className << "<" << types[i].name << ", "
                 << types[j].name << "> {\npublic:\n"
                 << "\ttypedef " << types[promote].name << " "
                 << typeName << ";\n};\n";
 
             if ((i >= 11) || (j >= 11))
-                ofs << "#endif" << endl;
+                ofs << "#endif" << std::endl;
 
-            ofs << endl;
+            ofs << std::endl;
         }
     }
 
-    ofs << endl << "BZ_NAMESPACE_END" << endl << endl
-        << "#endif // BZ_PROMOTE_H" << endl;
+    ofs << std::endl << "BZ_NAMESPACE_END" << std::endl << std::endl
+        << "#endif // BZ_PROMOTE_H" << std::endl;
 }
 
 int main()

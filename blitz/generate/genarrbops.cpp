@@ -2,6 +2,9 @@
  * $Id$
  *
  * $Log$
+ * Revision 1.2  2003/01/06 14:42:20  papadop
+ * Load of ISO C++ changes (some are necessary for the future g++-3.4).
+ *
  * Revision 1.1  2000/06/19 13:02:48  tveldhui
  * Initial source check-in; added files not usually released in the
  * distribution.
@@ -9,8 +12,8 @@
  *
  */
 
-#include <iostream.h>
-#include <fstream.h>
+#include <iostream>
+#include <fstream>
 #include "bzfstream.h"
 #include "arroptuple.h"
 
@@ -22,16 +25,16 @@
 
 int main()
 {
-    cout << "Generating <arraybops.cc>" << endl;
+    std::cout << "Generating <arraybops.cc>" << std::endl;
 
     OperandTuple operands(2);
 
     bzofstream ofs("arraybops.cc", "Array expression templates (2 operands)",
         __FILE__, "BZ_ARRAYBOPS_CC");
 
-    ofs << "#ifndef BZ_ARRAYEXPR_H" << endl
+    ofs << "#ifndef BZ_ARRAYEXPR_H" << std::endl
         << " #error <blitz/arraybops.cc> must be included after <blitz/arrayexpr.h>" 
-        << endl << "#endif" << endl << endl;
+        << std::endl << "#endif" << std::endl << std::endl;
 
     ofs.beginNamespace();
 
@@ -68,9 +71,9 @@ int main()
 
     for (int i=0; i < numOperators; ++i)
     {
-    ofs << "/****************************************************************************" << endl
-        << " * " << ops[i].comment << endl
-        << " ****************************************************************************/" << endl;
+    ofs << "/****************************************************************************" << std::endl
+        << " * " << ops[i].comment << std::endl
+        << " ****************************************************************************/" << std::endl;
 
     operands.reset();
 
@@ -93,51 +96,51 @@ int main()
                 continue;
         }
 
-        ofs << endl;
+        ofs << std::endl;
 
         if (operands.anyComplex())
-            ofs << "#ifdef BZ_HAVE_COMPLEX" << endl;
+            ofs << "#ifdef BZ_HAVE_COMPLEX" << std::endl;
 
         ofs << "// ";
         operands[0].printName(ofs);
         ofs << " " << ops[i].opSymbol << " ";
         operands[1].printName(ofs);
-        ofs << endl;
+        ofs << std::endl;
 
         operands.printTemplates(ofs);
-        ofs << endl << "inline" << endl;
+        ofs << std::endl << "inline" << std::endl;
 
         ofs << "_bz_ArrayExpr<_bz_ArrayExprOp<";
         operands.printIterators(ofs, 1);
-        ofs << "," << endl << "      " << ops[i].opApplicName << "<";
+        ofs << "," << std::endl << "      " << ops[i].opApplicName << "<";
         operands[0].printNumtype(ofs);
         ofs << ", ";    
         operands[1].printNumtype(ofs);
-        ofs << " > > >" << endl;
+        ofs << " > > >" << std::endl;
      
         // operator+(const Vector<T_numtype1>& d1, _bz_VecExpr<T_expr2> d2)
         ofs << "operator" << ops[i].opSymbol << "(";
         operands.printArgumentList(ofs, 1);
-        ofs << ")" << endl << "{" << endl;
+        ofs << ")" << std::endl << "{" << std::endl;
 
         ofs << "    return _bz_ArrayExprOp<";
         operands.printIterators(ofs, 1);
-        ofs << ", " << endl << "      " << ops[i].opApplicName << "<";
+        ofs << ", " << std::endl << "      " << ops[i].opApplicName << "<";
         operands[0].printNumtype(ofs);
         ofs << ", ";
         operands[1].printNumtype(ofs);
-        ofs << "> >" << endl;
+        ofs << "> >" << std::endl;
         ofs << "      (";
         operands.printInitializationList(ofs,1);
-        ofs << ");" << endl << "}" << endl;
+        ofs << ");" << std::endl << "}" << std::endl;
 
         if (operands.anyComplex())
-            ofs << "#endif // BZ_HAVE_COMPLEX" << endl;
+            ofs << "#endif // BZ_HAVE_COMPLEX" << std::endl;
 
     } while (++operands);
 
    }
 
-   cout << operands.numSpecializations() << " operators written." << endl;
+   std::cout << operands.numSpecializations() << " operators written." << std::endl;
 }
 

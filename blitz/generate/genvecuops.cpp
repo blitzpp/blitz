@@ -1,6 +1,6 @@
-#include <fstream.h>
-#include <iostream.h>
-#include <iomanip.h>
+#include <fstream>
+#include <iostream>
+#include <iomanip>
 #include "bzfstream.h"
 #include "optuple.h"
 
@@ -13,7 +13,7 @@ bzofstream ofs("vecuops.cc",
 
 void two(const char* fname, int flag=0, const char* apname = 0)
 {
-    cout << "genvecuops.cpp: two() not implemented" << endl;
+    std::cout << "genvecuops.cpp: two() not implemented" << std::endl;
 }
 
 void one(const char* fname, int flag=0, const char* apname = 0)
@@ -21,50 +21,50 @@ void one(const char* fname, int flag=0, const char* apname = 0)
     if (apname == 0)
         apname = fname;
 
-    ofs << "/****************************************************************************" << endl
-        << " * " << fname << endl
-        << " ****************************************************************************/" << endl << endl;
+    ofs << "/****************************************************************************" << std::endl
+        << " * " << fname << std::endl
+        << " ****************************************************************************/" << std::endl << std::endl;
 
     if (flag == ieeeflag)
-        ofs << "#ifdef BZ_HAVE_IEEE_MATH" << endl;
+        ofs << "#ifdef BZ_HAVE_IEEE_MATH" << std::endl;
     else if (flag == bsdflag)
-        ofs << "#ifdef BZ_HAVE_SYSTEM_V_MATH" << endl;
+        ofs << "#ifdef BZ_HAVE_SYSTEM_V_MATH" << std::endl;
 
     OperandTuple operands(1);
 
     do {
         operands.printTemplates(ofs);
-        ofs << endl << "inline" << endl
+        ofs << std::endl << "inline" << std::endl
             << "_bz_VecExpr<_bz_VecExprUnaryOp<";
         operands.printIterators(ofs);
-        ofs << "," << endl << "    _bz_" << apname << "<";
+        ofs << "," << std::endl << "    _bz_" << apname << "<";
         operands[0].printNumtype(ofs);
-        ofs << "> > >" << endl
+        ofs << "> > >" << std::endl
             << fname << "(";
         operands.printArgumentList(ofs);
-        ofs << ")" << endl
-            << "{" << endl
+        ofs << ")" << std::endl
+            << "{" << std::endl
             << "    typedef _bz_VecExprUnaryOp<";
         operands.printIterators(ofs);
-        ofs << "," << endl << "        _bz_" << apname << "<";
+        ofs << "," << std::endl << "        _bz_" << apname << "<";
         operands[0].printNumtype(ofs);
-        ofs << "> > T_expr;" << endl << endl
+        ofs << "> > T_expr;" << std::endl << std::endl
             << "    return _bz_VecExpr<T_expr>(T_expr(";
         operands.printInitializationList(ofs);
-        ofs << "));" << endl
-            << "}" << endl << endl;
+        ofs << "));" << std::endl
+            << "}" << std::endl << std::endl;
 
     } while (++operands);
     
     if (flag != 0)
-        ofs << "#endif" << endl;
+        ofs << "#endif" << std::endl;
 
-    ofs << endl;
+    ofs << std::endl;
 }
 
 int main()
 {
-    cout << "Generating <vecuops.cc>" << endl;
+    std::cout << "Generating <vecuops.cc>" << std::endl;
 
 ofs << 
 "#ifndef BZ_VECEXPR_H\n"

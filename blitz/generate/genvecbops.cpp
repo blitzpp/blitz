@@ -2,6 +2,9 @@
  * $Id$
  *
  * $Log$
+ * Revision 1.2  2003/01/06 14:42:23  papadop
+ * Load of ISO C++ changes (some are necessary for the future g++-3.4).
+ *
  * Revision 1.1  2000/06/19 13:02:49  tveldhui
  * Initial source check-in; added files not usually released in the
  * distribution.
@@ -9,8 +12,8 @@
  *
  */
 
-#include <iostream.h>
-#include <fstream.h>
+#include <iostream>
+#include <fstream>
 #include "bzfstream.h"
 #include "optuple.h"
 
@@ -22,16 +25,16 @@
 
 int main()
 {
-    cout << "Generating <vecbops.cc>" << endl;
+    std::cout << "Generating <vecbops.cc>" << std::endl;
 
     OperandTuple operands(2);
 
     bzofstream ofs("vecbops.cc", "Vector expression templates (2 operands)",
         __FILE__, "BZ_VECBOPS_CC");
 
-    ofs << "#ifndef BZ_VECEXPR_H" << endl
+    ofs << "#ifndef BZ_VECEXPR_H" << std::endl
         << " #error <blitz/vecbops.cc> must be included via <blitz/vecexpr.h>" 
-        << endl << "#endif" << endl << endl;
+        << std::endl << "#endif" << std::endl << std::endl;
 
     ofs.beginNamespace();
 
@@ -64,9 +67,9 @@ int main()
 
     for (int i=0; i < 18; ++i)
     {
-    ofs << "/****************************************************************************" << endl
-        << " * " << ops[i].comment << endl
-        << " ****************************************************************************/" << endl;
+    ofs << "/****************************************************************************" << std::endl
+        << " * " << ops[i].comment << std::endl
+        << " ****************************************************************************/" << std::endl;
 
     operands.reset();
 
@@ -92,54 +95,54 @@ int main()
         // Vector<P_numtype1> + _bz_VecExpr<P_expr2>
 
         if (operands.anyComplex())
-            ofs << "#ifdef BZ_HAVE_COMPLEX" << endl;
+            ofs << "#ifdef BZ_HAVE_COMPLEX" << std::endl;
 
-        ofs << endl << "// ";
+        ofs << std::endl << "// ";
         operands[0].printName(ofs);
         ofs << " " << ops[i].opSymbol << " ";
         operands[1].printName(ofs);
-        ofs << endl;
+        ofs << std::endl;
 
         operands.printTemplates(ofs);
-        ofs << endl << "inline" << endl;
+        ofs << std::endl << "inline" << std::endl;
 
         // _bz_VecExpr<_bz_VecExprOp<VectorIterConst<T_numtype1>,
-        //     _bz_VecExpr<T_expr2>, _bz_Add<T_numtype1, _bz_typename T_expr2::T_numtype> > >
+        //     _bz_VecExpr<T_expr2>, _bz_Add<T_numtype1,typename T_expr2::T_numtype> > >
         ofs << "_bz_VecExpr<_bz_VecExprOp<";
         operands.printIterators(ofs, 1);
-        ofs << "," << endl << "      " << ops[i].opApplicName << "<";
+        ofs << "," << std::endl << "      " << ops[i].opApplicName << "<";
         operands[0].printNumtype(ofs);
         ofs << ", ";    
         operands[1].printNumtype(ofs);
-        ofs << " > > >" << endl;
+        ofs << " > > >" << std::endl;
      
         // operator+(const Vector<T_numtype1>& d1, _bz_VecExpr<T_expr2> d2)
         ofs << "operator" << ops[i].opSymbol << "(";
         operands.printArgumentList(ofs, 1);
-        ofs << ")" << endl << "{" << endl;
+        ofs << ")" << std::endl << "{" << std::endl;
 
         // typedef _bz_VecExprOp<VectorIterConst<T_numtype1>,
-        // _bz_VecExpr<T_expr2>, _bz_Add<T_numtype1, _bz_typename T_expr2::T_numtype> > T_expr;
+        // _bz_VecExpr<T_expr2>, _bz_Add<T_numtype1,typename T_expr2::T_numtype> > T_expr;
         ofs << "    typedef _bz_VecExprOp<";
         operands.printIterators(ofs, 1);
-        ofs << ", " << endl << "      " << ops[i].opApplicName << "<";
+        ofs << ", " << std::endl << "      " << ops[i].opApplicName << "<";
         operands[0].printNumtype(ofs);
         ofs << ", ";
         operands[1].printNumtype(ofs);
-        ofs << "> > T_expr;" << endl << endl;
+        ofs << "> > T_expr;" << std::endl << std::endl;
 
         // return _bz_VecExpr<T_expr>(T_expr(a.begin(), b));
         ofs << "    return _bz_VecExpr<T_expr>(T_expr(";
         operands.printInitializationList(ofs,1);
-        ofs << "));" << endl << "}" << endl;
+        ofs << "));" << std::endl << "}" << std::endl;
 
         if (operands.anyComplex())
-            ofs << "#endif // BZ_HAVE_COMPLEX" << endl << endl;
+            ofs << "#endif // BZ_HAVE_COMPLEX" << std::endl << std::endl;
 
     } while (++operands);
 
    }
 
-   cout << operands.numSpecializations() << " operators written." << endl;
+   std::cout << operands.numSpecializations() << " operators written." << std::endl;
 }
 

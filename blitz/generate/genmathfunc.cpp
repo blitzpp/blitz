@@ -1,6 +1,6 @@
-#include <iostream.h>
-#include <fstream.h> 
-#include <iomanip.h>
+#include <iostream>
+#include <fstream> 
+#include <iomanip>
 
 using namespace std;
 
@@ -93,39 +93,39 @@ void one(char* applicName, char* specialization, char* funcName,
     ofs << ")";
     if (comment)
         ofs << "    " << comment;
-    ofs << endl;
+    ofs << std::endl;
 
     if (flag == cflag)
-        ofs << "#ifdef BZ_HAVE_COMPLEX_MATH" << endl;
+        ofs << "#ifdef BZ_HAVE_COMPLEX_MATH" << std::endl;
     else if (flag == cflag2)
-        ofs << "#ifdef BZ_HAVE_COMPLEX_MATH2" << endl;
+        ofs << "#ifdef BZ_HAVE_COMPLEX_MATH2" << std::endl;
     else if (flag == ieeeflag)
-        ofs << "#ifdef BZ_HAVE_IEEE_MATH" << endl;
+        ofs << "#ifdef BZ_HAVE_IEEE_MATH" << std::endl;
     else if (flag == bsdflag)
-        ofs << "#ifdef BZ_HAVE_SYSTEM_V_MATH" << endl;
+        ofs << "#ifdef BZ_HAVE_SYSTEM_V_MATH" << std::endl;
 //    else if (flag == ldflag)
-//        ofs << "#ifdef BZ_LONGDOUBLE128" << endl;
+//        ofs << "#ifdef BZ_LONGDOUBLE128" << std::endl;
 
     if (!specialization)
     {
-        ofs << "template<class P_numtype1>" << endl;
+        ofs << "template<class P_numtype1>" << std::endl;
     }
     else {
-        ofs << "template<>" << endl;
+        ofs << "template<>" << std::endl;
     }
     ofs << "class _bz_" << applicName;     
     if (specialization)
         ofs << "<" << specialization << ">";
 
-    ofs << " : public OneOperandApplicativeTemplatesBase {" << endl;
+    ofs << " : public OneOperandApplicativeTemplatesBase {" << std::endl;
 
-    ofs << "public:" << endl;
+    ofs << "public:" << std::endl;
     ofs << "    typedef ";
     if (specialization)
         ofs << specialization;
     else 
         ofs << "P_numtype1";
-    ofs << " T_numtype1;" << endl;
+    ofs << " T_numtype1;" << std::endl;
 
     ofs << "    typedef ";
     if (returnType)
@@ -134,10 +134,10 @@ void one(char* applicName, char* specialization, char* funcName,
         ofs << specialization;
     else
         ofs << "P_numtype1";
-    ofs << " T_numtype;" << endl;
+    ofs << " T_numtype;" << std::endl;
 
-    ofs << endl << "    static inline T_numtype apply(T_numtype1 x)"
-        << endl << "    { return ";
+    ofs << std::endl << "    static inline T_numtype apply(T_numtype1 x)"
+        << std::endl << "    { return ";
 
     if (noCastFlag == nofuncflag)
     {
@@ -159,24 +159,24 @@ void one(char* applicName, char* specialization, char* funcName,
 
     ofs << "x)";
     }
-    ofs << "; }" << endl;
+    ofs << "; }" << std::endl;
 
-    ofs << endl << "    template<class T1>" << endl
+    ofs << std::endl << "    template<class T1>" << std::endl
         << "    static void prettyPrint(string& str, prettyPrintFormat& format,"
-        << endl
-        << "        const T1& a)" << endl
-        << "    {" << endl
+        << std::endl
+        << "        const T1& a)" << std::endl
+        << "    {" << std::endl
         << "        str += \"" << funcName;
-      ofs  << "(\";" << endl
-        << "        a.prettyPrint(str,format);" << endl
-        << "        str += \")\";" << endl
-        << "    }" << endl
-        << "};" << endl;
+      ofs  << "(\";" << std::endl
+        << "        a.prettyPrint(str,format);" << std::endl
+        << "        str += \")\";" << std::endl
+        << "    }" << std::endl
+        << "};" << std::endl;
 
    if ((flag != ldflag) && (flag != 0))
-        ofs << "#endif" << endl;
+        ofs << "#endif" << std::endl;
 
-    ofs << endl;
+    ofs << std::endl;
 }
 
 void two(char* applicName, char* specialization, char* funcName,
@@ -197,45 +197,45 @@ void two(char* applicName, char* specialization, char* funcName,
     ofs << ")";
     if (comment)
         ofs << "    " << comment;
-    ofs << endl;
+    ofs << std::endl;
 
     if (flag == cflag)
-        ofs << "#ifdef BZ_HAVE_COMPLEX_MATH" << endl;
+        ofs << "#ifdef BZ_HAVE_COMPLEX_MATH" << std::endl;
     else if (flag == cflag2)
-        ofs << "#ifdef BZ_HAVE_COMPLEX_MATH2" << endl;
+        ofs << "#ifdef BZ_HAVE_COMPLEX_MATH2" << std::endl;
     else if (flag == ieeeflag)
-        ofs << "#ifdef BZ_HAVE_IEEE_MATH" << endl;
+        ofs << "#ifdef BZ_HAVE_IEEE_MATH" << std::endl;
     else if (flag == bsdflag)
-        ofs << "#ifdef BZ_HAVE_SYSTEM_V_MATH" << endl;
+        ofs << "#ifdef BZ_HAVE_SYSTEM_V_MATH" << std::endl;
 //    else if (flag == ldflag)
-//        ofs << "#ifdef BZ_LONGDOUBLE128" << endl;
+//        ofs << "#ifdef BZ_LONGDOUBLE128" << std::endl;
 
     if (!specialization)
     {
-        ofs << "template<class P_numtype1, class P_numtype2>" << endl;
+        ofs << "template<class P_numtype1, class P_numtype2>" << std::endl;
     }
     else {
-        ofs << "template<>" << endl;
+        ofs << "template<>" << std::endl;
     }
     ofs << "class _bz_" << applicName;
     if (specialization)
         ofs << "<" << specialization  << ", " << specialization << " >";
-    ofs << " : public TwoOperandApplicativeTemplatesBase {" << endl;
+    ofs << " : public TwoOperandApplicativeTemplatesBase {" << std::endl;
 
-    ofs << "public:" << endl;
+    ofs << "public:" << std::endl;
     ofs << "    typedef ";
     if (specialization)
         ofs << specialization;
     else
         ofs << "P_numtype1";
-    ofs << " T_numtype1;" << endl;
+    ofs << " T_numtype1;" << std::endl;
 
     ofs << "    typedef ";
     if (specialization)
         ofs << specialization;
     else
         ofs << "P_numtype2";
-    ofs << " T_numtype2;" << endl;
+    ofs << " T_numtype2;" << std::endl;
 
     ofs << "    typedef ";
     if (returnType)
@@ -244,10 +244,10 @@ void two(char* applicName, char* specialization, char* funcName,
         ofs << specialization;
     else
         ofs << "BZ_PROMOTE(T_numtype1, T_numtype2)";
-    ofs << " T_numtype;" << endl;
+    ofs << " T_numtype;" << std::endl;
 
-    ofs << endl << "    static inline T_numtype apply(T_numtype1 x, T_numtype2 y)"
-        << endl << "    { return ";
+    ofs << std::endl << "    static inline T_numtype apply(T_numtype1 x, T_numtype2 y)"
+        << std::endl << "    { return ";
 
     if ((flag == cflag) || (flag == cflag2))
         ofs << "BZ_CMATHFN_SCOPE(";
@@ -268,38 +268,38 @@ void two(char* applicName, char* specialization, char* funcName,
         ofs << "(" << specialization << ")";
     else if ((returnType) && (!noCastFlag))
         ofs << "(" << returnType << ")";
-    ofs << "y); }" << endl;
+    ofs << "y); }" << std::endl;
 
-    ofs << endl << "    template<class T1, class T2>" << endl
+    ofs << std::endl << "    template<class T1, class T2>" << std::endl
         << "    static void prettyPrint(string& str, prettyPrintFormat& format,"
-        << endl
-        << "        const T1& a, const T2& b)" << endl
-        << "    {" << endl
+        << std::endl
+        << "        const T1& a, const T2& b)" << std::endl
+        << "    {" << std::endl
         << "        str += \"" << funcName;
-      ofs  << "(\";" << endl
-        << "        a.prettyPrint(str,format);" << endl
-        << "        str += \",\";" << endl
-        << "        b.prettyPrint(str,format);" << endl
-        << "        str += \")\";" << endl
-        << "    }" << endl;
+      ofs  << "(\";" << std::endl
+        << "        a.prettyPrint(str,format);" << std::endl
+        << "        str += \",\";" << std::endl
+        << "        b.prettyPrint(str,format);" << std::endl
+        << "        str += \")\";" << std::endl
+        << "    }" << std::endl;
 
-    ofs << "};" << endl;
+    ofs << "};" << std::endl;
 
     if ((flag != ldflag) && (flag != 0))
-        ofs << "#endif" << endl;
+        ofs << "#endif" << std::endl;
 
-    ofs << endl;
+    ofs << std::endl;
 }
 
 int main()
 {
-    cout << "Generating <mathfunc.h>" << endl;
+    std::cout << "Generating <mathfunc.h>" << std::endl;
 
     ofs.open("mathfunc.h");
 
     ofs <<  
 "// Generated: " << __FILE__ << " " << __DATE__ << " " << __TIME__ 
-                 << endl << endl <<
+                 << std::endl << std::endl <<
 "#ifndef BZ_MATHFUNC_H\n"
 "#define BZ_MATHFUNC_H\n"
 "\n"
@@ -510,7 +510,7 @@ two("unordered", "",         "unordered", "int",       "True if a comparison of 
 one("y0"     ,""            ,"y0"      ,"double"       ,"Bessel function of the second kind, order zero", ieeeflag);
 one("y1"     ,""            ,"y1"      ,"double"       ,"Bessel function of the second kind, order one", ieeeflag);
 
-    ofs << endl << endl <<
+    ofs << std::endl << std::endl <<
 "BZ_NAMESPACE_END\n\n"
 "#endif // BZ_MATHFUNC_H\n";
 

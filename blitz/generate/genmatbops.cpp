@@ -2,33 +2,36 @@
  * $Id$
  *
  * $Log$
+ * Revision 1.3  2003/01/06 14:42:22  papadop
+ * Load of ISO C++ changes (some are necessary for the future g++-3.4).
+ *
  * Revision 1.2  2002/06/28 23:59:49  jcumming
  * Files for generating Matrix operators and math functions.
  *
  *
  */
 
-#include <iostream.h>
-#include <fstream.h>
+#include <iostream>
+#include <fstream>
 #include "optuple2.h"
 
 int main()
 {
-    cout << "Generating <matbops.h>" << endl;
+    std::cout << "Generating <matbops.h>" << std::endl;
 
     OperandTuple2 operands(2);
 
-    ofstream ofs("matbops.h");
-    ofs << "// Generated source file.  Do not edit." << endl;
+    std::ofstream ofs("matbops.h");
+    ofs << "// Generated source file.  Do not edit." << std::endl;
     ofs << "// Created by: " << __FILE__ << " " << __DATE__ 
-        << " " << __TIME__ << endl << endl;
+        << " " << __TIME__ << std::endl << std::endl;
 
-    ofs << "#ifndef BZ_MATBOPS_H" << endl
-        << "#define BZ_MATBOPS_H" << endl
-        << endl << "BZ_NAMESPACE(blitz)" << endl << endl
-        << "#ifndef BZ_MATEXPR_H" << endl
+    ofs << "#ifndef BZ_MATBOPS_H" << std::endl
+        << "#define BZ_MATBOPS_H" << std::endl
+        << std::endl << "BZ_NAMESPACE(blitz)" << std::endl << std::endl
+        << "#ifndef BZ_MATEXPR_H" << std::endl
         << " #error <blitz/matbops.h> must be included via <blitz/matexpr.h>" 
-        << endl << "#endif" << endl << endl;
+        << std::endl << "#endif" << std::endl << std::endl;
 
     struct {
         const char* opSymbol;
@@ -59,9 +62,9 @@ int main()
 
     for (int i=0; i < 18; ++i)
     {
-    ofs << "/****************************************************************************" << endl
-        << " * " << ops[i].comment << endl
-        << " ****************************************************************************/" << endl;
+    ofs << "/****************************************************************************" << std::endl
+        << " * " << ops[i].comment << std::endl
+        << " ****************************************************************************/" << std::endl;
 
     operands.reset();
 
@@ -76,57 +79,57 @@ int main()
         // Matrix<P_numtype1> + _bz_MatExpr<P_expr2>
 
         if (operands.anyComplex())
-            ofs << "#ifdef BZ_HAVE_COMPLEX" << endl;
+            ofs << "#ifdef BZ_HAVE_COMPLEX" << std::endl;
 
-        ofs << endl << "// ";
+        ofs << std::endl << "// ";
         operands[0].printName(ofs);
         ofs << " " << ops[i].opSymbol << " ";
         operands[1].printName(ofs);
-        ofs << endl;
+        ofs << std::endl;
 
         operands.printTemplates(ofs);
-        ofs << endl << "inline" << endl;
+        ofs << std::endl << "inline" << std::endl;
 
         // _bz_MatExpr<_bz_MatExprOp<MatRef<T_numtype1>,
-        //     _bz_MatExpr<T_expr2>, _bz_Add<T_numtype1, _bz_typename T_expr2::T_numtype> > >
+        //     _bz_MatExpr<T_expr2>, _bz_Add<T_numtype1,typename T_expr2::T_numtype> > >
         ofs << "_bz_MatExpr<_bz_MatExprOp<";
         operands.printIterators(ofs, 1);
-        ofs << "," << endl << "      " << ops[i].opApplicName << "<";
+        ofs << "," << std::endl << "      " << ops[i].opApplicName << "<";
         operands[0].printNumtype(ofs);
         ofs << ", ";    
         operands[1].printNumtype(ofs);
-        ofs << " > > >" << endl;
+        ofs << " > > >" << std::endl;
      
         // operator+(const Matrix<T_numtype1>& d1, _bz_MatExpr<T_expr2> d2)
         ofs << "operator" << ops[i].opSymbol << "(";
         operands.printArgumentList(ofs, 1);
-        ofs << ")" << endl << "{" << endl;
+        ofs << ")" << std::endl << "{" << std::endl;
 
         // typedef _bz_MatExprOp<MatRef<T_numtype1>,
-        // _bz_MatExpr<T_expr2>, _bz_Add<T_numtype1, _bz_typename T_expr2::T_numtype> > T_expr;
+        // _bz_MatExpr<T_expr2>, _bz_Add<T_numtype1,typename T_expr2::T_numtype> > T_expr;
         ofs << "    typedef _bz_MatExprOp<";
         operands.printIterators(ofs, 1);
-        ofs << ", " << endl << "      " << ops[i].opApplicName << "<";
+        ofs << ", " << std::endl << "      " << ops[i].opApplicName << "<";
         operands[0].printNumtype(ofs);
         ofs << ", ";
         operands[1].printNumtype(ofs);
-        ofs << "> > T_expr;" << endl << endl;
+        ofs << "> > T_expr;" << std::endl << std::endl;
 
         // return _bz_MatExpr<T_expr>(T_expr(a.begin(), b));
         ofs << "    return _bz_MatExpr<T_expr>(T_expr(";
         operands.printInitializationList(ofs,1);
-        ofs << "));" << endl << "}" << endl;
+        ofs << "));" << std::endl << "}" << std::endl;
 
         if (operands.anyComplex())
-            ofs << "#endif // BZ_HAVE_COMPLEX" << endl << endl;
+            ofs << "#endif // BZ_HAVE_COMPLEX" << std::endl << std::endl;
 
     } while (++operands);
     
     }
 
-    ofs << endl << "BZ_NAMESPACE_END" << endl << endl
-        << "#endif // BZ_MATBOPS_H" << endl;
+    ofs << std::endl << "BZ_NAMESPACE_END" << std::endl << std::endl
+        << "#endif // BZ_MATBOPS_H" << std::endl;
 
-   cout << operands.numSpecializations() << " operators written." << endl;
+   std::cout << operands.numSpecializations() << " operators written." << std::endl;
 }
 
