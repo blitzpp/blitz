@@ -21,75 +21,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.11  2003/01/06 14:42:15  papadop
- * Load of ISO C++ changes (some are necessary for the future g++-3.4).
- *
- * Revision 1.10  2002/08/30 22:12:49  jcumming
- * Added declaration of setStorage() method, which lets user set Array storage
- * format after construction.
- *
- * Revision 1.9  2002/06/28 01:33:03  jcumming
- * Modified the isInRange() methods to check that each index value is
- * greater than or equal to the base index value, rather than just
- * casting (index-base) to an unsigned int.  The latter gives unpredictable
- * results if index<base and produces compiler warnings about comparisons
- * between unsigned and signed quantities.
- *
- * Revision 1.8  2002/06/27 00:28:50  jcumming
- * Changed template parameter name T_numtype2 to P_numtype2 in member function
- * template declarataions for consistency with definitions and to avoid any
- * confusion with typedef T_numtype.
- *
- * Revision 1.7  2002/06/26 23:55:45  jcumming
- * Explicitly specify second template argument for ListInitializationSwitch,
- * rather than relying on the default value.  This eliminates a compilation
- * problem using the xlC compiler.  Also removed #include of misc.cc, which
- * is now handled in blitz/array/et.h.
- *
- * Revision 1.6  2002/05/27 19:29:29  jcumming
- * Removed use of this-> as means of accessing members of templated base class.
- * Instead provided using declarations for these members within the derived
- * class definitions to bring them into the scope of the derived class.
- *
- * Revision 1.5  2002/03/06 15:47:49  patricg
- *
- * data_ replaced by this->data_ everywhere
- * changeToNullBlock() replaced by this->changeToNullBlock()
- * class _bz_endTag replaced by struct _bz_endTag {}
- *
- * Revision 1.4  2001/02/15 13:14:39  tveldhui
- * Fixed typo
- *
- * Revision 1.3  2001/02/11 22:10:55  tveldhui
- * Fixed prototype typos
- *
- * Revision 1.2  2001/02/11 15:43:39  tveldhui
- * Additions from Julian Cummings:
- *  - StridedDomain class
- *  - more versions of resizeAndPreserve
- *
- * Revision 1.1  2001/01/26 18:30:50  tveldhui
- * More source code reorganization to reduce compile times.
- *
- * Revision 1.3  2001/01/24 22:51:50  tveldhui
- * Reorganized #include orders to avoid including the huge Vector e.t.
- * implementation when using Array.
- *
- * Revision 1.2  2001/01/24 20:22:49  tveldhui
- * Updated copyright date in headers.
- *
- * Revision 1.1.1.1  2000/06/19 12:26:12  tveldhui
- * Imported sources
- *
- * Revision 1.2  1998/03/14 00:04:47  tveldhui
- * 0.2-alpha-05
- *
- * Revision 1.1  1997/07/16 14:51:20  tveldhui
- * Update: Alpha release 0.2 (Arrays)
- *
- */
+ ***************************************************************************/
 
 /*
  * Wish list for array classes.

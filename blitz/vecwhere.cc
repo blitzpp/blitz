@@ -14,15 +14,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.1  2000/06/19 12:26:11  tveldhui
- * Initial revision
- *
- * Revision 1.1  1997/07/16 14:51:20  tveldhui
- * Update: Alpha release 0.2 (Arrays)
- *
- */ 
+ ***************************************************************************/ 
 
 // Generated source file.  Do not edit. 
 // genvecwhere.cpp Feb  5 1997 09:52:29

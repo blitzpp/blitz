@@ -19,22 +19,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://seurat.uwaterloo.ca/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.3  2002/06/29 00:09:25  jcumming
- * Freshly generated from genvecuops.cpp.  Changed BZ_HAVE_SYSV_MATH to
- * BZ_HAVE_SYSTEM_V_MATH to match what is in config.h and elsewhere.
- * Corrected categorization of a few math functions.  Otherwise, no changes.
- *
- * Revision 1.2  2001/01/26 20:11:25  tveldhui
- * Changed isnan to blitz_isnan, to avoid conflicts with implementations
- * that define isnan as a preprocessor macro.
- * 
- * Revision 1.1  2000/06/19 13:02:47  tveldhui
- * Initial source check-in; added files not usually released in the
- * distribution.
- *
- */ 
+ ***************************************************************************/ 
 
 // Generated source file.  Do not edit. 
 // genvecuops.cpp Jun 28 2002 16:11:47
