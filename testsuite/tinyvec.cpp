@@ -1,4 +1,4 @@
-#include <blitz/tinyvec.h>
+#include <blitz/tinyvec-et.h>
 
 using namespace blitz;
 
