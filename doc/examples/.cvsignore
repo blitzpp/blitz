@@ -16,6 +16,6 @@ strideslice
 xor
 core
 core.*
-cxx_epository
+cxx_repository
 *.texi
 *.out
