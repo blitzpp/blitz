@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/prettyprint.h      Format object for pretty-printing of
  *                          array expressions
@@ -32,15 +33,23 @@ BZ_NAMESPACE(blitz)
 class prettyPrintFormat {
 
 public:
-    prettyPrintFormat(const bool terse = false): tersePrintingSelected_(terse) {
+    prettyPrintFormat(const bool terse = false)
+        : tersePrintingSelected_(terse) 
+    {
         arrayOperandCounter_ = 0;
         scalarOperandCounter_ = 0;
         dumpArrayShapes_ = false;
     }
 
     void setDumpArrayShapesMode()  { dumpArrayShapes_ = true; }
-    char nextArrayOperandSymbol()  { return 'A' + ((arrayOperandCounter_++) % 26); }
-    char nextScalarOperandSymbol() { return 's' + ((scalarOperandCounter_++) % 26); }
+    char nextArrayOperandSymbol()  
+    { 
+        return static_cast<char>('A' + ((arrayOperandCounter_++) % 26)); 
+    }
+    char nextScalarOperandSymbol() 
+    { 
+        return static_cast<char>('s' + ((scalarOperandCounter_++) % 26)); 
+    }
 
     bool tersePrintingSelected() const { return tersePrintingSelected_; }
     bool dumpArrayShapesMode()   const { return dumpArrayShapes_; }
