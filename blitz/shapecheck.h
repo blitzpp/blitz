@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2002/06/28 01:35:59  jcumming
+ * Changed loop variable i to unsigned to avoid unsigned/signed comparisons.
+ *
  * Revision 1.2  2001/01/24 20:22:50  tveldhui
  * Updated copyright date in headers.
  *
@@ -67,7 +70,7 @@ inline _bz_bool areShapesConformable(const T_shape& a, const T_shape& b)
     // use it.
     // return all(a == b);
 
-    for (int i=0; i < a.length(); ++i)
+    for (unsigned i=0; i < a.length(); ++i)
     {
         if (a[i] != b[i])
         {
