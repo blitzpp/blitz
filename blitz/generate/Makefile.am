@@ -2,8 +2,6 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-generatedir = $(builddir)/blitz/generate
-
 noinst_HEADERS = arroperands.h arroptuple.h bzfstream.h operands.h operands2.h optuple.h optuple2.h
 
 noinst_PROGRAMS = genarrbops genmathfunc genvecbops genarruops genmatuops \
