@@ -1,4 +1,9 @@
 
+2005-01-07  Patrick Guio  <patrick.guio@bccs.uib.no>
+
+	* blitz/array/ops.h: Completed ET(array,scalar) for scalar 
+	of all integral types.
+
 2004-11-17  Patrick Guio  <patrick.guio@bccs.uib.no>
 
 	* doc/doxygen/Makefile.am: Fixed install related targets to take into
