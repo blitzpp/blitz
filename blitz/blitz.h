@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.7  2001/02/11 22:03:44  tveldhui
+ * Fixed minor typo in blitz.h
+ *
  * Revision 1.6  2001/02/04 22:36:41  tveldhui
  * Oops, was including <pthread.h> inside the blitz namespace.
  *
@@ -136,6 +139,9 @@ BZ_NAMESPACE_END
 #endif
 
 #ifdef BZ_THREADSAFE
+#define BZ_THREADSAFE_USE_PTHREADS
+
+#ifdef BZ_THREADSAFE_USE_PTHREADS
  #include <pthread.h>
 
  #define BZ_MUTEX_DECLARE(name)   pthread_mutex_t name
@@ -150,6 +156,8 @@ BZ_NAMESPACE_END
  #define BZ_MUTEX_UNLOCK(name)
  #define BZ_MUTEX_DESTROY(name)
 #endif
+
+#endif  // BZ_THREADSAFE
 
 #include <blitz/bzdebug.h>           // Debugging macros
 
