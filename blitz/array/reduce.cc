@@ -23,6 +23,10 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2002/03/06 17:00:35  patricg
+ *
+ * TinyVector<int,rank> replaced by TinyVector<int,T_expr::rank>
+ *
  * Revision 1.2  2001/01/25 00:25:55  tveldhui
  * Ensured that source files have cvs logs.
  *
@@ -87,7 +91,7 @@ _bz_reduceWithIndexTraversal(T_expr expr, T_reduction reduction)
 
     const int rank = T_expr::rank;
 
-    TinyVector<int,rank> index, first, last;
+    TinyVector<int,T_expr::rank> index, first, last;
 
     unsigned long count = 1;
 
@@ -146,7 +150,7 @@ _bz_reduceWithIndexVectorTraversal(T_expr expr, T_reduction reduction)
 
     const int rank = T_expr::rank;
 
-    TinyVector<int,rank> index, first, last;
+    TinyVector<int,T_expr::rank> index, first, last;
 
     unsigned long count = 1;
 
