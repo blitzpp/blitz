@@ -406,7 +406,7 @@ public:
         BZPRECONDITION(0);
     }
 
-    _bz_bool isUnitStride(int rank) const
+    _bz_bool isUnitStride(int) const
     {
         BZPRECONDITION(0);
         return false;
@@ -445,20 +445,20 @@ public:
     }
 
     template<int N_rank2>
-    void moveTo(const TinyVector<int,N_rank2>& i)
+    void moveTo(const TinyVector<int,N_rank2>&)
     {
         BZPRECONDITION(0);
         return ;
     }
 
-    void prettyPrint(string& str, prettyPrintFormat& format) const
+    void prettyPrint(string& str, prettyPrintFormat&) const
     {
         // NEEDS_WORK-- do real formatting for reductions
         str += "map[NEEDS_WORK]";
     }
 
     template<class T_shape>
-    _bz_bool shapeCheck(const T_shape& shape) const
+    _bz_bool shapeCheck(const T_shape&) const
     { 
         // NEEDS_WORK-- do a real shape check (tricky)
         return _bz_true; 
