@@ -1,0 +1,57 @@
+
+bzsubsect(How to get help)
+
+bzindex(help, obtaining)
+bzindex(support, obtaining)
+
+The starting point for all bug reports, feature requests and
+support questions is the Blitz++ support page, at
+url(http://oonumerics.org/blitz/support/)(http://oonumerics.org/blitz/support/)
+
+bzsubsect(How to subscribe to a mailing list)
+
+bzindex(mailing lists)
+
+To subscribe to a Blitz++ mailing list, send a message containing 
+one (or more) of these lines to tt(majordomo@oonumerics.org):
+
+bf(bzverb(\
+subscribe blitz-support
+subscribe blitz-bugs
+subscribe blitz-dev
+subscribe blitz
+))
+
+bzsubsect(blitz-bugs)
+
+bzindex(blitz-bugs list)
+You can report bugs (or things you suspect might
+be bugs) to tt(blitz-bugs@oonumerics.org).
+
+It's not a very interesting list to be subscribed to.  There
+are archives available from the Blitz++ web site.
+
+bzsubsect(blitz-dev)
+
+bzindex(blitz-dev list)
+bzindex(contributing to Blitz++)
+
+Blitz++ is in open development: anyone can contribute features and
+code to the library.  If you are interested in helping out with
+coding or porting, you should start by subscribing to the tt(blitz-dev)
+mailing list.  
+
+This list is also the appropriate place to send suggestions for
+features; just send email to tt(blitz-dev@oonumerics.org).
+We can't implement it if you don't suggest it.
+
+Archives of this list are available from the Blitz++ web site.
+
+bzsubsect(blitz-support)
+
+bzindex(blitz-support list)
+
+This mailing list is for posting and answering questions about
+using the Blitz++ library.  Anyone can post questions; anyone
+can answer.
+

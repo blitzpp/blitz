@@ -1,0 +1,189 @@
+
+bzindex(FAQ)
+
+bzsect(Questions about installation)
+
+bzindex(CRC error in .tar.gz)
+bzindex(invalid compressed data)
+
+bzfaq(I downloaded Blitz++, but when I try to gunzip it, I get
+"invalid compressed data--crc error".)
+
+You forgot to set binary download mode in ftp.  Do so with
+the "binary" command.
+
+bzindex(gcc!memory hog)
+bzindex(memory hog, gcc)
+bzindex(out of virtual memory, gcc)
+bzindex(virtual memory problems, gcc)
+
+bzfaq(I can't use gcc on my PC because it requires 45-150 Mb
+to compile with Blitz++)
+
+Unfortunately this is true.  If this problem is ever fixed, it
+will be by the gcc developers, so my best suggestion is to post
+a bug report to the gcc-bugs list.  
+
+
+
+bzindex(external symbol relocation, Solaris)
+
+bzfaq(I am using gcc under Solaris, and I get errors about 
+"relocation against external symbol".)
+
+This problem can be fixed by installing the gnu linker and
+binutils.  Peter Nordlund found that by using gnu-binutils-2.9.1,
+this problem disappeared.  You can read a detailed 
+discussion at
+url(http://oonumerics.org/blitz/support/blitz-support/archive/0029.html)
+   (http://oonumerics.org/blitz/support/blitz-support/archive/0029.html).
+
+bzindex(as: symbol too long)
+bzindex(symbol too long, Solaris as)
+
+bzfaq(I am using gcc under Solaris, and the assembler gives
+me an error that a symbol is too long.)
+
+This problem can also be fixed by installing the gnu linker and
+binutils.  See the above question.
+
+
+bzindex(templates with C linkage, DECcxx)
+
+bzfaq(DECcxx reports problems about "templates with C linkage")
+
+This problem was caused by a problem in some versions of DECcxx's
+tt(math.h) header: XOPEN_SOURCE_EXTENDED was causing an
+tt(extern "C" { ... }) section to have no closing brace.
+There is a kludge which is included in recent versions of
+Blitz++.
+
+
+bzsect(Questions about Blitz++ functionality)
+
+bzindex(eigenvector decomposition)
+bzindex(solving linear systems)
+bzindex(matrix inversion)
+bzindex(linear algebra)
+
+bzfaq(For my problem, I need SVD, FFTs, QMRES, PLU, QR, ....)
+
+Blitz++ does not currently provide any of these.  However, there
+are numerous C++ and C packages out there which do, and it is
+easy to move data back and forth between Blitz++ and other
+libraries.  See these terms in the index: creating an array
+from pre-existing data, tt(data()), tt(stride()),
+tt(extent()), tt(fortranArray).  For a list of other 
+numerical C++ libraries, see the Object Oriented Numerics
+Page at 
+url(http://oonumerics.org/oon/)(http://oonumerics.org/oon/).
+
+
+bzindex(Python)
+
+bzfaq(Can Blitz++ be interfaced with Python?)
+
+Phil Austin has done so successfully.  See a description of
+his setup in 
+url(http://oonumerics.org/blitz/support/blitz-support/archive/0053.html)
+(http://oonumerics.org/blitz/support/blitz-support/archive/0053.html).
+
+
+bzindex(out of memory)
+bzindex(handling out of memory)
+bzindex(new handler)
+bzindex(set_new_handler())
+bzindex(bad_alloc)
+
+bzfaq(If I try to allocate an array which is too big, my
+program just crashes or goes into an infinite loop.  Is there
+some way I can handle this more elegantly?)
+
+Blitz++ uses tt(new) to allocate memory for arrays.
+In theory, your compiler should be throwing a
+tt(bad_alloc) exception when you run out of memory.  
+If it does, you can use a try/catch block to handle the
+out of memory exception.  If your compiler does
+not throw tt(bad_alloc), you can install your own
+new handler to handle out of memory.
+
+Here is an excerpt from the ISO/ANSI C++ standard
+which describes the behaviour of tt(new):
+
+startit()
+
+it() Executes a loop: Within the loop, the function first attempts
+to allocate the requested storage. Whether the attempt
+involves a call to the Standard C library function malloc is
+unspecified. 
+
+it() Returns a pointer to the allocated storage if the attempt is
+successful. Otherwise, if the last argument to
+set_new_handler() was a null pointer, throw bad_alloc. 
+
+it() Otherwise, the function calls the current new_handler
+(lib.new.handler). If the called function returns, the loop
+repeats. 
+
+it() The loop terminates when an attempt to allocate the
+requested storage is successful or when a called
+new_handler function does not return. 
+
+endit()
+
+You can use tt(set_new_handler) to create a new handler which
+will issue an error message or throw an exception.  For
+example:
+
+verb(\
+void my_new_handler()
+{
+cerr << "Out of memory" << endl;
+cerr.flush();
+abort();
+}
+
+...
+
+// First line in main():
+set_new_handler(my_new_handler);
+)
+
+
+
+bzindex(passing arrays by value)
+bzindex(constness problems)
+
+bzfaq(When I pass arrays by value, the function which receives
+them can modify the array data.  Why?)
+
+It's a result of
+reference-counting. You have to think of array
+objects as being "handles" to underlying arrays. The function
+doesn't receive a copy of the array data, but rather
+a copy of the handle. 
+The alternative would be to copy the array data
+when passing by value, which would be grossly inefficient.
+
+
+bzindex(<< operator, bitshift)
+bzindex(operator <<, bitshift)
+bzindex(operator >>, bitshift)
+bzindex(>> operator, bitshift)
+bzindex(bitshift operators)
+
+bzfaq(Why can't I use e.g. tt(A >> 3) to do bitshifting on arrays?)
+
+The operators tt(<<) and tt(>>) are used for input/ouput of arrays.
+It would cause problems with the expression templates implementation
+to also use them for bitshifting.  However, it is easy enough to
+define your own bitshifting function -- see ref(user-et).
+
+
+bzindex(matrix multiply)
+
+bzfaq(When I write tt(TinyMatrix * TinyVector) I get an error.)
+
+Try tt(product(d2,d1)).  This works for matrix-matrix and
+matrix-vector products.
+
