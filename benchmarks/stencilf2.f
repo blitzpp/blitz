@@ -3,6 +3,7 @@
        SUBROUTINE stencilftiled(A, B, N, iters)
        INTEGER N, iters
        DOUBLE PRECISION A(N,N,N), B(N,N,N)
+       INTEGER z
        DOUBLE PRECISION c
        c = 1 / 7.
 
