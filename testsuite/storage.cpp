@@ -20,7 +20,10 @@ int main()
     storage.base() = 0, 0;
     storage.ascendingFlag() = true, false;
 
-    Array<int,2> C(3, 3, storage);
+    //    Array<int,2> C(3, 3, storage);
+    Array<int,2> C;
+    C.setStorage(storage);
+    C.resize(3,3);
 
     // Set each array equal to
     // [ 1 2 3 ]
