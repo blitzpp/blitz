@@ -45,12 +45,15 @@ AC_SUBST(AR)
 AC_SUBST(AR_FLAGS)
 AC_SUBST(RANLIB)
 
+# Set default values
+AR_FLAGS="-cru"
+
 # Process command-line arguments for configure
 
 know_compiler=0
 
 AC_ARG_WITH(cxx,
-  [  --with-cxx=COMPILER[:name-flags]     set options for COMPILER (KCC, SGI64, SGI32, FCC, cray, gcc, DECcxx, aCC, icc, pgCC, xlC)],
+  [  --with-cxx=COMPILER[:name-flags]     set options for COMPILER (KCC, SGI, FCC, cray, gcc, DECcxx, aCC, icc, pgCC, xlC)],
   [case "$withval" in
      KCCdev)             # KAI C++ (development flags)
        echo "Configuring for KAI C++ development environment"
@@ -66,11 +69,19 @@ AC_ARG_WITH(cxx,
      KCC*)               # KAI C++  http://www.kai.com/
        echo "Configuring for KAI C++"
        bz_compiler=kcc
-       AC_BZ_SET_COMPILER($withval,"KCC","--restrict --strict_warnings")
+       case "$target" in
+         *aix*)
+           # When using KCC under AIX, enable long long type
+           AC_BZ_SET_COMPILER($withval,"KCC","--restrict --longlong --strict_warnings")
+         ;;
+         *)
+           AC_BZ_SET_COMPILER($withval,"KCC","--restrict --strict_warnings")
+         ;;
+       esac
        CXX_OPTIMIZE_FLAGS="+K3 -O3"
        CXX_DEBUG_FLAGS="-g +K0 -DBZ_DEBUG"
-			 AR="KCC"
-			 AR_FLAGS="-o"
+       AR="\$(CXX)"
+       AR_FLAGS="-o"
      ;;
      SGI64*)             # SGI C++  http://www.sgi.com
        echo "Configuring for SGI C++ (64 bit abi)"
@@ -80,7 +91,7 @@ AC_ARG_WITH(cxx,
        CXX_OPTIMIZE_FLAGS="-Ofast"
        CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
        LDFLAGS="-64 -lCio"
-			 RANLIB="ar ts"
+       RANLIB="ar ts"
      ;;
      SGI32*)             # SGI C++  http://www.sgi.com
        echo "Configuring for SGI C++ (32 bit abi)"
@@ -90,7 +101,17 @@ AC_ARG_WITH(cxx,
        CXX_OPTIMIZE_FLAGS="-Ofast"
        CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
        LDFLAGS="-n32 -lCio"
-			 RANLIB="ar ts"
+       RANLIB="ar ts"
+     ;;
+     SGI*)               # SGI C++  http://www.sgi.com
+       echo "Configuring for SGI C++"
+       bz_compiler=sgiCC
+       AC_BZ_SET_COMPILER($withval,"CC","-LANG:std -LANG:restrict")
+       CXX_OPTIMIZE_FLAGS="-Ofast"
+       CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
+       AR="\$(CXX)"
+       AR_FLAGS="-ar -o"
+       RANLIB="ar ts"
      ;;
      FCC*)
        echo "Configuring for Fujitsu C++"
@@ -105,9 +126,8 @@ AC_ARG_WITH(cxx,
        AC_BZ_SET_COMPILER($withval,"cxx","-DBZ_ENABLE_XOPEN_SOURCE -std strict_ansi")
        CXX_OPTIMIZE_FLAGS="-O4 -tune host"
        CXX_DEBUG_FLAGS="-g -msg_display_tag -DBZ_DEBUG"
-			 AR="ar"
-			 AR_FLAGS="-rv"
-			 RANLIB="ar ts"
+       AR_FLAGS="-rv"
+       RANLIB="ar ts"
      ;;
      DECcxx6.3)          # DEC C++  http://www.digital.com/
        echo "Configuring for DEC cxx 6.3"
@@ -115,9 +135,8 @@ AC_ARG_WITH(cxx,
        AC_BZ_SET_COMPILER($withval,"cxx","-DBZ_ENABLE_XOPEN_SOURCE -std strict_ansi -nopure_cname")
        CXX_OPTIMIZE_FLAGS="-O4 -tune host"
        CXX_DEBUG_FLAGS="-g -msg_display_tag -DBZ_DEBUG"
-			 AR="ar"
-			 AR_FLAGS="-rv"
-			 RANLIB="ar ts"
+       AR_FLAGS="-rv"
+       RANLIB="ar ts"
      ;;
      cray*)              # Cray C++
        echo "Configuring for Cray C++."
@@ -126,7 +145,7 @@ AC_ARG_WITH(cxx,
        CXX_OPTIMIZE_FLAGS="-O3 -hpipeline3 -hunroll -haggress -hscalar2"
        CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
      ;;
-     egcs*|gcc*)         # gcc  http://gcc.gnu.org/
+     gcc*)               # gcc  http://gcc.gnu.org/
        echo "Configuring for gcc (wahoo!)"
        bz_compiler=gcc
        AC_BZ_SET_COMPILER($withval,"g++","-ftemplate-depth-30")
@@ -175,8 +194,7 @@ cat << 'EOH'
 This script only recognizes a small set of compilers and platforms so far.
 You will have to rerun this script with one of these options:
   --with-cxx=KCC          KAI C++ (http://www.kai.com/)
-  --with-cxx=SGI64        SGI C++ 7.3 or better (http://www.sgi.com/)
-  --with-cxx=SGI32                ... with 32-bit ABI
+  --with-cxx=SGI          SGI C++ 7.3 or better (http://www.sgi.com/)
   --with-cxx=gcc          gcc (http://gcc.gnu.org/)
   --with-cxx=cray         Cray C++ 3.0 or better (http://www.cray.com/)
   --with-cxx=DECcxx6.2    DEC cxx 6.2 (http://www.dec.com/)
@@ -190,53 +208,97 @@ EOH
 exit 1
 fi
 
+# Check if the script was called with --enable-64bit
+# and if so modify the compilation flags.
+
+bz_64bit=false
+AC_ARG_ENABLE(64bit,
+  [  --enable-64bit          enable 64-bit compilation flags],
+  [if test "$enableval" = yes; then
+     echo "64-bit compilation flags enabled"
+     bz_64bit=true
+   fi], [])
+
 # Set platform-specific fortran compilers and optimization settings
 
 case "$target" in
   *aix*)
-    echo "AIX: assuming f77 and xlf90"
-    F77=f77
+    echo "AIX: assuming xlf and xlf90"
+    F77="xlf"
     F77_OPTIMIZE_FLAGS="-O3 -qstrict -qhot"
     F90="xlf90 -qsuffix=f=f90"
     F90_OPTIMIZE_FLAGS="-O3 -qstrict -qhot"
     FORTLIBS="-lxlf90"
+    if test "$bz_64bit" = true; then
+      F77="xlf -q64"
+      F90="xlf90 -q64 -qsuffix=f=f90"
+      case "$CXX" in
+        xlC)
+          CXXFLAGS="-q64 $CXXFLAGS"
+          AR_FLAGS="-cruX64"
+        ;;
+        KCC)
+          CXXFLAGS="-q64 $CXXFLAGS"
+          AR_FLAGS="-q64 -o"
+        ;;
+        gcc)
+          CXXFLAGS="-maix64 $CXXFLAGS"
+        ;;
+      esac
+    fi
   ;;
   *irix*)
     echo "IRIX: assuming f77 and f90"
     F77=f77
-    F77_OPTIMIZE_FLAGS="-Ofast -64"
+    F77_OPTIMIZE_FLAGS="-Ofast"
     F90=f90
-    F90_OPTIMIZE_FLAGS="-Ofast -64"
+    F90_OPTIMIZE_FLAGS="-Ofast"
     CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
     case "$CXX" in
       KCC)
         # When using KAI C++ under IRIX, enable some backend optimizations
-        CXX_OPTIMIZE_FLAGS="+K3 -O3 --COMPO_fe --output_restrict --backend -LANG:restrict=on -64 -mips4"
-        CXX_DEBUG_FLAGS="-g +K0 -DBZ_DEBUG -64 -mips4"
+        CXX_OPTIMIZE_FLAGS="+K3 -O3 --COMPO_fe --output_restrict --backend -LANG:restrict=on -mips4"
+      ;;
+    esac
+    if test "$bz_64bit" = true; then
+      F77="f77 -64"
+      F90="f90 -64"
+      case "$CXX" in
+        CC)
+          CXXFLAGS="-64 $CXXFLAGS"
+          AR_FLAGS="-64 -ar -o"
+        ;;
+        KCC)
+          CXXFLAGS="-64 $CXXFLAGS"
+          AR_FLAGS="-64 -o"
+        ;;
+        gcc)
+          CXXFLAGS="-mabi64 $CXXFLAGS"
+        ;;
+      esac
+    fi
+  ;;
+  *linux*)
+    echo "Linux: assuming g++/g77 or icc/icf"
+    case "$CXX" in
+      g++)
+        F77=g77
+        F77_OPTIMIZE_FLAGS="-O2 -funroll-loops"
+        F90=g77
+        F90_OPTIMIZE_FLAGS="-O2 -funroll-loops"
+        CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_DOUBLE_TRAILING_UNDERSCORES"
+        FORTLIBS="-lg2c"
+      ;;
+      icc)
+        F77=ifc
+        F77_OPTIMIZE_FLAGS="-w90 -O2"
+        F90=ifc
+        F90_OPTIMIZE_FLAGS="-O2"
+        CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
+        FORTLIBS="-lF90 -lCEPCF90 -lIEPCF90 -lintrins"
       ;;
     esac
   ;;
-	*linux*)
-		echo "Linux: assuming g++/g77 or icc/icf"
-		case "$CXX" in
-			g++)
-       F77=g77
-       F77_OPTIMIZE_FLAGS="-O2 -funroll-loops"
-       F90=g77
-       F90_OPTIMIZE_FLAGS="-O2 -funroll-loops"
-       CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_DOUBLE_TRAILING_UNDERSCORES"
-       FORTLIBS="-lg2c"
-			;;
-			icc)
-       F77=ifc
-       F77_OPTIMIZE_FLAGS="-w90 -O2"
-       F90=ifc
-       F90_OPTIMIZE_FLAGS="-O2"
-       CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
-       FORTLIBS="-lF90 -lCEPCF90 -lIEPCF90 -lintrins"
-			;;
-		esac
-	;;
   *solaris*)
     echo "Solaris: assuming f77 and f90"
     F77=f77
@@ -244,21 +306,21 @@ case "$target" in
     F90=f90
     F90_OPTIMIZE_FLAGS="-O3"
   ;;
-	*hp-hpux*)
-		echo "HP-UX: assuming f70 and f90"
-		F77=f90
-		F77_OPTIMIZE_FLAGS="-O3"
-		F90=f90
-		F90_OPTIMIZE_FLAGS="-O3"
-		FORTLIBS="-lc -lF90"
-	;;
+  *hp-hpux*)
+    echo "HP-UX: assuming f70 and f90"
+    F77=f90
+    F77_OPTIMIZE_FLAGS="-O3"
+    F90=f90
+    F90_OPTIMIZE_FLAGS="-O3"
+    FORTLIBS="-lc -lF90"
+  ;;
   *osf*)
     echo "OSF: assuming f77 and f90"
     F77=f77
     F77_OPTIMIZE_FLAGS="-O4 -tune host"
     F90=f90
     F90_OPTIMIZE_FLAGS="-O4 -tune host"
-		FORTLIBS="-lfor"
+    FORTLIBS="-lfor"
     CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
   ;;
   alpha-cray-unicos)
