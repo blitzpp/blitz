@@ -15,5 +15,5 @@ libblitz_a_AR = $(AR) $(AR_FLAGS)
 
 
 clean-local:
-	-rm -f libblitz.a cxx_repository ti_files
+	-rm -rf cxx_repository ti_files
 

@@ -188,6 +188,7 @@ endif
 
 ###########################################################################
 
-clean:
-	-rm -f *.o *.ii *.int.c *.s work.pc* $(BENCHMARKS) $(COMPILE_TIME_BENCHMARKS)
+clean-local:
+	-rm -rf *.o *.ii *.int.c *.s work.pc* cxx_repository ti_files \
+		$(BENCHMARKS) $(COMPILE_TIME_BENCHMARKS) 
 

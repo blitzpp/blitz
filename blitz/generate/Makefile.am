@@ -18,3 +18,6 @@ genvecuops_SOURCES = genvecuops.cpp
 genmatbops_SOURCES = genmatbops.cpp
 genpromote_SOURCES = genpromote.cpp
 genvecwhere_SOURCES = genvecwhere.cpp
+
+clean-local:
+	-rm -rf cxx_repository ti_files
