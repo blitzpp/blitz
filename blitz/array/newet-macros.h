@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/array/newet-macros.h  Macros for new e.t. implementation
  *
@@ -40,7 +41,7 @@ typename BzUnaryExprResult<functor,T1>::T_result                          \
 name(const ETBase<T1>& d1)                                                \
 {                                                                         \
     typedef typename BzUnaryExprResult<functor,T1>::T_result result;      \
-    return result(static_cast<const T1&>(d1));                            \
+    return result(d1.unwrap());                                           \
 }
 
 /*
@@ -94,7 +95,7 @@ typename BzBinaryExprResult<applic,T1,T2>::T_result                      \
 name(const T1& d1,const ETBase<T2>& d2)                                  \
 {                                                                        \
     typedef typename BzBinaryExprResult<applic,T1,T2>::T_result result;  \
-    return result(d1,static_cast<const T2&>(d2));                        \
+    return result(d1,d2.unwrap());                                       \
 }
 
 /*
@@ -131,7 +132,7 @@ name(const ETBase<T1>& d1)                                                \
     return _bz_ArrayExpr<_bz_ArrayExprUnaryOp<                            \
         _bz_typename asExpr<T1>::T_expr,                                  \
         functor<_bz_typename asExpr<T1>::T_expr::T_numtype> > >           \
-        (static_cast<const T1&>(d1));                                     \
+        (d1.unwrap());                                     \
 }
 
 /*
@@ -195,7 +196,7 @@ name(const T1& d1, const ETBase<T2>& d2)                                  \
         _bz_typename asExpr<T2>::T_expr,                                  \
         applic<_bz_typename asExpr<T1>::T_expr::T_numtype,                \
         _bz_typename asExpr<T2>::T_expr::T_numtype> > >                   \
-        (d1, static_cast<const T2&>(d2));                                 \
+        (d1, d2.unwrap());                                                \
 }
 
 /*
