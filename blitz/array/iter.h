@@ -28,6 +28,10 @@
 #ifndef BZ_ARRAY_ITER_H
 #define BZ_ARRAY_ITER_H
 
+#ifdef BZ_HAVE_STL
+#include <iterator>
+#endif
+
 BZ_NAMESPACE(blitz)
 
 // helper class ConstPointerStack
@@ -54,8 +58,9 @@ private:
 
 template<typename T, int N>
 class ConstArrayIterator {
-
 public:
+    ConstArrayIterator() : data_(0) { }
+
     ConstArrayIterator(const Array<T,N>& array)
     {
         // Making internal copies of these avoids keeping
@@ -72,26 +77,23 @@ public:
         for (int i=0; i < N; ++i)
         {
             stack_[i] = data_;
-            last_[i] = data_ + array.extent(order_(i))  
-                * strides_(order_(i));
+            last_[i] = data_ + extent_(order_(i)) * strides_(order_(i));
         }
 
         pos_ = lbound_;
     }
 
-    ConstArrayIterator(const Array<T,N>&, _bz_endTag)
-    {
-        // The _bz_endTag type is provided by the end() method
-        // in Array<T,N>, and indicates that an end iterator
-        // is to be constructed.
-
-        // Use 0 pointer to mark end of array.
-        // This also handles the case of empty arrays, which
-        // have their data pointer set to 0.
-        data_ = 0;
+    bool operator==(const ConstArrayIterator<T,N>& x) const 
+    { 
+        return data_ == x.data_; 
     }
-
-    T operator*() const
+    
+    bool operator!=(const ConstArrayIterator<T,N>& x) const 
+    { 
+        return data_ != x.data_; 
+    }
+ 
+    const T& operator*() const
     {
         BZPRECHECK(data_ != 0, "Attempted to dereference invalid iterator "
              << "(empty array or past end of array)");
@@ -107,19 +109,14 @@ public:
 
     ConstArrayIterator<T,N>& operator++();
 
-    // This operator returns void, which breaks the STL forward
-    // iterator requirements.  Unfortunately many people have
-    // gotten into the habit of writing iter++ when they really
-    // mean ++iter.  iter++ implemented the proper way requires
-    // returning a copy of the original state of the iterator,
-    // before increment.  This would be very inefficient, since
-    // the iterator contains a lot of data.  Hence the void
-    // return: it will be efficient even if you write iter++.
-    // Maybe this is a bad idea, let me know if this causes
-    // you problems.
-    void operator++(int)
-    { ++(*this); }
+    const ConstArrayIterator<T,N>& operator++(int)
+    {
+        ConstArrayIterator<T,N> tmp = *this;
+        ++(*this); 
+        return tmp;
+    }
 
+    // get the current position of the Array iterator in index space
     const TinyVector<int,N>& position() const
     { 
         BZPRECHECK(data_ != 0, "Array<T,N>::iterator::position() called on"
@@ -127,12 +124,6 @@ public:
         return pos_; 
     }
    
-    bool operator==(const ConstArrayIterator<T,N>& x) const { return data_==x.data_; }
-    bool operator!=(const ConstArrayIterator<T,N>& x) const { return data_!=x.data_; }
- 
-private:
-    ConstArrayIterator() { }
-
 private:
     TinyVector<int,N> strides_, lbound_, extent_, order_;
     ConstPointerStack<T,N> stack_;
@@ -146,38 +137,44 @@ protected:
 };
 
 
-
 template<typename T, int N>
 class ArrayIterator : public ConstArrayIterator<T,N> {
-  private:
+private:
     typedef ConstArrayIterator<T,N> T_base;
     using T_base::data_;
-  public:
-    ArrayIterator(Array<T,N>& x)
-      : ConstArrayIterator<T,N>(x)
-    { }
 
-    ArrayIterator(Array<T,N>& x, _bz_endTag y)
-      : ConstArrayIterator<T,N>(x,y)
-    { }
+public:
+    ArrayIterator() { }
 
-    ArrayIterator<T,N>& operator++()
+    ArrayIterator(Array<T,N>& x) : T_base(x) { }
+
+    T& operator*() const
     {
-        ConstArrayIterator<T,N>::operator++();
-        return *this;
-    }
-
-    T& operator*()
-    {
+        BZPRECHECK(data_ != 0, "Attempted to dereference invalid iterator "
+             << "(empty array or past end of array)");
         return *data_;
     }
 
-    T* restrict operator->() 
+    T* restrict operator->() const
     {
+        BZPRECHECK(data_ != 0, "Attempted to dereference invalid iterator "
+             << "(empty array or past end of array)");
         return data_;
     }
-};
 
+    ArrayIterator<T,N>& operator++()
+    {
+        T_base::operator++();
+        return *this;
+    }
+
+    const ArrayIterator<T,N>& operator++(int)
+    {
+        ArrayIterator<T,N> tmp = *this;
+        ++(*this); 
+        return tmp;
+    }
+};
 
 
 template<typename T, int N>
@@ -232,7 +229,37 @@ ConstArrayIterator<T,N>& ConstArrayIterator<T,N>::operator++()
     return *this;
 }
 
+
 BZ_NAMESPACE_END
+
+
+#ifdef BZ_HAVE_STL
+// support for std::iterator_traits
+BZ_NAMESPACE(std)
+
+template <typename T, int N>
+struct iterator_traits< BZ_BLITZ_SCOPE(ConstArrayIterator)<T,N> > 
+{
+    typedef forward_iterator_tag               iterator_category;
+    typedef T                                  value_type;
+    typedef ptrdiff_t                          difference_type;
+    typedef const T*                           pointer;
+    typedef const T&                           reference;
+};
+
+template <typename T, int N>
+struct iterator_traits< BZ_BLITZ_SCOPE(ArrayIterator)<T,N> > 
+{
+    typedef forward_iterator_tag               iterator_category;
+    typedef T                                  value_type;
+    typedef ptrdiff_t                          difference_type;
+    typedef T*                                 pointer;
+    typedef T&                                 reference;
+};
+
+BZ_NAMESPACE_END
+
+#endif // BZ_HAVE_STL
 
 #endif // BZ_ARRAY_ITER_H
 
