@@ -70,7 +70,7 @@ public:
 
 private:
 
-#if defined(BZ_NAMESPACES) && defined(BZ_HAVE_STD)
+#if defined(BZ_HAVE_NAMESPACES) && defined(BZ_HAVE_STD)
   typedef std::vector<twist_int> State;
 #else
   typedef vector<twist_int> State;
