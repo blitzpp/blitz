@@ -75,10 +75,6 @@
  #include <blitz/shapecheck.h>
 #endif
 
-#ifndef BZ_MINMAX_H
- #include <blitz/minmax.h>
-#endif
-
 #ifndef BZ_TINYVEC_H
  #include <blitz/tinyvec.h>
 #endif
@@ -204,7 +200,7 @@ public:
 protected:
     _bz_FunctorExpr() { }
 
-    const T_functor& f_;
+    T_functor f_;
     T_expr iter_;
 };
 
@@ -337,8 +333,7 @@ public:
     {
         int stride1 = iter1_.suggestStride(rank);
         int stride2 = iter2_.suggestStride(rank);
-        return (stride1>stride2?stride1:stride2);
-        //return minmax::max(stride1, stride2);
+        return ( stride1>stride2 ? stride1 : stride2 );
     }
   
     _bz_bool isStride(int rank, int stride) const
@@ -370,7 +365,7 @@ public:
 protected:
     _bz_FunctorExpr2() { }
 
-    const T_functor& f_;
+    T_functor f_;
     T_expr1 iter1_;
     T_expr2 iter2_;
 };
@@ -527,8 +522,8 @@ public:
         int stride1 = iter1_.suggestStride(rank);
         int stride2 = iter2_.suggestStride(rank);
         int stride3 = iter3_.suggestStride(rank);
-	return stride1>(stride2=(stride2>stride3?stride2:stride3))?stride1:stride2;
-        //return minmax::max(stride1, minmax::max(stride2, stride3));
+	return ( stride1 > (stride2 = (stride2>stride3 ? stride2 : stride3)) ?
+            stride1 : stride2 );
     }
   
     _bz_bool isStride(int rank, int stride) const
@@ -567,7 +562,7 @@ public:
 protected:
     _bz_FunctorExpr3() { }
 
-    const T_functor& f_;
+    T_functor f_;
     T_expr1 iter1_;
     T_expr2 iter2_;
     T_expr3 iter3_;
