@@ -1735,6 +1735,14 @@ public:
 
     static inline T_numtype apply(T_numtype x)
     { return -x; }
+
+		template<class T1>
+		static void prettyPrint(string& str, prettyPrintFormat& format, const T1& a)
+		{
+		    str += "-(";
+			  a.prettyPrint(str,format);
+			  str += ")";
+		}
 };
 
 // norm(P_numtype1)
