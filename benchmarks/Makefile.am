@@ -70,7 +70,7 @@ ctime2v ctime3v ctime4v ctime5v
 
 EXTRA_PROGRAMS = $(BENCHMARKS)
 
-compile: $(EXTRA_PROGRAMS) $(LOOP_KERNELS)
+#compile: $(EXTRA_PROGRAMS) $(LOOP_KERNELS)
 
 run:	$(EXTRA_PROGRAMS)
 	@for benchmark in $(BENCHMARKS) ; do \
