@@ -29,7 +29,7 @@ else
  fi
 fi
 
-AM_CONDITIONAL(DOC, test x$enable_doc = xyes)
+AM_CONDITIONAL(DOXYGEN_DOC, test x$enable_doc = xyes)
 
 if test x$DOT = x; then
  if test "x$enable_dot" = xyes; then
