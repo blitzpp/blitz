@@ -23,6 +23,11 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2002/03/06 16:03:02  patricg
+ *
+ * added typename (_bz_typename) qualifier to the iterator and const_iterator
+ * of Array<T_numtype,N_rank>
+ *
  * Revision 1.2  2001/01/25 00:25:55  tveldhui
  * Ensured that source files have cvs logs.
  *
@@ -87,7 +92,8 @@ ostream& operator<<(ostream& os, const Array<T_numtype,N_rank>& x)
 
     os << endl << "[ ";
     
-    Array<T_numtype, N_rank>::const_iterator iter = x.begin(), end = x.end();
+    _bz_typename Array<T_numtype, N_rank>::const_iterator iter = x.begin();
+		_bz_typename Array<T_numtype, N_rank>::const_iterator end = x.end();
     int p = 0;
 
     while (iter != end) {
@@ -137,7 +143,8 @@ istream& operator>>(istream& is, Array<T_numtype,N_rank>& x)
 
     x.resize(extent);
 
-    Array<T_numtype,N_rank>::iterator iter = x.begin(), end = x.end();
+    _bz_typename Array<T_numtype,N_rank>::iterator iter = x.begin();
+		_bz_typename Array<T_numtype,N_rank>::iterator end = x.end();
 
     while (iter != end) {
         BZPRECHECK(!is.bad(), "Premature end of input while scanning array");
