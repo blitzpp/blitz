@@ -242,7 +242,7 @@ double BenchmarkExt<P_parameter>::getMflops(unsigned implementation,
 }
 
 template<typename P_parameter>
-void BenchmarkExt<P_parameter>::saveMatlabGraph(const char* filename) const
+void BenchmarkExt<P_parameter>::saveMatlabGraph(const char* filename, const char* graphType) const
 {
     BZPRECONDITION(state_ == done);
 
@@ -278,7 +278,7 @@ void BenchmarkExt<P_parameter>::saveMatlabGraph(const char* filename) const
     }
     ofs << "] ;" << endl << endl;
 
-    ofs << "semilogx(parm,Mf), title('" << description_ << "'), " << endl
+    ofs << graphType << "(parm,Mf), title('" << description_ << "'), " << endl
         << "    xlabel('" << parameterDescription_ << "'), "
         << "ylabel('" << rateDescription_ << "')" << endl
         << "legend(";
