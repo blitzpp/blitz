@@ -70,6 +70,158 @@ public:
         containers_[2] = &container2;
     }
 
+    CartesianProduct(const T_container& container0, 
+        const T_container& container1,
+        const T_container& container2,
+        const T_container& container3)
+    { 
+        BZPRECONDITION(N_containers == 4);
+        containers_[0] = &container0;
+        containers_[1] = &container1;
+        containers_[2] = &container2;
+        containers_[3] = &container3;
+    }
+
+    CartesianProduct(const T_container& container0, 
+        const T_container& container1,
+        const T_container& container2,
+        const T_container& container3,
+        const T_container& container4)
+    { 
+        BZPRECONDITION(N_containers == 5);
+        containers_[0] = &container0;
+        containers_[1] = &container1;
+        containers_[2] = &container2;
+        containers_[3] = &container3;
+        containers_[4] = &container4;
+    }
+
+    CartesianProduct(const T_container& container0, 
+        const T_container& container1,
+        const T_container& container2,
+        const T_container& container3,
+        const T_container& container4,
+        const T_container& container5)
+    { 
+        BZPRECONDITION(N_containers == 6);
+        containers_[0] = &container0;
+        containers_[1] = &container1;
+        containers_[2] = &container2;
+        containers_[3] = &container3;
+        containers_[4] = &container4;
+        containers_[5] = &container5;
+    }
+
+    CartesianProduct(const T_container& container0, 
+        const T_container& container1,
+        const T_container& container2,
+        const T_container& container3,
+        const T_container& container4,
+        const T_container& container5,
+        const T_container& container6)
+    { 
+        BZPRECONDITION(N_containers == 7);
+        containers_[0] = &container0;
+        containers_[1] = &container1;
+        containers_[2] = &container2;
+        containers_[3] = &container3;
+        containers_[4] = &container4;
+        containers_[5] = &container5;
+        containers_[6] = &container6;
+    }
+
+    CartesianProduct(const T_container& container0, 
+        const T_container& container1,
+        const T_container& container2,
+        const T_container& container3,
+        const T_container& container4,
+        const T_container& container5,
+        const T_container& container6,
+        const T_container& container7)
+    { 
+        BZPRECONDITION(N_containers == 8);
+        containers_[0] = &container0;
+        containers_[1] = &container1;
+        containers_[2] = &container2;
+        containers_[3] = &container3;
+        containers_[4] = &container4;
+        containers_[5] = &container5;
+        containers_[6] = &container6;
+        containers_[7] = &container7;
+    }
+
+    CartesianProduct(const T_container& container0, 
+        const T_container& container1,
+        const T_container& container2,
+        const T_container& container3,
+        const T_container& container4,
+        const T_container& container5,
+        const T_container& container6,
+        const T_container& container7,
+        const T_container& container8)
+    { 
+        BZPRECONDITION(N_containers == 9);
+        containers_[0] = &container0;
+        containers_[1] = &container1;
+        containers_[2] = &container2;
+        containers_[3] = &container3;
+        containers_[4] = &container4;
+        containers_[5] = &container5;
+        containers_[6] = &container6;
+        containers_[7] = &container7;
+        containers_[8] = &container8;
+    }
+
+    CartesianProduct(const T_container& container0, 
+        const T_container& container1,
+        const T_container& container2,
+        const T_container& container3,
+        const T_container& container4,
+        const T_container& container5,
+        const T_container& container6,
+        const T_container& container7,
+        const T_container& container8,
+        const T_container& container9)
+    { 
+        BZPRECONDITION(N_containers == 10);
+        containers_[0] = &container0;
+        containers_[1] = &container1;
+        containers_[2] = &container2;
+        containers_[3] = &container3;
+        containers_[4] = &container4;
+        containers_[5] = &container5;
+        containers_[6] = &container6;
+        containers_[7] = &container7;
+        containers_[8] = &container8;
+        containers_[9] = &container9;
+    }
+
+    CartesianProduct(const T_container& container0, 
+        const T_container& container1,
+        const T_container& container2,
+        const T_container& container3,
+        const T_container& container4,
+        const T_container& container5,
+        const T_container& container6,
+        const T_container& container7,
+        const T_container& container8,
+        const T_container& container9,
+        const T_container& container10)
+    { 
+        BZPRECONDITION(N_containers == 11);
+        containers_[0] = &container0;
+        containers_[1] = &container1;
+        containers_[2] = &container2;
+        containers_[3] = &container3;
+        containers_[4] = &container4;
+        containers_[5] = &container5;
+        containers_[6] = &container6;
+        containers_[7] = &container7;
+        containers_[8] = &container8;
+        containers_[9] = &container9;
+        containers_[10] = &container10;
+    }
+
     const T_container& operator[](int i)
     { return *(containers_[i]); }
 
@@ -145,15 +297,23 @@ template<typename T_tuple, typename T_container, int N_containers>
 void CartesianProductIterator<T_tuple, T_container, 
     N_containers>::operator++()
 {
-    // NEEDS_WORK: put in short-circuit for most common case
-    // (just increment the last iterator)
-
     // Usual stack-style increment
     const int Nminus1 = N_containers - 1;
 
     int i = Nminus1;
 
-    for (; i >= 0; --i)
+    // Short-circuit for most common case
+    // (just increment the last iterator)
+
+    if((++iters_[i]) != enditers_[i])
+    {
+        tuple_[i] = *iters_[i];
+        return;
+    }
+
+    // Less common cases
+
+    for (--i; i >= 0; --i)
     {
         ++iters_[i];
         if (iters_[i] != enditers_[i])
