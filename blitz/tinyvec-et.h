@@ -21,19 +21,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.1  2002/07/02 19:27:27  jcumming
- * This is the new name for the TinyVec.h file, which includes the TinyVector class implementation and ET support using the old style expression templates.
- *
- * Revision 1.1  2001/01/26 18:30:50  tveldhui
- * More source code reorganization to reduce compile times.
- *
- * Revision 1.1  2001/01/24 22:51:50  tveldhui
- * Reorganized #include orders to avoid including the huge Vector e.t.
- * implementation when using Array.
- *
- */
+ ***************************************************************************/
 
 #ifndef BZ_TINYVEC_ET_H
 #define BZ_TINYVEC_ET_H
