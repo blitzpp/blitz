@@ -3,4 +3,6 @@ Makefile
 *.la
 .deps
 .libs
+cxx_repository
 config.h
+

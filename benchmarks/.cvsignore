@@ -5,6 +5,7 @@ Makefile
 .libs
 work.pc
 work.pcl
+cxx_repository
 acou3d
 acoustic
 daxpy
