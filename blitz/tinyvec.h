@@ -46,25 +46,25 @@ BZ_NAMESPACE(blitz)
  * Forward declarations
  */
 
-template<class P_numtype, int N_length, int N_stride BZ_TEMPLATE_DEFAULT(1) >
+template<typename P_numtype, int N_length, int N_stride BZ_TEMPLATE_DEFAULT(1) >
 class TinyVectorIter;
 
-template<class P_numtype, int N_length, int N_stride BZ_TEMPLATE_DEFAULT(1) >
+template<typename P_numtype, int N_length, int N_stride BZ_TEMPLATE_DEFAULT(1) >
 class TinyVectorIterConst;
 
-template<class P_numtype>
+template<typename P_numtype>
 class Vector;
 
-template<class P_expr>
+template<typename P_expr>
 class _bz_VecExpr;
 
-template<class P_distribution>
+template<typename P_distribution>
 class Random;
 
-template<class P_numtype>
+template<typename P_numtype>
 class VectorPick;
 
-template<class T_numtype1, class T_numtype2, int N_rows, int N_columns,
+template<typename T_numtype1, typename T_numtype2, int N_rows, int N_columns,
     int N_vecStride>
 class _bz_matrixVectorProduct;
 
@@ -74,7 +74,7 @@ class _bz_matrixVectorProduct;
  * Declaration of class TinyVector
  */
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 class TinyVector {
 
 public:
@@ -98,7 +98,7 @@ public:
 
     inline TinyVector(const TinyVector<T_numtype,N_length>& x);
 
-    template <class T_numtype2>
+    template <typename T_numtype2>
     inline TinyVector(const TinyVector<T_numtype2,N_length>& x);
 
     inline TinyVector(T_numtype initValue);
@@ -221,7 +221,7 @@ public:
     }
 
     // Constructor added by Peter Nordlund
-    template<class P_expr>
+    template<typename P_expr>
     inline TinyVector(_bz_VecExpr<P_expr> expr);
 
     T_iterator begin()
@@ -233,16 +233,16 @@ public:
     // T_iterator end();
     // T_constIterator end() const;
 
-    T_numtype * _bz_restrict data()
+    T_numtype * restrict data()
     { return data_; }
 
-    const T_numtype * _bz_restrict data() const
+    const T_numtype * restrict data() const
     { return data_; }
 
-    T_numtype * _bz_restrict dataFirst()
+    T_numtype * restrict dataFirst()
     { return data_; }
 
-    const T_numtype * _bz_restrict dataFirst() const
+    const T_numtype * restrict dataFirst() const
     { return data_; }
 
     unsigned length() const
@@ -257,16 +257,16 @@ public:
     unsigned        _bz_suggestLength() const
     { return N_length; }
 
-    _bz_bool        _bz_hasFastAccess() const
-    { return _bz_true; }
+    bool        _bz_hasFastAccess() const
+    { return true; }
 
-    T_numtype& _bz_restrict     _bz_fastAccess(unsigned i)
+    T_numtype& restrict     _bz_fastAccess(unsigned i)
     { return data_[i]; }
 
     T_numtype       _bz_fastAccess(unsigned i) const
     { return data_[i]; }
 
-    template<class P_expr, class P_updater>
+    template<typename P_expr, typename P_updater>
     void _bz_assign(P_expr, P_updater);
 
     _bz_VecExpr<T_constIterator> _bz_asVecExpr() const
@@ -276,12 +276,12 @@ public:
     // Subscripting operators
     //////////////////////////////////////////////
 
-    _bz_bool lengthCheck(unsigned i) const
+    bool lengthCheck(unsigned i) const
     {
         BZPRECHECK(i < N_length, 
             "TinyVector<" << BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_numtype) 
             << "," << N_length << "> index out of bounds: " << i);
-        return _bz_true;
+        return true;
     }
 
     T_numtype operator()(unsigned i) const
@@ -290,7 +290,7 @@ public:
         return data_[i];
     }
 
-    T_numtype& _bz_restrict operator()(unsigned i)
+    T_numtype& restrict operator()(unsigned i)
     { 
         BZPRECONDITION(lengthCheck(i));
         return data_[i];
@@ -302,7 +302,7 @@ public:
         return data_[i];
     }
 
-    T_numtype& _bz_restrict operator[](unsigned i)
+    T_numtype& restrict operator[](unsigned i)
     {
         BZPRECONDITION(lengthCheck(i));
         return data_[i];
@@ -330,76 +330,76 @@ public:
     T_vector& operator>>=(int);
     T_vector& operator<<=(int);
 
-    template<class P_numtype2> 
+    template<typename P_numtype2> 
     T_vector& operator=(const TinyVector<P_numtype2, N_length> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator+=(const TinyVector<P_numtype2, N_length> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator-=(const TinyVector<P_numtype2, N_length> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator*=(const TinyVector<P_numtype2, N_length> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator/=(const TinyVector<P_numtype2, N_length> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator%=(const TinyVector<P_numtype2, N_length> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator^=(const TinyVector<P_numtype2, N_length> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator&=(const TinyVector<P_numtype2, N_length> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator|=(const TinyVector<P_numtype2, N_length> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator>>=(const TinyVector<P_numtype2, N_length> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator<<=(const TinyVector<P_numtype2, N_length> &);
 
-    template<class P_numtype2> T_vector& operator=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_vector& operator+=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_vector& operator-=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_vector& operator*=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_vector& operator/=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_vector& operator%=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_vector& operator^=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_vector& operator&=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_vector& operator|=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_vector& operator>>=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_vector& operator<<=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator+=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator-=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator*=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator/=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator%=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator^=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator&=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator|=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator>>=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator<<=(const Vector<P_numtype2> &);
 
     // Vector expression operand
-    template<class P_expr> T_vector& operator=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_vector& operator+=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_vector& operator-=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_vector& operator*=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_vector& operator/=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_vector& operator%=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_vector& operator^=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_vector& operator&=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_vector& operator|=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_vector& operator>>=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_vector& operator<<=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_vector& operator=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_vector& operator+=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_vector& operator-=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_vector& operator*=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_vector& operator/=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_vector& operator%=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_vector& operator^=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_vector& operator&=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_vector& operator|=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_vector& operator>>=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_vector& operator<<=(_bz_VecExpr<P_expr>);
 
     // VectorPick operand
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator+=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator-=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator*=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator/=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator%=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator^=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator&=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator|=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator>>=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator<<=(const VectorPick<P_numtype2> &);
 
     // Range operand
@@ -415,7 +415,7 @@ public:
     T_vector& operator>>=(Range);
     T_vector& operator<<=(Range);
 
-    T_numtype* _bz_restrict getInitializationIterator()
+    T_numtype* restrict getInitializationIterator()
     { return dataFirst(); }
 
 private:
@@ -426,7 +426,7 @@ private:
 // Specialization for N = 0: KCC is giving some
 // peculiar errors, perhaps this will fix.
 
-template<class T>
+template<typename T>
 class TinyVector<T,0> {
 };
 

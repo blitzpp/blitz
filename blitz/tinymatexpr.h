@@ -32,7 +32,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class T_expr>
+template<typename T_expr>
 class _bz_tinyMatExpr {
 public:
     typedef _bz_typename T_expr::T_numtype T_numtype;

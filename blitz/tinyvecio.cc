@@ -18,7 +18,7 @@ BZ_NAMESPACE(blitz)
 
 // NEEDS_WORK
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 ostream& operator<<(ostream& os, const TinyVector<P_numtype, N_length>& x)
 {
     os << N_length << " [ ";

@@ -38,12 +38,12 @@
 BZ_NAMESPACE(blitz)
 
 // N_stride has default 1, in forward declaration in <blitz/tinyvec.h>
-template<class P_numtype, int N_length, int N_stride>
+template<typename P_numtype, int N_length, int N_stride>
 class TinyVectorIter {
 public:
     typedef P_numtype T_numtype;
 
-    _bz_explicit TinyVectorIter(TinyVector<T_numtype, N_length>& x)
+    explicit TinyVectorIter(TinyVector<T_numtype, N_length>& x)
         : data_(x.data())
     { }
 
@@ -60,7 +60,7 @@ public:
         return data_[i * N_stride];
     }
 
-    T_numtype& _bz_restrict operator[](int i)
+    T_numtype& restrict operator[](int i)
     {
         BZPRECONDITION(i >= 0 && i < N_length);
         return data_[i * N_stride];
@@ -72,7 +72,7 @@ public:
         return data_[i * N_stride];
     }
 
-    T_numtype& _bz_restrict operator()(int i)
+    T_numtype& restrict operator()(int i)
     {
         BZPRECONDITION(i >= 0 && i < N_length);
         return data_[i * N_stride];
@@ -85,8 +85,8 @@ public:
            _bz_dynamicLengthCount = 0,
            _bz_staticLength = 0 };
 
-    _bz_bool _bz_hasFastAccess() const
-    { return _bz_true; }
+    bool _bz_hasFastAccess() const
+    { return true; }
 
     T_numtype _bz_fastAccess(int i) const
     { return data_[i * N_stride]; }
@@ -98,16 +98,16 @@ public:
     { return N_length; }
 
 private:
-    T_numtype * _bz_restrict data_;
+    T_numtype * restrict data_;
 };
 
 // N_stride has default 1, in forward declaration in <blitz/tinyvec.h>
-template<class P_numtype, int N_length, int N_stride>
+template<typename P_numtype, int N_length, int N_stride>
 class TinyVectorIterConst {
 public:
     typedef P_numtype T_numtype;
 
-    _bz_explicit TinyVectorIterConst(const TinyVector<T_numtype, N_length>& x)
+    explicit TinyVectorIterConst(const TinyVector<T_numtype, N_length>& x)
         : data_(x.data())
     { }
 
@@ -144,8 +144,8 @@ public:
            _bz_dynamicLengthCount = 0,
            _bz_staticLength = 0 };
 
-    _bz_bool _bz_hasFastAccess() const
-    { return _bz_true; }
+    bool _bz_hasFastAccess() const
+    { return true; }
 
     T_numtype _bz_fastAccess(int i) const
     { return data_[i * N_stride]; }
@@ -154,7 +154,7 @@ public:
     { return N_length; }
 
 private:
-    const T_numtype * _bz_restrict data_;
+    const T_numtype * restrict data_;
 };
 
 BZ_NAMESPACE_END

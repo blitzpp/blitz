@@ -42,14 +42,14 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>::TinyVector(T_numtype initValue)
 {
     for (int i=0; i < N_length; ++i)
         data_[i] = initValue;
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>::TinyVector(const 
     TinyVector<T_numtype, N_length>& x)
 {
@@ -57,7 +57,7 @@ inline TinyVector<P_numtype, N_length>::TinyVector(const
         data_[i] = x.data_[i];
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>::TinyVector(const 
     TinyVector<P_numtype2, N_length>& x)
 {
@@ -65,7 +65,7 @@ inline TinyVector<P_numtype, N_length>::TinyVector(const
         data_[i] = static_cast<P_numtype>(x[i]);
 }
 
-template<class P_numtype, int N_length> template<class P_expr, class P_updater>
+template<typename P_numtype, int N_length> template<typename P_expr, typename P_updater>
 inline
 void TinyVector<P_numtype, N_length>::_bz_assign(P_expr expr, P_updater up)
 {
@@ -85,7 +85,7 @@ void TinyVector<P_numtype, N_length>::_bz_assign(P_expr expr, P_updater up)
 }
 
 // Constructor added by Peter Nordlund (peter.nordlund@ind.af.se)
-template<class P_numtype, int N_length> template<class P_expr>
+template<typename P_numtype, int N_length> template<typename P_expr>
 inline TinyVector<P_numtype, N_length>::TinyVector(_bz_VecExpr<P_expr> expr) 
 {
   _bz_assign(expr, _bz_update<T_numtype, _bz_typename P_expr::T_numtype>());
@@ -95,7 +95,7 @@ inline TinyVector<P_numtype, N_length>::TinyVector(_bz_VecExpr<P_expr> expr)
  * Assignment operators with vector expression operand
  */
 
-template<class P_numtype, int N_length> template<class P_expr>
+template<typename P_numtype, int N_length> template<typename P_expr>
 inline TinyVector<P_numtype, N_length>& 
 TinyVector<P_numtype, N_length>::operator=(_bz_VecExpr<P_expr> expr)
 {
@@ -103,7 +103,7 @@ TinyVector<P_numtype, N_length>::operator=(_bz_VecExpr<P_expr> expr)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_expr>
+template<typename P_numtype, int N_length> template<typename P_expr>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator+=(_bz_VecExpr<P_expr> expr)
 {
@@ -112,7 +112,7 @@ TinyVector<P_numtype, N_length>::operator+=(_bz_VecExpr<P_expr> expr)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_expr>
+template<typename P_numtype, int N_length> template<typename P_expr>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator-=(_bz_VecExpr<P_expr> expr)
 {
@@ -121,7 +121,7 @@ TinyVector<P_numtype, N_length>::operator-=(_bz_VecExpr<P_expr> expr)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_expr>
+template<typename P_numtype, int N_length> template<typename P_expr>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator*=(_bz_VecExpr<P_expr> expr)
 {
@@ -130,7 +130,7 @@ TinyVector<P_numtype, N_length>::operator*=(_bz_VecExpr<P_expr> expr)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_expr>
+template<typename P_numtype, int N_length> template<typename P_expr>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator/=(_bz_VecExpr<P_expr> expr)
 {
@@ -139,7 +139,7 @@ TinyVector<P_numtype, N_length>::operator/=(_bz_VecExpr<P_expr> expr)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_expr>
+template<typename P_numtype, int N_length> template<typename P_expr>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator%=(_bz_VecExpr<P_expr> expr)
 {
@@ -148,7 +148,7 @@ TinyVector<P_numtype, N_length>::operator%=(_bz_VecExpr<P_expr> expr)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_expr>
+template<typename P_numtype, int N_length> template<typename P_expr>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator^=(_bz_VecExpr<P_expr> expr)
 {
@@ -157,7 +157,7 @@ TinyVector<P_numtype, N_length>::operator^=(_bz_VecExpr<P_expr> expr)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_expr>
+template<typename P_numtype, int N_length> template<typename P_expr>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator&=(_bz_VecExpr<P_expr> expr)
 {
@@ -166,7 +166,7 @@ TinyVector<P_numtype, N_length>::operator&=(_bz_VecExpr<P_expr> expr)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_expr>
+template<typename P_numtype, int N_length> template<typename P_expr>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator|=(_bz_VecExpr<P_expr> expr)
 {
@@ -175,7 +175,7 @@ TinyVector<P_numtype, N_length>::operator|=(_bz_VecExpr<P_expr> expr)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_expr>
+template<typename P_numtype, int N_length> template<typename P_expr>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator<<=(_bz_VecExpr<P_expr> expr)
 {
@@ -184,7 +184,7 @@ TinyVector<P_numtype, N_length>::operator<<=(_bz_VecExpr<P_expr> expr)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_expr>
+template<typename P_numtype, int N_length> template<typename P_expr>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator>>=(_bz_VecExpr<P_expr> expr)
 {
@@ -197,7 +197,7 @@ TinyVector<P_numtype, N_length>::operator>>=(_bz_VecExpr<P_expr> expr)
  * Assignment operators with scalar operand
  */
 
-template<class P_numtype, int N_length> 
+template<typename P_numtype, int N_length> 
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::initialize(T_numtype x)
 {
@@ -213,7 +213,7 @@ TinyVector<P_numtype, N_length>::initialize(T_numtype x)
     return *this;
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator+=(T_numtype x)
 {
@@ -222,7 +222,7 @@ TinyVector<P_numtype, N_length>::operator+=(T_numtype x)
     return *this;
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator-=(T_numtype x)
 {
@@ -231,7 +231,7 @@ TinyVector<P_numtype, N_length>::operator-=(T_numtype x)
     return *this;
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator*=(T_numtype x)
 {
@@ -240,7 +240,7 @@ TinyVector<P_numtype, N_length>::operator*=(T_numtype x)
     return *this;
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator/=(T_numtype x)
 {
@@ -249,7 +249,7 @@ TinyVector<P_numtype, N_length>::operator/=(T_numtype x)
     return *this;
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator%=(T_numtype x)
 {
@@ -258,7 +258,7 @@ TinyVector<P_numtype, N_length>::operator%=(T_numtype x)
     return *this;
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator^=(T_numtype x)
 {
@@ -267,7 +267,7 @@ TinyVector<P_numtype, N_length>::operator^=(T_numtype x)
     return *this;
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator&=(T_numtype x)
 {
@@ -276,7 +276,7 @@ TinyVector<P_numtype, N_length>::operator&=(T_numtype x)
     return *this;
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator|=(T_numtype x)
 {
@@ -285,7 +285,7 @@ TinyVector<P_numtype, N_length>::operator|=(T_numtype x)
     return *this;
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator<<=(int x)
 {
@@ -294,7 +294,7 @@ TinyVector<P_numtype, N_length>::operator<<=(int x)
     return *this;
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator>>=(int x)
 {
@@ -307,7 +307,7 @@ TinyVector<P_numtype, N_length>::operator>>=(int x)
  * Assignment operators with TinyVector operand
  */
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator=(const 
     TinyVector<P_numtype2, N_length>& x)
@@ -317,7 +317,7 @@ TinyVector<P_numtype, N_length>::operator=(const
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator+=(const
     TinyVector<P_numtype2, N_length>& x)
@@ -327,7 +327,7 @@ TinyVector<P_numtype, N_length>::operator+=(const
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator-=(const
     TinyVector<P_numtype2, N_length>& x)
@@ -337,7 +337,7 @@ TinyVector<P_numtype, N_length>::operator-=(const
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator*=(const
     TinyVector<P_numtype2, N_length>& x)
@@ -347,7 +347,7 @@ TinyVector<P_numtype, N_length>::operator*=(const
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator/=(const
     TinyVector<P_numtype2, N_length>& x)
@@ -357,7 +357,7 @@ TinyVector<P_numtype, N_length>::operator/=(const
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator%=(const
     TinyVector<P_numtype2, N_length>& x)
@@ -367,7 +367,7 @@ TinyVector<P_numtype, N_length>::operator%=(const
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator^=(const
     TinyVector<P_numtype2, N_length>& x)
@@ -377,7 +377,7 @@ TinyVector<P_numtype, N_length>::operator^=(const
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator&=(const
     TinyVector<P_numtype2, N_length>& x)
@@ -387,7 +387,7 @@ TinyVector<P_numtype, N_length>::operator&=(const
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator|=(const
     TinyVector<P_numtype2, N_length>& x)
@@ -397,7 +397,7 @@ TinyVector<P_numtype, N_length>::operator|=(const
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator<<=(const
     TinyVector<P_numtype2, N_length>& x)
@@ -407,7 +407,7 @@ TinyVector<P_numtype, N_length>::operator<<=(const
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator>>=(const
     TinyVector<P_numtype2, N_length>& x)
@@ -421,7 +421,7 @@ TinyVector<P_numtype, N_length>::operator>>=(const
  * Assignment operators with Vector operand
  */
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator=(const Vector<P_numtype2>& x)
 {
@@ -429,7 +429,7 @@ TinyVector<P_numtype, N_length>::operator=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator+=(const Vector<P_numtype2>& x)
 {
@@ -437,7 +437,7 @@ TinyVector<P_numtype, N_length>::operator+=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator-=(const Vector<P_numtype2>& x)
 {
@@ -445,7 +445,7 @@ TinyVector<P_numtype, N_length>::operator-=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator*=(const Vector<P_numtype2>& x)
 {
@@ -453,7 +453,7 @@ TinyVector<P_numtype, N_length>::operator*=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator/=(const Vector<P_numtype2>& x)
 {
@@ -461,7 +461,7 @@ TinyVector<P_numtype, N_length>::operator/=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator%=(const Vector<P_numtype2>& x)
 {
@@ -469,7 +469,7 @@ TinyVector<P_numtype, N_length>::operator%=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator^=(const Vector<P_numtype2>& x)
 {
@@ -477,7 +477,7 @@ TinyVector<P_numtype, N_length>::operator^=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator&=(const Vector<P_numtype2>& x)
 {
@@ -485,7 +485,7 @@ TinyVector<P_numtype, N_length>::operator&=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator|=(const Vector<P_numtype2>& x)
 {
@@ -493,7 +493,7 @@ TinyVector<P_numtype, N_length>::operator|=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator<<=(const Vector<P_numtype2>& x)
 {
@@ -501,7 +501,7 @@ TinyVector<P_numtype, N_length>::operator<<=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator>>=(const Vector<P_numtype2>& x)
 {
@@ -513,7 +513,7 @@ TinyVector<P_numtype, N_length>::operator>>=(const Vector<P_numtype2>& x)
  * Assignment operators with Range operand
  */
 
-template<class P_numtype, int N_length> 
+template<typename P_numtype, int N_length> 
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator=(Range r)
 {
@@ -521,7 +521,7 @@ TinyVector<P_numtype, N_length>::operator=(Range r)
     return *this;
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator+=(Range r)
 {
@@ -529,7 +529,7 @@ TinyVector<P_numtype, N_length>::operator+=(Range r)
     return *this;
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator-=(Range r)
 {
@@ -537,7 +537,7 @@ TinyVector<P_numtype, N_length>::operator-=(Range r)
     return *this;
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator*=(Range r)
 {
@@ -545,7 +545,7 @@ TinyVector<P_numtype, N_length>::operator*=(Range r)
     return *this;
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator/=(Range r)
 {
@@ -553,7 +553,7 @@ TinyVector<P_numtype, N_length>::operator/=(Range r)
     return *this;
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator%=(Range r)
 {
@@ -561,7 +561,7 @@ TinyVector<P_numtype, N_length>::operator%=(Range r)
     return *this;
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator^=(Range r)
 {
@@ -569,7 +569,7 @@ TinyVector<P_numtype, N_length>::operator^=(Range r)
     return *this;
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator&=(Range r)
 {
@@ -577,7 +577,7 @@ TinyVector<P_numtype, N_length>::operator&=(Range r)
     return *this;
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator|=(Range r)
 {
@@ -585,7 +585,7 @@ TinyVector<P_numtype, N_length>::operator|=(Range r)
     return *this;
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator<<=(Range r)
 {
@@ -593,7 +593,7 @@ TinyVector<P_numtype, N_length>::operator<<=(Range r)
     return *this;
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator>>=(Range r)
 {
@@ -605,7 +605,7 @@ TinyVector<P_numtype, N_length>::operator>>=(Range r)
  * Assignment operators with VectorPick operand
  */
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator=(const VectorPick<P_numtype2>& x)
 {
@@ -613,7 +613,7 @@ TinyVector<P_numtype, N_length>::operator=(const VectorPick<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator+=(const VectorPick<P_numtype2>& x)
 {
@@ -621,7 +621,7 @@ TinyVector<P_numtype, N_length>::operator+=(const VectorPick<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator-=(const VectorPick<P_numtype2>& x)
 {
@@ -629,7 +629,7 @@ TinyVector<P_numtype, N_length>::operator-=(const VectorPick<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator*=(const VectorPick<P_numtype2>& x)
 {
@@ -637,7 +637,7 @@ TinyVector<P_numtype, N_length>::operator*=(const VectorPick<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator/=(const VectorPick<P_numtype2>& x)
 {
@@ -645,7 +645,7 @@ TinyVector<P_numtype, N_length>::operator/=(const VectorPick<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator%=(const VectorPick<P_numtype2>& x)
 {
@@ -653,7 +653,7 @@ TinyVector<P_numtype, N_length>::operator%=(const VectorPick<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator^=(const VectorPick<P_numtype2>& x)
 {
@@ -661,7 +661,7 @@ TinyVector<P_numtype, N_length>::operator^=(const VectorPick<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator&=(const VectorPick<P_numtype2>& x)
 {
@@ -669,7 +669,7 @@ TinyVector<P_numtype, N_length>::operator&=(const VectorPick<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator|=(const VectorPick<P_numtype2>& x)
 {
@@ -677,7 +677,7 @@ TinyVector<P_numtype, N_length>::operator|=(const VectorPick<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype, int N_length> template<class P_numtype2>
+template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator>>=(const VectorPick<P_numtype2>& x)
 {

@@ -44,32 +44,32 @@
 BZ_NAMESPACE(blitz)
 
 // Forward declarations
-template<class T_expr>
+template<typename T_expr>
 class _bz_tinyMatExpr;
 
-template<class T_numtype, int N_rows, int N_columns, int N_rowStride,
+template<typename T_numtype, int N_rows, int N_columns, int N_rowStride,
     int N_colStride>
 class _bz_tinyMatrixRef {
 
 public:
-    _bz_tinyMatrixRef(T_numtype* _bz_restrict const data)
+    _bz_tinyMatrixRef(T_numtype* restrict const data)
         : data_(data)
     { }
 
-    T_numtype * _bz_restrict data()
-    { return (T_numtype * _bz_restrict)data_; }
+    T_numtype * restrict data()
+    { return (T_numtype * restrict)data_; }
 
-    T_numtype& _bz_restrict operator()(int i, int j)
+    T_numtype& restrict operator()(int i, int j)
     { return data_[i * N_rowStride + j * N_colStride]; }
 
     T_numtype operator()(int i, int j) const
     { return data_[i * N_rowStride + j * N_colStride]; }
 
 protected:
-    T_numtype * _bz_restrict const data_;
+    T_numtype * restrict const data_;
 };
 
-template<class P_numtype, int N_rows, int N_columns>
+template<typename P_numtype, int N_rows, int N_columns>
 class TinyMatrix {
 
 public:
@@ -80,20 +80,20 @@ public:
 
     TinyMatrix() { }
 
-    T_numtype* _bz_restrict data()
+    T_numtype* restrict data()
     { return data_; }
 
-    const T_numtype* _bz_restrict data() const
+    const T_numtype* restrict data() const
     { return data_; }
 
-    T_numtype* _bz_restrict dataFirst()
+    T_numtype* restrict dataFirst()
     { return data_; }
 
-    const T_numtype* _bz_restrict dataFirst() const
+    const T_numtype* restrict dataFirst() const
     { return data_; }
 
     // NEEDS_WORK -- precondition checks
-    T_numtype& _bz_restrict operator()(int i, int j)
+    T_numtype& restrict operator()(int i, int j)
     { return data_[i*N_columns + j]; }
 
     T_numtype operator()(int i, int j) const
@@ -112,7 +112,7 @@ public:
         return ListInitializationSwitch<T_matrix,T_numtype*>(*this, x);
     }
 
-    template<class T_expr>
+    template<typename T_expr>
     TinyMatrix<T_numtype, N_rows, N_columns>&
     operator=(_bz_tinyMatExpr<T_expr> expr)
     {
@@ -128,7 +128,7 @@ public:
             (*this)(i,j) = x;
     }
 
-    T_numtype* _bz_restrict getInitializationIterator()
+    T_numtype* restrict getInitializationIterator()
     { return dataFirst(); }
 
 protected:
