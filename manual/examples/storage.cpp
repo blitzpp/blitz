@@ -1,18 +1,10 @@
 /*****************************************************************************
+ *
  * storage.cpp        Blitz++ Array custom storage orders example
  *
  * $Id$
  *
- * $Log$
- * Revision 1.1  2000/06/19 13:03:29  tveldhui
- * Initial source check-in; added files not usually released in the
- * distribution.
- *
- * Revision 1.1  1997/07/16 19:38:23  tveldhui
- * Update: Alpha release 0.2 (Arrays)
- *
- *****************************************************************************
- */
+ *****************************************************************************/
 #include <blitz/array.h>
 
 BZ_USING_NAMESPACE(blitz)
