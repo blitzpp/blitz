@@ -23,6 +23,11 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.8  2002/06/27 00:28:50  jcumming
+ * Changed template parameter name T_numtype2 to P_numtype2 in member function
+ * template declarataions for consistency with definitions and to avoid any
+ * confusion with typedef T_numtype.
+ *
  * Revision 1.7  2002/06/26 23:55:45  jcumming
  * Explicitly specify second template argument for ListInitializationSwitch,
  * rather than relying on the default value.  This eliminates a compilation
@@ -906,8 +911,8 @@ public:
     { return T_iterator(*this); }
 
     // Deprecated: now extractComponent(...)
-    template<class T_numtype2>
-    Array<T_numtype2,N_rank>          chopComponent(T_numtype2 a, int compNum,
+    template<class P_numtype2>
+    Array<P_numtype2,N_rank>          chopComponent(P_numtype2 a, int compNum,
                                           int numComponents) const
     { return extractComponent(a, compNum, numComponents); }
 
@@ -1002,8 +1007,8 @@ public:
     const TinyVector<int,N_rank>&     extent() const
     { return length_; }
 
-    template<class T_numtype2>
-    Array<T_numtype2,N_rank>          extractComponent(T_numtype2, int compNum,
+    template<class P_numtype2>
+    Array<P_numtype2,N_rank>          extractComponent(P_numtype2, int compNum,
                                           int numComponents) const;
 
     void                              free() 
@@ -2294,28 +2299,28 @@ public:
     // Array operands
     T_array& operator=(const Array<T_numtype,N_rank>&);
 
-    template<class T_numtype2> 
-    T_array& operator=(const Array<T_numtype2,N_rank>&);
-    template<class T_numtype2>
-    T_array& operator+=(const Array<T_numtype2,N_rank>&);
-    template<class T_numtype2>
-    T_array& operator-=(const Array<T_numtype2,N_rank>&);
-    template<class T_numtype2>
-    T_array& operator*=(const Array<T_numtype2,N_rank>&);
-    template<class T_numtype2>
-    T_array& operator/=(const Array<T_numtype2,N_rank>&);
-    template<class T_numtype2>
-    T_array& operator%=(const Array<T_numtype2,N_rank>&);
-    template<class T_numtype2>
-    T_array& operator^=(const Array<T_numtype2,N_rank>&);
-    template<class T_numtype2>
-    T_array& operator&=(const Array<T_numtype2,N_rank>&);
-    template<class T_numtype2>
-    T_array& operator|=(const Array<T_numtype2,N_rank>&);
-    template<class T_numtype2>
-    T_array& operator>>=(const Array<T_numtype2,N_rank>&);
-    template<class T_numtype2>
-    T_array& operator<<=(const Array<T_numtype2,N_rank>&);
+    template<class P_numtype2> 
+    T_array& operator=(const Array<P_numtype2,N_rank>&);
+    template<class P_numtype2>
+    T_array& operator+=(const Array<P_numtype2,N_rank>&);
+    template<class P_numtype2>
+    T_array& operator-=(const Array<P_numtype2,N_rank>&);
+    template<class P_numtype2>
+    T_array& operator*=(const Array<P_numtype2,N_rank>&);
+    template<class P_numtype2>
+    T_array& operator/=(const Array<P_numtype2,N_rank>&);
+    template<class P_numtype2>
+    T_array& operator%=(const Array<P_numtype2,N_rank>&);
+    template<class P_numtype2>
+    T_array& operator^=(const Array<P_numtype2,N_rank>&);
+    template<class P_numtype2>
+    T_array& operator&=(const Array<P_numtype2,N_rank>&);
+    template<class P_numtype2>
+    T_array& operator|=(const Array<P_numtype2,N_rank>&);
+    template<class P_numtype2>
+    T_array& operator>>=(const Array<P_numtype2,N_rank>&);
+    template<class P_numtype2>
+    T_array& operator<<=(const Array<P_numtype2,N_rank>&);
 
     // Array expression operands
     template<class T_expr>
