@@ -1,6 +1,15 @@
 Makefile
 Makefile.in
+*.o
+*.lo
+*.la
+*.ii
+*.ti
 .deps
 .libs
 cxx_repository
+Template.dir
+ii_files
+ti_files
 *.texi
+dump-stencil
