@@ -33,13 +33,13 @@ BZ_NAMESPACE(blitz)
 
 #ifdef BZ_HAVE_COMPLEX
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 inline Array<T_numtype, N_rank> real(const Array<complex<T_numtype>,N_rank>& A)
 {
     return A.extractComponent(T_numtype(), 0, 2);
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 inline Array<T_numtype, N_rank> imag(const Array<complex<T_numtype>,N_rank>& A)
 {
     return A.extractComponent(T_numtype(), 1, 2);
