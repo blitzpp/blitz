@@ -26,7 +26,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class T>
+template<typename T>
 Array<T,1> convolve(const Array<T,1>& B, const Array<T,1>& C)
 {
     int Bl = B.lbound(0), Bh = B.ubound(0);
