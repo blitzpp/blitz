@@ -31,8 +31,5 @@ pgi/bzconfig.h kai/bzconfig.h fujitsu/bzconfig.h
 
 nobase_blitz_HEADERS = $(COMPILER_SPECIFIC_HEADER)
 
-EXTRA_DIST = MAT-NOTE.gz config-ICL.h config-KCC.h config-SC4.0.h \
-config-SGi.h config-g++2.7.2.h config-mwerks.h config-xlC.h config-g++3.h
-
 clean-local:
 	-rm -rf config.h 
