@@ -143,7 +143,7 @@ int main()
     two("fmod");
     two("hypot", bsdflag);
     one("ilogb", ieeeflag);
-    one("blitz_isnan", ieeeflag);
+    one("isnan", ieeeflag);
     one("itrunc", bsdflag);
     one("j0", ieeeflag);
     one("j1", ieeeflag);
