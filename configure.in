@@ -45,6 +45,7 @@ AC_SUBST(CXXF90FLAG)
 
 # Set default values
 AR_FLAGS="-cru"
+LDFLAGS=
 
 # Process command-line arguments for configure
 
@@ -53,17 +54,6 @@ know_compiler=0
 AC_ARG_WITH(cxx,
   [  --with-cxx=COMPILER[:name-flags]     set options for COMPILER (KCC, SGI, FCC, cray, gcc, old-gcc, DECcxx, aCC, icc, pgCC, xlC)],
   [case "$withval" in
-     KCCdev)             # KAI C++ (development flags)
-       echo "Configuring for KAI C++ development environment"
-       bz_compiler=kccdev
-       CXX=KCC
-       CXXFLAGS="-DTV_KCC --restrict \
---no_implicit_include --abstract_pointer --abstract_float \
---no_implicit_typename --no_old_specializations \
---strict_warnings"
-       CXX_OPTIMIZE_FLAGS="+K3 -O3"
-       CXX_DEBUG_FLAGS="-g +K0 -DBZ_DEBUG"
-     ;;
      KCC*)               # KAI C++  http://www.kai.com/
        echo "Configuring for KAI C++"
        bz_compiler=kcc
@@ -78,38 +68,17 @@ AC_ARG_WITH(cxx,
        esac
        CXX_OPTIMIZE_FLAGS="+K3 -O3"
        CXX_DEBUG_FLAGS="-g +K0 -DBZ_DEBUG"
-       AR="\$(CXX)"
+       AR="KCC"
        AR_FLAGS="-o"
-     ;;
-     SGI64*)             # SGI C++  http://www.sgi.com
-       echo "Configuring for SGI C++ (64 bit abi)"
-       bz_compiler=sgiCC
-       AC_BZ_SET_COMPILER($withval,"CC","-64 -LANG:std -LANG:restrict")
-       CXX_LIBS="-lCio"
-       CXX_OPTIMIZE_FLAGS="-Ofast"
-       CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
-       LDFLAGS="-64 -lCio"
-       RANLIB="ar ts"
-     ;;
-     SGI32*)             # SGI C++  http://www.sgi.com
-       echo "Configuring for SGI C++ (32 bit abi)"
-       bz_compiler=sgiCC
-       AC_BZ_SET_COMPILER($withval,"CC","-n32 -LANG:std -LANG:restrict")
-       CXX_LIBS="-lCio"
-       CXX_OPTIMIZE_FLAGS="-Ofast"
-       CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
-       LDFLAGS="-n32 -lCio"
-       RANLIB="ar ts"
      ;;
      SGI*)               # SGI C++  http://www.sgi.com
        echo "Configuring for SGI C++"
        bz_compiler=sgiCC
        AC_BZ_SET_COMPILER($withval,"CC","-LANG:std -LANG:restrict")
-       CXX_OPTIMIZE_FLAGS="-Ofast"
+       CXX_OPTIMIZE_FLAGS="-O3"
        CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
-       AR="\$(CXX)"
+       AR="CC"
        AR_FLAGS="-ar -o"
-			 LDFLAGS="-lCio"
        RANLIB="ar ts"
      ;;
      FCC*)
@@ -246,7 +215,7 @@ case "$target" in
         ;;
         KCC)
           CXXFLAGS="-q64 $CXXFLAGS"
-          AR_FLAGS="-q64 -o"
+          AR_FLAGS="-q64 $AR_FLAGS"
         ;;
         gcc)
           CXXFLAGS="-maix64 $CXXFLAGS"
@@ -257,9 +226,9 @@ case "$target" in
   *irix*)
     echo "IRIX: assuming f77 and f90"
     F77=f77
-    F77_OPTIMIZE_FLAGS="-Ofast"
+    F77_OPTIMIZE_FLAGS="-O3"
     F90=f90
-    F90_OPTIMIZE_FLAGS="-Ofast"
+    F90_OPTIMIZE_FLAGS="-O3"
     FORTLIBS="-lfortran -lffio -lftn"
     CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
     case "$CXX" in
@@ -275,11 +244,11 @@ case "$target" in
         CC)
           CXXFLAGS="-64 $CXXFLAGS"
           LDFLAGS="-64 $LDFLAGS"
-          AR_FLAGS="-64 -ar -o"
+          AR_FLAGS="-64 $AR_FLAGS"
         ;;
         KCC)
           CXXFLAGS="-64 $CXXFLAGS"
-          AR_FLAGS="-64 -o"
+          AR_FLAGS="-64 $AR_FLAGS"
         ;;
         gcc)
           CXXFLAGS="-mabi=64 $CXXFLAGS"
@@ -388,19 +357,14 @@ AC_ARG_ENABLE(debug,
 
 echo ""
 
-# Check tools
-#AC_CHECK_TOOL(AR, ar)
-#AC_PROG_RANLIB
+# Disable shared library building by default (use --enable-shared to enable)
+AM_DISABLE_SHARED
 
-# Disable shared library building
-#AM_DISABLE_SHARED
 # Libtool stuff check
-
 AC_PROG_LIBTOOL
 
 AC_LANG([C++])
 AC_PROG_CXX
-#AC_CHECK_PROGS(M4, gm4 gnum4 m4, m4)
 
 AC_CHECK_LIB(m, sin)
 
@@ -550,7 +514,7 @@ cat << 'EOH'
 The configure script has generated makefiles for your platform.
 You have several options now:
 
-	make                  Check the compiler and create libblitz.a
+	make lib              Check the compiler and create libblitz.a
 	make check-testsuite  Build and check the testsuite
 	make check-examples   Build and check the examples
 	make check-benchmarks Build and check the benchmarks (takes a long time)
