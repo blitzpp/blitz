@@ -1,6 +1,12 @@
 #include "testsuite.h"
 #include <blitz/array.h>
 
+#ifdef BZ_HAVE_STL
+#include <iterator>
+#include <algorithm>
+BZ_USING_NAMESPACE(std)
+#endif
+
 BZ_USING_NAMESPACE(blitz)
 
 void check(const Array<int,2>& A, const Array<int,1>& b)
@@ -14,6 +20,21 @@ void check(const Array<int,2>& A, const Array<int,1>& b)
     }
     BZTEST(i == A.numElements());
 }
+
+#ifdef BZ_HAVE_STL
+template <typename _Iter>
+void checkInterface(_Iter iter)
+{
+    typedef typename iterator_traits<_Iter>::value_type value_type;
+    typedef typename iterator_traits<_Iter>::reference reference;
+    typedef typename iterator_traits<_Iter>::pointer pointer;
+    value_type x = *iter;
+    BZTEST(*iter == x);
+    reference y(x);
+    pointer p = &(*iter);
+    BZTEST(*p == y);
+}
+#endif // BZ_HAVE_STL
 
 int main()
 {
@@ -58,6 +79,27 @@ int main()
     Array<int,2>::iterator iter = B.begin(), end = B.end();
     BZTEST(iter == end);
   }
+
+#ifdef BZ_HAVE_STL
+  {
+    Array<int,2> A(3,3);
+    A = 1, 2, 3,
+        3, 2, 1,
+        4, 3, 2;
+    replace(A.begin(), A.end(), 3, 0); // replace each 3 with 0
+    Array<int,1> b(9);
+    b = 1, 2, 0, 0, 2, 1, 4, 0, 2;
+    check(A,b);
+    Array<int,2>::iterator iter;
+    iter = adjacent_find(A.begin(),A.end());
+    TinyVector<int,2> pos = iter.position(), ans(0,2);
+    BZTEST(pos[0] == ans[0] && pos[1] == ans[1]);
+    checkInterface(iter);
+    const Array<int,2>& B(A);
+    Array<int,2>::const_iterator citer = B.begin();
+    checkInterface(citer);
+  }
+#endif // BZ_HAVE_STL
 
 }
 
