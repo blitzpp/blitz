@@ -1,3 +1,46 @@
+2003-12-16  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* testsuite/newet.cpp: Added some testing of support for
+	user-defined ternary functions.
+
+	* blitz/array/Makefile.am: Removed newet-macros-old.h from
+	array_HEADERS list.
+
+	* blitz/array/newet-macros.h: Added macros
+	BZ_DECLARE_ARRAY_ET_TERNARY, BZ_DECLARE_FUNCTION3, and
+	BZ_DECLARE_FUNCTION3_RET to provide support for creating
+	user-defined ternary functions that act on Arrays.  This code was
+	originally provided by Navneet Dalal.  Also folded in to this file
+	the macros from the file newet-macros-old.h, using the old
+	versions only if template template arguments are not supported.  I
+	will be eliminating newet-macros-old.h, since it contained many
+	macros that were identical to the ones given here.
+	* blitz/array/asexpr.h: Added definition of struct template
+	BzTernaryExprResult, which provides the type of the result of a
+	ternary operator or function acting on three Arrays.
+
+	* blitz/array/expr.h: Added definition of class template
+	_bz_ArrayExprTernaryOp to handle ternary operators and functions
+	acting on blitz Arrays.  It is modeled after the where operator,
+	which is a very special kind of ternary operator.
+2003-12-15  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/array/functorExpr.h: Added missing typename keyword (using
+	_bz_typename macro) in a few places where derived types were being
+	passed to the BZ_PROMOTE macro.
+
+2003-12-12  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* configure.in: Patch from Theodore Papadopoulo to test for flags
+	needed to set the runtime library search path and to use dynamic
+	linking.
+	* acinclude.m4: Patch from Theodore Papadopoulo to provide
+	functions that test for flags needed to set the runtime library
+	search path and to use dynamic linking.
+	* doc/Makefile.am: Patch from Theodore Papadopoulo to fix problem
+	with building docs from a different directory than the source
+	directory.
+
 2003-12-10  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* blitz/applics.h blitz/array-impl.h blitz/bench.cc blitz/bench.h 
