@@ -1742,11 +1742,11 @@ if test "${with_cxx+set}" = set; then
      ;;
      *:*)                   # Simple initialization syntax
        CXX=`echo "$cxxwith" | sed  -n -e 's/.*:\(.*\)/\1/p'`
-       CXXFLAGS="-64 -DBZ_DISABLE_XOPEN_SOURCE -LANG:std -LANG:restrict"
+       CXXFLAGS="-64 -LANG:std -LANG:restrict"
      ;;
      *)                     # Default values
        CXX="CC"
-       CXXFLAGS="-64 -DBZ_DISABLE_XOPEN_SOURCE -LANG:std -LANG:restrict"
+       CXXFLAGS="-64 -LANG:std -LANG:restrict"
      ;;
    esac
        CXX_LIBS="-lCio"
@@ -1766,11 +1766,11 @@ if test "${with_cxx+set}" = set; then
      ;;
      *:*)                   # Simple initialization syntax
        CXX=`echo "$cxxwith" | sed  -n -e 's/.*:\(.*\)/\1/p'`
-       CXXFLAGS="-n32 -DBZ_DISABLE_XOPEN_SOURCE -LANG:std -LANG:restrict"
+       CXXFLAGS="-n32 -LANG:std -LANG:restrict"
      ;;
      *)                     # Default values
        CXX="CC"
-       CXXFLAGS="-n32 -DBZ_DISABLE_XOPEN_SOURCE -LANG:std -LANG:restrict"
+       CXXFLAGS="-n32 -LANG:std -LANG:restrict"
      ;;
    esac
        CXX_LIBS="-lCio"
@@ -1811,11 +1811,11 @@ if test "${with_cxx+set}" = set; then
      ;;
      *:*)                   # Simple initialization syntax
        CXX=`echo "$cxxwith" | sed  -n -e 's/.*:\(.*\)/\1/p'`
-       CXXFLAGS="-DBZ_DISABLE_XOPEN_SOURCE -std strict_ansi"
+       CXXFLAGS="-DBZ_ENABLE_XOPEN_SOURCE -std strict_ansi"
      ;;
      *)                     # Default values
        CXX="cxx"
-       CXXFLAGS="-DBZ_DISABLE_XOPEN_SOURCE -std strict_ansi"
+       CXXFLAGS="-DBZ_ENABLE_XOPEN_SOURCE -std strict_ansi"
      ;;
    esac
        CXX_OPTIMIZE_FLAGS="-O4 -tune host"
@@ -1835,11 +1835,11 @@ if test "${with_cxx+set}" = set; then
      ;;
      *:*)                   # Simple initialization syntax
        CXX=`echo "$cxxwith" | sed  -n -e 's/.*:\(.*\)/\1/p'`
-       CXXFLAGS="-DBZ_DISABLE_XOPEN_SOURCE -std strict_ansi -nopure_cname"
+       CXXFLAGS="-DBZ_ENABLE_XOPEN_SOURCE -std strict_ansi -nopure_cname"
      ;;
      *)                     # Default values
        CXX="cxx"
-       CXXFLAGS="-DBZ_DISABLE_XOPEN_SOURCE -std strict_ansi -nopure_cname"
+       CXXFLAGS="-DBZ_ENABLE_XOPEN_SOURCE -std strict_ansi -nopure_cname"
      ;;
    esac
        CXX_OPTIMIZE_FLAGS="-O4 -tune host"
