@@ -49,9 +49,7 @@ int main()
      { "==", true,  true,  "_bz_Equal",          "Equality operators" },
      { "!=", true,  true,  "_bz_NotEqual",       "Not-equal operators" },
      { "&&", false, false, "_bz_LogicalAnd",     "Logical AND operators" },
-     { "||", false, false, "_bz_LogicalOr",      "Logical OR operators" },
-		 { "min", false, false, "_bz_Min",      "Minimum Operators" },
-		 { "max", false, false, "_bz_Max",      "Maximum Operators" }
+     { "||", false, false, "_bz_LogicalOr",      "Logical OR operators" }
     };
 
     for (int i=0; i < 18; ++i)
