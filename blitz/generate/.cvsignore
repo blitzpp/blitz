@@ -1,1 +1,11 @@
 Makefile
+.deps
+genarrbops
+genarruops
+genmatbops
+genmathfunc
+genmatuops
+genpromote
+genvecbops
+genvecuops
+genvecwhere
