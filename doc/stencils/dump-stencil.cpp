@@ -5,7 +5,7 @@ BZ_USING_NAMESPACE(blitz)
 
 
 BZ_DECLARE_STENCIL2(footprint,A,B)
-    B = stenciltoapply;
+    B = stenciltoapply(stencilargs);
 BZ_END_STENCIL
 
 
