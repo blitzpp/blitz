@@ -1,3 +1,23 @@
+2003-09-02  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/array/methods.cc: Fixed bug in code that constructs an
+	Array from an array expression.  The default value for the
+	ordering and ascending variables when there is no Array with a
+	defined shape in the expression is INT_MIN, not INT_MAX.
+	* blitz/vecuops.cc: Freshly generated vecuops.cc header with new
+	support for conj() function.
+	* blitz/generate/genvecuops.cpp: Added support for complex math
+	operations and added conj() to list of generated unary operations
+	for vector types.
+	* blitz/vecexpr.h: Added missing unary minus operator for
+	VectorPick and TinyVector types.
+
+2003-07-22  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/array/methods.cc: Patch from Derrick Bass to correct a bug
+	that could lead to incorrect Array ordering data when performing
+	reductions.
+
 2003-06-25  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* blitz/array/fastiter.h: FastArrayIterator now uses
