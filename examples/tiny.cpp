@@ -12,9 +12,7 @@
 
 #include <blitz/tinyvec-et.h>
 
-#ifdef BZ_NAMESPACES
-using namespace blitz;
-#endif
+BZ_USING_NAMESPACE(blitz)
 
 void reflect(TinyVector<double,3>& reflection, const TinyVector<double,3>& ray,
     const TinyVector<double,3>& surfaceNormal)
