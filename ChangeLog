@@ -1,3 +1,10 @@
+
+2004-11-17  Patrick Guio  <patrick.guio@bccs.uib.no>
+
+	* doc/doxygen/Makefile.am: Fixed install related targets to take into
+	account a possible DESTDIR.
+
+
 2004-11-04  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
         Tagging repository contents with Blitz_0_8 tag.
