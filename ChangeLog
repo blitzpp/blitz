@@ -1,3 +1,96 @@
+2003-12-30  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* testsuite/extract.cpp: Use new BZ_DECLARE_ARRAY_ET_SCALAR_OPS
+	macro to provide binary operators that combine an Array and an
+	RGB24 object.  This is needed here to provide the definition for
+	operator==.  This is an example of how to place a user-defined
+	concrete data type into the blitz ET system.
+
+	* testsuite/newet.cpp: Removed the final test in this testsuite
+	code, which was attempting to invoke a ternary functor with one of
+	the arguments being a scalar int.  This no longer works because
+	the ternary operator definition has been modified to accept only
+	Array-like ETBase<T> objects.  This seems like a more reasonable
+	behavior.  One could define ternary combinations that involve one
+	or two scalar objects and convert them into _bz_ArrayExprConstant
+	objects, but I'm not sure there is any real need for such
+	operators.
+
+	* blitz/array/funcs.h: Added new macro
+	BZ_DECLARE_ARRAY_ET_SCALAR_FUNCS that provides binary functions
+	for combinations of an ETBase<T> and a scalar type.  This macro is
+	used to provide binary funcs for Array-like objects interacting
+	with all the common built-in scalar types.  It can also be used to
+	define similar functions with a user-defined scalar type.
+
+	* blitz/array/ops.h: Added new macro
+	BZ_DECLARE_ARRAY_ET_SCALAR_OPS that provides binary operators for
+	combinations of an ETBase<T> and a scalar type.  This macro is
+	used to provide binary ops for Array-like objects interacting with
+	all the common built-in scalar types.  It can also be used to
+	define similar operators with a user-defined scalar type.
+
+	* blitz/array/zip.h: Renamed class _bz_ArrayExprOp to
+	_bz_ArrayExprBinaryOp for imporoved clarity.
+
+	* blitz/array/newet-macros.h: Renamed class _bz_ArrayExprOp to
+	_bz_ArrayExprBinaryOp for imporoved clarity.  Reduced the
+	complexity of the BZ_DECLARE_ARRAY_ET_BINARY macro.  This macro
+	now applies only to the combination of an ETBase<T1> and an
+	ETBase<T2>, so the operands must be Arrays or Array
+	expression-like objects.  Interactions between an ETBase<T> and a
+	scalar type are handled by a new macro called
+	BZ_DECLARE_ARRAY_ET_BINARY_SCALAR, which converts the scalar into
+	an expression object using the asExpr class.  The advantage of
+	this approach is that we have fewer combinations to handle and we
+	can avoid ambiguities that might arise with general function
+	templates.
+
+	* blitz/array/asexpr.h: Renamed class _bz_ArrayExprOp to
+	_bz_ArrayExprBinaryOp for imporoved clarity.  Added static method
+	getExpr() to asExpr class to convert the given type into the
+	T_expr type needed for expression evaluation.  This allows us to
+	reduce the number of specializations of binary operators by
+	treating all ETBase<T> objects in a uniform fashion.
+
+	* blitz/array/expr.h: Renamed class _bz_ArrayExprOp to
+	_bz_ArrayExprBinaryOp for imporoved clarity.  Some other cosmetic
+	changes as well.
+
+	* blitz/array/bops.cc: Regenerated blitz/array/bops.cc header
+	file.
+
+	* blitz/array/uops.cc: Regenerated blitz/array/uops.cc header
+	file.
+
+	* blitz/generate/genarruops.cpp: Renamed _bz_ArrayExprOp class to
+	_bz_ArrayExprBinaryOp for improved clarity.
+
+	* blitz/generate/genarrbops.cpp: Renamed _bz_ArrayExprOp class to
+	_bz_ArrayExprBinaryOp for improved clarity.
+
+	* blitz/array/where.h: Removed some previously commented out code.
+	Added Emacs C++ tag.
+	* blitz/array/ops.cc: Replaced static_cast of ETBase objects with
+	call to unwrap() member function.  Also removed external include
+	guards.
+
+	* blitz/array/newet-macros.h: Replaced static_cast of ETBase
+	objects with call to unwrap() member function.  Also added Emacs
+	C++ tag at top of file.
+
+	* blitz/array/functorExpr.h: Replaced static_cast of ETBase
+	objects with call to unwrap() member function.  Also added Emacs
+	C++ tag and Blitz file header at top of file.
+
+	* blitz/array/funcs.h: Replaced static_cast of ETBase objects with
+	call to unwrap() member function.  Also added Emacs C++ tag at top
+	of file and removed external include guards.
+
+	* blitz/etbase.h: Added unwrap() member function to ETBase class
+	that performs the static cast to produce the wrapped type.  Also
+	added Emacs C++ tag at top of file.
+
 2003-12-17  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* doc/blitz.texi: Patch from Peter Bienstman to add directory info
