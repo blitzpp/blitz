@@ -54,31 +54,31 @@ public:
     }
 #endif
 
-    T_numtype operator[](unsigned i) const
+    T_numtype operator[](int i) const
     {
-        BZPRECONDITION(i < N_length);
+        BZPRECONDITION(i >= 0 && i < N_length);
         return data_[i * N_stride];
     }
 
-    T_numtype& _bz_restrict operator[](unsigned i)
+    T_numtype& _bz_restrict operator[](int i)
     {
-        BZPRECONDITION(i < N_length);
+        BZPRECONDITION(i >= 0 && i < N_length);
         return data_[i * N_stride];
     }
 
-    T_numtype operator()(unsigned i) const
+    T_numtype operator()(int i) const
     {
-        BZPRECONDITION(i < N_length);
+        BZPRECONDITION(i >= 0 && i < N_length);
         return data_[i * N_stride];
     }
 
-    T_numtype& _bz_restrict operator()(unsigned i)
+    T_numtype& _bz_restrict operator()(int i)
     {
-        BZPRECONDITION(i < N_length);
+        BZPRECONDITION(i >= 0 && i < N_length);
         return data_[i * N_stride];
     }
 
-    unsigned length(unsigned) const
+    int length(int) const
     { return N_length; }
 
     enum { _bz_staticLengthCount = 1,
@@ -88,13 +88,13 @@ public:
     _bz_bool _bz_hasFastAccess() const
     { return _bz_true; }
 
-    T_numtype _bz_fastAccess(unsigned i) const
+    T_numtype _bz_fastAccess(int i) const
     { return data_[i * N_stride]; }
 
-    T_numtype& _bz_fastAccess(unsigned i)
+    T_numtype& _bz_fastAccess(int i)
     { return data_[i * N_stride]; }
 
-    unsigned _bz_suggestLength() const
+    int _bz_suggestLength() const
     { return N_length; }
 
 private:
@@ -125,19 +125,19 @@ public:
     }
 #endif
 
-    T_numtype operator[](unsigned i) const
+    T_numtype operator[](int i) const
     {
-        BZPRECONDITION(i < N_length);
+        BZPRECONDITION(i >= 0 && i < N_length);
         return data_[i * N_stride];
     }
 
-    T_numtype operator()(unsigned i) const
+    T_numtype operator()(int i) const
     {
-        BZPRECONDITION(i < N_length);
+        BZPRECONDITION(i >= 0 && i < N_length);
         return data_[i * N_stride];
     }
 
-    unsigned length(unsigned) const
+    int length(int) const
     { return N_length; }
 
     enum { _bz_staticLengthCount = 1,
@@ -147,10 +147,10 @@ public:
     _bz_bool _bz_hasFastAccess() const
     { return _bz_true; }
 
-    T_numtype _bz_fastAccess(unsigned i) const
+    T_numtype _bz_fastAccess(int i) const
     { return data_[i * N_stride]; }
 
-    unsigned _bz_suggestLength() const
+    int _bz_suggestLength() const
     { return N_length; }
 
 private:
