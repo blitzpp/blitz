@@ -1,7 +1,17 @@
 
+
+2004-10-14  Patrick Guio  <patrick.guio@ii.uib.no>
+
+	* config/texinfo.tex: Removed from repository since it is generated
+	when running 'autoreconf -vif'.
+
+	* doc/blitz.info: Removed from repository since it is generated when
+	making doc.
+
+
 2004-10-13  Patrick Guio  <patrick.guio@ii.uib.no>
 
-  * m4/ac_compiler_specific_header.m4: New macro "extracted" from
+	* m4/ac_compiler_specific_header.m4: New macro "extracted" from
 	configure.ac to set the compiler-specific header. Added 
 	COMPILER_SPECIFIC_HEADER as a precious variable. Added icc as a
 	supported compiler (together with icpc).
