@@ -4,7 +4,7 @@
 
 EXTRA_DIST = readme.txt
 
-AM_CXXFLAGS = -I$(srcdir) -I$(top_srcdir)
+AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir)
 
 lib_LTLIBRARIES = libblitz.la
 libblitz_la_SOURCES = $(top_srcdir)/src/globals.cpp
