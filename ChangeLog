@@ -1,3 +1,59 @@
+2004-09-17  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/array/eval.cc: Replaced data[i] with *data++ in unit
+	stride loops over data inside various Array expression evaluation
+	mechanisms.  This tends to optimize better under some compilers,
+	and this change eliminates some unusual bugs in expression
+	evaluation when using the KCC compiler in optimized mode.  This is
+	an old patch which I forgot to check in.
+	* blitz/array/resize.cc: Changed precondition on resize() method
+	to allow extent arguments with the value 0.  This will allow the
+	user to resize an existing Array to size 0, which will cause the
+	MemoryBlockReference class to call the changeToNullBlock() method
+	and release its reference to any pre-existing allocated memory
+	block.  We continue to reject an extent of 0 in the
+	resizeAndPreserve() method, since presumably the user wishes to
+	preserve some pre-existing elements.
+	* blitz/array/slicing.cc: Use default value of zero for second
+	argument in call to changeBlock method of class
+	MemoryBlockReference.  No need to set data_ pointer to
+	array.dataZero(), as this is already done by changeBlock.
+	* blitz/array/methods.cc: Use default value of zero for second
+	argument in call to changeBlock method of class
+	MemoryBlockReference.  Removed commented out line setting
+	data_=array.data_, as this is now already taken care of by
+	changeBlock.  When constructing an Array, only allocate new memory
+	block if numElements>0.  If numElements==0, call
+	changeToNullBlock.  This ensures that the begin() and end()
+	iterators are equal for an Array with size 0.
+	* blitz/vector.cc: Use default value of zero for second argument
+	in call to changeBlock method of class MemoryBlockReference.
+	* blitz/memblock.h: Reset data_ pointer equal to data_ pointer of
+	original MemoryBlockReference rather than data_ pointer of
+	MemoryBlock itself when constructing a new MemoryBlockReference
+	from an old one or changing the MemoryBlock that it refers to.
+	The MemoryBlock data_ pointer points to the beginning of the
+	usable portion of the allocated memory block, whereas the data_
+	pointer for a MemoryBlockReference points to the zeroth element of
+	the Array allocated in this MemoryBlock.  Note that the zeroth
+	element may not be within the valid range of the Array and the
+	MemoryBlockReference data_ pointer may point to an address outside
+	of the memory block.  I've given the offset parameter for the
+	changeBlock method a default value of zero.  Any offset value
+	given will indicate an offset in memory between the zeroth element
+	of the original Array and the modified or new Array.  Normally, we
+	can just accept the default offset value of zero and then adjust
+	the position of the Array data_ pointer afterwards if needed.
+2004-08-24  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/array/methods.cc: Commented out an unnecessary line of
+	code in Array::reference() method.
+
+	* blitz/array/slicing.cc: Modified slice() method to flip the
+	ascendingFlag inside the Array storage if slicing with a backwards
+	Range.  Factored expression for computing offset of data_ pointer.
+	Corrected sign error in adjustment of zeroOffset_ value.  It
+	should move in the same direction as the data_ pointer.
 2004-07-28  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
 
     * blitz/array-impl.h: Made the return type of operator()(XXX) const
