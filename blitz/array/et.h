@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.4  2002/06/26 23:56:37  jcumming
+ * Added #include of blitz/array/misc.cc if not using new expression templates.
+ *
  * Revision 1.3  2001/01/25 00:25:55  tveldhui
  * Ensured that source files have cvs logs.
  *
@@ -36,6 +39,7 @@
 #else
  #include <blitz/array/bops.cc>     // Expression templates, two operands
  #include <blitz/array/uops.cc>     // Expression templates, math functions
+ #include <blitz/array/misc.cc>     // Expression templates, miscellaneous
 #endif
 
 #endif
