@@ -8,18 +8,23 @@
 #include <blitz/rand-uniform.h>
 #include <blitz/benchext.h>
 
+#ifdef BZ_HAVE_VALARRAY
+	#define BENCHMARK_VALARRAY
+#endif
+
 #ifdef BENCHMARK_VALARRAY
 #include <valarray>
 #endif
 
-using namespace blitz;
+BZ_USING_NAMESPACE(blitz)
 
-#ifdef BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES
+#if defined(BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES)
  #define loop4_f77 loop4_f77_
  #define loop4_f90 loop4_f90_
-#endif
-
-#ifdef BZ_FORTRAN_SYMBOLS_CAPS
+#elif defined(BZ_FORTRAN_SYMBOLS_WITH_DOUBLE_TRAILING_UNDERSCORES)
+ #define loop4_f77 loop4_f77__
+ #define loop4_f90 loop4_f90__
+#elif defined(BZ_FORTRAN_SYMBOLS_CAPS)
  #define loop4_f77 LOOP4_F77
  #define loop4_f90 LOOP4_F90
 #endif
@@ -77,7 +82,9 @@ int main()
     VectorVersion(bench);
     ArrayVersion(bench);
     F77Version(bench);
+#ifdef FORTRAN_90
     F90Version(bench);
+#endif
 #ifdef BENCHMARK_VALARRAY
     ValarrayVersion(bench);
 #endif
@@ -198,6 +205,7 @@ void F77Version(BenchmarkExt<int>& bench)
     bench.endImplementation();
 }
 
+#ifdef FORTRAN_90
 void F90Version(BenchmarkExt<int>& bench)
 {
     bench.beginImplementation("Fortran 90");
@@ -229,4 +237,4 @@ void F90Version(BenchmarkExt<int>& bench)
 
     bench.endImplementation();
 }
-
+#endif
