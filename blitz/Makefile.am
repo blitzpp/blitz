@@ -25,6 +25,12 @@ vecglobs.h vecio.cc veciter.h vecmax.cc vecmin.cc vecnorm.cc vecnorm1.cc \
 vecpick.cc vecpick.h vecpickio.cc vecpickiter.h vecsum.cc vector-et.h \
 vector.cc vector.h vecwhere.h wrap-climits.h zero.cc zero.h $(genheaders)
 
+EXTRA_HEADERS = apple/bzconfig.h intel/bzconfig.h ibm/bzconfig.h \
+compaq/bzconfig.h hp/bzconfig.h sgi/bzconfig.h gnu/bzconfig.h \
+pgi/bzconfig.h kai/bzconfig.h fujitsu/bzconfig.h
+
+nobase_blitz_HEADERS = $(COMPILER_SPECIFIC_HEADER)
+
 EXTRA_DIST = MAT-NOTE.gz config-ICL.h config-KCC.h config-SC4.0.h \
 config-SGi.h config-g++2.7.2.h config-mwerks.h config-xlC.h config-g++3.h
 
