@@ -1,8 +1,0 @@
-[Blitz++] Precondition failure: Module ../../blitz/array-impl.h line 1318
-Array index out of range: (4, 4)
-Lower bounds: 2 [          0         0 ]
-Length:       2 [          4         4 ]
-
-debug: ../../blitz/array-impl.h:1318: bool blitz::Array<T, N>::assertInRange 
-(int, int) const [with P_numtype = complex<float>, int N_rank = 2]: Assertion 
-`0' failed.
