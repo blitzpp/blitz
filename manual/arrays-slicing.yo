@@ -168,6 +168,7 @@ public:
     void shrink(int dim, int amount);
     void expand(int amount);
     void expand(int dim, int amount);
+};
 )
 
 

@@ -30,7 +30,7 @@ chapter(Introduction)
 bzsect(About this document)
 
 To use the Blitz++ library,
-you will need a compiler with near-draft standard syntax support
+you will need a compiler with near-ISO/ANSI C++ syntax support
 (see the following section for possible compilers).
 Information on what platforms are supported is
 available from
@@ -122,7 +122,7 @@ chapter(TinyVector)
 includefile(tinyvector)
 
 
-chapter(Parallel Computing)
+chapter(Parallel Computing with Blitz++)
 includefile(parallel)
 
 chapter(Random Number Generators)

@@ -63,9 +63,9 @@ contents of the array are known, you can initialize it using
 a comma-delimited list of values.  For example, this code
 excerpt sets tt(y) equal to a 4x4 identity matrix:
 bzverb(\
-y = 1, 0, 0, 0
-    0, 1, 0, 0
-    0, 0, 1, 0
+y = 1, 0, 0, 0,
+    0, 1, 0, 0,
+    0, 0, 1, 0,
     0, 0, 0, 1;)
 bzsubsect(Array types)
 
