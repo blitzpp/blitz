@@ -25,10 +25,9 @@
 #ifndef BZ_COMPILER_H
 #define BZ_COMPILER_H
 
-// The file <blitz/config.h> is generated automatically by the
-// script 'bzconfig', located in the 'compiler' directory.
+// The file <blitz/config.h> is generated automatically by configure.
 
-#include <blitz/new-config.h>
+#include <blitz/config.h>
 
 /*
  * Define some kludges.
