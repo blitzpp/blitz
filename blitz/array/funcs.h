@@ -23,6 +23,10 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.4  2002/07/02 19:14:01  jcumming
+ * Use new style of Array ET macros to declare unary and binary math functions
+ * that act on Array types.
+ *
  * Revision 1.3  2001/01/26 20:11:25  tveldhui
  * Changed isnan to blitz_isnan, to avoid conflicts with implementations
  * that define isnan as a preprocessor macro.
@@ -32,11 +36,11 @@
  *
  */
 
-#ifndef BZ_BASICOPS_H
-#define BZ_BASICOPS_H
+#ifndef BZ_ARRAY_FUNCS_H
+#define BZ_ARRAY_FUNCS_H
 
-#ifndef BZ_MATHFUNC_H
- #include <blitz/mathfunc.h>
+#ifndef BZ_FUNCS_H
+ #include <blitz/funcs.h>
 #endif
 
 #ifndef BZ_NEWET_MACROS_H
@@ -44,91 +48,117 @@
 #endif
 
 BZ_NAMESPACE(blitz)
-
-BZ_DECLARE_ARRAY_ET(atan2,      _bz_atan2)
-BZ_DECLARE_ARRAY_ET(pow,        _bz_pow)
-
-#ifdef BZ_HAVE_COMPLEX_MATH
-BZ_DECLARE_ARRAY_ET(polar,     _bz_polar)
-#endif
-
-#ifdef BZ_HAVE_SYSTEM_V_MATH
-BZ_DECLARE_ARRAY_ET(copysign,  _bz_copysign)
-BZ_DECLARE_ARRAY_ET(drem,      _bz_drem)
-BZ_DECLARE_ARRAY_ET(fmod,      _bz_fmod)
-BZ_DECLARE_ARRAY_ET(hypot,     _bz_hypot)
-BZ_DECLARE_ARRAY_ET(nextafter, _bz_nextafter)
-BZ_DECLARE_ARRAY_ET(remainder, _bz_remainder)
-BZ_DECLARE_ARRAY_ET(scalb,     _bz_scalb)
-BZ_DECLARE_ARRAY_ET(unordered, _bz_unordered)
-#endif
-
-BZ_DECLARE_ARRAY_ET_UOP(abs,   _bz_abs)
-BZ_DECLARE_ARRAY_ET_UOP(acos,  _bz_acos)
-BZ_DECLARE_ARRAY_ET_UOP(asin,  _bz_asin)
-BZ_DECLARE_ARRAY_ET_UOP(atan,  _bz_atan)
-BZ_DECLARE_ARRAY_ET_UOP(ceil,  _bz_ceil)
-BZ_DECLARE_ARRAY_ET_UOP(cexp,  _bz_cexp)
-BZ_DECLARE_ARRAY_ET_UOP(cos,   _bz_cos)
-BZ_DECLARE_ARRAY_ET_UOP(cosh,  _bz_cosh)
-BZ_DECLARE_ARRAY_ET_UOP(csqrt, _bz_csqrt)
-BZ_DECLARE_ARRAY_ET_UOP(exp,   _bz_exp)
-BZ_DECLARE_ARRAY_ET_UOP(fabs,  _bz_abs)
-BZ_DECLARE_ARRAY_ET_UOP(floor, _bz_floor)
-BZ_DECLARE_ARRAY_ET_UOP(log,   _bz_log)
-BZ_DECLARE_ARRAY_ET_UOP(log10, _bz_log10)
-BZ_DECLARE_ARRAY_ET_UOP(pow2,  _bz_pow2)
-BZ_DECLARE_ARRAY_ET_UOP(pow3,  _bz_pow3)
-BZ_DECLARE_ARRAY_ET_UOP(pow4,  _bz_pow4)
-BZ_DECLARE_ARRAY_ET_UOP(pow5,  _bz_pow5)
-BZ_DECLARE_ARRAY_ET_UOP(pow6,  _bz_pow6)
-BZ_DECLARE_ARRAY_ET_UOP(pow7,  _bz_pow7)
-BZ_DECLARE_ARRAY_ET_UOP(pow8,  _bz_pow8)
-BZ_DECLARE_ARRAY_ET_UOP(sin,   _bz_sin)
-BZ_DECLARE_ARRAY_ET_UOP(sinh,  _bz_sinh)
-BZ_DECLARE_ARRAY_ET_UOP(sqr,   _bz_sqr)
-BZ_DECLARE_ARRAY_ET_UOP(sqrt,  _bz_sqrt)
-BZ_DECLARE_ARRAY_ET_UOP(tan,   _bz_tan)
-BZ_DECLARE_ARRAY_ET_UOP(tanh,  _bz_tanh)
+    
+// unary functions
+    
+BZ_DECLARE_ARRAY_ET_UNARY(abs,   Fn_abs)
+BZ_DECLARE_ARRAY_ET_UNARY(acos,  Fn_acos)
+BZ_DECLARE_ARRAY_ET_UNARY(asin,  Fn_asin)
+BZ_DECLARE_ARRAY_ET_UNARY(atan,  Fn_atan)
+BZ_DECLARE_ARRAY_ET_UNARY(ceil,  Fn_ceil)
+BZ_DECLARE_ARRAY_ET_UNARY(cexp,  Fn_exp)
+BZ_DECLARE_ARRAY_ET_UNARY(cos,   Fn_cos)
+BZ_DECLARE_ARRAY_ET_UNARY(cosh,  Fn_cosh)
+BZ_DECLARE_ARRAY_ET_UNARY(csqrt, Fn_sqrt)
+BZ_DECLARE_ARRAY_ET_UNARY(cube,  Fn_cube)
+BZ_DECLARE_ARRAY_ET_UNARY(exp,   Fn_exp)
+BZ_DECLARE_ARRAY_ET_UNARY(fabs,  Fn_fabs)
+BZ_DECLARE_ARRAY_ET_UNARY(floor, Fn_floor)
+BZ_DECLARE_ARRAY_ET_UNARY(log,   Fn_log)
+BZ_DECLARE_ARRAY_ET_UNARY(log10, Fn_log10)
+BZ_DECLARE_ARRAY_ET_UNARY(pow2,  Fn_sqr)
+BZ_DECLARE_ARRAY_ET_UNARY(pow3,  Fn_cube)
+BZ_DECLARE_ARRAY_ET_UNARY(pow4,  Fn_pow4)
+BZ_DECLARE_ARRAY_ET_UNARY(pow5,  Fn_pow5)
+BZ_DECLARE_ARRAY_ET_UNARY(pow6,  Fn_pow6)
+BZ_DECLARE_ARRAY_ET_UNARY(pow7,  Fn_pow7)
+BZ_DECLARE_ARRAY_ET_UNARY(pow8,  Fn_pow8)
+BZ_DECLARE_ARRAY_ET_UNARY(sin,   Fn_sin)
+BZ_DECLARE_ARRAY_ET_UNARY(sinh,  Fn_sinh)
+BZ_DECLARE_ARRAY_ET_UNARY(sqr,   Fn_sqr)
+BZ_DECLARE_ARRAY_ET_UNARY(sqrt,  Fn_sqrt)
+BZ_DECLARE_ARRAY_ET_UNARY(tan,   Fn_tan)
+BZ_DECLARE_ARRAY_ET_UNARY(tanh,  Fn_tanh)
 
 #ifdef BZ_HAVE_COMPLEX_MATH
-BZ_DECLARE_ARRAY_ET_UOP(arg,   _bz_arg)
-BZ_DECLARE_ARRAY_ET_UOP(conj,  _bz_conj)
+BZ_DECLARE_ARRAY_ET_UNARY(arg,   Fn_arg)
+BZ_DECLARE_ARRAY_ET_UNARY(conj,  Fn_conj)
+BZ_DECLARE_ARRAY_ET_UNARY(imag,  Fn_imag)
+BZ_DECLARE_ARRAY_ET_UNARY(norm,  Fn_norm)
+BZ_DECLARE_ARRAY_ET_UNARY(real,  Fn_real)
 #endif
-
-#ifdef BZ_HAVE_SYSTEM_V_MATH
-BZ_DECLARE_ARRAY_ET_UOP(_class,  _bz__class)
-BZ_DECLARE_ARRAY_ET_UOP(ilogb,   _bz_ilogb)
-BZ_DECLARE_ARRAY_ET_UOP(itrunc,  _bz_itrunc)
-BZ_DECLARE_ARRAY_ET_UOP(nearest, _bz_nearest)
-BZ_DECLARE_ARRAY_ET_UOP(rsqrt,   _bz_rsqrt)
-BZ_DECLARE_ARRAY_ET_UOP(uitrunc, _bz_uitrunc)
-#endif
-
 
 #ifdef BZ_HAVE_IEEE_MATH
-
 // finite and trunc omitted: blitz-bugs/archive/0189.html
-BZ_DECLARE_ARRAY_ET_UOP(acosh,  _bz_acosh)
-BZ_DECLARE_ARRAY_ET_UOP(asinh,  _bz_asinh)
-BZ_DECLARE_ARRAY_ET_UOP(atanh,  _bz_atanh)
-BZ_DECLARE_ARRAY_ET_UOP(cbrt,   _bz_cbrt)
-BZ_DECLARE_ARRAY_ET_UOP(expm1,  _bz_expm1)
-BZ_DECLARE_ARRAY_ET_UOP(erf,    _bz_erf)
-BZ_DECLARE_ARRAY_ET_UOP(erfc,   _bz_erfc)
-// BZ_DECLARE_ARRAY_ET_UOP(finite, _bz_finite)
-BZ_DECLARE_ARRAY_ET_UOP(blitz_isnan,  _bz_blitz_isnan)
-BZ_DECLARE_ARRAY_ET_UOP(j0,     _bz_j0)
-BZ_DECLARE_ARRAY_ET_UOP(j1,     _bz_j1)
-BZ_DECLARE_ARRAY_ET_UOP(lgamma, _bz_lgamma)
-BZ_DECLARE_ARRAY_ET_UOP(logb,   _bz_logb)
-BZ_DECLARE_ARRAY_ET_UOP(log1p,  _bz_log1p)
-BZ_DECLARE_ARRAY_ET_UOP(rint,   _bz_rint)
-// BZ_DECLARE_ARRAY_ET_UOP(trunc,  _bz_trunc)
-BZ_DECLARE_ARRAY_ET_UOP(y0,     _bz_y0)
-BZ_DECLARE_ARRAY_ET_UOP(y1,     _bz_y1)
+BZ_DECLARE_ARRAY_ET_UNARY(acosh,  Fn_acosh)
+BZ_DECLARE_ARRAY_ET_UNARY(asinh,  Fn_asinh)
+BZ_DECLARE_ARRAY_ET_UNARY(atanh,  Fn_atanh)
+BZ_DECLARE_ARRAY_ET_UNARY(cbrt,   Fn_cbrt)
+BZ_DECLARE_ARRAY_ET_UNARY(erf,    Fn_erf)
+BZ_DECLARE_ARRAY_ET_UNARY(erfc,   Fn_erfc)
+BZ_DECLARE_ARRAY_ET_UNARY(expm1,  Fn_expm1)
+// BZ_DECLARE_ARRAY_ET_UNARY(finite, Fn_finite)
+BZ_DECLARE_ARRAY_ET_UNARY(ilogb,   Fn_ilogb)
+BZ_DECLARE_ARRAY_ET_UNARY(blitz_isnan,  Fn_isnan)
+BZ_DECLARE_ARRAY_ET_UNARY(j0,     Fn_j0)
+BZ_DECLARE_ARRAY_ET_UNARY(j1,     Fn_j1)
+BZ_DECLARE_ARRAY_ET_UNARY(lgamma, Fn_lgamma)
+BZ_DECLARE_ARRAY_ET_UNARY(logb,   Fn_logb)
+BZ_DECLARE_ARRAY_ET_UNARY(log1p,  Fn_log1p)
+BZ_DECLARE_ARRAY_ET_UNARY(rint,   Fn_rint)
+// BZ_DECLARE_ARRAY_ET_UNARY(trunc,  Fn_trunc)
+BZ_DECLARE_ARRAY_ET_UNARY(y0,     Fn_y0)
+BZ_DECLARE_ARRAY_ET_UNARY(y1,     Fn_y1)
+#endif
+
+#ifdef BZ_HAVE_SYSTEM_V_MATH
+BZ_DECLARE_ARRAY_ET_UNARY(_class,  Fn__class)
+BZ_DECLARE_ARRAY_ET_UNARY(itrunc,  Fn_itrunc)
+BZ_DECLARE_ARRAY_ET_UNARY(nearest, Fn_nearest)
+BZ_DECLARE_ARRAY_ET_UNARY(rsqrt,   Fn_rsqrt)
+BZ_DECLARE_ARRAY_ET_UNARY(uitrunc, Fn_uitrunc)
+#endif
+    
+// cast() function
+    
+template<class T_cast, class T1>
+_bz_inline_et
+_bz_ArrayExpr<_bz_ArrayExprUnaryOp<_bz_typename asExpr<T1>::T_expr,
+    Cast<_bz_typename asExpr<T1>::T_expr::T_numtype, T_cast> > >
+cast(const ETBase<T1>& expr)
+{
+    return _bz_ArrayExpr<_bz_ArrayExprUnaryOp<
+        _bz_typename asExpr<T1>::T_expr,
+        Cast<_bz_typename asExpr<T1>::T_expr::T_numtype,T_cast> > >
+        (static_cast<const T1&>(expr));
+}
+
+// binary functions
+
+BZ_DECLARE_ARRAY_ET_BINARY(atan2,     Fn_atan2)
+BZ_DECLARE_ARRAY_ET_BINARY(fmod,      Fn_fmod)
+BZ_DECLARE_ARRAY_ET_BINARY(ldexp,     Fn_ldexp)
+BZ_DECLARE_ARRAY_ET_BINARY(pow,       Fn_pow)
+
+#ifdef BZ_HAVE_COMPLEX_MATH
+BZ_DECLARE_ARRAY_ET_BINARY(polar,     Fn_polar)
+#endif
+    
+#ifdef BZ_HAVE_IEEE_MATH
+BZ_DECLARE_ARRAY_ET_BINARY(jn,        Fn_jn)
+BZ_DECLARE_ARRAY_ET_BINARY(yn,        Fn_yn)
+#endif
+    
+#ifdef BZ_HAVE_SYSTEM_V_MATH
+BZ_DECLARE_ARRAY_ET_BINARY(copysign,  Fn_copysign)
+BZ_DECLARE_ARRAY_ET_BINARY(drem,      Fn_drem)
+BZ_DECLARE_ARRAY_ET_BINARY(hypot,     Fn_hypot)
+BZ_DECLARE_ARRAY_ET_BINARY(nextafter, Fn_nextafter)
+BZ_DECLARE_ARRAY_ET_BINARY(remainder, Fn_remainder)
+BZ_DECLARE_ARRAY_ET_BINARY(scalb,     Fn_scalb)
+BZ_DECLARE_ARRAY_ET_BINARY(unordered, Fn_unordered)
 #endif
 
 BZ_NAMESPACE_END
 
-#endif
+#endif // BZ_ARRAY_FUNCS_H
