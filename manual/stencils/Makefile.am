@@ -12,9 +12,9 @@ forward41.yo forward42.yo
 
 EXTRA_DIST = $(doc_DATA)
 
-INCLUDES = -I$(top_srcdir)
-AM_CXXFLAGS = @CXXFLAGS@ @CXX_DEBUG_FLAGS@ -Dstenciltodump=Laplacian2D4
-LDADD = -L$(top_srcdir)/lib -lblitz
+AM_CPPFLAGS = -I$(top_srcdir)
+AM_CXXFLAGS = @CXX_DEBUG_FLAGS@ -Dstenciltodump=Laplacian2D4
+LDADD = -L$(top_builddir)/lib -lblitz
 
 SINGLE_TESTS = dump-stencil
 
