@@ -2,6 +2,17 @@
  * $Id$
  *
  * $Log$
+ * Revision 1.5  2002/05/23 00:15:43  jcumming
+ * Fixed bug in Array::evaluateWithIndexTraversal1() by removing cast of
+ * second argument to T_numtype in call to T_update::update().  This cast
+ * will occur automatically when the update operation is performed.  This
+ * fixes a problem reported by Masahiro Tatsumi <tatsumi@nfi.co.jp> in
+ * which one could not assign a double to an Array of TinyVectors of double
+ * without explicitly constructing a TinyVector of doubles on the right-hand
+ * side.  Also fixed an unused variable warning emanating from the function
+ * Array::evaluateWithFastTraversal() by moving the definition of local
+ * variable "last" so that it is only seen if it is used.
+ *
  * Revision 1.4  2002/03/06 16:18:34  patricg
  *
  * data_ replaced by this->data_
@@ -692,7 +703,7 @@ Array<T_numtype, N_rank>::evaluateWithIndexTraversal1(
         for (index[0] = lbound(firstRank); index[0] <= last;
             ++index[0])
         {
-            T_update::update(iter[index[0]], T_numtype(expr(index)));
+            T_update::update(iter[index[0]], expr(index));
         }
     }
     else {
@@ -854,9 +865,6 @@ cerr << "maxRank = " << maxRank << " secondLastRank = " << secondLastRank
 
         if ((useUnitStride) || (useCommonStride))
         {
-            T_numtype* _bz_restrict last = const_cast<T_numtype*>(iter.data()) 
-                + lastLength * commonStride;
-
 #ifdef BZ_USE_FAST_READ_ARRAY_EXPR
             int ubound = lastLength * commonStride;
             T_numtype* _bz_restrict data = const_cast<T_numtype*>(iter.data());
@@ -891,6 +899,9 @@ cerr << "maxRank = " << maxRank << " secondLastRank = " << secondLastRank
             iter.advance(lastLength * commonStride);
             expr.advance(lastLength * commonStride);
 #else   // ! BZ_USE_FAST_READ_ARRAY_EXPR
+            T_numtype* _bz_restrict last = const_cast<T_numtype*>(iter.data()) 
+                + lastLength * commonStride;
+
             while (iter.data() != last)
             {
                 T_update::update(*const_cast<T_numtype*>(iter.data()), *expr);
