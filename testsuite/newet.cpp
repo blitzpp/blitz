@@ -34,6 +34,9 @@ private:
     double power_;
 };
 
+int max3(int a, int b, int c) { return (a>b?(a>c?a:c):(b>c?b:c)); }
+BZ_DECLARE_FUNCTION3(max3)
+
 
 int main()
 {
@@ -84,5 +87,16 @@ int main()
     A = f2.foo(1.2 - tensor::i, 1.2 + tensor::i);
     B = cast<int>((1.2 - tensor::i) * pow(1.2 + tensor::i, 3.5));
     BZTEST(count(A==B)==4);
+
+    A = 3 * tensor::i;
+    B = max3(5,6,7);
+    C = 9 - 2 * tensor::i;
+    D = 9, 7, 7, 9;
+    Array<int,1> DD(4);
+    DD = max3(A,B,C);
+    BZTEST(count(DD=D)==4);
+    DD = max3(A,7,C);
+    BZTEST(count(DD=D)==4);
+
 }
 
