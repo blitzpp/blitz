@@ -4,7 +4,7 @@
 
 EXTRA_DIST = stencil4.f profile.cpp tiny2.cpp tiny3.cpp
 
-AM_CXXFLAGS = -I$(srcdir) -I$(top_srcdir) @CXXFLAGS@
+AM_CXXFLAGS = -I$(srcdir) -I$(top_srcdir)
 LDADD = -L$(top_builddir)/lib -lblitz
 
 EXTRA_PROGRAMS = array cartesian cast cfd complex-test convolve curldiv \

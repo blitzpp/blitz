@@ -6,7 +6,7 @@
 
 EXTRA_DIST = testsuite.h
 
-AM_CXXFLAGS = -I$(srcdir) -I$(top_srcdir) @CXXFLAGS@ @CXX_DEBUG_FLAGS@
+AM_CXXFLAGS = -I$(srcdir) -I$(top_srcdir) @CXX_DEBUG_FLAGS@
 LDADD = -L$(top_builddir)/lib -lblitz
 
 EXTRA_PROGRAMS = Adnene-Ben-Abdallah-1 Adnene-Ben-Abdallah-2 arrayresize \
