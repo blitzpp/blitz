@@ -21,19 +21,19 @@ COMPILE = $(CXX) $(CXXFLAGS) $(INCLUDES)
 %2D.texi :
 	$(COMPILE) "-Dstenciltoapply=$(patsubst %.texi,%,$@)(A)" \
 		-o $(patsubst %.cpp,%,$<) $< $(LDADD)
-	$(patsubst %.cpp,%,$<) $ > $@  2>&1
+	./$(patsubst %.cpp,%,$<) > $@  2>&1
 	-rm -f $(patsubst %.cpp,%,$<)
 
 %2D4.texi :
 	$(COMPILE) "-Dstenciltoapply=$(patsubst %.texi,%,$@)(A)" \
 		-o $(patsubst %.cpp,%,$<) $< $(LDADD)
-	$(patsubst %.cpp,%,$<) $ > $@  2>&1
+	./$(patsubst %.cpp,%,$<) > $@  2>&1
 	-rm -f $(patsubst %.cpp,%,$<)
 
 %.texi :
 	$(COMPILE) "-Dstenciltoapply=$(patsubst %.texi,%,$@)(A,1)" \
 		-o $(patsubst %.cpp,%,$<) $< $(LDADD)
-	$(patsubst %.cpp,%,$<) $ > $@  2>&1
+	./$(patsubst %.cpp,%,$<) > $@  2>&1
 	-rm -f $(patsubst %.cpp,%,$<)
 
 central12.texi: dump-stencil.cpp
