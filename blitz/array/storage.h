@@ -23,6 +23,18 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.4  2002/03/06 17:08:36  patricg
+ *
+ * in
+ * template<int N_rank>
+ * class FortranArray : public GeneralArrayStorage<N_rank> {} and
+ * template<int N_rank>
+ * class ColumnMajorArray : public GeneralArrayStorage<N_rank> {}
+ * ordering_, ascendingFlag_, base_ replaced by this->ordering_,
+ * this->ascendingFlag_, this->base_
+ * noInitializeFlag() replaced by
+ * GeneralArrayStorage<N_rank>::noInitializeFlag()
+ *
  * Revision 1.3  2001/01/25 00:25:56  tveldhui
  * Ensured that source files have cvs logs.
  *
@@ -171,12 +183,12 @@ template<int N_rank>
 class FortranArray : public GeneralArrayStorage<N_rank> {
 public:
     FortranArray()
-        : GeneralArrayStorage<N_rank>(noInitializeFlag())
+        : GeneralArrayStorage<N_rank>(GeneralArrayStorage<N_rank>::noInitializeFlag())
     {
         for (int i=0; i < N_rank; ++i)
-          ordering_(i) = i;
-        ascendingFlag_ = 1;
-        base_ = 1;
+          this->ordering_(i) = i;
+        this->ascendingFlag_ = 1;
+        this->base_ = 1;
     }
 };
 
@@ -239,11 +251,11 @@ template<int N_rank>
 class ColumnMajorArray : public GeneralArrayStorage<N_rank> {
 public:
     ColumnMajorArray()
-        : GeneralArrayStorage<N_rank>(noInitializeFlag())
+        : GeneralArrayStorage<N_rank>(GeneralArrayStorage<N_rank>::noInitializeFlag())
     {
-        ordering_ = Range(0, N_rank - 1);
-        ascendingFlag_ = 1;
-        base_ = 0;
+        this->ordering_ = Range(0, N_rank - 1);
+        this->ascendingFlag_ = 1;
+        this->base_ = 0;
     }
 };
 
