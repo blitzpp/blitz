@@ -1,6 +1,6 @@
 #include <blitz/array.h>
 
-using namespace blitz;
+BZ_USING_NAMESPACE(blitz)
 
 int main()
 {
