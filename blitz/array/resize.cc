@@ -286,6 +286,279 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     }
 }
 
+
+template<class T_numtype, int N_rank>
+void Array<T_numtype, N_rank>::resize(Range r0)
+{
+	BZPRECONDITION(r0.isAscendingContiguous());
+
+	length_[0] = r0.length();
+	storage_.setBase(0, r0.first());
+
+	setupStorage(0);
+}
+
+template<class T_numtype, int N_rank>
+void Array<T_numtype, N_rank>::resize(Range r0, Range r1)
+{
+	BZPRECONDITION(r0.isAscendingContiguous() &&
+			r1.isAscendingContiguous());
+
+	length_[0] = r0.length();
+	storage_.setBase(0, r0.first());
+	length_[1] = r1.length();
+	storage_.setBase(1, r1.first());
+
+	setupStorage(1);
+}
+
+template<class T_numtype, int N_rank>
+void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2)
+{ 
+	BZPRECONDITION(r0.isAscendingContiguous() &&
+			r1.isAscendingContiguous() && r2.isAscendingContiguous());
+
+	length_[0] = r0.length();
+	storage_.setBase(0, r0.first());
+	length_[1] = r1.length();
+	storage_.setBase(1, r1.first());
+	length_[2] = r2.length();
+	storage_.setBase(2, r2.first());
+
+	setupStorage(2);
+}
+
+template<class T_numtype, int N_rank>
+void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
+		Range r3)
+{
+	BZPRECONDITION(r0.isAscendingContiguous() &&
+			r1.isAscendingContiguous() && r2.isAscendingContiguous()
+			&& r3.isAscendingContiguous());
+
+	length_[0] = r0.length();
+	storage_.setBase(0, r0.first());
+	length_[1] = r1.length();
+	storage_.setBase(1, r1.first());
+	length_[2] = r2.length();
+	storage_.setBase(2, r2.first());
+	length_[3] = r3.length();
+	storage_.setBase(3, r3.first());
+
+	setupStorage(3);
+} 
+
+template<class T_numtype, int N_rank>
+void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
+		Range r3, Range r4)
+{
+	BZPRECONDITION(r0.isAscendingContiguous() &&
+			r1.isAscendingContiguous() && r2.isAscendingContiguous()
+			&& r3.isAscendingContiguous() && r4.isAscendingContiguous());
+
+	length_[0] = r0.length();
+	storage_.setBase(0, r0.first());
+	length_[1] = r1.length();
+	storage_.setBase(1, r1.first());
+	length_[2] = r2.length();
+	storage_.setBase(2, r2.first());
+	length_[3] = r3.length();
+	storage_.setBase(3, r3.first());
+	length_[4] = r4.length();
+	storage_.setBase(4, r4.first());
+
+	setupStorage(4);
+} 
+
+template<class T_numtype, int N_rank>
+void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
+		Range r3, Range r4, Range r5)
+{
+	BZPRECONDITION(r0.isAscendingContiguous() &&
+			r1.isAscendingContiguous() && r2.isAscendingContiguous()
+			&& r3.isAscendingContiguous() && r4.isAscendingContiguous()
+			&& r5.isAscendingContiguous());
+
+	length_[0] = r0.length();
+	storage_.setBase(0, r0.first());
+	length_[1] = r1.length();
+	storage_.setBase(1, r1.first());
+	length_[2] = r2.length();
+	storage_.setBase(2, r2.first());
+	length_[3] = r3.length();
+	storage_.setBase(3, r3.first());
+	length_[4] = r4.length();
+	storage_.setBase(4, r4.first());
+	length_[5] = r5.length();
+	storage_.setBase(5, r5.first());
+
+	setupStorage(5);
+} 
+
+template<class T_numtype, int N_rank>
+void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
+		Range r3, Range r4, Range r5, Range r6)
+{
+	BZPRECONDITION(r0.isAscendingContiguous() &&
+			r1.isAscendingContiguous() && r2.isAscendingContiguous()
+			&& r3.isAscendingContiguous() && r4.isAscendingContiguous()
+			&& r5.isAscendingContiguous() && r6.isAscendingContiguous());
+
+	length_[0] = r0.length();
+	storage_.setBase(0, r0.first());
+	length_[1] = r1.length();
+	storage_.setBase(1, r1.first());
+	length_[2] = r2.length();
+	storage_.setBase(2, r2.first());
+	length_[3] = r3.length();
+	storage_.setBase(3, r3.first());
+	length_[4] = r4.length();
+	storage_.setBase(4, r4.first());
+	length_[5] = r5.length();
+	storage_.setBase(5, r5.first());
+	length_[6] = r6.length();
+	storage_.setBase(6, r6.first());
+
+	setupStorage(6);
+} 
+
+template<class T_numtype, int N_rank>
+void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
+		Range r3, Range r4, Range r5, Range r6, Range r7)
+{
+	BZPRECONDITION(r0.isAscendingContiguous() &&
+			r1.isAscendingContiguous() && r2.isAscendingContiguous()
+			&& r3.isAscendingContiguous() && r4.isAscendingContiguous()
+			&& r5.isAscendingContiguous() && r6.isAscendingContiguous()
+			&& r7.isAscendingContiguous());
+
+	length_[0] = r0.length();
+	storage_.setBase(0, r0.first());
+	length_[1] = r1.length();
+	storage_.setBase(1, r1.first());
+	length_[2] = r2.length();
+	storage_.setBase(2, r2.first());
+	length_[3] = r3.length();
+	storage_.setBase(3, r3.first());
+	length_[4] = r4.length();
+	storage_.setBase(4, r4.first());
+	length_[5] = r5.length();
+	storage_.setBase(5, r5.first());
+	length_[6] = r6.length();
+	storage_.setBase(6, r6.first());
+	length_[7] = r7.length();
+	storage_.setBase(7, r7.first());
+
+	setupStorage(7);
+} 
+
+template<class T_numtype, int N_rank>
+void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
+		Range r3, Range r4, Range r5, Range r6, Range r7, Range r8)
+{
+	BZPRECONDITION(r0.isAscendingContiguous() &&
+			r1.isAscendingContiguous() && r2.isAscendingContiguous()
+			&& r3.isAscendingContiguous() && r4.isAscendingContiguous()
+			&& r5.isAscendingContiguous() && r6.isAscendingContiguous()
+			&& r7.isAscendingContiguous() && r8.isAscendingContiguous());
+
+	length_[0] = r0.length();
+	storage_.setBase(0, r0.first());
+	length_[1] = r1.length();
+	storage_.setBase(1, r1.first());
+	length_[2] = r2.length();
+	storage_.setBase(2, r2.first());
+	length_[3] = r3.length();
+	storage_.setBase(3, r3.first());
+	length_[4] = r4.length();
+	storage_.setBase(4, r4.first());
+	length_[5] = r5.length();
+	storage_.setBase(5, r5.first());
+	length_[6] = r6.length();
+	storage_.setBase(6, r6.first());
+	length_[7] = r7.length();
+	storage_.setBase(7, r7.first());
+	length_[8] = r8.length();
+	storage_.setBase(8, r8.first());
+
+	setupStorage(8);
+} 
+
+template<class T_numtype, int N_rank>
+void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
+		Range r3, Range r4, Range r5, Range r6, Range r7, Range r8,
+		Range r9)
+{
+	BZPRECONDITION(r0.isAscendingContiguous() &&
+			r1.isAscendingContiguous() && r2.isAscendingContiguous()
+			&& r3.isAscendingContiguous() && r4.isAscendingContiguous()
+			&& r5.isAscendingContiguous() && r6.isAscendingContiguous()
+			&& r7.isAscendingContiguous() && r8.isAscendingContiguous()
+			&& r9.isAscendingContiguous());
+
+	length_[0] = r0.length();
+	storage_.setBase(0, r0.first());
+	length_[1] = r1.length();
+	storage_.setBase(1, r1.first());
+	length_[2] = r2.length();
+	storage_.setBase(2, r2.first());
+	length_[3] = r3.length();
+	storage_.setBase(3, r3.first());
+	length_[4] = r4.length();
+	storage_.setBase(4, r4.first());
+	length_[5] = r5.length();
+	storage_.setBase(5, r5.first());
+	length_[6] = r6.length();
+	storage_.setBase(6, r6.first());
+	length_[7] = r7.length();
+	storage_.setBase(7, r7.first());
+	length_[8] = r8.length();
+	storage_.setBase(8, r8.first());
+	length_[9] = r9.length();
+	storage_.setBase(9, r9.first());
+
+	setupStorage(9);
+} 
+
+template<class T_numtype, int N_rank>
+void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
+		Range r3, Range r4, Range r5, Range r6, Range r7, Range r8,
+		Range r9, Range r10)
+{
+	BZPRECONDITION(r0.isAscendingContiguous() &&
+			r1.isAscendingContiguous() && r2.isAscendingContiguous()
+			&& r3.isAscendingContiguous() && r4.isAscendingContiguous()
+			&& r5.isAscendingContiguous() && r6.isAscendingContiguous()
+			&& r7.isAscendingContiguous() && r8.isAscendingContiguous()
+			&& r9.isAscendingContiguous() && r10.isAscendingContiguous());
+
+	length_[0] = r0.length();
+	storage_.setBase(0, r0.first());
+	length_[1] = r1.length();
+	storage_.setBase(1, r1.first());
+	length_[2] = r2.length();
+	storage_.setBase(2, r2.first());
+	length_[3] = r3.length();
+	storage_.setBase(3, r3.first());
+	length_[4] = r4.length();
+	storage_.setBase(4, r4.first());
+	length_[5] = r5.length();
+	storage_.setBase(5, r5.first());
+	length_[6] = r6.length();
+	storage_.setBase(6, r6.first());
+	length_[7] = r7.length();
+	storage_.setBase(7, r7.first());
+	length_[8] = r8.length();
+	storage_.setBase(8, r8.first());
+	length_[9] = r9.length();
+	storage_.setBase(9, r9.first());
+	length_[10] = r10.length();
+	storage_.setBase(10, r10.first());
+
+	setupStorage(10);
+} 
+
+
 template<class T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(int length0)
 {
