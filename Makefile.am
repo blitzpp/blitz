@@ -21,7 +21,7 @@ check-benchmarks: lib
 	@(cd benchmarks && $(MAKE) $(AM_MAKEFLAGS) $@) || exit 1;
 
 lib: check-compiler
-	@(cd src && $(MAKE) $(AM_MAKEFLAGS) $@) || exit 1;
+	@(cd lib && $(MAKE) $(AM_MAKEFLAGS)) || exit 1;
 
 clean-local:
 	-rm -rf .deps
