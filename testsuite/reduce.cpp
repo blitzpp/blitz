@@ -19,7 +19,7 @@ int main()
     BZTEST(product(A) == 0);
     BZTEST(all(A >= 0));
     BZTEST(any(A == 7));
-
+    BZTEST(count(A > 1 && A < 5) == 3);
     BZTEST(sum(pow2(A)) == 506);
 
     BZ_USING_NAMESPACE(blitz::tensor)
