@@ -5,8 +5,8 @@
 SUBDIRS = examples stencils
 
 docdir = $(prefix)/doc/blitz
-doc_DATA = Frames.html INDEX.html Index-epilogue.html Index-prologue.html \
-Index.html arrays-ctors.yo arrays-debug.yo arrays-expr.yo arrays-globals.yo \
+doc_DATA = Frames.html TOCINDEX.html Index-epilogue.html Index-prologue.html \
+_Index.html arrays-ctors.yo arrays-debug.yo arrays-expr.yo arrays-globals.yo \
 arrays-indirect.yo arrays-intro.yo arrays-io.yo arrays-members.yo \
 arrays-multi.yo arrays-slicing.yo arrays-stencils.yo arrays-storage.yo \
 arrays-types arrays-usertype.yo blitz.gif blitz.html blitz.ps blitz.yo \
