@@ -23,6 +23,17 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2002/03/06 17:18:11  patricg
+ *
+ * template declaration
+ * template<int N_dimensions>
+ * _bz_typename TraversalOrderCollection<N_dimensions>::T_set
+ * 	TraversalOrderCollection<N_dimensions>::traversals_;
+ * in blitz/transversal.cc moved before template specialisation
+ * template<>
+ * class TraversalOrderCollection<0> {}
+ * in blitz/transversal.h
+ *
  * Revision 1.2  2001/01/25 00:25:55  tveldhui
  * Ensured that source files have cvs logs.
  *
@@ -41,9 +52,9 @@ BZ_NAMESPACE(blitz)
 // to Allan Stokes.
 static set<TraversalOrder<2> > *_bz_intel_kludge;
 
-template<int N_dimensions>
-_bz_typename TraversalOrderCollection<N_dimensions>::T_set
-    TraversalOrderCollection<N_dimensions>::traversals_;
+//template<int N_dimensions>
+//_bz_typename TraversalOrderCollection<N_dimensions>::T_set
+//    TraversalOrderCollection<N_dimensions>::traversals_;
 
 template<int N>
 void makeHilbert(Vector<TinyVector<int,N> >& coord, 
