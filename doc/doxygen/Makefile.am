@@ -27,8 +27,8 @@ $(PACKAGE)-$(VERSION).pdf: html/index.html
 	fi
 
 doc: html/index.html
-	@if test ! -f html/search.idx; then \
-		(cd html; doxytag -s search.idx); \
+	@if test ! -f html/blitz.tag.tag; then \
+		(cd html; doxytag -t blitz.tag); \
 	fi
 	@if test -d latex; then \
 		make pdf; \
