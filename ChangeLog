@@ -1,4 +1,7 @@
+2004-11-04  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
+        Tagging repository contents with Blitz_0_8 tag.
+	
 2004-11-04  Patrick Guio  <patrick.guio@bccs.uib.no>
 
 	* m4/ac_prog_doxygen.m4: Added test on doxygen version. In order 
