@@ -1,5 +1,27 @@
 2003-09-17  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
+	* compiler/Makefile.am: Separate targets for local config.h file
+	and the BZ_CONFIG_H file in blitz/config.h.  The distribution
+	contains a default blitz/config.h file, but this should be rebuilt
+	when the distribution is first unpacked.
+	* doc/stencils/Makefile.am: Removed texinfo files from EXTRA_DIST
+	list, since these files are included in the distribution by the
+	parent directory already.
+	* doc/examples/Makefile.am: Removed source code files for examples
+	from EXTRA_DIST, since SOURCES get included in distribution
+	automatically.  Added a few missing files to the EXTRA_DIST list.
+	* doc/Makefile.am: Added files containing figures for the
+	documentation to the distribution.
+	* doc/version.texi: Updated date in version.texi file.
+	* Makefile.am: Added manual to list of SUBDIRS to be processed by
+	automake.  This is needed to include source files for the Blitz
+	html manual in the distribution.
+	* random/Makefile.am: Removed Makefile.am from list of header
+	files for subdirectory random.  This file is part of the
+	distribution but not part of the installation.
+	* benchmarks/Makefile.am: Comment out the compile target, so that
+	it is not included in distdir target.  We don't need to compile
+	benchmark codes in order to create a distribution.
 	* blitz/Makefile.am: Added file config-VS.NET2003.h to EXTRA_DIST
 	for inclusion in distribution.
 	* Makefile.am: Deleted old file config.h.in from EXTRA_DIST list
