@@ -147,6 +147,6 @@ endif
 ###########################################################################
 
 clean-local:
-	-rm -rf *.o *.ii *.int.c *.s work.pc* cxx_repository ti_files core.[0-9]* \
+	-rm -rf *.ii *.ti *.int.c *.s work.pc* cxx_repository Template.dir ii_files ti_files core.[0-9]* \
 		$(BENCHMARKS) $(COMPILE_TIME_BENCHMARKS) 
 
