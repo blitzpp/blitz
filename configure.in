@@ -38,6 +38,7 @@ AC_SUBST(CXXFLAGS)
 AC_SUBST(LDFLAGS)
 AC_SUBST(F77)
 AC_SUBST(F90)
+AC_SUBST(FFLAGS)
 AC_SUBST(F77_OPTIMIZE_FLAGS)
 AC_SUBST(F90_OPTIMIZE_FLAGS)
 AC_SUBST(FORTLIBS)
@@ -170,12 +171,12 @@ cat << 'EOH'
 This script only recognizes a small set of compilers and platforms so far.
 You will have to rerun this script with one of these options:
   --with-cxx=KCC          KAI C++ (http://www.kai.com/)
+  --with-cxx=SGI64        SGI C++ 7.3 or better (http://www.sgi.com/)
+  --with-cxx=SGI32                ... with 32-bit ABI
   --with-cxx=gcc          gcc (http://gcc.gnu.org/)
   --with-cxx=cray         Cray C++ 3.0 or better (http://www.cray.com/)
   --with-cxx=DECcxx6.2    DEC cxx 6.2 (http://www.dec.com/)
   --with-cxx=DECcxx6.3    DEC cxx 6.3 or better (http://www.dec.com/)
-  --with-cxx=SGI64        SGI C++ 7.3 or better (http://www.sgi.com/)
-  --with-cxx=SGI32                ... with 32-bit ABI
   --with-cxx=aCC          HP-UX aCC 3.33 or better (http://www.hp.com/go/c++)
   --with-cxx=icc          Intel icc 5.0 or better (http://www.intel.com/)
 
@@ -301,17 +302,9 @@ AC_ARG_ENABLE(debug,
 
 echo ""
 
-#
-AC_PROG_CC
-AC_PROG_CPP
-AC_PROG_AWK
-AC_PROG_INSTALL
-AC_PROG_LN_S
-AC_PROG_MAKE_SET
-AC_PROG_RANLIB
-
+# Check tools
 AC_CHECK_TOOL(AR, ar)
-AC_CHECK_TOOL(RANLIB, ranlib)
+AC_PROG_RANLIB
 
 # Disable shared library building
 #AM_DISABLE_SHARED
@@ -320,7 +313,7 @@ AC_CHECK_TOOL(RANLIB, ranlib)
 
 AC_LANG([C++])
 AC_PROG_CXX
-dnl AC_CHECK_PROGS(M4, gm4 gnum4 m4, m4)
+#AC_CHECK_PROGS(M4, gm4 gnum4 m4, m4)
 
 AC_CHECK_LIB(m, sin)
 
