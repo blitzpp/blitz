@@ -253,6 +253,7 @@ case "$target" in
     F77_OPTIMIZE_FLAGS="-Ofast"
     F90=f90
     F90_OPTIMIZE_FLAGS="-Ofast"
+    FORTLIBS="-lfortran -lffio -lftn"
     CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
     case "$CXX" in
       KCC)
