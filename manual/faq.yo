@@ -101,6 +101,10 @@ his setup in
 url(http://oonumerics.org/blitz/support/blitz-support/archive/0053.html)
 (http://oonumerics.org/blitz/support/blitz-support/archive/0053.html).
 
+bzindex(image processing)
+Also see Harry Zuzan's Python/Blitz image processing example code
+at url(http://www.stat.duke.edu/~hz/blitz_py/index.html)
+(http://www.stat.duke.edu/~hz/blitz_py/index.html).
 
 bzindex(out of memory)
 bzindex(handling out of memory)
