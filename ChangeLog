@@ -1,3 +1,9 @@
+2004-06-04  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/array/stencilops.h: Added missing typename keyword.
+	* blitz/array/stencils.h: Added blitz:: qualifier to use of
+	TinyVector type.
+
 2004-05-06  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
 
     * configure.in: Do not execute the AC_FC_FREEFORM and AC_FC_SRCEXT
