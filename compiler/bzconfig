@@ -6,25 +6,6 @@
 # With thanks to Tom Keffer (Rogue Wave Software) and Larry Wall
 #
 # $Id$
-# 
-# $Log$
-# Revision 1.1  2000/06/19 12:26:15  tveldhui
-# Initial revision
-#
-# Revision 1.5  1998/04/03 19:37:14  tveldhui
-# Added command-line options, noninteractive mode
-#
-# Revision 1.4  1997/07/16 20:02:44  tveldhui
-# Update: Alpha release 0.2 (Arrays)
-#
-# Revision 1.3  1996/11/01 22:41:42  tveldhui
-# Added type promotion check; tidied up.
-#
-# Revision 1.2  1996/04/16  11:28:54  todd
-# All important features checked.
-#
-# Revision 1.1  1996/04/16  03:09:38  todd
-# Initial revision
 
 # If you need to debug this script, try uncommenting the
 # next line
