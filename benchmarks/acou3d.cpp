@@ -50,7 +50,7 @@ int main()
 
 		cout << "Acoustic 3D Benchmark" << endl << endl;
 
-		double Mflops = (N-2)*(N-2)*(N-2) * 9.0 * niters / 1.0e+6;
+		double Mflops = (N-2)*(N-2)*(N-2) * 11.0 * niters / 1.0e+6;
 
     generateFastTraversalOrder(TinyVector<int,2>(N-2,N-2));
 
@@ -108,9 +108,9 @@ int main()
 				 << endl << endl;
 #endif
 
-    timer.start(); cout << "ok" << " N=" << N << " niters=" << niters << " check=" << check << endl;
+    timer.start(); 
     acoustic3d_f77(N, niters, check);
-    timer.stop(); cout << "ok" << endl;
+    timer.stop(); 
     cout << "Fortran 77: " << timer.elapsedSeconds() << " s  check = " 
          << check << " Mflops = " << (Mflops/timer.elapsedSeconds())
 				 << endl << endl;
