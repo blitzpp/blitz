@@ -30,14 +30,14 @@ Configuring $PACKAGE_STRING for $target
 
 dnl C++ compiler
 AC_LANG_CPLUSPLUS
-AC_PROG_CXX([CC cxx xlC aCC g++ icc pgCC KCC FCC])
+AC_PROG_CXX([xlC CC cxx aCC g++ icc pgCC KCC FCC])
 AC_CXX_FLAGS_PRESET
 
 dnl Fortran compiler
 AC_LANG_FORTRAN77
-AC_PROG_F77([fort77 f77 xlf g77 ifort ifc])
+AC_PROG_F77([xlf f77 g77 ifort ifc pgf77 fort77])
 AC_LANG([Fortran])
-AC_PROG_FC([xlf90 f90 pgf90 ifort ifc])
+AC_PROG_FC([xlf90 f90 ifort ifc pgf90])
 AC_FC_FREEFORM
 AC_FC_SRCEXT(f90)
 AC_FORTRAN_FLAGS_PRESET
