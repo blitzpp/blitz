@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/array/stencils.h  Stencils for arrays
  *
@@ -29,8 +30,6 @@
 
 #include <blitz/array/stencilops.h>
 
-BZ_NAMESPACE(blitz)
-
 // NEEDS_WORK: currently stencilExtent returns int(1).  What if the
 // stencil contains calls to math functions, or divisions, etc.?
 // Should at least return a number of the appropriate type.  Probably
@@ -54,7 +53,8 @@ BZ_NAMESPACE(blitz)
 
 #define BZ_END_STENCIL_WITH_SHAPE(MINS,MAXS) } \
     template<int N> \
-    void getExtent(TinyVector<int,N>& minb, TinyVector<int,N>& maxb) const \
+    void getExtent(BZ_BLITZ_SCOPE(TinyVector)<int,N>& minb, \
+                   BZ_BLITZ_SCOPE(TinyVector)<int,N>& maxb) const \
     { \
         minb = MINS; \
         maxb = MAXS; \
@@ -139,6 +139,8 @@ BZ_NAMESPACE(blitz)
       T8& H, T9& I, T10& J, T11& K) \
     {
 
+
+BZ_NAMESPACE(blitz)
 
 
 /*
