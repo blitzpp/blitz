@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2002/05/22 22:39:41  jcumming
+ * Added #include of <blitz/tinymatio.cc>.
+ *
  * Revision 1.2  2001/01/24 20:22:50  tveldhui
  * Updated copyright date in headers.
  *
@@ -153,6 +156,7 @@ BZ_NAMESPACE_END
 
 #include <blitz/meta/matvec.h>     // Matrix-vector product metaprogram
 #include <blitz/meta/matmat.h>     // Matrix-matrix products
+#include <blitz/tinymatio.cc>      // I/O operations
 
 #endif // BZ_TINYMAT_H
 
