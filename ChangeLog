@@ -3,6 +3,9 @@
 Fri May 24 10:25:23 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* INSTALL: added instruction for cvs repository installation in case a
 	problem should occur with the build system.
+	* configure.in: removed some unecessary check
+	* configure: regenerated with autoconf 2.53, automake 1.6.1, libtool 1.4.2
+	* every Makefile.in: likewise
 
 Thu May 23 17:08:43 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* configure.in: added support for ranlib on SGI that failed and a few
