@@ -802,7 +802,7 @@ Optional Features:
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
-  --with-cxx=COMPILER:name-flags     set options for COMPILER (KCC, SGI, FCC, cray, gcc, DECcxx, aCC, icc, pgCC, xlC)
+  --with-cxx=COMPILER:name-flags     set options for COMPILER (KCC, SGI, FCC, cray, gcc, old-gcc, DECcxx, aCC, icc, pgCC, xlC)
   --with-blas=DIR         set the path for the blas library
 
 Some influential environment variables:
@@ -1694,12 +1694,6 @@ echo ""
 echo "Configuring Blitz++ for $target"
 echo ""
 
-# substitute SUBDIRS in Makefile
-SUBDIRS=". bin blitz random compiler src lib manual testsuite examples \
-benchmarks demos"
-
-
-
 # Declare variables which we want substituted in the Makefile.in's
 
 
@@ -1948,7 +1942,7 @@ if test "${with_cxx+set}" = set; then
        CXX_OPTIMIZE_FLAGS="-O3 -hpipeline3 -hunroll -haggress -hscalar2"
        CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
      ;;
-     gcc*)               # gcc  http://gcc.gnu.org/
+     old-gcc*)               # gcc  http://gcc.gnu.org/
        echo "Configuring for gcc (wahoo!)"
        bz_compiler=gcc
        cxxwith=`echo $withval | sed -e 's/ /@/'`
@@ -1967,6 +1961,27 @@ if test "${with_cxx+set}" = set; then
      ;;
    esac
        CXX_OPTIMIZE_FLAGS="-O2 -funroll-loops -fstrict-aliasing -fno-gcse"
+       CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
+     ;;
+     gcc*)               # gcc  http://gcc.gnu.org/
+       echo "Configuring for gcc (wahoo!)"
+       bz_compiler=gcc
+       cxxwith=`echo $withval | sed -e 's/ /@/'`
+   case "$cxxwith" in
+     *:*@*)                 # Full initialization syntax
+       CXX=`echo "$cxxwith" | sed  -n -e 's/.*:\(.*\)@.*/\1/p'`
+       CXXFLAGS=`echo "$cxxwith" | sed  -n -e 's/.*:.*@\(.*\)/\1/p'`
+     ;;
+     *:*)                   # Simple initialization syntax
+       CXX=`echo "$cxxwith" | sed  -n -e 's/.*:\(.*\)/\1/p'`
+       CXXFLAGS=""
+     ;;
+     *)                     # Default values
+       CXX="g++"
+       CXXFLAGS=""
+     ;;
+   esac
+       CXX_OPTIMIZE_FLAGS="-O2 -funroll-loops"
        CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
      ;;
      aCC)                # HP-UX compiler http://www.hp.com/go/c++
@@ -2070,7 +2085,8 @@ This script only recognizes a small set of compilers and platforms so far.
 You will have to rerun this script with one of these options:
   --with-cxx=KCC          KAI C++ (http://www.kai.com/)
   --with-cxx=SGI          SGI C++ 7.3 or better (http://www.sgi.com/)
-  --with-cxx=gcc          gcc (http://gcc.gnu.org/)
+  --with-cxx=gcc          gcc (version 3.1 and up) (http://gcc.gnu.org/)
+  --with-cxx=old-gcc      old gcc version (http://gcc.gnu.org/)
   --with-cxx=cray         Cray C++ 3.0 or better (http://www.cray.com/)
   --with-cxx=DECcxx6.2    DEC cxx 6.2 (http://www.dec.com/)
   --with-cxx=DECcxx6.3    DEC cxx 6.3 or better (http://www.dec.com/)
@@ -4118,7 +4134,6 @@ s,@SET_MAKE@,$SET_MAKE,;t t
 s,@MAINTAINER_MODE_TRUE@,$MAINTAINER_MODE_TRUE,;t t
 s,@MAINTAINER_MODE_FALSE@,$MAINTAINER_MODE_FALSE,;t t
 s,@MAINT@,$MAINT,;t t
-s,@SUBDIRS@,$SUBDIRS,;t t
 s,@CXX_LIBS@,$CXX_LIBS,;t t
 s,@CXX_OPTIMIZE_FLAGS@,$CXX_OPTIMIZE_FLAGS,;t t
 s,@CXX_DEBUG_FLAGS@,$CXX_DEBUG_FLAGS,;t t
@@ -4587,5 +4602,3 @@ You have several options now:
 	make install          Install Blitz++
 
 EOH
-
-
