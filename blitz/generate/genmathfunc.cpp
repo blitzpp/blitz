@@ -494,7 +494,7 @@ ofs <<
 "        str += \")\";\n"
 "    }\n"
 "};\n\n"
-"#ifdef BZ_HAVE_COMPLEX_MATH\n"
+"#ifdef BZ_HAVE_COMPLEX\n"
 "// Specialization of _bz_sqr for complex<T>\n"
 "template<typename T>\n"
 "class _bz_sqr<complex<T> > : public OneOperandApplicativeTemplatesBase {\n"
