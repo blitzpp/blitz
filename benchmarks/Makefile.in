@@ -77,10 +77,7 @@ CPP = @CPP@
 CXX = @CXX@
 CXXF90FLAG = @CXXF90FLAG@
 CXXFFLAGS = @CXXFFLAGS@
-
-CXXFLAGS = -I$(top_srcdir) @CXXF90FLAG@ @CXXFLAGS@ @CXX_OPTIMIZE_FLAGS@ \
-	@CXXFFLAGS@ 
-
+CXXFLAGS = @CXXFLAGS@
 CXX_DEBUG_FLAGS = @CXX_DEBUG_FLAGS@
 CXX_LIBS = @CXX_LIBS@
 CXX_OPTIMIZE_FLAGS = @CXX_OPTIMIZE_FLAGS@
@@ -97,8 +94,6 @@ MAINT = @MAINT@
 PACKAGE = @PACKAGE@
 RANLIB = @RANLIB@
 STRIP = @STRIP@
-
-SUBDIRS = .
 VERSION = @VERSION@
 am__include = @am__include@
 am__quote = @am__quote@
@@ -112,6 +107,10 @@ daxpy2.cpp daxpyf90-2.f90 dot.cpp dot2.cpp echof2-back.f echotune.cpp \
 echotune.m echotunef.f frek.m hao-he-mark.cpp kepler.cpp loop1-bug.cpp \
 loop4.cpp loop4f.f loop4f90.f90 loopstruct.cpp looptest.cpp makelogo.cpp \
 makeloops.cpp qcd.txt quinlan.cpp stenciln.cpp tiny3.cpp
+
+
+AM_CXXFLAGS = -I$(top_srcdir) @CXXF90FLAG@ @CXXFLAGS@ @CXX_OPTIMIZE_FLAGS@ \
+	@CXXFFLAGS@ 
 
 
 F77FLAGS = @F77_OPTIMIZE_FLAGS@
@@ -548,16 +547,10 @@ DIST_SOURCES = $(acou3d_SOURCES) $(acoustic_SOURCES) $(daxpy_SOURCES) \
 	$(tinydaxpy_SOURCES)
 DATA = $(benchmark_DATA)
 
-
-RECURSIVE_TARGETS = info-recursive dvi-recursive install-info-recursive \
-	uninstall-info-recursive all-recursive install-data-recursive \
-	install-exec-recursive installdirs-recursive install-recursive \
-	uninstall-recursive check-recursive installcheck-recursive
 DIST_COMMON = Makefile.am Makefile.in compile plot_benchmarks.m.in
-DIST_SUBDIRS = $(SUBDIRS)
 SOURCES = $(acou3d_SOURCES) $(acoustic_SOURCES) $(daxpy_SOURCES) $(haney_SOURCES) $(hao_he_SOURCES) $(loop1_SOURCES) $(loop10_SOURCES) $(loop11_SOURCES) $(loop12_SOURCES) $(loop13_SOURCES) $(loop14_SOURCES) $(loop15_SOURCES) $(loop16_SOURCES) $(loop17_SOURCES) $(loop18_SOURCES) $(loop19_SOURCES) $(loop2_SOURCES) $(loop21_SOURCES) $(loop22_SOURCES) $(loop23_SOURCES) $(loop24_SOURCES) $(loop25_SOURCES) $(loop3_SOURCES) $(loop36_SOURCES) $(loop5_SOURCES) $(loop6_SOURCES) $(loop8_SOURCES) $(loop9_SOURCES) $(qcd_SOURCES) $(stencil_SOURCES) $(tinydaxpy_SOURCES)
 
-all: all-recursive
+all: all-am
 
 .SUFFIXES:
 .SUFFIXES: .cpp .f .f90 .o .obj
@@ -751,61 +744,6 @@ uninstall-benchmarkDATA:
 	  rm -f $(DESTDIR)$(benchmarkdir)/$$f; \
 	done
 
-# This directory's subdirectories are mostly independent; you can cd
-# into them and run `make' without going through this Makefile.
-# To change the values of `make' variables: instead of editing Makefiles,
-# (1) if the variable is set in `config.status', edit `config.status'
-#     (which will cause the Makefiles to be regenerated when you run `make');
-# (2) otherwise, pass the desired values on the `make' command line.
-$(RECURSIVE_TARGETS):
-	@set fnord $$MAKEFLAGS; amf=$$2; \
-	dot_seen=no; \
-	target=`echo $@ | sed s/-recursive//`; \
-	list='$(SUBDIRS)'; for subdir in $$list; do \
-	  echo "Making $$target in $$subdir"; \
-	  if test "$$subdir" = "."; then \
-	    dot_seen=yes; \
-	    local_target="$$target-am"; \
-	  else \
-	    local_target="$$target"; \
-	  fi; \
-	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
-	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
-	done; \
-	if test "$$dot_seen" = "no"; then \
-	  $(MAKE) $(AM_MAKEFLAGS) "$$target-am" || exit 1; \
-	fi; test -z "$$fail"
-
-mostlyclean-recursive clean-recursive distclean-recursive \
-maintainer-clean-recursive:
-	@set fnord $$MAKEFLAGS; amf=$$2; \
-	dot_seen=no; \
-	case "$@" in \
-	  distclean-* | maintainer-clean-*) list='$(DIST_SUBDIRS)' ;; \
-	  *) list='$(SUBDIRS)' ;; \
-	esac; \
-	rev=''; for subdir in $$list; do \
-	  if test "$$subdir" = "."; then :; else \
-	    rev="$$subdir $$rev"; \
-	  fi; \
-	done; \
-	rev="$$rev ."; \
-	target=`echo $@ | sed s/-recursive//`; \
-	for subdir in $$rev; do \
-	  echo "Making $$target in $$subdir"; \
-	  if test "$$subdir" = "."; then \
-	    local_target="$$target-am"; \
-	  else \
-	    local_target="$$target"; \
-	  fi; \
-	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
-	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
-	done && test -z "$$fail"
-tags-recursive:
-	list='$(SUBDIRS)'; for subdir in $$list; do \
-	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) tags); \
-	done
-
 ETAGS = etags
 ETAGSFLAGS =
 
@@ -820,15 +758,10 @@ ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	       END { for (i in files) print i; }'`; \
 	mkid -fID $$unique
 
-TAGS: tags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
+TAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
 		$(TAGS_FILES) $(LISP)
 	tags=; \
 	here=`pwd`; \
-	list='$(SUBDIRS)'; for subdir in $$list; do \
-	  if test "$$subdir" = .; then :; else \
-	    test -f $$subdir/TAGS && tags="$$tags -i $$here/$$subdir/TAGS"; \
-	  fi; \
-	done; \
 	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
 	unique=`for i in $$list; do \
 	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
@@ -872,35 +805,22 @@ distdir: $(DISTFILES)
 	    || exit 1; \
 	  fi; \
 	done
-	list='$(SUBDIRS)'; for subdir in $$list; do \
-	  if test "$$subdir" = .; then :; else \
-	    test -d $(distdir)/$$subdir \
-	    || mkdir $(distdir)/$$subdir \
-	    || exit 1; \
-	    (cd $$subdir && \
-	      $(MAKE) $(AM_MAKEFLAGS) \
-	        top_distdir="$(top_distdir)" \
-	        distdir=../$(distdir)/$$subdir \
-	        distdir) \
-	      || exit 1; \
-	  fi; \
-	done
 check-am: all-am
-check: check-recursive
+check: check-am
 all-am: Makefile $(DATA)
-installdirs: installdirs-recursive
-installdirs-am:
+
+installdirs:
 	$(mkinstalldirs) $(DESTDIR)$(benchmarkdir)
 
-install: install-recursive
-install-exec: install-exec-recursive
-install-data: install-data-recursive
-uninstall: uninstall-recursive
+install: install-am
+install-exec: install-exec-am
+install-data: install-data-am
+uninstall: uninstall-am
 
 install-am: all-am
 	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
 
-installcheck: installcheck-recursive
+installcheck: installcheck-am
 install-strip:
 	$(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
 	  INSTALL_STRIP_FLAG=-s \
@@ -916,20 +836,20 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
-clean: clean-recursive
+clean: clean-am
 
 clean-am: clean-generic mostlyclean-am
 
-distclean: distclean-recursive
+distclean: distclean-am
 
 distclean-am: clean-am distclean-compile distclean-depend \
 	distclean-generic distclean-tags
 
-dvi: dvi-recursive
+dvi: dvi-am
 
 dvi-am:
 
-info: info-recursive
+info: info-am
 
 info-am:
 
@@ -937,39 +857,32 @@ install-data-am: install-benchmarkDATA
 
 install-exec-am:
 
-install-info: install-info-recursive
+install-info: install-info-am
 
 install-man:
 
 installcheck-am:
 
-maintainer-clean: maintainer-clean-recursive
+maintainer-clean: maintainer-clean-am
 
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
-mostlyclean: mostlyclean-recursive
+mostlyclean: mostlyclean-am
 
 mostlyclean-am: mostlyclean-compile mostlyclean-generic
 
 uninstall-am: uninstall-benchmarkDATA uninstall-info-am
 
-uninstall-info: uninstall-info-recursive
-
-.PHONY: $(RECURSIVE_TARGETS) GTAGS all all-am check check-am clean \
-	clean-generic clean-recursive distclean distclean-compile \
-	distclean-depend distclean-generic distclean-recursive \
-	distclean-tags distdir dvi dvi-am dvi-recursive info info-am \
-	info-recursive install install-am install-benchmarkDATA \
-	install-data install-data-am install-data-recursive \
-	install-exec install-exec-am install-exec-recursive \
-	install-info install-info-am install-info-recursive install-man \
-	install-recursive install-strip installcheck installcheck-am \
-	installdirs installdirs-am installdirs-recursive \
-	maintainer-clean maintainer-clean-generic \
-	maintainer-clean-recursive mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-recursive tags tags-recursive \
+.PHONY: GTAGS all all-am check check-am clean clean-generic distclean \
+	distclean-compile distclean-depend distclean-generic \
+	distclean-tags distdir dvi dvi-am info info-am install \
+	install-am install-benchmarkDATA install-data install-data-am \
+	install-exec install-exec-am install-info install-info-am \
+	install-man install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-compile mostlyclean-generic tags \
 	uninstall uninstall-am uninstall-benchmarkDATA \
-	uninstall-info-am uninstall-info-recursive uninstall-recursive
+	uninstall-info-am
 
 
 @F90_COMPILER_TRUE@%.o : %f90.f
