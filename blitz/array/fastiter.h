@@ -23,6 +23,10 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.5  2002/09/20 01:10:32  jcumming
+ * Removed meaningless restrict qualifier inside const_cast that generates
+ * compiler warnings under SGI and KCC compilers.
+ *
  * Revision 1.4  2002/06/28 01:39:47  jcumming
  * Changed order of ctor initializers to match order of member data declarations,
  * eliminating warning from gcc compiler.
@@ -265,17 +269,17 @@ public:
 
     // Experimental
     void operator=(T_numtype x)
-    {   *const_cast<T_numtype* _bz_restrict>(data_) = x; }
+    {   *const_cast<T_numtype*>(data_) = x; }
 
     // Experimental
     template<class T_value>
     void operator=(T_value x)
-    {   *const_cast<T_numtype* _bz_restrict>(data_) = x; }
+    {   *const_cast<T_numtype*>(data_) = x; }
 
     // Experimental
     template<class T_value>
     void operator+=(T_value x)
-    { *const_cast<T_numtype* _bz_restrict>(data_) += x; }
+    { *const_cast<T_numtype*>(data_) += x; }
 
     // NEEDS_WORK: other operators
 
