@@ -60,6 +60,8 @@ struct asExpr<IndexPlaceholder<N> > {
     typedef IndexPlaceholder<N> T_expr;
 };
 
+#ifdef BZ_TEMPLATES_AS_TEMPLATE_ARGUMENTS
+
 //  A traits class that provides the return type of a binary operation.
 
 template <template <typename T1> class OP,typename O1>
@@ -77,6 +79,8 @@ struct BzBinaryExprResult {
                                 OP<typename asExpr<O1>::T_expr::T_numtype,
                                    typename asExpr<O2>::T_expr::T_numtype> > > T_result;
 };
+
+#endif /* BZ_TEMPLATES_AS_TEMPLATE_ARGUMENTS */
 
 BZ_NAMESPACE_END
 
