@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.4  2002/05/27 19:41:24  jcumming
+ * Removed use of this->.  data_ is now declared in scope of class definition.
+ *
  * Revision 1.3  2002/03/06 15:56:43  patricg
  *
  * data_ replaced by this->data_ in
@@ -152,6 +155,9 @@ protected:
 
 template<class T, int N>
 class ArrayIterator : public ConstArrayIterator<T,N> {
+  private:
+    typedef ConstArrayIterator<T,N> T_base;
+    using T_base::data_;
   public:
     ArrayIterator(Array<T,N>& x)
       : ConstArrayIterator<T,N>(x)
@@ -169,12 +175,12 @@ class ArrayIterator : public ConstArrayIterator<T,N> {
 
     T& operator*()
     {
-        return *this->data_;
+        return *data_;
     }
 
     T* _bz_restrict operator->() 
     {
-        return this->data_;
+        return data_;
     }
 };
 
