@@ -104,11 +104,12 @@ AC_ARG_WITH(cxx,
      SGI*)               # SGI C++  http://www.sgi.com
        echo "Configuring for SGI C++"
        bz_compiler=sgiCC
-       AC_BZ_SET_COMPILER($withval,"CC","-LANG:std -LANG:restrict")
+       AC_BZ_SET_COMPILER($withval,"CC","-LANG:std -LANG:restrict -ptused")
        CXX_OPTIMIZE_FLAGS="-Ofast"
        CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
        AR="\$(CXX)"
        AR_FLAGS="-ar -o"
+			 LDFLAGS="-lCio"
        RANLIB="ar ts"
      ;;
      FCC*)
@@ -280,7 +281,7 @@ case "$target" in
           AR_FLAGS="-64 -o"
         ;;
         gcc)
-          CXXFLAGS="-mabi64 $CXXFLAGS"
+          CXXFLAGS="-mabi=64 $CXXFLAGS"
         ;;
       esac
     fi
