@@ -119,4 +119,16 @@ Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	0.0, complex<double>());
 	Still a problem with the complex stencil, right now the statement
 	applyStencil(kinEnergy(),A,B); is commented
+
+
+Thu Mar  7 09:06:58 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure.in: f90 optimisation flag set to O3 for platform *hp-hpux*
+	* blitz/array/io.cc: cosmetic change
+	* blitz/traversal.h: moved 
+	template<int N_dimensions>
+	_bz_typename TraversalOrderCollection<N_dimensions>::T_set
+	    TraversalOrderCollection<N_dimensions>::traversals_;
+	after the declaration of 
+	template<int N_dimensions> class TraversalOrderCollection
+	
 	
