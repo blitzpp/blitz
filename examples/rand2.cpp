@@ -8,6 +8,13 @@ using namespace ranlib;
 
 #include <time.h>
 
+// workaround for broken streams in Compaq cxx, can't handle long double
+#if defined(__DECCXX)
+#define LD_HACK(x) static_cast<double>(x)
+#else
+#define LD_HACK(x) x
+#endif
+
 int main2()
 {
     DiscreteUniform<int> rng(100);
@@ -49,10 +56,10 @@ int main()
         sum4 += x*x*x*x;
     }
 
-    cout << "k1 = " << (sum1/N) << endl
-         << "k2 = " << (sum2/N) << endl
-         << "k3 = " << (sum3/N) << endl
-         << "k4 = " << (sum4/N) << endl;
+    cout << "k1 = " << LD_HACK(sum1/N) << endl
+         << "k2 = " << LD_HACK(sum2/N) << endl
+         << "k3 = " << LD_HACK(sum3/N) << endl
+         << "k4 = " << LD_HACK(sum4/N) << endl;
 
     return 0;
 }

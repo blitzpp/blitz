@@ -11,6 +11,13 @@
 using namespace ranlib;
 using namespace blitz;
 
+// workaround for broken streams in Compaq cxx, can't handle long double
+#if defined(__DECCXX)
+#define LD_HACK(x) static_cast<double>(x)
+#else
+#define LD_HACK(x) x
+#endif
+
 template<typename T>
 void printRandoms()
 {
@@ -19,7 +26,7 @@ void printRandoms()
   x.seed(5);
   int N=5;
   for (int i = 0; i < N; ++i) 
-    cout << setprecision(digits10(T())) << x.random() << endl;
+    cout << setprecision(digits10(T())) << LD_HACK(x.random()) << endl;
 
   cout << endl;
 }
