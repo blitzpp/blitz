@@ -1,18 +1,28 @@
+#define BZ_DISABLE_RESTRICT
+
 #include <blitz/array.h>
 #include <blitz/traversal.h>
 #include <blitz/timer.h>
-#include <fstream>
+
+#ifdef BZ_HAVE_STD
+  #include <fstream>
+#else
+  #include <fstream.h>
+#endif
 
 BZ_USING_NAMESPACE(blitz)
 
-#ifdef BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES
+#if defined(BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES)
  #define acoustic3d_f90 acoustic3d_f90_
  #define acoustic3d_f77 acoustic3d_f77_
  #define acoustic3d_f90tuned acoustic3d_f90tuned_
  #define acoustic3d_f77tuned acoustic3d_f77tuned_
-#endif
-
-#ifdef BZ_FORTRAN_SYMBOLS_CAPS
+#elif defined(BZ_FORTRAN_SYMBOLS_WITH_DOUBLE_TRAILING_UNDERSCORES)
+ #define acoustic3d_f90 acoustic3d_f90__
+ #define acoustic3d_f77 acoustic3d_f77__
+ #define acoustic3d_f90tuned acoustic3d_f90tuned__
+ #define acoustic3d_f77tuned acoustic3d_f77tuned__
+#elif defined(BZ_FORTRAN_SYMBOLS_CAPS)
  #define acoustic3d_f90       ACOUSTIC3D_F90
  #define acoustic3d_f77       ACOUSTIC3D_F77
  #define acoustic3d_f90tuned  ACOUSTIC3D_F90TUNED
@@ -38,37 +48,26 @@ int main()
     int niters = 210;    // Must be divisible by 3 for tuned Fortran versions
     float check;
 
+		cout << "Acoustic 3D Benchmark" << endl << endl;
+
+		double Mflops = (N-2)*(N-2)*(N-2) * 9.0 * niters / 1.0e+6;
+
     generateFastTraversalOrder(TinyVector<int,2>(N-2,N-2));
-
-    timer.start();
-    acoustic3d_f90(N, niters, check);
-    timer.stop();
-    cout << "Fortran 90: " << timer.elapsedSeconds() << " s  check = " 
-         << check << endl;
-
-    timer.start();
-    acoustic3d_f77(N, niters, check);
-    timer.stop();
-    cout << "Fortran 77: " << timer.elapsedSeconds() << " s  check = " 
-         << check << endl;
-
-    timer.start();
-    acoustic3d_f90tuned(N, niters, check);
-    timer.stop();
-    cout << "Fortran 90 (tuned): " << timer.elapsedSeconds() << " s  check = "
-         << check << endl;
-
-    timer.start();
-    acoustic3d_f77tuned(N, niters, check);
-    timer.stop();
-    cout << "Fortran 77 (tuned): " << timer.elapsedSeconds() << " s  check = "
-         << check << endl;
 
     timer.start();
     check = acoustic3D_BlitzRaw(N, niters);
     timer.stop();
     cout << "Blitz++ (raw):    " << timer.elapsedSeconds() << " s  check = " 
-         << check << endl;
+         << check << " Mflops = " << (Mflops/timer.elapsedSeconds())
+				 << endl << endl;
+
+    timer.start();
+    check = acoustic3D_BlitzStencil(N, niters);
+    timer.stop();
+    cout << "Blitz++ (stencil): " << timer.elapsedSeconds()
+         << " s check = " << check 
+				 << " Mflops = " << (Mflops/timer.elapsedSeconds())
+				 << endl << endl;
 
 #if 0
     timer.start();
@@ -82,19 +81,46 @@ int main()
     check = acoustic3D_BlitzCycled(N, niters);
     timer.stop();
     cout << "Blitz++ (cycled): " << timer.elapsedSeconds() << " s check = "
-         << check << endl;
+         << check << " Mflops = " << (Mflops/timer.elapsedSeconds())
+				 << endl << endl;
  
     timer.start();
     check = acoustic3D_BlitzInterlacedCycled(N, niters);
     timer.stop();
     cout << "Blitz++ (interlaced & cycled): " << timer.elapsedSeconds()
-         << " s check = " << check << endl;
+         << " s check = " << check
+				 << " Mflops = " << (Mflops/timer.elapsedSeconds())
+				 << endl << endl;
+
+#ifdef FORTRAN_90
+    timer.start();
+    acoustic3d_f90(N, niters, check);
+    timer.stop();
+    cout << "Fortran 90: " << timer.elapsedSeconds() << " s  check = " 
+         << check << " Mflops = " << (Mflops/timer.elapsedSeconds())
+				 << endl << endl;
 
     timer.start();
-    check = acoustic3D_BlitzStencil(N, niters);
+    acoustic3d_f90tuned(N, niters, check);
     timer.stop();
-    cout << "Blitz++ (stencil): " << timer.elapsedSeconds()
-         << " s check = " << check << endl;
+    cout << "Fortran 90 (tuned): " << timer.elapsedSeconds() << " s  check = "
+         << check << " Mflops = " << (Mflops/timer.elapsedSeconds())
+				 << endl << endl;
+#endif
+
+    timer.start(); cout << "ok" << " N=" << N << " niters=" << niters << " check=" << check << endl;
+    acoustic3d_f77(N, niters, check);
+    timer.stop(); cout << "ok" << endl;
+    cout << "Fortran 77: " << timer.elapsedSeconds() << " s  check = " 
+         << check << " Mflops = " << (Mflops/timer.elapsedSeconds())
+				 << endl << endl;
+
+    timer.start();
+    acoustic3d_f77tuned(N, niters, check);
+    timer.stop();
+    cout << "Fortran 77 (tuned): " << timer.elapsedSeconds() << " s  check = "
+         << check << " Mflops = " << (Mflops/timer.elapsedSeconds())
+				 << endl << endl;
 
     return 0;
 }
