@@ -32,12 +32,12 @@ BZ_NAMESPACE(blitz)
 
 typedef double T_defaultSpatialCoordinate;
 
-template<int N_dim, class T = T_defaultSpatialCoordinate>
+template<int N_dim, typename T = T_defaultSpatialCoordinate>
 class UniformOrthoGeometry {
 public:
 };
 
-template<int N_dim, class T = T_defaultSpatialCoordinate>
+template<int N_dim, typename T = T_defaultSpatialCoordinate>
 class UniformCubicGeometry {
     T h_;
     T recip_h_;
@@ -94,7 +94,7 @@ private:
     }
 };
 
-template<int N_dim, class T = T_defaultSpatialCoordinate>
+template<int N_dim, typename T = T_defaultSpatialCoordinate>
 class TensorProductGeometry {
 public:
 };
