@@ -32,14 +32,14 @@
 BZ_NAMESPACE(blitz)
 
 template<typename T_numtype, int N_rank>
-void Array<T_numtype, N_rank>::resize(int length0)
+void Array<T_numtype, N_rank>::resize(int extent0)
 {
-    BZPRECONDITION(length0 > 0);
+    BZPRECONDITION(extent0 >= 0);
     BZPRECONDITION(N_rank == 1);
 
-    if (length0 != length_[firstRank])
+    if (extent0 != length_[0])
     {
-        length_[firstRank] = length0;
+        length_[0] = extent0;
         setupStorage(0);
     }
 }
@@ -47,7 +47,7 @@ void Array<T_numtype, N_rank>::resize(int length0)
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1)
 {
-    BZPRECONDITION((extent0 > 0) && (extent1 > 0));
+    BZPRECONDITION((extent0 >= 0) && (extent1 >= 0));
     BZPRECONDITION(N_rank == 2);
 
     if ((extent0 != length_[0]) || (extent1 != length_[1]))
@@ -62,7 +62,7 @@ template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2)
 {
-    BZPRECONDITION((extent0 > 0) && (extent1 > 0) && (extent2 > 0));
+    BZPRECONDITION((extent0 >= 0) && (extent1 >= 0) && (extent2 >= 0));
     BZPRECONDITION(N_rank == 3);
 
     if ((extent0 != length_[0]) || (extent1 != length_[1])
@@ -80,8 +80,8 @@ template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2, int extent3)
 {
-    BZPRECONDITION((extent0 > 0) && (extent1 > 0) && (extent2 > 0)
-        && (extent3 > 0));
+    BZPRECONDITION((extent0 >= 0) && (extent1 >= 0) && (extent2 >= 0)
+        && (extent3 >= 0));
     BZPRECONDITION(N_rank == 4);
 
     if ((extent0 != length_[0]) || (extent1 != length_[1])
@@ -99,8 +99,8 @@ template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2, int extent3, int extent4)
 {
-    BZPRECONDITION((extent0 > 0) && (extent1 > 0) && (extent2 > 0)
-        && (extent3 > 0) && (extent4 > 0));
+    BZPRECONDITION((extent0 >= 0) && (extent1 >= 0) && (extent2 >= 0)
+        && (extent3 >= 0) && (extent4 >= 0));
     BZPRECONDITION(N_rank == 5);
 
     if ((extent0 != length_[0]) || (extent1 != length_[1])
@@ -120,8 +120,8 @@ template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2, int extent3, int extent4, int extent5)
 {
-    BZPRECONDITION((extent0 > 0) && (extent1 > 0) && (extent2 > 0)
-        && (extent3 > 0) && (extent4 > 0) && (extent5 > 0));
+    BZPRECONDITION((extent0 >= 0) && (extent1 >= 0) && (extent2 >= 0)
+        && (extent3 >= 0) && (extent4 >= 0) && (extent5 >= 0));
     BZPRECONDITION(N_rank == 6);
 
     if ((extent0 != length_[0]) || (extent1 != length_[1])
@@ -143,9 +143,9 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2, int extent3, int extent4, int extent5,
     int extent6)
 {
-    BZPRECONDITION((extent0 > 0) && (extent1 > 0) && (extent2 > 0)
-        && (extent3 > 0) && (extent4 > 0) && (extent5 > 0)
-        && (extent6 > 0));
+    BZPRECONDITION((extent0 >= 0) && (extent1 >= 0) && (extent2 >= 0)
+        && (extent3 >= 0) && (extent4 >= 0) && (extent5 >= 0)
+        && (extent6 >= 0));
     BZPRECONDITION(N_rank == 7);
 
     if ((extent0 != length_[0]) || (extent1 != length_[1])
@@ -169,9 +169,9 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2, int extent3, int extent4, int extent5,
     int extent6, int extent7)
 {
-    BZPRECONDITION((extent0 > 0) && (extent1 > 0) && (extent2 > 0)
-        && (extent3 > 0) && (extent4 > 0) && (extent5 > 0)
-        && (extent6 > 0) && (extent7 > 0));
+    BZPRECONDITION((extent0 >= 0) && (extent1 >= 0) && (extent2 >= 0)
+        && (extent3 >= 0) && (extent4 >= 0) && (extent5 >= 0)
+        && (extent6 >= 0) && (extent7 >= 0));
     BZPRECONDITION(N_rank == 8);
 
     if ((extent0 != length_[0]) || (extent1 != length_[1])
@@ -196,9 +196,9 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2, int extent3, int extent4, int extent5,
     int extent6, int extent7, int extent8)
 {
-    BZPRECONDITION((extent0 > 0) && (extent1 > 0) && (extent2 > 0)
-        && (extent3 > 0) && (extent4 > 0) && (extent5 > 0)
-        && (extent6 > 0) && (extent7 > 0) && (extent8 > 0));
+    BZPRECONDITION((extent0 >= 0) && (extent1 >= 0) && (extent2 >= 0)
+        && (extent3 >= 0) && (extent4 >= 0) && (extent5 >= 0)
+        && (extent6 >= 0) && (extent7 >= 0) && (extent8 >= 0));
     BZPRECONDITION(N_rank == 9);
 
     if ((extent0 != length_[0]) || (extent1 != length_[1])
@@ -226,10 +226,10 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2, int extent3, int extent4, int extent5,
     int extent6, int extent7, int extent8, int extent9)
 {
-    BZPRECONDITION((extent0 > 0) && (extent1 > 0) && (extent2 > 0)
-        && (extent3 > 0) && (extent4 > 0) && (extent5 > 0)
-        && (extent6 > 0) && (extent7 > 0) && (extent8 > 0)
-        && (extent9 > 0));
+    BZPRECONDITION((extent0 >= 0) && (extent1 >= 0) && (extent2 >= 0)
+        && (extent3 >= 0) && (extent4 >= 0) && (extent5 >= 0)
+        && (extent6 >= 0) && (extent7 >= 0) && (extent8 >= 0)
+        && (extent9 >= 0));
     BZPRECONDITION(N_rank == 10);
 
     if ((extent0 != length_[0]) || (extent1 != length_[1])
@@ -258,10 +258,10 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent6, int extent7, int extent8, int extent9,
     int extent10)
 {
-    BZPRECONDITION((extent0 > 0) && (extent1 > 0) && (extent2 > 0)
-        && (extent3 > 0) && (extent4 > 0) && (extent5 > 0)
-        && (extent6 > 0) && (extent7 > 0) && (extent8 > 0)
-        && (extent9 > 0) && (extent10 > 0));
+    BZPRECONDITION((extent0 >= 0) && (extent1 >= 0) && (extent2 >= 0)
+        && (extent3 >= 0) && (extent4 >= 0) && (extent5 >= 0)
+        && (extent6 >= 0) && (extent7 >= 0) && (extent8 >= 0)
+        && (extent9 >= 0) && (extent10 >= 0));
     BZPRECONDITION(N_rank == 11);
 
     if ((extent0 != length_[0]) || (extent1 != length_[1])
