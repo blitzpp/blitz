@@ -81,6 +81,17 @@ Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	this->ascendingFlag_, this->base_
 	noInitializeFlag() replaced by
 	GeneralArrayStorage<N_rank>::noInitializeFlag()
+	* blitz/array/where.h: minmax::max(minmax::max(stride1,stride2),stride3)
+	replaced by
+	stride1>(stride2=(stride2>stride3?stride2:stride3))?stride1:stride2
+	* blitz/transversal.cc, blitz/transversal.h: template declaration
+	template<int N_dimensions>
+	_bz_typename TraversalOrderCollection<N_dimensions>::T_set
+	    TraversalOrderCollection<N_dimensions>::traversals_;
+	in blitz/transversal.cc moved before template specialisation
+	template<>
+	class TraversalOrderCollection<0> {}
+	in blitz/transversal.h 
 
 
 
