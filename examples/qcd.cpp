@@ -1,25 +1,6 @@
 /*****************************************************************************
  * qcd.cpp     Blitz++ TinyMatrix<T> example.  
  *
- * $Id$
- *
- * $Log$
- * Revision 1.3  2002/07/02 19:49:02  jcumming
- * Updated to use new header file names that avoid capitalization.
- *
- * Revision 1.2  2001/01/26 18:30:51  tveldhui
- * More source code reorganization to reduce compile times.
- *
- * Revision 1.1.1.1  2000/06/19 12:26:17  tveldhui
- * Imported sources
- *
- * Revision 1.2  1997/07/16 19:38:23  tveldhui
- * Update: Alpha release 0.2 (Arrays)
- *
- * Revision 1.1  1997/02/28 23:32:41  tveldhui
- * Initial revision
- *
- *****************************************************************************
  * This example illustrates the TinyMatrix<T,N,M> class.  TinyMatrix can
  * be used for small matrices whose dimensions are known at compile time.
  * The application is from lattice quantum chromodynamics.
@@ -27,7 +8,7 @@
  * See: S. Booth, Lattice QCD simulation programs on the Cray T3D,
  * Edinburgh Parallel Computing Centre Technical Report EPCC-TR96-03.  
  * http://www.epcc.ed.ac.uk/t3d/documents/techreports.html
- */
+ *****************************************************************************/
 
 #include <blitz/blitz.h>
 

@@ -1,32 +1,12 @@
 /*****************************************************************************
  * reduce.cpp     Blitz++ array reduction example
  *
- * $Id$
- *
- * $Log$
- * Revision 1.3  2002/07/02 19:49:02  jcumming
- * Updated to use new header file names that avoid capitalization.
- *
- * Revision 1.2  2001/01/26 18:30:51  tveldhui
- * More source code reorganization to reduce compile times.
- *
- * Revision 1.1.1.1  2000/06/19 12:26:17  tveldhui
- * Imported sources
- *
- * Revision 1.2  1997/07/16 19:38:23  tveldhui
- * Update: Alpha release 0.2 (Arrays)
- *
- * Revision 1.1  1997/07/12 15:06:27  tveldhui
- * Initial revision
- *
- *
- *****************************************************************************
  * This example illustrates the array reduction functions provided by
  * Blitz++.  These functions reduce an N dimensional array (or array
  * expression) to an N-1 dimensional array expression by summing, taking
  * the mean, etc.  These array reductions are currently provided: sum,
  * mean, min, max, minIndex, maxIndex, product, count, any and all.
- */
+ *****************************************************************************/
 
 #include <blitz/array.h>
 
