@@ -16,6 +16,7 @@ tvmet library)
 ** proper usage of std namespace within blitz (reduce or eliminate use of
 non-standard headers and using directives)
 
+** add RPM as a dist medium
 
 * Later
 
