@@ -37,6 +37,8 @@ const int RGB24::blue;
 
 BZ_DECLARE_MULTICOMPONENT_TYPE(RGB24, unsigned char, 3)
 
+BZ_DECLARE_ARRAY_ET_SCALAR_OPS(RGB24)
+
 int main()
 {
     Array<TinyVector<int,3>,2> A(8,8);
