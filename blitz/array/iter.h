@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/array/iter.h  Basic iterator for arrays.
  *
@@ -37,7 +38,8 @@ public:
 
     void operator=(const ConstPointerStack<P_numtype,N_rank>& rhs) 
     {
-        stack_ = rhs.stack_;
+        for (int i=0; i<N_rank; ++i)
+            stack_[i] = rhs.stack_[i];
     }
 
     const T_numtype*& operator[](int position)
