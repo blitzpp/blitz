@@ -90,7 +90,7 @@ void two(const char* fname, int flag=0, const char* apname = 0)
 
         operands.printTemplates(ofs);
         ofs << std::endl << "inline" << std::endl
-            << "_bz_ArrayExpr<_bz_ArrayExprOp<";
+            << "_bz_ArrayExpr<_bz_ArrayExprBinaryOp<";
         operands.printIterators(ofs);
         ofs << "," << std::endl << "    _bz_" << apname << "<";
         operands[0].printNumtype(ofs);
@@ -102,7 +102,7 @@ void two(const char* fname, int flag=0, const char* apname = 0)
         ofs << ")" << std::endl
             << "{" << std::endl;
 
-        ofs << "    return _bz_ArrayExprOp<";
+        ofs << "    return _bz_ArrayExprBinaryOp<";
         operands.printIterators(ofs);
         ofs << "," << std::endl << "    _bz_" << apname << "<";
         operands[0].printNumtype(ofs);

@@ -99,7 +99,7 @@ int main()
         operands.printTemplates(ofs);
         ofs << std::endl << "inline" << std::endl;
 
-        ofs << "_bz_ArrayExpr<_bz_ArrayExprOp<";
+        ofs << "_bz_ArrayExpr<_bz_ArrayExprBinaryOp<";
         operands.printIterators(ofs, 1);
         ofs << "," << std::endl << "      " << ops[i].opApplicName << "<";
         operands[0].printNumtype(ofs);
@@ -107,15 +107,14 @@ int main()
         operands[1].printNumtype(ofs);
         ofs << " > > >" << std::endl;
      
-        // operator+(const Vector<T_numtype1>& d1, _bz_VecExpr<T_expr2> d2)
-				if (ops[i].opSymbol[0] == 'm')
-					ofs << ops[i].opSymbol << "(";
-				else
-        	ofs << "operator" << ops[i].opSymbol << "(";
+        if (ops[i].opSymbol[0] == 'm')
+            ofs << ops[i].opSymbol << "(";
+        else
+            ofs << "operator" << ops[i].opSymbol << "(";
         operands.printArgumentList(ofs, 1);
         ofs << ")" << std::endl << "{" << std::endl;
 
-        ofs << "    return _bz_ArrayExprOp<";
+        ofs << "    return _bz_ArrayExprBinaryOp<";
         operands.printIterators(ofs, 1);
         ofs << ", " << std::endl << "      " << ops[i].opApplicName << "<";
         operands[0].printNumtype(ofs);
