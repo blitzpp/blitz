@@ -82,7 +82,7 @@ dnl			CXX_OPTIMIZE_FLAGS="-O3"
 			CXXFLAGS=""
 			CXX_OPTIMIZE_FLAGS="-O2 -funroll-loops"
 		fi
-  	CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
+		CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
 		CXX_PROFIL_FLAGS="-pg"
 	;;
 	aCC) dnl aCC http://www.hp.com/go/c++
