@@ -1,8 +1,6 @@
 /***************************************************************************
  * blitz/array/reduce.cc  Array reductions.
  *
- * $Id$
- *
  * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
@@ -21,17 +19,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.3  2002/03/06 17:00:35  patricg
- *
- * TinyVector<int,rank> replaced by TinyVector<int,T_expr::rank>
- *
- * Revision 1.2  2001/01/25 00:25:55  tveldhui
- * Ensured that source files have cvs logs.
- *
- */
-
+ ****************************************************************************/
 #ifndef BZ_ARRAYREDUCE_H
  #error <blitz/array/reduce.cc> must be included via <blitz/array/reduce.h>
 #endif

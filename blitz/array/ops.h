@@ -1,8 +1,6 @@
 /***************************************************************************
  * blitz/array/ops.h  Array operators
  *
- * $Id$
- *
  * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
@@ -21,17 +19,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.3  2002/07/02 19:12:50  jcumming
- * Use new style of Array ET macros to create unary and binary operators
- * that act on Array types.
- *
- * Revision 1.2  2001/01/25 00:25:55  tveldhui
- * Ensured that source files have cvs logs.
- *
- */
-
+ ****************************************************************************/
 #ifndef BZ_ARRAY_OPS_H
 #define BZ_ARRAY_OPS_H
 

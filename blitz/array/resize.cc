@@ -1,8 +1,6 @@
 /***************************************************************************
  * blitz/array/resize.cc  Resizing of arrays
  *
- * $Id$
- *
  * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
@@ -21,23 +19,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.4  2002/03/06 15:50:41  patricg
- *
- * for (d=0; d < N_rank; ++d) replaced by for (int d=0; d < N_rank; ++d)
- * (for scoping problem)
- *
- * Revision 1.3  2001/02/11 15:43:39  tveldhui
- * Additions from Julian Cummings:
- *  - StridedDomain class
- *  - more versions of resizeAndPreserve
- *
- * Revision 1.2  2001/01/25 00:25:55  tveldhui
- * Ensured that source files have cvs logs.
- *
- */
-
+ ****************************************************************************/
 #ifndef BZ_ARRAYRESIZE_CC
 #define BZ_ARRAYRESIZE_CC
 

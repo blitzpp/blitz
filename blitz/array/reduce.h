@@ -3,8 +3,6 @@
  *                        single rank: sum, mean, min, minIndex, max, maxIndex, 
  *                        product, count, any, all
  *
- * $Id$
- *
  * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
@@ -23,22 +21,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.2  2001/01/24 20:22:51  tveldhui
- * Updated copyright date in headers.
- *
- * Revision 1.1.1.1  2000/06/19 12:26:14  tveldhui
- * Imported sources
- *
- * Revision 1.2  1998/03/14 00:04:47  tveldhui
- * 0.2-alpha-05
- *
- * Revision 1.1  1997/07/16 14:51:20  tveldhui
- * Update: Alpha release 0.2 (Arrays)
- *
- */
-
+ ****************************************************************************/
 #ifndef BZ_ARRAYREDUCE_H
 #define BZ_ARRAYREDUCE_H
 
