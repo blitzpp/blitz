@@ -1,0 +1,49 @@
+bzindex(debugging mode)
+bzindex(bounds checking)
+bzindex(Array!bounds checking)
+The Blitz++ library has a debugging mode which is enabled by defining
+the preprocessor symbol tt(BZ_DEBUG).  For most compilers, the command
+line argument tt(-DBZ_DEBUG) should work.
+
+In debugging mode, your programs will run em(very slowly).  This is
+because Blitz++ is doing lots of precondition checking and bounds
+checking.  When it detects something fishy, it will likely halt your 
+program and display an error message.
+
+For example, this program attempts to access an element of a 4x4
+array which doesn't exist:
+
+bzexample(
+#include <blitz/array.h>
+
+using namespace blitz;
+
+int main()
+{
+    Array<complex<float>, 2> Z(4,4);
+
+    // Since this is a C-style array, the valid index 
+    // ranges are 0..3 and 0..3
+    Z(4,4) = complex<float>(1.0, 0.0);
+
+    return 0;
+}
+)
+
+When compiled with tt(-DBZ_DEBUG), the out of bounds indices are
+detected and an error message results:
+
+bzexample(\
+[Blitz++] Precondition failure: Module ../../blitz/array.h line 1070
+Array index out of range: (4, 4)
+Lower bounds: [          0         0 ]
+Upper bounds: [          3         3 ]
+
+Assertion failed: __EX, file  ../../blitz/array.h, line 1070
+IOT/Abort trap (core dumped)
+)
+
+Precondition failures send their error messages to the standard
+error stream (tt(cerr)).  After displaying the error message,
+tt(assert(0)) is invoked.  
+
