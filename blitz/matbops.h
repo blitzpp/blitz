@@ -1,5 +1,5 @@
 // Generated source file.  Do not edit.
-// Created by: genmatbops.cpp Jun 25 2003 19:46:27
+// Created by: genmatbops.cpp Sep 25 2003 13:27:26
 
 #ifndef BZ_MATBOPS_H
 #define BZ_MATBOPS_H
@@ -5348,6 +5348,284 @@ operator||(int d1,
     typedef _bz_MatExprOp<_bz_MatExprConstant<int>, 
       _bz_MatExpr<P_expr2>, 
       _bz_LogicalOr<int, typename P_expr2::T_numtype> > T_expr;
+
+    return _bz_MatExpr<T_expr>(T_expr(_bz_MatExprConstant<int>(d1), 
+      d2));
+}
+/****************************************************************************
+ * Minimum Operators
+ ****************************************************************************/
+
+// Matrix<P_numtype1, P_struct1> min Matrix<P_numtype2, P_struct2>
+template<class P_numtype1, class P_struct1, class P_numtype2, class P_struct2>
+inline
+_bz_MatExpr<_bz_MatExprOp<_bz_MatrixRef<P_numtype1, P_struct1>, 
+      _bz_MatrixRef<P_numtype2, P_struct2>,
+      _bz_Min<P_numtype1, P_numtype2 > > >
+min(const Matrix<P_numtype1, P_struct1>& d1, 
+      const Matrix<P_numtype2, P_struct2>& d2)
+{
+    typedef _bz_MatExprOp<_bz_MatrixRef<P_numtype1, P_struct1>, 
+      _bz_MatrixRef<P_numtype2, P_struct2>, 
+      _bz_Min<P_numtype1, P_numtype2> > T_expr;
+
+    return _bz_MatExpr<T_expr>(T_expr(d1._bz_getRef(), 
+      d2._bz_getRef()));
+}
+
+// Matrix<P_numtype1, P_struct1> min _bz_MatExpr<P_expr2>
+template<class P_numtype1, class P_struct1, class P_expr2>
+inline
+_bz_MatExpr<_bz_MatExprOp<_bz_MatrixRef<P_numtype1, P_struct1>, 
+      _bz_MatExpr<P_expr2>,
+      _bz_Min<P_numtype1, typename P_expr2::T_numtype > > >
+min(const Matrix<P_numtype1, P_struct1>& d1, 
+      _bz_MatExpr<P_expr2> d2)
+{
+    typedef _bz_MatExprOp<_bz_MatrixRef<P_numtype1, P_struct1>, 
+      _bz_MatExpr<P_expr2>, 
+      _bz_Min<P_numtype1, typename P_expr2::T_numtype> > T_expr;
+
+    return _bz_MatExpr<T_expr>(T_expr(d1._bz_getRef(), 
+      d2));
+}
+
+// Matrix<P_numtype1, P_struct1> min int
+template<class P_numtype1, class P_struct1>
+inline
+_bz_MatExpr<_bz_MatExprOp<_bz_MatrixRef<P_numtype1, P_struct1>, 
+      _bz_MatExprConstant<int>,
+      _bz_Min<P_numtype1, int > > >
+min(const Matrix<P_numtype1, P_struct1>& d1, 
+      int d2)
+{
+    typedef _bz_MatExprOp<_bz_MatrixRef<P_numtype1, P_struct1>, 
+      _bz_MatExprConstant<int>, 
+      _bz_Min<P_numtype1, int> > T_expr;
+
+    return _bz_MatExpr<T_expr>(T_expr(d1._bz_getRef(), 
+      _bz_MatExprConstant<int>(d2)));
+}
+
+// _bz_MatExpr<P_expr1> min Matrix<P_numtype2, P_struct2>
+template<class P_expr1, class P_numtype2, class P_struct2>
+inline
+_bz_MatExpr<_bz_MatExprOp<_bz_MatExpr<P_expr1>, 
+      _bz_MatrixRef<P_numtype2, P_struct2>,
+      _bz_Min<typename P_expr1::T_numtype, P_numtype2 > > >
+min(_bz_MatExpr<P_expr1> d1, 
+      const Matrix<P_numtype2, P_struct2>& d2)
+{
+    typedef _bz_MatExprOp<_bz_MatExpr<P_expr1>, 
+      _bz_MatrixRef<P_numtype2, P_struct2>, 
+      _bz_Min<typename P_expr1::T_numtype, P_numtype2> > T_expr;
+
+    return _bz_MatExpr<T_expr>(T_expr(d1, 
+      d2._bz_getRef()));
+}
+
+// _bz_MatExpr<P_expr1> min _bz_MatExpr<P_expr2>
+template<class P_expr1, class P_expr2>
+inline
+_bz_MatExpr<_bz_MatExprOp<_bz_MatExpr<P_expr1>, 
+      _bz_MatExpr<P_expr2>,
+      _bz_Min<typename P_expr1::T_numtype, typename P_expr2::T_numtype > > >
+min(_bz_MatExpr<P_expr1> d1, 
+      _bz_MatExpr<P_expr2> d2)
+{
+    typedef _bz_MatExprOp<_bz_MatExpr<P_expr1>, 
+      _bz_MatExpr<P_expr2>, 
+      _bz_Min<typename P_expr1::T_numtype, typename P_expr2::T_numtype> > T_expr;
+
+    return _bz_MatExpr<T_expr>(T_expr(d1, 
+      d2));
+}
+
+// _bz_MatExpr<P_expr1> min int
+template<class P_expr1>
+inline
+_bz_MatExpr<_bz_MatExprOp<_bz_MatExpr<P_expr1>, 
+      _bz_MatExprConstant<int>,
+      _bz_Min<typename P_expr1::T_numtype, int > > >
+min(_bz_MatExpr<P_expr1> d1, 
+      int d2)
+{
+    typedef _bz_MatExprOp<_bz_MatExpr<P_expr1>, 
+      _bz_MatExprConstant<int>, 
+      _bz_Min<typename P_expr1::T_numtype, int> > T_expr;
+
+    return _bz_MatExpr<T_expr>(T_expr(d1, 
+      _bz_MatExprConstant<int>(d2)));
+}
+
+// int min Matrix<P_numtype2, P_struct2>
+template<class P_numtype2, class P_struct2>
+inline
+_bz_MatExpr<_bz_MatExprOp<_bz_MatExprConstant<int>, 
+      _bz_MatrixRef<P_numtype2, P_struct2>,
+      _bz_Min<int, P_numtype2 > > >
+min(int d1, 
+      const Matrix<P_numtype2, P_struct2>& d2)
+{
+    typedef _bz_MatExprOp<_bz_MatExprConstant<int>, 
+      _bz_MatrixRef<P_numtype2, P_struct2>, 
+      _bz_Min<int, P_numtype2> > T_expr;
+
+    return _bz_MatExpr<T_expr>(T_expr(_bz_MatExprConstant<int>(d1), 
+      d2._bz_getRef()));
+}
+
+// int min _bz_MatExpr<P_expr2>
+template<class P_expr2>
+inline
+_bz_MatExpr<_bz_MatExprOp<_bz_MatExprConstant<int>, 
+      _bz_MatExpr<P_expr2>,
+      _bz_Min<int, typename P_expr2::T_numtype > > >
+min(int d1, 
+      _bz_MatExpr<P_expr2> d2)
+{
+    typedef _bz_MatExprOp<_bz_MatExprConstant<int>, 
+      _bz_MatExpr<P_expr2>, 
+      _bz_Min<int, typename P_expr2::T_numtype> > T_expr;
+
+    return _bz_MatExpr<T_expr>(T_expr(_bz_MatExprConstant<int>(d1), 
+      d2));
+}
+/****************************************************************************
+ * Maximum Operators
+ ****************************************************************************/
+
+// Matrix<P_numtype1, P_struct1> max Matrix<P_numtype2, P_struct2>
+template<class P_numtype1, class P_struct1, class P_numtype2, class P_struct2>
+inline
+_bz_MatExpr<_bz_MatExprOp<_bz_MatrixRef<P_numtype1, P_struct1>, 
+      _bz_MatrixRef<P_numtype2, P_struct2>,
+      _bz_Max<P_numtype1, P_numtype2 > > >
+max(const Matrix<P_numtype1, P_struct1>& d1, 
+      const Matrix<P_numtype2, P_struct2>& d2)
+{
+    typedef _bz_MatExprOp<_bz_MatrixRef<P_numtype1, P_struct1>, 
+      _bz_MatrixRef<P_numtype2, P_struct2>, 
+      _bz_Max<P_numtype1, P_numtype2> > T_expr;
+
+    return _bz_MatExpr<T_expr>(T_expr(d1._bz_getRef(), 
+      d2._bz_getRef()));
+}
+
+// Matrix<P_numtype1, P_struct1> max _bz_MatExpr<P_expr2>
+template<class P_numtype1, class P_struct1, class P_expr2>
+inline
+_bz_MatExpr<_bz_MatExprOp<_bz_MatrixRef<P_numtype1, P_struct1>, 
+      _bz_MatExpr<P_expr2>,
+      _bz_Max<P_numtype1, typename P_expr2::T_numtype > > >
+max(const Matrix<P_numtype1, P_struct1>& d1, 
+      _bz_MatExpr<P_expr2> d2)
+{
+    typedef _bz_MatExprOp<_bz_MatrixRef<P_numtype1, P_struct1>, 
+      _bz_MatExpr<P_expr2>, 
+      _bz_Max<P_numtype1, typename P_expr2::T_numtype> > T_expr;
+
+    return _bz_MatExpr<T_expr>(T_expr(d1._bz_getRef(), 
+      d2));
+}
+
+// Matrix<P_numtype1, P_struct1> max int
+template<class P_numtype1, class P_struct1>
+inline
+_bz_MatExpr<_bz_MatExprOp<_bz_MatrixRef<P_numtype1, P_struct1>, 
+      _bz_MatExprConstant<int>,
+      _bz_Max<P_numtype1, int > > >
+max(const Matrix<P_numtype1, P_struct1>& d1, 
+      int d2)
+{
+    typedef _bz_MatExprOp<_bz_MatrixRef<P_numtype1, P_struct1>, 
+      _bz_MatExprConstant<int>, 
+      _bz_Max<P_numtype1, int> > T_expr;
+
+    return _bz_MatExpr<T_expr>(T_expr(d1._bz_getRef(), 
+      _bz_MatExprConstant<int>(d2)));
+}
+
+// _bz_MatExpr<P_expr1> max Matrix<P_numtype2, P_struct2>
+template<class P_expr1, class P_numtype2, class P_struct2>
+inline
+_bz_MatExpr<_bz_MatExprOp<_bz_MatExpr<P_expr1>, 
+      _bz_MatrixRef<P_numtype2, P_struct2>,
+      _bz_Max<typename P_expr1::T_numtype, P_numtype2 > > >
+max(_bz_MatExpr<P_expr1> d1, 
+      const Matrix<P_numtype2, P_struct2>& d2)
+{
+    typedef _bz_MatExprOp<_bz_MatExpr<P_expr1>, 
+      _bz_MatrixRef<P_numtype2, P_struct2>, 
+      _bz_Max<typename P_expr1::T_numtype, P_numtype2> > T_expr;
+
+    return _bz_MatExpr<T_expr>(T_expr(d1, 
+      d2._bz_getRef()));
+}
+
+// _bz_MatExpr<P_expr1> max _bz_MatExpr<P_expr2>
+template<class P_expr1, class P_expr2>
+inline
+_bz_MatExpr<_bz_MatExprOp<_bz_MatExpr<P_expr1>, 
+      _bz_MatExpr<P_expr2>,
+      _bz_Max<typename P_expr1::T_numtype, typename P_expr2::T_numtype > > >
+max(_bz_MatExpr<P_expr1> d1, 
+      _bz_MatExpr<P_expr2> d2)
+{
+    typedef _bz_MatExprOp<_bz_MatExpr<P_expr1>, 
+      _bz_MatExpr<P_expr2>, 
+      _bz_Max<typename P_expr1::T_numtype, typename P_expr2::T_numtype> > T_expr;
+
+    return _bz_MatExpr<T_expr>(T_expr(d1, 
+      d2));
+}
+
+// _bz_MatExpr<P_expr1> max int
+template<class P_expr1>
+inline
+_bz_MatExpr<_bz_MatExprOp<_bz_MatExpr<P_expr1>, 
+      _bz_MatExprConstant<int>,
+      _bz_Max<typename P_expr1::T_numtype, int > > >
+max(_bz_MatExpr<P_expr1> d1, 
+      int d2)
+{
+    typedef _bz_MatExprOp<_bz_MatExpr<P_expr1>, 
+      _bz_MatExprConstant<int>, 
+      _bz_Max<typename P_expr1::T_numtype, int> > T_expr;
+
+    return _bz_MatExpr<T_expr>(T_expr(d1, 
+      _bz_MatExprConstant<int>(d2)));
+}
+
+// int max Matrix<P_numtype2, P_struct2>
+template<class P_numtype2, class P_struct2>
+inline
+_bz_MatExpr<_bz_MatExprOp<_bz_MatExprConstant<int>, 
+      _bz_MatrixRef<P_numtype2, P_struct2>,
+      _bz_Max<int, P_numtype2 > > >
+max(int d1, 
+      const Matrix<P_numtype2, P_struct2>& d2)
+{
+    typedef _bz_MatExprOp<_bz_MatExprConstant<int>, 
+      _bz_MatrixRef<P_numtype2, P_struct2>, 
+      _bz_Max<int, P_numtype2> > T_expr;
+
+    return _bz_MatExpr<T_expr>(T_expr(_bz_MatExprConstant<int>(d1), 
+      d2._bz_getRef()));
+}
+
+// int max _bz_MatExpr<P_expr2>
+template<class P_expr2>
+inline
+_bz_MatExpr<_bz_MatExprOp<_bz_MatExprConstant<int>, 
+      _bz_MatExpr<P_expr2>,
+      _bz_Max<int, typename P_expr2::T_numtype > > >
+max(int d1, 
+      _bz_MatExpr<P_expr2> d2)
+{
+    typedef _bz_MatExprOp<_bz_MatExprConstant<int>, 
+      _bz_MatExpr<P_expr2>, 
+      _bz_Max<int, typename P_expr2::T_numtype> > T_expr;
 
     return _bz_MatExpr<T_expr>(T_expr(_bz_MatExprConstant<int>(d1), 
       d2));

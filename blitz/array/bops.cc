@@ -22,7 +22,7 @@
  */ 
 
 // Generated source file.  Do not edit. 
-// genarrbops.cpp Jun 25 2003 19:45:26
+// genarrbops.cpp Sep 25 2003 13:49:58
 
 #ifndef BZ_ARRAYBOPS_CC
 #define BZ_ARRAYBOPS_CC
@@ -8364,6 +8364,492 @@ operator<<(int d1,
     return _bz_ArrayExprOp<_bz_ArrayExprConstant<int>, 
       IndexPlaceholder<N_index2>, 
       ShiftLeft<int, int> >
+      (_bz_ArrayExprConstant<int>(d1), 
+      d2);
+}
+/****************************************************************************
+ * Minimum Operators
+ ****************************************************************************/
+
+// Array<T_numtype1, N_rank1> min Array<T_numtype2, N_rank2>
+template<class T_numtype1, int N_rank1, class T_numtype2, int N_rank2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<ArrayIterator<T_numtype1, N_rank1>, 
+      ArrayIterator<T_numtype2, N_rank2>,
+      _bz_Min<T_numtype1, T_numtype2 > > >
+min(const Array<T_numtype1, N_rank1>& d1, 
+      const Array<T_numtype2, N_rank2>& d2)
+{
+    return _bz_ArrayExprOp<ArrayIterator<T_numtype1, N_rank1>, 
+      ArrayIterator<T_numtype2, N_rank2>, 
+      _bz_Min<T_numtype1, T_numtype2> >
+      (d1.begin(), 
+      d2.begin());
+}
+
+// Array<T_numtype1, N_rank1> min _bz_ArrayExpr<P_expr2>
+template<class T_numtype1, int N_rank1, class P_expr2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<ArrayIterator<T_numtype1, N_rank1>, 
+      _bz_ArrayExpr<P_expr2>,
+      _bz_Min<T_numtype1, typename P_expr2::T_numtype > > >
+min(const Array<T_numtype1, N_rank1>& d1, 
+      _bz_ArrayExpr<P_expr2> d2)
+{
+    return _bz_ArrayExprOp<ArrayIterator<T_numtype1, N_rank1>, 
+      _bz_ArrayExpr<P_expr2>, 
+      _bz_Min<T_numtype1, typename P_expr2::T_numtype> >
+      (d1.begin(), 
+      d2);
+}
+
+// Array<T_numtype1, N_rank1> min IndexPlaceholder<N_index2>
+template<class T_numtype1, int N_rank1, int N_index2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<ArrayIterator<T_numtype1, N_rank1>, 
+      IndexPlaceholder<N_index2>,
+      _bz_Min<T_numtype1, int > > >
+min(const Array<T_numtype1, N_rank1>& d1, 
+      IndexPlaceholder<N_index2> d2)
+{
+    return _bz_ArrayExprOp<ArrayIterator<T_numtype1, N_rank1>, 
+      IndexPlaceholder<N_index2>, 
+      _bz_Min<T_numtype1, int> >
+      (d1.begin(), 
+      d2);
+}
+
+// Array<T_numtype1, N_rank1> min int
+template<class T_numtype1, int N_rank1>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<ArrayIterator<T_numtype1, N_rank1>, 
+      _bz_ArrayExprConstant<int>,
+      _bz_Min<T_numtype1, int > > >
+min(const Array<T_numtype1, N_rank1>& d1, 
+      int d2)
+{
+    return _bz_ArrayExprOp<ArrayIterator<T_numtype1, N_rank1>, 
+      _bz_ArrayExprConstant<int>, 
+      _bz_Min<T_numtype1, int> >
+      (d1.begin(), 
+      _bz_ArrayExprConstant<int>(d2));
+}
+
+// _bz_ArrayExpr<P_expr1> min Array<T_numtype2, N_rank2>
+template<class P_expr1, class T_numtype2, int N_rank2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<_bz_ArrayExpr<P_expr1>, 
+      ArrayIterator<T_numtype2, N_rank2>,
+      _bz_Min<typename P_expr1::T_numtype, T_numtype2 > > >
+min(_bz_ArrayExpr<P_expr1> d1, 
+      const Array<T_numtype2, N_rank2>& d2)
+{
+    return _bz_ArrayExprOp<_bz_ArrayExpr<P_expr1>, 
+      ArrayIterator<T_numtype2, N_rank2>, 
+      _bz_Min<typename P_expr1::T_numtype, T_numtype2> >
+      (d1, 
+      d2.begin());
+}
+
+// _bz_ArrayExpr<P_expr1> min _bz_ArrayExpr<P_expr2>
+template<class P_expr1, class P_expr2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<_bz_ArrayExpr<P_expr1>, 
+      _bz_ArrayExpr<P_expr2>,
+      _bz_Min<typename P_expr1::T_numtype, typename P_expr2::T_numtype > > >
+min(_bz_ArrayExpr<P_expr1> d1, 
+      _bz_ArrayExpr<P_expr2> d2)
+{
+    return _bz_ArrayExprOp<_bz_ArrayExpr<P_expr1>, 
+      _bz_ArrayExpr<P_expr2>, 
+      _bz_Min<typename P_expr1::T_numtype, typename P_expr2::T_numtype> >
+      (d1, 
+      d2);
+}
+
+// _bz_ArrayExpr<P_expr1> min IndexPlaceholder<N_index2>
+template<class P_expr1, int N_index2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<_bz_ArrayExpr<P_expr1>, 
+      IndexPlaceholder<N_index2>,
+      _bz_Min<typename P_expr1::T_numtype, int > > >
+min(_bz_ArrayExpr<P_expr1> d1, 
+      IndexPlaceholder<N_index2> d2)
+{
+    return _bz_ArrayExprOp<_bz_ArrayExpr<P_expr1>, 
+      IndexPlaceholder<N_index2>, 
+      _bz_Min<typename P_expr1::T_numtype, int> >
+      (d1, 
+      d2);
+}
+
+// _bz_ArrayExpr<P_expr1> min int
+template<class P_expr1>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<_bz_ArrayExpr<P_expr1>, 
+      _bz_ArrayExprConstant<int>,
+      _bz_Min<typename P_expr1::T_numtype, int > > >
+min(_bz_ArrayExpr<P_expr1> d1, 
+      int d2)
+{
+    return _bz_ArrayExprOp<_bz_ArrayExpr<P_expr1>, 
+      _bz_ArrayExprConstant<int>, 
+      _bz_Min<typename P_expr1::T_numtype, int> >
+      (d1, 
+      _bz_ArrayExprConstant<int>(d2));
+}
+
+// IndexPlaceholder<N_index1> min Array<T_numtype2, N_rank2>
+template<int N_index1, class T_numtype2, int N_rank2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<IndexPlaceholder<N_index1>, 
+      ArrayIterator<T_numtype2, N_rank2>,
+      _bz_Min<int, T_numtype2 > > >
+min(IndexPlaceholder<N_index1> d1, 
+      const Array<T_numtype2, N_rank2>& d2)
+{
+    return _bz_ArrayExprOp<IndexPlaceholder<N_index1>, 
+      ArrayIterator<T_numtype2, N_rank2>, 
+      _bz_Min<int, T_numtype2> >
+      (d1, 
+      d2.begin());
+}
+
+// IndexPlaceholder<N_index1> min _bz_ArrayExpr<P_expr2>
+template<int N_index1, class P_expr2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<IndexPlaceholder<N_index1>, 
+      _bz_ArrayExpr<P_expr2>,
+      _bz_Min<int, typename P_expr2::T_numtype > > >
+min(IndexPlaceholder<N_index1> d1, 
+      _bz_ArrayExpr<P_expr2> d2)
+{
+    return _bz_ArrayExprOp<IndexPlaceholder<N_index1>, 
+      _bz_ArrayExpr<P_expr2>, 
+      _bz_Min<int, typename P_expr2::T_numtype> >
+      (d1, 
+      d2);
+}
+
+// IndexPlaceholder<N_index1> min IndexPlaceholder<N_index2>
+template<int N_index1, int N_index2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<IndexPlaceholder<N_index1>, 
+      IndexPlaceholder<N_index2>,
+      _bz_Min<int, int > > >
+min(IndexPlaceholder<N_index1> d1, 
+      IndexPlaceholder<N_index2> d2)
+{
+    return _bz_ArrayExprOp<IndexPlaceholder<N_index1>, 
+      IndexPlaceholder<N_index2>, 
+      _bz_Min<int, int> >
+      (d1, 
+      d2);
+}
+
+// IndexPlaceholder<N_index1> min int
+template<int N_index1>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<IndexPlaceholder<N_index1>, 
+      _bz_ArrayExprConstant<int>,
+      _bz_Min<int, int > > >
+min(IndexPlaceholder<N_index1> d1, 
+      int d2)
+{
+    return _bz_ArrayExprOp<IndexPlaceholder<N_index1>, 
+      _bz_ArrayExprConstant<int>, 
+      _bz_Min<int, int> >
+      (d1, 
+      _bz_ArrayExprConstant<int>(d2));
+}
+
+// int min Array<T_numtype2, N_rank2>
+template<class T_numtype2, int N_rank2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<_bz_ArrayExprConstant<int>, 
+      ArrayIterator<T_numtype2, N_rank2>,
+      _bz_Min<int, T_numtype2 > > >
+min(int d1, 
+      const Array<T_numtype2, N_rank2>& d2)
+{
+    return _bz_ArrayExprOp<_bz_ArrayExprConstant<int>, 
+      ArrayIterator<T_numtype2, N_rank2>, 
+      _bz_Min<int, T_numtype2> >
+      (_bz_ArrayExprConstant<int>(d1), 
+      d2.begin());
+}
+
+// int min _bz_ArrayExpr<P_expr2>
+template<class P_expr2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<_bz_ArrayExprConstant<int>, 
+      _bz_ArrayExpr<P_expr2>,
+      _bz_Min<int, typename P_expr2::T_numtype > > >
+min(int d1, 
+      _bz_ArrayExpr<P_expr2> d2)
+{
+    return _bz_ArrayExprOp<_bz_ArrayExprConstant<int>, 
+      _bz_ArrayExpr<P_expr2>, 
+      _bz_Min<int, typename P_expr2::T_numtype> >
+      (_bz_ArrayExprConstant<int>(d1), 
+      d2);
+}
+
+// int min IndexPlaceholder<N_index2>
+template<int N_index2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<_bz_ArrayExprConstant<int>, 
+      IndexPlaceholder<N_index2>,
+      _bz_Min<int, int > > >
+min(int d1, 
+      IndexPlaceholder<N_index2> d2)
+{
+    return _bz_ArrayExprOp<_bz_ArrayExprConstant<int>, 
+      IndexPlaceholder<N_index2>, 
+      _bz_Min<int, int> >
+      (_bz_ArrayExprConstant<int>(d1), 
+      d2);
+}
+/****************************************************************************
+ * Maximum Operators
+ ****************************************************************************/
+
+// Array<T_numtype1, N_rank1> max Array<T_numtype2, N_rank2>
+template<class T_numtype1, int N_rank1, class T_numtype2, int N_rank2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<ArrayIterator<T_numtype1, N_rank1>, 
+      ArrayIterator<T_numtype2, N_rank2>,
+      _bz_Max<T_numtype1, T_numtype2 > > >
+max(const Array<T_numtype1, N_rank1>& d1, 
+      const Array<T_numtype2, N_rank2>& d2)
+{
+    return _bz_ArrayExprOp<ArrayIterator<T_numtype1, N_rank1>, 
+      ArrayIterator<T_numtype2, N_rank2>, 
+      _bz_Max<T_numtype1, T_numtype2> >
+      (d1.begin(), 
+      d2.begin());
+}
+
+// Array<T_numtype1, N_rank1> max _bz_ArrayExpr<P_expr2>
+template<class T_numtype1, int N_rank1, class P_expr2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<ArrayIterator<T_numtype1, N_rank1>, 
+      _bz_ArrayExpr<P_expr2>,
+      _bz_Max<T_numtype1, typename P_expr2::T_numtype > > >
+max(const Array<T_numtype1, N_rank1>& d1, 
+      _bz_ArrayExpr<P_expr2> d2)
+{
+    return _bz_ArrayExprOp<ArrayIterator<T_numtype1, N_rank1>, 
+      _bz_ArrayExpr<P_expr2>, 
+      _bz_Max<T_numtype1, typename P_expr2::T_numtype> >
+      (d1.begin(), 
+      d2);
+}
+
+// Array<T_numtype1, N_rank1> max IndexPlaceholder<N_index2>
+template<class T_numtype1, int N_rank1, int N_index2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<ArrayIterator<T_numtype1, N_rank1>, 
+      IndexPlaceholder<N_index2>,
+      _bz_Max<T_numtype1, int > > >
+max(const Array<T_numtype1, N_rank1>& d1, 
+      IndexPlaceholder<N_index2> d2)
+{
+    return _bz_ArrayExprOp<ArrayIterator<T_numtype1, N_rank1>, 
+      IndexPlaceholder<N_index2>, 
+      _bz_Max<T_numtype1, int> >
+      (d1.begin(), 
+      d2);
+}
+
+// Array<T_numtype1, N_rank1> max int
+template<class T_numtype1, int N_rank1>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<ArrayIterator<T_numtype1, N_rank1>, 
+      _bz_ArrayExprConstant<int>,
+      _bz_Max<T_numtype1, int > > >
+max(const Array<T_numtype1, N_rank1>& d1, 
+      int d2)
+{
+    return _bz_ArrayExprOp<ArrayIterator<T_numtype1, N_rank1>, 
+      _bz_ArrayExprConstant<int>, 
+      _bz_Max<T_numtype1, int> >
+      (d1.begin(), 
+      _bz_ArrayExprConstant<int>(d2));
+}
+
+// _bz_ArrayExpr<P_expr1> max Array<T_numtype2, N_rank2>
+template<class P_expr1, class T_numtype2, int N_rank2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<_bz_ArrayExpr<P_expr1>, 
+      ArrayIterator<T_numtype2, N_rank2>,
+      _bz_Max<typename P_expr1::T_numtype, T_numtype2 > > >
+max(_bz_ArrayExpr<P_expr1> d1, 
+      const Array<T_numtype2, N_rank2>& d2)
+{
+    return _bz_ArrayExprOp<_bz_ArrayExpr<P_expr1>, 
+      ArrayIterator<T_numtype2, N_rank2>, 
+      _bz_Max<typename P_expr1::T_numtype, T_numtype2> >
+      (d1, 
+      d2.begin());
+}
+
+// _bz_ArrayExpr<P_expr1> max _bz_ArrayExpr<P_expr2>
+template<class P_expr1, class P_expr2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<_bz_ArrayExpr<P_expr1>, 
+      _bz_ArrayExpr<P_expr2>,
+      _bz_Max<typename P_expr1::T_numtype, typename P_expr2::T_numtype > > >
+max(_bz_ArrayExpr<P_expr1> d1, 
+      _bz_ArrayExpr<P_expr2> d2)
+{
+    return _bz_ArrayExprOp<_bz_ArrayExpr<P_expr1>, 
+      _bz_ArrayExpr<P_expr2>, 
+      _bz_Max<typename P_expr1::T_numtype, typename P_expr2::T_numtype> >
+      (d1, 
+      d2);
+}
+
+// _bz_ArrayExpr<P_expr1> max IndexPlaceholder<N_index2>
+template<class P_expr1, int N_index2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<_bz_ArrayExpr<P_expr1>, 
+      IndexPlaceholder<N_index2>,
+      _bz_Max<typename P_expr1::T_numtype, int > > >
+max(_bz_ArrayExpr<P_expr1> d1, 
+      IndexPlaceholder<N_index2> d2)
+{
+    return _bz_ArrayExprOp<_bz_ArrayExpr<P_expr1>, 
+      IndexPlaceholder<N_index2>, 
+      _bz_Max<typename P_expr1::T_numtype, int> >
+      (d1, 
+      d2);
+}
+
+// _bz_ArrayExpr<P_expr1> max int
+template<class P_expr1>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<_bz_ArrayExpr<P_expr1>, 
+      _bz_ArrayExprConstant<int>,
+      _bz_Max<typename P_expr1::T_numtype, int > > >
+max(_bz_ArrayExpr<P_expr1> d1, 
+      int d2)
+{
+    return _bz_ArrayExprOp<_bz_ArrayExpr<P_expr1>, 
+      _bz_ArrayExprConstant<int>, 
+      _bz_Max<typename P_expr1::T_numtype, int> >
+      (d1, 
+      _bz_ArrayExprConstant<int>(d2));
+}
+
+// IndexPlaceholder<N_index1> max Array<T_numtype2, N_rank2>
+template<int N_index1, class T_numtype2, int N_rank2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<IndexPlaceholder<N_index1>, 
+      ArrayIterator<T_numtype2, N_rank2>,
+      _bz_Max<int, T_numtype2 > > >
+max(IndexPlaceholder<N_index1> d1, 
+      const Array<T_numtype2, N_rank2>& d2)
+{
+    return _bz_ArrayExprOp<IndexPlaceholder<N_index1>, 
+      ArrayIterator<T_numtype2, N_rank2>, 
+      _bz_Max<int, T_numtype2> >
+      (d1, 
+      d2.begin());
+}
+
+// IndexPlaceholder<N_index1> max _bz_ArrayExpr<P_expr2>
+template<int N_index1, class P_expr2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<IndexPlaceholder<N_index1>, 
+      _bz_ArrayExpr<P_expr2>,
+      _bz_Max<int, typename P_expr2::T_numtype > > >
+max(IndexPlaceholder<N_index1> d1, 
+      _bz_ArrayExpr<P_expr2> d2)
+{
+    return _bz_ArrayExprOp<IndexPlaceholder<N_index1>, 
+      _bz_ArrayExpr<P_expr2>, 
+      _bz_Max<int, typename P_expr2::T_numtype> >
+      (d1, 
+      d2);
+}
+
+// IndexPlaceholder<N_index1> max IndexPlaceholder<N_index2>
+template<int N_index1, int N_index2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<IndexPlaceholder<N_index1>, 
+      IndexPlaceholder<N_index2>,
+      _bz_Max<int, int > > >
+max(IndexPlaceholder<N_index1> d1, 
+      IndexPlaceholder<N_index2> d2)
+{
+    return _bz_ArrayExprOp<IndexPlaceholder<N_index1>, 
+      IndexPlaceholder<N_index2>, 
+      _bz_Max<int, int> >
+      (d1, 
+      d2);
+}
+
+// IndexPlaceholder<N_index1> max int
+template<int N_index1>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<IndexPlaceholder<N_index1>, 
+      _bz_ArrayExprConstant<int>,
+      _bz_Max<int, int > > >
+max(IndexPlaceholder<N_index1> d1, 
+      int d2)
+{
+    return _bz_ArrayExprOp<IndexPlaceholder<N_index1>, 
+      _bz_ArrayExprConstant<int>, 
+      _bz_Max<int, int> >
+      (d1, 
+      _bz_ArrayExprConstant<int>(d2));
+}
+
+// int max Array<T_numtype2, N_rank2>
+template<class T_numtype2, int N_rank2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<_bz_ArrayExprConstant<int>, 
+      ArrayIterator<T_numtype2, N_rank2>,
+      _bz_Max<int, T_numtype2 > > >
+max(int d1, 
+      const Array<T_numtype2, N_rank2>& d2)
+{
+    return _bz_ArrayExprOp<_bz_ArrayExprConstant<int>, 
+      ArrayIterator<T_numtype2, N_rank2>, 
+      _bz_Max<int, T_numtype2> >
+      (_bz_ArrayExprConstant<int>(d1), 
+      d2.begin());
+}
+
+// int max _bz_ArrayExpr<P_expr2>
+template<class P_expr2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<_bz_ArrayExprConstant<int>, 
+      _bz_ArrayExpr<P_expr2>,
+      _bz_Max<int, typename P_expr2::T_numtype > > >
+max(int d1, 
+      _bz_ArrayExpr<P_expr2> d2)
+{
+    return _bz_ArrayExprOp<_bz_ArrayExprConstant<int>, 
+      _bz_ArrayExpr<P_expr2>, 
+      _bz_Max<int, typename P_expr2::T_numtype> >
+      (_bz_ArrayExprConstant<int>(d1), 
+      d2);
+}
+
+// int max IndexPlaceholder<N_index2>
+template<int N_index2>
+inline
+_bz_ArrayExpr<_bz_ArrayExprOp<_bz_ArrayExprConstant<int>, 
+      IndexPlaceholder<N_index2>,
+      _bz_Max<int, int > > >
+max(int d1, 
+      IndexPlaceholder<N_index2> d2)
+{
+    return _bz_ArrayExprOp<_bz_ArrayExprConstant<int>, 
+      IndexPlaceholder<N_index2>, 
+      _bz_Max<int, int> >
       (_bz_ArrayExprConstant<int>(d1), 
       d2);
 }
