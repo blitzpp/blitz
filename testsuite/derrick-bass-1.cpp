@@ -22,7 +22,9 @@
 #define BZ_ARRAY_STACK_TRAVERSAL_UNROLL
 #define BZ_ARRAY_EXPR_USE_COMMON_STRIDE
 
-#include <blitz/array.h>
+#include <blitz/array-only.h>
+#include <blitz/array/ops.h>
+#include <blitz/array/funcs.h>
 
 BZ_USING_NAMESPACE(std)
 BZ_USING_NAMESPACE(blitz)

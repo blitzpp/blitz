@@ -1,4 +1,7 @@
-#include <blitz/array.h>
+#include <blitz/array-only.h>
+#include <blitz/array/ops.h>
+#include <blitz/array/funcs.h>
+
 int main() {
   using namespace blitz;
   Array<int,2> A(7, 7);

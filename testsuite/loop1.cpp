@@ -1,5 +1,5 @@
 /*
- * This benchmark causes some versions of egcs to crash.
+ * This benchmark causes some versions of gcc to crash.
  */
 
 #include <blitz/vector.h>
