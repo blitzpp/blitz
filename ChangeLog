@@ -1,3 +1,20 @@
+
+2004-10-13  Patrick Guio  <patrick.guio@ii.uib.no>
+
+  * m4/ac_compiler_specific_header.m4: New macro "extracted" from
+	configure.ac to set the compiler-specific header. Added 
+	COMPILER_SPECIFIC_HEADER as a precious variable. Added icc as a
+	supported compiler (together with icpc).
+
+	* configure.ac: Moved compiler specific-header handling in
+	m4/ac_compiler_specific_header.m4.
+
+	* blitz/config-ICL.h blitz/config-KCC.h blitz/config-SC4.0.h
+	blitz/config-SGi.h blitz/config-g++2.7.2.h blitz/config-g++3.h
+	blitz/config-mwerks.h blitz/config-xlC.h: Removed as rendered
+	obsolete due to the new form of preprocessor symbol BZ_HAVE_*.
+
+
 2004-10-06  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* blitz/Makefile.am: Modified to install the compiler-specific
