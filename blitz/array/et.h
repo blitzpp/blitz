@@ -1,8 +1,6 @@
 /***************************************************************************
  * blitz/array/et.h  Include expression templates implementation for arrays
  *
- * $Id$
- *
  * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
@@ -21,16 +19,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.4  2002/06/26 23:56:37  jcumming
- * Added #include of blitz/array/misc.cc if not using new expression templates.
- *
- * Revision 1.3  2001/01/25 00:25:55  tveldhui
- * Ensured that source files have cvs logs.
- *
- */
-
+ ****************************************************************************/
 #ifndef BZ_ARRAY_ET_H
 #define BZ_ARRAY_ET_H
 
