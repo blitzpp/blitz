@@ -1,3 +1,31 @@
+2005-02-08  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* doc/stencils/Makefile.am: Removed explicit -lm flag from LDADD.
+	This is now inserted into the LIBS variable automatically if
+	needed for standard math functions like sin().
+	* benchmarks/Makefile.am: Simplified settings for F90 compilation,
+	taking advantage of the improved F90 support in automake 1.9 using
+	the FC variables.
+	* m4/ac_lib_blas.m4: Replaced FORTLIBS with standard autoconf
+	variable FLIBS.
+	* m4/ac_env.m4: Print out settings of FLIBS and FCLIBS rather than
+	FORTLIBS, which is now obsolete.
+	* m4/ac_fortran_flags_preset.m4: Removed settings for FORTLIBS
+	variable.  Fortran library loader flags are now handled using
+	standard autoconf macros.  Separated settings for F77 and FC
+	variables and only set FC variables if FC has been set.  Ensure
+	that we add to FFLAGS and FCFLAGS rather than overwriting them.
+	Added gfortran case for F77 and FC on Linux platform.  Added g77
+	case for all Unix platforms.
+	* configure.ac: Advanced required automake version number to 1.9,
+	which has improved support for F90 compilers via the FC variables.
+	Added gfortran to the list of supported F77 and F90 compilers.
+	Use standard autoconf macros to determine the Fortran library
+	flags to pass to the loader, rather than our ad-hoc variable
+	FORTLIBS.  Simplified test for whether FC has been set.  Improved
+	test for standard math functions like sin() so that -lm is only
+	explicitly included on the link line if necessary.  Removed test
+	for existence of lib directory, since this is now guaranteed.
 2005-02-07  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* m4/ac_compilers_64bits.m4: Generalized names of a few other
