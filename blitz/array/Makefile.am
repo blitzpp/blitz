@@ -1,7 +1,6 @@
 #
-# $Id$
-#
-# Patrick Guio <patrick.guio@fys.uio.no>
+# $Id: Makefile.am,v 1.1 2002/03/06 11:43:57 patricg Exp 
+# Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
 SUBDIRS = 

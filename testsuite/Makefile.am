@@ -1,7 +1,6 @@
 #
 # $Id$
-#
-# Patrick Guio <patrick.guio@fys.uio.no>
+# Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
 # Blitz++ test suite makefile
