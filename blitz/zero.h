@@ -81,7 +81,7 @@ private:
   template<>                         \
   class ZeroElement<T > {            \
   public:                            \
-    static T& getZero()              \
+    static T& zero()                 \
     { return zero_; }                \
   private:                           \
     static T zero_;                  \
@@ -93,9 +93,12 @@ private:
   BZZERO_DECLARE(complex<long double>);
 #endif // BZ_HAVE_COMPLEX
 
-BZ_NAMESPACE_END
+// initialization of static data member for general class template
 
-#include <blitz/zero.cc>
+template<class P_numtype>
+P_numtype ZeroElement<P_numtype>::zero_ = 0;
+
+BZ_NAMESPACE_END
 
 #endif // BZ_ZERO_H
 
