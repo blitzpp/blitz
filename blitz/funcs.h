@@ -135,9 +135,11 @@ BZ_DEFINE_UNARY_FUNC(Fn_pow6,BZ_BLITZ_SCOPE(blitz_pow6))
 BZ_DEFINE_UNARY_FUNC(Fn_pow7,BZ_BLITZ_SCOPE(blitz_pow7))
 BZ_DEFINE_UNARY_FUNC(Fn_pow8,BZ_BLITZ_SCOPE(blitz_pow8))
 
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_FCNS
 BZ_DEFINE_UNARY_FUNC(Fn_conj,BZ_CMATHFN_SCOPE(conj))
+#endif
 
+#ifdef BZ_HAVE_COMPLEX
 /* Specialization of unary functor for complex type */
     
 #define BZ_DEFINE_UNARY_CFUNC(name,fun)                        \
@@ -161,6 +163,7 @@ struct name< complex<T> > {                                    \
     }                                                          \
 };
 
+#ifdef BZ_HAVE_COMPLEX_MATH1
 BZ_DEFINE_UNARY_CFUNC(Fn_cos,BZ_CMATHFN_SCOPE(cos))
 BZ_DEFINE_UNARY_CFUNC(Fn_cosh,BZ_CMATHFN_SCOPE(cosh))
 BZ_DEFINE_UNARY_CFUNC(Fn_exp,BZ_CMATHFN_SCOPE(exp))
@@ -171,6 +174,7 @@ BZ_DEFINE_UNARY_CFUNC(Fn_sinh,BZ_CMATHFN_SCOPE(sinh))
 BZ_DEFINE_UNARY_CFUNC(Fn_sqrt,BZ_CMATHFN_SCOPE(sqrt))
 BZ_DEFINE_UNARY_CFUNC(Fn_tan,BZ_CMATHFN_SCOPE(tan))
 BZ_DEFINE_UNARY_CFUNC(Fn_tanh,BZ_CMATHFN_SCOPE(tanh))
+#endif // BZ_HAVE_COMPLEX_MATH1
 
 BZ_DEFINE_UNARY_CFUNC(Fn_sqr,BZ_BLITZ_SCOPE(blitz_sqr))
 BZ_DEFINE_UNARY_CFUNC(Fn_cube,BZ_BLITZ_SCOPE(blitz_cube))
@@ -206,12 +210,14 @@ struct name< complex<T> > {                                    \
     }                                                          \
 };
 
+#ifdef BZ_HAVE_COMPLEX_FCNS
 BZ_DEFINE_UNARY_CFUNC2(Fn_arg,BZ_CMATHFN_SCOPE(arg))
 BZ_DEFINE_UNARY_CFUNC2(Fn_imag,BZ_CMATHFN_SCOPE(imag))
 BZ_DEFINE_UNARY_CFUNC2(Fn_norm,BZ_CMATHFN_SCOPE(norm))
 BZ_DEFINE_UNARY_CFUNC2(Fn_real,BZ_CMATHFN_SCOPE(real))
-#endif
+#endif // BZ_HAVE_COMPLEX_FCNS
     
+#endif // BZ_HAVE_COMPLEX
     
 /* Unary functions that return a specified type */
     
@@ -283,7 +289,7 @@ BZ_DEFINE_BINARY_FUNC(Fn_remainder,BZ_IEEEMATHFN_SCOPE(remainder))
 BZ_DEFINE_BINARY_FUNC(Fn_scalb,BZ_IEEEMATHFN_SCOPE(scalb))
 #endif
     
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX
 /* Specialization of binary functor for complex type */
     
 #define BZ_DEFINE_BINARY_CFUNC(name,fun)                       \
@@ -359,7 +365,9 @@ struct name< T, complex<T> > {                                 \
     }                                                          \
 };
 
+#ifdef BZ_HAVE_COMPLEX_MATH1
 BZ_DEFINE_BINARY_CFUNC(Fn_pow,BZ_CMATHFN_SCOPE(pow))
+#endif
 
 /* Binary functions that apply only to T and return complex<T> */
     
@@ -391,9 +399,11 @@ struct name<T, T> {                                               \
     }                                                             \
 };
 
+#ifdef BZ_HAVE_COMPLEX_FCNS
 BZ_DEFINE_BINARY_CFUNC2(Fn_polar,BZ_CMATHFN_SCOPE(polar))
 #endif
     
+#endif // BZ_HAVE_COMPLEX
     
 /* Binary functions that return a specified type */
     
@@ -536,7 +546,7 @@ struct Fn_abs< long double > {
     }
 };
 
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_FCNS
 // abs(complex<T>)
 template<typename T>
 struct Fn_abs< complex<T> > {
@@ -557,7 +567,7 @@ struct Fn_abs< complex<T> > {
         str += ")";
     }
 };
-#endif
+#endif // BZ_HAVE_COMPLEX_FCNS
 
 
 #ifdef BZ_HAVE_IEEE_MATH
@@ -588,7 +598,7 @@ struct Fn_isnan {
         str += ")";
     }
 };
-#endif
+#endif // BZ_HAVE_IEEE_MATH
 
 
 // Blitz cast() function
