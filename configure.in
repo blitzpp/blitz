@@ -2,11 +2,11 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
 
-AC_INIT([blitz],[0.7],[blitz-bugs@oonumerics.org])
+AC_INIT(blitz, 0.7, blitz-bugs@oonumerics.org)
 
-AC_CONFIG_AUX_DIR([config])
-AC_CONFIG_SRCDIR([blitz/blitz.h])
-AC_CONFIG_HEADERS([blitz/config.h])
+AC_CONFIG_AUX_DIR(config)
+AC_CONFIG_SRCDIR(blitz/blitz.h)
+AC_CONFIG_HEADERS(blitz/config.h)
 
 AC_CANONICAL_TARGET
 
@@ -28,24 +28,23 @@ Configuring $PACKAGE_STRING for $target
 
 ])
 
-dnl C++ compiler
-AC_LANG_CPLUSPLUS
-AC_PROG_CXX([xlC CC cxx aCC g++ icc pgCC KCC FCC])
-AC_CXX_FLAGS_PRESET
-
 dnl Fortran compiler
-AC_LANG_FORTRAN77
+AC_LANG(Fortran 77)
 AC_PROG_F77([xlf f77 g77 ifort ifc pgf77 fort77])
-AC_LANG([Fortran])
+AC_LANG(Fortran)
 AC_PROG_FC([xlf90 f90 ifort ifc pgf90])
 AC_FC_FREEFORM
 AC_FC_SRCEXT(f90)
 AC_FORTRAN_FLAGS_PRESET
 
+dnl C++ compiler
+AC_LANG(C++)
+AC_PROG_CXX([xlC CC cxx aCC g++ icc pgCC KCC FCC])
+AC_CXX_FLAGS_PRESET
+
 dnl Doxygen documentation
 AC_PROG_DOXYGEN
 
-AC_LANG_CPLUSPLUS
 dnl Disable shared library building by default (use --enable-shared to enable)
 AM_DISABLE_SHARED
 AC_PROG_LIBTOOL
@@ -83,8 +82,6 @@ AC_CONFIG_FILES([
 	blitz/generate/Makefile
 	blitz/meta/Makefile
 	random/Makefile
-	compiler/Makefile
-	src/Makefile 
 	lib/Makefile
 	manual/Makefile
 	manual/examples/Makefile
@@ -99,6 +96,8 @@ AC_CONFIG_FILES([
 	doc/doxygen/Makefile
 	])
 dnl	demos/Makefile
+dnl	compiler/Makefile
+dnl	src/Makefile 
 
 AC_CONFIG_FILES([doc/doxygen/Doxyfile])
 
