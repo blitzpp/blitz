@@ -100,7 +100,7 @@ public:
         str += "(stencil)";    // lame, needs work
     }
 
-    void prettyPrint(string& str, prettyPrintFormat& format) const
+    void prettyPrint(string& str, prettyPrintFormat&) const
     {   str += "(stencil)"; }
 
     template<class T_shape>
