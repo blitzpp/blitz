@@ -1,3 +1,14 @@
+2003-09-08  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/rand-mt.h: Replaced use of &S[0] syntax with call to
+	S.begin() to avoid issues with the return type of
+	std::vector<>::operator[].  Added call to reload() at the end of
+	the seed() function.
+	* blitz/tinyveciter.h: Changed from use of unsigned to int type to
+	avoid gcc compiler warnings about comparisons between unsigned and
+	signed integer types.  Extended BZPRECONDITION checks to test that
+	int argument value is non-negative.
+
 2003-09-02  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* blitz/array/methods.cc: Fixed bug in code that constructs an
