@@ -1,23 +1,3 @@
-! $Id$
-!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!
-! $Log$
-! Revision 1.1  2002/03/06 13:03:33  patricg
-!
-! New file renamed from *.f
-!
-! Revision 1.1  2002/01/24 16:38:30  patricg
-! *** empty log message ***
-!
-! Revision 1.1.1.1  2002/01/14 09:40:47  patricg
-! Imported sources
-!
-! Revision 1.1.1.1  2000/06/19 12:26:03  tveldhui
-! Imported sources
-!
-!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
 ! F90 Tuned version
 ! Optimizations:

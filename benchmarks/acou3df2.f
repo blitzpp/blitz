@@ -1,22 +1,3 @@
-! $Id$
-!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!
-! $Log$
-! Revision 1.3  2002/12/17 15:55:04  patricg
-!
-! added support for test prog
-! added explicit INTEGER declaration for i,j,k in subroutine
-! acoustic3d_f77Tuned_stencil
-!
-! Revision 1.2  2002/10/08 20:10:52  julianc
-! Removed some extraneous semicolons that were inhibiting compilation of these Fortran sources with some compilers.
-!
-! Revision 1.1.1.1  2000/06/19 12:26:03  tveldhui
-! Imported sources
-!
-!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
 ! Tuned Fortran 77 version
 ! Optimizations:
