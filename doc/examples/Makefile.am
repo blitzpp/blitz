@@ -36,7 +36,7 @@ fixed_SOURCES = fixed.cpp
 %.texi : 
 	sed -e 's/{/@{/' -e 's/}/@}/' $< | fold -s -w 80 > $@
 
-%.out : %
+%.out : 
 	./$< 2>&1 | fold -s -w 80 > $@
 
 simple.texi: simple.cpp
@@ -54,19 +54,19 @@ range.texi: range.cpp
 fixed.texi: fixed.cpp
 fixed-point.texi: fixed-point.h
 
-simple.out: simple
-storage.out: storage
-outer.out: outer
-strideslice.out: strideslice
-slicing.out: slicing
-debug.out: debug
-output.out: output
-io.out: io
-dump.out: dump
-xor.out: xor
-cast.out: cast
-range.out: range
-fixed.out: fixed
+simple.out: simple$(EXEEXT)
+storage.out: storage$(EXEEXT)
+outer.out: outer$(EXEEXT)
+strideslice.out: strideslice$(EXEEXT)
+slicing.out: slicing$(EXEEXT)
+debug.out: debug$(EXEEXT)
+output.out: output$(EXEEXT)
+io.out: io$(EXEEXT)
+dump.out: dump$(EXEEXT)
+xor.out: xor$(EXEEXT)
+cast.out: cast$(EXEEXT)
+range.out: range$(EXEEXT)
+fixed.out: fixed$(EXEEXT)
 
 texi: simple.texi storage.texi outer.texi strideslice.texi slicing.texi \
 debug.texi output.texi io.texi dump.texi xor.texi cast.texi range.texi \
