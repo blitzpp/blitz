@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/vector.h      Declaration of the Vector<P_numtype> class
  *
@@ -36,21 +37,10 @@
 #ifndef BZ_VECTOR_H
 #define BZ_VECTOR_H
 
-#ifndef BZ_BLITZ_H
- #include <blitz/blitz.h>
-#endif
-
-#ifndef BZ_MEMBLOCK_H
- #include <blitz/memblock.h>
-#endif
-
-#ifndef BZ_RANGE_H
- #include <blitz/range.h>
-#endif
-
-#ifndef BZ_LISTINIT_H
- #include <blitz/listinit.h>
-#endif
+#include <blitz/blitz.h>
+#include <blitz/memblock.h>
+#include <blitz/range.h>
+#include <blitz/listinit.h>
 
 BZ_NAMESPACE(blitz)
 
@@ -97,17 +87,8 @@ public:
 
     // This constructor is provided inline because it involves
     // no memory allocation.
-    Vector(Vector<T_numtype>& vec)
-        : MemoryBlockReference<T_numtype>(vec)
-    {
-        length_ = vec.length_;
-        stride_ = vec.stride_;
-    }
-
-    // Slightly unsafe cast-away-const version
     Vector(const Vector<T_numtype>& vec)
-        : MemoryBlockReference<T_numtype>
-           (const_cast<Vector<T_numtype>& >(vec))
+        : MemoryBlockReference<T_numtype>(const_cast<Vector<T_numtype>&>(vec))
     {
         length_ = vec.length_;
         stride_ = vec.stride_;
@@ -120,15 +101,15 @@ public:
         stride_ = 1;
     }
 
-    Vector(Vector<T_numtype>& vec, Range r)
-        : MemoryBlockReference<T_numtype>(vec, 
-            r.first() * vec.stride())
+    Vector(const Vector<T_numtype>& vec, Range r)
+        : MemoryBlockReference<T_numtype>(const_cast<Vector<T_numtype>&>(vec),
+                                          r.first() * vec.stride())
     {
         BZPRECONDITION((r.first() >= 0) && (r.first() < vec.length()));
         BZPRECONDITION((r.last(vec.length()-1) >= 0) 
             && (r.last(vec.length()-1) < vec.length()));
         length_ = (r.last(vec.length()-1) - r.first()) / r.stride() + 1;
-        stride_ = vec.stride_ * r.stride();
+        stride_ = vec.stride() * r.stride();
     }
 
     Vector(int length, T_numtype initValue)
