@@ -19,7 +19,7 @@ latexcommand(\textwidth 6in)
 
 XXsetdocumentheader(Blitz++ User's Guide)
                    (Todd Veldhuizen nl() tt(<tveldhui@acm.org>))
-                   (Version 0.6, January 2001)
+                   (Version 1.2, February 2001)
 
 COMMENT(
        ( PIPETHROUGH(date +"%B %d, %Y")(x)
@@ -122,6 +122,8 @@ chapter(TinyVector)
 includefile(tinyvector)
 
 
+chapter(Parallel Computing)
+includefile(parallel)
 
 chapter(Random Number Generators)
 includefile(random)

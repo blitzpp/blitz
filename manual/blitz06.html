@@ -11,14 +11,14 @@
 </ul>
 <hr>
 
-<a name="l101"></a>
+<a name="l102"></a>
 <h1>Chapter 6: Indirection</h1>
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>6.1: Indirection</font></td></tr></table><br><a name="l102"></a>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>6.1: Indirection</font></td></tr></table><br><a name="l103"></a>
 
 <a name="arrays-indirect"></a>
     
-<!-- BZINDEX indirection --><a name="index00407">
-<!-- BZINDEX Array!indirection --><a name="index00408">
+<!-- BZINDEX indirection --><a name="index00410">
+<!-- BZINDEX Array!indirection --><a name="index00411">
 <strong>Indirection</strong> is the ability to modify or access an array at a 
 set of selected index values.  Blitz++ provides several forms of
 indirection: 
@@ -43,7 +43,7 @@ Figure 5: Three styles of indirection (from top to bottom):
   indirection; (3) using a set of strips to represent an
   arbitrarily-shaped subset of an array 
 </center><p><br>
-<p><!-- BZINDEX STL, for indirection --><a name="index00409">
+<p><!-- BZINDEX STL, for indirection --><a name="index00412">
 In all cases, Blitz++ expects a Standard Template Library
 container.  Some useful STL containers are
 <code>list&lt;&gt;</code>, <code>vector&lt;&gt;</code>, <code>deque&lt;&gt;</code> and <code>set&lt;&gt;</code>.
@@ -63,7 +63,7 @@ numerical work.
 #include &lt;deque&gt;  // for deque&lt;&gt;
 #include &lt;set&gt;    // for set&lt;&gt;
 </pre>
-<p><!-- BZINDEX [] operator, for indirection --><a name="index00410">
+<p><!-- BZINDEX [] operator, for indirection --><a name="index00413">
 The <code>[]</code> operator is overloaded on arrays so that
 the syntax <code>array[container]</code> provides an indirect
 view of the array.  So far, this indirect view may
@@ -71,10 +71,10 @@ only be used as an lvalue (i.e. on the left-hand side
 of an assignment statement).
 <p>The examples in the next sections are available
 in the Blitz++ distribution in <code>&lt;examples/indirect.cpp&gt;</code>.
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>6.2: Indirection using lists of array positions</font></td></tr></table><br><a name="l103"></a>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>6.2: Indirection using lists of array positions</font></td></tr></table><br><a name="l104"></a>
 
-<p><!-- BZINDEX Array!indirection!list of positions --><a name="index00411">
-<!-- BZINDEX indirection!list of positions --><a name="index00412">
+<p><!-- BZINDEX Array!indirection!list of positions --><a name="index00414">
+<!-- BZINDEX indirection!list of positions --><a name="index00415">
 <p>The simplest kind of indirection uses a list of points.
 For one-dimensional arrays, you can just use an STL
 container of integers.  Example:
@@ -122,10 +122,10 @@ After this code, the array A contains:
 </pre>
 <p>(The <code>tensor::i</code> notation is explained in the section on
 index placeholders <a href="blitz03.html#index-placeholders">3.6</a>).
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>6.3: Cartesian-product indirection</font></td></tr></table><br><a name="l104"></a>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>6.3: Cartesian-product indirection</font></td></tr></table><br><a name="l105"></a>
 
-<p><!-- BZINDEX Array!indirection!Cartesian-product --><a name="index00413">
-<!-- BZINDEX indirection!Cartesian-product --><a name="index00414">
+<p><!-- BZINDEX Array!indirection!Cartesian-product --><a name="index00416">
+<!-- BZINDEX indirection!Cartesian-product --><a name="index00417">
 <p>The Cartesian product of the sets I, J and K is the
 set of (i,j,k) tuples for which i is in I, j is in J,
 and k is in K.  
@@ -142,7 +142,7 @@ indexSet(T_container&amp; c1, T_container&amp; c2, ...)
 The returned adaptor can then be used in
 the <code>[]</code> operator of an array object.
 <p>Here is a two-dimensional example:
-<!-- BZINDEX rank-1 update --><a name="index00415">
+<!-- BZINDEX rank-1 update --><a name="index00418">
 <pre>
   Array&lt;int,2&gt; A(6,6), B(6,6);
   A = 0;
@@ -173,10 +173,10 @@ must be the same type (e.g. all <code>vector&lt;int&gt;</code> or
 all <code>set&lt;TinyVector&lt;int,2&gt; &gt;</code>), but they may 
 be different sizes.  Singleton containers
 (containers containing a single value) are fine.
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>6.4: Indirection with lists of strips</font></td></tr></table><br><a name="l105"></a>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>6.4: Indirection with lists of strips</font></td></tr></table><br><a name="l106"></a>
 
-<p><!-- BZINDEX Array!indirection!list of strips --><a name="index00416">
-<!-- BZINDEX indirection!list of strips --><a name="index00417">
+<p><!-- BZINDEX Array!indirection!list of strips --><a name="index00419">
+<!-- BZINDEX indirection!list of strips --><a name="index00420">
 <p>You can also do indirection with a container of
 one-dimensional <strong>strips</strong>.  This is useful
 when you want to manipulate some arbitrarily-shaped,
@@ -184,7 +184,7 @@ well-connected subdomain of an array.  By
 representing the subdomain as a list of strips,
 you allow Blitz++ to operate on vectors, rather
 than scattered points; this is much more efficient.
-<p><!-- BZINDEX RectDomain&lt;N&gt; --><a name="index00418">
+<p><!-- BZINDEX RectDomain&lt;N&gt; --><a name="index00421">
 Strips are represented by objects of type
 <code>RectDomain&lt;N&gt;</code>, where <code>N</code> is the
 dimensionality of the array.  The <code>RectDomain&lt;N&gt;</code>
@@ -192,7 +192,7 @@ class can be used to represent any rectangular
 subdomain, but for indirection it is only
 used to represent strips.
 <p>You create a strip by using this function:
-<!-- BZINDEX strip() --><a name="index00419">
+<!-- BZINDEX strip() --><a name="index00422">
 <strong><pre>RectDomain&lt;N&gt; strip(TinyVector&lt;int,N&gt; start,
     int stripDimension, int ubound);
 </pre></strong>

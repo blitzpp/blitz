@@ -418,6 +418,7 @@ bzindex(resizeAndPreserve())
 bzindex(Array!member functions!resizeAndPreserve())
 bf(bzverb(\
 void                              resizeAndPreserve(int extent1, ...);))
+void                              resizeAndPreserve(const TinyVector<int,N_rank>&);
 These functions resize an array to the specified size.  If
 the array is already the size specified, then no change
 occurs (the array is not reallocated and copied).

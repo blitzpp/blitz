@@ -11,13 +11,13 @@
 </ul>
 <hr>
 
-<a name="l131"></a>
+<a name="l132"></a>
 <h1>Chapter 9: Numeric properties</h1>
 <a name="numinquire"></a>
     
-<br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>9.1: Introduction</font></td></tr></table><br><a name="l132"></a>
+<br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>9.1: Introduction</font></td></tr></table><br><a name="l133"></a>
 
-<p><!-- BZINDEX numeric limits --><a name="index00450">
+<p><!-- BZINDEX numeric limits --><a name="index00453">
 <p>Blitz++ provides a set of functions to
 access numeric properties of intrinsic types.
 They are provided as an alternative to the somewhat
@@ -33,7 +33,7 @@ appropriate case.  If not, the results are not useful.
 The standard requires that <code>numeric_limits&lt;T&gt;</code> be
 specialized for all the intrinsic numeric types
 (float, double, int, bool, unsigned int, etc.).
-<p><!-- BZINDEX numinquire.h --><a name="index00451">
+<p><!-- BZINDEX numinquire.h --><a name="index00454">
 <p>To use these functions, you must first include the
 header <code>&lt;blitz/numinquire.h&gt;</code>.  Also, note that
 these functions may be unavailable if your compiler
@@ -41,100 +41,100 @@ is non-ANSI compliant.  If the preprocessor symbol
 <code>BZ_HAVE_NUMERIC_LIMITS</code> is false, then these
 functions are unavailable.
 <p>
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>9.2: Function descriptions</font></td></tr></table><br><a name="l133"></a>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>9.2: Function descriptions</font></td></tr></table><br><a name="l134"></a>
 
-<p><!-- BZINDEX denorm_min() --><a name="index00452">
+<p><!-- BZINDEX denorm_min() --><a name="index00455">
 <strong><pre>T     denorm_min(T) throw;
 </pre></strong>
 Minimum positive denormalized value.  Available for floating-point
 types only. 
-<p><!-- BZINDEX digits() --><a name="index00453">
+<p><!-- BZINDEX digits() --><a name="index00456">
 <strong><pre>int   digits(T);
 </pre></strong>
 The number of radix digits (read: bits) in the mantissa.  Also
 works for integer types.  The official definition is "number of
 radix digits that can be represented without change". 
-<p><!-- BZINDEX digits10() --><a name="index00454">
+<p><!-- BZINDEX digits10() --><a name="index00457">
 <strong><pre>int   digits10(T);
 </pre></strong>
 The number of base-10 digits that can be represented without
 change. 
-<p><!-- BZINDEX epsilon() --><a name="index00455">
+<p><!-- BZINDEX epsilon() --><a name="index00458">
 <strong><pre>T     epsilon(T);
 </pre></strong>
 The smallest amount which can be added to 1 to produce
 a result which is not 1.  Floating-point types only.
-<p><!-- BZINDEX denormalized values --><a name="index00456">
-<!-- BZINDEX has_denorm() --><a name="index00457">
+<p><!-- BZINDEX denormalized values --><a name="index00459">
+<!-- BZINDEX has_denorm() --><a name="index00460">
 <strong><pre>bool  has_denorm(T);
 </pre></strong>
 True if the representation allows denormalized values (floating-point
 only).
-<p><!-- BZINDEX denormalization loss --><a name="index00458">
-<!-- BZINDEX has_denorm_loss() --><a name="index00459">
+<p><!-- BZINDEX denormalization loss --><a name="index00461">
+<!-- BZINDEX has_denorm_loss() --><a name="index00462">
 <strong><pre>bool  has_denorm_loss(T);
 </pre></strong>
 True if a loss of precision is detected as a denormalization loss, rather
 than as an inexact result (floating-point only). 
-<p><!-- BZINDEX infinity -- has_infinity() --><a name="index00460">
-<!-- BZINDEX has_infinity() --><a name="index00461">
+<p><!-- BZINDEX infinity -- has_infinity() --><a name="index00463">
+<!-- BZINDEX has_infinity() --><a name="index00464">
 <strong><pre>bool  has_infinity(T);
 </pre></strong>
 True if there is a special representation for the value "infinity".
 If true, the representation can be obtained by calling <code>infinity(T)</code>.
-<p><!-- BZINDEX has_quiet_NaN() --><a name="index00462">
-<!-- BZINDEX NaN -- has_quiet_NaN() --><a name="index00463">
+<p><!-- BZINDEX has_quiet_NaN() --><a name="index00465">
+<!-- BZINDEX NaN -- has_quiet_NaN() --><a name="index00466">
 <strong><pre>bool  has_quiet_NaN(T);
 </pre></strong>
 True if there is a special representation for a quiet (non-signalling)
 Not A Number (NaN).  If so, use the function <code>quiet_NaN(T)</code> to obtain
 it. 
-<p><!-- BZINDEX NaN -- has_signalling_NaN() --><a name="index00464">
-<!-- BZINDEX has_signalling_NaN() --><a name="index00465">
+<p><!-- BZINDEX NaN -- has_signalling_NaN() --><a name="index00467">
+<!-- BZINDEX has_signalling_NaN() --><a name="index00468">
 <strong><pre>bool  has_signaling_NaN(T);
 bool  has_signalling_NaN(T);  
 </pre></strong>
 True if there is a special representation for a signalling
 Not A Number (NaN).  If so, use the function <code>signalling_NaN(T)</code>
 to obtain it. 
-<p><!-- BZINDEX huge() --><a name="index00466">
-<!-- BZINDEX maximum value of a type --><a name="index00467">
+<p><!-- BZINDEX huge() --><a name="index00469">
+<!-- BZINDEX maximum value of a type --><a name="index00470">
 <strong><pre>T     huge(T) throw;
 </pre></strong>
 Returns the maximum finite representable value.  Equivalent to
 <code>CHAR_MAX</code>, <code>SHRT_MAX</code>, <code>FLT_MAX</code>, etc.  For floating types
 with denormalization, the maximum positive <strong>normalized</strong> value is
 returned.  
-<p><!-- BZINDEX infinity() --><a name="index00468">
+<p><!-- BZINDEX infinity() --><a name="index00471">
 <strong><pre>T     infinity(T) throw;
 </pre></strong>
 Returns the representation of positive infinity, if available.
 Note that you should check availability with <code>has_infinity(T)</code>
 before calling this function. 
-<p><!-- BZINDEX is_bounded() --><a name="index00469">
+<p><!-- BZINDEX is_bounded() --><a name="index00472">
 <strong><pre>bool  is_bounded(T);
 </pre></strong>
 True if the set of values represented by the type is finite.
 All built-in types are bounded.  (This function was provided
 so that e.g. arbitrary precision types could be distinguished).
-<p><!-- BZINDEX is_exact() --><a name="index00470">
+<p><!-- BZINDEX is_exact() --><a name="index00473">
 <strong><pre>bool  is_exact(T);
 </pre></strong>
 True if the representation is exact.  All integer types are
 exact; floating-point types generally aren't.  A rational
 arithmetic type could be exact. 
-<p><!-- BZINDEX IEC 559 --><a name="index00471">
-<!-- BZINDEX is_iec559() --><a name="index00472">
+<p><!-- BZINDEX IEC 559 --><a name="index00474">
+<!-- BZINDEX is_iec559() --><a name="index00475">
 <strong><pre>bool  is_iec559(T);
 </pre></strong>
 True if the type conforms to the IEC 559 standard.  IEC is
 the International Electrotechnical Commission.  Note that
 IEC 559 is the same as IEEE 754.  Only relevant for floating types.
-<p><!-- BZINDEX is_integer() --><a name="index00473">
+<p><!-- BZINDEX is_integer() --><a name="index00476">
 <strong><pre>bool  is_integer(T);
 </pre></strong>
 True if the type is integer.  
-<p><!-- BZINDEX is_modulo() --><a name="index00474">
+<p><!-- BZINDEX is_modulo() --><a name="index00477">
 <strong><pre>bool  is_modulo(T);
 </pre></strong>
 True if the type is modulo.  Integer types are usually
@@ -143,8 +143,8 @@ and give you a small result.  (Some special kinds of
 integers don't wrap around, but stop at an upper or
 lower bound; this is called saturating arithmetic).
 This is false for floating types.  
-<p><!-- BZINDEX is_signed() --><a name="index00475">
-<!-- BZINDEX signed -- is_signed() --><a name="index00476">
+<p><!-- BZINDEX is_signed() --><a name="index00478">
+<!-- BZINDEX signed -- is_signed() --><a name="index00479">
 <strong><pre>bool  is_signed(T);
 </pre></strong>
 True if the type is signed (i.e. can handle both positive
@@ -153,63 +153,63 @@ and negative values).
 </pre></strong>
 The maximum exponent (Max_exp) is the maximum positive integer such that
 the radix (read: 2) raised to the power Max_exp-1 is a representable,
-finite floating point number.  Floating types only. <!-- BZINDEX max_exponent() --><a name="index00477">
-<p><!-- BZINDEX max_exponent10() --><a name="index00478">
+finite floating point number.  Floating types only. <!-- BZINDEX max_exponent() --><a name="index00480">
+<p><!-- BZINDEX max_exponent10() --><a name="index00481">
 <strong><pre>int   max_exponent10(T);
 </pre></strong>
 The maximum base-10 exponent (Max_exp10) is the maximum positive integer
 such that 10 raised to the power Max_exp10 is a representable,
 finite floating point number.  Floating types only. 
-<p><!-- BZINDEX min_exponent() --><a name="index00479">
+<p><!-- BZINDEX min_exponent() --><a name="index00482">
 <strong><pre>int   min_exponent(T);
 </pre></strong>
 The minimum exponent (Min_exp) is the minimum negative integer
 such that the radix (read: 2) raised to the power Min_exp-1 is
 a <strong>normalized</strong> floating point number.  Floating types only. 
-<p><!-- BZINDEX min_exponent10() --><a name="index00480">
+<p><!-- BZINDEX min_exponent10() --><a name="index00483">
 <strong><pre>int   min_exponent10(T);
 </pre></strong>
 The minimum base-10 exponent (Min_exp10) is the minimum negative
 integer such that 10 raised to the power Min_exp10 is in the
 range of <strong>normalized</strong> floating point numbers. 
-<p><!-- BZINDEX neghuge() --><a name="index00481">
-<!-- BZINDEX maximally negative value -- neghuge() --><a name="index00482">
+<p><!-- BZINDEX neghuge() --><a name="index00484">
+<!-- BZINDEX maximally negative value -- neghuge() --><a name="index00485">
 <strong><pre>T     neghuge(T);
 </pre></strong>
 This returns the maximally negative value for a type.
 For integers, this is the same as min().  For floating-point
 types, it is <code>- huge(T())</code>.
-<p><!-- BZINDEX one() --><a name="index00483">
+<p><!-- BZINDEX one() --><a name="index00486">
 <strong><pre>T     one(T);
 </pre></strong>
 Returns a representation for "1".  
-<p><!-- BZINDEX precision() --><a name="index00484">
+<p><!-- BZINDEX precision() --><a name="index00487">
 <strong><pre>int   precision(T);
 </pre></strong>
 Same as <code>digits10()</code>. 
-<p><!-- BZINDEX quiet_NaN() --><a name="index00485">
-<!-- BZINDEX NaN -- quiet_NaN() --><a name="index00486">
+<p><!-- BZINDEX quiet_NaN() --><a name="index00488">
+<!-- BZINDEX NaN -- quiet_NaN() --><a name="index00489">
 <strong><pre>T     quiet_NaN(T) throw;
 </pre></strong>
 Returns the representation for a quiet (non-signalling) Not A Number
 (NaN), if available.  You should check availability using the
 <code>has_quiet_NaN(T)</code> function first.  
-<p><!-- BZINDEX radix() --><a name="index00487">
+<p><!-- BZINDEX radix() --><a name="index00490">
 <strong><pre>int   radix(T);
 </pre></strong>
 For floating-point types, this returns the radix (base) of the
 exponent.  For integers, it specifies the base of the representation.
-<p><!-- BZINDEX range() --><a name="index00488">
+<p><!-- BZINDEX range() --><a name="index00491">
 <strong><pre>Range range(T);
 </pre></strong>
 Returns <code>Range(min_exponent10(T()), max_exponent10(T()))</code>, i.e.
 the range of representable base-10 exponents.  
-<p><!-- BZINDEX round_error() --><a name="index00489">
+<p><!-- BZINDEX round_error() --><a name="index00492">
 <strong><pre>T     round_error(T) throw;
 </pre></strong>
 Returns a measure of the maximum rounding error for floating-point types.  
 This will typically be <code>0.5</code>. 
-<p><!-- BZINDEX round_style() --><a name="index00490">
+<p><!-- BZINDEX round_style() --><a name="index00493">
 <strong><pre>std::float_round_style round_style(T);
 </pre></strong>
 Returns the current rounding style for floating-point arithmetic.
@@ -218,32 +218,32 @@ The possibilities are: <code>round_indeterminate</code> (i.e. don't have a clue)
 representable value), <code>round_toward_infinity</code> (round toward
 positive infinity), and <code>round_neg_infinity</code> (round toward
 negative infinity).  
-<p><!-- BZINDEX signalling_NaN() --><a name="index00491">
+<p><!-- BZINDEX signalling_NaN() --><a name="index00494">
 <strong><pre>T     signaling_NaN(T) throw;
 T     signalling_NaN(T) throw;    
 </pre></strong>
 Returns the representation for a signalling Not A Number (NaN),
 if available.  You should check availability by calling
 <pre>has_signalling_NaN(T)</pre> first.  
-<p><!-- BZINDEX tiny() --><a name="index00492">
-<!-- BZINDEX minimum finite value -- tiny() --><a name="index00493">
+<p><!-- BZINDEX tiny() --><a name="index00495">
+<!-- BZINDEX minimum finite value -- tiny() --><a name="index00496">
 <strong><pre>T     tiny(T);
 </pre></strong>
 For integer types, this returns the minimum finite value, which may be
 negative.  For floating types, it returns the minimum positive value.
 For floating types with denormalization, the function
 returns the minimum positive <strong>normalized</strong> value.  
-<p><!-- BZINDEX tinyness_before() --><a name="index00494">
+<p><!-- BZINDEX tinyness_before() --><a name="index00497">
 <strong><pre>T     tinyness_before(T);
 </pre></strong>
 True if tinyness is detected before rounding.  Other than this
 description, I don't have a clue what this means; anyone have
 a copy of IEC 559/IEEE 754 floating around? 
-<p><!-- BZINDEX traps() --><a name="index00495">
+<p><!-- BZINDEX traps() --><a name="index00498">
 <strong><pre>T     traps(T);
 </pre></strong>
 True if trapping is implemented for this type. 
-<p><!-- BZINDEX zero() --><a name="index00496">
+<p><!-- BZINDEX zero() --><a name="index00499">
 <strong><pre>T     zero(T);
 </pre></strong>
 Returns a representation for zero. 

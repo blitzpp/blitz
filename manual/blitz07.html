@@ -11,11 +11,11 @@
 </ul>
 <hr>
 
-<a name="l106"></a>
+<a name="l107"></a>
 <h1>Chapter 7: TinyVector</h1>
 <a name="tinyvector"></a>
     
-<!-- BZINDEX TinyVector --><a name="index00420">
+<!-- BZINDEX TinyVector --><a name="index00423">
 <p>The <code>TinyVector</code> class provides a small, lightweight vector
 object whose size is known at compile time.  It is included
 via the header <code>&lt;blitz/tinyvec.h&gt;</code>.  
@@ -25,7 +25,7 @@ or use the directive <code>using namespace blitz;</code>.
 <p>The Blitz++ <code>Array</code> object uses <code>TinyVector</code> internally, so
 if you include <code>&lt;blitz/array.h&gt;</code>, the TinyVector
 header is automatically included.
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.1: Template parameters and types</font></td></tr></table><br><a name="l107"></a>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.1: Template parameters and types</font></td></tr></table><br><a name="l108"></a>
 
 <p>The <code>TinyVector&lt;T,N&gt;</code> class has two template parameters:
 <p><dl>
@@ -41,7 +41,7 @@ template parameter <code>T</code>)
 <p><p></p><dt><strong><code>iterator</code></strong><dd> is an STL-style iterator.
 <p><p></p><dt><strong><code>constIterator</code></strong><dd> is an STL-style const iterator.
 <p></dl>
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.2: Constructors</font></td></tr></table><br><a name="l108"></a>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.2: Constructors</font></td></tr></table><br><a name="l109"></a>
 
 <p><strong><pre>TinyVector();
 </pre></strong>
@@ -56,7 +56,7 @@ All elements are initialized to <code>value</code>.
 </pre></strong>
 The vector is initialized with the list of values given.
 These constructors are provided for up to N=11.
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.3: Member functions</font></td></tr></table><br><a name="l109"></a>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.3: Member functions</font></td></tr></table><br><a name="l110"></a>
 
 <p><strong><pre>TinyVector&lt;T,N&gt;::iterator                   begin();
 TinyVector&lt;T,N&gt;::const_iterator             begin() const;
@@ -83,13 +83,13 @@ T_numtype&amp;              operator[](int i);
 Returns the <code>i</code>th element of the vector.  If the
 code is compiled with debugging enabled (<code>-DBZ_DEBUG</code>),
 bounds checking is performed.
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.4: Assignment operators</font></td></tr></table><br><a name="l110"></a>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.4: Assignment operators</font></td></tr></table><br><a name="l111"></a>
 
 <p>The assignment operators =, +=, -=, *=, /=, %=, ^=, &amp;=, |=, &gt;&gt;= and &lt;&lt;=
 are all provided.  The right hand side of an assignment may be a
 scalar of type <code>T_numtype</code>, a <code>TinyVector</code> of any type but the
 same size, or a vector expression.
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.5: Expressions</font></td></tr></table><br><a name="l111"></a>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.5: Expressions</font></td></tr></table><br><a name="l112"></a>
 
 <p>Expressions involving tiny vectors may contain any combination
 of the operators
@@ -97,7 +97,7 @@ of the operators
 <p>with operands of type TinyVector, scalar, or vector expressions.
 The usual math functions (see the Array documentation) are supported
 on TinyVector.
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.6: Global functions</font></td></tr></table><br><a name="l112"></a>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.6: Global functions</font></td></tr></table><br><a name="l113"></a>
 
 <p><strong><pre>dot(TinyVector, TinyVector);
 dot(vector-expr, TinyVector);
@@ -116,9 +116,9 @@ Returns the sum of the elements in the vector.
 <p><strong><pre>TinyVector&lt;T,3&gt; cross(TinyVector&lt;T,3&gt; x, TinyVector&lt;T,3&gt; y);
 </pre></strong>
 Returns the cross product of <code>x</code> and <code>y</code>.
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.7: Arrays of TinyVector</font></td></tr></table><br><a name="l113"></a>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.7: Arrays of TinyVector</font></td></tr></table><br><a name="l114"></a>
 
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.8: Input/output</font></td></tr></table><br><a name="l114"></a>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.8: Input/output</font></td></tr></table><br><a name="l115"></a>
 
 <p><strong><pre>ostream&amp; operator&lt;&lt;(ostream&amp;, const TinyVector&lt;T,N&gt;&amp; x)
 </pre></strong>

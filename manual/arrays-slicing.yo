@@ -99,6 +99,77 @@ An array can be used on both sides of an expression only if the
 subarrays don't overlap.  If the arrays overlap, the result may
 depend on the order in which the array is traversed.  
 
+bzsubsect(RectDomain and StridedDomain)
+
+bzindex(RectDomain)
+bzindex(StridedDomain)
+bzindex(TinyVector!of Range (use RectDomain))
+
+The classes tt(RectDomain) and tt(StridedDomain),
+defined in tt(blitz/domain.h), offer a dimension-independent
+notation for subarrays.
+
+tt(RectDomain) and tt(StridedDomain) can be thought of as a
+tt(TinyVector<Range,N>).  Both have a vector of lower- and
+upper-bounds; tt(StridedDomain) has a stride vector.
+For example, the subarray:
+
+bzverb(
+Array<int,2> B = A(Range(4,7), Range(8,11));  // 4..7, 8..11
+)
+
+could be obtained using tt(RectDomain) this way:
+
+bzverb(
+TinyVector<int,2> lowerBounds(4, 8);
+TinyVector<int,2> upperBounds(7, 11);
+RectDomain<2> subdomain(lowerBounds, upperBounds);
+
+Array<int,2> B = A(subdomain);
+)
+
+Here are the prototypes of tt(RectDomain) and tt(StridedDomain).
+
+bzverb(
+template<int N_rank>
+class RectDomain {
+
+public:
+    RectDomain(const TinyVector<int,N_rank>& lbound,
+        const TinyVector<int,N_rank>& ubound);
+
+    const TinyVector<int,N_rank>& lbound() const;
+    int lbound(int i) const;
+    const TinyVector<int,N_rank>& ubound() const;
+    int ubound(int i) const;
+    Range operator[](int rank) const;
+    void shrink(int amount);
+    void shrink(int dim, int amount);
+    void expand(int amount);
+    void expand(int dim, int amount);
+};
+
+template<int N_rank>
+class StridedDomain {
+
+public:
+    StridedDomain(const TinyVector<int,N_rank>& lbound,
+        const TinyVector<int,N_rank>& ubound,
+        const TinyVector<int,N_rank>& stride);
+
+    const TinyVector<int,N_rank>& lbound() const;
+    int lbound(int i) const;
+    const TinyVector<int,N_rank>& ubound() const;
+    int ubound(int i) const;
+    const TinyVector<int,N_rank>& stride() const;
+    int stride(int i) const;
+    Range operator[](int rank) const;
+    void shrink(int amount);
+    void shrink(int dim, int amount);
+    void expand(int amount);
+    void expand(int dim, int amount);
+)
+
 
 label(slicing-combo)
 bzsubsect(Slicing)

@@ -10,36 +10,36 @@
 </ul>
 <hr>
 
-<a name="l134"></a>
+<a name="l135"></a>
 <h1>Chapter 10: Frequently Asked Questions</h1>
 <a name="faq"></a>
     
-<!-- BZINDEX FAQ --><a name="index00497">
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>10.1: Questions about installation</font></td></tr></table><br><a name="l135"></a>
+<!-- BZINDEX FAQ --><a name="index00500">
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>10.1: Questions about installation</font></td></tr></table><br><a name="l136"></a>
 
-<p><!-- BZINDEX CRC error in .tar.gz --><a name="index00498">
-<!-- BZINDEX invalid compressed data --><a name="index00499">
+<p><!-- BZINDEX CRC error in .tar.gz --><a name="index00501">
+<!-- BZINDEX invalid compressed data --><a name="index00502">
 <p><p><b>I downloaded Blitz++, but when I try to gunzip it, I get
 "invalid compressed data--crc error".</b></p>
 <p>You forgot to set binary download mode in ftp.  Do so with
 the "binary" command.
-<p><!-- BZINDEX `Array' undeclared --><a name="index00500">
+<p><!-- BZINDEX `Array' undeclared --><a name="index00503">
 <p><p><b>The compiler complains that there is no Array class, even though I've
-included &lt;blitz.h&gt;.</b></p>
-<p>You forgot to say:
+included <code>&lt;blitz.h&gt;</code>.</b></p>
+<p>You need to have the line:
 <p><pre>using namespace blitz;
 </pre>
-<p>after including &lt;blitz.h&gt;.
-<p><!-- BZINDEX gcc!memory hog --><a name="index00501">
-<!-- BZINDEX memory hog, gcc --><a name="index00502">
-<!-- BZINDEX out of virtual memory, gcc --><a name="index00503">
-<!-- BZINDEX virtual memory problems, gcc --><a name="index00504">
+<p>after including <code>&lt;blitz.h&gt;</code>.
+<p><!-- BZINDEX gcc!memory hog --><a name="index00504">
+<!-- BZINDEX memory hog, gcc --><a name="index00505">
+<!-- BZINDEX out of virtual memory, gcc --><a name="index00506">
+<!-- BZINDEX virtual memory problems, gcc --><a name="index00507">
 <p><p><b>I can't use gcc on my PC because it requires 45-150 Mb
 to compile with Blitz++</b></p>
 <p>Unfortunately this is true.  If this problem is ever fixed, it
 will be by the gcc developers, so my best suggestion is to post
 a bug report to the gcc-bugs list.  
-<p><!-- BZINDEX external symbol relocation, Solaris --><a name="index00505">
+<p><!-- BZINDEX external symbol relocation, Solaris --><a name="index00508">
 <p><p><b>I am using gcc under Solaris, and I get errors about 
 "relocation against external symbol".</b></p>
 <p>This problem can be fixed by installing the gnu linker and
@@ -47,25 +47,33 @@ binutils.  Peter Nordlund found that by using gnu-binutils-2.9.1,
 this problem disappeared.  You can read a detailed 
 discussion at
 <a href="http://oonumerics.org/blitz/support/blitz-support/archive/0029.html">http://oonumerics.org/blitz/support/blitz-support/archive/0029.html</a>.
-<p><!-- BZINDEX as: symbol too long --><a name="index00506">
-<!-- BZINDEX symbol too long, Solaris as --><a name="index00507">
+<p><!-- BZINDEX as: symbol too long --><a name="index00509">
+<!-- BZINDEX symbol too long, Solaris as --><a name="index00510">
 <p><p><b>I am using gcc under Solaris, and the assembler gives
 me an error that a symbol is too long.</b></p>
 <p>This problem can also be fixed by installing the gnu linker and
 binutils.  See the above question.
-<p><!-- BZINDEX templates with C linkage, DECcxx --><a name="index00508">
+<p><!-- BZINDEX templates with C linkage, DECcxx --><a name="index00511">
 <p><p><b>DECcxx reports problems about "templates with C linkage"</b></p>
 <p>This problem was caused by a problem in some versions of DECcxx's
 <code>math.h</code> header: XOPEN_SOURCE_EXTENDED was causing an
 <code>extern "C" { ... }</code> section to have no closing brace.
 There is a kludge which is included in recent versions of
 Blitz++.
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>10.2: Questions about Blitz++ functionality</font></td></tr></table><br><a name="l136"></a>
+<p><!-- BZINDEX template instantiation resulted in an unexpected... --><a name="index00512">
+<p><p><b>On some platforms (especially SGI) the testsuite program <code>minsumpow</code>
+fails with the error: <code>Template instantiation resulted in an unexpected 
+function type of...</code></b></p>
+<p>This is a known bug in the older versions of the EDG front end,
+which many C++ compilers use.  There is no known fix.
+Most of Blitz++ will work, but you won't be able to use
+some array reductions.
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>10.2: Questions about Blitz++ functionality</font></td></tr></table><br><a name="l137"></a>
 
-<p><!-- BZINDEX eigenvector decomposition --><a name="index00509">
-<!-- BZINDEX solving linear systems --><a name="index00510">
-<!-- BZINDEX matrix inversion --><a name="index00511">
-<!-- BZINDEX linear algebra --><a name="index00512">
+<p><!-- BZINDEX eigenvector decomposition --><a name="index00513">
+<!-- BZINDEX solving linear systems --><a name="index00514">
+<!-- BZINDEX matrix inversion --><a name="index00515">
+<!-- BZINDEX linear algebra --><a name="index00516">
 <p><p><b>For my problem, I need SVD, FFTs, QMRES, PLU, QR, ....</b></p>
 <p>Blitz++ does not currently provide any of these.  However, there
 are numerous C++ and C packages out there which do, and it is
@@ -76,16 +84,19 @@ from pre-existing data, <code>data()</code>, <code>stride()</code>,
 numerical C++ libraries, see the Object Oriented Numerics
 Page at 
 <a href="http://oonumerics.org/oon/">http://oonumerics.org/oon/</a>.
-<p><!-- BZINDEX Python --><a name="index00513">
+<p><!-- BZINDEX Python --><a name="index00517">
 <p><p><b>Can Blitz++ be interfaced with Python?</b></p>
 <p>Phil Austin has done so successfully.  See a description of
 his setup in 
 <a href="http://oonumerics.org/blitz/support/blitz-support/archive/0053.html">http://oonumerics.org/blitz/support/blitz-support/archive/0053.html</a>.
-<p><!-- BZINDEX out of memory --><a name="index00514">
-<!-- BZINDEX handling out of memory --><a name="index00515">
-<!-- BZINDEX new handler --><a name="index00516">
-<!-- BZINDEX set_new_handler() --><a name="index00517">
-<!-- BZINDEX bad_alloc --><a name="index00518">
+<p><!-- BZINDEX image processing --><a name="index00518">
+Also see Harry Zuzan's Python/Blitz image processing example code
+at <a href="http://www.stat.duke.edu/~hz/blitz_py/index.html">http://www.stat.duke.edu/~hz/blitz_py/index.html</a>.
+<p><!-- BZINDEX out of memory --><a name="index00519">
+<!-- BZINDEX handling out of memory --><a name="index00520">
+<!-- BZINDEX new handler --><a name="index00521">
+<!-- BZINDEX set_new_handler() --><a name="index00522">
+<!-- BZINDEX bad_alloc --><a name="index00523">
 <p><p><b>If I try to allocate an array which is too big, my
 program just crashes or goes into an infinite loop.  Is there
 some way I can handle this more elegantly?</b></p>
@@ -131,8 +142,8 @@ set_new_handler(my_new_handler);
 
 </pre>
 
-<p><!-- BZINDEX passing arrays by value --><a name="index00519">
-<!-- BZINDEX constness problems --><a name="index00520">
+<p><!-- BZINDEX passing arrays by value --><a name="index00524">
+<!-- BZINDEX constness problems --><a name="index00525">
 <p><p><b>When I pass arrays by value, the function which receives
 them can modify the array data.  Why?</b></p>
 <p>It's a result of
@@ -142,17 +153,17 @@ doesn't receive a copy of the array data, but rather
 a copy of the handle. 
 The alternative would be to copy the array data
 when passing by value, which would be grossly inefficient.
-<p><!-- BZINDEX &lt;&lt; operator, bitshift --><a name="index00521">
-<!-- BZINDEX operator &lt;&lt;, bitshift --><a name="index00522">
-<!-- BZINDEX operator &gt;&gt;, bitshift --><a name="index00523">
-<!-- BZINDEX &gt;&gt; operator, bitshift --><a name="index00524">
-<!-- BZINDEX bitshift operators --><a name="index00525">
+<p><!-- BZINDEX &lt;&lt; operator, bitshift --><a name="index00526">
+<!-- BZINDEX operator &lt;&lt;, bitshift --><a name="index00527">
+<!-- BZINDEX operator &gt;&gt;, bitshift --><a name="index00528">
+<!-- BZINDEX &gt;&gt; operator, bitshift --><a name="index00529">
+<!-- BZINDEX bitshift operators --><a name="index00530">
 <p><p><b>Why can't I use e.g. <code>A &gt;&gt; 3</code> to do bitshifting on arrays?</b></p>
 <p>The operators <code>&lt;&lt;</code> and <code>&gt;&gt;</code> are used for input/ouput of arrays.
 It would cause problems with the expression templates implementation
 to also use them for bitshifting.  However, it is easy enough to
 define your own bitshifting function -- see <a href="blitz03.html#user-et">3.10</a>.
-<p><!-- BZINDEX matrix multiply --><a name="index00526">
+<p><!-- BZINDEX matrix multiply --><a name="index00531">
 <p><p><b>When I write <code>TinyMatrix * TinyVector</code> I get an error.</b></p>
 <p>Try <code>product(d2,d1)</code>.  This works for matrix-matrix and
 matrix-vector products.

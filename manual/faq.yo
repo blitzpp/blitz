@@ -15,15 +15,15 @@ the "binary" command.
 bzindex(`Array' undeclared)
 
 bzfaq(The compiler complains that there is no Array class, even though I've
-included <blitz.h>.)
+included tt(<blitz.h>).)
 
-You forgot to say:
+You need to have the line:
 
 bzverb(\
 using namespace blitz;
 )
 
-after including <blitz.h>.
+after including tt(<blitz.h>).
 
 bzindex(gcc!memory hog)
 bzindex(memory hog, gcc)
@@ -71,6 +71,16 @@ tt(extern "C" { ... }) section to have no closing brace.
 There is a kludge which is included in recent versions of
 Blitz++.
 
+bzindex(template instantiation resulted in an unexpected...)
+
+bzfaq(On some platforms (especially SGI) the testsuite program tt(minsumpow)
+fails with the error: tt(Template instantiation resulted in an unexpected 
+function type of...))
+
+This is a known bug in the older versions of the EDG front end,
+which many C++ compilers use.  There is no known fix.
+Most of Blitz++ will work, but you won't be able to use
+some array reductions.
 
 bzsect(Questions about Blitz++ functionality)
 
