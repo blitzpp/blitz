@@ -16,7 +16,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P>
+template<typename P>
 inline
 Vector<BZ_SUMTYPE(_bz_typename P::T_numtype)> _bz_vec_accumulate(P expr)
 {
@@ -43,20 +43,20 @@ Vector<BZ_SUMTYPE(_bz_typename P::T_numtype)> _bz_vec_accumulate(P expr)
 
     return z;
 }
-template<class P_numtype>
+template<typename P_numtype>
 Vector<BZ_SUMTYPE(P_numtype)> accumulate(const Vector<P_numtype>& x)
 {
     return _bz_vec_accumulate(x);
 }
 
-template<class P_expr>
+template<typename P_expr>
 Vector<BZ_SUMTYPE(_bz_typename P_expr::T_numtype)>
 accumulate(_bz_VecExpr<P_expr> x)
 {
     return _bz_vec_accumulate(x);
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 Vector<BZ_SUMTYPE(P_numtype)> accumulate(const VectorPick<P_numtype>& x)
 {
     return _bz_vec_accumulate(x);

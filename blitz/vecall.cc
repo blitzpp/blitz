@@ -16,8 +16,8 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_expr>
-inline _bz_bool _bz_vec_all(P_expr vector)
+template<typename P_expr>
+inline bool _bz_vec_all(P_expr vector)
 {
     int length = vector._bz_suggestLength();
 
@@ -25,37 +25,37 @@ inline _bz_bool _bz_vec_all(P_expr vector)
     {
         for (int i=0; i < length; ++i)
             if (!vector._bz_fastAccess(i))
-                return _bz_false;
+                return false;
     }
     else {
         for (int i=0; i < length; ++i)
             if (!vector[i])
-                return _bz_false;
+                return false;
     }
 
-    return _bz_true;
+    return true;
 }
 
-template<class P_numtype>
-inline _bz_bool all(const Vector<P_numtype>& x)
+template<typename P_numtype>
+inline bool all(const Vector<P_numtype>& x)
 {
     return _bz_vec_all(x._bz_asVecExpr());
 }
 
-template<class P_expr>
-inline _bz_bool all(_bz_VecExpr<P_expr> expr)
+template<typename P_expr>
+inline bool all(_bz_VecExpr<P_expr> expr)
 {
     return _bz_vec_all(expr);
 }
 
-template<class P_numtype>
-inline _bz_bool all(const VectorPick<P_numtype>& x)
+template<typename P_numtype>
+inline bool all(const VectorPick<P_numtype>& x)
 {
     return _bz_vec_all(x._bz_asVecExpr());
 }
 
-template<class P_numtype, int N_dimensions>
-inline _bz_bool all(const TinyVector<P_numtype, N_dimensions>& x)
+template<typename P_numtype, int N_dimensions>
+inline bool all(const TinyVector<P_numtype, N_dimensions>& x)
 {
     return _bz_vec_all(x._bz_asVecExpr());
 }

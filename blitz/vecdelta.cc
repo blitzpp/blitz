@@ -16,7 +16,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P>
+template<typename P>
 inline
 Vector<BZ_DIFFTYPE(_bz_typename P::T_numtype)> _bz_vec_delta(P expr)
 {
@@ -49,21 +49,21 @@ Vector<BZ_DIFFTYPE(_bz_typename P::T_numtype)> _bz_vec_delta(P expr)
     return z;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 Vector<BZ_DIFFTYPE(P_numtype)> delta(const Vector<P_numtype>& x)
 {
     return _bz_vec_delta(x);
 }
 
 // delta(expr)
-template<class P_expr>
+template<typename P_expr>
 Vector<BZ_DIFFTYPE(_bz_typename P_expr::T_numtype)> delta(_bz_VecExpr<P_expr> x)
 {
     return _bz_vec_delta(x);
 }
 
 // delta(vecpick)
-template<class P_numtype>
+template<typename P_numtype>
 Vector<BZ_DIFFTYPE(P_numtype)> delta(const VectorPick<P_numtype>& x)
 {
     return _bz_vec_delta(x);

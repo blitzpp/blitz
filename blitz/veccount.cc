@@ -16,7 +16,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_expr>
+template<typename P_expr>
 inline int _bz_vec_count(P_expr vector)
 {
     int length = vector._bz_suggestLength();
@@ -37,25 +37,25 @@ inline int _bz_vec_count(P_expr vector)
     return count;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline int count(const Vector<P_numtype>& x)
 {
     return _bz_vec_count(x._bz_asVecExpr());
 }
 
-template<class P_expr>
+template<typename P_expr>
 inline int count(_bz_VecExpr<P_expr> expr)
 {
     return _bz_vec_count(expr);
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline int count(const VectorPick<P_numtype>& x)
 {
     return _bz_vec_count(x._bz_asVecExpr());
 }
 
-template<class P_numtype, int N_dimensions>
+template<typename P_numtype, int N_dimensions>
 inline int count(const TinyVector<P_numtype, N_dimensions>& x)
 {
     return _bz_vec_count(x._bz_asVecExpr());

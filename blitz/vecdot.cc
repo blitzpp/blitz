@@ -16,7 +16,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P1, class P2>
+template<typename P1, typename P2>
 inline
 BZ_SUMTYPE(BZ_PROMOTE(_bz_typename P1::T_numtype, _bz_typename P2::T_numtype))
 _bz_dot(P1 vector1, P2 vector2)
@@ -45,7 +45,7 @@ _bz_dot(P1 vector1, P2 vector2)
 
 
 // dot()
-template<class P_numtype1, class P_numtype2>
+template<typename P_numtype1, typename P_numtype2>
 inline
 BZ_SUMTYPE(BZ_PROMOTE(P_numtype1,P_numtype2))
 dot(const Vector<P_numtype1>& a, const Vector<P_numtype2>& b)
@@ -54,7 +54,7 @@ dot(const Vector<P_numtype1>& a, const Vector<P_numtype2>& b)
 }
 
 // dot(expr,expr)
-template<class P_expr1, class P_expr2>
+template<typename P_expr1, typename P_expr2>
 inline
 BZ_SUMTYPE(BZ_PROMOTE(_bz_typename P_expr1::T_numtype,
     _bz_typename P_expr2::T_numtype))
@@ -64,7 +64,7 @@ dot(_bz_VecExpr<P_expr1> expr1, _bz_VecExpr<P_expr2> expr2)
 }
 
 // dot(expr,vec)
-template<class P_expr1, class P_numtype2>
+template<typename P_expr1, typename P_numtype2>
 inline
 BZ_SUMTYPE(BZ_PROMOTE(_bz_typename P_expr1::T_numtype, P_numtype2))
 dot(_bz_VecExpr<P_expr1> expr1, const Vector<P_numtype2>& vector2)
@@ -73,7 +73,7 @@ dot(_bz_VecExpr<P_expr1> expr1, const Vector<P_numtype2>& vector2)
 }
 
 // dot(vec,expr)
-template<class P_numtype1, class P_expr2>
+template<typename P_numtype1, typename P_expr2>
 inline
 BZ_SUMTYPE(BZ_PROMOTE(P_numtype1, _bz_typename P_expr2::T_numtype))
 dot(const Vector<P_numtype1>& vector1, _bz_VecExpr<P_expr2> expr2)
@@ -82,7 +82,7 @@ dot(const Vector<P_numtype1>& vector1, _bz_VecExpr<P_expr2> expr2)
 }
 
 // dot(vec,vecpick)
-template<class P_numtype1, class P_numtype2>
+template<typename P_numtype1, typename P_numtype2>
 inline
 BZ_SUMTYPE(BZ_PROMOTE(P_numtype1, P_numtype2))
 dot(const Vector<P_numtype1>& vector1, const VectorPick<P_numtype2>& vector2)
@@ -91,7 +91,7 @@ dot(const Vector<P_numtype1>& vector1, const VectorPick<P_numtype2>& vector2)
 }
 
 // dot(vecpick,vec)
-template<class P_numtype1, class P_numtype2>
+template<typename P_numtype1, typename P_numtype2>
 inline
 BZ_SUMTYPE(BZ_PROMOTE(P_numtype1, P_numtype2))
 dot(const VectorPick<P_numtype1>& vector1, const Vector<P_numtype2>& vector2)
@@ -100,7 +100,7 @@ dot(const VectorPick<P_numtype1>& vector1, const Vector<P_numtype2>& vector2)
 }
 
 // dot(vecpick,vecpick)
-template<class P_numtype1, class P_numtype2>
+template<typename P_numtype1, typename P_numtype2>
 inline
 BZ_SUMTYPE(BZ_PROMOTE(P_numtype1, P_numtype2))
 dot(const VectorPick<P_numtype1>& vector1, const VectorPick<P_numtype2>& vector2)
@@ -109,7 +109,7 @@ dot(const VectorPick<P_numtype1>& vector1, const VectorPick<P_numtype2>& vector2
 }
 
 // dot(expr, vecpick)
-template<class P_expr1, class P_numtype2>
+template<typename P_expr1, typename P_numtype2>
 inline
 BZ_SUMTYPE(BZ_PROMOTE(_bz_typename P_expr1::T_numtype, P_numtype2))
 dot(_bz_VecExpr<P_expr1> expr1, const VectorPick<P_numtype2>& vector2)
@@ -118,7 +118,7 @@ dot(_bz_VecExpr<P_expr1> expr1, const VectorPick<P_numtype2>& vector2)
 }
 
 // dot(vecpick, expr)
-template<class P_numtype1, class P_expr2>
+template<typename P_numtype1, typename P_expr2>
 inline
 BZ_SUMTYPE(BZ_PROMOTE(P_numtype1, _bz_typename P_expr2::T_numtype))
 dot(const VectorPick<P_numtype1>& vector1, _bz_VecExpr<P_expr2> expr2)
