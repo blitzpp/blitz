@@ -14,9 +14,6 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_numtype>
-P_numtype ZeroElement<P_numtype>::zero_ = 0;
-
 #ifdef BZ_HAVE_COMPLEX
 
 complex<float>  ZeroElement<complex<float> >::zero_ = 
