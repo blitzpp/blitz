@@ -4,7 +4,7 @@
 
 noinst_HEADERS = arroperands.h arroptuple.h bzfstream.h operands.h operands2.h optuple.h optuple2.h
 
-noinst_PROGRAMS = genarrbops genmathfunc genvecbops genarruops genmatuops \
+EXTRA_PROGRAMS = genarrbops genmathfunc genvecbops genarruops genmatuops \
                   genvecuops genmatbops genpromote genvecwhere genvecbfn
 
 genarrbops_SOURCES = genarrbops.cpp
