@@ -1,19 +1,25 @@
+/*
+ * $Id$
+ *
+ * $Log$
+ * Revision 1.1  2002/06/28 23:59:49  jcumming
+ * Files for generating Matrix operators and math functions.
+ *
+ *
+ */
+
 #include <fstream.h>
 #include <iostream.h>
 #include <iomanip.h>
-#include "bzfstream.h"
-#include "optuple.h"
+#include "optuple2.h"
 
 const int ieeeflag = 1, bsdflag = 2;
 
-bzofstream ofs("vecuops.cc", 
-    "Expression templates for vectors, unary functions",
-    __FILE__,
-    "BZ_VECUOPS_CC");
+ofstream ofs("matuops.h");
 
 void two(const char* fname, int flag=0, const char* apname = 0)
 {
-    cout << "genvecuops.cpp: two() not implemented" << endl;
+    cout << "genmatuops.cpp: two() not implemented" << endl;
 }
 
 void one(const char* fname, int flag=0, const char* apname = 0)
@@ -30,12 +36,12 @@ void one(const char* fname, int flag=0, const char* apname = 0)
     else if (flag == bsdflag)
         ofs << "#ifdef BZ_HAVE_SYSTEM_V_MATH" << endl;
 
-    OperandTuple operands(1);
+    OperandTuple2 operands(1);
 
     do {
         operands.printTemplates(ofs);
         ofs << endl << "inline" << endl
-            << "_bz_VecExpr<_bz_VecExprUnaryOp<";
+            << "_bz_MatExpr<_bz_MatExprUnaryOp<";
         operands.printIterators(ofs);
         ofs << "," << endl << "    _bz_" << apname << "<";
         operands[0].printNumtype(ofs);
@@ -44,12 +50,12 @@ void one(const char* fname, int flag=0, const char* apname = 0)
         operands.printArgumentList(ofs);
         ofs << ")" << endl
             << "{" << endl
-            << "    typedef _bz_VecExprUnaryOp<";
+            << "    typedef _bz_MatExprUnaryOp<";
         operands.printIterators(ofs);
         ofs << "," << endl << "        _bz_" << apname << "<";
         operands[0].printNumtype(ofs);
         ofs << "> > T_expr;" << endl << endl
-            << "    return _bz_VecExpr<T_expr>(T_expr(";
+            << "    return _bz_MatExpr<T_expr>(T_expr(";
         operands.printInitializationList(ofs);
         ofs << "));" << endl
             << "}" << endl << endl;
@@ -64,14 +70,18 @@ void one(const char* fname, int flag=0, const char* apname = 0)
 
 int main()
 {
-    cout << "Generating <vecuops.cc>" << endl;
+    cout << "Generating <matuops.h>" << endl;
 
-ofs << 
-"#ifndef BZ_VECEXPR_H\n"
-" #error <blitz/vecuops.cc> must be included via <blitz/vecexpr.h>\n"
-"#endif // BZ_VECEXPR_H\n\n";
+    ofs << "// Generated source file.  Do not edit." << endl;
+    ofs << "// Created by: " << __FILE__ << " " << __DATE__ 
+        << " " << __TIME__ << endl << endl;
 
-    ofs.beginNamespace();
+    ofs << "#ifndef BZ_MATUOPS_H" << endl
+        << "#define BZ_MATUOPS_H" << endl
+        << endl << "BZ_NAMESPACE(blitz)" << endl << endl
+        << "#ifndef BZ_MATEXPR_H" << endl
+        << " #error <blitz/matuops.h> must be included via <blitz/matexpr.h>" 
+        << endl << "#endif" << endl << endl;
 
     one("abs");
     one("acos");
@@ -125,6 +135,9 @@ ofs <<
     two("unordered", bsdflag);
     one("y0", ieeeflag);
     one("y1", ieeeflag);
+
+    ofs << endl << "BZ_NAMESPACE_END" << endl << endl
+        << "#endif // BZ_MATUOPS_H" << endl;
 
     return 0;
 }
