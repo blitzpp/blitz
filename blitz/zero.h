@@ -60,7 +60,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_numtype>
+template<typename P_numtype>
 class ZeroElement {
 public:
     typedef P_numtype T_numtype;
@@ -95,7 +95,7 @@ private:
 
 // initialization of static data member for general class template
 
-template<class P_numtype>
+template<typename P_numtype>
 P_numtype ZeroElement<P_numtype>::zero_ = 0;
 
 BZ_NAMESPACE_END
