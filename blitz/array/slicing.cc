@@ -342,13 +342,15 @@ cout << "slice(" << rank << ", Range):" << endl
     length_[rank] = (last - first) / stride + 1;
 
     // TV 20000312: added second term here, for testsuite/Josef-Wagenhuber
-    int offset = -base(rank) * stride_[rank] * stride
-                 + first * stride_[rank];
-    // (first - base(rank)) * stride_[rank] 
+    int offset = (first - base(rank) * stride) * stride_[rank];
+
     data_ += offset;
-    zeroOffset_ -= offset;
+    zeroOffset_ += offset;
 
     stride_[rank] *= stride;
+    // JCC: adjust ascending flag if slicing with backwards Range
+    if (stride<0)
+        storage_.setAscendingFlag(rank, !isRankStoredAscending(rank));
 }
 
 BZ_NAMESPACE_END
