@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/array/asexpr.h  Declaration of the asExpr helper functions
  *
@@ -37,6 +38,7 @@ BZ_NAMESPACE(blitz)
 template <typename T>
 struct asExpr {
     typedef _bz_ArrayExprConstant<T> T_expr;
+    static T_expr getExpr(const T& x) { return T_expr(x); }
 };
 
 //  Already an expression template term
@@ -44,6 +46,7 @@ struct asExpr {
 template <typename T>
 struct asExpr<_bz_ArrayExpr<T> > {
     typedef _bz_ArrayExpr<T> T_expr;
+    static const T_expr& getExpr(const T_expr& x) { return x; }
 };
 
 //  An array operand
@@ -51,6 +54,7 @@ struct asExpr<_bz_ArrayExpr<T> > {
 template <typename T,int N>
 struct asExpr<Array<T,N> > {
     typedef FastArrayIterator<T,N> T_expr;
+    static T_expr getExpr(const Array<T,N>& x) { return x.beginFast(); }
 };
 
 //  Index placeholder
@@ -58,6 +62,7 @@ struct asExpr<Array<T,N> > {
 template <int N>
 struct asExpr<IndexPlaceholder<N> > {
     typedef IndexPlaceholder<N> T_expr;
+    static T_expr getExpr(T_expr x) { return x; }
 };
 
 #ifdef BZ_TEMPLATES_AS_TEMPLATE_ARGUMENTS
@@ -74,7 +79,7 @@ struct BzUnaryExprResult {
 template <template <typename T1, typename T2> class OP,
           typename O1, typename O2>
 struct BzBinaryExprResult {
-    typedef _bz_ArrayExpr<_bz_ArrayExprOp<
+    typedef _bz_ArrayExpr<_bz_ArrayExprBinaryOp<
         typename asExpr<O1>::T_expr,
         typename asExpr<O2>::T_expr,
         OP<typename asExpr<O1>::T_expr::T_numtype,
