@@ -1143,7 +1143,7 @@ subarrays:
      int main()
      {
          Array<int,1> A(7);
-         A = 0, 1, 2, 3, 4, 5, 6, 7;
+         A = 0, 1, 2, 3, 4, 5, 6;
      
          cout << A(Range::all())  << endl          // [ 0 1 2 3 4 5 6 ]
               << A(Range(3,5))    << endl          // [ 3 4 5 ]
@@ -5996,32 +5996,32 @@ Node: Array ctors22794
 Ref: Array ctors-Footnote-132524
 Node: Array slicing32731
 Node: Slicing combo37915
-Node: Array debug44216
-Node: Array members45777
-Node: Array globals63174
-Node: Array I/O67524
-Node: Array storage71201
-Ref: Array storage-Footnote-185984
-Ref: Array storage-Footnote-286115
-Node: Array Expressions86222
-Node: Array expressions87182
-Node: Index placeholders93075
-Node: Math functions 198933
-Node: Math functions 2105717
-Node: User et108227
-Node: Where expr120288
-Node: Stencils120892
-Node: Customised Arrays139356
-Node: Array multi139668
-Node: Array usertype145108
-Node: Indirection148039
-Ref: Indirection-Footnote-1155264
-Node: TinyVector155445
-Node: Parallel Computing159692
-Node: Random Number Generators161012
-Node: Numeric properties168826
-Node: FAQ176234
-Node: Keyword Index181744
-Node: Concept Index193108
+Node: Array debug44213
+Node: Array members45774
+Node: Array globals63171
+Node: Array I/O67521
+Node: Array storage71198
+Ref: Array storage-Footnote-185981
+Ref: Array storage-Footnote-286112
+Node: Array Expressions86219
+Node: Array expressions87179
+Node: Index placeholders93072
+Node: Math functions 198930
+Node: Math functions 2105714
+Node: User et108224
+Node: Where expr120285
+Node: Stencils120889
+Node: Customised Arrays139353
+Node: Array multi139665
+Node: Array usertype145105
+Node: Indirection148036
+Ref: Indirection-Footnote-1155261
+Node: TinyVector155442
+Node: Parallel Computing159689
+Node: Random Number Generators161009
+Node: Numeric properties168823
+Node: FAQ176231
+Node: Keyword Index181741
+Node: Concept Index193105
 
 End Tag Table
