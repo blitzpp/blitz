@@ -81,8 +81,8 @@ int main()
     BZTEST(count(E==F)==4);
 
     myClass f2(3.5);
-    A = f2.foo(1.2 + tensor::i, 1.2 - tensor::i);
-    B = cast<int>((1.2 + tensor::i) * pow(1.2 - tensor::i, 3.5));
+    A = f2.foo(1.2 - tensor::i, 1.2 + tensor::i);
+    B = cast<int>((1.2 - tensor::i) * pow(1.2 + tensor::i, 3.5));
     BZTEST(count(A==B)==4);
 }
 
