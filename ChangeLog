@@ -1,0 +1,30 @@
+
+
+Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* ChangeLog: new file
+	* testsuite/mattias-lindstroem-1: removed (executable)
+	* configure.in: updated with autoupdate (GNU autoconf) 2.49c
+	* aclocal.m4: renamed to acinclude.m4. It contains the *_BZ_* declarations
+	* acinclude.m4: new file generated when running aclocal (GNU automake) 1.4a
+	* Makefile.am (in each directory): new files (to generate a Makefile.in with
+	automake)
+	* bin/Makefile.in: new file generated from Makefile.am
+	* blitz/Makefile.in: likewise
+	* blitz/array/Makefile.in: likewise
+	* blitz/generate/Makefile.in: likewise
+	* blitz/meta/Makefile.in: likewise
+	* lib/Makefile.in: likewise
+	* manual/Makefile.in: likewise
+	* manual/examples/Makefile.in: likewise
+	* manual/stencils/Makefile.in: likewise
+	* random/Makefile.in: likewise
+	* .cvsignore (in each directory): new files
+	* missing: new file generated when running the scripts
+	aclocal (GNU automake) 1.4a
+	autoconf -a -c -i (GNU autoconf) 2.49c
+	automake (GNU automake) 1.4a
+	* mkinstalldirs: likewise
+	* config.guess: updated from automake 1.4a
+	* config.sub: likewise
+	* GPL: renamed to COPYING according to GNU standard
+
