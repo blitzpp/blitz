@@ -20,7 +20,7 @@ public:
 
     T random()
     {
-        return irng_.random() % n_;
+        return this->irng_.random() % n_;
     }
 
 private:
