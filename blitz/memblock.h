@@ -3,7 +3,7 @@
  *
  * $Id$
  *
- * Copyright (C) 1997-1999 Todd Veldhuizen <tveldhui@oonumerics.org>
+ * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,8 +23,11 @@
  *
  ***************************************************************************
  * $Log$
- * Revision 1.1  2000/06/19 12:26:09  tveldhui
- * Initial revision
+ * Revision 1.2  2001/01/24 20:22:49  tveldhui
+ * Updated copyright date in headers.
+ *
+ * Revision 1.1.1.1  2000/06/19 12:26:09  tveldhui
+ * Imported sources
  *
  * Revision 1.8  1998/12/06 00:00:35  tveldhui
  * Prior to adding UnownedMemoryBlock

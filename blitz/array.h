@@ -3,7 +3,7 @@
  *
  * $Id$
  *
- * Copyright (C) 1997-1999 Todd Veldhuizen <tveldhui@oonumerics.org>
+ * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,8 +23,11 @@
  *
  ***************************************************************************
  * $Log$
- * Revision 1.1  2000/06/19 12:26:12  tveldhui
- * Initial revision
+ * Revision 1.2  2001/01/24 20:22:49  tveldhui
+ * Updated copyright date in headers.
+ *
+ * Revision 1.1.1.1  2000/06/19 12:26:12  tveldhui
+ * Imported sources
  *
  * Revision 1.2  1998/03/14 00:04:47  tveldhui
  * 0.2-alpha-05
@@ -47,6 +50,19 @@
 
 #ifndef BZ_ARRAY_H
 #define BZ_ARRAY_H
+
+/*
+ * With BZ_GANG_INCLUDE, <blitz/array.h> includes every possible
+ * array functionality.  This pulls in ~ 120000 lines of code,
+ * making for extremely slow compiles.
+ * With BZ_NO_GANG_INCLUDE, <blitz/array.h> includes a minimal
+ * implementation of Array<T,N>.  Other functionalities must
+ * be included separately.
+ */
+
+#ifndef BZ_NO_GANG_INCLUDE
+ #define BZ_GANG_INCLUDE
+#endif
 
 #ifndef BZ_BLITZ_H
  #include <blitz/blitz.h>

@@ -3,7 +3,7 @@
  *
  * $Id$
  *
- * Copyright (C) 1997-1999 Todd Veldhuizen <tveldhui@oonumerics.org>
+ * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,8 +23,11 @@
  *
  ***************************************************************************
  * $Log$
- * Revision 1.1  2000/06/19 12:26:09  tveldhui
- * Initial revision
+ * Revision 1.2  2001/01/24 20:22:50  tveldhui
+ * Updated copyright date in headers.
+ *
+ * Revision 1.1.1.1  2000/06/19 12:26:09  tveldhui
+ * Imported sources
  *
  * Revision 1.6  1998/03/14 00:04:47  tveldhui
  * 0.2-alpha-05
@@ -54,8 +57,10 @@
  #include <blitz/blitz.h>
 #endif
 
+#ifdef BZ_GANG_INCLUDE
 #ifndef BZ_VECEXPRWRAP_H
  #include <blitz/vecexprwrap.h>      // _bz_VecExpr wrapper
+#endif
 #endif
 
 #include <blitz/wrap-climits.h>                  // for INT_MIN
@@ -220,8 +225,10 @@ public:
         return length();
     }
 
+#ifdef BZ_GANG_INCLUDE
     _bz_VecExpr<Range> _bz_asVecExpr() const
     { return _bz_VecExpr<Range>(*this); }
+#endif
 
 private:
     int first_, last_, stride_;
