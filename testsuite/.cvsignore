@@ -1,8 +1,12 @@
 Makefile
+Makefile.in
+*.o
 *.lo
 *.la
 .deps
 .libs
+cxx_repository
+ii_files
 Adnene-Ben-Abdallah-1
 Adnene-Ben-Abdallah-2
 Josef-Wagenhuber
