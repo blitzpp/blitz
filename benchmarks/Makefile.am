@@ -23,22 +23,13 @@ F90COMPILE = $(FC) $(FCFLAGS) $(FCFLAGS_f90) @FC_OPTIMIZE_FLAGS@
 LTF90COMPILE = $(LIBTOOL) --tag=F77 --mode=compile $(FC) $(FCFLAGS) $(FCFLAGS_f90) \
 	@FC_OPTIMIZE_FLAGS@
 
-SUFFIXES = .f90.f .f90 .lo .obj
-
-f90.f.o:
-	$(F90COMPILE) -c -o $@ $<
+SUFFIXES = .f90 .o .lo .obj
 
 .f90.o: 
 	$(F90COMPILE) -c -o $@ $<
 
-f90.f.obj:
-	$(F90COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
-
 .f90.obj: 
 	$(F90COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
-
-f90.f.lo:
-	$(LTF90COMPILE) -c -o $@ $<
 
 .f90.lo: 
 	$(LTF90COMPILE) -c -o $@ $<
