@@ -17,9 +17,7 @@
 #include <blitz/tinymat.h>
 #include <blitz/vector-et.h>
 
-#ifdef BZ_NAMESPACES
-using namespace blitz;
-#endif
+BZ_USING_NAMESPACE(blitz)
 
 /*
  * This example is drawn from a technical report by Stephen Booth of
