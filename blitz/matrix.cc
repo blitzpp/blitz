@@ -6,6 +6,9 @@
  * conditions of use.
  *
  * $Log$
+ * Revision 1.3  2002/05/27 19:38:33  jcumming
+ * Removed use of this->.  data_ is now declared in scope of class definition.
+ *
  * Revision 1.2  2002/03/06 16:29:28  patricg
  *
  * data_ replaced by this->data_
@@ -47,7 +50,7 @@ Matrix<P_numtype, P_structure>::operator=(_bz_MatExpr<P_expr> expr)
     _bz_typename P_structure::T_iterator iter(rows(), cols());
     while (iter)
     {
-        this->data_[iter.offset()] = expr(iter.row(), iter.col());
+        data_[iter.offset()] = expr(iter.row(), iter.col());
         ++iter;
     }
 
