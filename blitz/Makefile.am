@@ -26,7 +26,8 @@ vecpick.cc vecpick.h vecpickio.cc vecpickiter.h vecsum.cc vector-et.h \
 vector.cc vector.h vecwhere.h wrap-climits.h zero.cc zero.h $(genheaders)
 
 EXTRA_DIST = MAT-NOTE.gz config-ICL.h config-KCC.h config-SC4.0.h \
-config-SGi.h config-g++2.7.2.h config-mwerks.h config-xlC.h config-VS.NET2003.h
+config-SGi.h config-g++2.7.2.h config-mwerks.h config-xlC.h \
+config-VS.NET2003.h config-g++3.h
 
 clean-local:
 	-rm -rf config.h 
