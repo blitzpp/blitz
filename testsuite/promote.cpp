@@ -8,17 +8,17 @@ BZ_USING_NAMESPACE(blitz)
 int main() { return 0; }
 #else
 
-template<class T1, class T2>
+template<typename T1, typename T2>
 struct sameType {
     enum { same = 0 };
 };
 
-template<class T>
+template<typename T>
 struct sameType<T,T> {
     enum { same = 1 };
 };
 
-template<class T1, class T2, class T_promote>
+template<typename T1, typename T2, typename T_promote>
 inline void check(T1,T2,T_promote)
 {
 #if 0
