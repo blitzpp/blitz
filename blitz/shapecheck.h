@@ -37,18 +37,18 @@ BZ_NAMESPACE(blitz)
  * of subdomains.
  */
 
-template<class T_shape1, class T_shape2>
-inline _bz_bool areShapesConformable(const T_shape1&, const T_shape2&)
+template<typename T_shape1, typename T_shape2>
+inline bool areShapesConformable(const T_shape1&, const T_shape2&)
 {
     // If the shape objects are different types, this means
     // that the arrays are different ranks, or one is jagged
     // edged, etc.  In this case the two arrays are not
     // conformable.
-    return _bz_false;
+    return false;
 }
 
-template<class T_shape>
-inline _bz_bool areShapesConformable(const T_shape& a, const T_shape& b)
+template<typename T_shape>
+inline bool areShapesConformable(const T_shape& a, const T_shape& b)
 {
     // The shape objects are the same type, so compare them.
 
@@ -62,11 +62,11 @@ inline _bz_bool areShapesConformable(const T_shape& a, const T_shape& b)
         {
             BZ_DEBUG_MESSAGE("Incompatible shapes detected: " << endl 
                  << a << endl << b << endl);
-            return _bz_false;
+            return false;
         }
     }
 
-    return _bz_true;
+    return true;
 }
 
 BZ_NAMESPACE_END
