@@ -200,13 +200,14 @@ public:
     bool isStride(int rank, int stride) const
     { return iter_.isStride(rank,stride); }
 
-    void prettyPrint(string& str) const
+    void prettyPrint(BZ_STD_SCOPE(string) &str) const
     {
         prettyPrintFormat format(true);  // Terse formatting by default
         iter_.prettyPrint(str, format);
     }
 
-    void prettyPrint(string& str, prettyPrintFormat& format) const
+    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+        prettyPrintFormat& format) const
     { iter_.prettyPrint(str, format); }
 
     template<typename T_shape>
@@ -431,7 +432,8 @@ public:
     bool isStride(int rank, int stride) const
     { return iter_.isStride(rank,stride); }
 
-    void prettyPrint(string& str, prettyPrintFormat& format) const
+    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+        prettyPrintFormat& format) const
     { T_op::prettyPrint(str, format, iter_); }
 
     template<typename T_shape>
@@ -583,7 +585,8 @@ public:
         iter2_.moveTo(i);
     }
 
-    void prettyPrint(string& str, prettyPrintFormat& format) const
+    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+        prettyPrintFormat& format) const
     {
         T_op::prettyPrint(str, format, iter1_, iter2_);
     }
@@ -769,7 +772,8 @@ public:
         iter3_.moveTo(i);
     }
 
-    void prettyPrint(string& str, prettyPrintFormat& format) const
+    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+        prettyPrintFormat& format) const
     {
         T_op::prettyPrint(str, format, iter1_, iter2_, iter3_);
     }
@@ -873,7 +877,8 @@ public:
     {
     }
 
-    void prettyPrint(string& str, prettyPrintFormat& format) const
+    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+        prettyPrintFormat& format) const
     {
         if (format.tersePrintingSelected())
             str += format.nextScalarOperandSymbol();

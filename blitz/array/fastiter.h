@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/array/iter.h     Declaration of FastArrayIterator<P_numtype,N_rank>
  *
@@ -168,14 +169,15 @@ public:
     bool canCollapse(int outerLoopRank, int innerLoopRank) const
     { return array_.canCollapse(outerLoopRank, innerLoopRank); }
 
-    void prettyPrint(string& str, prettyPrintFormat& format) const
+    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+        prettyPrintFormat& format) const
     {
         if (format.tersePrintingSelected())
             str += format.nextArrayOperandSymbol();
         else if (format.dumpArrayShapesMode())
         {
 #ifdef BZ_HAVE_STD
-						ostringstream ostr;
+	    BZ_STD_SCOPE(ostringstream) ostr;
 #else
             ostrstream ostr;
 #endif

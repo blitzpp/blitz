@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/array/map.h      Declaration of the ArrayIndexMapping class
  *
@@ -451,7 +452,7 @@ public:
         return ;
     }
 
-    void prettyPrint(string& str, prettyPrintFormat&) const
+    void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat&) const
     {
         // NEEDS_WORK-- do real formatting for reductions
         str += "map[NEEDS_WORK]";

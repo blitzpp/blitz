@@ -196,7 +196,8 @@ public:
     bool isStride(int rank, int stride) const
     { return iter_.isStride(rank,stride); }
 
-    void prettyPrint(string& str, prettyPrintFormat& format) const
+    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+        prettyPrintFormat& format) const
     {
         str += BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_functor);
         str += "(";
@@ -358,7 +359,8 @@ public:
         return iter1_.isStride(rank,stride) && iter2_.isStride(rank,stride);
     }
   
-    void prettyPrint(string& str, prettyPrintFormat& format) const
+    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+        prettyPrintFormat& format) const
     {
         str += BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_functor);
         str += "(";
@@ -549,7 +551,8 @@ public:
             && iter3_.isStride(rank,stride);
     }
   
-    void prettyPrint(string& str, prettyPrintFormat& format) const
+    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+        prettyPrintFormat& format) const
     {
         str += BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_functor);
         str += "(";
