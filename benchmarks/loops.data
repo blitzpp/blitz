@@ -1,0 +1,147 @@
+begin loop1
+array x y
+flops 1
+loop $x = sqrt($y)
+end
+
+begin loop2
+array x y
+scalar u
+flops 1
+loop $x=$y/$u
+end
+
+begin loop3
+array x y
+scalar a
+flops 2
+loop $y=$y+$a*$x
+end
+
+begin loop5
+array x a b
+flops 1
+loop $x=$a+$b
+end
+
+begin loop6
+array x a b
+flops 1
+loop $x=$a*$b
+end
+
+begin loop8
+array a x
+scalar u
+flops 1
+loop $x=u/$a
+end
+
+begin loop9
+array a x
+flops 1
+loop $x=$x+$a
+end
+
+begin loop10
+array x a b c
+scalar u
+flops 3
+loop $x=u+$a+$b+$c
+end
+
+begin loop11
+array x a b c d
+flops 3
+loop $x=$a+$b+$c+$d
+end
+
+begin loop12
+array y a x b c d
+scalar u
+flops 4
+loop $y = u + $a; $x = $a + $b + $c + $d
+end
+
+begin loop13
+array x a b c d y
+scalar u
+loop $x=$a+$b+$c+$d; $y=u+$d
+flops 4
+end
+
+begin loop14
+array x a b y
+loop $x=$a+$b; $y=$a-$b
+flops 2
+end
+
+begin loop15
+array x c a b
+flops 2
+loop $x=$c+$a*$b
+flops 3
+end
+
+begin loop16
+array x a b c y
+scalar u
+loop $x=$a+$b+$c; $y=$x+$c+u
+flops 4
+end
+
+begin loop17
+array x a b c d
+flops 3
+loop $x=($a+$b)*($c+$d)
+end
+
+begin loop18
+array x a b
+scalar u v
+flops 3
+loop $x = (u + $a) * (v + $b)
+end
+
+begin loop19
+array x a b y
+scalar u v
+flops 2
+loop $x=u*$a; $y=v*$b
+end
+
+begin loop21
+array x a b c d
+flops 3
+loop $x = $a * $b + $c * $d
+end
+
+begin loop22
+array x a b c d
+flops 4
+loop $x = $x + $a * $b + $c * $d
+end
+
+begin loop23
+array x a b c d y
+flops 4
+loop $x=$a*$b+$c*$d; $y=$b+$d
+end
+
+begin loop24
+array x a b c d y
+flops 6
+loop $x=$a*$c-$b*$d; $y=$a*$d+$b*$c
+end
+
+begin loop25
+array x a b c y
+scalar u v w
+loop $x=u*$b; $y=v*$b+w*$a+u*$c
+end
+
+begin loop36
+array x e
+flops 1
+loop $x = exp($e)
+end
