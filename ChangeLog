@@ -5,6 +5,9 @@
 	and automake 1.6.2).
 	* doc/examples/.cvsignore: Added programs.
 	* doc/doxygen/.cvsignore: New file.
+	* doc/examples/range.cpp: Fixed a bug in the initialisation of array A.
+	* doc/examples/range.texi: Regenerated.
+	* doc/blitz.info: Regenerated.
 
 2003-01-21 Patrick Guio <patrick.guio@fys.uio.no>
 	* doc: New directory that should contain any form of documentation; Currently
