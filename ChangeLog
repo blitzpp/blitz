@@ -71,6 +71,13 @@
 	doc/mdate-sh.
 	* doc/texinfo.tex doc/mdate-sh: Removed. Replaced by config/texinfo.tex
 	config/mdate-sh.
+	* m4/ac_cxx_flags_preset.m4 m4/ac_fortran_flags_preset.m4: Fixed
+	unsupported syntax variable assignement of several strings on several
+	lines to one long string.
+	* benchmarks/Makefile.am: Fixed clean-local target core* into core.[0-9]*.
+	* m4/ac_cxx_flags_preset.m4: Fixed CXXFLAGS flag for Compaq cxx ver.>=6.3. 
+	Actually tested just for cxx ver. 6.5.
+	* Makefile.am: Added so_locations cxx_repository in the clean-local target.
 
 2004-03-16  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
