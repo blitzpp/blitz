@@ -1,23 +1,20 @@
-
-
-AC_DEFUN([AC_CXX_HAVE_COMPLEX],[AC_MSG_CHECKING([whether $CXX has complex<T>])
-AC_COMPILE_IFELSE(
-[AC_LANG_PROGRAM([[
-// complex<T> class
-
-#include <complex>
-
-#ifndef BZ_NO_NAMESPACES
+dnl Available from the GNU Autoconf Macro Archive at:
+dnl http://www.gnu.org/software/ac-archive/htmldoc/ac_cxx_have_complex.html
+dnl
+AC_DEFUN([AC_CXX_HAVE_COMPLEX],
+[AC_CACHE_CHECK(whether the compiler has complex<T>,
+ac_cv_cxx_have_complex,
+[AC_REQUIRE([AC_CXX_NAMESPACES])
+ AC_LANG_SAVE
+ AC_LANG_CPLUSPLUS
+ AC_TRY_COMPILE([#include <complex>
+#ifdef HAVE_NAMESPACES
 using namespace std;
-#endif
-]], [[
-    complex<float> a;
-    complex<double> b;
-    return 0;
-]])],
-[AC_MSG_RESULT([yes])
-AC_DEFINE([BZ_HAVE_COMPLEX],[],[Does it have complex<T>?])],
-[AC_MSG_RESULT([no])])])
-
-
-
+#endif],[complex<float> a; complex<double> b; return 0;],
+ ac_cv_cxx_have_complex=yes, ac_cv_cxx_have_complex=no)
+ AC_LANG_RESTORE
+])
+if test "$ac_cv_cxx_have_complex" = yes; then
+  AC_DEFINE(HAVE_COMPLEX,,[define if the compiler has complex<T>])
+fi
+])

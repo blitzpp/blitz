@@ -1,24 +1,19 @@
-
-
-AC_DEFUN([AC_CXX_DEFAULT_TEMPLATE_PARAMETERS],[
-AC_MSG_CHECKING([whether $CXX accepts default template parameters])
-AC_COMPILE_IFELSE(
-[AC_LANG_PROGRAM([[
-// Default template parameters
-// BZ_DEFAULT_TEMPLATE_PARAMETERS
-
-template<class T_type = double, int N = 10>
-class foo {
-public:
-    int bar() const
-    { return 0; }
-};
-]],[[
-    foo<float> z;
-    return z.bar();
-]])],
-[AC_MSG_RESULT([yes])
-AC_DEFINE([BZ_DEFAULT_TEMPLATE_PARAMETERS],[],[Default template parameters?])],
-[AC_MSG_RESULT([no])])])
-
-
+dnl Available from the GNU Autoconf Macro Archive at:
+dnl http://www.gnu.org/software/ac-archive/htmldoc/ac_cxx_default_template_parameters.html
+dnl
+AC_DEFUN([AC_CXX_DEFAULT_TEMPLATE_PARAMETERS],
+[AC_CACHE_CHECK(whether the compiler supports default template parameters,
+ac_cv_cxx_default_template_parameters,
+[AC_LANG_SAVE
+ AC_LANG_CPLUSPLUS
+ AC_TRY_COMPILE([
+template<class T = double, int N = 10> class A {public: int f() {return 0;}};
+],[A<float> a; return a.f();],
+ ac_cv_cxx_default_template_parameters=yes, ac_cv_cxx_default_template_parameters=no)
+ AC_LANG_RESTORE
+])
+if test "$ac_cv_cxx_default_template_parameters" = yes; then
+  AC_DEFINE(HAVE_DEFAULT_TEMPLATE_PARAMETERS,,
+            [define if the compiler supports default template parameters])
+fi
+])

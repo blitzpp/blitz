@@ -1,55 +1,28 @@
-
-
-AC_DEFUN([AC_CXX_TEMPLATE_QUALIFIED_RETURN_TYPE],[
-AC_MSG_CHECKING([whether $CXX accepts template-qualified return types])
-AC_COMPILE_IFELSE(
-[AC_LANG_PROGRAM([[
-#ifdef BZ_NO_TYPENAME
+dnl Available from the GNU Autoconf Macro Archive at:
+dnl http://www.gnu.org/software/ac-archive/htmldoc/ac_cxx_template_qualified_return_type.html
+dnl
+AC_DEFUN([AC_CXX_TEMPLATE_QUALIFIED_RETURN_TYPE],
+[AC_CACHE_CHECK(whether the compiler supports template-qualified return types,
+ac_cv_cxx_template_qualified_return_type,
+[AC_REQUIRE([AC_CXX_TYPENAME])
+ AC_LANG_SAVE
+ AC_LANG_CPLUSPLUS
+ AC_TRY_COMPILE([
+#ifndef HAVE_TYPENAME
  #define typename
 #endif
-
-
-// Template-qualified return type, necessary for type promotion on vectors
-// BZ_TEMPLATE_QUALIFIED_RETURN_TYPE
-
-
-class base1 {
-public:
-    int bar() const
-    { return 1; }
-};
-
-class base2 {
-public:
-    int bar() const
-    { return 0; }
-};
-
-template<class X>
-struct base_trait {
-    typedef base1 base;
-};
-
-template<>
-struct base_trait<float> {
-    typedef base2 base;
-};
-
-template<class T>
-class weird : public base_trait<T>::base {
-public:
-    typedef typename base_trait<T>::base base;
-
-    int zowee() const
-    { return this->bar(); }
-};
-]],[[
-    weird<float> z;
-    return z.zowee();
-]])],
-[AC_MSG_RESULT([yes])
-AC_DEFINE([BZ_TEMPLATE_QUALIFIED_RETURN_TYPE],[],
-[Template-qualified return types (necessary for vector type promotion)?])],
-[AC_MSG_RESULT([no])])])
-
-
+template<class X, class Y> struct promote_trait             { typedef X T; };
+template<>                 struct promote_trait<int, float> { typedef float T; };
+template<class T> class A { public : A () {} };
+template<class X, class Y>
+A<typename promote_trait<X,Y>::T> operator+ (const A<X>&, const A<Y>&)
+{ return A<typename promote_trait<X,Y>::T>(); }
+],[A<int> x; A<float> y; A<float> z = x + y; return 0;],
+ ac_cv_cxx_template_qualified_return_type=yes, ac_cv_cxx_template_qualified_return_type=no)
+ AC_LANG_RESTORE
+])
+if test "$ac_cv_cxx_template_qualified_return_type" = yes; then
+  AC_DEFINE(HAVE_TEMPLATE_QUALIFIED_RETURN_TYPE,,
+            [define if the compiler supports template-qualified return types])
+fi
+])

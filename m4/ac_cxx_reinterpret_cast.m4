@@ -1,45 +1,22 @@
-
-
-AC_DEFUN([AC_CXX_REINTERPRET_CAST],[
-AC_MSG_CHECKING([whether $CXX accepts 'reinterpret_cast<>' ])
-AC_COMPILE_IFELSE(
-[AC_LANG_PROGRAM([[
-// Reinterpret cast
-
-#include <typeinfo>
-
-class Dog {
-public:
-    Dog() { }
-    virtual void fetch() = 0;
-};
-
-class Dalmation : public Dog {
-public:
-    Dalmation() { }
-    virtual void fetch();
-};
-
-void Dalmation::fetch()
-{
-}
-
-class Unrelated {
-public:
-    Unrelated() { }
-
-};
-
-void foo(Unrelated&)
-{ } 
-]],[[
-    Dalmation cairo;
-    Dog& dog = cairo;
-    Unrelated& eek = reinterpret_cast<Unrelated&>(dog);
-    foo(eek);
-    return 0;
-]])],
-[AC_MSG_RESULT([yes])
-AC_DEFINE([BZ_REINTERPRET_CAST],[],[reinterpret_cast<>?])],
-[AC_MSG_RESULT([no])])])
-
+dnl Available from the GNU Autoconf Macro Archive at:
+dnl http://www.gnu.org/software/ac-archive/htmldoc/ac_cxx_reinterpret_cast.html
+dnl
+AC_DEFUN([AC_CXX_REINTERPRET_CAST],
+[AC_CACHE_CHECK(whether the compiler supports reinterpret_cast<>,
+ac_cv_cxx_reinterpret_cast,
+[AC_LANG_SAVE
+ AC_LANG_CPLUSPLUS
+ AC_TRY_COMPILE([#include <typeinfo>
+class Base { public : Base () {} virtual void f () = 0;};
+class Derived : public Base { public : Derived () {} virtual void f () {} };
+class Unrelated { public : Unrelated () {} };
+int g (Unrelated&) { return 0; }],[
+Derived d;Base& b=d;Unrelated& e=reinterpret_cast<Unrelated&>(b);return g(e);],
+ ac_cv_cxx_reinterpret_cast=yes, ac_cv_cxx_reinterpret_cast=no)
+ AC_LANG_RESTORE
+])
+if test "$ac_cv_cxx_reinterpret_cast" = yes; then
+  AC_DEFINE(HAVE_REINTERPRET_CAST,,
+            [define if the compiler supports reinterpret_cast<>])
+fi
+])

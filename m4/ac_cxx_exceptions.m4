@@ -1,34 +1,16 @@
-
-
-AC_DEFUN([AC_CXX_EXCEPTIONS],[AC_MSG_CHECKING([whether $CXX support exceptions])
-AC_COMPILE_IFELSE(
-[AC_LANG_PROGRAM([[
-// Exceptions
-// BZ_EXCEPTIONS
-
-#include <typeinfo>
-
-class foo { };
-
-int divide(int a, int b)
-{
-    if (b == 0)
-        throw foo();
-
-    return a / b;
-}
-]],[[
-    try {
-        divide(5,0);
-    }
-    catch(foo x) {
-        return 0;
-    }
-
-    return 1;
-]])],
-[AC_MSG_RESULT([yes])
-AC_DEFINE([BZ_EXCEPTIONS],[],[What about exceptions?])],
-[AC_MSG_RESULT([no])])])
-
-
+dnl Available from the GNU Autoconf Macro Archive at:
+dnl http://www.gnu.org/software/ac-archive/htmldoc/ac_cxx_exceptions.html
+dnl
+AC_DEFUN([AC_CXX_EXCEPTIONS],
+[AC_CACHE_CHECK(whether the compiler supports exceptions,
+ac_cv_cxx_exceptions,
+[AC_LANG_SAVE
+ AC_LANG_CPLUSPLUS
+ AC_TRY_COMPILE(,[try { throw  1; } catch (int i) { return i; }],
+ ac_cv_cxx_exceptions=yes, ac_cv_cxx_exceptions=no)
+ AC_LANG_RESTORE
+])
+if test "$ac_cv_cxx_exceptions" = yes; then
+  AC_DEFINE(HAVE_EXCEPTIONS,,[define if the compiler supports exceptions])
+fi
+])
