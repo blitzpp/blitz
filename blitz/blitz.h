@@ -23,6 +23,10 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.9  2002/07/19 20:40:32  jcumming
+ * Put ending semicolon into definition of BZ_MUTEX_* macros so that you
+ * don't need to add a semicolon after invoking the macro.
+ *
  * Revision 1.8  2001/02/15 13:13:30  tveldhui
  * Fixed problem with BZ_THREADSAFE macros
  *
@@ -159,11 +163,11 @@ BZ_NAMESPACE_END
 #ifdef BZ_THREADSAFE_USE_PTHREADS
  #include <pthread.h>
 
- #define BZ_MUTEX_DECLARE(name)   pthread_mutex_t name
- #define BZ_MUTEX_INIT(name)      pthread_mutex_init(&name,NULL)
- #define BZ_MUTEX_LOCK(name)      pthread_mutex_lock(&name)
- #define BZ_MUTEX_UNLOCK(name)    pthread_mutex_unlock(&name)
- #define BZ_MUTEX_DESTROY(name)   pthread_mutex_destroy(&name)
+ #define BZ_MUTEX_DECLARE(name)   pthread_mutex_t name;
+ #define BZ_MUTEX_INIT(name)      pthread_mutex_init(&name,NULL);
+ #define BZ_MUTEX_LOCK(name)      pthread_mutex_lock(&name);
+ #define BZ_MUTEX_UNLOCK(name)    pthread_mutex_unlock(&name);
+ #define BZ_MUTEX_DESTROY(name)   pthread_mutex_destroy(&name);
 #else
  #define BZ_MUTEX_DECLARE(name)
  #define BZ_MUTEX_INIT(name)
