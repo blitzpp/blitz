@@ -23,6 +23,12 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.7  2002/06/26 23:55:45  jcumming
+ * Explicitly specify second template argument for ListInitializationSwitch,
+ * rather than relying on the default value.  This eliminates a compilation
+ * problem using the xlC compiler.  Also removed #include of misc.cc, which
+ * is now handled in blitz/array/et.h.
+ *
  * Revision 1.6  2002/05/27 19:29:29  jcumming
  * Removed use of this-> as means of accessing members of templated base class.
  * Instead provided using declarations for these members within the derived
@@ -2247,9 +2253,9 @@ public:
     // Scalar operand
     // NEEDS_WORK : need a precondition check on
     // isStorageContiguous when operator, is used.
-    ListInitializationSwitch<T_array> operator=(T_numtype x)
+    ListInitializationSwitch<T_array,T_numtype*> operator=(T_numtype x)
     {
-        return ListInitializationSwitch<T_array>(*this, x);
+        return ListInitializationSwitch<T_array,T_numtype*>(*this, x);
     }
 
     T_array& initialize(T_numtype);
@@ -2544,7 +2550,6 @@ BZ_NAMESPACE_END
 #include <blitz/array/ops.cc>       // Assignment operators
 #include <blitz/array/io.cc>        // Output formatting
 #include <blitz/array/et.h>         // Expression templates
-#include <blitz/array/misc.cc>      // Expression templates, miscellaneous
 #include <blitz/array/reduce.h>     // Array reduction expression templates
 #include <blitz/array/interlace.cc> // Allocation of interlaced arrays
 #include <blitz/array/resize.cc>    // Array resize, resizeAndPreserve
