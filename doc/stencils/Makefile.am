@@ -16,7 +16,7 @@ EXTRA_DIST = $(doc_DATA)
 
 INCLUDES = -I$(top_srcdir)
 LDADD = -L$(top_srcdir)/lib -lblitz -lm
-#COMPILE = $(CXX) $(CXXFLAGS) $(INCLUDES) 
+COMPILE = $(CXX) $(CXXFLAGS) $(INCLUDES) 
 
 %2D.texi :
 	$(COMPILE) "-Dstenciltoapply=$(patsubst %.texi,%,$@)(A)" \
