@@ -16,3 +16,4 @@ strideslice
 xor
 core
 core.*
+cxx_repository
