@@ -11,7 +11,7 @@
 using namespace ranlib;
 using namespace blitz;
 
-template<class T>
+template<typename T>
 void printRandoms()
 {
   Uniform<T> x;
