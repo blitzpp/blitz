@@ -96,7 +96,7 @@ Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	#include <strstream> replaced by #include <sstream> 
 	ostrstream ostr replaced by ostringstream ostr
 	* testsuite/matthias-troyer-1.cpp, testsuite/matthias-troyer-2.cpp:
-	removed unecessary includes for iostream.h and complex.h
+	removed unnecessary includes for iostream.h and complex.h
 	* examples/cfd.cpp: added #ifdef BZ_HAVE_STD for #include <fstream>
 	* examples/haney.cpp: likewise for #include<valarray>
 	* blitz/vecexpr.h: (re)inserted includes for vecbops, vecuops and vecbfn
@@ -147,5 +147,9 @@ Thu Mar  7 09:06:58 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	warrior compiler proposed by Xavier Warin <xavier.warin@der.edfgdf.fr>
 	* INSTALL: updated with the new make targets
 	* Makefile.am (in each directory): fixed a bug for the target dist
+	* configure.in: added support for Intel icf (Fortran 90 compiler) when 
+	target is *linux* and CXX is Intel icc
+	* benchmarks/Makefile: added work.pc* in clean target, these files are
+	generated when running Intel Fortran 90 compiler ifc
 	
 	
