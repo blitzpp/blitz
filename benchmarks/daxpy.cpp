@@ -8,21 +8,29 @@
 #include <blitz/rand-uniform.h>
 #include <blitz/benchext.h>
 
+#ifdef BZ_HAVE_VALARRAY
+ #define BENCHMARK_VALARRAY
+#endif
+
 #ifdef BENCHMARK_VALARRAY
 #include <valarray>
 #endif
 
 BZ_USING_NAMESPACE(blitz)
 
-#ifdef BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES
+#if defined(BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES)
  #define fdaxpy   fdaxpy_
  #define daxpy    daxpy_
  #define f90daxpy f90daxpy_
  #define fidaxpy  fidaxpy_
  #define fidaxpyo fidaxpyo_
-#endif
-
-#ifdef BZ_FORTRAN_SYMBOLS_CAPS
+#elif defined(BZ_FORTRAN_SYMBOLS_WITH_DOUBLE_TRAILING_UNDERSCORES)
+ #define fdaxpy   fdaxpy__
+ #define daxpy    daxpy__
+ #define f90daxpy f90daxpy__
+ #define fidaxpy  fidaxpy__
+ #define fidaxpyo fidaxpyo__
+#elif defined(BZ_FORTRAN_SYMBOLS_CAPS)
  #define fdaxpy   FDAXPY
  #define daxpy    DAXPY
  #define f90daxpy F90DAXPY
@@ -51,19 +59,21 @@ void daxpyVectorVersion(BenchmarkExt<int>& bench, double a, double b);
 void daxpyArrayVersion(BenchmarkExt<int>& bench, double a);
 void daxpyF77Version(BenchmarkExt<int>& bench, double a);
 void daxpyBLASVersion(BenchmarkExt<int>& bench, double a);
+#ifdef FORTRAN_90
 void daxpyF90Version(BenchmarkExt<int>& bench, double a);
-
+#endif
 #ifdef BENCHMARK_VALARRAY
 void daxpyValarrayVersion(BenchmarkExt<int>& bench, double a);
 #endif
 
 int main()
 {
-
-#ifdef BENCHMARK_VALARRAY
     int numBenchmarks = 6;
-#else
-    int numBenchmarks = 5;
+#ifndef BENCHMARK_VALARRAY
+		numBenchmarks--;   // No  valarray
+#endif
+#ifndef FORTRAN_90
+		numBenchmarks--;   // No fortran 90
 #endif
 
     BenchmarkExt<int> bench("DAXPY Benchmark", numBenchmarks);
@@ -78,7 +88,7 @@ int main()
 
     for (int i=0; i < numSizes; ++i)
     {
-        parameters[i] = pow(10.0, (i+1)/4.0);
+        parameters[i] = (int)pow(10.0, double(i+1)/4.0);
         iters[i] = 50000000L / parameters[i];
         if (iters[i] < 2)
             iters[i] = 2;
@@ -97,8 +107,9 @@ int main()
     daxpyArrayVersion(bench, a);
     daxpyF77Version(bench, a);
     daxpyBLASVersion(bench, a);
+#ifdef FORTRAN_90
     daxpyF90Version(bench, a);
-
+#endif
 #ifdef BENCHMARK_VALARRAY
     daxpyValarrayVersion(bench, a);
 #endif
@@ -263,6 +274,7 @@ void daxpyBLASVersion(BenchmarkExt<int>& bench, double a)
     bench.endImplementation();
 }
 
+#ifdef FORTRAN_90
 void daxpyF90Version(BenchmarkExt<int>& bench, double a)
 {
     bench.beginImplementation("Fortran 90");
@@ -291,6 +303,7 @@ void daxpyF90Version(BenchmarkExt<int>& bench, double a)
 
     bench.endImplementation();
 }
+#endif
 
 #ifdef BENCHMARK_VALARRAY
 void daxpyValarrayVersion(BenchmarkExt<int>& bench, double a)
