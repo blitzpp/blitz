@@ -5,12 +5,7 @@ BZ_USING_NAMESPACE(blitz)
 
 class RGB24 {
 public:
-#if defined(_IBMR2)
-// hack for bug in IBM xlC compiler
-    enum {red=0, green=1, blue=2};
-#else
     static const int red=0, green=1, blue=2;
-#endif
 
     RGB24() { }
 
@@ -34,6 +29,11 @@ public:
 private:
     unsigned char colours[3];
 };
+
+// declare static data members of RGB24 so we can use them below
+const int RGB24::red;
+const int RGB24::green;
+const int RGB24::blue;
 
 BZ_DECLARE_MULTICOMPONENT_TYPE(RGB24, unsigned char, 3)
 
