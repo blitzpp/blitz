@@ -23,6 +23,11 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.6  2002/05/27 19:30:27  jcumming
+ * Removed use of this-> as means of accessing members of templated base class.
+ * Instead provided using declarations for these members within the derived
+ * class definitions to bring them into the scope of the derived class.
+ *
  * Revision 1.5  2002/03/06 16:09:46  patricg
  * *** empty log message ***
  *
@@ -103,6 +108,10 @@ template<class P_numtype> class Random;
 
 template<class P_numtype>
 class Vector : protected MemoryBlockReference<P_numtype> {
+  
+private:
+    typedef MemoryBlockReference<P_numtype> T_base;
+    using T_base::data_;
 
 public:
     //////////////////////////////////////////////
@@ -179,7 +188,7 @@ public:
         length_ = length;
         stride_ = 1;
         for (int i=0; i < length; ++i)
-            this->data_[i] = firstValue + i * delta;
+            data_[i] = firstValue + i * delta;
     }
 
     template<class P_distribution>
@@ -248,10 +257,10 @@ public:
     // T_constIterator end()    const;
 
     T_numtype * _bz_restrict data()  
-    { return this->data_; }
+    { return data_; }
 
     const T_numtype * _bz_restrict data() const
-    { return this->data_; }
+    { return data_; }
 
     _bz_bool        isUnitStride() const
     { return stride_ == 1; }
@@ -295,10 +304,10 @@ public:
     { return stride_ == 1; }
 
     T_numtype&      _bz_fastAccess(int i)
-    { return this->data_[i]; }
+    { return data_[i]; }
 
     T_numtype       _bz_fastAccess(int i) const
-    { return this->data_[i]; }
+    { return data_[i]; }
 
     template<class P_expr, class P_updater>
     void            _bz_assign(P_expr, P_updater);
@@ -316,7 +325,7 @@ public:
     {
         BZPRECONDITION(i < length_);
         BZPRECONDITION(stride_ == 1);
-        return this->data_[i];
+        return data_[i];
     }
 
     // operator()(int) may be used only when the vector has unit
@@ -325,19 +334,19 @@ public:
     {
         BZPRECONDITION(i < length_);
         BZPRECONDITION(stride_ == 1);
-        return this->data_[i];
+        return data_[i];
     }
 
     T_numtype        operator[](int i) const
     {
         BZPRECONDITION(i < length_);
-        return this->data_[i * stride_];
+        return data_[i * stride_];
     }
 
     T_numtype& _bz_restrict operator[](int i)
     {
         BZPRECONDITION(i < length_);
-        return this->data_[i * stride_];
+        return data_[i * stride_];
     }
 
     T_vector      operator()(Range r)
