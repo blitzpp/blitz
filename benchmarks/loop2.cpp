@@ -10,7 +10,11 @@
 #include <blitz/rand-uniform.h>
 #include <blitz/benchext.h>
 
-// Generated: makeloops.cpp Jul 30 1998
+// Generated: makeloops.cpp Dec 11 2002
+
+#ifdef BZ_HAVE_VALARRAY
+ #define BENCHMARK_VALARRAY
+#endif
 
 #ifdef BENCHMARK_VALARRAY
 #include <valarray>
@@ -18,21 +22,17 @@
 
 BZ_USING_NAMESPACE(blitz)
 
-#ifdef BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES
+#if defined(BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES)
  #define loop2_f77 loop2_f77_
  #define loop2_f77overhead loop2_f77overhead_
  #define loop2_f90 loop2_f90_
  #define loop2_f90overhead loop2_f90overhead_
-#endif
-
-#ifdef BZ_FORTRAN_SYMBOLS_WITH_DOUBLE_TRAILING_UNDERSCORES
+#elif defined(BZ_FORTRAN_SYMBOLS_WITH_DOUBLE_TRAILING_UNDERSCORES)
  #define loop2_f77 loop2_f77__
  #define loop2_f77overhead loop2_f77overhead__
  #define loop2_f90 loop2_f90__
  #define loop2_f90overhead loop2_f90overhead__
-#endif
-
-#ifdef BZ_FORTRAN_SYMBOLS_CAPS
+#elif defined(BZ_FORTRAN_SYMBOLS_CAPS)
  #define loop2_f77 LOOP2_F77
  #define loop2_f77overhead LOOP2_F77OVERHEAD
  #define loop2_f90 LOOP2_F90
@@ -53,8 +53,9 @@ extern "C" {
 void VectorVersion(BenchmarkExt<int>& bench, double u);
 void ArrayVersion(BenchmarkExt<int>& bench, double u);
 void F77Version(BenchmarkExt<int>& bench, double u);
+#ifdef FORTRAN_90
 void F90Version(BenchmarkExt<int>& bench, double u);
-
+#endif
 #ifdef BENCHMARK_VALARRAY
 void ValarrayVersion(BenchmarkExt<int>& bench, double u);
 #endif
@@ -63,10 +64,12 @@ void sink() {}
 
 int main()
 {
-#ifdef BENCHMARK_VALARRAY
     int numBenchmarks = 5;
-#else
-    int numBenchmarks = 4;
+#ifndef BENCHMARK_VALARRAY
+    numBenchmarks--;   // No  valarray
+#endif
+#ifndef FORTRAN_90
+    numBenchmarks--;   // No fortran 90
 #endif
 
     BenchmarkExt<int> bench("loop2: $x=$y/$u", numBenchmarks);
@@ -99,7 +102,9 @@ int main()
     VectorVersion(bench, u);
     ArrayVersion(bench, u);
     F77Version(bench, u);
+#ifdef FORTRAN_90
     F90Version(bench, u);
+#endif
 #ifdef BENCHMARK_VALARRAY
     ValarrayVersion(bench, u);
 #endif
@@ -268,6 +273,7 @@ void F77Version(BenchmarkExt<int>& bench, double u)
     bench.endImplementation();
 }
 
+#ifdef FORTRAN_90
 void F90Version(BenchmarkExt<int>& bench, double u)
 {
     bench.beginImplementation("Fortran 90");
@@ -302,4 +308,5 @@ void F90Version(BenchmarkExt<int>& bench, double u)
 
     bench.endImplementation();
 }
+#endif
 
