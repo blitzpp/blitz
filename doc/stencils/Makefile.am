@@ -12,13 +12,7 @@
 #forward42.texi Laplacian2D.texi Laplacian2D4.texi \
 #dump-stencil.cpp
 
-EXTRA_DIST = backward11.texi backward12.texi backward21.texi backward22.texi \
-backward31.texi backward32.texi backward41.texi backward42.texi \
-central12.texi central14.texi central22.texi central24.texi central32.texi \
-central34.texi central42.texi central44.texi forward11.texi forward12.texi \
-forward21.texi forward22.texi forward31.texi forward32.texi forward41.texi \
-forward42.texi Laplacian2D.texi Laplacian2D4.texi \
-dump-stencil.cpp
+EXTRA_DIST = dump-stencil.cpp
 
 INCLUDES = -I$(top_srcdir) -I$(top_builddir)
 LDADD = -L$(top_builddir)/lib/.libs -lblitz -lm
