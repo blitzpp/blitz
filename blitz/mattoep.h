@@ -50,10 +50,7 @@ public:
         offset_ = 0;
     }
 
-    operator _bz_bool() const
-    {
-        return good_;
-    }
+    operator bool() const { return good_; }
 
     void operator++()
     {
@@ -79,7 +76,7 @@ protected:
     unsigned offset_;
     unsigned i_, j_;
     unsigned rows_, cols_;
-    _bz_bool good_;
+    bool     good_;
 };
 
 class Toeplitz : public GeneralMatrix {
@@ -107,43 +104,32 @@ public:
     unsigned firstInRow(unsigned i) const
     { return 0; }
 
-    template<class T_numtype>
-    T_numtype get(const T_numtype * _bz_restrict data,
+    template<typename T_numtype>
+    T_numtype get(const T_numtype * restrict data,
         unsigned i, unsigned j) const
     {
         BZPRECONDITION(inRange(i,j));
         return data[coordToOffset(i,j)];
     }
 
-    template<class T_numtype>
-    T_numtype& get(T_numtype * _bz_restrict data, unsigned i, unsigned j)
+    template<typename T_numtype>
+    T_numtype& get(T_numtype * restrict data, unsigned i, unsigned j)
     {
         BZPRECONDITION(inRange(i,j));
         return data[coordToOffset(i,j)];
     }
 
-    unsigned lastInRow(unsigned i) const
-    { return cols_ - 1; }
+    unsigned lastInRow(const unsigned)  const { return cols_ - 1; }
+    unsigned firstInCol(const unsigned) const { return 0; }
+    unsigned lastInCol(const unsigned)  const { return rows_ - 1; }
 
-    unsigned firstInCol(unsigned j) const
-    { return 0; }
+    bool inRange(const unsigned i,const unsigned j) const { return (i<rows_) && (j<cols_); }
 
-    unsigned lastInCol(unsigned j) const
-    { return rows_ - 1; }
+    unsigned numElements() const { return rows_ + cols_ - 1; }
 
-    _bz_bool inRange(unsigned i, unsigned j) const
-    {
-        return (i < rows_) && (j < cols_);
-    }
+    unsigned rows() const { return rows_; }
 
-    unsigned numElements() const
-    { return rows_ + cols_ - 1; }
-
-    unsigned rows() const
-    { return rows_; }
-
-    void resize(unsigned rows, unsigned cols)
-    {
+    void resize(const unsigned rows,const unsigned cols) {
         rows_ = rows;
         cols_ = cols;
     }

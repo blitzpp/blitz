@@ -50,8 +50,7 @@ public:
         j_ = 0;
     }
    
-    operator _bz_bool() const
-    { return good_; }
+    operator bool() const { return good_; }
 
     void operator++()
     {
@@ -78,7 +77,7 @@ public:
 
 protected:
     unsigned size_;
-    _bz_bool good_;
+    bool     good_;
     unsigned offset_;
     unsigned i_, j_;
 };
@@ -115,8 +114,8 @@ public:
     unsigned firstInRow(unsigned i) const
     { return 0; }
 
-    template<class T_numtype>
-    T_numtype get(const T_numtype * _bz_restrict data,
+    template<typename T_numtype>
+    T_numtype get(const T_numtype * restrict data,
         unsigned i, unsigned j) const
     {
         BZPRECONDITION(inRange(i,j));
@@ -126,8 +125,8 @@ public:
             return ZeroElement<T_numtype>::zero();
     }
 
-    template<class T_numtype>
-    T_numtype& get(T_numtype * _bz_restrict data, unsigned i, unsigned j)
+    template<typename T_numtype>
+    T_numtype& get(T_numtype * restrict data, unsigned i, unsigned j)
     {
         BZPRECONDITION(inRange(i,j));
         if (j >= i)
@@ -145,24 +144,15 @@ public:
     unsigned lastInCol(unsigned j) const
     { return j; }
 
-    _bz_bool inRange(unsigned i, unsigned j) const
-    {
-        return (i < size_) && (j < size_);
-    }
+    bool inRange(const unsigned i,const unsigned j) const { return (i<size_) && (j<size_); }
 
-    unsigned numElements() const
-    { return size_ * (size_ + 1) / 2; }
+    unsigned numElements() const { return size_ * (size_ + 1) / 2; }
 
-    unsigned rows() const
-    { return size_; }
+    unsigned rows() const { return size_; }
 
-    void resize(unsigned size)
-    {
-        size_ = size;
-    }
+    void resize(const unsigned size) { size_ = size; }
 
-    void resize(unsigned rows, unsigned cols)
-    {
+    void resize(const unsigned rows,const unsigned cols) {
         BZPRECONDITION(rows == cols);
         size_  = rows;
     }
