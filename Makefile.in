@@ -99,7 +99,10 @@ am__include = @am__include@
 am__quote = @am__quote@
 install_sh = @install_sh@
 
-SUBDIRS = bin compiler blitz random src lib manual testsuite examples benchmarks demos
+SUBDIRS = bin compiler blitz random src lib testsuite \
+	examples benchmarks doc
+
+
 EXTRA_DIST = LEGAL LICENSE README.binutils config.h.in ChangeLog.1 
 
 demodir = $(prefix)/demos
@@ -107,7 +110,7 @@ demo_DATA = demos/Makefile
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
-CONFIG_CLEAN_FILES = demos/Makefile
+CONFIG_CLEAN_FILES = examples/Makefile
 DIST_SOURCES =
 DATA = $(demo_DATA)
 
@@ -139,7 +142,7 @@ $(srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.in $(ACLOCAL_M4)
 
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ configure.in acinclude.m4
 	cd $(srcdir) && $(ACLOCAL) $(ACLOCAL_AMFLAGS)
-demos/Makefile: $(top_builddir)/config.status $(top_srcdir)/demos/Makefile.in
+examples/Makefile: $(top_builddir)/config.status $(top_srcdir)/examples/Makefile.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 uninstall-info-am:
 demoDATA_INSTALL = $(INSTALL_DATA)
@@ -272,7 +275,7 @@ distcleancheck_listfiles = find . -type f -print
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkinstalldirs) $(distdir)/benchmarks $(distdir)/demos
+	$(mkinstalldirs) $(distdir)/benchmarks $(distdir)/examples
 	@list='$(DISTFILES)'; for file in $$list; do \
 	  if test -f $$file || test -d $$file; then d=.; else d=$(srcdir); fi; \
 	  dir=`echo "$$file" | sed -e 's,/[^/]*$$,,'`; \

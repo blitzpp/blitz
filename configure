@@ -1498,7 +1498,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=Blitz++
- VERSION=0.5
+ VERSION=0.6
 
 
 cat >>confdefs.h <<_ACEOF
@@ -3472,8 +3472,9 @@ echo "BLASLIB            = $BLASLIB"
 echo ""
 
 # Process the Makefile.in's
-ac_config_files="$ac_config_files Makefile bin/Makefile blitz/Makefile blitz/array/Makefile blitz/generate/Makefile blitz/meta/Makefile random/Makefile compiler/Makefile src/Makefile lib/Makefile manual/Makefile manual/examples/Makefile manual/stencils/Makefile testsuite/Makefile examples/Makefile benchmarks/Makefile benchmarks/plot_benchmarks.m demos/Makefile"
+ac_config_files="$ac_config_files Makefile bin/Makefile blitz/Makefile blitz/array/Makefile blitz/generate/Makefile blitz/meta/Makefile random/Makefile compiler/Makefile src/Makefile lib/Makefile manual/Makefile manual/examples/Makefile manual/stencils/Makefile testsuite/Makefile examples/Makefile benchmarks/Makefile benchmarks/plot_benchmarks.m doc/Makefile doc/examples/Makefile doc/stencils/Makefile"
 
+#	demos/Makefile
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
 # tests run on this system so they can be shared between configure
@@ -4019,7 +4020,9 @@ do
   "examples/Makefile" ) CONFIG_FILES="$CONFIG_FILES examples/Makefile" ;;
   "benchmarks/Makefile" ) CONFIG_FILES="$CONFIG_FILES benchmarks/Makefile" ;;
   "benchmarks/plot_benchmarks.m" ) CONFIG_FILES="$CONFIG_FILES benchmarks/plot_benchmarks.m" ;;
-  "demos/Makefile" ) CONFIG_FILES="$CONFIG_FILES demos/Makefile" ;;
+  "doc/Makefile" ) CONFIG_FILES="$CONFIG_FILES doc/Makefile" ;;
+  "doc/examples/Makefile" ) CONFIG_FILES="$CONFIG_FILES doc/examples/Makefile" ;;
+  "doc/stencils/Makefile" ) CONFIG_FILES="$CONFIG_FILES doc/stencils/Makefile" ;;
   "depfiles" ) CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
   *) { { echo "$as_me:$LINENO: error: invalid argument: $ac_config_target" >&5
 echo "$as_me: error: invalid argument: $ac_config_target" >&2;}
