@@ -1,3 +1,48 @@
+2002-07-02  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+	* examples/cast.cpp: Added check for use of new-style expression
+	templates.  I changed the syntax for casting the type of a blitz
+	Array to make it simpler.  Instead of giving a second argument
+	that is an instance of the new element type, just provide the new
+	element type as a template parameter.
+	* testsuite/newet.cpp: Added testing of functorExpr.h header file,
+	which provides support for declaring user-defined functors and
+	class methods that act on Array types.  The code for this support
+	originated from Derrick Bass of Caltech.
+	* testsuite/tinyvec.cpp: Include blitz/tinyvec-et.h here to get ET
+	support.
+	* blitz/vecexpr.h: Undid the previous change to this file.  Vector
+	ET support is now gotten by including blitz/vector-et.h
+	explicitly.
+	* blitz/promote.h: Added BZ_BLITZ_SCOPE to promote_trait in
+	BZ_PROMOTE macro definition so that this macro works correctly
+	outside the blitz namespace.
+	* blitz/Makefile.am: Removed Array.h, Vector.h, TinyVec.h and
+	TinyMat.h from blitz_HEADERS.  Added array-old.h, vector-et.h
+	tinyvec-et.h and funcs.h.
+	* blitz/Makefile.in: Rebuilt from Makefile.am to update
+	blitz_HEADERS.
+	* blitz/array.h: This file used to be called Array.h but has been
+	renamed to avoid name clashes on Windows-based systems.  This file
+	includes only the Array class implementation files.
+	* blitz/array/newet-macros.h: Renamed and reorganized new style
+	macros for declaring unary and binary functions/operators that act
+	on Array types.
+	* blitz/array/newet.h: Added #include of blitz/array/functorExpr.h
+	to support user-defined functors and class methods acting on Array
+	types.
+	* blitz/array/funcs.h: Use new style of Array ET macros to declare
+	unary and binary math functions that act on Array types.
+	* blitz/array/ops.h: Use new style of Array ET macros to create
+	unary and binary operators that act on Array types.
+	* blitz/ops.h: Rewrote and reorganized this file to make better
+	use of macros to generate all the functor classes needed to
+	provide unary and binary operators for the "new" style of
+	expression templates.
+	* blitz/array/Makefile.am: Added functorExpr.h to list of
+	array_HEADERS.
+	* blitz/array/Makefile.in: Rebuilt from Makefile.am to include new
+	header file.
+
 2002-06-28  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 	* blitz/mathfunc.h: Corrected categorization of fmod and ilogb
 	math functions.
