@@ -101,7 +101,11 @@ public:
         rank = BZ_ENUM_CAST(P_expr::rank) };
 
     _bz_ArrayExpr(const _bz_ArrayExpr<P_expr>& a)
+#ifdef BZ_NEW_EXPRESSION_TEMPLATES
+        : ETBase< _bz_ArrayExpr<P_expr> >(a), iter_(a.iter_)
+#else
         : iter_(a.iter_)
+#endif
     { }
 
 #if defined(BZ_NEW_EXPRESSION_TEMPLATES) && ! defined(__MWERKS__)
@@ -659,7 +663,7 @@ public:
     void advance(int) { }
     void loadStride(int) { }
 
-    _bz_bool isUnitStride(int rank) const
+    _bz_bool isUnitStride(int) const
     { return _bz_true; }
 
     void advanceUnitStride()
@@ -681,7 +685,7 @@ public:
     { return _bz_true; }
 
     template<int N_rank>
-    void moveTo(const TinyVector<int,N_rank>& i)
+    void moveTo(const TinyVector<int,N_rank>&)
     {
     }
 
