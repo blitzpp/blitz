@@ -77,5 +77,5 @@ all-am:
 	$(MAKE) $(AM_MAKEFLAGS) stencils
 
 clean-local:
-	-rm -rf cxx_repository dump-stencil
+	-rm -rf cxx_repository dump-stencil *.texi
 
