@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.6  2001/02/04 22:36:41  tveldhui
+ * Oops, was including <pthread.h> inside the blitz namespace.
+ *
  * Revision 1.5  2001/02/04 16:32:28  tveldhui
  * Made memory block reference counting (optionally) threadsafe when
  * BZ_THREADSAFE is defined.  Currently uses pthread mutex.
@@ -126,6 +129,8 @@ BZ_NAMESPACE(blitz)
  #define BZ_GLOBAL_INIT(X) 
 #endif
 
+BZ_NAMESPACE_END
+
 #ifdef _REENTRANT
  #define BZ_THREADSAFE
 #endif
@@ -145,8 +150,6 @@ BZ_NAMESPACE(blitz)
  #define BZ_MUTEX_UNLOCK(name)
  #define BZ_MUTEX_DESTROY(name)
 #endif
-
-BZ_NAMESPACE_END
 
 #include <blitz/bzdebug.h>           // Debugging macros
 
