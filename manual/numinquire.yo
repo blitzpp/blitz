@@ -1,0 +1,319 @@
+
+bzsect(Introduction)
+
+bzindex(numeric limits)
+
+Blitz++ provides a set of functions to
+access numeric properties of intrinsic types.
+They are provided as an alternative to the somewhat
+klunky tt(numeric_limits<T>::yadda_yadda) syntax
+provided by the ISO/ANSI C++ standard.  Where a
+similar Fortran 90 function exists, the same name
+has been used.
+
+The argument in all cases is a dummy of the appropriate
+type.
+
+All functions described in this section assume that
+tt(numeric_limits<T>) has been specialized for the
+appropriate case.  If not, the results are not useful.
+The standard requires that tt(numeric_limits<T>) be
+specialized for all the intrinsic numeric types
+(float, double, int, bool, unsigned int, etc.).
+
+bzindex(numinquire.h)
+
+To use these functions, you must first include the
+header tt(<blitz/numinquire.h>).  Also, note that
+these functions may be unavailable if your compiler
+is non-ANSI compliant.  If the preprocessor symbol
+tt(BZ_HAVE_NUMERIC_LIMITS) is false, then these
+functions are unavailable.
+
+COMMENT(
+bzsect(Floating-point primer)
+
+Define: radix, mantissa, exponent, denormalized
+
+bzsect(Special values)
+
+Special values: NaN, QNaN, SNaN, +Inf, -Inf
+
+Signalling and trapping
+)
+
+bzsect(Function descriptions)
+
+bzindex(denorm_min())
+bf(bzverb(\
+T     denorm_min(T) throw;
+))
+Minimum positive denormalized value.  Available for floating-point
+types only. 
+
+bzindex(digits())
+bf(bzverb(\
+int   digits(T);
+))
+The number of radix digits (read: bits) in the mantissa.  Also
+works for integer types.  The official definition is "number of
+radix digits that can be represented without change". 
+
+bzindex(digits10())
+bf(bzverb(\
+int   digits10(T);
+))
+The number of base-10 digits that can be represented without
+change. 
+
+bzindex(epsilon())
+bf(bzverb(\
+T     epsilon(T);
+))
+The smallest amount which can be added to 1 to produce
+a result which is not 1.  Floating-point types only.
+
+bzindex(denormalized values)
+bzindex(has_denorm())
+bf(bzverb(\
+bool  has_denorm(T);
+))
+True if the representation allows denormalized values (floating-point
+only).
+
+bzindex(denormalization loss)
+bzindex(has_denorm_loss())
+bf(bzverb(\
+bool  has_denorm_loss(T);
+))
+True if a loss of precision is detected as a denormalization loss, rather
+than as an inexact result (floating-point only). 
+
+bzindex(infinity -- has_infinity())
+bzindex(has_infinity())
+bf(bzverb(\
+bool  has_infinity(T);
+))
+True if there is a special representation for the value "infinity".
+If true, the representation can be obtained by calling tt(infinity(T)).
+
+bzindex(has_quiet_NaN())
+bzindex(NaN -- has_quiet_NaN())
+bf(bzverb(\
+bool  has_quiet_NaN(T);
+))
+True if there is a special representation for a quiet (non-signalling)
+Not A Number (NaN).  If so, use the function tt(quiet_NaN(T)) to obtain
+it. 
+
+bzindex(NaN -- has_signalling_NaN())
+bzindex(has_signalling_NaN())
+bf(bzverb(\
+bool  has_signaling_NaN(T);
+bool  has_signalling_NaN(T);  
+))
+True if there is a special representation for a signalling
+Not A Number (NaN).  If so, use the function tt(signalling_NaN(T))
+to obtain it. 
+
+bzindex(huge())
+bzindex(maximum value of a type)
+bf(bzverb(\
+T     huge(T) throw;
+))
+Returns the maximum finite representable value.  Equivalent to
+tt(CHAR_MAX), tt(SHRT_MAX), tt(FLT_MAX), etc.  For floating types
+with denormalization, the maximum positive bf(normalized) value is
+returned.  
+
+bzindex(infinity())
+bf(bzverb(\
+T     infinity(T) throw;
+))
+Returns the representation of positive infinity, if available.
+Note that you should check availability with tt(has_infinity(T))
+before calling this function. 
+
+bzindex(is_bounded())
+bf(bzverb(\
+bool  is_bounded(T);
+))
+True if the set of values represented by the type is finite.
+All built-in types are bounded.  (This function was provided
+so that e.g. arbitrary precision types could be distinguished).
+
+bzindex(is_exact())
+bf(bzverb(\
+bool  is_exact(T);
+))
+True if the representation is exact.  All integer types are
+exact; floating-point types generally aren't.  A rational
+arithmetic type could be exact. 
+
+bzindex(IEC 559)
+bzindex(is_iec559())
+bf(bzverb(\
+bool  is_iec559(T);
+))
+True if the type conforms to the IEC 559 standard.  IEC is
+the International Electrotechnical Commission.  Note that
+IEC 559 is the same as IEEE 754.  Only relevant for floating types.
+
+bzindex(is_integer())
+bf(bzverb(\
+bool  is_integer(T);
+))
+True if the type is integer.  
+
+bzindex(is_modulo())
+bf(bzverb(\
+bool  is_modulo(T);
+))
+True if the type is modulo.  Integer types are usually
+modulo: if you add two integers, they might wrap around
+and give you a small result.  (Some special kinds of
+integers don't wrap around, but stop at an upper or
+lower bound; this is called saturating arithmetic).
+This is false for floating types.  
+
+bzindex(is_signed())
+bzindex(signed -- is_signed())
+bf(bzverb(\
+bool  is_signed(T);
+))
+True if the type is signed (i.e. can handle both positive
+and negative values).  
+
+bf(bzverb(\
+int   max_exponent(T);
+))
+The maximum exponent (Max_exp) is the maximum positive integer such that
+the radix (read: 2) raised to the power Max_exp-1 is a representable,
+finite floating point number.  Floating types only. bzindex(max_exponent())
+
+bzindex(max_exponent10())
+bf(bzverb(\
+int   max_exponent10(T);
+))
+The maximum base-10 exponent (Max_exp10) is the maximum positive integer
+such that 10 raised to the power Max_exp10 is a representable,
+finite floating point number.  Floating types only. 
+
+bzindex(min_exponent())
+bf(bzverb(\
+int   min_exponent(T);
+))
+The minimum exponent (Min_exp) is the minimum negative integer
+such that the radix (read: 2) raised to the power Min_exp-1 is
+a bf(normalized) floating point number.  Floating types only. 
+
+bzindex(min_exponent10())
+bf(bzverb(\
+int   min_exponent10(T);
+))
+The minimum base-10 exponent (Min_exp10) is the minimum negative
+integer such that 10 raised to the power Min_exp10 is in the
+range of bf(normalized) floating point numbers. 
+
+bzindex(neghuge())
+bzindex(maximally negative value -- neghuge())
+bf(bzverb(\
+T     neghuge(T);
+))
+This returns the maximally negative value for a type.
+For integers, this is the same as min().  For floating-point
+types, it is tt(- huge(T())).
+
+bzindex(one())
+bf(bzverb(\
+T     one(T);
+))
+Returns a representation for "1".  
+
+bzindex(precision())
+bf(bzverb(\
+int   precision(T);
+))
+Same as tt(digits10()). 
+
+bzindex(quiet_NaN())
+bzindex(NaN -- quiet_NaN())
+bf(bzverb(\
+T     quiet_NaN(T) throw;
+))
+Returns the representation for a quiet (non-signalling) Not A Number
+(NaN), if available.  You should check availability using the
+tt(has_quiet_NaN(T)) function first.  
+
+bzindex(radix())
+bf(bzverb(\
+int   radix(T);
+))
+For floating-point types, this returns the radix (base) of the
+exponent.  For integers, it specifies the base of the representation.
+
+bzindex(range())
+bf(bzverb(\
+Range range(T);
+))
+Returns tt(Range(min_exponent10(T()), max_exponent10(T()))), i.e.
+the range of representable base-10 exponents.  
+
+bzindex(round_error())
+bf(bzverb(\
+T     round_error(T) throw;
+))
+Returns a measure of the maximum rounding error for floating-point types.  
+This will typically be tt(0.5). 
+
+bzindex(round_style())
+bf(bzverb(\
+std::float_round_style round_style(T);
+))
+Returns the current rounding style for floating-point arithmetic.
+The possibilities are: tt(round_indeterminate) (i.e. don't have a clue),
+tt(round_toward_zero), tt(round_to_nearest) (round to nearest
+representable value), tt(round_toward_infinity) (round toward
+positive infinity), and tt(round_neg_infinity) (round toward
+negative infinity).  
+
+bzindex(signalling_NaN())
+bf(bzverb(\
+T     signaling_NaN(T) throw;
+T     signalling_NaN(T) throw;    
+))
+Returns the representation for a signalling Not A Number (NaN),
+if available.  You should check availability by calling
+bzverb(has_signalling_NaN(T)) first.  
+
+bzindex(tiny())
+bzindex(minimum finite value -- tiny())
+bf(bzverb(\
+T     tiny(T);
+))
+For integer types, this returns the minimum finite value, which may be
+negative.  For floating types, it returns the minimum positive value.
+For floating types with denormalization, the function
+returns the minimum positive bf(normalized) value.  
+
+bzindex(tinyness_before())
+bf(bzverb(\
+T     tinyness_before(T);
+))
+True if tinyness is detected before rounding.  Other than this
+description, I don't have a clue what this means; anyone have
+a copy of IEC 559/IEEE 754 floating around? 
+
+bzindex(traps())
+bf(bzverb(\
+T     traps(T);
+))
+True if trapping is implemented for this type. 
+
+bzindex(zero())
+bf(bzverb(\
+T     zero(T);
+))
+Returns a representation for zero. 
+
+
