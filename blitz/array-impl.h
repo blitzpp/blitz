@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2001/02/11 22:10:55  tveldhui
+ * Fixed prototype typos
+ *
  * Revision 1.2  2001/02/11 15:43:39  tveldhui
  * Additions from Julian Cummings:
  *  - StridedDomain class
@@ -1106,6 +1109,8 @@ public:
     void                              resize(const TinyVector<int,N_rank>&);
  
 
+    void                              resizeAndPreserve(const TinyVector<int,
+                                                                   N_rank>&);
     void                              resizeAndPreserve(int extent);
     void                              resizeAndPreserve(int extent1, 
                                         int extent2);
@@ -1142,7 +1147,6 @@ public:
                                         int extent11);
 
     // NEEDS_WORK -- resizeAndPreserve(Range,...)
-    // NEEDS_WORK -- resizeAndPreserve(const TinyVector<int,N_rank>&);
     // NEEDS_WORK -- resizeAndPreserve(const Domain<N_rank>&);
 
     T_array                           reverse(int rank);
@@ -2376,6 +2380,8 @@ protected:
     _bz_inline2 void setupStorage(int rank);
     void constructSubarray(Array<T_numtype, N_rank>& array, 
         const RectDomain<N_rank>&);
+    void constructSubarray(Array<T_numtype, N_rank>& array,
+        const StridedDomain<N_rank>&);
     void constructSubarray(Array<T_numtype, N_rank>& array, Range r0);
     void constructSubarray(Array<T_numtype, N_rank>& array, Range r0, Range r1);
     void constructSubarray(Array<T_numtype, N_rank>& array, Range r0,
