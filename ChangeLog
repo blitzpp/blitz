@@ -1,4 +1,27 @@
 
+2003-01-14 Patrick Guio <patrick.guio@fys.uio.no>
+	* blitz/applics.h blitz/array-impl.h blitz/array-old.h blitz/array.h
+	blitz/bench.[cc,h] blitz/benchext.[cc,h] blitz/blitz.h blitz/bzdebug.h
+	blitz/compiler.h blitz/etbase.h blitz/extremum.h blitz/funcs.h
+	blitz/indexexpr.h blitz/limits-hack.h blitz/listinit.h blitz/matdiag.h
+	blitz/matexpr.h blitz/matgen.h blitz/mathf2.h blitz/matltri.h
+	blitz/matref.h blitz/matrix.[cc,h] blitz/matsymm.h blitz/mattoep.h
+	blitz/matutri.h blitz/memblock.[cc,h] blitz/minmax.h blitz/mstruct.h
+	blitz/numinquire.h blitz/numtrait.h blitz/ops.h blitz/prettyprint.h
+	blitz/promote.h blitz/rand-dunif.h blitz/rand-normal.h blitz/rand-tt800.h
+	blitz/rand-uniform.h blitz/random.h blitz/randref.h blitz/range.h
+	blitz/reduce.h blitz/shapecheck.h blitz/tau.h blitz/timer.h  blitz/tiny.h
+	blitz/tinymat.h blitz/tinymatexpr.h blitz/tinymatio.cc blitz/tinyvec-et.h
+	blitz/tinyvecio.cc blitz/tinyveciter.h blitz/traversal.cc traversal.h
+	blitz/tuning.h blitz/tvcross.h blitz/tvecglobs.h blitz/update.h
+	blitz/vecaccum.cc blitz/vecall.cc blitz/vecany.cc vecbops.cc
+	blitz/veccount.cc blitz/vecdelta.cc blitz/vecdot.cc blitz/vecexpr.h
+	blitz/vecexprwrap.h blitz/vecglobs.[cc,h] blitz/vecio.cc blitz/veciter.h
+	blitz/vecmax.cc blitz/vecmin.cc blitz/vecnorm.cc blitz/vecnorm1.cc
+	blitz/vecpick.[cc,h] blitz/vecpickio.cc blitz/vecpickiter.h
+	blitz/vecsum.cc blitz/vector-et.h blitz/vector.[cc,h] blitz/vecuops.cc
+	blitz/vecwhere.[cc,h] blitz/zero.[cc,h]: Removed the cvs log and added
+	them to the ChangeLog  
 
 2003-01-13 Patrick Guio <patrick.guio@fys.uio.no>
 	* benchmarks/acou3df2.f benchmarks/acou3df90.f90
@@ -174,7 +197,7 @@ Fri Oct 25 10:56:21 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* benchmarks/acou3df2.f: Removed some extraneous semicolons that were
 	inhibiting compilation of these Fortran sources with some compilers.
 
-Wed Oct  9 10:17:27 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
+2002-10-09 Patrick Guio <patrick.guio@fys.uio.no>
 	* src/Makefile.am: Moved library target libblitz.a into lib directory 
 	to avoid unecessary and not so clean target like making a copy into lib
 	directory
@@ -323,9 +346,15 @@ Wed Oct  9 10:17:27 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	tinyvec-et.h and funcs.h.
 	* blitz/Makefile.in: Rebuilt from Makefile.am to update
 	blitz_HEADERS.
+	* blitz/tinyvec-et.h: This is the new name for the TinyVec.h file, which
+	includes the TinyVector class implementation and ET support using the old
+	style expression templates.
 	* blitz/array.h: This file used to be called Array.h but has been
 	renamed to avoid name clashes on Windows-based systems.  This file
 	includes only the Array class implementation files.
+	* blitz/array-old.h: This is the new name for the old array.h header file
+	that included all of the Array, TinyVector and Vector stuff along with
+	Vector ET support. It is now deprecated.
 	* blitz/array/newet-macros.h: Renamed and reorganized new style
 	macros for declaring unary and binary functions/operators that act
 	on Array types.
@@ -474,7 +503,9 @@ Wed Oct  9 10:17:27 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* blitz/array/iter.h: Likewise.
 	* blitz/matrix.cc: Likewise.
 	* blitz/vector.cc: Likewise.
-	* blitz/memblock.h: Likewise.
+	* blitz/memblock.h: Likewise. Changed this->addReference() to
+	MemoryBlock<P_type>::addReference(). Use base class name as scoping
+	qualifier rather than "this" pointer.
 	* blitz/matrix.h: Likewise.
 	* blitz/vector.h: Likewise.
 
@@ -613,7 +644,7 @@ Wed Oct  9 10:17:27 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* INSTALL: Likewise
 
 2002-03-06 Patrick Guio <patrick.guio@fys.uio.no>
-	* ChangeLog: New file
+	* ChangeLog: New file.
 	* testsuite/mattias-lindstroem-1: Removed (executable)
 	* configure.in: updated with autoupdate (GNU autoconf) 2.49c, added support
 	for HP-UX aCC and Intel icc.
@@ -658,8 +689,7 @@ Wed Oct  9 10:17:27 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	everywhere for ANSI C++ correctness (14.6.2(3) in the C++ Standard)
 	* random/discrete-uniform.h: Likewise
 	* random/normal.h: getUniform() replaced by this->getUniform() 
-	* blitz/array-impl.h: 
-	data_ replaced by this->data_ everywhere,
+	* blitz/array-impl.h: data_ replaced by this->data_ everywhere,
 	changeToNullBlock() replaced by this->changeToNullBlock(),
 	class _bz_endTag replaced by struct _bz_endTag { } declaration
 	* blitz/array/resize.cc: for (d=0; d < N_rank; ++d) replaced by for (int
@@ -671,7 +701,7 @@ Wed Oct  9 10:17:27 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	removed struct _bz_endTag { }; declaration
 	* blitz/array/io.cc: Added typename (_bz_typename) qualifier to the
 	iterator and const_iterator of Array<T_numtype,N_rank>
-	* blitz/ops.h: os replaced by str in the BitwiseNot template
+	* blitz/ops.h: `os' replaced by `str' in the BitwiseNot template
 	* blitz/vector.h: data_ replaced by this->data_ everywhere
 	* blitz/array/slicing.cc: Likewise
 	* blitz/array/eval.cc: Likewise
@@ -720,7 +750,7 @@ Wed Oct  9 10:17:27 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* benchmarks/acou3d.cpp: Added #include <blitz/traversal.h> for call to
 	generateFastTraversalOrder function
 	* benchmarks/stencil.cpp: Likewise
-	* blitz/memblock.h: in the constructor
+	* blitz/memblock.h: In the constructor
 	MemoryBlock(size_t length, T_type* _bz_restrict data)
 	dataBlockAddress_ = data replaced by dataBlockAddress_ = 0
 	as it was before. (testsuite/extract does not crash then)
@@ -732,16 +762,34 @@ Wed Oct  9 10:17:27 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	Still a problem with the complex stencil, right now the statement
 	applyStencil(kinEnergy(),A,B); is commented
 
+2002-02-28 tveldhui
+	* blitz/memblock.h: Fixed extra semicolon problem with KCC.
+
 2001-02-22 tveldhui
 	* manual/blitz02.html: Fixed minor bug in docs.
+
+2001-02-15 tveldhui
+	* blitz/array-impl.h: Fixed typo.
+	* blitz/blitz.h: Fixed problem with BZ_THREADSAFE macros.
+
+2001-02-11 tveldhui
+	* blitz/array-impl.h: Fixed prototype typos
+	* blitz/blitz.h: Fixed minor typo.
 
 2001-02-11 Julian Cummings
     * blitz/array/domain.h, blitz/array/slicing.cc: Added StridedDomain class
 		and more versions of resizeAndPreserve.
 
+2001-02-04 tveldhui
+	* blitz/blitz.h blitz/memblock.h: Made memory block reference counting
+	(optionally) threadsafe when BZ_THREADSAFE is defined.  Currently uses
+	pthread mutex.  When compiling with gcc -pthread, _REENTRANT automatically
+	causes BZ_THREADSAFE to be enabled.
+
 2001-01-26 tveldhui
-    * blitz/array/eval.cc blitz/array/methods.cc examples/array.cpp: More
-		source code reorganization to reduce compile times.
+    * blitz/array/eval.cc blitz/array/methods.cc blitz/Array.h
+		examples/array.cpp blitz/benchext.cc blitz/range.h blitz/TinyVec.h
+		blitz/tuning.h: More source code reorganization to reduce compile times.
     * blitz/array/stencils.cc: Incorporated 1D stencil fix from Derrick Bass.
     * blitz/array/funcs.h, blitz/arrayuops.cc: Changed isnan to blitz_isnan,
 		to avoid conflicts with implementations that define isnan as a
@@ -769,7 +817,8 @@ Wed Oct  9 10:17:27 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 		blitz/array/cycle.cc blitz/array/io.cc blitz/array/misc.cc 
 		blitz/array/newbops.cc blitz/array/ops.cc blitz/array/reduce.cc 
 		blitz/array/resize.cc blitz/array/slicing.cc blitz/array/stencils.cc
-		blitz/tinyvec.cc: Ensured that source files have cvs logs.
+		blitz/tinyvec.cc blitz/etbase.h blitz/limits-hack.h blitz/mathf2.h
+		blitz/minmax.h blitz/traversal.cc: Ensured that source files have cvs logs.
  
 2001-01-24 tveldhui
     * Updated copyright date in headers.
@@ -780,8 +829,9 @@ Wed Oct  9 10:17:27 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 		all array and vector functionality (about 120000 lines of code).  
 		#include <blitz/Array.h> includes a minimal subset of Array functionality;
 		other features must be included explicitly.
-    * blitz/array/eval.cc: Reorganized #include orders to avoid including
-		the huge Vector e.t.  implementation when using Array.
+    * blitz/array/eval.cc blitz/Array.h blitz/blitz.h blitz/TinyVec.h
+		blitz/vecexpr.h blitz/vector.h: Reorganized #include orders to avoid
+		including the huge Vector e.t. implementation when using Array.
 
 2000-06-19 tveldhui
 	* manual/examples/storage.cpp: Initial source check-in; added files not
@@ -789,9 +839,19 @@ Wed Oct  9 10:17:27 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* manual/blitz02.html: Likewise
 	* blitz/generate/genarrbops.cpp blitz/generate/genvecbops.cpp: Initial 
 	source check-in; added files not usually released in thedistribution.
+	* blitz/vecuops.cc: Initial source check-in; added files not usually
+	released in the distribution.
 
 1999-01-25 allan@stokes.ca (Allan Stokes) www.stokes.ca
 	* random/mt.h: adapted to STL-like idiom 
+
+1998-12-06 tveldhui
+	* blitz/memblock.h: Prior to adding UnownedMemoryBlock.
+
+1998-06-15 tveldhui
+	* blitz/memblock.h: When a memory block is created from an existing block
+	of data, add an additional reference count so that makeUnique() will
+	create a copy of the data.
 
 1998-04-03 tveldhui
 	* compiler/bzconfig: Added command-line options, noninteractive mode
@@ -816,10 +876,28 @@ Wed Oct  9 10:17:27 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* examples/numinquire.cpp: Initial revision
 
 1997-02-28 tveldhui
-	* examples/qcd.cpp: Initial revision
+	* examples/qcd.cpp blitz/rand-tt800.h: Initial revision
+
+1997-01-24 tveldhui
+	* blitz/bench.h: Prior to rewrite of Bench class; in this version, Bench
+	contain each benchmark implementation.
+
+1997-01-23 tveldhui
+	* blitz/vecwhere.h: Initial revision
+
+1997-01-13 tveldhui
+	* blitz/numtrait.h blitz/vecglobs.h blitz/vecpick.h blitz/vecpickiter.h
+	blitz/zero.h: Initial revision.
+
+1996-11-11 tveldhui
+	* blitz/memblock.h blitz/range.h blitz/tuning.h: Initial revision.
 
 1996-11-01 tveldhui
 	* compiler/bzconfig: Added type promotion check; tidied up.
+
+1996-10-31 tveldhui
+	* blitz/matrix.h blitz/vector.h: Did away with multiple template parameters.
+	Only numeric type and structure parameters now.
 
 1996-04-16 todd
 	* compiler/bzconfig: Initial revision. All important features checked.
