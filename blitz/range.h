@@ -77,7 +77,7 @@ public:
     }
 #endif
 
-    _bz_explicit Range(int slicePosition)
+    explicit Range(int slicePosition)
     {
         first_ = slicePosition;
         last_ = slicePosition;
@@ -120,7 +120,7 @@ public:
     int stride() const
     { return stride_; }
 
-    _bz_bool isAscendingContiguous() const
+    bool isAscendingContiguous() const
     {
         return ((first_ < last_) && (stride_ == 1) || (first_ == last_));
     }
@@ -185,7 +185,7 @@ public:
            _bz_dynamicLengthCount = 0,
            _bz_staticLength = 0 };
 
-    _bz_bool _bz_hasFastAccess() const
+    bool _bz_hasFastAccess() const
     { return stride_ == 1; }
 
     T_numtype _bz_fastAccess(unsigned i) const

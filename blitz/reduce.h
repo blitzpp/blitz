@@ -41,7 +41,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_sourcetype, class P_resulttype = BZ_SUMTYPE(P_sourcetype)>
+template<typename P_sourcetype, typename P_resulttype = BZ_SUMTYPE(P_sourcetype)>
 class ReduceSum {
 
 public:
@@ -85,7 +85,7 @@ protected:
     T_resulttype sum_;
 };
 
-template<class P_sourcetype, class P_resulttype = BZ_FLOATTYPE(P_sourcetype)>
+template<typename P_sourcetype, typename P_resulttype = BZ_FLOATTYPE(P_sourcetype)>
 class ReduceMean {
 
 public:
@@ -135,7 +135,7 @@ protected:
     T_resulttype sum_;
 };
 
-template<class P_sourcetype>
+template<typename P_sourcetype>
 class ReduceMin {
 
 public:
@@ -183,7 +183,7 @@ protected:
     T_resulttype min_;
 };
 
-template<class P_sourcetype>
+template<typename P_sourcetype>
 class ReduceMax {
 
 public:
@@ -231,7 +231,7 @@ protected:
     T_resulttype max_;
 };
 
-template<class P_sourcetype>
+template<typename P_sourcetype>
 class ReduceMinIndex {
 
 public:
@@ -288,7 +288,7 @@ protected:
     int index_;
 };
 
-template<class P_sourcetype, int N>
+template<typename P_sourcetype, int N>
 class ReduceMinIndexVector {
 
 public:
@@ -351,7 +351,7 @@ protected:
     TinyVector<int,N> index_;
 };
 
-template<class P_sourcetype>
+template<typename P_sourcetype>
 class ReduceMaxIndex {
 
 public:
@@ -408,7 +408,7 @@ protected:
     int index_;
 };
 
-template<class P_sourcetype, int N_rank>
+template<typename P_sourcetype, int N_rank>
 class ReduceMaxIndexVector {
 
 public:
@@ -465,7 +465,7 @@ protected:
     TinyVector<int,N_rank> index_;
 };
 
-template<class P_sourcetype>
+template<typename P_sourcetype>
 class ReduceFirst {
 
 public:
@@ -521,7 +521,7 @@ protected:
     int index_;
 };
 
-template<class P_sourcetype>
+template<typename P_sourcetype>
 class ReduceLast {
 
 public:
@@ -577,7 +577,7 @@ protected:
     int index_;
 };
 
-template<class P_sourcetype, class P_resulttype = BZ_SUMTYPE(P_sourcetype)>
+template<typename P_sourcetype, typename P_resulttype = BZ_SUMTYPE(P_sourcetype)>
 class ReduceProduct {
 
 public:
@@ -621,7 +621,7 @@ protected:
     T_resulttype product_;
 };
 
-template<class P_sourcetype>
+template<typename P_sourcetype>
 class ReduceCount {
 
 public:
@@ -669,12 +669,12 @@ protected:
     T_resulttype count_;
 };
 
-template<class P_sourcetype>
+template<typename P_sourcetype>
 class ReduceAny {
 
 public:
     typedef P_sourcetype T_sourcetype;
-    typedef _bz_bool     T_resulttype;
+    typedef bool     T_resulttype;
     typedef T_resulttype T_numtype;
 
     enum { needIndex = 0, canProvideInitialValue = 0 };
@@ -691,7 +691,7 @@ public:
     {
         if (x)
         {
-            any_ = _bz_true;
+            any_ = true;
             return false;
         }
 
@@ -702,7 +702,7 @@ public:
     {
         if (x)
         {
-            any_ = _bz_true;
+            any_ = true;
             return false;
         }
 
@@ -713,7 +713,7 @@ public:
     { return any_; }
 
     void reset()
-    { any_ = _bz_false; }
+    { any_ = false; }
 
     void reset(T_resulttype)
     { 
@@ -728,12 +728,12 @@ protected:
     T_resulttype any_;
 };
 
-template<class P_sourcetype>
+template<typename P_sourcetype>
 class ReduceAll {
 
 public:
     typedef P_sourcetype T_sourcetype;
-    typedef _bz_bool     T_resulttype;
+    typedef bool     T_resulttype;
     typedef T_resulttype T_numtype;
 
     enum { needIndex = 0, canProvideInitialValue = 0 };
@@ -748,9 +748,9 @@ public:
 
     bool operator()(T_sourcetype x)
     {
-        if (!_bz_bool(x))
+        if (!bool(x))
         {
-            all_ = _bz_false;
+            all_ = false;
             return false;
         }
         else
@@ -759,9 +759,9 @@ public:
 
     bool operator()(T_sourcetype x, int)
     {
-        if (!_bz_bool(x))
+        if (!bool(x))
         {
-            all_ = _bz_false;
+            all_ = false;
             return false;
         }
         else
@@ -772,7 +772,7 @@ public:
     { return all_; }
 
     void reset()
-    { all_ = _bz_true; }
+    { all_ = true; }
 
     void reset(T_resulttype)
     {
