@@ -1,4 +1,5 @@
 Makefile
+Makefile.in
 *.lo
 *.la
 .deps
@@ -6,6 +7,7 @@ Makefile
 work.pc
 work.pcl
 cxx_repository
+ii_files
 acou3d
 acoustic
 daxpy
