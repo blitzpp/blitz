@@ -6,7 +6,6 @@ SUBDIRS = examples stencils doxygen
 
 # install these files
 docdir = $(prefix)/doc
-doc_DATA = blitz.ps 
 
 HERE=$(CURDIR)
 DVIPS=export TEXPICTS=$(srcdir); dvips
@@ -45,12 +44,12 @@ faq.texi help.texi install.texi legal.texi numinquire.texi parallel.texi \
 platforms.texi random.texi tau.texi tinymatrix.texi tinyvector.texi \
 tuning.texi copyright.texi $(STENCILS) $(EXAMPLES) $(OUTPUT)
 
-EXTRA_DIST = blitz.gif blitztiny.jpg \
-	indirect.eps indirect.fig indirect.gif indirect.txt \
-	sinsoid.eps sinsoid.gif sinsoid.txt \
-	slice.eps slice.fig slice.gif slice.txt \
-	strideslice.eps strideslice.fig strideslice.gif strideslice.txt \
-	tensor1.eps tensor1.fig tensor1.gif tensor1.txt
+EXTRA_DIST = blitz.ps blitz.gif blitztiny.jpg \
+	indirect.eps indirect.fig indirect.pdf indirect.gif indirect.txt \
+	sinsoid.eps sinsoid.pdf sinsoid.gif sinsoid.txt \
+	slice.eps slice.fig slice.pdf slice.gif slice.txt \
+	strideslice.eps strideslice.fig strideslice.pdf strideslice.gif strideslice.txt \
+	tensor1.eps tensor1.fig tensor1.pdf tensor1.gif tensor1.txt
 
 # Files from texi2dvi that should be removed, but which Automake does
 # not know.
