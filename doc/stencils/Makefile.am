@@ -4,7 +4,7 @@
 
 EXTRA_DIST = dump-stencil.cpp
 
-AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir)
+AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir) -I$(top_builddir)
 LDADD = -L$(top_builddir)/lib -lblitz -lm
 COMPILE = $(CXX) $(DEFS) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 
@@ -13,21 +13,21 @@ LTCXXCOMPILE = $(LIBTOOL) --mode=link $(CXX) $(DEFS) \
 
 %2D.texi :
 	$(LTCXXCOMPILE) "-Dstenciltoapply=$(patsubst %.texi,%,$@)(A)" \
-		-o $(patsubst %.cpp,%,$<) $< $(LDADD)
-	./$(patsubst %.cpp,%,$<) > $@  2>&1
-	-rm -f $(patsubst %.cpp,%,$<)
+		-o dump-stencil$(EXEEXT) $< $(LDADD)
+	./dump-stencil$(EXEEXT) > $@  2>&1
+	-rm -f dump-stencil$(EXEEXT)
 
 %2D4.texi :
 	$(LTCXXCOMPILE) "-Dstenciltoapply=$(patsubst %.texi,%,$@)(A)" \
-		-o $(patsubst %.cpp,%,$<) $< $(LDADD)
-	./$(patsubst %.cpp,%,$<) > $@  2>&1
-	-rm -f $(patsubst %.cpp,%,$<)
+		-o dump-stencil$(EXEEXT) $< $(LDADD)
+	./dump-stencil$(EXEEXT) > $@  2>&1
+	-rm -f dump-stencil$(EXEEXT)
 
 %.texi :
 	$(LTCXXCOMPILE) "-Dstenciltoapply=$(patsubst %.texi,%,$@)(A,1)" \
-		-o $(patsubst %.cpp,%,$<) $< $(LDADD)
-	./$(patsubst %.cpp,%,$<) > $@  2>&1
-	-rm -f $(patsubst %.cpp,%,$<)
+		-o dump-stencil$(EXEEXT) $< $(LDADD)
+	./dump-stencil$(EXEEXT) > $@  2>&1
+	-rm -f dump-stencil$(EXEEXT)
 
 central12.texi: dump-stencil.cpp
 central22.texi: dump-stencil.cpp
