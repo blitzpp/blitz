@@ -16,7 +16,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_expr>
+template<typename P_expr>
 inline
 BZ_SUMTYPE(_bz_typename P_expr::T_numtype)
 _bz_vec_sum(P_expr vector)
@@ -40,7 +40,7 @@ _bz_vec_sum(P_expr vector)
     return sum;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline
 BZ_SUMTYPE(P_numtype) sum(const Vector<P_numtype>& x)
 {
@@ -48,7 +48,7 @@ BZ_SUMTYPE(P_numtype) sum(const Vector<P_numtype>& x)
 }
 
 // sum(expr)
-template<class P_expr>
+template<typename P_expr>
 inline
 BZ_SUMTYPE(_bz_typename P_expr::T_numtype)
 sum(_bz_VecExpr<P_expr> expr)
@@ -57,7 +57,7 @@ sum(_bz_VecExpr<P_expr> expr)
 }
 
 // sum(vecpick)
-template<class P_numtype>
+template<typename P_numtype>
 inline
 BZ_SUMTYPE(P_numtype)
 sum(const VectorPick<P_numtype>& x)
@@ -66,7 +66,7 @@ sum(const VectorPick<P_numtype>& x)
 }
 
 // mean(vector)
-template<class P_numtype>
+template<typename P_numtype>
 inline
 BZ_FLOATTYPE(BZ_SUMTYPE(P_numtype)) mean(const Vector<P_numtype>& x)
 {
@@ -77,7 +77,7 @@ BZ_FLOATTYPE(BZ_SUMTYPE(P_numtype)) mean(const Vector<P_numtype>& x)
 }
 
 // mean(expr)
-template<class P_expr>
+template<typename P_expr>
 inline
 BZ_FLOATTYPE(BZ_SUMTYPE(_bz_typename P_expr::T_numtype))
 mean(_bz_VecExpr<P_expr> expr)
@@ -90,7 +90,7 @@ mean(_bz_VecExpr<P_expr> expr)
 }
 
 // mean(vecpick)
-template<class P_numtype>
+template<typename P_numtype>
 inline
 BZ_FLOATTYPE(BZ_SUMTYPE(P_numtype))
 mean(const VectorPick<P_numtype>& x)
