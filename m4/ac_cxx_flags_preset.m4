@@ -61,11 +61,9 @@ dnl			CXX_OPTIMIZE_FLAGS="-O3"
 		if test $cxx_version -eq "6" -a $cxx_release -lt "3" ; then
 			CXXFLAGS="-nocompress -std strict_ansi -DBZ_ENABLE_XOPEN_SOURCE -ieee"
 		else
-			CXXFLAGS="-nocompress -std strict_ansi -nopure_cname " \
-				"-DBZ_ENABLE_XOPEN_SOURCE -ieee"
+			CXXFLAGS="-nocompress -std strict_ansi -nopure_cname -DBZ_ENABLE_XOPEN_SOURCE -D_OSF_SOURCE -ieee"
 		fi
-		CXX_OPTIMIZE_FLAGS="-O3 -inline speed -fp_reorder -nocleanup " \
-			"-tune host -float -assume trusted_short_alignment"
+		CXX_OPTIMIZE_FLAGS="-O3 -inline speed -fp_reorder -nocleanup -tune host -float -assume trusted_short_alignment"
 		CXX_DEBUG_FLAGS="-g -msg_display_tag -DBZ_DEBUG"
 		CXX_PROFIL_FLAGS="-pg -g1"
 		AR="ar"
@@ -105,8 +103,7 @@ dnl			CXX_OPTIMIZE_FLAGS="-O3"
 		CXX_VENDOR="IBM Visual Age"
 		CXXFLAGS="-qrtti=all"
 dnl		CXX_OPTIMIZE_FLAGS="-O3 -qstrict -Q -qansialias"
-		CXX_OPTIMIZE_FLAGS="-O3 -qmaxmem=-1 -qalign=natural -qcache=auto " \
-			"-qansialias -qarch=auto -qtune=auto -qrtti=all"
+		CXX_OPTIMIZE_FLAGS="-O3 -qmaxmem=-1 -qalign=natural -qcache=auto -qansialias -qarch=auto -qtune=auto -qrtti=all"
 		CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
 		CXX_PROFIL_FLAGS="-p"
 	;;      
