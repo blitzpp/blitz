@@ -1,8 +1,12 @@
 Makefile
+Makefile.in
+*.o
+*.a
 *.lo
 *.la
 .deps
 .libs
 cxx_repository
+ii_files
 config.h
 
