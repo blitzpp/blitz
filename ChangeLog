@@ -1,3 +1,35 @@
+2002-06-27  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+	* testsuite/complex-test.cpp: Added some explicit casts to float
+	to eliminate precision loss warnings from implicit conversions of
+	double to float.  Changed abs() to fabs() for floating-point
+	arguments.  abs() is for ints or complex numbers, while fabs() is
+	for floating-point numbers.
+	* testsuite/chris-jeffery-1.cpp: Slight change to eliminate
+	precision loss warning from double/float conversion.
+	* blitz/array/storage.h: Use _bz_bool and _bz_true where
+	appropriate to avoid int/bool conversions.
+	* blitz/array/fastiter.h: Changed order of ctor initializers to
+	match order of member data declarations, eliminating warning from
+	gcc compiler.
+	* blitz/array/slicing.cc: Modified valid indexing check to avoid
+	casting to unsigned.
+	* blitz/shapecheck.h: Changed loop variable i to unsigned to avoid
+	unsigned/signed comparisons.
+	* blitz/array-impl.h: Modified the isInRange() methods to check
+	that each index value is greater than or equal to the base index
+	value, rather than just casting (index-base) to an unsigned int.
+	The latter gives unpredictable results if index<base and produces
+	compiler warnings about comparisons between unsigned and signed
+	quantities.
+	* blitz/tinyvec.h: Changed return type of lengthCheck() method
+	from int to _bz_bool.
+	* testsuite/extract.cpp: Undid previous change and went back to
+	using static const int data members instead of enums for red,
+	green and blue.  These have to be actual ints, or else the Array
+	operator[] does not work properly.  Need to investigate further
+	the link-time error that occurs with this test code when using
+	xlC.
+
 2002-06-26  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 	* configure: Rebuilt from configure.in.
 	* configure.in: Moved package and version arguments back to
