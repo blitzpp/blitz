@@ -1,0 +1,135 @@
+DEFINEMACRO(bzsect)(1)(\
+    SETCOUNTER(XXsubsectcounter)(0)\
+    SETCOUNTER(XXsubsubsectcounter)(0)\
+    ADDTOCOUNTER(XXsectcounter)(1)\
+    XXsetlastnumber(XXsetchapternum()COUNTERVALUE(XXsectcounter))\
+    whenlatex(latexcommand(\section{)ARG1+latexcommand(}))\
+    whenhtml(bztitlebar(XXlastnumber(): ARG1)\
+             XXtocentry(htmlcommand(<b>)XXlastnumber(): ARG1\
+                        htmlcommand(</b><br>)))\
+    whentxt(XXnl()\
+            XXlastnumber(): ARG1\
+            XXnl()\
+            XXtocentry(XXlastnumber(): ARG1))\
+    whenman(XXroffcmd(.SH)("XXlastnumber(): ARG1")()()\
+            XXtocentry(XXlastnumber(): ARG1)\
+            XXtocentry(NOTRANS(__TOCCOMMAND__ .br)))\
+    whenms(XXroffcmd(.SH)()(XXlastnumber(): ARG1)(.PP)\
+            XXtocentry(XXlastnumber(): ARG1)\
+            XXtocentry(NOTRANS(__TOCCOMMAND__ .br)))\
+    whensgml(sgmlcommand(<sect>)ARG1+sgmlcommand(<p>)))
+
+DEFINEMACRO(bzsubsect)(1)(\
+    SETCOUNTER(XXsubsubsectcounter)(0)\
+    ADDTOCOUNTER(XXsubsectcounter)(1)\
+    XXsetlastnumber(XXsetchapternum()COUNTERVALUE(XXsectcounter).\
+                    COUNTERVALUE(XXsubsectcounter))\
+    \
+    whenlatex(latexcommand(\subsection{)ARG1+latexcommand(}))\
+    whenhtml(bzsubtitlebar(XXlastnumber(): ARG1)\
+             XXtocentry(htmlcommand(<dd>)XXlastnumber(): ARG1\
+                        htmlcommand(<br>)))\
+    whentxt(XXnl()\
+            XXlastnumber(): ARG1\
+            XXnl()\
+            XXtocentry(XXlastnumber(): ARG1))\
+    whenman(XXroffcmd(.SH)("XXlastnumber(): ARG1")()()\
+            XXtocentry(XXlastnumber(): ARG1)\
+            XXtocentry(NOTRANS(__TOCCOMMAND__ .br)))\
+    whenms(XXroffcmd(.SH)()(XXlastnumber(): ARG1)(.PP)\
+            XXtocentry(XXlastnumber(): ARG1)\
+            XXtocentry(NOTRANS(__TOCCOMMAND__ .br)))\
+    whensgml(sgmlcommand(<sect1>)ARG1+sgmlcommand(<p>)))\
+
+DEFINEMACRO(bzsubsubsect)(1)(\
+    ADDTOCOUNTER(XXsubsubsectcounter)(1)\
+    XXsetlastnumber(XXsetchapternum()COUNTERVALUE(XXsectcounter).\
+                    COUNTERVALUE(XXsubsectcounter).\
+                    COUNTERVALUE(XXsubsubsectcounter))\
+    whenlatex(latexcommand(\subsubsection{)ARG1+latexcommand(}))\
+    whenhtml(XXnl()\
+             htmlcommand(<b>)XXlastnumber(): ARG1 htmlcommand(</b><br><br>)\
+             XXtocentry(htmlcommand(<dd><dd>)XXlastnumber(): ARG1\
+                 htmlcommand(<br>)))\    
+    whentxt(XXnl()\
+            XXlastnumber(): ARG1\
+            XXnl())\
+    whenman(XXroffcmd(.SH)("XXlastnumber(): ARG1")()()\
+            XXtocentry(XXlastnumber(): ARG1)\
+            XXtocentry(NOTRANS(__TOCCOMMAND__ .br)))\
+    whenms(XXroffcmd(.SH)()(XXlastnumber(): ARG1)(.PP)\
+           XXtocentry(XXlastnumber(): ARG1)\
+           XXtocentry(NOTRANS(__TOCCOMMAND__ .br)))\
+    whensgml(sgmlcommand(<sect2>)ARG1+sgmlcommand(<p>)))
+
+
+DEFINEMACRO(bzsubtitlebar)(1)(\
+       htmlcommand(<br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>)ARG1+htmlcommand(</font></td></tr></table>))
+
+DEFINEMACRO(bztitlebar)(1)(\
+       htmlcommand(<br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>)ARG1+htmlcommand(</font></td></tr></table><br>))
+
+DEFINEMACRO(bzexample)(1)(\
+    IFDEF(html)(\
+       htmlcommand(<center><table border cellpadding=20 align=top><tr><td bgcolor="C0C0C0">)verb(ARG1)+htmlcommand(</td></tr></table></center>))
+      (verb(ARG1)))
+
+DEFINEMACRO(bzexamplefile)(1)(\
+    IFDEF(html)(\
+       htmlcommand(<center><table border cellpadding=20 align=top><tr><td bgcolor="COCOCO">)verbinclude(ARG1)+htmlcommand(</td></tr></table></center>))
+      (verbinclude(ARG1)))
+
+setfigurestring(Figure)
+
+DEFINEMACRO(bzindex)(1)(\
+    whenlatex(latexcommand(\index{)ARG1+latexcommand(}))\
+    whenhtml(htmlcommand(<!-- BZINDEX )ARG1+htmlcommand( -->)))
+
+DEFINEMACRO(bzfaq)(1)(\
+    whenlatex(latexcommand(\noindent{\bf )ARG1+latexcommand(}))\
+    whenhtml(htmlcommand(<p><b>)ARG1+htmlcommand(</b></p>)))
+
+DEFINEMACRO(bzmath)(1)(\
+    IFDEF(latex)(\
+        latexcommand($)NOTRANS(ARG1)+latexcommand($))
+       (tt(ARG1)))
+
+DEFINEMACRO(bzverb)(1)(\
+    whenlatex(PUSHCHARTABLE()\
+              latexcommand(\begin{verbatim}) XXnl()\
+              NOEXPAND(ARG1) COMMENT(XXnl())\
+              latexcommand(\end{verbatim}) COMMENT(XXnl())\
+              latexcommand(\noindent)\
+              POPCHARTABLE())\
+    whenhtml(SETCOUNTER(XXparcounter)(0)\
+             htmlcommand(<pre>)\
+             COMMENT(XXnl())\
+             NOEXPAND(ARG1)\
+             COMMENT(XXnl())\
+             htmlcommand(</pre>)\
+             COMMENT(XXnl())\
+             SETCOUNTER(XXparcounter)(1))\
+    whenman(SETCOUNTER(XXparcounter)(0)\
+            XXinternallabel(endremoveblank)\
+            XXroffcmd(.DS)()()()\
+            NOEXPAND(ARG1)\
+            XXroffcmd(.DE)()()()\
+            XXinternallabel(startremoveblank)\
+            SETCOUNTER(XXparcounter)(1))\
+    whenms(SETCOUNTER(XXparcounter)(0)\
+           XXinternallabel(endremoveblank)\
+           mscommand(\f)+CHAR(40)CW
+           XXroffcmd(.DS)()()()\
+           NOEXPAND(ARG1)\
+           XXroffcmd(.DE)()()()\
+           mscommand(\fP)\
+           XXinternallabel(startremoveblank)\
+           SETCOUNTER(XXparcounter)(1))\
+    whentxt(NOEXPAND(ARG1))\
+    whensgml(PUSHCHARTABLE(list)\
+             sgmlcommand(<tscreen><verb>) XXnl()\
+             NOEXPAND(ARG1)\
+             XXnl()\
+             sgmlcommand(</verb></tscreen>)\
+             POPCHARTABLE()))
+
