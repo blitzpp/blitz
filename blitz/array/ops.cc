@@ -36,8 +36,7 @@ BZ_NAMESPACE(blitz)
  */
 
 template<typename P_numtype, int N_rank>
-inline Array<P_numtype, N_rank>& Array<P_numtype,N_rank>::initialize(
-    T_numtype x)
+Array<P_numtype, N_rank>& Array<P_numtype,N_rank>::initialize(T_numtype x)
 {
     (*this) = _bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
     return *this;
