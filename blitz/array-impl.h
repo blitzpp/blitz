@@ -2156,7 +2156,7 @@ public:
      */
 
     Array<typename multicomponent_traits<T_numtype>::T_element,N_rank>
-    operator[](const unsigned component) {
+    operator[](const int component) {
         typedef typename multicomponent_traits<T_numtype>::T_element T_compType;
 
         return extractComponent(T_compType(),component,
@@ -2164,7 +2164,7 @@ public:
     }
 
     const Array<typename multicomponent_traits<T_numtype>::T_element,N_rank>
-    operator[](const unsigned component) const {
+    operator[](const int component) const {
         typedef typename multicomponent_traits<T_numtype>::T_element T_compType;
 
         return extractComponent(T_compType(),component,
