@@ -39,7 +39,7 @@ BZ_NAMESPACE(blitz)
  *             - cross product involving expressions
  */
 
-template<class T_numtype>
+template<typename T_numtype>
 TinyVector<T_numtype,3> cross(const TinyVector<T_numtype,3>& x, 
     const TinyVector<T_numtype,3>& y)
 {
