@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.4  2003/01/06 14:42:17  papadop
+ * Load of ISO C++ changes (some are necessary for the future g++-3.4).
+ *
  * Revision 1.3  2002/06/28 23:59:49  jcumming
  * Files for generating Matrix operators and math functions.
  *
@@ -30,20 +33,20 @@
  */
 
 
-#include <fstream.h>
-#include <iomanip.h>
-#include <iostream.h>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
 
-class bzofstream : public ofstream {
+class bzofstream : public std::ofstream {
 
 public:
     bzofstream(const char* filename, const char* description,
         const char* sourceFile, const char* mnemonic)
-        : ofstream(filename)
+        : std::ofstream(filename)
     {
         (*this) << 
 "/***************************************************************************\n"
-" * blitz/" << filename << "\t" << description << endl <<
+" * blitz/" << filename << "\t" << description << std::endl <<
 " *\n"
 " * This program is free software; you can redistribute it and/or\n"
 " * modify it under the terms of the GNU General Public License\n"
@@ -64,28 +67,28 @@ public:
 " ***************************************************************************\n"
 " *\n"
 " */ " 
-       << endl << endl
-       << "// Generated source file.  Do not edit. " << endl
+       << std::endl << std::endl
+       << "// Generated source file.  Do not edit. " << std::endl
        << "// " << sourceFile << " " << __DATE__ << " " << __TIME__ 
-       << endl << endl
-       << "#ifndef " << mnemonic << endl
-       << "#define " << mnemonic << endl << endl;
+       << std::endl << std::endl
+       << "#ifndef " << mnemonic << std::endl
+       << "#define " << mnemonic << std::endl << std::endl;
     }
 
     void include(const char* filename)
     {
-        (*this) << "#include <blitz/" << filename << ">" << endl;
+        (*this) << "#include <blitz/" << filename << ">" << std::endl;
     }
 
     void beginNamespace()
     {
-        (*this) << "BZ_NAMESPACE(blitz)" << endl << endl;
+        (*this) << "BZ_NAMESPACE(blitz)" << std::endl << std::endl;
     }
 
     ~bzofstream()
     {
-        (*this) << "BZ_NAMESPACE_END" << endl << endl
-                << "#endif" << endl;
+        (*this) << "BZ_NAMESPACE_END" << std::endl << std::endl
+                << "#endif" << std::endl;
     }
 
 };
