@@ -38,23 +38,23 @@ public:
  #if (FLT_MANT_DIG > 128) && !defined(BZ_IGNORE_RNG_ERRORS)
   #error RNG code assumes float mantissa is <= 128 bits (not true for your platform).  Use -DBZ_IGNORE_RNG_ERRORS to ignore this warning.
  #endif
-        IRNG_int i1 = irng_.random();
-        IRNG_int i2 = irng_.random();
-        IRNG_int i3 = irng_.random();
-        IRNG_int i4 = irng_.random();
+        IRNG_int i1 = this->irng_.random();
+        IRNG_int i2 = this->irng_.random();
+        IRNG_int i3 = this->irng_.random();
+        IRNG_int i4 = this->irng_.random();
         return i1 * norm128open + i2 * norm96open + i3 * norm64open
             + i4 * norm32open;
 #elif FLT_MANT_DIG > 64
-        IRNG_int i1 = irng_.random();
-        IRNG_int i2 = irng_.random();
-        IRNG_int i3 = irng_.random();
+        IRNG_int i1 = this->irng_.random();
+        IRNG_int i2 = this->irng_.random();
+        IRNG_int i3 = this->irng_.random();
         return i1 * norm96open + i2 * norm64open + i3 * norm32open;
 #elif FLT_MANT_DIG > 32
-        IRNG_int i1 = irng_.random();
-        IRNG_int i2 = irng_.random();
+        IRNG_int i1 = this->irng_.random();
+        IRNG_int i2 = this->irng_.random();
         return i1 * norm64open + i2 * norm32open;
 #else
-        IRNG_int i1 = irng_.random();
+        IRNG_int i1 = this->irng_.random();
         return i1 * norm32open;
 #endif
     }    
@@ -77,23 +77,23 @@ public:
   #error RNG code assumes double mantissa is <= 128 bits (not true for your platform).  Use -DBZ_IGNORE_RNG_ERRORS to ignore this warning.
  #endif
 
-        IRNG_int i1 = irng_.random();
-        IRNG_int i2 = irng_.random();
-        IRNG_int i3 = irng_.random();
-        IRNG_int i4 = irng_.random();
+        IRNG_int i1 = this->irng_.random();
+        IRNG_int i2 = this->irng_.random();
+        IRNG_int i3 = this->irng_.random();
+        IRNG_int i4 = this->irng_.random();
         return i1 * norm128open + i2 * norm96open + i3 * norm64open
             + i4 * norm32open;
 #elif DBL_MANT_DIG > 64
-        IRNG_int i1 = irng_.random();
-        IRNG_int i2 = irng_.random();
-        IRNG_int i3 = irng_.random();
+        IRNG_int i1 = this->irng_.random();
+        IRNG_int i2 = this->irng_.random();
+        IRNG_int i3 = this->irng_.random();
         return i1 * norm96open + i2 * norm64open + i3 * norm32open;
 #elif DBL_MANT_DIG > 32
-        IRNG_int i1 = irng_.random();
-        IRNG_int i2 = irng_.random();
+        IRNG_int i1 = this->irng_.random();
+        IRNG_int i2 = this->irng_.random();
         return i1 * norm64open + i2 * norm32open;
 #else
-        IRNG_int i1 = irng_.random();
+        IRNG_int i1 = this->irng_.random();
         return i1 * norm32open;
 #endif
 
@@ -116,23 +116,23 @@ public:
   #error RNG code assumes long double mantissa is <= 128 bits (not true for your platform).  Use -DBZ_IGNORE_RNG_ERRORS to ignore this warning.  
 #endif
 
-        IRNG_int i1 = irng_.random();
-        IRNG_int i2 = irng_.random();
-        IRNG_int i3 = irng_.random();
-        IRNG_int i4 = irng_.random();
+        IRNG_int i1 = this->irng_.random();
+        IRNG_int i2 = this->irng_.random();
+        IRNG_int i3 = this->irng_.random();
+        IRNG_int i4 = this->irng_.random();
         return i1 * norm128open + i2 * norm96open + i3 * norm64open
             + i4 * norm32open;
 #elif LDBL_MANT_DIG > 64
-        IRNG_int i1 = irng_.random();
-        IRNG_int i2 = irng_.random();
-        IRNG_int i3 = irng_.random();
+        IRNG_int i1 = this->irng_.random();
+        IRNG_int i2 = this->irng_.random();
+        IRNG_int i3 = this->irng_.random();
         return i1 * norm96open + i2 * norm64open + i3 * norm32open;
 #elif LDBL_MANT_DIG > 32
-        IRNG_int i1 = irng_.random();
-        IRNG_int i2 = irng_.random();
+        IRNG_int i1 = this->irng_.random();
+        IRNG_int i2 = this->irng_.random();
         return i1 * norm64open + i2 * norm32open;
 #else
-        IRNG_int i1 = irng_.random();
+        IRNG_int i1 = this->irng_.random();
         return i1 * norm32open;
 #endif
     }
@@ -193,27 +193,27 @@ public:
  #if (FLT_MANT_DIG > 128) && !defined(BZ_IGNORE_RNG_ERRORS)
   #error RNG code assumes float mantissa is <= 128 bits (not true for your platform).  Use -DBZ_IGNORE_RNG_ERRORS to ignore this warning.
  #endif
-        IRNG_int i1 = irng_.random();
-        IRNG_int i2 = irng_.random();
-        IRNG_int i3 = irng_.random();
-        IRNG_int i4 = irng_.random();
+        IRNG_int i1 = this->irng_.random();
+        IRNG_int i2 = this->irng_.random();
+        IRNG_int i3 = this->irng_.random();
+        IRNG_int i4 = this->irng_.random();
 
         return i1 * norm128clos1 + i2 * norm128clos2
           + i3 * norm128clos3 + i4 * norm128clos4;
 #elif FLT_MANT_DIG > 64
-        IRNG_int i1 = irng_.random();
-        IRNG_int i2 = irng_.random();
-        IRNG_int i3 = irng_.random();
+        IRNG_int i1 = this->irng_.random();
+        IRNG_int i2 = this->irng_.random();
+        IRNG_int i3 = this->irng_.random();
 
         return i1 * norm96closed1 + i2 * norm96closed2
           + i3 * norm96closed3;
 #elif FLT_MANT_DIG > 32
-        IRNG_int i1 = irng_.random();
-        IRNG_int i2 = irng_.random();
+        IRNG_int i1 = this->irng_.random();
+        IRNG_int i2 = this->irng_.random();
 
         return i1 * norm64closed1 + i2 * norm64closed2;
 #else
-        IRNG_int i = irng_.random();
+        IRNG_int i = this->irng_.random();
         return i * norm32closed;
 #endif
 
@@ -235,27 +235,27 @@ public:
  #if (DBL_MANT_DIG > 128) && !defined(BZ_IGNORE_RNG_ERRORS)
   #error RNG code assumes double mantissa is <= 128 bits (not true for your platform).  Use -DBZ_IGNORE_RNG_ERRORS to ignore this warning.
  #endif
-        IRNG_int i1 = irng_.random();
-        IRNG_int i2 = irng_.random();
-        IRNG_int i3 = irng_.random();
-        IRNG_int i4 = irng_.random();
+        IRNG_int i1 = this->irng_.random();
+        IRNG_int i2 = this->irng_.random();
+        IRNG_int i3 = this->irng_.random();
+        IRNG_int i4 = this->irng_.random();
 
         return i1 * norm128clos1 + i2 * norm128clos2
           + i3 * norm128clos3 + i4 * norm128clos4;
 #elif DBL_MANT_DIG > 64
-        IRNG_int i1 = irng_.random();
-        IRNG_int i2 = irng_.random();
-        IRNG_int i3 = irng_.random();
+        IRNG_int i1 = this->irng_.random();
+        IRNG_int i2 = this->irng_.random();
+        IRNG_int i3 = this->irng_.random();
 
         return i1 * norm96closed1 + i2 * norm96closed2
           + i3 * norm96closed3;
 #elif DBL_MANT_DIG > 32
-        IRNG_int i1 = irng_.random();
-        IRNG_int i2 = irng_.random();
+        IRNG_int i1 = this->irng_.random();
+        IRNG_int i2 = this->irng_.random();
 
         return i1 * norm64closed1 + i2 * norm64closed2;
 #else
-        IRNG_int i = irng_.random();
+        IRNG_int i = this->irng_.random();
         return i * norm32closed;
 #endif
 
@@ -278,27 +278,27 @@ public:
  #if (LDBL_MANT_DIG > 128) && !defined(BZ_IGNORE_RNG_ERRORS)
   #error RNG code assumes long double mantissa is <= 128 bits (not true for your platform).  Use -DBZ_IGNORE_RNG_ERRORS to ignore this warning.
  #endif
-        IRNG_int i1 = irng_.random();
-        IRNG_int i2 = irng_.random();
-        IRNG_int i3 = irng_.random();
-        IRNG_int i4 = irng_.random();
+        IRNG_int i1 = this->irng_.random();
+        IRNG_int i2 = this->irng_.random();
+        IRNG_int i3 = this->irng_.random();
+        IRNG_int i4 = this->irng_.random();
 
         return i1 * norm128clos1 + i2 * norm128clos2 
           + i3 * norm128clos3 + i4 * norm128clos4;
 #elif LDBL_MANT_DIG > 64
-        IRNG_int i1 = irng_.random();
-        IRNG_int i2 = irng_.random();
-        IRNG_int i3 = irng_.random();
+        IRNG_int i1 = this->irng_.random();
+        IRNG_int i2 = this->irng_.random();
+        IRNG_int i3 = this->irng_.random();
 
         return i1 * norm96closed1 + i2 * norm96closed2
           + i3 * norm96closed3;
 #elif LDBL_MANT_DIG > 32
-        IRNG_int i1 = irng_.random();
-        IRNG_int i2 = irng_.random();
+        IRNG_int i1 = this->irng_.random();
+        IRNG_int i2 = this->irng_.random();
 
         return i1 * norm64closed1 + i2 * norm64closed2;
 #else
-        IRNG_int i = irng_.random();
+        IRNG_int i = this->irng_.random();
         return i * norm32closed;
 #endif
     }
