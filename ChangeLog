@@ -1,3 +1,8 @@
+
+
+Sat Dec 21 15:55:33 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* benchmarks/daxpy.cpp: prefer new C++ cast to old C style cast
+
 2002-12-19  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 	* blitz/meta/vecassign.h: Removed names of function arguments in
 	the static methods of the _bz_meta_vecAssign<0,0> specialization
