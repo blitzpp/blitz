@@ -76,7 +76,7 @@ ctime2v ctime3v ctime4v ctime5v
 
 EXTRA_PROGRAMS = $(BENCHMARKS)
 
-compile: $(EXTRA_PROGRAMS) 
+#compile: $(EXTRA_PROGRAMS) 
 
 run:	$(OTHER_BENCH)
 	@for benchmark in $(OTHER_BENCH) ; do \
