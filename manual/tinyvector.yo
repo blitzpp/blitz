@@ -1,0 +1,161 @@
+
+bzindex(TinyVector)
+
+The tt(TinyVector) class provides a small, lightweight vector
+object whose size is known at compile time.  It is included
+via the header tt(<blitz/tinyvec.h>).  
+
+Note that tt(TinyVector) lives in the tt(blitz) namespace,
+so you will need to refer to it as tt(blitz::TinyVector),
+or use the directive tt(using namespace blitz;).
+
+The Blitz++ tt(Array) object uses tt(TinyVector) internally, so
+if you include tt(<blitz/array.h>), the TinyVector
+header is automatically included.
+
+bzsect(Template parameters and types)
+
+The tt(TinyVector<T,N>) class has two template parameters:
+
+startdit()
+
+dit(tt(T)) is the numeric type of the vector (float, double, int,
+   tt(complex<float>), etc.;
+
+dit(tt(N)) is the number of elements in the vector.
+
+enddit()
+
+Inside the tt(TinyVector) class, these types are declared:
+
+startdit()
+
+dit(tt(T_numtype)) is the numeric type stored in the vector (the
+template parameter tt(T))
+
+dit(tt(T_vector)) is the vector type tt(TinyVector<T,N>).
+
+dit(tt(iterator)) is an STL-style iterator.
+
+dit(tt(constIterator)) is an STL-style const iterator.
+
+enddit()
+
+bzsect(Constructors)
+
+bf(bzverb(\
+TinyVector();
+))
+The elements of the vector are left uninitialized.
+
+bf(bzverb(\
+TinyVector(const TinyVector<T,N>& x);
+))
+The elements of vector tt(x) are copied.
+
+bf(bzverb(\
+TinyVector(T value);
+))
+All elements are initialized to tt(value).
+
+bf(bzverb(\
+TinyVector(T value1, T value2, ...)
+))
+The vector is initialized with the list of values given.
+These constructors are provided for up to N=11.
+
+bzsect(Member functions)
+
+bf(bzverb(\
+TinyVector<T,N>::iterator                   begin();
+TinyVector<T,N>::const_iterator             begin() const;
+))
+Returns an STL-style iterator for the vector, positioned
+at the beginning of the data.
+
+bf(bzverb(\
+TinyVector<T,N>::iterator                   end();
+TinyVector<T,N>::const_iterator             end() const;
+))
+Returns an STL-style iterator for the vector, positioned
+at the end of the data.
+
+bf(bzverb(\
+T_numtype* [restrict]       data();
+const T_numtype* [restrict] data() const;
+))
+Returns a pointer to the first element in the vector.
+
+bf(bzverb(\
+int                     length() const;
+))
+Returns the length of the vector (the template parameter tt(N)).
+
+bf(bzverb(\
+T_numtype               operator()(int i) const;
+T_numtype&              operator()(int i);
+T_numtype               operator[](int i) const;
+T_numtype&              operator[](int i);
+))
+Returns the tt(i)th element of the vector.  If the
+code is compiled with debugging enabled (tt(-DBZ_DEBUG)),
+bounds checking is performed.
+
+bzsect(Assignment operators)
+
+The assignment operators =, +=, -=, *=, /=, %=, ^=, &=, |=, >>= and <<=
+are all provided.  The right hand side of an assignment may be a
+scalar of type tt(T_numtype), a tt(TinyVector) of any type but the
+same size, or a vector expression.
+
+bzsect(Expressions)
+
+Expressions involving tiny vectors may contain any combination
+of the operators
+
+tt(+ - * / % ^ & | >> <<)
+
+with operands of type TinyVector, scalar, or vector expressions.
+The usual math functions (see the Array documentation) are supported
+on TinyVector.
+
+bzsect(Global functions)
+
+bf(bzverb(\
+dot(TinyVector, TinyVector);
+dot(vector-expr, TinyVector);
+dot(TinyVector, vector-expr);
+dot(vector-expr, vector-expr);
+))
+These functions calculate a dot product between TinyVectors
+(or vector expressions).  The result is a scalar; the type
+of the scalar follows the usual type promotion rules.
+
+bf(bzverb(\
+product(TinyVector);
+))
+Returns the product of all the elements in the vector.
+
+bf(bzverb(\
+sum(TinyVector);
+))
+Returns the sum of the elements in the vector.
+
+bf(bzverb(\
+TinyVector<T,3> cross(TinyVector<T,3> x, TinyVector<T,3> y);
+))
+Returns the cross product of tt(x) and tt(y).
+
+bzsect(Arrays of TinyVector)
+
+bzsect(Input/output)
+
+bf(bzverb(\
+ostream& operator<<(ostream&, const TinyVector<T,N>& x)
+))
+This function outputs a TinyVector onto a stream.  Here's
+an illustration of the format for a length 3 vector:
+
+bf(bzverb(\
+[        0.5       0.2       0.9 ]
+))
