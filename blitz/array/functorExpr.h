@@ -337,7 +337,8 @@ public:
     {
         int stride1 = iter1_.suggestStride(rank);
         int stride2 = iter2_.suggestStride(rank);
-        return minmax::max(stride1, stride2);
+        return (stride1>stride2?stride1:stride2);
+        //return minmax::max(stride1, stride2);
     }
   
     _bz_bool isStride(int rank, int stride) const
@@ -526,7 +527,8 @@ public:
         int stride1 = iter1_.suggestStride(rank);
         int stride2 = iter2_.suggestStride(rank);
         int stride3 = iter3_.suggestStride(rank);
-        return minmax::max(stride1, minmax::max(stride2, stride3));
+	return stride1>(stride2=(stride2>stride3?stride2:stride3))?stride1:stride2;
+        //return minmax::max(stride1, minmax::max(stride2, stride3));
     }
   
     _bz_bool isStride(int rank, int stride) const
