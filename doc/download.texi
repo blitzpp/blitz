@@ -1,0 +1,9 @@
+
+@node download
+@section How to download Blitz++
+
+To download the Blitz++ library, go to the Blitz++ download page, at
+@uref{http://oonumerics.org/blitz/download/}
+
+But please read the section on supported platforms and compilers first.
+

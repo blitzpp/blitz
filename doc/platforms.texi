@@ -1,0 +1,97 @@
+
+@node platforms
+@section Platform notes
+
+For up-to-date information on supported platforms, please consult
+the Blitz++ web page:
+
+@uref{http://oonumerics.org/blitz/platforms/}
+
+The information in this document may be out of date.
+
+@subsection KAI C++ 
+@cindex KAI C++
+
+Blitz++ was developed and tested using KAI C++ under AIX.  It should (in
+theory) port to other KAI C++ platforms (Cray, SGI, HP, Sun, Linux, DEC)
+without difficulty.  Since KAI C++ uses an EDG front end, other EDG
+front-ended compilers (e.g. Comeau) should be able to compile Blitz++.
+
+Recommended compile flags are:
+
+@example
++K3 -O2 --restrict --abstract_pointer --abstract_float -tused
+@end example
+
+Note that you cannot compile with @code{-tall} (this will generate lots of
+errors).
+
+Under Linux, you may need the flag @code{-D__signed__=}.  You should omit
+@code{-tused} since this template instantiation model is not supported by
+@code{gcc}, which is used as the back-end compiler.
+
+@subsection Intel C++
+@cindex Intel C++
+
+Intel has a drop-in compiler based on the EDG front end.  It used to compile
+Blitz++, but since that time I've made use of some language features it
+doesn't support.  However, there is a new beta version out (3.0) which may
+be able to compile Blitz++.  Allan Stokes is working on this.
+
+More information:
+
+@uref{http://developer.intel.com/design/perftool/icl24/}
+
+@uref{http://developer.intel.com/design/perftool/icl24/icl24wht.htm}
+
+@subsection gcc
+@cindex gcc
+
+GCC (@code{g++}) is a free @acronym{GNU} C++ compiler.  It compiles Blitz++
+reliably, in fact most Blitz++ development work is done with @code{g++}.
+
+gcc may be downloaded from @uref{http://gcc.cygnus.com/}.
+
+If you are using gcc under Solaris, SunOS, or OSF/1, please see the
+@file{README.binutils} file included in the distribution.
+
+@subsection Metrowerks
+@cindex Metrowerks
+
+Metroworks is sort-of supported; see the platforms web page and the mailing
+lists for more information.
+
+@subsection DEC cxx
+@cindex DEC cxx
+
+The Digital C++ compiler is supported.
+
+@subsection Cray T3E/Cray T90/Cray C90/Cray J90
+@cindex Cray compiler
+
+As of Version 0.2-alpha-02 of Blitz++, Version 3.0.0.0 of the Cray C++
+compiler is supported (well, tolerated anyway).  It seems to be based on an
+older version of the EDG front end, so some kludges are required.  It
+doesn't support partial ordering of member templates, so slicing arrays
+requires the workaround described in Section @ref{Slicing combo}.  Portions
+of the standard library are missing, such as @code{<limits>},
+@code{<complex>}, and @code{<set>}.  This means you won't be able to use
+complex numbers (well, not the ISO/ANSI C++ versions anyway), numeric
+inquiry functions, or fast traversal orders.
+
+These compilation flags are recommended:
+
+@example
+-h instantiate=used
+@end example
+
+For optimization, you'll want:
+
+@example
+-O3 -h aggress
+@end example
+
+The ability of the Cray C++ compiler to optimize away temporary objects is
+disappointing.  It's not able to optimize away expression templates overhead
+or comma-delimited array initializers.
+
