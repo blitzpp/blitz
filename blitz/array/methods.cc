@@ -209,7 +209,8 @@ void Array<P_numtype, N_rank>::reference(const Array<P_numtype, N_rank>& array)
     MemoryBlockReference<P_numtype>::changeBlock(array.noConst(),
         array.zeroOffset_);
 
-    data_ = const_cast<P_numtype*>(array.data_);
+    // JCC: changeBlock() already resets the data_ pointer to zeroth element
+    // data_ = const_cast<P_numtype*>(array.data_);
 }
 
 /*
