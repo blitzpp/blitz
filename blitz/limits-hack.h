@@ -1,5 +1,9 @@
 /*
  * Severely hacked-up version of SGI/libstdc++ limits, for use with Blitz.
+ * $Log$
+ * Revision 1.2  2001/01/25 00:25:54  tveldhui
+ * Ensured that source files have cvs logs.
+ *
  */
 
 /*

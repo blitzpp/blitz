@@ -21,6 +21,12 @@
  *    http://oonumerics.org/blitz/
  *
  ***************************************************************************
+ * $Id$
+ *
+ * $Log$
+ * Revision 1.3  2001/01/25 00:25:55  tveldhui
+ * Ensured that source files have cvs logs.
+ *
  */
 
 #ifndef BZ_PROMOTE_H
