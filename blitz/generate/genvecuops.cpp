@@ -4,7 +4,7 @@
 #include "bzfstream.h"
 #include "optuple.h"
 
-const int ieeeflag = 1, bsdflag = 2;
+const int ieeeflag = 1, bsdflag = 2, cmplxflag = 3;
 
 bzofstream ofs("../vecuops.cc", 
     "Expression templates for vectors, unary functions",
@@ -24,6 +24,8 @@ void one(const char* fname, int flag=0, const char* apname = 0)
         ofs << "#ifdef BZ_HAVE_IEEE_MATH" << std::endl;
     else if (flag == bsdflag)
         ofs << "#ifdef BZ_HAVE_SYSTEM_V_MATH" << std::endl;
+    else if (flag == cmplxflag)
+        ofs << "#ifdef BZ_HAVE_COMPLEX_MATH" << std::endl;
 
     OperandTuple operands(1);
 
@@ -70,6 +72,8 @@ void two(const char* fname, int flag=0, const char* apname = 0)
         ofs << "#ifdef BZ_HAVE_IEEE_MATH" << std::endl;
     else if (flag == bsdflag)
         ofs << "#ifdef BZ_HAVE_SYSTEM_V_MATH" << std::endl;
+    else if (flag == cmplxflag)
+        ofs << "#ifdef BZ_HAVE_COMPLEX_MATH" << std::endl;
 
     OperandTuple operands(2);
 
@@ -128,6 +132,7 @@ ofs <<
     one("_class", bsdflag);
     one("cbrt", ieeeflag);
     one("ceil");
+    one("conj", cmplxflag);
     two("copysign", bsdflag);
     one("cos");
     one("cosh");
