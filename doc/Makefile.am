@@ -5,7 +5,7 @@
 SUBDIRS = examples stencils doxygen
 
 # install these files
-docdir = $(prefix)/doc
+docdir = $(prefix)/doc/blitz
 doc_DATA = blitz.ps blitz.pdf blitz.html \
 	blitz_abt.html blitz_fot.html blitz_ovr.html blitz_toc.html \
 	blitz_1.html blitz_2.html blitz_3.html blitz_4.html blitz_5.html \
