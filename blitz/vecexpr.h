@@ -221,6 +221,16 @@ private:
     T_numtype value_;
 };
 
+BZ_NAMESPACE_END
+
+
+#ifndef BZ_TINYVEC_H
+ #include <blitz/tinyvec.h>
+#endif
+
+
+BZ_NAMESPACE(blitz)
+
 // Some miscellaneous operators that don't seem to belong anywhere else.
 
 template<class P_expr>
@@ -279,11 +289,6 @@ operator-(const TinyVector<P_numtype,N_length>& a)
     return _bz_VecExpr<T_expr>(T_expr(a.begin()));
 }
 
-
 BZ_NAMESPACE_END
-
-#ifndef BZ_TINYVEC_H
- #include <blitz/tinyvec.h>
-#endif
 
 #endif // BZ_VECEXPR_H
