@@ -167,6 +167,31 @@ public:
     { return x << y; }
 };
 
+
+template<class P_numtype1, class P_numtype2>
+class _bz_Min : public TwoOperandApplicativeTemplatesBase {
+public:
+    typedef P_numtype1 T_numtype1;
+    typedef P_numtype2 T_numtype2;
+    typedef BZ_PROMOTE(T_numtype1,T_numtype2) T_promote;
+    typedef T_promote  T_numtype;
+
+    static inline T_promote apply(P_numtype1 x, P_numtype2 y)
+    { return (x < y ? x : y); }
+};
+
+template<class P_numtype1, class P_numtype2>
+class _bz_Max : public TwoOperandApplicativeTemplatesBase {
+public:
+    typedef P_numtype1 T_numtype1;
+    typedef P_numtype2 T_numtype2;
+    typedef BZ_PROMOTE(T_numtype1,T_numtype2) T_promote;
+    typedef T_promote  T_numtype;
+
+    static inline T_promote apply(P_numtype1 x, P_numtype2 y)
+    { return (x > y ? x : y); }
+};
+
 template<class P_numtype1, class P_numtype2>
 class _bz_Greater : public TwoOperandApplicativeTemplatesBase {
 public:
@@ -263,6 +288,7 @@ public:
     { return x || y; }
 };
 
+
 template<class P_numtype_in, class P_numtype_out>
 class _bz_Cast : public OneOperandApplicativeTemplatesBase {
 public:
@@ -295,6 +321,8 @@ public:
     static inline P_numtype apply(P_numtype x)
     { return ~x; }
 };
+
+
 
 /*****************************************************************************
  * Math Functions
