@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/array/zip.h  "zip" scalar arrays into a multicomponent array expr
  *
@@ -50,16 +51,20 @@ struct Zip2 {
 };
 
 template<typename T_component, typename T1, typename T2>
-inline _bz_ArrayExpr<_bz_ArrayExprOp<_bz_typename asExpr<T1>::T_expr, 
-    _bz_typename asExpr<T2>::T_expr, Zip2<T_component, 
-    _bz_typename asExpr<T1>::T_expr::T_numtype,
-    _bz_typename asExpr<T2>::T_expr::T_numtype> > >
+inline _bz_ArrayExpr<_bz_ArrayExprBinaryOp<
+    _bz_typename asExpr<T1>::T_expr, 
+    _bz_typename asExpr<T2>::T_expr, 
+    Zip2<T_component, 
+         _bz_typename asExpr<T1>::T_expr::T_numtype,
+         _bz_typename asExpr<T2>::T_expr::T_numtype> > >
 zip(const T1& a, const T2& b, T_component)
 {
-    return _bz_ArrayExpr<_bz_ArrayExprOp<_bz_typename asExpr<T1>::T_expr,
-        _bz_typename asExpr<T2>::T_expr, Zip2<T_component, 
-        _bz_typename asExpr<T1>::T_expr::T_numtype,
-        _bz_typename asExpr<T2>::T_expr::T_numtype> > >(a,b);
+    return _bz_ArrayExpr<_bz_ArrayExprBinaryOp<
+        _bz_typename asExpr<T1>::T_expr,
+        _bz_typename asExpr<T2>::T_expr, 
+        Zip2<T_component, 
+             _bz_typename asExpr<T1>::T_expr::T_numtype,
+             _bz_typename asExpr<T2>::T_expr::T_numtype> > >(a,b);
 }
 
 BZ_NAMESPACE_END
