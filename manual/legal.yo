@@ -1,22 +1,13 @@
 
 bzindex(license terms)
 
-The Blitz++ library is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+The Blitz++ library is licensed under both the GPL and the more permissive
+"Blitz++ Artistic License".  Take your pick.  They are detailed in GPL
+and LICENSE, respectively.  The artistic license is more appropriate for
+commercial use, since it lacks the "viral" properties of the GPL.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
-
-Caveat: The library and the techniques behind are still experimental;
-please be patient.
-
-
-bf(Note:) numerous people have expressed concern about the GPL
-and its incompatibility with commercial software development.
-The licensing terms will be changed in a future release to
-be more friendly to commercial developers.
 
