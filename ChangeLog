@@ -1,4 +1,9 @@
 
+
+2004-04-25  Patrick Guio <patrick.guio@fys.uio.no>
+
+	* m4/ac_cxx_flags_preset.m4: Fixed initialisation and test of ac_cxx_flags_preset variable.
+
 2004-04-17  Patrick Guio <patrick.guio@fys.uio.no>
 
 	* m4/ax_dirname.m4 m4/ax_create_pkgconfig_info.m4: New files. Macros to generate
