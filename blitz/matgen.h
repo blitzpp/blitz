@@ -71,23 +71,16 @@ public:
         good_ = true;
     }
 
-    unsigned offset() const
-    { return offset_; }
-
-    operator _bz_bool() const
-    { return good_; }
-   
-    unsigned row() const
-    { return i_; }
-
-    unsigned col() const
-    { return j_; }
+    unsigned offset() const { return offset_; }
+    operator bool()   const { return good_; }
+    unsigned row()    const { return i_; }
+    unsigned col()    const { return j_; }
  
 protected:
     unsigned rows_, cols_;
     unsigned offset_;
     unsigned i_, j_;
-    _bz_bool good_;
+    bool     good_;
 };
 
 class RowMajorIterator : public GeneralIterator {
@@ -127,16 +120,16 @@ public:
         return i*cols_+j;
     }
 
-    template<class T_numtype>
-    T_numtype get(const T_numtype * _bz_restrict data,
+    template<typename T_numtype>
+    T_numtype get(const T_numtype * restrict data,
         unsigned i, unsigned j) const
     {
         BZPRECONDITION(inRange(i,j));
         return data[coordToOffset(i,j)];
     }
 
-    template<class T_numtype>
-    T_numtype& get(T_numtype * _bz_restrict data, unsigned i, unsigned j)
+    template<typename T_numtype>
+    T_numtype& get(T_numtype * restrict data, unsigned i, unsigned j)
     {
         BZPRECONDITION(inRange(i,j));
         return data[coordToOffset(i,j)];
@@ -179,16 +172,16 @@ public:
         return j*rows_ + i;
     }
 
-    template<class T_numtype>
-    T_numtype get(const T_numtype * _bz_restrict data,
+    template<typename T_numtype>
+    T_numtype get(const T_numtype * restrict data,
         unsigned i, unsigned j) const
     {
         BZPRECONDITION(inRange(i,j));
         return data[coordToOffset(i,j)];
     }
 
-    template<class T_numtype>
-    T_numtype& get(T_numtype * _bz_restrict data, unsigned i, unsigned j)
+    template<typename T_numtype>
+    T_numtype& get(T_numtype * restrict data, unsigned i, unsigned j)
     {
         BZPRECONDITION(inRange(i,j));
         return data[coordToOffset(i,j)];

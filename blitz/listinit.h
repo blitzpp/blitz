@@ -38,7 +38,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class T_numtype, class T_iterator>
+template<typename T_numtype, typename T_iterator>
 class ListInitializer {
 
 public:
@@ -60,7 +60,7 @@ protected:
     T_iterator iter_;
 };
 
-template<class T_array, class T_iterator = _bz_typename T_array::T_numtype*>
+template<typename T_array, typename T_iterator = _bz_typename T_array::T_numtype*>
 class ListInitializationSwitch {
 
 public:
@@ -68,13 +68,13 @@ public:
 
     ListInitializationSwitch(const ListInitializationSwitch<T_array>& lis)
         : array_(lis.array_), value_(lis.value_), 
-          wipeOnDestruct_(_bz_true)
+          wipeOnDestruct_(true)
     {
         lis.disable();
     }
 
     ListInitializationSwitch(T_array& array, T_numtype value)
-        : array_(array), value_(value), wipeOnDestruct_(_bz_true)
+        : array_(array), value_(value), wipeOnDestruct_(true)
     { }
 
     ~ListInitializationSwitch()
@@ -85,7 +85,7 @@ public:
 
     ListInitializer<T_numtype, T_iterator> operator,(T_numtype x)
     {
-        wipeOnDestruct_ = _bz_false;
+        wipeOnDestruct_ = false;
         T_iterator iter = array_.getInitializationIterator();
         *iter = value_;
         T_iterator iter2 = iter + 1;
@@ -95,7 +95,7 @@ public:
 
     void disable() const
     {
-        wipeOnDestruct_ = _bz_false;
+        wipeOnDestruct_ = false;
     }
 
 private:
@@ -104,7 +104,7 @@ private:
 protected:
     T_array& array_;
     T_numtype value_;
-    mutable _bz_bool wipeOnDestruct_;
+    mutable bool wipeOnDestruct_;
 };
 
 BZ_NAMESPACE_END

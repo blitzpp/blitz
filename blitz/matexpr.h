@@ -38,7 +38,7 @@ BZ_NAMESPACE(blitz)
 // graphical class browsers.  
 class BlitzMatrixExpressionsBase { };
 
-template<class P_expr>
+template<typename P_expr>
 class _bz_MatExpr : public BlitzMatrixExpressionsBase {
 
 public:
@@ -68,7 +68,7 @@ private:
     T_expr iter_;
 };
 
-template<class P_expr1, class P_expr2, class P_op>
+template<typename P_expr1, typename P_expr2, typename P_op>
 class _bz_MatExprOp : public BlitzMatrixExpressionsBase {
 
 public:
@@ -111,7 +111,7 @@ private:
     T_expr2 iter2_;
 };
 
-template<class P_expr, class P_unaryOp>
+template<typename P_expr, typename P_unaryOp>
 class _bz_MatExprUnaryOp : public BlitzMatrixExpressionsBase {
 
 public:
@@ -142,7 +142,7 @@ private:
     T_expr iter_;    
 };
 
-template<class P_numtype>
+template<typename P_numtype>
 class _bz_MatExprConstant : public BlitzMatrixExpressionsBase {
 public:
     typedef P_numtype T_numtype;
