@@ -31,7 +31,8 @@ fixed_SOURCES = fixed.cpp
 	sed -e 's/{/@{/' -e 's/}/@}/' $< | fold -s -w 80 > $@
 
 %.out : 
-	./$< 2>&1 | fold -s -w 80 > $@
+	$(MAKE) $(AM_MAKEFLAGS) $(patsubst %.out,%$(EXEEXT),$@)
+	./$(patsubst %.out,%$(EXEEXT),$@) 2>&1 | fold -s -w 80 > $@
 
 simple.texi: simple.cpp
 storage.texi: storage.cpp
@@ -48,19 +49,19 @@ range.texi: range.cpp
 fixed.texi: fixed.cpp
 fixed-point.texi: fixed-point.h
 
-simple.out: simple$(EXEEXT)
-storage.out: storage$(EXEEXT)
-outer.out: outer$(EXEEXT)
-strideslice.out: strideslice$(EXEEXT)
-slicing.out: slicing$(EXEEXT)
-debug.out: debug$(EXEEXT)
-output.out: output$(EXEEXT)
-io.out: io$(EXEEXT)
-dump.out: dump$(EXEEXT)
-xor.out: xor$(EXEEXT)
-cast.out: cast$(EXEEXT)
-range.out: range$(EXEEXT)
-fixed.out: fixed$(EXEEXT)
+simple.out: simple.cpp
+storage.out: storage.cpp
+outer.out: outer.cpp
+strideslice.out: strideslice.cpp
+slicing.out: slicing.cpp
+debug.out: debug.cpp
+output.out: output.cpp
+io.out: io.cpp
+dump.out: dump.cpp
+xor.out: xor.cpp
+cast.out: cast.cpp
+range.out: range.cpp
+fixed.out: fixed.cpp
 
 texi: simple.texi storage.texi outer.texi strideslice.texi slicing.texi \
 debug.texi output.texi io.texi dump.texi xor.texi cast.texi range.texi \
