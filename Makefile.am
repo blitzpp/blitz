@@ -5,7 +5,7 @@
 ACLOCAL_AMFLAGS  = -I m4
 
 SUBDIRS = bin blitz random lib testsuite \
-	examples benchmarks doc manual
+	examples benchmarks doc
 
 EXTRA_DIST = LEGAL LICENSE README.binutils README-VS.NET.txt Blitz-VS.NET.zip \
 	ChangeLog.1 
