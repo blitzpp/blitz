@@ -22,8 +22,6 @@ AH_TOP([
  *
  */
 
-#ifndef BZ_CONFIG_H
-#define BZ_CONFIG_H
 ])
 
 AC_DEFINE_UNQUOTED([_compiler_name],["$CXX"],[CXX])
@@ -31,10 +29,6 @@ AC_DEFINE_UNQUOTED([_compiler_options],["$CXXFLAGS"],[CXXFLAGS])
 AC_DEFINE_UNQUOTED([_os_name],["$OS"],[uname -a])
 AC_DEFINE_UNQUOTED([_config_date],["$DATE"],[date])
 AC_DEFINE_UNQUOTED([_platform],["$target"],[target])
-
-AH_BOTTOM([
-#endif // BZ_CONFIG_H
-])
 
 AC_CXX_GENERAL
 AC_CXX_KEYWORDS
