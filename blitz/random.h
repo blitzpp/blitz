@@ -32,7 +32,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_distribution>
+template<typename P_distribution>
 class Random {
 
 public:

@@ -33,7 +33,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_distribution>
+template<typename P_distribution>
 class _bz_VecExprRandom {
 
 public:
@@ -61,7 +61,7 @@ public:
     unsigned _bz_suggestLength() const
     { return 0; }
 
-    _bz_bool _bz_hasFastAccess() const
+    bool _bz_hasFastAccess() const
     { return 1; }
 
     T_numtype _bz_fastAccess(unsigned) const
