@@ -70,37 +70,38 @@ const double recip_144 = .00694444444444444444444444444444444444444444444;
  ****************************************************************************/
 
 BZ_DECLARE_STENCIL_OPERATOR1(Laplacian2D, A)
-    return -4.0 * A + A.shift(-1,0) + A.shift(1,0) + A.shift(-1,1)
-      + A.shift(1,1);
+  return -4.0 * (*A)
+    + A.shift(-1,0) + A.shift(1,0)
+    + A.shift(-1,1) + A.shift(1,1);
 BZ_END_STENCIL_OPERATOR
 
 BZ_DECLARE_STENCIL_OPERATOR1(Laplacian3D, A)
-    return -6.0 * A 
-      + A.shift(-1,0) + A.shift(1,0) 
-      + A.shift(-1,1) + A.shift(1,1)
-      + A.shift(-1,2) + A.shift(1,2);
+  return -6.0 * (*A) 
+    + A.shift(-1,0) + A.shift(1,0) 
+    + A.shift(-1,1) + A.shift(1,1)
+    + A.shift(-1,2) + A.shift(1,2);
 BZ_END_STENCIL_OPERATOR
 
 BZ_DECLARE_STENCIL_OPERATOR1(Laplacian2D4, A)
-    return -60. * A 
-      + 16.*(A.shift(-1,0) + A.shift(1,0) + A.shift(-1,1) + A.shift(1,1))
-      -     (A.shift(-2,0) + A.shift(2,0) + A.shift(-2,1) + A.shift(2,1));
+  return -60.0 * (*A) 
+    + 16.0 * (A.shift(-1,0) + A.shift(1,0) + A.shift(-1,1) + A.shift(1,1))
+    -        (A.shift(-2,0) + A.shift(2,0) + A.shift(-2,1) + A.shift(2,1));
 BZ_END_STENCIL_OPERATOR
 
 BZ_DECLARE_STENCIL_OPERATOR1(Laplacian2D4n, A)
-    return Laplacian2D4(A) * recip_12;
+  return Laplacian2D4(A) * recip_12;
 BZ_END_STENCIL_OPERATOR
 
 BZ_DECLARE_STENCIL_OPERATOR1(Laplacian3D4, A)
-    return -90. * A 
-      + 16.*(A.shift(-1,0) + A.shift(1,0) + A.shift(-1,1) + A.shift(1,1)
-           + A.shift(-1,2) + A.shift(1,2))
-      -     (A.shift(-2,0) + A.shift(2,0) + A.shift(-2,1) + A.shift(2,1)
-           + A.shift(-2,2) + A.shift(2,2));
+  return -90.0 * (*A) 
+    + 16.0 * (A.shift(-1,0) + A.shift(1,0) + A.shift(-1,1) + A.shift(1,1) +
+              A.shift(-1,2) + A.shift(1,2))
+    -        (A.shift(-2,0) + A.shift(2,0) + A.shift(-2,1) + A.shift(2,1) +
+              A.shift(-2,2) + A.shift(2,2));
 BZ_END_STENCIL_OPERATOR
 
 BZ_DECLARE_STENCIL_OPERATOR1(Laplacian3D4n, A)
-    return Laplacian3D4(A) * recip_12;
+  return Laplacian3D4(A) * recip_12;
 BZ_END_STENCIL_OPERATOR
 
 /****************************************************************************
@@ -125,17 +126,18 @@ BZ_DECLARE_DIFF(central12) {
 }
 
 BZ_DECLARE_DIFF(central22) {
-  return A.shift(-1,dim) - 2. * A + A.shift(+1,dim);
+  return -2.0 * (*A) + A.shift(1,dim) + A.shift(-1,dim);
 }
 
 BZ_DECLARE_DIFF(central32) {
-  return -A.shift(-2,dim) + 2.*(A.shift(-1,dim) - A.shift(+1,dim))
-    + A.shift(+2,dim);
+  return -2.0 * (A.shift(1,dim) - A.shift(-1,dim))
+    +           (A.shift(2,dim) - A.shift(-2,dim));
 }
 
 BZ_DECLARE_DIFF(central42) {
-  return A.shift(-2,dim) + A.shift(2,dim) -4.*(A.shift(-1,dim)+A.shift(+1,dim)) 
-    +6.*A.shift(0,dim);
+  return 6.0 * (*A)
+    - 4.0 * (A.shift(1,dim) + A.shift(-1,dim))
+    +       (A.shift(2,dim) + A.shift(-2,dim));
 }
 
 /****************************************************************************
@@ -147,17 +149,19 @@ BZ_DECLARE_MULTIDIFF(central12) {
 }
 
 BZ_DECLARE_MULTIDIFF(central22) {
-  return A.shift(-1,dim)[comp] - 2. * (*A)[comp] + A.shift(+1,dim)[comp];
+  return -2.0 * (*A)[comp]
+    + A.shift(1,dim)[comp] + A.shift(-1,dim)[comp];
 }
 
 BZ_DECLARE_MULTIDIFF(central32) {
-  return -A.shift(-2,dim)[comp] + 2.*A.shift(-1,dim)[comp] 
-    -2.*A.shift(+1,dim)[comp] + A.shift(+2,dim)[comp];
+  return -2.0 * (A.shift(1,dim)[comp] - A.shift(-1,dim)[comp])
+    +           (A.shift(2,dim)[comp] - A.shift(-2,dim)[comp]);
 }
 
 BZ_DECLARE_MULTIDIFF(central42) {
-  return A.shift(-2,dim)[comp] -4.*A.shift(-1,dim)[comp] 
-    +6.*A.shift(0,dim)[comp] -4.*A.shift(1,dim)[comp] +A.shift(2,dim)[comp];
+  return 6.0 * (*A)[comp]
+    -4.0 * (A.shift(1,dim)[comp] + A.shift(-1,dim)[comp])
+    +      (A.shift(2,dim)[comp] + A.shift(-2,dim)[comp]);
 }
 
 /****************************************************************************
@@ -205,23 +209,27 @@ BZ_DECLARE_MULTIDIFF(central42n) {
  ****************************************************************************/
 
 BZ_DECLARE_DIFF(central14) {
-  return (A.shift(-2,dim) - A.shift(2,dim)) 
-     + 8.*(A.shift(1,dim)-A.shift(-1,dim));
+  return 8.0 * (A.shift(1,dim) - A.shift(-1,dim))
+    -          (A.shift(2,dim) - A.shift(-2,dim));
 }
 
 BZ_DECLARE_DIFF(central24) {
-  return -30.*A + 16.*(A.shift(-1,dim)+A.shift(1,dim))
-    - (A.shift(-2,dim)+A.shift(2,dim));
+  return -30.0 * (*A)
+    + 16.0 * (A.shift(1,dim) + A.shift(-1,dim))
+    -        (A.shift(2,dim) + A.shift(-2,dim));
 }
 
 BZ_DECLARE_DIFF(central34) {
-  return A.shift(-3,dim) - 8.*A.shift(-2,dim) +13.*A.shift(-1,dim) 
-     -13.*A.shift(1,dim)+8.*A.shift(2,dim)-A.shift(3,dim);
+  return -13.0 * (A.shift(1,dim) - A.shift(-1,dim))
+    +      8.0 * (A.shift(2,dim) - A.shift(-2,dim))
+    -            (A.shift(3,dim) - A.shift(-3,dim));
 }
 
 BZ_DECLARE_DIFF(central44) {
-  return -1.*A.shift(-3,dim)+12.*A.shift(-2,dim)-39.*A.shift(-1,dim)
-    +56.*A-39.*A.shift(1,dim)+12.*A.shift(2,dim)-A.shift(3,dim);
+  return 56.0 * (*A)
+    - 39.0 * (A.shift(1,dim) + A.shift(-1,dim))
+    + 12.0 * (A.shift(2,dim) + A.shift(-2,dim))
+    -        (A.shift(3,dim) + A.shift(-3,dim));
 }
 
 /****************************************************************************
@@ -229,25 +237,27 @@ BZ_DECLARE_DIFF(central44) {
  ****************************************************************************/
 
 BZ_DECLARE_MULTIDIFF(central14) {
-  return A.shift(-2,dim)[comp] - 8. * A.shift(-1,dim)[comp] 
-    + 8. * A.shift(1,dim)[comp] - A.shift(2,dim)[comp];
+  return 8.0 * (A.shift(1,dim)[comp] - A.shift(-1,dim)[comp])
+    -          (A.shift(2,dim)[comp] - A.shift(-2,dim)[comp]);
 }
 
 BZ_DECLARE_MULTIDIFF(central24) {
-  return - A.shift(-2,dim)[comp] + 16.*A.shift(-1,dim)[comp] - 30.*(*A)[comp]
-    + 16.*A.shift(1,dim)[comp] - A.shift(2,dim)[comp];
+  return - 30.0 * (*A)[comp]
+    + 16.0 * (A.shift(1,dim)[comp] + A.shift(-1,dim)[comp])
+    -        (A.shift(2,dim)[comp] + A.shift(-2,dim)[comp]);
 }
 
 BZ_DECLARE_MULTIDIFF(central34) {
-  return A.shift(-3,dim)[comp] - 8.*A.shift(-2,dim)[comp] 
-    +13.*A.shift(-1,dim)[comp] - 13.*A.shift(1,dim)[comp] 
-    + 8.*A.shift(2,dim)[comp] - A.shift(3,dim)[comp];
+  return -13.0 * (A.shift(1,dim)[comp] - A.shift(-1,dim)[comp])
+    +      8.0 * (A.shift(2,dim)[comp] - A.shift(-2,dim)[comp])
+    -            (A.shift(3,dim)[comp] - A.shift(-3,dim)[comp]);
 }
 
 BZ_DECLARE_MULTIDIFF(central44) {
-  return -1.*A.shift(-3,dim)[comp]+12.*A.shift(-2,dim)[comp]
-    -39.*A.shift(-1,dim)[comp] +56.*(*A)[comp]-39.*A.shift(1,dim)[comp]
-    +12.*A.shift(2,dim)[comp]-A.shift(3,dim)[comp];
+  return 56.0 * (*A)[comp]
+    - 39.0 * (A.shift(1,dim)[comp] + A.shift(-1,dim)[comp])
+    + 12.0 * (A.shift(2,dim)[comp] + A.shift(-2,dim)[comp])
+    -        (A.shift(3,dim)[comp] + A.shift(-3,dim)[comp]);
 }
 
 /****************************************************************************
@@ -295,20 +305,21 @@ BZ_DECLARE_MULTIDIFF(central44n) {
  ****************************************************************************/
 
 BZ_DECLARE_DIFF(backward11) {
-  return A - A.shift(-1,dim);
+  return (*A) - A.shift(-1,dim);
 }
 
 BZ_DECLARE_DIFF(backward21) {
-  return A -2.*A.shift(-1,dim) + A.shift(-2,dim);
+  return (*A) - 2.0 * A.shift(-1,dim) + A.shift(-2,dim);
 }
 
 BZ_DECLARE_DIFF(backward31) {
-  return A -3.*A.shift(-1,dim) + 3.*A.shift(-2,dim)-A.shift(-3,dim);
+  return (*A) - 3.0 * A.shift(-1,dim) + 3.0 * A.shift(-2,dim)
+    - A.shift(-3,dim);
 }
 
 BZ_DECLARE_DIFF(backward41) {
-  return A - 4.*A.shift(-1,dim) + 6.*A.shift(-2,dim) -4.*A.shift(-3,dim) 
-    + A.shift(-4,dim);
+  return (*A) - 4.0 * A.shift(-1,dim) + 6.0 * A.shift(-2,dim)
+    - 4.0 * A.shift(-3,dim) + A.shift(-4,dim);
 }
 
 /****************************************************************************
@@ -320,17 +331,17 @@ BZ_DECLARE_MULTIDIFF(backward11) {
 }
 
 BZ_DECLARE_MULTIDIFF(backward21) {
-  return (*A)[comp] -2.*A.shift(-1,dim)[comp] + A.shift(-2,dim)[comp];
+  return (*A)[comp] - 2.0 * A.shift(-1,dim)[comp] + A.shift(-2,dim)[comp];
 }
 
 BZ_DECLARE_MULTIDIFF(backward31) {
-  return (*A)[comp] -3.*A.shift(-1,dim)[comp] + 3.*A.shift(-2,dim)[comp]
-    -A.shift(-3,dim)[comp];
+  return (*A)[comp] - 3.0 * A.shift(-1,dim)[comp] + 3.0 * A.shift(-2,dim)[comp]
+    - A.shift(-3,dim)[comp];
 }
 
 BZ_DECLARE_MULTIDIFF(backward41) {
-  return (*A)[comp] - 4.*A.shift(-1,dim)[comp] + 6.*A.shift(-2,dim)[comp]
-    -4.*A.shift(-3,dim)[comp] + A.shift(-4,dim)[comp];
+  return (*A)[comp] - 4.0 * A.shift(-1,dim)[comp] + 6.0 * A.shift(-2,dim)[comp]
+    - 4.0 * A.shift(-3,dim)[comp] + A.shift(-4,dim)[comp];
 }
 
 /****************************************************************************
@@ -356,21 +367,22 @@ BZ_DECLARE_MULTIDIFF(backward41n) { return backward41(A,comp,dim); }
  ****************************************************************************/
 
 BZ_DECLARE_DIFF(backward12) {
-  return 3.*A -4.*A.shift(-1,dim) + A.shift(-2,dim);
+  return 3.0 * (*A) - 4.0 * A.shift(-1,dim) + A.shift(-2,dim);
 }
 
 BZ_DECLARE_DIFF(backward22) {
-  return 2.*A -5.*A.shift(-1,dim) + 4.*A.shift(-2,dim) -A.shift(-3,dim);
+  return 2.0 * (*A) - 5.0 * A.shift(-1,dim) + 4.0 * A.shift(-2,dim)
+    - A.shift(-3,dim);
 }
 
 BZ_DECLARE_DIFF(backward32) {
-  return 5.*A - 18.*A.shift(-1,dim) + 24.*A.shift(-2,dim) -14.*A.shift(-3,dim) 
-    + 3.*A.shift(-4,dim);
+  return 5.0 * (*A) - 18.0 * A.shift(-1,dim) + 24.0 * A.shift(-2,dim)
+    - 14.0 * A.shift(-3,dim) + 3.0 * A.shift(-4,dim);
 }
 
 BZ_DECLARE_DIFF(backward42) {
-  return 3.*A -14.*A.shift(-1,dim) + 26.*A.shift(-2,dim) -24.*A.shift(-3,dim) 
-    + 11.*A.shift(-4,dim) -2.*A.shift(-5,dim);
+  return 3.0 * (*A) - 14.0 * A.shift(-1,dim) + 26.0 * A.shift(-2,dim)
+    - 24.0 * A.shift(-3,dim) + 11.0 * A.shift(-4,dim) - 2.0 * A.shift(-5,dim);
 }
 
 /****************************************************************************
@@ -378,23 +390,25 @@ BZ_DECLARE_DIFF(backward42) {
  ****************************************************************************/
 
 BZ_DECLARE_MULTIDIFF(backward12) {
-  return 3.*(*A)[comp] -4.*A.shift(-1,dim)[comp] + A.shift(-2,dim)[comp];
+  return 3.0 * (*A)[comp] - 4.0 * A.shift(-1,dim)[comp]
+    + A.shift(-2,dim)[comp];
 }
 
 BZ_DECLARE_MULTIDIFF(backward22) {
-  return 2.*(*A)[comp] -5.*A.shift(-1,dim)[comp] + 4.*A.shift(-2,dim)[comp]
-     -A.shift(-3,dim)[comp];
+  return 2.0 * (*A)[comp] - 5.0 * A.shift(-1,dim)[comp]
+    + 4.0 * A.shift(-2,dim)[comp] - A.shift(-3,dim)[comp];
 }
 
 BZ_DECLARE_MULTIDIFF(backward32) {
-  return 5.*(*A)[comp] - 18.*A.shift(-1,dim)[comp] + 24.*A.shift(-2,dim)[comp]
-     -14.*A.shift(-3,dim)[comp] + 3.*A.shift(-4,dim)[comp];
+  return 5.0 * (*A)[comp] - 18.0 * A.shift(-1,dim)[comp]
+    + 24.0 * A.shift(-2,dim)[comp] - 14.0 * A.shift(-3,dim)[comp]
+    + 3.0 * A.shift(-4,dim)[comp];
 }
 
 BZ_DECLARE_MULTIDIFF(backward42) {
-  return 3.*(*A)[comp] -14.*A.shift(-1,dim)[comp] + 26.*A.shift(-2,dim)[comp]
-    -24.*A.shift(-3,dim)[comp] + 11.*A.shift(-4,dim)[comp] 
-    -2.*A.shift(-5,dim)[comp];
+  return 3.0 * (*A)[comp] - 14.0 * A.shift(-1,dim)[comp]
+    + 26.0 * A.shift(-2,dim)[comp] - 24.0 * A.shift(-3,dim)[comp]
+    + 11.0 * A.shift(-4,dim)[comp] - 2.0 * A.shift(-5,dim)[comp];
 }
 
 /****************************************************************************
@@ -420,20 +434,20 @@ BZ_DECLARE_MULTIDIFF(backward42n) { return backward42(A,comp,dim); }
  ****************************************************************************/
 
 BZ_DECLARE_DIFF(forward11) {
-  return A.shift(1,dim) - A;
+  return -(*A) + A.shift(1,dim);
 }
 
 BZ_DECLARE_DIFF(forward21) {
-  return A - 2.*A.shift(1,dim) + A.shift(2,dim);
+  return (*A) - 2.0 * A.shift(1,dim) + A.shift(2,dim);
 }
 
 BZ_DECLARE_DIFF(forward31) {
-  return -A + 3.*A.shift(1,dim) -3.*A.shift(2,dim) + A.shift(3,dim);
+  return -(*A) + 3.0 * A.shift(1,dim) - 3.0 * A.shift(2,dim) + A.shift(3,dim);
 }
 
 BZ_DECLARE_DIFF(forward41) {
-  return A -4.*A.shift(1,dim) + 6.*A.shift(2,dim) -4.*A.shift(3,dim) 
-    + A.shift(4,dim);
+  return (*A) - 4.0 * A.shift(1,dim) + 6.0 * A.shift(2,dim)
+    - 4.0 * A.shift(3,dim) + A.shift(4,dim);
 }
 
 /****************************************************************************
@@ -441,21 +455,21 @@ BZ_DECLARE_DIFF(forward41) {
  ****************************************************************************/
 
 BZ_DECLARE_MULTIDIFF(forward11) {
-  return -(*A)[comp]+A.shift(1,dim)[comp];
+  return  -(*A)[comp] + A.shift(1,dim)[comp];
 }
 
 BZ_DECLARE_MULTIDIFF(forward21) {
-  return (*A)[comp] - 2.*A.shift(1,dim)[comp] + A.shift(2,dim)[comp];
+  return (*A)[comp] - 2.0 * A.shift(1,dim)[comp] + A.shift(2,dim)[comp];
 }
 
 BZ_DECLARE_MULTIDIFF(forward31) {
-  return -(*A)[comp] + 3.*A.shift(1,dim)[comp] -3.*A.shift(2,dim)[comp] 
+  return -(*A)[comp] + 3.0 * A.shift(1,dim)[comp] - 3.0 * A.shift(2,dim)[comp]
     + A.shift(3,dim)[comp];
 }
 
 BZ_DECLARE_MULTIDIFF(forward41) {
-  return (*A)[comp] -4.*A.shift(1,dim)[comp] + 6.*A.shift(2,dim)[comp] 
-    -4.*A.shift(3,dim)[comp] + A.shift(4,dim)[comp];
+  return (*A)[comp] - 4.0 * A.shift(1,dim)[comp] + 6.0 * A.shift(2,dim)[comp]
+    - 4.0 * A.shift(3,dim)[comp] + A.shift(4,dim)[comp];
 }
 
 /****************************************************************************
@@ -481,21 +495,22 @@ BZ_DECLARE_MULTIDIFF(forward41n) { return forward41(A,comp,dim); }
  ****************************************************************************/
 
 BZ_DECLARE_DIFF(forward12) {
-  return -3.*A + 4.*A.shift(1,dim) - A.shift(2,dim);
+  return -3.0 * (*A) + 4.0 * A.shift(1,dim) - A.shift(2,dim);
 }
 
 BZ_DECLARE_DIFF(forward22) {
-  return 2.*A -5.*A.shift(1,dim) + 4.*A.shift(2,dim) -A.shift(3,dim);
+  return 2.0 * (*A) - 5.0 * A.shift(1,dim) + 4.0 * A.shift(2,dim)
+    - A.shift(3,dim);
 }
 
 BZ_DECLARE_DIFF(forward32) {
-  return -5.*A + 18.*A.shift(1,dim) -24.*A.shift(2,dim) 
-    + 14.*A.shift(3,dim) -3.*A.shift(4,dim);
+  return -5.0 * (*A) + 18.0 * A.shift(1,dim) - 24.0 * A.shift(2,dim) 
+    + 14.0 * A.shift(3,dim) - 3.0 * A.shift(4,dim);
 }
 
 BZ_DECLARE_DIFF(forward42) {
-  return 3.*A -14.*A.shift(1,dim) + 26.*A.shift(2,dim) -24.*A.shift(3,dim) 
-    +11.*A.shift(4,dim) -2.*A.shift(5,dim);
+  return 3.0 * (*A) - 14.0 * A.shift(1,dim) + 26.0 * A.shift(2,dim)
+    - 24.0 * A.shift(3,dim) + 11.0 * A.shift(4,dim) - 2.0 * A.shift(5,dim);
 }
 
 /****************************************************************************
@@ -503,23 +518,24 @@ BZ_DECLARE_DIFF(forward42) {
  ****************************************************************************/
 
 BZ_DECLARE_MULTIDIFF(forward12) {
-  return -3.*(*A)[comp] + 4.*A.shift(1,dim)[comp] - A.shift(2,dim)[comp];
+  return -3.0 * (*A)[comp] + 4.0 * A.shift(1,dim)[comp] - A.shift(2,dim)[comp];
 }
 
 BZ_DECLARE_MULTIDIFF(forward22) {
-  return 2.*(*A)[comp] -5.*A.shift(1,dim)[comp] + 4.*A.shift(2,dim)[comp] 
-    -A.shift(3,dim)[comp];
+  return 2.0 * (*A)[comp] - 5.0 * A.shift(1,dim)[comp]
+    + 4.0 * A.shift(2,dim)[comp] - A.shift(3,dim)[comp];
 }
 
 BZ_DECLARE_MULTIDIFF(forward32) {
-  return -5.*(*A)[comp] + 18.*A.shift(1,dim)[comp] -24.*A.shift(2,dim)[comp]
-    + 14.*A.shift(3,dim)[comp] -3.*A.shift(4,dim)[comp];
+  return -5.0 * (*A)[comp] + 18.0 * A.shift(1,dim)[comp]
+    - 24.0 * A.shift(2,dim)[comp] + 14.0 * A.shift(3,dim)[comp]
+    - 3.0 * A.shift(4,dim)[comp];
 }
 
 BZ_DECLARE_MULTIDIFF(forward42) {
-  return 3.*(*A)[comp] -14.*A.shift(1,dim)[comp] + 26.*A.shift(2,dim)[comp] 
-    -24.*A.shift(3,dim)[comp] +11.*A.shift(4,dim)[comp] 
-    + 11.*A.shift(5,dim)[comp];
+  return 3.0 * (*A)[comp] - 14.0 * A.shift(1,dim)[comp]
+    + 26.0 * A.shift(2,dim)[comp] - 24.0 * A.shift(3,dim)[comp]
+    + 11.0 * A.shift(4,dim)[comp] - 2.0 * A.shift(5,dim)[comp];
 }
 
 
@@ -977,60 +993,66 @@ BZ_END_STENCIL_OPERATOR
 
 template<class T>
 inline _bz_typename T::T_numtype::T_numtype
-div2D(T& A) {
-  const int x = firstDim, y = secondDim;
-  return central12(A,x,x) + central12(A,y,y);
+div2D(T& A)
+{
+    const int x = firstDim, y = secondDim;
+    return central12(A,x,x) + central12(A,y,y);
 }
 
 template<class T>
 inline _bz_typename T::T_numtype::T_numtype
-div2D4(T& A) {
-  const int x = firstDim, y = secondDim;
-  return central14(A,x,x) + central14(A,y,y);
+div2D4(T& A)
+{
+    const int x = firstDim, y = secondDim;
+    return central14(A,x,x) + central14(A,y,y);
 }
 
 template<class T>
 inline _bz_typename T::T_numtype::T_numtype
-div2Dn(T& A) {
-  const int x = firstDim, y = secondDim;
-  return (central12(A,x,x) + central12(A,y,y)) * recip_2;
+div2Dn(T& A)
+{
+    const int x = firstDim, y = secondDim;
+    return (central12(A,x,x) + central12(A,y,y)) * recip_2;
 }
 
 template<class T>
 inline _bz_typename T::T_numtype::T_numtype
-div2D4n(T& A) {
-  const int x = firstDim, y = secondDim;
-  return (central14(A,x,x) + central14(A,y,y)) * recip_12;
+div2D4n(T& A)
+{
+    const int x = firstDim, y = secondDim;
+    return (central14(A,x,x) + central14(A,y,y)) * recip_12;
 }
 
 template<class T>
 inline _bz_typename T::T_numtype::T_numtype
-div3D(T& A) {
-  const int x = firstDim, y = secondDim, z = thirdDim;
-  return central12(A,x,x) + central12(A,y,y) + central12(A,z,z);
+div3D(T& A)
+{
+    const int x = firstDim, y = secondDim, z = thirdDim;
+    return central12(A,x,x) + central12(A,y,y) + central12(A,z,z);
 }
 
 template<class T>
 inline _bz_typename T::T_numtype::T_numtype
-div3D4(T& A) {
-  const int x = firstDim, y = secondDim, z = thirdDim;
-  return central14(A,x,x) + central14(A,y,y) + central14(A,z,z);
+div3D4(T& A)
+{
+    const int x = firstDim, y = secondDim, z = thirdDim;
+    return central14(A,x,x) + central14(A,y,y) + central14(A,z,z);
 }
 
 template<class T>
 inline _bz_typename T::T_numtype::T_numtype
-div3Dn(T& A) {
-  const int x = firstDim, y = secondDim, z = thirdDim;
-  return (central12(A,x,x) + central12(A,y,y) + central12(A,z,z))
-    * recip_2;
+div3Dn(T& A)
+{
+    const int x = firstDim, y = secondDim, z = thirdDim;
+    return (central12(A,x,x) + central12(A,y,y) + central12(A,z,z)) * recip_2;
 }
 
 template<class T>
 inline _bz_typename T::T_numtype::T_numtype
-div3D4n(T& A) {
-  const int x = firstDim, y = secondDim, z = thirdDim;
-  return (central14(A,x,x) + central14(A,y,y) + central14(A,z,z))
-    * recip_12;
+div3D4n(T& A)
+{
+    const int x = firstDim, y = secondDim, z = thirdDim;
+    return (central14(A,x,x) + central14(A,y,y) + central14(A,z,z)) * recip_12;
 }
 
 /****************************************************************************
@@ -1042,28 +1064,28 @@ inline _bz_typename T::T_numtype
 mixed22(T& A, int x, int y)
 {
     return A.shift(-1,x,-1,y) - A.shift(-1,x,1,y)
-        -A.shift(1,x,-1,y) + A.shift(1,x,1,y);
+        -  A.shift(1,x,-1,y) + A.shift(1,x,1,y);
 }
 
 template<class T>
 inline _bz_typename T::T_numtype
 mixed22n(T& A, int x, int y)
 {
-    return mixed22(A, x, y) * recip_4;
+    return mixed22(A,x,y) * recip_4;
 }
 
 template<class T>
 inline _bz_typename T::T_numtype
 mixed24(T& A, int x, int y)
 {
-    return 64.*(A.shift(-1,x,-1,y) - A.shift(-1,x,1,y)
-        -A.shift(1,x,-1,y) + A.shift(1,x,1,y))
-        + (A.shift(-2,x,+1,y) - A.shift(-1,x,2,y)
-        - A.shift(1,x,2,y)-A.shift(2,x,1,y)
-        + A.shift(2,x,-1,y)+A.shift(1,x,-2,y)
-        - A.shift(-1,x,-2,y)+A.shift(-2,x,-1,y))
-        + 8.*(A.shift(-1,x,1,y)+A.shift(-1,x,2,y)
-        -A.shift(2,x,-2,y) + A.shift(2,x,2,y));
+    return 64.0 * (A.shift(-1,x,-1,y) - A.shift(-1,x,1,y) -
+                   A.shift(1,x,-1,y) + A.shift(1,x,1,y))
+        +         (A.shift(-2,x,1,y) - A.shift(-1,x,2,y) -
+                   A.shift(1,x,2,y) - A.shift(2,x,1,y) +
+                   A.shift(2,x,-1,y) + A.shift(1,x,-2,y) -
+                   A.shift(-1,x,-2,y) + A.shift(-2,x,-1,y))
+        +   8.0 * (A.shift(-1,x,1,y) + A.shift(-1,x,2,y) -
+                   A.shift(2,x,-2,y) + A.shift(2,x,2,y));
 }
 
 template<class T>
