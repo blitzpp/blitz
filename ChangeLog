@@ -1,4 +1,10 @@
 
+2004-11-04  Patrick Guio  <patrick.guio@bccs.uib.no>
+
+	* m4/ac_prog_doxygen.m4: Added test on doxygen version. In order 
+	to be used doxygen must be at least 1.3.x.
+
+
 2004-11-03  Patrick Guio  <patrick.guio@bccs.uib.no>
 
 	* m4/ac_prog_doxygen.m4 doc/doxygen/Makefile.am: Renamed automake
