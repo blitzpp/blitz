@@ -23,6 +23,10 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.5  2002/07/02 19:36:43  jcumming
+ * Undid the previous change to this file.  Vector ET support is now gotten
+ * by including blitz/vector-et.h explicitly.
+ *
  * Revision 1.4  2002/03/06 17:53:57  patricg
  *
  * (re)inserted includes for vecbops, vecuops and vecbfn
@@ -296,9 +300,5 @@ BZ_NAMESPACE_END
 #ifndef BZ_TINYVEC_H
  #include <blitz/tinyvec.h>
 #endif
-
-#include <blitz/vecbops.cc>       // Operators with two operands
-#include <blitz/vecuops.cc>       // Functions with one argument
-#include <blitz/vecbfn.cc>        // Functions with two arguments
 
 #endif // BZ_VECEXPR_H
