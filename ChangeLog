@@ -1,5 +1,54 @@
-2002-05-27  Julian Cummings  <cummings@tis-sa-ack.cacr.caltech.edu>
+2002-06-26  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+	* configure: Rebuilt from configure.in.
+	* configure.in: Moved package and version arguments back to
+	AM_INIT_AUTOMAKE macro call.  The new style suggested in the
+	automake documentation doesn't seem to work right when the tarball
+	name contains uppercase letters and is not trivially derived from
+	the package name.
+	* configure.in: Added section to handle xlC as a valid C++
+	compiler option.  Moved package name and version number arguments
+	to AC_INIT macro.  Moved AC_CANONICAL_TARGET macro call higher up
+	in file to eliminate autoconf warning.
+	* config.guess: Commented out use of oslevel command on AIX
+	platform to get OS version and release info, since it does not
+	always seem to report the right thing and can send confusing
+	output to config.sub.
+	* examples/Makefile.in: Rebuilt from examples/Makefile.am.
+	* examples/Makefile.am: Added profile.cpp, tiny2.cpp and tiny3.cpp
+	to EXTRA_DIST, so that these files will be included in the
+	distribution tarball.  This is necessary because these files are
+	not include in SOURCES and are not normally compiled.
+	* testsuite/extract.cpp: Changed members red, green and blue of
+	class RGB24 from static const int's to enumerators in order to
+	avoid a link-time error with xlC compiler.
+	* blitz/tinyvec.h: Changed P_numtype to T_numtype inside class
+	definition consistently.
+	* blitz/array-impl.h: Changed template parameter name T_numtype2
+	to P_numtype2 in member function template declarataions for
+	consistency with definitions and to avoid any confusion with
+	typedef T_numtype.
+	* blitz/array/slicing.cc: Changed T_numtype to P_numtype when used
+	outside the argument list or body of a member function definition
+	(i.e., outside the class scope).  Inside the class scope, we can
+	use the typedef T_numtype.  The IBM xlC compiler gets confused if
+	P_numtype is used as a template parameter name in a member
+	function declaration and then T_numtype is used as the parameter
+	name in the member function definition.  Fixed usage to be more
+	consistent.
+	* blitz/array/methods.cc: Likewise.
+	* blitz/array/ops.cc: Likewise.
+	* blitz/tinyvec.cc: Likewise.
+	* blitz/array/et.h: Added #include of blitz/array/misc.cc if not
+	using new expression templates.
+	* blitz/array-impl.h: Explicitly specify second template argument
+	for ListInitializationSwitch, rather than relying on the default
+	value.  This eliminates a compilation problem using the xlC
+	compiler.  Also removed #include of misc.cc, which is now handled
+	in blitz/array/et.h.
+	* blitz/tinymat.h: Likewise.
+	* blitz/tinyvec.h: Likewise.
 
+2002-05-27  Julian Cummings  <cummings@tis-sa-ack.cacr.caltech.edu>
 	* blitz/array-impl.h: Removed use of this-> as means of accessing
 	members of templated base class.  Instead provided using
 	declarations for these members within the derived class
@@ -32,7 +81,6 @@ Thu May 23 17:08:43 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* every Makefile.in: likewise
 
 2002-05-22  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
-
 	* blitz/array/eval.cc: Fixed bug in
 	Array::evaluateWithIndexTraversal1() by removing cast of second
 	argument to T_numtype in call to T_update::update().  This cast
