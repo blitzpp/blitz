@@ -16,8 +16,6 @@ AM_MAINTAINER_MODE
 # If you want to modify this file, make sure you are editing
 # configure.in, and not configure.  
 
-AC_PROG_MAKE_SET([])
-
 SHELL=${CONFIG_SHELL-/bin/sh}
 AC_SUBST(SHELL)dnl
 
