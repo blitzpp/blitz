@@ -26,6 +26,8 @@ AS_HELP_STRING([--enable-cxx-flags-preset],
 
 if test "$enableval" = yes ; then
 
+  ac_cxx_flags_preset=yes
+
 	case "$CXX" in
 	KCC) dnl KAI C++  http://www.kai.com/
 		CXX_VENDOR="KAI"
@@ -128,7 +130,7 @@ else
 	AC_MSG_RESULT([no])
 fi
 
-if test "$ac_cxx_flags_preset" = no ; then
+if test "$ac_cxx_flags_preset" = yes ; then
 	if test "$CXX_VENDOR" = GNU ; then
 		AC_MSG_NOTICE([Setting compiler flags for $CXX_VENDOR $CXX (wahoo!)])
 	else
