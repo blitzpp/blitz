@@ -2,6 +2,8 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
+AUTOMAKE_OPTIONS = foreign
+
 SUBDIRS = bin compiler blitz random src lib testsuite \
 	examples benchmarks doc
 
