@@ -113,18 +113,19 @@ void setupInitialConditions(Array<float,3>& P1, Array<float,3>& P2,
     c(Range(0,N/2-1), Range::all(), Range::all()) = 0.05;
     c(Range(N/2,N-1), Range::all(), Range::all()) = 0.3;
 
-    int cavityLeft = 3*N/7.0-1;
-    int cavityRight = 4*N/7.0-1;
-    int cavityFront = 3*N/7.0-1;
-    int cavityBack = 4*N/7.0-1;
-    int cavityTop = 5*N/7.0-1;
-    int cavityBottom = 6*N/7.0-1;
+    double Nfp = static_cast<double>(N);
+    int cavityLeft = static_cast<int>(3*Nfp/7-1);
+    int cavityRight = static_cast<int>(4*Nfp/7-1);
+    int cavityFront = static_cast<int>(3*Nfp/7-1);
+    int cavityBack = static_cast<int>(4*Nfp/7-1);
+    int cavityTop = static_cast<int>(5*Nfp/7-1);
+    int cavityBottom = static_cast<int>(6*Nfp/7-1);
 
     c(Range(cavityTop,cavityBottom),Range(cavityLeft,cavityRight), 
         Range(cavityFront,cavityBack)) = 0.02;
 
-    int cavityTop2 = 1*N/7.0-1;
-    int cavityBottom2 = 2*N/7.0-1;
+    int cavityTop2 = static_cast<int>(1*Nfp/7-1);
+    int cavityBottom2 = static_cast<int>(2*Nfp/7-1);
     c(Range(cavityTop2,cavityBottom2),Range(cavityLeft,cavityRight),
         Range(cavityFront,cavityBack)) = 0.001;
 
@@ -179,7 +180,7 @@ void snapshot(const Array<float,3>& P, const Array<float,3>& c)
         for (int j=0; j < N; ++j)
         {
             float value = (P(i,j,k)-Pmin)*PScale + c(i,j,k)*VScale;
-            int r = value * 4096;
+            int r = static_cast<int>(value * 4096);
             ofs << r << " ";
         }
         if (i < N-1)
