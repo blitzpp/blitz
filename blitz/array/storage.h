@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.7  2002/08/30 22:10:04  jcumming
+ * Added explicit assignment operator for GeneralArrayStorage class.
+ *
  * Revision 1.6  2002/06/28 01:42:24  jcumming
  * Use _bz_bool and _bz_true where appropriate to avoid int/bool conversions.
  *
@@ -104,6 +107,15 @@ public:
 
     ~GeneralArrayStorage()
     { }
+
+    GeneralArrayStorage<N_rank>& operator=(
+        const GeneralArrayStorage<N_rank>& rhs)
+    {
+        ordering_ = rhs.ordering();
+        ascendingFlag_ = rhs.ascendingFlag();
+        base_ = rhs.base();
+        return *this;
+    }
 
     TinyVector<int, N_rank>& ordering()
     { return ordering_; }
