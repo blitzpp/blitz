@@ -45,4 +45,5 @@ Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* random/uniform.h: irng_.random() replaced by this->irng_.random()
 	everywhere for ANSI C++ correctness (14.6.2(3) in the C++ Standard)
 	* random/discrete-uniform.h: likewise
+	* random/normal.h: getUniform() replaced by this->getUniform() 
 

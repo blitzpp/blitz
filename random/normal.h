@@ -48,9 +48,9 @@ public:
           // - sqrt(2/e) < v < sqrt(2/e)
           // The constant below is 2*sqrt(2/e).
 
-          u = getUniform();
+          u = this->getUniform();
           v = 1.715527769921413592960379282557544956242L 
-              * (getUniform() - 0.5);
+              * (this->getUniform() - 0.5);
 
           // Evaluate the quadratic form
           T x = u - s;
