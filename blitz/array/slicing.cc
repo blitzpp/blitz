@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.7  2002/06/28 01:37:40  jcumming
+ * Modified valid indexing check to avoid casting to unsigned.
+ *
  * Revision 1.6  2002/06/27 00:18:10  jcumming
  * Changed T_numtype to P_numtype when used outside the argument list or body
  * of a member function definition (i.e., outside the class scope).  Inside
@@ -357,8 +360,8 @@ cout << "slice(" << rank << ", Range):" << endl
     BZPRECHECK(
         ((first <= last) && (stride > 0)
          || (first >= last) && (stride < 0))
-        && (unsigned(first - base(rank)) < length_[rank])
-        && (unsigned(last - base(rank)) < length_[rank]),
+        && (first >= base(rank) && (first - base(rank)) < length_[rank])
+        && (last >= base(rank) && (last - base(rank)) < length_[rank]),
         "Bad array slice: Range(" << first << ", " << last << ", "
         << stride << ").  Array is Range(" << lbound(rank) << ", "
         << ubound(rank) << ")");
