@@ -83,7 +83,7 @@ public:
  
     double getMflops(unsigned implementation, unsigned parameterNum) const;
 
-    void saveMatlabGraph(const char* filename) const;
+    void saveMatlabGraph(const char* filename, const char* graphType="semilogx") const;
 
 protected:
     BenchmarkExt(const BenchmarkExt<P_parameter>&) { }
