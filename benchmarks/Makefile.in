@@ -785,7 +785,7 @@ check-benchmarks: run run-loops ctime
 ###########################################################################
 
 clean:
-	-rm -f *.o *.ii *.int.c *.s $(BENCHMARKS) $(COMPILE_TIME_BENCHMARKS)
+	-rm -f *.o *.ii *.int.c *.s work.pc* $(BENCHMARKS) $(COMPILE_TIME_BENCHMARKS)
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

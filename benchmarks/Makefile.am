@@ -141,5 +141,5 @@ loop36_SOURCES = loop36.cpp loop36f.f loop36f90.f90
 ###########################################################################
 
 clean:
-	-rm -f *.o *.ii *.int.c *.s $(BENCHMARKS) $(COMPILE_TIME_BENCHMARKS)
+	-rm -f *.o *.ii *.int.c *.s work.pc* $(BENCHMARKS) $(COMPILE_TIME_BENCHMARKS)
 
