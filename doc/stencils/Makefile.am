@@ -20,8 +20,8 @@ forward21.texi forward22.texi forward31.texi forward32.texi forward41.texi \
 forward42.texi Laplacian2D.texi Laplacian2D4.texi \
 dump-stencil.cpp
 
-INCLUDES = -I$(top_srcdir)
-LDADD = -L$(top_srcdir)/lib -lblitz -lm
+INCLUDES = -I$(top_srcdir) -I$(top_builddir)
+LDADD = -L$(top_builddir)/lib -lblitz -lm
 COMPILE = $(CXX) $(CXXFLAGS) $(INCLUDES) 
 
 %2D.texi :

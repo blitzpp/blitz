@@ -12,9 +12,9 @@ EXTRA_DIST = cast.cpp debug.cpp dump.cpp fixed.cpp fixed-point.h outer.cpp \
 output.cpp range.cpp simple.cpp slicing.cpp storage.cpp strideslice.cpp \
 xor.cpp
 
-INCLUDES = -I$(top_srcdir)
+INCLUDES = -I$(top_srcdir) -I$(top_builddir)
 AM_CXXFLAGS = @CXXFLAGS@ @CXX_DEBUG_FLAGS@
-LDADD = -L$(top_srcdir)/lib -lblitz
+LDADD = -L$(top_builddir)/lib -lblitz
 
 EXAMPLES = simple storage outer strideslice slicing debug output io dump xor \
 cast range fixed
