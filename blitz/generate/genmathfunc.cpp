@@ -137,30 +137,47 @@ void one(char* applicName, char* specialization, char* funcName,
         ofs << "P_numtype1";
     ofs << " T_numtype;" << std::endl;
 
-    ofs << std::endl << "    static inline T_numtype apply(T_numtype1 x)"
-        << std::endl << "    { return ";
-
-    if (noCastFlag == nofuncflag)
+    if (strcmp(applicName,"blitz_isnan") == 0) // Special case nan
     {
-        ofs << funcName;
+        ofs << std::endl << "    static inline T_numtype apply(T_numtype1 x)"
+            << std::endl << "    {" << std::endl;
+        ofs << "#ifdef isnan" << std::endl;
+        ofs << "        "
+            << "// Some platforms define isnan as a macro, which causes the"
+            << std::endl << "        "
+            << "// BZ_IEEEMATHFN_SCOPE macro to break." << std::endl;
+        ofs << "        return isnan(x);" << std::endl;
+        ofs << "#else" << std::endl;
+        ofs << "        return BZ_IEEEMATHFN_SCOPE(isnan)(x);" << std::endl;
+        ofs << "#endif" << std::endl << "    }" << std::endl;
     }
-    else {
-    if ((flag == cflag) || (flag == cflag2))
-        ofs << "BZ_CMATHFN_SCOPE(";
-    else if ((flag == ieeeflag) || (flag == bsdflag))
-        ofs << "BZ_IEEEMATHFN_SCOPE(";
     else 
-        ofs << "BZ_MATHFN_SCOPE(";
-    
-    ofs << funcName << ")(";
-    if (specialization != 0)
-        ofs << "(" << specialization << ")";
-    else if ((returnType)&&(!noCastFlag))
-        ofs << "(" << returnType << ")";
+    {
+        ofs << std::endl << "    static inline T_numtype apply(T_numtype1 x)"
+            << std::endl << "    { return ";
 
-    ofs << "x)";
+        if (noCastFlag == nofuncflag)
+        {
+            ofs << funcName;
+        }
+        else {
+        if ((flag == cflag) || (flag == cflag2))
+            ofs << "BZ_CMATHFN_SCOPE(";
+        else if ((flag == ieeeflag) || (flag == bsdflag))
+            ofs << "BZ_IEEEMATHFN_SCOPE(";
+        else 
+            ofs << "BZ_MATHFN_SCOPE(";
+    
+        ofs << funcName << ")(";
+        if (specialization != 0)
+            ofs << "(" << specialization << ")";
+        else if ((returnType)&&(!noCastFlag))
+            ofs << "(" << returnType << ")";
+
+        ofs << "x)";
+        }
+        ofs << "; }" << std::endl;
     }
-    ofs << "; }" << std::endl;
 
     ofs << std::endl << "    template<class T1>" << std::endl
         << "    static void prettyPrint(string& str, prettyPrintFormat& format,"
@@ -389,7 +406,7 @@ one("floor"  ,"long double" ,"floor"   ,"long double"  ,"");
 two("fmod"   ,""            ,"fmod"    ,"double"       ,"Modulo remainder");
 two("hypot"  ,""            ,"hypot"   ,"double"       ,"sqrt(x*x+y*y)",bsdflag);
 one("ilogb"  ,""            ,"ilogb"   ,"int"          ,"Integer unbiased exponent", ieeeflag,1);
-one("isnan"  ,""            ,"isnan"   ,"int"          ,"Nonzero if NaNS or NaNQ", ieeeflag,nofuncflag);
+one("blitz_isnan"  ,""            ,"blitz_isnan"   ,"int"          ,"Nonzero if NaNS or NaNQ", ieeeflag,nofuncflag);
 one("itrunc" ,""            ,"itrunc"  ,"int"          ,"Truncate and convert to integer", bsdflag,1);
 one("j0"     ,""            ,"j0"      ,"double"       ,"Bessel function first kind, order 0", ieeeflag);
 one("j1"     ,""            ,"j1"      ,"double"       ,"Bessel function first kind, order 1", ieeeflag);
@@ -417,8 +434,17 @@ ofs <<
 "public:\n"
 "    typedef BZ_SIGNEDTYPE(P_numtype) T_numtype;\n\n"
 "    static inline T_numtype apply(T_numtype x)\n"
-"    { return -x; }\n"
-"};\n\n";
+"    { return -x; }\n\n"
+"        template<class T1>\n"
+"        "
+"static void prettyPrint(string& str, prettyPrintFormat& format, const T1& a)\n"
+"        {\n"
+"                str += \"-(\";\n"
+"                       a.prettyPrint(str,format);\n"
+"                       str += \")\";\n"
+"        }\n"
+"};\n\n"
+;
 
 one("norm",   ""            ,"norm"    ,0             ,"", cflag);
 
@@ -463,6 +489,7 @@ ofs <<
 "        str += \")\";\n"
 "    }\n"
 "};\n\n"
+"#ifdef BZ_HAVE_COMPLEX_MATH\n"
 "// Specialization of _bz_sqr for complex<T>\n"
 "template<class T>\n"
 "class _bz_sqr<complex<T> > : public OneOperandApplicativeTemplatesBase {\n"
@@ -481,7 +508,8 @@ ofs <<
 "        a.prettyPrint(str,format);\n"
 "        str += \")\";\n"
 "    }\n"
-"};\n\n"
+"};\n"
+"#endif\n\n"
 ;
 
 one("sqrt"   ,""            ,"sqrt"    ,"double"       ,"Square root");
