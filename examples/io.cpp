@@ -1,5 +1,9 @@
 #include <blitz/Array.h>
-#include <fstream.h>
+#ifdef BZ_HAVE_STD
+	#include <fstream>
+#else
+	#include <fstream.h>
+#endif
 
 BZ_USING_NAMESPACE(blitz)
 
