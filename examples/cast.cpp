@@ -4,6 +4,12 @@
  * $Id$
  *
  * $Log$
+ * Revision 1.4  2002/07/02 19:48:44  jcumming
+ * Added check for use of new-style expression templates.  I changed the syntax
+ * for casting the type of a blitz Array to make it simpler.  Instead of giving
+ * a second argument that is an instance of the new element type, just provide
+ * the new element type as a template parameter.
+ *
  * Revision 1.3  2001/01/26 18:30:50  tveldhui
  * More source code reorganization to reduce compile times.
  *
@@ -24,7 +30,7 @@
  *****************************************************************************
  */
 
-#include <blitz/Array.h>
+#include <blitz/array.h>
 
 #ifdef BZ_NAMESPACES
 using namespace blitz;
@@ -41,7 +47,11 @@ int main()
     C = A / B;
     cout << C << endl;
 
+#ifdef BZ_NEW_EXPRESSION_TEMPLATES
+    C = A / cast<float>(B);
+#else
     C = A / cast(B, float());
+#endif
     cout << C << endl;
 
     return 0;
