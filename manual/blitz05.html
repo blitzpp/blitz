@@ -11,20 +11,20 @@
 </ul>
 <hr>
 
-<a name="l96"></a>
+<a name="l97"></a>
 <h1>Chapter 5: Multicomponent, complex, and user type arrays</h1>
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>5.1: Multicomponent and complex arrays</font></td></tr></table><br><a name="l97"></a>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>5.1: Multicomponent and complex arrays</font></td></tr></table><br><a name="l98"></a>
 
 <a name="arrays-multi"></a>
-    <!-- BZINDEX Array!multicomponent --><a name="index00398">
-<!-- BZINDEX multicomponent arrays --><a name="index00399">
+    <!-- BZINDEX Array!multicomponent --><a name="index00399">
+<!-- BZINDEX multicomponent arrays --><a name="index00400">
 Multicomponent arrays have elements which are vectors.  Examples
 of such arrays are vector fields, colour images (which contain, say,
 RGB tuples), and multispectral images.  Complex-valued arrays can
 also be regarded as multicomponent arrays, since each element is
 a 2-tuple of real values.
 <p>Here are some examples of multicomponent arrays:
-<p><!-- BZINDEX RGB24 example --><a name="index00400">
+<p><!-- BZINDEX RGB24 example --><a name="index00401">
 <p><pre>
   // A 3-dimensional array; each element is a length 3 vector of float
   Array&lt;TinyVector&lt;float,3&gt;,3&gt; A;  
@@ -39,10 +39,10 @@ a 2-tuple of real values.
 
   Array&lt;RGB24,2&gt; C;
 </pre>
-<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>5.1.1: Extracting components</font></td></tr></table><a name="l98"></a>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>5.1.1: Extracting components</font></td></tr></table><a name="l99"></a>
 
-<p><!-- BZINDEX extracting components --><a name="index00401">
-<!-- BZINDEX Array!extracting components --><a name="index00402">
+<p><!-- BZINDEX extracting components --><a name="index00402">
+<!-- BZINDEX Array!extracting components --><a name="index00403">
 <p>Blitz++ provides some special support for such arrays.  The most
 important is the ability to extract a single component.  For
 example:
@@ -70,7 +70,7 @@ knows this already for <code>TinyVector</code> and <code>complex&lt;T&gt;</code>
 If you use your own type, though, you will have to tell
 Blitz++ this information using the macro <code>BZ_DECLARE_MULTICOMPONENT_TYPE()</code>.
 This macro has three arguments:
-<p><!-- BZINDEX BZ_DECLARE_MULTICOMPONENT_TYPE --><a name="index00403">
+<p><!-- BZINDEX BZ_DECLARE_MULTICOMPONENT_TYPE --><a name="index00404">
 <pre>BZ_DECLARE_MULTICOMPONENT_TYPE(T_element, T_componentType, numComponents)
 </pre>
 <code>T_element</code> is the element type of the array.  <code>T_componentType</code>
@@ -79,7 +79,7 @@ the number of components in each element.
 <p>An example will clarify this.  Suppose we wanted to make a
 colour image, stored in 24-bit HSV (hue-saturation-value) format.
 We can make a class <code>HSV24</code> which represents a single pixel:
-<p><!-- BZINDEX HSV24 example --><a name="index00404">
+<p><!-- BZINDEX HSV24 example --><a name="index00405">
 <p><pre>#include &lt;blitz/array.h&gt;
 
 using namespace blitz;
@@ -127,10 +127,10 @@ components:
     A[HSV24::value](middle,middle) *= 1.2;
 }
 </pre>
-<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>5.1.2: Special support for complex arrays</font></td></tr></table><a name="l99"></a>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>5.1.2: Special support for complex arrays</font></td></tr></table><a name="l100"></a>
 
-<p><!-- BZINDEX Array!complex --><a name="index00405">
-<!-- BZINDEX complex arrays --><a name="index00406">
+<p><!-- BZINDEX Array!complex --><a name="index00406">
+<!-- BZINDEX complex arrays --><a name="index00407">
 <p>Since complex arrays are used frequently, Blitz++ provides
 two special methods for getting the real and imaginary components:
 <p><pre>Array&lt;complex&lt;float&gt;,2&gt; A(32,32);
@@ -146,10 +146,10 @@ over complex-valued arrays, such as
 <code>conj</code>, <code>polar</code>, <code>arg</code>, <code>abs</code>, <code>cos</code>, <code>pow</code>, etc.
 See the section on math functions 
 (<a href="blitz03.html#math-functions">3.8</a>) for details.
-<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>5.1.3: Zipping together expressions</font></td></tr></table><a name="l100"></a>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>5.1.3: Zipping together expressions</font></td></tr></table><a name="l101"></a>
 
-<p><!-- BZINDEX zipping expressions --><a name="index00407">
-<!-- BZINDEX Array!zipping expressions --><a name="index00408">
+<p><!-- BZINDEX zipping expressions --><a name="index00408">
+<!-- BZINDEX Array!zipping expressions --><a name="index00409">
 Blitz++ provides a function <code>zip()</code> which lets you
 combine two or more expressions into a single component.
 For example, you can combine two real expressions into
@@ -175,10 +175,10 @@ A = zip(cos(theta), sin(theta), complex&lt;float&gt;());
    A[i] = complex&lt;float&gt;(cos(theta[i]), sin(theta[i]));
 </pre>
 <p>
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>5.2: Creating arrays of a user type</font></td></tr></table><br><a name="l101"></a>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>5.2: Creating arrays of a user type</font></td></tr></table><br><a name="l102"></a>
 
 <a name="arrays-usertype"></a>
-    <!-- BZINDEX Array!of your own types --><a name="index00409">
+    <!-- BZINDEX Array!of your own types --><a name="index00410">
 <p>You can use the <code>Array</code> class with types you have created yourself,
 or types from another library.  If you want to do arithmetic on the
 array, whatever operators you use on the arrays have to be defined

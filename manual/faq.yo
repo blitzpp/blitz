@@ -30,7 +30,7 @@ bzindex(memory hog, gcc)
 bzindex(out of virtual memory, gcc)
 bzindex(virtual memory problems, gcc)
 
-bzfaq(I can't use gcc on my PC because it requires 45-150 Mb
+bzfaq(I can't use gcc on my elderly PC because it requires 45-150 Mb
 to compile with Blitz++)
 
 Unfortunately this is true.  If this problem is ever fixed, it

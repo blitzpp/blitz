@@ -3,12 +3,20 @@ primarily for this purpose.  For this reason, you may want to investigate
 some other available libraries, such as POOMA, before choosing to
 implement a parallel code using Blitz++.
 
+bzindex(parallel computing)
+
 bzsect(Blitz++ and thread safety)
+
+bzindex(thread safety)
 
 To enable thread-safety in Blitz++, you need to do one of these things:
 
+bzindex(BZ_THREADSAFE)
+bzindex(BZ_MUTEX_...)
+
 startit()
 
+bzindex(REENTRANT)
 it() Compile with tt(gcc -pthread), or tt(CC -mt) under Solaris.
 (These options define tt(_REENTRANT), which tells Blitz++ to generate
 thread-safe code).
@@ -22,6 +30,8 @@ by a mutex.  By default, pthread mutexes are used.
 If you would prefer a different mutex implementation, add the
 appropriate tt(BZ_MUTEX) macros to tt(<blitz/blitz.h>) and send them
 to tt(blitz-dev@oonumerics.org) for incorporation.
+
+bzindex(locking (thread safety))
 
 Blitz++ does not do locking for every array element access; this would
 result in terrible performance.  It is the job of the library

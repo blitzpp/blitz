@@ -11,17 +11,17 @@
 </ul>
 <hr>
 
-<a name="l79"></a>
+<a name="l80"></a>
 <h1>Chapter 4: Stencils</h1>
 <p><a name="arrays-stencils"></a>
     
-<!-- BZINDEX stencil objects --><a name="index00381">
-<!-- BZINDEX Array!stencils --><a name="index00382">
+<!-- BZINDEX stencil objects --><a name="index00382">
+<!-- BZINDEX Array!stencils --><a name="index00383">
 <p>Blitz++ provides an implementation of stencil objects which
 is currently <strong>experimental</strong>.  This means that the exact
 details of how they are declared and used may change in future
 releases.  Use at your own risk.
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>4.1: Motivation: a nicer notation for stencils</font></td></tr></table><br><a name="l80"></a>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>4.1: Motivation: a nicer notation for stencils</font></td></tr></table><br><a name="l81"></a>
 
 <p>Suppose we wanted to implement the 3-D acoustic wave equation
 using finite differencing.  Here is how a single iteration would
@@ -45,9 +45,9 @@ BZ_END_STENCIL
 
   applyStencil(acoustic3D_stencil(), P1, P2, P3, c);
 </pre>
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>4.2: Declaring stencil objects</font></td></tr></table><br><a name="l81"></a>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>4.2: Declaring stencil objects</font></td></tr></table><br><a name="l82"></a>
 
-<p><!-- BZINDEX stencil objects!declaring --><a name="index00383">
+<p><!-- BZINDEX stencil objects!declaring --><a name="index00384">
 <p>A stencil declaration may not be inside a function.
 It can appear inside a class declaration (in which
 case the stencil object is a nested type).
@@ -66,7 +66,7 @@ in the next section).
 statements, if/else/elseif constructs, function calls,
 loops, etc.
 <p>Here are some simple examples:
-<p><!-- BZINDEX BZ_DECLARE_STENCIL --><a name="index00384">
+<p><!-- BZINDEX BZ_DECLARE_STENCIL --><a name="index00385">
 <p><pre>
 BZ_DECLARE_STENCIL2(smooth2D,A,B)
   A = (B(0,0) + B(0,1) + B(0,-1) + B(1,0) + B(-1,0)) / 5.0;
@@ -97,7 +97,7 @@ the parentheses (i.e. as in "A"), then the current element
 is read.
 <p>You can invoke <em>stencil operators</em> which calculate finite
 differences and laplacians.
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>4.3: Automatic determination of stencil extent</font></td></tr></table><br><a name="l82"></a>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>4.3: Automatic determination of stencil extent</font></td></tr></table><br><a name="l83"></a>
 
 <p>In stencil declarations such as
 <pre>
@@ -135,9 +135,9 @@ index:
   min indices  -1, -1
   max indices  +1, +1
 </pre>
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>4.4: Stencil operators</font></td></tr></table><br><a name="l83"></a>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>4.4: Stencil operators</font></td></tr></table><br><a name="l84"></a>
 
-<p><!-- BZINDEX stencil operators --><a name="index00385">
+<p><!-- BZINDEX stencil operators --><a name="index00386">
 <p>This section lists all the stencil operators provided by Blitz++.
 They assume that an array represents evenly spaced data points
 separated by a distance of <code>h</code>.  A 2nd-order accurate operator
@@ -158,9 +158,9 @@ the normalized version of <code>central12</code>, and has factor <code>h</code>
 instead of <code>2h</code>.
 <p>These operators are defined in <code>blitz/array/stencilops.h</code> if
 you wish to see the implementation.
-<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.1: Central differences</font></td></tr></table><a name="l84"></a>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.1: Central differences</font></td></tr></table><a name="l85"></a>
 
-<p><!-- BZINDEX central differences --><a name="index00386">
+<p><!-- BZINDEX central differences --><a name="index00387">
 <p><dl>
 <p><p></p><dt><strong>central12(A,dimension)</strong><dd>: 1st derivative, 2nd order accurate.  Factor: 2h
 <p><a name="stencils/central12.yo"></a>
@@ -234,9 +234,9 @@ appropriate.
 <p>These are available in multicomponent versions: for example,
 <code>central12(A,component,dimension)</code> gives the central12 operator for the 
 specified component (Components are numbered 0, 1, ... N-1).  
-<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.2: Forward differences</font></td></tr></table><a name="l85"></a>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.2: Forward differences</font></td></tr></table><a name="l86"></a>
 
-<p><!-- BZINDEX forward differences --><a name="index00387">
+<p><!-- BZINDEX forward differences --><a name="index00388">
 <p><dl>
 <p><p></p><dt><strong>forward11(A,dimension)</strong><dd>: 1st derivative, 1st order accurate.  Factor: h
 <p><a name="stencils/forward11.yo"></a>
@@ -310,9 +310,9 @@ appropriate.
 <p>These are available in multicomponent versions: for example,
 <code>forward11(A,component,dimension)</code> gives the forward11 operator for the 
 specified component (Components are numbered 0, 1, ... N-1).
-<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.3: Backward differences</font></td></tr></table><a name="l86"></a>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.3: Backward differences</font></td></tr></table><a name="l87"></a>
 
-<p><!-- BZINDEX backward differences --><a name="index00388">
+<p><!-- BZINDEX backward differences --><a name="index00389">
 <p><dl>
 <p><p></p><dt><strong>backward11(A,dimension)</strong><dd>: 1st derivative, 1st order accurate.  Factor: h
 <p><a name="stencils/backward11.yo"></a>
@@ -386,9 +386,9 @@ appropriate.
 <p>These are available in multicomponent versions: for example,
 <code>backward42(A,component,dimension)</code> gives the backward42 operator for the 
 specified component (Components are numbered 0, 1, ... N-1).
-<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.4: Laplacian operators</font></td></tr></table><a name="l87"></a>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.4: Laplacian operators</font></td></tr></table><a name="l88"></a>
 
-<p><!-- BZINDEX Laplacian operators --><a name="index00389">
+<p><!-- BZINDEX Laplacian operators --><a name="index00390">
 
 <p><dl>
 <p><p></p><dt><strong>Laplacian2D(A)</strong><dd>: 2nd order accurate, 2-dimensional laplacian.  Factor: h^2
@@ -419,9 +419,9 @@ specified component (Components are numbered 0, 1, ... N-1).
 <p>Note that the above are available in normalized versions
 <code>Laplacian2D4n</code>, <code>Laplacian3D4n</code> which have factors
 h^2.
-<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.5: Gradient operators</font></td></tr></table><a name="l88"></a>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.5: Gradient operators</font></td></tr></table><a name="l89"></a>
 
-<p><!-- BZINDEX gradient operators --><a name="index00390">
+<p><!-- BZINDEX gradient operators --><a name="index00391">
 <p>These return <code>TinyVector</code>s of the appropriate numeric type and length:
 <p><dl>
 <p><p></p><dt><strong>grad2D(A)</strong><dd>: 2nd order, 2-dimensional gradient (vector of first derivatives),
@@ -433,9 +433,9 @@ generated using the central12 operator.  Factor: 2h
 <p>These are available in normalized versions
 <code>grad2Dn</code>, <code>grad2D4n</code>, <code>grad3Dn</code> and <code>grad3D4n</code> which
 have factors h.
-<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.6: Jacobian operators</font></td></tr></table><a name="l89"></a>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.6: Jacobian operators</font></td></tr></table><a name="l90"></a>
 
-<!-- BZINDEX Jacobian operators --><a name="index00391">
+<!-- BZINDEX Jacobian operators --><a name="index00392">
 <p>The Jacobian operators are defined over 3D vector fields only
 (e.g. <code>Array&lt;TinyVector&lt;double,3&gt;,3&gt;</code>).  They return a
 <code>TinyMatrix&lt;T,3,3&gt;</code> where T is the numeric type of the
@@ -449,9 +449,9 @@ using the central14 operator.  Factor: 12h.
 <p>These are also available in normalized
 versions <code>Jacobian3Dn</code> and <code>Jacobain3D4n</code> which
 have factors h.
-<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.7: Grad-squared operators</font></td></tr></table><a name="l90"></a>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.7: Grad-squared operators</font></td></tr></table><a name="l91"></a>
 
-<p><!-- BZINDEX Grad-squared operators --><a name="index00392">
+<p><!-- BZINDEX Grad-squared operators --><a name="index00393">
 <p>There are also grad-squared operators, which return <code>TinyVector</code>s of
 second derivatives:
 <p><dl>
@@ -467,9 +467,9 @@ central24 operator.  Factor: 12h^2
 <p>Note that the above are available in normalized versions
 <code>gradSqr2Dn</code>, <code>gradSqr2D4n</code>, <code>gradSqr3Dn</code>, <code>gradSqr3D4n</code>
 which have factors h^2.
-<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.8: Curl operators</font></td></tr></table><a name="l91"></a>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.8: Curl operators</font></td></tr></table><a name="l92"></a>
 
-<p><!-- BZINDEX curl operator --><a name="index00393">
+<p><!-- BZINDEX curl operator --><a name="index00394">
 
 <p>These curl operators return scalar values:
 <p><dl>
@@ -500,10 +500,10 @@ field, using the central14 operator.  Factor: 12h
 <p></dl>
 <p>Note that the above are available in normalized versions <code>curln</code> and
 <code>curl4n</code>, which have factors of <code>h</code>.
-<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.9: Divergence operators</font></td></tr></table><a name="l92"></a>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.9: Divergence operators</font></td></tr></table><a name="l93"></a>
 
 <p>The divergence operators return a scalar value.
-<!-- BZINDEX divergence operator --><a name="index00394">
+<!-- BZINDEX divergence operator --><a name="index00395">
 
 <p><dl>
 <p><p></p><dt><strong>div(Vx,Vy)</strong><dd>: 2nd order div operator using the central12 operator.
@@ -526,9 +526,9 @@ using the central14 operator.  Factor: 12h
 <p>These are available in normalized versions
 <code>divn</code>, <code>div4n</code>, <code>div2Dn</code>, <code>div2D4n</code>, <code>div3Dn</code>, and
 <code>div3D4n</code> which have factors of <code>h</code>.
-<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.10: Mixed partial derivatives</font></td></tr></table><a name="l93"></a>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.10: Mixed partial derivatives</font></td></tr></table><a name="l94"></a>
 
-<p><!-- BZINDEX mixed partial operators --><a name="index00395">
+<p><!-- BZINDEX mixed partial operators --><a name="index00396">
 <dl>
 <p><p></p><dt><strong>mixed22(A,dim1,dim2)</strong><dd>: 2nd order accurate, 2nd mixed partial derivative.
 Factor: 4h^2
@@ -537,9 +537,9 @@ Factor: 144h^2
 <p></dl>
 <p>There are also normalized versions of the above, <code>mixed22n</code> and
 <code>mixed24n</code> which have factors <code>h^2</code>.
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>4.5: Declaring your own stencil operators</font></td></tr></table><br><a name="l94"></a>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>4.5: Declaring your own stencil operators</font></td></tr></table><br><a name="l95"></a>
 
-<p><!-- BZINDEX stencil operators!declaring your own --><a name="index00396">
+<p><!-- BZINDEX stencil operators!declaring your own --><a name="index00397">
 <p>You can declare your own stencil operators using the macro
 <code>BZ_DECLARE_STENCIL_OPERATOR1</code>.  For example, here is the
 declaration of <code>Laplacian2D</code>:
@@ -584,9 +584,9 @@ BZ_DECLARE_DIFF(central12,A) {
 <code>offset</code> in dimension <code>dim</code>.
 <p>Stencil operator declarations cannot occur inside a function.  If
 declared inside a class, they are scoped by the class.
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>4.6: Applying a stencil</font></td></tr></table><br><a name="l95"></a>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>4.6: Applying a stencil</font></td></tr></table><br><a name="l96"></a>
 
-<p><!-- BZINDEX stencil objects!applying --><a name="index00397">
+<p><!-- BZINDEX stencil objects!applying --><a name="index00398">
 <p>The syntax for applying a stencil is:
 <p><pre>
   applyStencil(stencilname(),A,B,C...,F);

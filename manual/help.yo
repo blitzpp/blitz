@@ -8,6 +8,10 @@ The starting point for all bug reports, feature requests and
 support questions is the Blitz++ support page, at
 url(http://oonumerics.org/blitz/support/)(http://oonumerics.org/blitz/support/)
 
+Please note the search engine box on this web page which lets you search
+the mailing list archives.  This will often turn up answers to your
+question if it has been asked before.
+
 bzsubsect(How to subscribe to a mailing list)
 
 bzindex(mailing lists)
@@ -19,7 +23,6 @@ bf(bzverb(\
 subscribe blitz-support
 subscribe blitz-bugs
 subscribe blitz-dev
-subscribe blitz
 ))
 
 bzsubsect(blitz-bugs)

@@ -11,18 +11,23 @@
 </ul>
 <hr>
 
-<a name="l116"></a>
-<h1>Chapter 8: Parallel Computing</h1>
+<a name="l117"></a>
+<h1>Chapter 8: Parallel Computing with Blitz++</h1>
 <a name="parallel"></a>
     While Blitz++ can be used for parallel computing, it was not designed
 primarily for this purpose.  For this reason, you may want to investigate
 some other available libraries, such as POOMA, before choosing to
 implement a parallel code using Blitz++.
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>8.1: Blitz++ and thread safety</font></td></tr></table><br><a name="l117"></a>
+<p><!-- BZINDEX parallel computing --><a name="index00425">
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>8.1: Blitz++ and thread safety</font></td></tr></table><br><a name="l118"></a>
 
+<p><!-- BZINDEX thread safety --><a name="index00426">
 <p>To enable thread-safety in Blitz++, you need to do one of these things:
+<p><!-- BZINDEX BZ_THREADSAFE --><a name="index00427">
+<!-- BZINDEX BZ_MUTEX_... --><a name="index00428">
 <p><dl>
-<p><li > Compile with <code>gcc -pthread</code>, or <code>CC -mt</code> under Solaris.
+<p><!-- BZINDEX REENTRANT --><a name="index00429">
+<li > Compile with <code>gcc -pthread</code>, or <code>CC -mt</code> under Solaris.
 (These options define <code>_REENTRANT</code>, which tells Blitz++ to generate
 thread-safe code).
 <li > Compile with <code>-DBZ_THREADSAFE</code>, or <code>#define BZ_THREADSAFE</code>
@@ -33,6 +38,7 @@ by a mutex.  By default, pthread mutexes are used.
 If you would prefer a different mutex implementation, add the
 appropriate <code>BZ_MUTEX</code> macros to <code>&lt;blitz/blitz.h&gt;</code> and send them
 to <code>blitz-dev@oonumerics.org</code> for incorporation.
+<p><!-- BZINDEX locking (thread safety) --><a name="index00430">
 <p>Blitz++ does not do locking for every array element access; this would
 result in terrible performance.  It is the job of the library
 user to ensure that appropriate synchronization is used.
