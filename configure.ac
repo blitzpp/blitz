@@ -29,11 +29,13 @@ Configuring $PACKAGE_STRING for $target
 ])
 
 # Fortran compiler
+AC_PROG_F77([xlf ifort ifc f77 g77 gfortran pgf77 fort77])
+AC_PROG_FC([xlf90 ifort ifc f90 g95 gfortran pgf90])
+AC_FORTRAN_FLAGS_PRESET
+
 AC_LANG(Fortran 77)
-AC_PROG_F77([xlf ifort ifc gfortran f77 g77 pgf77 fort77])
 AC_F77_LIBRARY_LDFLAGS
 AC_LANG(Fortran)
-AC_PROG_FC([xlf90 ifort ifc gfortran f90 pgf90])
 AC_FC_LIBRARY_LDFLAGS
 
 if test -n "$FC"; then
@@ -42,11 +44,10 @@ fi
 if test -n "$FC"; then
     AC_FC_SRCEXT(f90,,FC=)
 fi
-AC_FORTRAN_FLAGS_PRESET
 
 # C++ compiler
-AC_LANG(C++)
 AC_PROG_CXX([xlc++ icpc icc xlC cxx aCC CC g++ pgCC KCC FCC])
+AC_LANG(C++)
 AC_CXX_FLAGS_PRESET
 
 # Prefix config macros with BZ_ and create compiler-specific bzconfig.h
