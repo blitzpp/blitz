@@ -64,7 +64,6 @@ clean-local:
 		$(RM) -f $(PACKAGE)-$(VERSION).pdf.bz2; \
 	fi
 	@if test -d html; then \
-	@if test -d html; then \
 		$(RM) -rf html; \
 	fi
 	@if test -d latex; then \
@@ -78,6 +77,8 @@ make-install-dirs:
 	fi
 
 install-data-hook: make-install-dirs
-	@echo Installing documentations into $(datadir)/doc/$(PACKAGE)-$(VERSION) ; \
-	$(INSTALL_DATA) html/* $(datadir)/doc/$(PACKAGE)-$(VERSION)
+	@if test -d html; then \
+		echo Installing documentations into $(datadir)/doc/$(PACKAGE)-$(VERSION) ; \
+		$(INSTALL_DATA) html/* $(datadir)/doc/$(PACKAGE)-$(VERSION) ; \
+	fi
 
