@@ -102,3 +102,6 @@ Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* blitz/vecexpr.h: (re)inserted includes for vecbops, vecuops and vecbfn
 	in order to compile testsuite/tinyvec.cpp
 	* benchmarks/ct.cpp: removed (output of g++ -E)
+	* benchmarks/acou3db4.cpp: corrected typo in 
+	#include <blitz/array/stencil.h>, should be 
+	#include <blitz/array/stencils.h>
