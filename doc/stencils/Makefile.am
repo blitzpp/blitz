@@ -12,20 +12,20 @@ LTCXXCOMPILE = $(LIBTOOL) --mode=link $(CXX) $(DEFS) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 
 %2D.texi :
-	$(LTCXXCOMPILE) "-Dstenciltoapply=$(patsubst %.texi,%,$@)(A)" \
-		-o dump-stencil$(EXEEXT) $< $(LDADD)
+	$(LTCXXCOMPILE) -Dstenciltoapply=$(patsubst %.texi,%,$@) \
+		-Dstencilargs=A -o dump-stencil$(EXEEXT) $< $(LDADD)
 	./dump-stencil$(EXEEXT) > $@  2>&1
 	-rm -f dump-stencil$(EXEEXT)
 
 %2D4.texi :
-	$(LTCXXCOMPILE) "-Dstenciltoapply=$(patsubst %.texi,%,$@)(A)" \
-		-o dump-stencil$(EXEEXT) $< $(LDADD)
+	$(LTCXXCOMPILE) -Dstenciltoapply=$(patsubst %.texi,%,$@) \
+		-Dstencilargs=A -o dump-stencil$(EXEEXT) $< $(LDADD)
 	./dump-stencil$(EXEEXT) > $@  2>&1
 	-rm -f dump-stencil$(EXEEXT)
 
 %.texi :
-	$(LTCXXCOMPILE) "-Dstenciltoapply=$(patsubst %.texi,%,$@)(A,1)" \
-		-o dump-stencil$(EXEEXT) $< $(LDADD)
+	$(LTCXXCOMPILE) -Dstenciltoapply=$(patsubst %.texi,%,$@) \
+		-Dstencilargs=A,1 -o dump-stencil$(EXEEXT) $< $(LDADD)
 	./dump-stencil$(EXEEXT) > $@  2>&1
 	-rm -f dump-stencil$(EXEEXT)
 
