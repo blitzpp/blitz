@@ -23,6 +23,11 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2002/12/19 20:41:02  julianc
+ * Removed names of function arguments in the static methods of the
+ * _bz_meta_vecAssign<0,0> specialization to eliminate compiler
+ * warnings about unused variables.
+ *
  * Revision 1.2  2001/01/24 20:22:51  tveldhui
  * Updated copyright date in headers.
  *
@@ -80,18 +85,18 @@ template<>
 class _bz_meta_vecAssign<0,0> {
 public:
     template<class T_vector, class T_expr, class T_updater>
-    static inline void fastAssign(T_vector& vec, T_expr expr, T_updater u)
+    static inline void fastAssign(T_vector&, T_expr, T_updater)
     { }
 
     template<class T_vector, class T_expr, class T_updater>
-    static inline void assign(T_vector& vec, T_expr expr, T_updater u)
+    static inline void assign(T_vector&, T_expr, T_updater)
     { }
 
     template<class T_vector, class T_numtype, class T_updater>
-    static inline void assignWithArgs(T_vector& vec, T_updater u,
-        T_numtype x0, T_numtype x1=0, T_numtype x2=0, T_numtype x3=0,
-        T_numtype x4=0, T_numtype x5=0, T_numtype x6=0, T_numtype x7=0,
-        T_numtype x8=0, T_numtype x9=0)
+    static inline void assignWithArgs(T_vector&, T_updater,
+        T_numtype, T_numtype =0, T_numtype =0, T_numtype =0,
+        T_numtype =0, T_numtype =0, T_numtype =0, T_numtype =0,
+        T_numtype =0, T_numtype =0)
     {
     }
 };
