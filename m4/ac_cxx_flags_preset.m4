@@ -48,7 +48,7 @@ if test "$enableval" = yes ; then
 		;;
 		esac
 	;;
-	cxx) dnl DEC C++  http://www.digital.com/
+	cxx) dnl Compaq C++  http://www.compaq.com/
 		CXX_VENDOR="Compaq"
 		CXX_V=`cxx -V`
 		cxx_version=`expr "$CXX_V" : '.*\(@<:@0-9@:>@\)\..*'`
@@ -80,40 +80,47 @@ if test "$enableval" = yes ; then
 		CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
 		CXX_PROFIL_FLAGS="-pg"
 	;;
-	aCC) dnl aCC http://www.hp.com/go/c++
+	aCC) dnl HP aCC http://www.hp.com/go/c++
 		CXX_VENDOR="HP"
 		CXXFLAGS="-AA"
 		CXX_OPTIMIZE_FLAGS="+O2"
 		CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
 		CXX_PROFIL_FLAGS="+pal"
 	;;
-	icc) dnl icc http://www.intel.com/
+	icpc|icc) dnl Intel icc http://www.intel.com/
 		CXX_VENDOR="Intel"
 		CXXFLAGS="-strict_ansi"
 		CXX_OPTIMIZE_FLAGS="-O3 -Zp16 -ip -ansi_alias"
 		CXX_DEBUG_FLAGS="-g -O0 -C -DBZ_DEBUG"
 		CXX_PROFIL_FLAGS="-p"
 	;;
-	*xlC) dnl IBM Visual Age C++   http://www.ibm.com/
+	xlc++*) dnl IBM C++ compiler for Darwin
 		CXX_VENDOR="IBM"
-		CXXFLAGS="-qrtti=all"
+		CXXFLAGS="-qrtti -D__APPLE"
+		CXX_OPTIMIZE_FLAGS="-O5 -qstrict -qstrict_induction -qmaxmem=8192 -qansialias"
+		CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
+		CXX_PROFIL_FLAGS="-p"
+	;;      
+	*xlC*) dnl IBM Visual Age C++   http://www.ibm.com/
+		CXX_VENDOR="IBM"
+		CXXFLAGS="-qrtti=all -D__IBM"
 		CXX_OPTIMIZE_FLAGS="-O5 -qstrict -qstrict_induction -qmaxmem=8192 -qansialias"
 		CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
 		CXX_PROFIL_FLAGS="-p"
 	;;      
 	FCC) dnl Fujitsu C++
 		CXX_VENDOR="Fujitsu"
-		CXXFLAGS=""
+		CXXFLAGS="-D__FUJITSU"
 		CXX_OPTIMIZE_FLAGS="-K fast"
 		CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
 	;;
-	pgCC) dnl Portland group   http://www.pgroup.com
+	pgCC) dnl Portland Group   http://www.pgroup.com
 		CXX_VENDOR="PGI"
 		CXXFLAGS=""
 		CXX_OPTIMIZE_FLAGS="-O4 -Mnoframe -Mnodepchk -Minline=levels:25"
 		CXX_DEBUG_FLAGS="-g -O0 -DBZ_DEBUG"
 	;;
-	*CC) 
+	*CC*) 
 		case "$target" in
 		*sgi*) dnl SGI C++  http://www.sgi.com
 			CXX_VENDOR="SGI"
