@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.11  2003/01/06 14:42:15  papadop
+ * Load of ISO C++ changes (some are necessary for the future g++-3.4).
+ *
  * Revision 1.10  2002/08/30 22:12:49  jcumming
  * Added declaration of setStorage() method, which lets user set Array storage
  * format after construction.
@@ -145,19 +148,19 @@ BZ_NAMESPACE(blitz)
  * Forward declarations
  */
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 class ArrayIterator;
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 class ConstArrayIterator;
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 class FastArrayIterator;
 
-template<class P_expr>
+template<typename P_expr>
 class _bz_ArrayExpr;
 
-template<class T_array, class T_index>
+template<typename T_array, typename T_index>
 class IndirectArray;
 
 struct _bz_endTag {};
@@ -172,7 +175,7 @@ struct _bz_endTag {};
 // To make this work, need to expose MemoryBlockReference::numReferences()
 // and make Array<P,N2> a friend of Array<P,N> for slicing.
 
-template<class P_numtype, int N_rank>
+template<typename P_numtype, int N_rank>
 class Array : public MemoryBlockReference<P_numtype> 
 #ifdef BZ_NEW_EXPRESSION_TEMPLATES
     , public ETBase<Array<P_numtype,N_rank> >
@@ -220,7 +223,7 @@ public:
      * Construct an array from an array expression.
      */
 
-    template<class T_expr>
+    template<typename T_expr>
     _bz_explicit Array(_bz_ArrayExpr<T_expr> expr);
 
     /*
@@ -894,8 +897,8 @@ public:
      * a combination of integer and Range arguments.  It's not intended
      * for end-user use.
      */
-    template<int N_rank2, class R0, class R1, class R2, class R3, class R4,
-        class R5, class R6, class R7, class R8, class R9, class R10>
+    template<int N_rank2, typename R0, typename R1, typename R2, typename R3, typename R4,
+        typename R5, typename R6, typename R7, typename R8, typename R9, typename R10>
     Array(Array<T_numtype,N_rank2>& array, R0 r0, R1 r1, R2 r2,
         R3 r3, R4 r4, R5 r5, R6 r6, R7 r7, R8 r8, R9 r9, R10 r10)
     {
@@ -922,7 +925,7 @@ public:
     { return T_iterator(*this); }
 
     // Deprecated: now extractComponent(...)
-    template<class P_numtype2>
+    template<typename P_numtype2>
     Array<P_numtype2,N_rank>          chopComponent(P_numtype2 a, int compNum,
                                           int numComponents) const
     { return extractComponent(a, compNum, numComponents); }
@@ -1018,7 +1021,7 @@ public:
     const TinyVector<int,N_rank>&     extent() const
     { return length_; }
 
-    template<class P_numtype2>
+    template<typename P_numtype2>
     Array<P_numtype2,N_rank>          extractComponent(P_numtype2, int compNum,
                                           int numComponents) const;
 
@@ -1994,110 +1997,100 @@ public:
 
 #ifdef BZ_PARTIAL_ORDERING
 
-    template<class T1, class T2>
-    _bz_typename SliceInfo<T_numtype,T1,T2>::T_slice
+    template<typename T1, typename T2>
+    typename SliceInfo<T_numtype,T1,T2>::T_slice
     operator()(T1 r1, T2 r2) const
     {
-        return SliceInfo<T_numtype,T1,T2>::T_slice(noConst(), r1, r2,
-            nilArraySection(), nilArraySection(), nilArraySection(),
+        typedef typename SliceInfo<T_numtype,T1,T2>::T_slice slice;
+        return slice(noConst(), r1, r2, nilArraySection(), nilArraySection(), nilArraySection(),
             nilArraySection(), nilArraySection(), nilArraySection(),
             nilArraySection(), nilArraySection(), nilArraySection());
     }
 
-    template<class T1, class T2, class T3>
-    _bz_typename SliceInfo<T_numtype,T1,T2,T3>::T_slice 
+    template<typename T1, typename T2, typename T3>
+    typename SliceInfo<T_numtype,T1,T2,T3>::T_slice 
     operator()(T1 r1, T2 r2, T3 r3) const
     {
-        return SliceInfo<T_numtype,T1,T2,T3>::T_slice(noConst(), r1, r2, r3,
-            nilArraySection(), nilArraySection(), nilArraySection(),
+        typedef typename SliceInfo<T_numtype,T1,T2,T3>::T_slice slice;
+        return slice(noConst(), r1, r2, r3, nilArraySection(), nilArraySection(), nilArraySection(),
             nilArraySection(), nilArraySection(), nilArraySection(),
             nilArraySection(), nilArraySection());
     }
 
-    template<class T1, class T2, class T3, class T4>
-    _bz_typename SliceInfo<T_numtype,T1,T2,T3,T4>::T_slice
+    template<typename T1, typename T2, typename T3, typename T4>
+    typename SliceInfo<T_numtype,T1,T2,T3,T4>::T_slice
     operator()(T1 r1, T2 r2, T3 r3, T4 r4) const
     {
-        return SliceInfo<T_numtype,T1,T2,T3,T4>::T_slice(noConst(), r1, r2, r3,
-            r4, nilArraySection(), nilArraySection(),
+        typedef typename SliceInfo<T_numtype,T1,T2,T3,T4>::T_slice slice;
+        return slice(noConst(), r1, r2, r3, r4, nilArraySection(), nilArraySection(),
             nilArraySection(), nilArraySection(), nilArraySection(),
             nilArraySection(), nilArraySection());
     }
 
-    template<class T1, class T2, class T3, class T4, class T5>
-    _bz_typename SliceInfo<T_numtype,T1,T2,T3,T4,T5>::T_slice
+    template<typename T1, typename T2, typename T3, typename T4, typename T5>
+    typename SliceInfo<T_numtype,T1,T2,T3,T4,T5>::T_slice
     operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5) const
     {
-        return SliceInfo<T_numtype,T1,T2,T3,T4,T5>::T_slice(noConst(), r1, r2, 
-            r3, r4, r5, nilArraySection(),
+        typedef typename SliceInfo<T_numtype,T1,T2,T3,T4,T5>::T_slice slice;
+        return slice(noConst(), r1, r2, r3, r4, r5, nilArraySection(),
             nilArraySection(), nilArraySection(), nilArraySection(),
             nilArraySection(), nilArraySection());
     }
 
-    template<class T1, class T2, class T3, class T4, class T5, class T6>
-    _bz_typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6>::T_slice
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+    typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6>::T_slice
     operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6) const
     {
-        return SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6>::T_slice(noConst(), r1, 
-            r2, r3, r4, r5, r6, 
-            nilArraySection(), nilArraySection(), nilArraySection(),
+        typedef typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6>::T_slice slice;
+        return slice(noConst(), r1, r2, r3, r4, r5, r6, nilArraySection(), nilArraySection(), nilArraySection(),
             nilArraySection(), nilArraySection());
     }
 
-    template<class T1, class T2, class T3, class T4, class T5, class T6,
-        class T7>
-    _bz_typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7>::T_slice
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
+        typename T7>
+    typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7>::T_slice
     operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7) const
     {
-        return SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7>::T_slice(noConst(), 
-            r1, r2, r3, r4, r5, r6, r7,
-            nilArraySection(), nilArraySection(),
+        typedef typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7>::T_slice slice;
+        return slice(noConst(), r1, r2, r3, r4, r5, r6, r7, nilArraySection(), nilArraySection(),
             nilArraySection(), nilArraySection());
     }
 
-    template<class T1, class T2, class T3, class T4, class T5, class T6,
-        class T7, class T8>
-    _bz_typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8>::T_slice
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
+        typename T7, typename T8>
+    typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8>::T_slice
     operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8) const
     {
-        return SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8>::T_slice(noConst(), 
-            r1, r2, r3, r4, r5, r6, r7, r8,
+        typedef typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8>::T_slice slice;
+        return slice(noConst(), r1, r2, r3, r4, r5, r6, r7, r8,
             nilArraySection(), nilArraySection(), nilArraySection());
     }
 
-    template<class T1, class T2, class T3, class T4, class T5, class T6,
-        class T7, class T8, class T9>
-    _bz_typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8,T9>::T_slice
-    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, 
-        T9 r9) const
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
+        typename T7, typename T8, typename T9>
+    typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8,T9>::T_slice
+    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9) const
     {
-        return SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8,T9>
-            ::T_slice(noConst(), 
-            r1, r2, r3, r4, r5, r6, r7, r8, r9, 
-            nilArraySection(), nilArraySection());
+        typedef typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8,T9>::T_slice slice;
+        return slice(noConst(), r1, r2, r3, r4, r5, r6, r7, r8, r9, nilArraySection(), nilArraySection());
     }
 
-    template<class T1, class T2, class T3, class T4, class T5, class T6,
-        class T7, class T8, class T9, class T10>
-    _bz_typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>::T_slice
-    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8,
-        T9 r9, T10 r10) const
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
+        typename T7, typename T8, typename T9, typename T10>
+    typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>::T_slice
+    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9, T10 r10) const
     {
-        return SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8,T9,
-            T10>::T_slice(noConst(), r1, r2, r3, r4, r5, r6, r7, r8, 
-            r9, r10, nilArraySection());
+        typedef typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>::T_slice slice;
+        return slice(noConst(), r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, nilArraySection());
     }
 
-    template<class T1, class T2, class T3, class T4, class T5, class T6,
-        class T7, class T8, class T9, class T10, class T11>
-    _bz_typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,
-        T11>::T_slice
-    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8,
-        T9 r9, T10 r10, T11 r11) const
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
+        typename T7, typename T8, typename T9, typename T10, typename T11>
+    typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice
+    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9, T10 r10, T11 r11) const
     {
-        return SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,
-            T11>::T_slice(noConst(), r1, r2, r3, r4, r5, r6, r7, r8, r9, 
-            r10, r11);
+        typedef typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice slice;
+        return slice(noConst(), r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11);
     }
 
 #endif // BZ_PARTIAL_ORDERING
@@ -2242,10 +2235,10 @@ public:
      */
 
     // NEEDS_WORK: const version
-    Array<_bz_typename multicomponent_traits<T_numtype>::T_element,N_rank>
+    Array<typename multicomponent_traits<T_numtype>::T_element,N_rank>
     operator[](int component)
     {
-        typedef _bz_typename multicomponent_traits<T_numtype>::T_element 
+        typedef typename multicomponent_traits<T_numtype>::T_element 
             T_compType;
 
         return extractComponent(T_compType(), 
@@ -2256,7 +2249,7 @@ public:
     // Indirection
     //////////////////////////////////////////////
  
-    template<class T_indexContainer>
+    template<typename T_indexContainer>
     IndirectArray<T_array, T_indexContainer>
     operator[](const T_indexContainer& index)
     {
@@ -2282,20 +2275,20 @@ public:
     // T_array& operator=(T_numtype);
 
 #ifdef BZ_NEW_EXPRESSION_TEMPLATES
-    template<class T_expr>
+    template<typename T_expr>
     T_array& operator=(const ETBase<T_expr>&);
     T_array& operator=(const Array<T_numtype,N_rank>&);
 
-    template<class T> T_array& operator+=(const T&);
-    template<class T> T_array& operator-=(const T&);
-    template<class T> T_array& operator*=(const T&);
-    template<class T> T_array& operator/=(const T&);
-    template<class T> T_array& operator%=(const T&);
-    template<class T> T_array& operator^=(const T&);
-    template<class T> T_array& operator&=(const T&);
-    template<class T> T_array& operator|=(const T&);
-    template<class T> T_array& operator>>=(const T&);
-    template<class T> T_array& operator<<=(const T&);
+    template<typename T> T_array& operator+=(const T&);
+    template<typename T> T_array& operator-=(const T&);
+    template<typename T> T_array& operator*=(const T&);
+    template<typename T> T_array& operator/=(const T&);
+    template<typename T> T_array& operator%=(const T&);
+    template<typename T> T_array& operator^=(const T&);
+    template<typename T> T_array& operator&=(const T&);
+    template<typename T> T_array& operator|=(const T&);
+    template<typename T> T_array& operator>>=(const T&);
+    template<typename T> T_array& operator<<=(const T&);
 
 #else
     T_array& operator+=(T_numtype);
@@ -2312,51 +2305,51 @@ public:
     // Array operands
     T_array& operator=(const Array<T_numtype,N_rank>&);
 
-    template<class P_numtype2> 
+    template<typename P_numtype2> 
     T_array& operator=(const Array<P_numtype2,N_rank>&);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_array& operator+=(const Array<P_numtype2,N_rank>&);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_array& operator-=(const Array<P_numtype2,N_rank>&);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_array& operator*=(const Array<P_numtype2,N_rank>&);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_array& operator/=(const Array<P_numtype2,N_rank>&);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_array& operator%=(const Array<P_numtype2,N_rank>&);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_array& operator^=(const Array<P_numtype2,N_rank>&);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_array& operator&=(const Array<P_numtype2,N_rank>&);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_array& operator|=(const Array<P_numtype2,N_rank>&);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_array& operator>>=(const Array<P_numtype2,N_rank>&);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_array& operator<<=(const Array<P_numtype2,N_rank>&);
 
     // Array expression operands
-    template<class T_expr>
+    template<typename T_expr>
     inline T_array& operator=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr);
-    template<class T_expr>
+    template<typename T_expr>
     inline T_array& operator+=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr);
-    template<class T_expr>
+    template<typename T_expr>
     inline T_array& operator-=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr);
-    template<class T_expr>
+    template<typename T_expr>
     inline T_array& operator*=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr);
-    template<class T_expr>
+    template<typename T_expr>
     inline T_array& operator/=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr);
-    template<class T_expr>
+    template<typename T_expr>
     inline T_array& operator%=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr);
-    template<class T_expr>
+    template<typename T_expr>
     inline T_array& operator^=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr);
-    template<class T_expr>
+    template<typename T_expr>
     inline T_array& operator&=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr);
-    template<class T_expr>
+    template<typename T_expr>
     inline T_array& operator|=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr);
-    template<class T_expr>
+    template<typename T_expr>
     inline T_array& operator>>=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr);
-    template<class T_expr>
+    template<typename T_expr>
     inline T_array& operator<<=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr);
 
     // NEEDS_WORK -- Index placeholder operand
@@ -2367,12 +2360,12 @@ public:
 public:
     // Undocumented implementation routines
 
-    template<class T_expr, class T_update>
+    template<typename T_expr, typename T_update>
     inline T_array& evaluate(T_expr expr, T_update);
 
 #ifdef BZ_HAVE_STD
 #ifdef BZ_ARRAY_SPACE_FILLING_TRAVERSAL
-    template<class T_expr, class T_update>
+    template<typename T_expr, typename T_update>
     inline T_array& evaluateWithFastTraversal(
         const TraversalOrder<N_rank - 1>& order, 
         T_expr expr, T_update);
@@ -2380,24 +2373,24 @@ public:
 #endif
 
 #ifdef BZ_ARRAY_2D_STENCIL_TILING
-    template<class T_expr, class T_update>
+    template<typename T_expr, typename T_update>
     inline T_array& evaluateWithTiled2DTraversal(
         T_expr expr, T_update);
 #endif
 
-    template<class T_expr, class T_update>
+    template<typename T_expr, typename T_update>
     inline T_array& evaluateWithIndexTraversal1(
         T_expr expr, T_update);
 
-    template<class T_expr, class T_update>
+    template<typename T_expr, typename T_update>
     inline T_array& evaluateWithIndexTraversalN(
         T_expr expr, T_update);
 
-    template<class T_expr, class T_update>
+    template<typename T_expr, typename T_update>
     inline T_array& evaluateWithStackTraversal1(
         T_expr expr, T_update);
 
-    template<class T_expr, class T_update>
+    template<typename T_expr, typename T_update>
     inline T_array& evaluateWithStackTraversalN(
         T_expr expr, T_update);
 
@@ -2453,8 +2446,8 @@ protected:
 
     void calculateZeroOffset();
 
-    template<int N_rank2, class R0, class R1, class R2, class R3, class R4, 
-        class R5, class R6, class R7, class R8, class R9, class R10>
+    template<int N_rank2, typename R0, typename R1, typename R2, typename R3, typename R4, 
+        typename R5, typename R6, typename R7, typename R8, typename R9, typename R10>
     void constructSlice(Array<T_numtype, N_rank2>& array, R0 r0, R1 r1, R2 r2, 
         R3 r3, R4 r4, R5 r5, R6 r6, R7 r7, R8 r8, R9 r9, R10 r10);
 
@@ -2541,16 +2534,16 @@ const int eleventhDim = 10;
  * Global Functions
  */
 
-template<class T_numtype>
+template<typename T_numtype>
 ostream& operator<<(ostream&, const Array<T_numtype,1>&);
 
-template<class T_numtype>
+template<typename T_numtype>
 ostream& operator<<(ostream&, const Array<T_numtype,2>&);
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 ostream& operator<<(ostream&, const Array<T_numtype,N_rank>&);
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 istream& operator>>(istream& is, Array<T_numtype,N_rank>& x);
 
 BZ_NAMESPACE_END
