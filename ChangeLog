@@ -37,4 +37,6 @@ Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* manual/examples/Makefile, manual/stencils/Makefile: removed, now generated
 	by configure
 	* CHANGELOG: renamed to ChangeLog.1
+	* manual/examples/*.out: renamed to manual/examples/*.log due to
+	interference with automake
 
