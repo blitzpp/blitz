@@ -71,7 +71,7 @@ int main()
     stencilFortran77VersionTiled(bench);
     bench.endBenchmarking();
 
-    bench.saveMatlabGraph("stencil.m");
+    bench.saveMatlabGraph("stencil.m","plot");
 
     return 0;
 }
