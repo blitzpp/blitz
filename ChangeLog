@@ -1,3 +1,10 @@
+2003-09-09  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/vecexpr.h: Corrected a dependency problem noted by
+	Matthias Schillinger that was causing some test codes to fail to
+	compile.  This is an example of the problem with having ET support
+	for the Vector and TinyVector types convolved together.
+
 2003-09-08  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* blitz/rand-mt.h: Replaced use of &S[0] syntax with call to
