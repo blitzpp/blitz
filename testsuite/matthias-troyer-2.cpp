@@ -25,7 +25,7 @@ float c = - 1.;
 A = zip( exp(c * (sqr(i-midpoint) + sqr(j-midpoint)
     + sqr(k-midpoint))), 0.0, complex<double>());
 
-//applyStencil(kinEnergy(),A,B);
+applyStencil(kinEnergy(),A,B);
 
 Array<complex<double>,1> a_view(A.data(),shape(N*N*N));
 cout << a_view;
