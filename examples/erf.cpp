@@ -15,9 +15,7 @@
 // this flag defined as well, so that the Blitz++ flag BZ_HAVE_IEEE_MATH
 // will be set properly in <blitz/config.h>.
 
-#ifdef BZ_NAMESPACES
-using namespace blitz;
-#endif
+BZ_USING_NAMESPACE(blitz)
 
 int main()
 {
