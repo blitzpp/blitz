@@ -1,5 +1,9 @@
-makeHTMLIndex blitz*.html
-sort -f <index.data | awk -F"|" '{ print "<a href=" $3 " target=\"docFrame\">" $2 "</a><br>" }' >Index.html
+if ! test -x ./makeHTMLIndex; then
+  g++ makeHTMLIndex.cpp -o makeHTMLIndex
+fi
+
+./makeHTMLIndex blitz*.html
+sort -f <index.data | awk -F"|" '{ print "<a href=\"" $3 "\" target=\"docFrame\">" $2 "</a><br>" }' >Index.html
 for f in *.new; do mv $f `basename $f .new`; done
 cat Index-prologue.html Index.html Index-epilogue.html >INDEX.html
 chmod go+r INDEX.html
