@@ -14,6 +14,13 @@ Tue Jan  7 16:30:17 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
 	functions call.
 	* blitz/generate/.cvsignore: added .deps and gen* progs
 	* manual/examples/.cvsignore manual/stencils/.cvsignore: added .deps
+	* benchmarks/Makefile.am lib/Makefile.am blitz/generate/Makefile.am:
+	the clean-local target should remove recursively template directories like
+	cxx_repository and ti_files. 
+	* benchmarks/Makefile.in lib/Makefile.in blitz/generate/Makefile.in:
+	regenerated with "autoreconf -v" (autoconf 2.53 and automake 1.6.2).
+	* compiler/.cvsignore benchmarks/.cvsignore blitz/generate/.cvsignore
+	lib/.cvsignore: added template directory cxx_repository.
 
 2003-01-06 Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
     * configure.in: Do not substitute the variable SUBDIRS. Created
