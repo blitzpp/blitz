@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/array/funcs.h   Math functions on arrays
  *
@@ -25,13 +26,8 @@
 #ifndef BZ_ARRAY_FUNCS_H
 #define BZ_ARRAY_FUNCS_H
 
-#ifndef BZ_FUNCS_H
- #include <blitz/funcs.h>
-#endif
-
-#ifndef BZ_NEWET_MACROS_H
- #include <blitz/array/newet-macros.h>
-#endif
+#include <blitz/funcs.h>
+#include <blitz/array/newet-macros.h>
 
 BZ_NAMESPACE(blitz)
     
@@ -116,7 +112,7 @@ cast(const ETBase<T1>& expr)
     return _bz_ArrayExpr<_bz_ArrayExprUnaryOp<
         _bz_typename asExpr<T1>::T_expr,
         Cast<_bz_typename asExpr<T1>::T_expr::T_numtype,T_cast> > >
-        (static_cast<const T1&>(expr));
+        (expr.unwrap());
 }
 
 // binary functions
