@@ -1,0 +1,292 @@
+bzsect(Overview)
+
+These are the basic
+random number generators (RNGs):
+
+bzindex(RNGs)
+bzindex(Random Number Generators)
+bzindex(Random Number Generators!overview)
+
+startdit()
+dit(Uniform)  Uniform reals on [0,1)
+dit(Normal) Normal with specified mean and variance
+dit(Exponential) Exponential with specified mean
+dit(DiscreteUniform) Integers uniformly distributed over a specified range.
+dit(Beta) Beta distribution
+dit(Gamma) Gamma distribution
+dit(F) F distribution
+enddit()
+
+To use these generators, you need to include
+some subset of these headers:
+
+bzverb(\
+#include <random/uniform.h>
+#include <random/normal.h>
+#include <random/exponential.h>
+#include <random/discrete-uniform.h>
+#include <random/beta.h>
+#include <random/gamma.h>
+#include <random/chisquare.h>
+#include <random/F.h>
+
+using namespace ranlib;
+)
+
+All the generators are inside the namespace bf(ranlib), bzindex(ranlib)
+so a bf(using namespace ranlib) directive is required (alternately,
+you can write e.g. tt(ranlib::Uniform<>)).
+
+These generators are all class templates.  The first template
+parameter is the number type you want to generate:
+float, double or long double for continuous distributions,
+and integer for discrete distributions.  This parameter
+defaults to bf(tt(float)) for continuous distributions,
+and bf(tt(unsigned int)) for discrete distributions.
+
+The constructors are:
+bzverb(\
+Uniform();
+Normal(T mean, T standardDeviation);
+Exponential(T mean);
+DiscreteUniform(T n);   // range is 0 .. n-1
+Beta(T a, T b);
+Gamma(T mean);
+ChiSquare(T df);
+F(T dfn, T dfd);
+)
+
+where T is the first template parameter (float, double, or long double).
+To obtain a random number, use the method tt(random()).  Here is an
+example of constructing and using a tt(Normal) generator:
+
+bzverb(\
+#include <random/normal.h>
+
+using namespace ranlib;
+
+void foo()
+{
+    Normal<double> normalGen;
+    double x = normalGen.random();    // x is a normal random number
+}
+)
+
+
+bzsect(Note: Parallel random number generators)
+
+The generators which Blitz++ provides are not suitable for
+parallel programs.  If you need parallel RNGs, you may find
+url(SPRNG)(http://www.ncsa.uiuc.edu/Apps/SPRNG) useful.
+
+bzsect(Seeding a random number generator)
+
+bzindex(Random Number Generators!seeding)
+
+You may seed a random number generator using the member function
+tt(seed(unsigned int)).  bzindex(seeding a RNG) By default, all 
+random number generators
+share the same underlying integer random number generator.  So seeding
+one generator will seed them all.  (Note: you can create generators
+with their own internal state; see the sections below).
+You should generally only seed a random number generator once,
+at the beginning of a program run.  
+
+Here is an example of seeding with the system clock:
+
+bzverb(\
+#include <random/uniform.h>
+#include <time.h>
+
+using namespace ranlib;
+
+int main()
+{
+    // At start of program, seed with the system time so we get
+    // a different stream of random numbers each run.
+    Uniform<float> x;
+    x.seed((unsigned int)time(0));
+
+    // Rest of program
+    ...
+}
+)
+
+Note: you may be tempted to seed the random number generator
+from a static initializer.  bf(Don't do it!)  
+Due to an oddity of C++, there is no guarantee
+on the order of static initialization when templates are involved.
+Hence, you may seed the RNG before its constructor is invoked,
+in which case your program will crash.  If you don't know what
+a static initializer is, don't worry -- you're safe!
+
+
+bzsect(Detailed description of RNGs)
+
+bzindex(Random Number Generators!details)
+
+There are really two types of RNGs:
+
+startdit()
+dit(Integer RNGs) provide uniformly distributed, unsigned
+32 bit integers. bzindex(IRNGs) bzindex(Integer RNGs)
+dit(RNGs) use Integer RNGs to provide other kinds of random
+numbers. 
+enddit()
+
+By default, the Integer RNG used is a faithful adaptation of
+the Mersenne Twister MT19937 bzindex(MersenneTwister) due to
+Matsumoto and Nishimura (see ACM Transactions on Modeling
+and Computer Simulation, Vol. 8, No. 1, January 1998, pp 3-30,
+url(web page)(http://www.math.keio.ac.jp/~matumoto/emt.html),
+url(paper)(http://www.acm.org/pubs/citations/journals/tomacs/1998-8-1/p3-matsumoto/)).
+This generator has a period of htmlcommand(2<sup>19937</sup>-1)
+latexcommand($2^{19937}-1$), passed several stringent statistical
+tests (including the url(Diehard)(http://stat.fsu.edu/~geo/diehard.html) tests), and 
+has speed comparable to other modern generators.
+
+bzsect(Template parameters)
+
+RNGs take three template parameters, all of which have default
+values.  Using the tt(Uniform) RNG as an example, the template
+parameters of tt(Uniform<T, IRNG, stateTag>) are:
+
+startdit()
+dit(T) is the type of random number to generate (one of float, double,
+or long double for continuous distributions; an integer type for
+discrete distributions).  Note that generating double and
+long double RNGs takes longer, because filling the entire mantissa
+with random bits requires several random integers.
+The default parameter for most generators is tt(float).
+
+dit(IRNG) is the underlying Integer RNG to use.  The default is
+MersenneTwister.
+
+dit(stateTag) is either tt(sharedState) or tt(independentState).
+bzindex(stateTag (RNGs))
+If tt(sharedState), the IRNG is shared with other generators.
+If tt(independentState), the RNG contains its own IRNG.  The
+default is sharedState.
+
+enddit()
+
+
+bzsect(Member functions)
+
+bzindex(Random Number Generators!member functions)
+
+RNGs have these methods:
+bf(bzverb(\
+T random();))
+bzindex(random())
+Returns a random number.
+bf(bzverb(\
+void seed(unsigned int);))
+bzindex(seed())
+Seeds the underlying IRNG.  See above for an example of seeding
+with the system timer.
+
+bzsect(Detailed listing of RNGs)
+
+bzindex(Random Number Generators!list of)
+
+To save space in the below list, template parameters have
+been omitted and only constructors are listed.  The notation
+[a,b] means an interval which includes the endpoints a and b;
+(a,b) is an interval which does not include the endpoints.
+
+bzsubsect(tt(random/uniform.h))
+bzindex(random/uniform.h)
+
+bf(bzverb(
+Uniform<>()))
+Continuous uniform distribution on [0,1). bzindex(Uniform RNG)
+
+bf(bzverb(\
+UniformClosedOpen<>()))
+Continuous uniform distribution on [0,1).  Same as tt(Uniform<>).
+bzindex(UniformClosedOpen RNG)
+
+bf(bzverb(\
+UniformClosed<>()))
+Continuous uniform distribution on [0,1].
+bzindex(UniformClosed RNG)
+
+bf(bzverb(\
+UniformOpen<>()))
+Continuous uniform distribution on (0,1).
+bzindex(UniformOpen RNG)
+
+bf(bzverb(\
+UniformOpenClosed<>()))
+Continuous uniform distribution on (0,1].
+bzindex(UniformOpenClosed RNG)
+
+bzsubsect(tt(random/normal.h))
+
+bf(bzverb(
+NormalUnit<>()))
+Continuous normal distribution with mean 0 and variance 1.
+bzindex(NormalUnit RNG)
+
+bf(bzverb(\
+Normal<>(T mean, T standardDeviation)))
+Continuous normal distribution with specified mean and standard 
+deviation.  bzindex(Normal RNG)
+
+bzsubsect(tt(random/exponential.h))
+
+bf(bzverb(
+ExponentialUnit<>()))
+Continuous exponential distribution with mean 1.
+bzindex(ExponentialUnit RNG)
+
+bf(bzverb(\
+Exponential<>(T mean)))
+Continuous exponential distribution with specified mean.
+bzindex(Exponential RNG)
+
+bzsubsect(tt(random/beta.h))
+
+bf(bzverb(\
+Beta<>(T a, T b)))
+Beta distribution with parameters a and b.  The mean of the distribution
+is latexcommand($\frac{a}{a+b}$)htmlcommand(a/(a+b)) and its variance
+is latexcommand($\frac{ab}{(a+b)^2 (a+b+1)}$)htmlcommand(ab/((a+b)^2(a+b+1))).
+Use the method tt(setParameters(T a, T b)) to change the
+parameters.
+bzindex(Beta RNG)
+
+bzsubsect(tt(random/chisquare.h))
+bf(bzverb(\
+ChiSquare<>(T df)))
+latexcommand($\chi^2$)htmlcommand(Chi Square) distribution with
+df degrees of freedom.  The parameter df must be positive.  Use the
+method tt(setDF(T df)) to change the degrees of freedom.
+bzindex(latexcommand($\chi^2$)htmlcommand(Chi-Square) RNG)
+
+bzsubsect(tt(random/gamma.h))
+
+bf(bzverb(\
+Gamma<>(T mean)))
+Gamma distribution with specified mean.  The mean must
+be positive.  Use the method tt(setMean(T mean)) to
+change the mean.
+bzindex(Gamma RNG)
+
+bzsubsect(tt(random/F.h))
+bf(bzverb(\
+F<>(T numeratorDF, T denominatorDF)))
+F distribution with numerator and denominator degrees
+of freedom specified.  Both these parameters must be
+positive.  Use tt(setDF(T dfn, T dfd)) to change the
+degrees of freedom. 
+bzindex(F distribution RNG)
+
+bzsubsect(tt(random/discrete-uniform.h))
+
+bf(bzverb(
+DiscreteUniform<>(T n)))
+Discrete uniform distribution over 0, 1, ..., n-1.
+bzindex(DiscreteUniform RNG)
+

@@ -1,0 +1,366 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%CUT HERE%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%   This is proc2e.sty. 
+%   This file may be freely distributed but may not be altered in any way.
+%   Any comments or questions regarding these macros should be directed to:
+
+%                 Corey Gray
+%                 SIAM
+%                 3600 University City Science Center
+%                 Philadelphia, PA 19104-2688
+%                 USA
+%                 Telephone: (215) 382-9800
+%                 Fax: (215) 386-7999
+%                 e-mail: gray@siam.org
+
+%   This is a file of macros and definitions for creating a chapter for 
+%   publication in the SIAM Proceedings series using LaTeX2e.
+
+%   Report the version.
+\message{*** SIAM LaTeX2e Proceedings Series macro package, version 1.1,
+October 28, 1996 ***} 
+
+\pretolerance=800 
+\tolerance=10000 
+\sloppy 
+ 
+ 
+\vsize=56pc 
+\hsize=36pc 
+\baselineskip=13pt 
+\hoffset -.5in
+\voffset -.5in
+\footskip=18pt 
+\topmargin 24pt  
+\headheight 12pt  
+\headsep 15pt  
+\textheight 53.5pc  \advance\textheight by \topskip 
+\textwidth 36pc  
+\parskip 0pt
+\parindent 18pt
+\def\topfraction{.9}
+\def\textfraction{.1}
+\def\topnumber{2}
+%% footnotes  to be set 8/10 
+\def\footnotesize{\@setsize\footnotesize{11pt}\ixpt\@ixpt 
+   %  \indent 
+       \abovedisplayskip \z@ 
+      \belowdisplayskip\z@ 
+     \abovedisplayshortskip\abovedisplayskip 
+    \belowdisplayshortskip\belowdisplayshortskip 
+\def\@listi{\leftmargin\leftmargini \topsep 3pt plus 1pt minus 1pt 
+     \parsep 2pt plus 1pt minus 1pt 
+    \itemsep \parsep}} 
+ 
+\let\referencesize\footnotesize 
+ 
+\footnotesep 0pt  
+ 
+\skip\footins 12pt plus 12pt  
+ 
+\def\footnoterule{\kern3\p@  \hrule width 3em\vspace{3pt}} % the \hrule is .4pt high 
+ 
+ 
+\def\ps@plain{\let\@mkboth\@gobbletwo 
+     \def\@oddfoot{{\hfil\small\thepage\hfil}}% 
+     \def\@oddhead{} 
+      \def\@evenhead{}\def\@evenfoot{}} 
+ 
+ 
+ 
+\def\ps@headings{\let\@mkboth\markboth 
+        \def\@oddfoot{}\def\@evenfoot{}% 
+        \def\@evenhead{{\rm\thepage}\hspace*{2pc}{\sc\leftmark}\hfil}%
+        \def\@oddhead{\hfil{\noindent\sc\rightmark}\hspace*{2pc}{\rm\thepage}}%
+
+ 
+ 
+\def\ps@myheadings{\let\@mkboth\@gobbletwo 
+ \def\@oddfoot{}\def\@evenfoot{}% 
+ \def\@oddhead{\hfil{\sc\rightmark}\hspace*{2pc}{\normalsize\rm\thepage}}% 
+ \def\@evenhead{{\normalsize\rm\thepage}\hspace*{2pc}{\sc\leftmark}\hfil}% 
+%        \def\chaptermark##1{}% 
+ %       \def\sectionmark##1{}\def\subsectionmark##1{}} 
+}} 
+ 
+ 
+ 
+\def\theequation{\arabic{equation}} 
+ 
+\def\abstract{\if@twocolumn
+\section*{Abstract}
+\else \small 
+\begin{center}
+{\bf Abstract\vspace{-.5em}\vspace{3pt}} 
+\end{center}
+\quotation 
+\fi}
+\def\endabstract{\if@twocolumn\else\endquotation\fi}
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%                                         % 
+%     THEOREMS, PROOFS, ALGORITHMS        % 
+%                                         % 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+ 
+%%% defined proof environment by theorem model (took out counter) 
+
+\def\qed{{\qquad \vbox{\hrule\hbox{%
+   \vrule height1.3ex\hskip0.8ex\vrule}\hrule
+  }}\par}   
+
+\def\newproof#1{\@nprf{#1}} 
+ 
+\def\@nprf#1#2{\@xnprf{#1}{#2}} 
+ 
+\def\@xnprf#1#2{\expandafter\@ifdefinable\csname #1\endcsname 
+\global\@namedef{#1}{\@prf{#1}{#2}}\global\@namedef{end#1}{\@endproof}} 
+ 
+\def\@prf#1#2{\@xprf{#1}{#2}} 
+ 
+\def\@xprf#1#2{\@beginproof{#2}{\csname the#1\endcsname}\ignorespaces} 
+ 
+ 
+ 
+%%% defined algorithm environment by theorem model 
+ 
+\def\newalgorithm#1{\@ifnextchar[{\@oalg{#1}}{\@nalg{#1}}} 
+ 
+\def\@nalg#1#2{% 
+\@ifnextchar[{\@xnalg{#1}{#2}}{\@ynalg{#1}{#2}}} 
+ 
+\def\@xnalg#1#2[#3]{\expandafter\@ifdefinable\csname #1\endcsname 
+{\@definecounter{#1}\@addtoreset{#1}{#3}% 
+\expandafter\xdef\csname the#1\endcsname{\expandafter\noexpand 
+  \csname the#3\endcsname \@thmcountersep \@thmcounter{#1}}% 
+\global\@namedef{#1}{\@alg{#1}{#2}}\global\@namedef{end#1}{\@endalgorithm}}} 
+ 
+\def\@ynalg#1#2{\expandafter\@ifdefinable\csname #1\endcsname 
+{\@definecounter{#1}% 
+\expandafter\xdef\csname the#1\endcsname{\@thmcounter{#1}}% 
+\global\@namedef{#1}{\@alg{#1}{#2}}\global\@namedef{end#1}{\@endalgorithm}}} 
+ 
+\def\@oalg#1[#2]#3{\expandafter\@ifdefinable\csname #1\endcsname 
+  {\global\@namedef{the#1}{\@nameuse{the#2}}% 
+\global\@namedef{#1}{\@alg{#2}{#3}}% 
+\global\@namedef{end#1}{\@endalgorithm}}} 
+ 
+\def\@alg#1#2{\refstepcounter 
+    {#1}\@ifnextchar[{\@yalg{#1}{#2}}{\@xalg{#1}{#2}}} 
+ 
+\def\@xalg#1#2{\@beginalgorithm{#2}{\csname the#1\endcsname}\ignorespaces} 
+\def\@yalg#1#2[#3]{\@opargbeginalgorithm{#2}{\csname 
+       the#1\endcsname}{#3}\ignorespaces} 
+ 
+ 
+ 
+ 
+\def\@beginproof#1{\rm {\it #1.\ }} 
+\def\@endproof{\outerparskip 0pt\endtrivlist} 
+ 
+\def\@begintheorem#1#2{\it {\sc #1\ #2.\ }} 
+\def\@opargbegintheorem#1#2#3{\it 
+      {\sc #1\ #2\ (#3).\ }} 
+\def\@endtheorem{\outerparskip 0pt\endtrivlist} 
+
+%\def\@begindefinition#1#2{\rm \trivlist \item[\hskip \labelsep{\sc #1\ #2.}]} 
+%\def\@opargbegindefinition#1#2#3{\rm \trivlist 
+%      \item[\hskip \labelsep{\sc #1\ #2.\ (#3)}]} 
+%\def\@enddefinition{\outerparskip 0pt\endtrivlist} 
+
+ 
+\def\@beginalgorithm#1#2{\rm \trivlist \item[\hskip \labelsep{\sc #1\ #2.}]} 
+\def\@opargbeginalgorithm#1#2#3{\rm \trivlist 
+      \item[\hskip \labelsep{\sc #1\ #2.\ (#3)}]} 
+\def\@endalgorithm{\outerparskip 6pt\endtrivlist} 
+ 
+ 
+\newskip\outerparskip 
+ 
+%\def\trivlist{\parsep\outerparskip 
+%  \@trivlist \labelwidth\z@ \leftmargin\z@ 
+%  \itemindent\parindent \def\makelabel##1{##1}} 
+% 
+%\def\@trivlist{\topsep=0pt\@topsepadd\topsep 
+%  \if@noskipsec \leavevmode \fi 
+%  \ifvmode \advance\@topsepadd\partopsep \else \unskip\par\fi 
+%  \if@inlabel \@noparitemtrue \@noparlisttrue  
+%    \else \@noparlistfalse \@topsep\@topsepadd \fi 
+%    \advance\@topsep \parskip 
+%  \leftskip\z@\rightskip\@rightskip \parfillskip\@flushglue 
+%  \@setpar{\if@newlist\else{\@@par}\fi}% 
+%  \global\@newlisttrue \@outerparskip\parskip} 
+% 
+% 
+%\def\endtrivlist{\if@newlist\@noitemerr\fi  
+%   \if@inlabel\indent\fi  
+%   \ifhmode\unskip \par\fi  
+%   \if@noparlist \else 
+%      \ifdim\lastskip >\z@ \@tempskipa\lastskip \vskip -\lastskip 
+%         \advance\@tempskipa\parskip \advance\@tempskipa -\@outerparskip  
+%         \vskip\@tempskipa 
+%   \fi\@endparenv\fi 
+%   \vskip\outerparskip} 
+ 
+ 
+
+ \newproof{@proof}{Proof} 
+ \newenvironment{proof}{\begin{@proof}}{\end{@proof}} 
+ 
+ \newtheorem{@theorem}{Theorem}[section] 
+ \newenvironment{theorem}{\begin{@theorem}}{\end{@theorem}} 
+ 
+% \newalgorithm{@algorithm}{Algorithm}[section] 
+% \newenvironment{algorithm}{\begin{@algorithm}}{\end{@algorithm}} 
+ 
+ 
+ 
+\newtheorem{lemma}{Lemma}[section] 
+\newtheorem{fact}{Fact}[section] 
+\newtheorem{corollary}{Corollary}[section] 
+\newtheorem{axiom}{Axiom}[section] 
+\newtheorem{cond}{Condition}[section] 
+\newtheorem{property}{Property}[section]  
+\newtheorem{proposition}{Proposition}[section] 
+ 
+\newtheorem{Conjecture}{Conjecture}[section] 
+\newtheorem{Definition}{Definition}[section] 
+\newtheorem{Lemma}{Lemma}[section] 
+\newtheorem{Remark}{Remark}[section] 
+ 
+\newproof{Example}{Example} 
+\newproof{Method}{Method} 
+\newproof{Exercise}{Exercise} 
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%                                         % 
+%        TABLE AND FIGURE CAPTIONS        % 
+%                                         % 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+ \def\@figtxt{figure}
+\long\def\@makecaption#1#2{\small
+\setlength{\parindent}{18pt}
+\baselineskip 14pt
+ \ifx\@captype\@figtxt
+ \vskip 10pt 
+ \setbox\@tempboxa\hbox{{\sc #1} {\it #2}}
+ \ifdim \wd\@tempboxa >\hsize {\sc #1} {\it #2}\par \else \hbox
+to\hsize{\hfil\box\@tempboxa\hfil}%
+ \fi\else\hbox to\hsize{\hfil{\sc #1}\hfil}%
+ \setbox\@tempboxa\hbox{{\it #2}}%
+ \ifdim \wd\@tempboxa >\hsize {\it #2}\par \else
+ \hbox to \hsize{\hfil\box\@tempboxa\hfil}\fi
+ \vskip 10pt
+ \fi}
+
+ 
+%\newif\iftable  \global\tablefalse 
+ 
+ 
+%\long\def\@makecaption#1#2{% 
+%\setlength{\parindent}{18pt}
+% \vskip 12pt  
+%    \iftable 
+ %              \hbox to \hsize{\hfil\sc #1\hfil} 
+ %              \hbox to \hsize{\hfil\it #2\hfil} 
+ %              \global\tablefalse 
+ %    \else 
+ %      \setbox\@tempboxa\hbox{{\small#1} {\small\it#2}} 
+ %        \ifdim \wd\@tempboxa >\hsize  
+ %           \indent{\small#1}{\small\it#2}\par  
+ %               \else  
+ %                \hbox to\hsize{\hfil\box\@tempboxa\hfil}\fi 
+ % \fi} 
+% \vskip 6pt} 
+ 
+ 
+ 
+%\def\figure{\global\tablefalse\@float{figure}} 
+\def\fnum@figure{\par\sc Fig. \thefigure.\ } 
+%\def\fnum@figure{\par\sc Fig. \thefigure\ } 
+ 
+%\def\table{\global\tabletrue\@float{table}} 
+\def\fnum@table{\small \sc Table \thetable} 
+ 
+ 
+ 
+
+ 
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%                                         % 
+%             SECTIONS                    % 
+%                                         % 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+\def\section{\@startsection {section}{1}{\z@}{-3.5ex plus -1ex minus 
+ -.2ex}%{2.3ex plus .2ex}
+{2pt}{\large\bf}}
+\def\subsection{\@startsection{subsection}{2}{\z@}{-3.25ex plus -1ex minus 
+ -.2ex}%{1.5ex plus .2ex}
+{2pt}{\large\bf}}
+\def\subsubsection{\@startsection {subsubsection}{3}{\z@}{1.3ex plus .5ex minus 
+    .2ex}{-.5em plus -.1em}{\normalsize\bf}}
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%                                          %% 
+%%            BIBLIOGRAPHY                  %% 
+%%                                          %% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+ 
+\def\thebibliography#1{% 
+%\cleardoublepage 
+\parindent 0em
+\vspace{9pt}
+\begin{flushleft}\large\bf {References}\end{flushleft}
+\addvspace{3pt}\nopagebreak\list 
+ %% default is no labels, for those not using \cite or BibTeX 
+{[\arabic{enumi}]} {\settowidth\labelwidth{[#1]} 
+%%{[\arabic{enumi}]}{\settowidth\labelwidth{mm} 
+\leftmargin\labelwidth 
+\leftmargin=17pt
+ \advance\leftmargin\labelsep 
+ \usecounter{enumi}\@bibsetup} 
+\def\newblock{\hskip .11em plus .33em minus -.07em} 
+ \sloppy\clubpenalty4000\widowpenalty4000 
+ \sfcode`\.=1000\relax} 
+
+
+ 
+%% setup 8/10 type 
+\def\@bibsetup{%\itemindent=0pt
+\itemsep=0pt \parsep=0pt
+\small} 
+ 
+\def\sameauthor{\leavevmode\vrule height 2pt depth -1.6pt width 23pt} 
+ 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%                                         % 
+%                INDEX                    % 
+%                                         % 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+ 
+ 
+%makeindex.sty        official version 6.4  
+%The second line came from /usr/misc/lib/tex82/report.sty. 
+ 
+\def\theindex{\@restonecoltrue\if@twocolumn\@restonecolfalse\fi 
+\columnseprule \z@ 
+\columnsep 35pt\twocolumn[\chapter*{Index}] 
+ \parskip\z@ plus .3pt\relax\let\item\@idxitem} 
+ 
+ 
+\def\printindex{\cleardoublepage\markboth{INDEX}{INDEX} 
+\addcontentsline{toc}{chapter}{Index}\@input{\jobname.ind}} 
+ 
+\ps@headings  
+ 
+ 
+%%% end of style file 
