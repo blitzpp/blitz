@@ -1,3 +1,29 @@
+2002-06-28  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+	* blitz/mathfunc.h: Corrected categorization of fmod and ilogb
+	math functions.
+	* blitz/vecuops.cc: Freshly generated from genvecuops.cpp.
+	Changed BZ_HAVE_SYSV_MATH to BZ_HAVE_SYSTEM_V_MATH to match what
+	is in config.h and elsewhere.  Corrected categorization of a few
+	math functions.  Otherwise, no changes.
+	* blitz/matuops.h: Freshly generated matuops.h header file with
+	definitions for unary math functions operating on Matrix types.
+	This file was previously empty.  I followed a style similar to
+	that of vecuops.
+	* blitz/matbops.h: Rebuilt from latest genmatbops.cpp.  Same
+	content as before with slightly different formatting.  Also,
+	binary combinations with complex<T> are now handled with a single
+	templated ComplexOperand type as with vecbops.
+	* blitz/generate: Added support for generating matuops.h header
+	file borrowing heavily from the existing genvecuops code.  Also
+	made a few corrections in categorization of math functions.
+	* configure.in: Added -qstrict flag to F77 and F90 optimization
+	flags on AIX platforms to avoid optimizations that might alter the
+	code semantics, as suggested by the compiler.  Added flag for
+	xlf90 compiler to allow f90 file suffix.
+	* config.guess: Undo previous change to this script regarding use
+	of oslevel script on AIX.  This was a mistake based on an error in
+	my environment variable settings.
+
 2002-06-27  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 	* compiler/sysvmath.cpp: Removed ilogb() and fmod() from this
 	test.  ilogb() is now in the IEEE math test and fmod() should be
