@@ -6,7 +6,7 @@
 using namespace std;
 
 // abs(i), labs(l)                     Absolute value
-// acos(d), acols(ld)                  Inverse cosine
+// acos(d), acosl(ld)                  Inverse cosine
 // acosh(d)                            Inverse hyperbolic cosine
 // asin(d), asinl(ld)                  Inverse sine
 // asinh(d)                            Inverse hyperbolic sine
@@ -40,7 +40,7 @@ using namespace std;
 // j1(d)                               Bessel function first kind, order 1
 // jn(int, double)                     Bessel function first kind, order i
 // ldexp(d,i), ldexpl(ld,i)            Compute d * 2^i
-// lgamma(d), lgammald(ld)             Log absolute gamma
+// lgamma(d), lgammal(ld)              Log absolute gamma
 // log(d), logl(ld)                    Natural logarithm
 // logb(d)                             Unbiased exponent (IEEE)
 // log1p(d)                            Compute log(1 + x)
@@ -49,7 +49,7 @@ using namespace std;
 // double nearest(double)              Nearest floating point integer
 // nextafter(d, d)                     Next representable neighbor of 1st
 //                                     in direction of 2nd
-// pow(d,d), pow(ld,ld)                Computes x ^ y
+// pow(d,d), powl(ld,ld)               Computes x ^ y
 // d remainder(d,d)                    IEEE remainder
 // d rint(d)                           Round to f-integer (depends on mode)
 // d rsqrt(d)                          Reciprocal square root
@@ -383,21 +383,27 @@ one("cos",    "float",       "cos",     "float",       "");
 one("cos"    ,"long double" ,"cos"    ,"long double"  ,"", ldflag);
 one("cos"   ,"complex<float> ", "cos", "complex<float>", "", cflag1);
 one("cos"   ,"complex<double> ", "cos", "complex<double>", "", cflag1);
+ ofs << "#ifndef __PGI\n";
 one("cos", "complex<long double> ", "cos", "complex<long double>", "", cflag1);
+ ofs << "#endif\n";
 two("copysign", ""          ,"copysign","double"       ,"", bsdflag);
 one("cosh"   ,""            ,"cosh"    ,"double"       ,"Hyperbolic cosine");
 one("cosh",   "float",       "cosh",    "float", "");
 one("cosh"   ,"long double" ,"cosh"   ,"long double"  ,"", ldflag);
 one("cosh"   ,"complex<float> ", "cosh", "complex<float>", "", cflag1);
 one("cosh"   ,"complex<double> ", "cosh", "complex<double>", "", cflag1);
+ ofs << "#ifndef __PGI\n";
 one("cosh", "complex<long double> ", "cosh", "complex<long double>", "", cflag1);
+ ofs << "#endif\n";
 two("drem"   ,""            ,"drem"    ,"double"       ,"Remainder", bsdflag);
 one("exp"    ,""            ,"exp"     ,"double"       ,"Exponential");
 one("exp",    "float",       "exp",     "float",       "");
 one("exp"    ,"long double" ,"exp"    ,"long double"  ,"", ldflag      );
 one("exp"   ,"complex<float> ", "exp", "complex<float>", "", cflag1);
 one("exp"   ,"complex<double> ", "exp", "complex<double>", "", cflag1);
+ ofs << "#ifndef __PGI\n";
 one("exp", "complex<long double> ", "exp", "complex<long double>", "", cflag1);
+ ofs << "#endif\n";
 one("expm1"  ,""            ,"expm1"   ,"double"       ,"Exp(x)-1", ieeeflag);
 one("erf"    ,""            ,"erf"     ,"double"       ,"Error function", ieeeflag);
 one("erfc"   ,""            ,"erfc"    ,"double"       ,"Complementary error function", ieeeflag);
@@ -421,7 +427,9 @@ one("log",    "float",       "log",     "float",        "");
 one("log"    ,"long double" ,"log"     ,"long double"  ,"", ldflag);
 one("log"   ,"complex<float> ", "log", "complex<float>", "", cflag1);
 one("log"   ,"complex<double> ", "log", "complex<double>", "", cflag1);
+ ofs << "#ifndef __PGI\n";
 one("log", "complex<long double> ", "log", "complex<long double>", "", cflag1);
+ ofs << "#endif\n";
 one("logb"   ,""            ,"logb"    ,"double"       ,"Unbiased exponent (IEEE)", ieeeflag);
 one("log1p"  ,""            ,"log1p"   ,"double"       ,"Compute log(1 + x)", ieeeflag);
 one("log10"  ,""            ,"log10"   ,"double"       ,"Logarithm base 10");
@@ -455,11 +463,15 @@ one("norm",   ""            ,"norm"    ,0             ,"", cflag);
 
 two("polar"  ,""            ,"polar"   ,"complex<T_numtype1>", "", cflag, 1);
 two("pow"    ,""            ,"pow"     ,"double"       ,"Power");
+ ofs << "#ifndef __PGI\n";
 two("pow"    ,"float"       ,"pow"     ,"float"        ,"");
+ ofs << "#endif\n";
 two("pow"    ,"long double" ,"pow"     ,"long double"  ,"");
 two("pow"    ,"complex<float>","pow"   ,"complex<float>" ,"",cflag1);
 two("pow"    ,"complex<double>","pow"  ,"complex<double>","",cflag1);
+ ofs << "#ifndef __PGI\n";
 two("pow"    ,"complex<long double>","pow","complex<long double>","",cflag1);
+ ofs << "#endif\n";
 two("remainder", "",         "remainder", "double",     "Remainder", bsdflag);
 
 one("rint"   ,""            ,"rint"    ,"double"       ,"Round to floating point integer", ieeeflag);
@@ -470,13 +482,17 @@ one("sin",    "float",       "sin",     "float",       "");
 one("sin"    ,"long double" ,"sin"    ,"long double"  ,"", ldflag);
 one("sin"   ,"complex<float> ", "sin", "complex<float>", "", cflag1);
 one("sin"   ,"complex<double> ", "sin", "complex<double>", "", cflag1);
+ ofs << "#ifndef __PGI\n";
 one("sin", "complex<long double> ", "sin", "complex<long double>", "", cflag1);
+ ofs << "#endif\n";
 one("sinh"   ,""            ,"sinh"    ,"double"       ,"Hyperbolic sine");
 one("sinh",   "float",       "sinh",    "float",        "");
 one("sinh"   ,"long double" ,"sinh"   ,"long double"  ,"", ldflag);
 one("sinh"   ,"complex<float> ", "sinh", "complex<float>", "", cflag1);
 one("sinh"   ,"complex<double> ", "sinh", "complex<double>", "", cflag1);
+ ofs << "#ifndef __PGI\n";
 one("sinh", "complex<long double> ", "sinh", "complex<long double>", "", cflag1);
+ ofs << "#endif\n";
 
 ofs << 
 "template<typename P_numtype>\n"
@@ -522,19 +538,25 @@ one("sqrt",   "float",       "sqrt",    "float",        "");
 one("sqrt"   ,"long double" ,"sqrt"   ,"long double"  ,"", ldflag);
 one("sqrt"   ,"complex<float> ", "sqrt", "complex<float>", "", cflag1);
 one("sqrt"   ,"complex<double> ", "sqrt", "complex<double>", "", cflag1);
+ ofs << "#ifndef __PGI\n";
 one("sqrt", "complex<long double> ", "sqrt", "complex<long double>", "", cflag1);
+ ofs << "#endif\n";
 one("tan"    ,""            ,"tan"     ,"double"       ,"Tangent");
 one("tan",    "float",       "tan",    "float",         "");
 one("tan"    ,"long double" ,"tan"    ,"long double"  ,"");
 one("tan"   ,"complex<float> ", "tan", "complex<float>", "", cflag1);
 one("tan"   ,"complex<double> ", "tan", "complex<double>", "", cflag1);
+ ofs << "#ifndef __PGI\n";
 one("tan", "complex<long double> ", "tan", "complex<long double>", "", cflag1);
+ ofs << "#endif\n";
 one("tanh"   ,""            ,"tanh"    ,"double"       ,"Hyperbolic tangent");
 one("tanh",   "float",       "tanh",    "float",        "");
 one("tanh"   ,"long double" ,"tanh"   ,"long double"  ,"", ldflag);
 one("tanh"   ,"complex<float> ", "tanh", "complex<float>", "", cflag1);
 one("tanh"   ,"complex<double> ", "tanh", "complex<double>", "", cflag1);
+ ofs << "#ifndef __PGI\n";
 one("tanh", "complex<long double> ", "tanh", "complex<long double>", "", cflag1);
+ ofs << "#endif\n";
 
 // blitz-bugs/archive/0189.html
 // one("trunc"  ,""            ,"trunc"   ,"double"       ,"Nearest floating integer in the direction of zero", ieeeflag);
