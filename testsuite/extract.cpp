@@ -19,7 +19,7 @@ public:
     unsigned char operator[](int component) const
     { return colours[component]; }
 
-    _bz_bool operator==(const RGB24& x)
+    bool operator==(const RGB24& x)
     { 
         return colours[0] == x.colours[0]
             && colours[1] == x.colours[1]
