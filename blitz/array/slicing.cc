@@ -23,6 +23,14 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.6  2002/06/27 00:18:10  jcumming
+ * Changed T_numtype to P_numtype when used outside the argument list or body
+ * of a member function definition (i.e., outside the class scope).  Inside
+ * the class scope, we can use the typedef T_numtype.  The IBM xlC compiler
+ * gets confused if P_numtype is used as a template parameter name in a member
+ * function declaration and then T_numtype is used as the parameter name in
+ * the member function definition.  Fixed usage to be more consistent.
+ *
  * Revision 1.5  2002/05/27 19:49:27  jcumming
  * Removed use of this->.  Member data_ of templated base class is now declared
  * in derived class Array.
@@ -235,7 +243,7 @@ void Array<P_numtype, N_rank>::constructSlice(Array<T_numtype, N_rank2>& array,
     R0 r0, R1 r1, R2 r2, R3 r3, R4 r4, R5 r5, R6 r6, R7 r7, R8 r8, R9 r9,
     R10 r10)
 {
-    MemoryBlockReference<P_numtype>::changeBlock(array, array.zeroOffset());
+    MemoryBlockReference<T_numtype>::changeBlock(array, array.zeroOffset());
     data_ = array.dataZero();
 
     int setRank = 0;
@@ -272,8 +280,8 @@ void Array<P_numtype, N_rank>::constructSlice(Array<T_numtype, N_rank2>& array,
  * It's called by constructSlice(), above.  This version handles
  * Range parameters.
  */
-template<class T_numtype, int N_rank> template<int N_rank2>
-void Array<T_numtype, N_rank>::slice(int& setRank, Range r,
+template<class P_numtype, int N_rank> template<int N_rank2>
+void Array<P_numtype, N_rank>::slice(int& setRank, Range r,
     Array<T_numtype,N_rank2>& array, TinyVector<int,N_rank2>& rankMap,
     int sourceRank)
 {
@@ -301,8 +309,8 @@ cout << "slice(" << setRank << ", [" << r.first(array.lbound(sourceRank))
  * It's called by constructSlice(), above.  This version handles
  * int parameters, which reduce the dimensionality by one.
  */
-template<class T_numtype, int N_rank> template<int N_rank2>
-void Array<T_numtype, N_rank>::slice(int& setRank, int i,
+template<class P_numtype, int N_rank> template<int N_rank2>
+void Array<P_numtype, N_rank>::slice(int& setRank, int i,
     Array<T_numtype,N_rank2>& array, TinyVector<int,N_rank2>& rankMap,
     int sourceRank)
 {
