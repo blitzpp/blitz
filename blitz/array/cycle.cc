@@ -29,7 +29,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void cycleArrays(Array<T_numtype, N_rank>& a, Array<T_numtype, N_rank>& b)
 {
     Array<T_numtype, N_rank> tmp(a);
@@ -37,7 +37,7 @@ void cycleArrays(Array<T_numtype, N_rank>& a, Array<T_numtype, N_rank>& b)
     b.reference(tmp);
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void cycleArrays(Array<T_numtype, N_rank>& a, Array<T_numtype, N_rank>& b,
     Array<T_numtype, N_rank>& c)
 {
@@ -47,7 +47,7 @@ void cycleArrays(Array<T_numtype, N_rank>& a, Array<T_numtype, N_rank>& b,
     c.reference(tmp);
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void cycleArrays(Array<T_numtype, N_rank>& a, Array<T_numtype, N_rank>& b,
     Array<T_numtype, N_rank>& c, Array<T_numtype, N_rank>& d)
 {
@@ -58,7 +58,7 @@ void cycleArrays(Array<T_numtype, N_rank>& a, Array<T_numtype, N_rank>& b,
     d.reference(tmp);
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void cycleArrays(Array<T_numtype, N_rank>& a, Array<T_numtype, N_rank>& b,
     Array<T_numtype, N_rank>& c, Array<T_numtype, N_rank>& d,
     Array<T_numtype, N_rank>& e)
