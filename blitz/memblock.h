@@ -23,6 +23,10 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2001/01/26 19:34:19  tveldhui
+ * Fixed bug with preexisting memory not being deleted, found by
+ * Mike Smyth.
+ *
  * Revision 1.2  2001/01/24 20:22:49  tveldhui
  * Updated copyright date in headers.
  *
@@ -124,7 +128,7 @@ protected:
     {
         length_ = length;
         data_ = data;
-        dataBlockAddress_ = 0;
+        dataBlockAddress_ = data;
         references_ = 0;
     }
 
