@@ -20,19 +20,7 @@
  *
  * Distributed with consent of the authors.
  *
- ***************************************************************************
- *
- * $Log$
- * Revision 1.1  2000/06/19 12:26:12  tveldhui
- * Initial revision
- *
- * Revision 1.2  1997/07/16 14:51:20  tveldhui
- * Update: Alpha release 0.2 (Arrays)
- *
- * Revision 1.1  1997/02/28 13:39:51  tveldhui
- * Initial revision
- *
- */
+ ***************************************************************************/
 
 #ifndef BZ_RAND_TT800_H
 #define BZ_RAND_TT800_H
