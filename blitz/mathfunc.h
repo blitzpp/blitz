@@ -1,4 +1,4 @@
-// Generated: genmathfunc.cpp Dec 10 2003 17:57:41
+// Generated: genmathfunc.cpp Mar  9 2004 15:26:46
 
 #ifndef BZ_MATHFUNC_H
 #define BZ_MATHFUNC_H
@@ -25,7 +25,7 @@ public:
     { return BZ_MATHFN_SCOPE(abs)(x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "abs(";
@@ -45,7 +45,7 @@ public:
     { return BZ_MATHFN_SCOPE(labs)((long)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "labs(";
@@ -65,7 +65,7 @@ public:
     { return BZ_MATHFN_SCOPE(fabs)((float)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "fabs(";
@@ -85,7 +85,7 @@ public:
     { return BZ_MATHFN_SCOPE(fabs)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "fabs(";
@@ -105,7 +105,7 @@ public:
     { return BZ_MATHFN_SCOPE(fabs)((long double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "fabs(";
@@ -126,7 +126,7 @@ public:
     { return BZ_CMATHFN_SCOPE(abs)((complex<float> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "abs(";
@@ -148,7 +148,7 @@ public:
     { return BZ_CMATHFN_SCOPE(abs)((complex<double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "abs(";
@@ -170,7 +170,7 @@ public:
     { return BZ_CMATHFN_SCOPE(abs)((complex<long double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "abs(";
@@ -191,7 +191,7 @@ public:
     { return BZ_MATHFN_SCOPE(acos)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "acos(";
@@ -211,7 +211,7 @@ public:
     { return BZ_MATHFN_SCOPE(acos)((float)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "acos(";
@@ -231,7 +231,7 @@ public:
     { return BZ_MATHFN_SCOPE(acos)((long double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "acos(";
@@ -252,7 +252,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(acosh)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "acosh(";
@@ -273,7 +273,7 @@ public:
     { return BZ_MATHFN_SCOPE(asin)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "asin(";
@@ -293,7 +293,7 @@ public:
     { return BZ_MATHFN_SCOPE(asin)((float)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "asin(";
@@ -313,7 +313,7 @@ public:
     { return BZ_MATHFN_SCOPE(asin)((long double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "asin(";
@@ -334,7 +334,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(asinh)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "asinh(";
@@ -356,7 +356,7 @@ public:
     { return 0; }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "0(";
@@ -378,7 +378,7 @@ public:
     { return BZ_CMATHFN_SCOPE(arg)((complex<float> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "arg(";
@@ -400,7 +400,7 @@ public:
     { return BZ_CMATHFN_SCOPE(arg)((complex<double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "arg(";
@@ -422,7 +422,7 @@ public:
     { return BZ_CMATHFN_SCOPE(arg)((complex<long double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "arg(";
@@ -443,7 +443,7 @@ public:
     { return BZ_MATHFN_SCOPE(atan)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "atan(";
@@ -463,7 +463,7 @@ public:
     { return BZ_MATHFN_SCOPE(atan)((float)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "atan(";
@@ -483,7 +483,7 @@ public:
     { return BZ_MATHFN_SCOPE(atan)((long double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "atan(";
@@ -504,7 +504,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(atanh)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "atanh(";
@@ -526,7 +526,7 @@ public:
     { return BZ_MATHFN_SCOPE(atan2)((double)x,(double)y); }
 
     template<typename T1, typename T2>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a, const T2& b)
     {
         str += "atan2(";
@@ -549,7 +549,7 @@ public:
     { return BZ_MATHFN_SCOPE(atan2)((float)x,(float)y); }
 
     template<typename T1, typename T2>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a, const T2& b)
     {
         str += "atan2(";
@@ -572,7 +572,7 @@ public:
     { return BZ_MATHFN_SCOPE(atan2)((long double)x,(long double)y); }
 
     template<typename T1, typename T2>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a, const T2& b)
     {
         str += "atan2(";
@@ -595,7 +595,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(_class)(x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "_class(";
@@ -617,7 +617,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(cbrt)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "cbrt(";
@@ -638,7 +638,7 @@ public:
     { return BZ_MATHFN_SCOPE(ceil)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "ceil(";
@@ -658,7 +658,7 @@ public:
     { return BZ_MATHFN_SCOPE(ceil)((float)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "ceil(";
@@ -678,7 +678,7 @@ public:
     { return BZ_MATHFN_SCOPE(ceil)((long double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "ceil(";
@@ -699,7 +699,7 @@ public:
     { return BZ_CMATHFN_SCOPE(conj)(x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "conj(";
@@ -720,7 +720,7 @@ public:
     { return BZ_MATHFN_SCOPE(cos)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "cos(";
@@ -740,7 +740,7 @@ public:
     { return BZ_MATHFN_SCOPE(cos)((float)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "cos(";
@@ -760,7 +760,7 @@ public:
     { return BZ_MATHFN_SCOPE(cos)((long double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "cos(";
@@ -781,7 +781,7 @@ public:
     { return BZ_CMATHFN_SCOPE(cos)((complex<float> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "cos(";
@@ -803,7 +803,7 @@ public:
     { return BZ_CMATHFN_SCOPE(cos)((complex<double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "cos(";
@@ -825,7 +825,7 @@ public:
     { return BZ_CMATHFN_SCOPE(cos)((complex<long double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "cos(";
@@ -848,7 +848,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(copysign)((double)x,(double)y); }
 
     template<typename T1, typename T2>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a, const T2& b)
     {
         str += "copysign(";
@@ -871,7 +871,7 @@ public:
     { return BZ_MATHFN_SCOPE(cosh)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "cosh(";
@@ -891,7 +891,7 @@ public:
     { return BZ_MATHFN_SCOPE(cosh)((float)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "cosh(";
@@ -911,7 +911,7 @@ public:
     { return BZ_MATHFN_SCOPE(cosh)((long double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "cosh(";
@@ -932,7 +932,7 @@ public:
     { return BZ_CMATHFN_SCOPE(cosh)((complex<float> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "cosh(";
@@ -954,7 +954,7 @@ public:
     { return BZ_CMATHFN_SCOPE(cosh)((complex<double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "cosh(";
@@ -976,7 +976,7 @@ public:
     { return BZ_CMATHFN_SCOPE(cosh)((complex<long double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "cosh(";
@@ -999,7 +999,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(drem)((double)x,(double)y); }
 
     template<typename T1, typename T2>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a, const T2& b)
     {
         str += "drem(";
@@ -1022,7 +1022,7 @@ public:
     { return BZ_MATHFN_SCOPE(exp)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "exp(";
@@ -1042,7 +1042,7 @@ public:
     { return BZ_MATHFN_SCOPE(exp)((float)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "exp(";
@@ -1062,7 +1062,7 @@ public:
     { return BZ_MATHFN_SCOPE(exp)((long double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "exp(";
@@ -1083,7 +1083,7 @@ public:
     { return BZ_CMATHFN_SCOPE(exp)((complex<float> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "exp(";
@@ -1105,7 +1105,7 @@ public:
     { return BZ_CMATHFN_SCOPE(exp)((complex<double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "exp(";
@@ -1127,7 +1127,7 @@ public:
     { return BZ_CMATHFN_SCOPE(exp)((complex<long double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "exp(";
@@ -1149,7 +1149,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(expm1)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "expm1(";
@@ -1171,7 +1171,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(erf)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "erf(";
@@ -1193,7 +1193,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(erfc)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "erfc(";
@@ -1214,7 +1214,7 @@ public:
     { return BZ_MATHFN_SCOPE(floor)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "floor(";
@@ -1234,7 +1234,7 @@ public:
     { return BZ_MATHFN_SCOPE(floor)((float)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "floor(";
@@ -1254,7 +1254,7 @@ public:
     { return BZ_MATHFN_SCOPE(floor)((long double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "floor(";
@@ -1275,7 +1275,7 @@ public:
     { return BZ_MATHFN_SCOPE(fmod)((double)x,(double)y); }
 
     template<typename T1, typename T2>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a, const T2& b)
     {
         str += "fmod(";
@@ -1299,7 +1299,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(hypot)((double)x,(double)y); }
 
     template<typename T1, typename T2>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a, const T2& b)
     {
         str += "hypot(";
@@ -1323,7 +1323,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(ilogb)(x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "ilogb(";
@@ -1353,7 +1353,7 @@ public:
     }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "blitz_isnan(";
@@ -1375,7 +1375,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(itrunc)(x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "itrunc(";
@@ -1397,7 +1397,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(j0)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "j0(";
@@ -1419,7 +1419,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(j1)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "j1(";
@@ -1441,7 +1441,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(lgamma)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "lgamma(";
@@ -1462,7 +1462,7 @@ public:
     { return BZ_MATHFN_SCOPE(log)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "log(";
@@ -1482,7 +1482,7 @@ public:
     { return BZ_MATHFN_SCOPE(log)((float)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "log(";
@@ -1502,7 +1502,7 @@ public:
     { return BZ_MATHFN_SCOPE(log)((long double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "log(";
@@ -1523,7 +1523,7 @@ public:
     { return BZ_CMATHFN_SCOPE(log)((complex<float> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "log(";
@@ -1545,7 +1545,7 @@ public:
     { return BZ_CMATHFN_SCOPE(log)((complex<double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "log(";
@@ -1567,7 +1567,7 @@ public:
     { return BZ_CMATHFN_SCOPE(log)((complex<long double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "log(";
@@ -1589,7 +1589,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(logb)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "logb(";
@@ -1611,7 +1611,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(log1p)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "log1p(";
@@ -1632,7 +1632,7 @@ public:
     { return BZ_MATHFN_SCOPE(log10)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "log10(";
@@ -1652,7 +1652,7 @@ public:
     { return BZ_MATHFN_SCOPE(log10)((float)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "log10(";
@@ -1672,7 +1672,7 @@ public:
     { return BZ_MATHFN_SCOPE(log10)((long double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "log10(";
@@ -1693,7 +1693,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(nearest)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "nearest(";
@@ -1716,7 +1716,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(nextafter)((double)x,(double)y); }
 
     template<typename T1, typename T2>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a, const T2& b)
     {
         str += "nextafter(";
@@ -1737,7 +1737,7 @@ public:
     { return -x; }
 
         template<typename T1>
-        static void prettyPrint(string& str, prettyPrintFormat& format, const T1& a)
+        static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format, const T1& a)
         {
                 str += "-(";
                        a.prettyPrint(str,format);
@@ -1757,7 +1757,7 @@ public:
     { return BZ_CMATHFN_SCOPE(norm)(x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "norm(";
@@ -1780,7 +1780,7 @@ public:
     { return BZ_CMATHFN_SCOPE(polar)(x,y); }
 
     template<typename T1, typename T2>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a, const T2& b)
     {
         str += "polar(";
@@ -1804,7 +1804,7 @@ public:
     { return BZ_MATHFN_SCOPE(pow)((double)x,(double)y); }
 
     template<typename T1, typename T2>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a, const T2& b)
     {
         str += "pow(";
@@ -1827,7 +1827,7 @@ public:
     { return BZ_MATHFN_SCOPE(pow)((float)x,(float)y); }
 
     template<typename T1, typename T2>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a, const T2& b)
     {
         str += "pow(";
@@ -1850,7 +1850,7 @@ public:
     { return BZ_MATHFN_SCOPE(pow)((long double)x,(long double)y); }
 
     template<typename T1, typename T2>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a, const T2& b)
     {
         str += "pow(";
@@ -1874,7 +1874,7 @@ public:
     { return BZ_CMATHFN_SCOPE(pow)((complex<float>)x,(complex<float>)y); }
 
     template<typename T1, typename T2>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a, const T2& b)
     {
         str += "pow(";
@@ -1899,7 +1899,7 @@ public:
     { return BZ_CMATHFN_SCOPE(pow)((complex<double>)x,(complex<double>)y); }
 
     template<typename T1, typename T2>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a, const T2& b)
     {
         str += "pow(";
@@ -1924,7 +1924,7 @@ public:
     { return BZ_CMATHFN_SCOPE(pow)((complex<long double>)x,(complex<long double>)y); }
 
     template<typename T1, typename T2>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a, const T2& b)
     {
         str += "pow(";
@@ -1949,7 +1949,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(remainder)((double)x,(double)y); }
 
     template<typename T1, typename T2>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a, const T2& b)
     {
         str += "remainder(";
@@ -1973,7 +1973,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(rint)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "rint(";
@@ -1995,7 +1995,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(rsqrt)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "rsqrt(";
@@ -2018,7 +2018,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(scalb)((double)x,(double)y); }
 
     template<typename T1, typename T2>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a, const T2& b)
     {
         str += "scalb(";
@@ -2041,7 +2041,7 @@ public:
     { return BZ_MATHFN_SCOPE(sin)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "sin(";
@@ -2061,7 +2061,7 @@ public:
     { return BZ_MATHFN_SCOPE(sin)((float)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "sin(";
@@ -2081,7 +2081,7 @@ public:
     { return BZ_MATHFN_SCOPE(sin)((long double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "sin(";
@@ -2102,7 +2102,7 @@ public:
     { return BZ_CMATHFN_SCOPE(sin)((complex<float> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "sin(";
@@ -2124,7 +2124,7 @@ public:
     { return BZ_CMATHFN_SCOPE(sin)((complex<double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "sin(";
@@ -2146,7 +2146,7 @@ public:
     { return BZ_CMATHFN_SCOPE(sin)((complex<long double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "sin(";
@@ -2167,7 +2167,7 @@ public:
     { return BZ_MATHFN_SCOPE(sinh)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "sinh(";
@@ -2187,7 +2187,7 @@ public:
     { return BZ_MATHFN_SCOPE(sinh)((float)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "sinh(";
@@ -2207,7 +2207,7 @@ public:
     { return BZ_MATHFN_SCOPE(sinh)((long double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "sinh(";
@@ -2228,7 +2228,7 @@ public:
     { return BZ_CMATHFN_SCOPE(sinh)((complex<float> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "sinh(";
@@ -2250,7 +2250,7 @@ public:
     { return BZ_CMATHFN_SCOPE(sinh)((complex<double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "sinh(";
@@ -2272,7 +2272,7 @@ public:
     { return BZ_CMATHFN_SCOPE(sinh)((complex<long double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "sinh(";
@@ -2290,7 +2290,7 @@ public:
     static inline T_numtype apply(T_numtype x)
     { return x*x; }
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "sqr(";
@@ -2312,7 +2312,7 @@ public:
         return T_numtype(r*r-i*i, 2*r*i);
     }
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "sqr(";
@@ -2333,7 +2333,7 @@ public:
     { return BZ_MATHFN_SCOPE(sqrt)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "sqrt(";
@@ -2353,7 +2353,7 @@ public:
     { return BZ_MATHFN_SCOPE(sqrt)((float)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "sqrt(";
@@ -2373,7 +2373,7 @@ public:
     { return BZ_MATHFN_SCOPE(sqrt)((long double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "sqrt(";
@@ -2394,7 +2394,7 @@ public:
     { return BZ_CMATHFN_SCOPE(sqrt)((complex<float> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "sqrt(";
@@ -2416,7 +2416,7 @@ public:
     { return BZ_CMATHFN_SCOPE(sqrt)((complex<double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "sqrt(";
@@ -2438,7 +2438,7 @@ public:
     { return BZ_CMATHFN_SCOPE(sqrt)((complex<long double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "sqrt(";
@@ -2459,7 +2459,7 @@ public:
     { return BZ_MATHFN_SCOPE(tan)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "tan(";
@@ -2479,7 +2479,7 @@ public:
     { return BZ_MATHFN_SCOPE(tan)((float)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "tan(";
@@ -2499,7 +2499,7 @@ public:
     { return BZ_MATHFN_SCOPE(tan)((long double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "tan(";
@@ -2520,7 +2520,7 @@ public:
     { return BZ_CMATHFN_SCOPE(tan)((complex<float> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "tan(";
@@ -2542,7 +2542,7 @@ public:
     { return BZ_CMATHFN_SCOPE(tan)((complex<double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "tan(";
@@ -2564,7 +2564,7 @@ public:
     { return BZ_CMATHFN_SCOPE(tan)((complex<long double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "tan(";
@@ -2585,7 +2585,7 @@ public:
     { return BZ_MATHFN_SCOPE(tanh)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "tanh(";
@@ -2605,7 +2605,7 @@ public:
     { return BZ_MATHFN_SCOPE(tanh)((float)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "tanh(";
@@ -2625,7 +2625,7 @@ public:
     { return BZ_MATHFN_SCOPE(tanh)((long double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "tanh(";
@@ -2646,7 +2646,7 @@ public:
     { return BZ_CMATHFN_SCOPE(tanh)((complex<float> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "tanh(";
@@ -2668,7 +2668,7 @@ public:
     { return BZ_CMATHFN_SCOPE(tanh)((complex<double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "tanh(";
@@ -2690,7 +2690,7 @@ public:
     { return BZ_CMATHFN_SCOPE(tanh)((complex<long double> )x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "tanh(";
@@ -2712,7 +2712,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(uitrunc)((unsigned)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "uitrunc(";
@@ -2735,7 +2735,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(unordered)(x,y); }
 
     template<typename T1, typename T2>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a, const T2& b)
     {
         str += "unordered(";
@@ -2759,7 +2759,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(y0)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "y0(";
@@ -2781,7 +2781,7 @@ public:
     { return BZ_IEEEMATHFN_SCOPE(y1)((double)x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "y1(";
