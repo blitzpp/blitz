@@ -23,6 +23,10 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.5  2002/05/27 19:45:43  jcumming
+ * Removed use of this->.  Types and members from templated base class are now
+ * declared in scope of derived classes.
+ *
  * Revision 1.4  2002/03/06 17:08:36  patricg
  *
  * in
@@ -181,14 +185,20 @@ protected:
 
 template<int N_rank>
 class FortranArray : public GeneralArrayStorage<N_rank> {
+private:
+    typedef GeneralArrayStorage<N_rank> T_base;
+    typedef _bz_typename T_base::noInitializeFlag noInitializeFlag;
+    using T_base::ordering_;
+    using T_base::ascendingFlag_;
+    using T_base::base_;
 public:
     FortranArray()
-        : GeneralArrayStorage<N_rank>(GeneralArrayStorage<N_rank>::noInitializeFlag())
+        : GeneralArrayStorage<N_rank>(noInitializeFlag())
     {
         for (int i=0; i < N_rank; ++i)
-          this->ordering_(i) = i;
-        this->ascendingFlag_ = 1;
-        this->base_ = 1;
+          ordering_(i) = i;
+        ascendingFlag_ = 1;
+        base_ = 1;
     }
 };
 
@@ -249,13 +259,19 @@ _bz_global _bz_fortranTag fortranArray;
 
 template<int N_rank>
 class ColumnMajorArray : public GeneralArrayStorage<N_rank> {
+private:
+    typedef GeneralArrayStorage<N_rank> T_base;
+    typedef _bz_typename T_base::noInitializeFlag noInitializeFlag;
+    using T_base::ordering_;
+    using T_base::ascendingFlag_;
+    using T_base::base_;
 public:
     ColumnMajorArray()
-        : GeneralArrayStorage<N_rank>(GeneralArrayStorage<N_rank>::noInitializeFlag())
+        : GeneralArrayStorage<N_rank>(noInitializeFlag())
     {
-        this->ordering_ = Range(0, N_rank - 1);
-        this->ascendingFlag_ = 1;
-        this->base_ = 0;
+        ordering_ = Range(0, N_rank - 1);
+        ascendingFlag_ = 1;
+        base_ = 0;
     }
 };
 
