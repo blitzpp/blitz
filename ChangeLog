@@ -5,6 +5,7 @@
 	* doc/stencils/Makefile.am: Added *.texi in clean-local target
 	* doc/examples/Makefile.am: Added *.texi and *.out in clean-local target.
 	Prefix ./ to $<  in .out building rule.
+	* configure.in: Removed unecessary AC_PROG_MAKE_SET.
 
 2003-01-21  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 	* blitz/generate/genmathfunc.cpp: Fixed categorization and scoping
