@@ -7,6 +7,10 @@ config.h.in
 config.log
 config.status
 configure
+depcomp
+install-sh
 ltconfig
 libtool
+mkinstalldirs
+missing
 .deps

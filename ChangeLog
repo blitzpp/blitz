@@ -1,4 +1,10 @@
 
+2003-02-05 Patrick Guio <patrick.guio@fys.uio.no>
+  * depcomp install-sh mkinstalldirs missing: Removed from repository
+	since generated running `autoreconf -v -i'.
+	* Makefile.am: Added a guard to avoid overwriting COPYING and INSTALL
+	files when running `autoreconf -v -i -f'.
+
 2003-01-23 Patrick Guio <patrick.guio@fys.uio.no>
 	* blitz/Makefile.am blitz/generate/Makefile.am: Added dependencies
 	and building rule for the generated .cc and .h files.
