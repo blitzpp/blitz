@@ -1,0 +1,161 @@
+<html>
+<head>
+<title>Blitz++ User's Guide </title>
+</head>
+<body fgcolor="#27408B" bgcolor="#FFFAF0"  >
+<hr>
+<ul>
+    <li> <a href="blitz09.html">Previous chapter</a>
+    <li> <a href="blitz.html">Table of contents</a>
+</ul>
+<hr>
+
+<a name="l134"></a>
+<h1>Chapter 10: Frequently Asked Questions</h1>
+<a name="faq"></a>
+    
+<!-- BZINDEX FAQ --><a name="index00497">
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>10.1: Questions about installation</font></td></tr></table><br><a name="l135"></a>
+
+<p><!-- BZINDEX CRC error in .tar.gz --><a name="index00498">
+<!-- BZINDEX invalid compressed data --><a name="index00499">
+<p><p><b>I downloaded Blitz++, but when I try to gunzip it, I get
+"invalid compressed data--crc error".</b></p>
+<p>You forgot to set binary download mode in ftp.  Do so with
+the "binary" command.
+<p><!-- BZINDEX gcc!memory hog --><a name="index00500">
+<!-- BZINDEX memory hog, gcc --><a name="index00501">
+<!-- BZINDEX out of virtual memory, gcc --><a name="index00502">
+<!-- BZINDEX virtual memory problems, gcc --><a name="index00503">
+<p><p><b>I can't use gcc on my PC because it requires 45-150 Mb
+to compile with Blitz++</b></p>
+<p>Unfortunately this is true.  If this problem is ever fixed, it
+will be by the gcc developers, so my best suggestion is to post
+a bug report to the gcc-bugs list.  
+<p><!-- BZINDEX external symbol relocation, Solaris --><a name="index00504">
+<p><p><b>I am using gcc under Solaris, and I get errors about 
+"relocation against external symbol".</b></p>
+<p>This problem can be fixed by installing the gnu linker and
+binutils.  Peter Nordlund found that by using gnu-binutils-2.9.1,
+this problem disappeared.  You can read a detailed 
+discussion at
+<a href="http://oonumerics.org/blitz/support/blitz-support/archive/0029.html">http://oonumerics.org/blitz/support/blitz-support/archive/0029.html</a>.
+<p><!-- BZINDEX as: symbol too long --><a name="index00505">
+<!-- BZINDEX symbol too long, Solaris as --><a name="index00506">
+<p><p><b>I am using gcc under Solaris, and the assembler gives
+me an error that a symbol is too long.</b></p>
+<p>This problem can also be fixed by installing the gnu linker and
+binutils.  See the above question.
+<p><!-- BZINDEX templates with C linkage, DECcxx --><a name="index00507">
+<p><p><b>DECcxx reports problems about "templates with C linkage"</b></p>
+<p>This problem was caused by a problem in some versions of DECcxx's
+<code>math.h</code> header: XOPEN_SOURCE_EXTENDED was causing an
+<code>extern "C" { ... }</code> section to have no closing brace.
+There is a kludge which is included in recent versions of
+Blitz++.
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>10.2: Questions about Blitz++ functionality</font></td></tr></table><br><a name="l136"></a>
+
+<p><!-- BZINDEX eigenvector decomposition --><a name="index00508">
+<!-- BZINDEX solving linear systems --><a name="index00509">
+<!-- BZINDEX matrix inversion --><a name="index00510">
+<!-- BZINDEX linear algebra --><a name="index00511">
+<p><p><b>For my problem, I need SVD, FFTs, QMRES, PLU, QR, ....</b></p>
+<p>Blitz++ does not currently provide any of these.  However, there
+are numerous C++ and C packages out there which do, and it is
+easy to move data back and forth between Blitz++ and other
+libraries.  See these terms in the index: creating an array
+from pre-existing data, <code>data()</code>, <code>stride()</code>,
+<code>extent()</code>, <code>fortranArray</code>.  For a list of other 
+numerical C++ libraries, see the Object Oriented Numerics
+Page at 
+<a href="http://oonumerics.org/oon/">http://oonumerics.org/oon/</a>.
+<p><!-- BZINDEX Python --><a name="index00512">
+<p><p><b>Can Blitz++ be interfaced with Python?</b></p>
+<p>Phil Austin has done so successfully.  See a description of
+his setup in 
+<a href="http://oonumerics.org/blitz/support/blitz-support/archive/0053.html">http://oonumerics.org/blitz/support/blitz-support/archive/0053.html</a>.
+<p><!-- BZINDEX out of memory --><a name="index00513">
+<!-- BZINDEX handling out of memory --><a name="index00514">
+<!-- BZINDEX new handler --><a name="index00515">
+<!-- BZINDEX set_new_handler() --><a name="index00516">
+<!-- BZINDEX bad_alloc --><a name="index00517">
+<p><p><b>If I try to allocate an array which is too big, my
+program just crashes or goes into an infinite loop.  Is there
+some way I can handle this more elegantly?</b></p>
+<p>Blitz++ uses <code>new</code> to allocate memory for arrays.
+In theory, your compiler should be throwing a
+<code>bad_alloc</code> exception when you run out of memory.  
+If it does, you can use a try/catch block to handle the
+out of memory exception.  If your compiler does
+not throw <code>bad_alloc</code>, you can install your own
+new handler to handle out of memory.
+<p>Here is an excerpt from the ISO/ANSI C++ standard
+which describes the behaviour of <code>new</code>:
+<p><ul>
+<p><li > Executes a loop: Within the loop, the function first attempts
+to allocate the requested storage. Whether the attempt
+involves a call to the Standard C library function malloc is
+unspecified. 
+<p><li > Returns a pointer to the allocated storage if the attempt is
+successful. Otherwise, if the last argument to
+set_new_handler() was a null pointer, throw bad_alloc. 
+<p><li > Otherwise, the function calls the current new_handler
+(lib.new.handler). If the called function returns, the loop
+repeats. 
+<p><li > The loop terminates when an attempt to allocate the
+requested storage is successful or when a called
+new_handler function does not return. 
+<p></ul>
+<p>You can use <code>set_new_handler</code> to create a new handler which
+will issue an error message or throw an exception.  For
+example:
+<p><pre>
+void my_new_handler()
+{
+cerr &lt;&lt; "Out of memory" &lt;&lt; endl;
+cerr.flush();
+abort();
+}
+
+...
+
+// First line in main():
+set_new_handler(my_new_handler);
+
+</pre>
+
+<p><!-- BZINDEX passing arrays by value --><a name="index00518">
+<!-- BZINDEX constness problems --><a name="index00519">
+<p><p><b>When I pass arrays by value, the function which receives
+them can modify the array data.  Why?</b></p>
+<p>It's a result of
+reference-counting. You have to think of array
+objects as being "handles" to underlying arrays. The function
+doesn't receive a copy of the array data, but rather
+a copy of the handle. 
+The alternative would be to copy the array data
+when passing by value, which would be grossly inefficient.
+<p><!-- BZINDEX &lt;&lt; operator, bitshift --><a name="index00520">
+<!-- BZINDEX operator &lt;&lt;, bitshift --><a name="index00521">
+<!-- BZINDEX operator &gt;&gt;, bitshift --><a name="index00522">
+<!-- BZINDEX &gt;&gt; operator, bitshift --><a name="index00523">
+<!-- BZINDEX bitshift operators --><a name="index00524">
+<p><p><b>Why can't I use e.g. <code>A &gt;&gt; 3</code> to do bitshifting on arrays?</b></p>
+<p>The operators <code>&lt;&lt;</code> and <code>&gt;&gt;</code> are used for input/ouput of arrays.
+It would cause problems with the expression templates implementation
+to also use them for bitshifting.  However, it is easy enough to
+define your own bitshifting function -- see <a href="blitz03.html#user-et">3.10</a>.
+<p><!-- BZINDEX matrix multiply --><a name="index00525">
+<p><p><b>When I write <code>TinyMatrix * TinyVector</code> I get an error.</b></p>
+<p>Try <code>product(d2,d1)</code>.  This works for matrix-matrix and
+matrix-vector products.
+<p>
+<p>
+<p><hr>
+<ul>
+    <li> <a href="blitz09.html">Previous chapter</a>
+    <li> <a href="blitz.html">Table of contents</a>
+</ul>
+<hr>
+</body>
+</html>

@@ -1,0 +1,103 @@
+# Blitz++ test suite makefile
+
+srcdir = @srcdir@
+VPATH = @srcdir@
+BZDIR = ..
+
+CXX = @CXX@
+CXXFLAGS  = -I$(srcdir)/$(BZDIR) @CXXFLAGS@ @CXX_DEBUG_FLAGS@
+LDFLAGS = @LDFLAGS@
+
+DEFS = 
+
+LIBS = -L$(BZDIR)/lib -lblitz -lm @CXX_LIBS@
+
+SINGLE_TESTS = ctors initialize storage shapecheck reduce derrick-bass-1 \
+	qcd loop1 peter-nordlund-1 shape interlace promote arrayresize \
+	minmax transpose reverse extract free \
+	chris-jeffery-1 where minsumpow gary-huber-1 \
+	derrick-bass-3 constarray chris-jeffery-2 reindex Ulisses-Mello-1 \
+	peter-bienstman-1 complex peter-nordlund-3 \
+	newet peter-bienstman-3 troyer-genilloud peter-nordlund-2 \
+	peter-bienstman-2 iter contiguous exprctor Olaf-Ronneberger-1 \
+	peter-bienstman-4 tinymat wei-ku-1 \
+	theodore-papadopoulo-1 peter-bienstman-5 Adnene-Ben-Abdallah-2 \
+	Josef-Wagenhuber
+
+MULTIPLE_TESTS = modules
+
+TESTS = $(SINGLE_TESTS) $(MULTIPLE_TESTS)
+
+.SUFFIXES: .o .cpp 
+
+.cpp.o:
+	$(CXX) $(CXXFLAGS) $(DEFS) -c $(srcdir)/$*.cpp 
+
+###########################################################################
+
+all:	$(TESTS)
+	echo Running test suite...
+	@for prog in $(TESTS) ; do \
+	  echo $$prog && (./$$prog) || exit 1; \
+	done
+	echo All tests passed.
+
+$(SINGLE_TESTS): 
+	$(CXX) $(LDFLAGS) $@.o -o $@ $(LIBS) 
+
+initialize:	initialize.o
+shapecheck:	shapecheck.o
+reduce:	reduce.o
+storage:	storage.o
+ctors:	ctors.o
+derrick-bass-1:	derrick-bass-1.o
+qcd:	qcd.o
+loop1:	loop1.o
+peter-nordlund-1:	peter-nordlund-1.o
+peter-nordlund-2:	peter-nordlund-2.o
+shape:	shape.o
+interlace:	interlace.o
+promote:	promote.o
+arrayresize:	arrayresize.o
+minmax:	minmax.o
+modules:	module1.o module2.o
+	$(CXX) $(LDFLAGS) module1.o module2.o -o $@ $(LIBS)
+transpose: 	transpose.o
+reverse:	reverse.o
+extract:	extract.o
+free:	free.o
+chris-jeffery-1:	chris-jeffery-1.o
+where:	where.o
+minsumpow:	minsumpow.o
+gary-huber-1:	gary-huber-1.o
+derrick-bass-3:	derrick-bass-3.o
+constarray:	constarray.o
+chris-jeffery-2:	chris-jeffery-2.o
+reindex:	reindex.o
+Ulisses-Mello-1:	Ulisses-Mello-1.o
+peter-bienstman-1:	peter-bienstman-1.o
+complex:	complex.o
+peter-bienstman-2:	peter-bienstman-2.o
+peter-nordlund-3:	peter-nordlund-3.o
+newet:	newet.o
+peter-bienstman-3:	peter-bienstman-3.o
+troyer-genilloud:	troyer-genilloud.o
+iter:	iter.o
+contiguous:	contiguous.o
+exprctor:	exprctor.o
+matthias-troyer-2:	matthias-troyer-2.o
+Olaf-Ronneberger-1:	Olaf-Ronneberger-1.o
+peter-bienstman-4:	peter-bienstman-4.o
+tinymat:	tinymat.o
+wei-ku-1:	wei-ku-1.o
+theodore-papadopoulo-1:	theodore-papadopoulo-1.o
+peter-bienstman-5:	peter-bienstman-5.o
+Adnene-Ben-Abdallah-2:	Adnene-Ben-Abdallah-2.o
+Josef-Wagenhuber:	Josef-Wagenhuber.o
+
+##########################################################################
+
+check:	all
+
+clean:
+	rm -f *.o *.ii *.int.c *.s $(TESTS)

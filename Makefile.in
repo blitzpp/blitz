@@ -1,0 +1,41 @@
+srcdir = @srcdir@
+VPATH = @srcdir@
+
+SHELL = @SHELL@
+
+top_builddir = .
+
+@SET_MAKE@
+
+FLAGS_TO_PASS = \
+        MAKE='$(MAKE)'
+
+SUBDIRS = compiler src testsuite examples
+
+all:
+	@for subdir in $(SUBDIRS) ; do \
+	  (cd $$subdir && $(MAKE) $(FLAGS_TO_PASS) $@ ) || exit 1; \
+	done
+
+clean:
+	rm -f config.cache blitz/config.h
+	@for subdir in $(SUBDIRS) ; do \
+	  (cd $$subdir && $(MAKE) $(FLAGS_TO_PASS) $@ ) || exit 1; \
+	done
+
+setup:
+	@(cd compiler ; $(MAKE) $(FLAGS_TO_PASS) )
+
+check:	lib
+	@(cd testsuite ; $(MAKE) $(FLAGS_TO_PASS) $@ )
+
+examples:
+	@(cd examples ; $(MAKE) $(FLAGS_TO_PASS) $@ )
+
+lib:	setup
+	@(cd src; $(MAKE) $(FLAGS_TO_PASS) )
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	cd $(top_builddir) \
+	  && CONFIG_FILES=$@ CONFIG_HEADERS= $(SHELL) ./config.status
+

@@ -1,0 +1,288 @@
+<html>
+<head>
+<title>Blitz++ User's Guide </title>
+</head>
+<body fgcolor="#27408B" bgcolor="#FFFAF0"  >
+<hr>
+<ul>
+    <li> <a href="blitz06.html">Next chapter</a>
+    <li> <a href="blitz04.html">Previous chapter</a>
+    <li> <a href="blitz.html">Table of contents</a>
+</ul>
+<hr>
+
+<a name="l95"></a>
+<h1>Chapter 5: Multicomponent, complex, and user type arrays</h1>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>5.1: Multicomponent and complex arrays</font></td></tr></table><br><a name="l96"></a>
+
+<a name="arrays-multi"></a>
+    <!-- BZINDEX Array!multicomponent --><a name="index00395">
+<!-- BZINDEX multicomponent arrays --><a name="index00396">
+Multicomponent arrays have elements which are vectors.  Examples
+of such arrays are vector fields, colour images (which contain, say,
+RGB tuples), and multispectral images.  Complex-valued arrays can
+also be regarded as multicomponent arrays, since each element is
+a 2-tuple of real values.
+<p>Here are some examples of multicomponent arrays:
+<p><!-- BZINDEX RGB24 example --><a name="index00397">
+<p><pre>
+  // A 3-dimensional array; each element is a length 3 vector of float
+  Array&lt;TinyVector&lt;float,3&gt;,3&gt; A;  
+
+  // A complex 2-dimensional array
+  Array&lt;complex&lt;double&gt;,2&gt; B;
+
+  // A 2-dimensional image containing RGB tuples
+  struct RGB24 {
+    unsigned char r, g, b;
+  };
+
+  Array&lt;RGB24,2&gt; C;
+</pre>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>5.1.1: Extracting components</font></td></tr></table><a name="l97"></a>
+
+<p><!-- BZINDEX extracting components --><a name="index00398">
+<!-- BZINDEX Array!extracting components --><a name="index00399">
+<p>Blitz++ provides some special support for such arrays.  The most
+important is the ability to extract a single component.  For
+example:
+<p><pre>
+  Array&lt;TinyVector&lt;float,3&gt;,2&gt; A(128,128);
+  Array&lt;float,2&gt; B = A.extractComponent(float(), 1, 3);
+  B = 0;
+</pre>
+<p>The call to <code>extractComponent</code> returns an array of floats; this
+array is a view of the second component of each element of A.
+The arguments of <code>extractComponent</code> are: (1) the type of the
+component (in this example, float); (2) the component number
+to extract (numbered 0, 1, ... N-1); and (3) the number of 
+components in the array.
+<p>This is a little bit messy, so Blitz++ provides a handy shortcut
+using <code>operator[]</code>:
+<p><pre>
+  Array&lt;TinyVector&lt;float,3&gt;,2&gt; A(128,128);
+  A[1] = 0;
+</pre>
+<p>The number inside the square brackets is the component number.
+However, for this operation to work, Blitz++ has to already know
+how many components there are, and what type they are.  It
+knows this already for <code>TinyVector</code> and <code>complex&lt;T&gt;</code>.
+If you use your own type, though, you will have to tell
+Blitz++ this information using the macro <code>BZ_DECLARE_MULTICOMPONENT_TYPE()</code>.
+This macro has three arguments:
+<p><!-- BZINDEX BZ_DECLARE_MULTICOMPONENT_TYPE --><a name="index00400">
+<pre>BZ_DECLARE_MULTICOMPONENT_TYPE(T_element, T_componentType, numComponents)
+</pre>
+<code>T_element</code> is the element type of the array.  <code>T_componentType</code>
+is the type of the components of that element.  <code>numComponents</code> is
+the number of components in each element.
+<p>An example will clarify this.  Suppose we wanted to make a
+colour image, stored in 24-bit HSV (hue-saturation-value) format.
+We can make a class <code>HSV24</code> which represents a single pixel:
+<p><!-- BZINDEX HSV24 example --><a name="index00401">
+<p><pre>#include &lt;blitz/array.h&gt;
+
+using namespace blitz;
+
+class HSV24 {
+public:
+    // These constants will makes the code below cleaner; we can
+    // refer to the components by name, rather than number.
+
+    static const int hue=0, saturation=1, value=2;
+
+    HSV24() { }
+    HSV24(int hue, int saturation, int value)
+      : h_(hue), s_(saturation), v_(value)
+    { }
+
+    // Some other stuff here, obviously
+
+private:
+    unsigned char h_, s_, v_;
+};
+</pre>
+<p>Right after the class declaration, we will invoke the
+macro <code>BZ_DECLARE_MULTICOMPONENT_TYPE</code> to tell Blitz++
+about HSV24:
+<p><pre>// HSV24 has 3 components of type unsigned char
+BZ_DECLARE_MULTICOMPONENT_TYPE(HSV24, unsigned char, 3);
+</pre>
+<p>Now we can create HSV images and modify the individual
+components:
+<p><pre>int main()
+{
+    Array&lt;HSV24,2&gt; A(128,128);   // A 128x128 HSV image
+    ...
+
+    // Extract a greyscale version of the image
+    Array&lt;unsigned char,2&gt; A_greyscale = A[HSV24::value];
+
+    // Bump up the saturation component to get a
+    // pastel effect
+    A[HSV24::saturation] *= 1.3; 
+
+    // Brighten up the middle of the image
+    Range middle(32,96);
+    A[HSV24::value](middle,middle) *= 1.2;
+}
+</pre>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>5.1.2: Special support for complex arrays</font></td></tr></table><a name="l98"></a>
+
+<p><!-- BZINDEX Array!complex --><a name="index00402">
+<!-- BZINDEX complex arrays --><a name="index00403">
+<p>Since complex arrays are used frequently, Blitz++ provides
+two special methods for getting the real and imaginary components:
+<p><pre>Array&lt;complex&lt;float&gt;,2&gt; A(32,32);
+
+  real(A) = 1.0;
+  imag(A) = 0.0;
+</pre>
+<p>The function <code>real(A)</code> returns an array view of the
+real component; <code>imag(A)</code> returns a view of the imaginary
+component.
+<p>Note: Blitz++ provides numerous math functions defined
+over complex-valued arrays, such as
+<code>conj</code>, <code>polar</code>, <code>arg</code>, <code>abs</code>, <code>cos</code>, <code>pow</code>, etc.
+See the section on math functions 
+(<a href="blitz03.html#math-functions">3.8</a>) for details.
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>5.1.3: Zipping together expressions</font></td></tr></table><a name="l99"></a>
+
+<p><!-- BZINDEX zipping expressions --><a name="index00404">
+<!-- BZINDEX Array!zipping expressions --><a name="index00405">
+Blitz++ provides a function <code>zip()</code> which lets you
+combine two or more expressions into a single component.
+For example, you can combine two real expressions into
+a complex expression, or three integer expressions into
+an HSV24 expression.  The function has this syntax:
+<p><pre>resultexpr zip(expr1, expr2, T_element)
+resultexpr zip(expr1, expr2, expr3, T_element)         ** not available yet
+resultexpr zip(expr1, expr2, expr3, expr4, T_element)  ** not available yet
+</pre>
+<p>The types <code>resultexpr</code>, <code>expr1</code> and <code>expr2</code> are
+array expressions.  The third argument is the type you
+want to create.  For example:
+<p><pre>int N = 16;
+Array&lt;complex&lt;float&gt;,1&gt; A(N);
+Array&lt;float,1&gt; theta(N);
+
+ ...
+
+A = zip(cos(theta), sin(theta), complex&lt;float&gt;());
+</pre>
+<p>The above line is equivalent to:
+<p><pre>for (int i=0; i &lt; N; ++i)
+   A[i] = complex&lt;float&gt;(cos(theta[i]), sin(theta[i]));
+</pre>
+<p>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>5.2: Creating arrays of a user type</font></td></tr></table><br><a name="l100"></a>
+
+<a name="arrays-usertype"></a>
+    <!-- BZINDEX Array!of your own types --><a name="index00406">
+<p>You can use the <code>Array</code> class with types you have created yourself,
+or types from another library.  If you want to do arithmetic on the
+array, whatever operators you use on the arrays have to be defined
+on the underlying type.
+<p>For example, here's a simple class for doing fixed point computations
+in the interval [0,1]:
+<p><center><table border cellpadding=20 align=top><tr><td bgcolor="C0C0C0"><pre>
+
+#include &lt;blitz/numinquire.h&gt;     // for huge()
+
+class FixedPoint {
+
+public:
+    // The type to use for the mantissa
+    typedef unsigned int T_mantissa;
+
+    FixedPoint() { }
+
+    explicit FixedPoint(T_mantissa mantissa)
+    {  
+        mantissa_ = mantissa;
+    }
+
+    FixedPoint(double value)
+    {
+        assert((value &gt;= 0.0) &amp;&amp; (value &lt;= 1.0));
+        mantissa_ = value * huge(T_mantissa());
+    }
+   
+    FixedPoint operator+(FixedPoint x)
+    { return FixedPoint(mantissa_ + x.mantissa_); }
+
+    double value() const
+    { return mantissa_ / double(huge(T_mantissa())); }
+
+private:
+    T_mantissa mantissa_;
+};
+
+ostream&amp; operator&lt;&lt;(ostream&amp; os, const FixedPoint&amp; a)
+{
+    os &lt;&lt; a.value();
+    return os;
+}
+
+</pre>
+</td></tr></table></center>
+<p>The function <code>huge(T)</code> returns the largest representable value
+for type T; in the example above, it's equal to <code>UINT_MAX</code>.
+<p>The <code>FixedPoint</code> class declares three useful operations: conversion
+from <code>double</code>, addition, and outputing to an <code>ostream</code>.  We can
+use all of these operations on an <code>Array&lt;FixedPoint&gt;</code> object:
+<p><center><table border cellpadding=20 align=top><tr><td bgcolor="C0C0C0"><pre>
+
+#include &lt;blitz/array.h&gt;
+
+using namespace blitz;
+
+int main()
+{
+    // Create an array using the FixedPoint class:
+
+    Array&lt;FixedPoint, 2&gt; A(4,4), B(4,4);
+
+    A = 0.5, 0.3, 0.8, 0.2,
+        0.1, 0.3, 0.2, 0.9,
+        0.0, 1.0, 0.7, 0.4,
+        0.2, 0.3, 0.8, 0.4;
+
+    B = A + 0.05;
+
+    cout &lt;&lt; "B = " &lt;&lt; B &lt;&lt; endl;
+
+    return 0;
+}
+
+</pre>
+</td></tr></table></center>
+<p>Note that the array <code>A</code> is initialized using a comma-delimited list
+of <code>double</code>; this makes use of the constructor <code>FixedPoint(double)</code>.
+The assignment <code>B = A + 0.05</code> uses 
+<code>FixedPoint::operator+(FixedPoint)</code>, with an implicit conversion
+from <code>double</code> to <code>FixedPoint</code>.  Formatting the array <code>B</code> onto
+the standard output stream is done using the output operator
+defined for <code>FixedPoint</code>.
+<p>Here's the program output:
+<p><center><table border cellpadding=20 align=top><tr><td bgcolor="C0C0C0"><pre>
+B = 4 x 4
+      0.55      0.35      0.85      0.25
+      0.15      0.35      0.25      0.95
+      0.05      0.05      0.75      0.45
+      0.25      0.35      0.85      0.45
+
+</pre>
+</td></tr></table></center>
+<p>
+<p>
+
+<hr>
+<ul>
+    <li> <a href="blitz06.html">Next chapter</a>
+    <li> <a href="blitz04.html">Previous chapter</a>
+    <li> <a href="blitz.html">Table of contents</a>
+</ul>
+<hr>
+</body>
+</html>

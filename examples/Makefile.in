@@ -1,0 +1,70 @@
+srcdir = @srcdir@
+VPATH = @srcdir@
+
+BZDIR = ..
+
+CXX = @CXX@
+CXXFLAGS = @CXXFLAGS@ @CXX_DEBUG_FLAGS@ -I$(srcdir)/$(BZDIR)
+LDFLAGS = @LDFLAGS@
+
+LIBS = -L$(BZDIR)/lib -lblitz -lm @CXX_LIBS@
+
+############################################################################
+
+EXAMPLES =  array cast deriv matmult numinquire outer pick \
+	rangexpr reduce simple slicing storage tiny fixed where qcd erf \
+	transform nested complex stencil stencil2 diff curldiv cfd \
+	indirect useret iter stencil3 io convolve random
+
+.SUFFIXES: .o .cpp 
+
+.cpp.o:
+	$(CXX) $(CXXFLAGS) -c $(srcdir)/$*.cpp
+
+$(EXAMPLES):
+	$(CXX) $(LDFLAGS) $@.o -o $@ $(LIBS)
+
+###########################################################################
+
+all:	$(EXAMPLES)
+
+examples:	$(EXAMPLES)
+
+array:	array.o
+cast:	cast.o
+deriv:	deriv.o
+matmult:	matmult.o
+numinquire:	numinquire.o
+outer:	outer.o
+pick:	pick.o
+rangexpr:	rangexpr.o
+reduce:	reduce.o
+simple:	simple.o
+slicing:	slicing.o
+storage:	storage.o
+tiny:	tiny.o
+fixed:	fixed.o
+where:	where.o
+qcd:	qcd.o
+erf:	erf.o
+transform:	transform.o
+stencil:	stencil.o
+nested:	nested.o
+complex:	complex.o
+stencil2:	stencil2.o
+curldiv:	curldiv.o
+diff:	diff.o
+cfd:	cfd.o
+indirect:	indirect.o
+useret:	useret.o
+iter:	iter.o
+stencil3:	stencil3.o
+io:	io.o
+convolve:	convolve.o
+random:	random.o
+
+###########################################################################
+
+
+clean:
+	rm -f *.o *.ii *.int.c *.s $(EXAMPLES)

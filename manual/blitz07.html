@@ -1,0 +1,140 @@
+<html>
+<head>
+<title>Blitz++ User's Guide </title>
+</head>
+<body fgcolor="#27408B" bgcolor="#FFFAF0"  >
+<hr>
+<ul>
+    <li> <a href="blitz08.html">Next chapter</a>
+    <li> <a href="blitz06.html">Previous chapter</a>
+    <li> <a href="blitz.html">Table of contents</a>
+</ul>
+<hr>
+
+<a name="l106"></a>
+<h1>Chapter 7: TinyVector</h1>
+<a name="tinyvector"></a>
+    
+<!-- BZINDEX TinyVector --><a name="index00420">
+<p>The <code>TinyVector</code> class provides a small, lightweight vector
+object whose size is known at compile time.  It is included
+via the header <code>&lt;blitz/tinyvec.h&gt;</code>.  
+<p>Note that <code>TinyVector</code> lives in the <code>blitz</code> namespace,
+so you will need to refer to it as <code>blitz::TinyVector</code>,
+or use the directive <code>using namespace blitz;</code>.
+<p>The Blitz++ <code>Array</code> object uses <code>TinyVector</code> internally, so
+if you include <code>&lt;blitz/array.h&gt;</code>, the TinyVector
+header is automatically included.
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.1: Template parameters and types</font></td></tr></table><br><a name="l107"></a>
+
+<p>The <code>TinyVector&lt;T,N&gt;</code> class has two template parameters:
+<p><ul>
+<p><li><strong><code>T</code></strong> is the numeric type of the vector (float, double, int,
+   <code>complex&lt;float&gt;</code>, etc.;
+<p><li><strong><code>N</code></strong> is the number of elements in the vector.
+<p></ul>
+<p>Inside the <code>TinyVector</code> class, these types are declared:
+<p><ul>
+<p><li><strong><code>T_numtype</code></strong> is the numeric type stored in the vector (the
+template parameter <code>T</code>)
+<p><li><strong><code>T_vector</code></strong> is the vector type <code>TinyVector&lt;T,N&gt;</code>.
+<p><li><strong><code>iterator</code></strong> is an STL-style iterator.
+<p><li><strong><code>constIterator</code></strong> is an STL-style const iterator.
+<p></ul>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.2: Constructors</font></td></tr></table><br><a name="l108"></a>
+
+<p><strong><pre>TinyVector();
+</pre></strong>
+The elements of the vector are left uninitialized.
+<p><strong><pre>TinyVector(const TinyVector&lt;T,N&gt;&amp; x);
+</pre></strong>
+The elements of vector <code>x</code> are copied.
+<p><strong><pre>TinyVector(T value);
+</pre></strong>
+All elements are initialized to <code>value</code>.
+<p><strong><pre>TinyVector(T value1, T value2, ...)
+</pre></strong>
+The vector is initialized with the list of values given.
+These constructors are provided for up to N=11.
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.3: Member functions</font></td></tr></table><br><a name="l109"></a>
+
+<p><strong><pre>TinyVector&lt;T,N&gt;::iterator                   begin();
+TinyVector&lt;T,N&gt;::const_iterator             begin() const;
+</pre></strong>
+Returns an STL-style iterator for the vector, positioned
+at the beginning of the data.
+<p><strong><pre>TinyVector&lt;T,N&gt;::iterator                   end();
+TinyVector&lt;T,N&gt;::const_iterator             end() const;
+</pre></strong>
+Returns an STL-style iterator for the vector, positioned
+at the end of the data.
+<p><strong><pre>T_numtype* [restrict]       data();
+const T_numtype* [restrict] data() const;
+</pre></strong>
+Returns a pointer to the first element in the vector.
+<p><strong><pre>int                     length() const;
+</pre></strong>
+Returns the length of the vector (the template parameter <code>N</code>).
+<p><strong><pre>T_numtype               operator()(int i) const;
+T_numtype&amp;              operator()(int i);
+T_numtype               operator[](int i) const;
+T_numtype&amp;              operator[](int i);
+</pre></strong>
+Returns the <code>i</code>th element of the vector.  If the
+code is compiled with debugging enabled (<code>-DBZ_DEBUG</code>),
+bounds checking is performed.
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.4: Assignment operators</font></td></tr></table><br><a name="l110"></a>
+
+<p>The assignment operators =, +=, -=, *=, /=, %=, ^=, &amp;=, |=, &gt;&gt;= and &lt;&lt;=
+are all provided.  The right hand side of an assignment may be a
+scalar of type <code>T_numtype</code>, a <code>TinyVector</code> of any type but the
+same size, or a vector expression.
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.5: Expressions</font></td></tr></table><br><a name="l111"></a>
+
+<p>Expressions involving tiny vectors may contain any combination
+of the operators
+<p><code>+ - * / % ^ &amp; | &gt;&gt; &lt;&lt;</code>
+<p>with operands of type TinyVector, scalar, or vector expressions.
+The usual math functions (see the Array documentation) are supported
+on TinyVector.
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.6: Global functions</font></td></tr></table><br><a name="l112"></a>
+
+<p><strong><pre>dot(TinyVector, TinyVector);
+dot(vector-expr, TinyVector);
+dot(TinyVector, vector-expr);
+dot(vector-expr, vector-expr);
+</pre></strong>
+These functions calculate a dot product between TinyVectors
+(or vector expressions).  The result is a scalar; the type
+of the scalar follows the usual type promotion rules.
+<p><strong><pre>product(TinyVector);
+</pre></strong>
+Returns the product of all the elements in the vector.
+<p><strong><pre>sum(TinyVector);
+</pre></strong>
+Returns the sum of the elements in the vector.
+<p><strong><pre>TinyVector&lt;T,3&gt; cross(TinyVector&lt;T,3&gt; x, TinyVector&lt;T,3&gt; y);
+</pre></strong>
+Returns the cross product of <code>x</code> and <code>y</code>.
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.7: Arrays of TinyVector</font></td></tr></table><br><a name="l113"></a>
+
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>7.8: Input/output</font></td></tr></table><br><a name="l114"></a>
+
+<p><strong><pre>ostream&amp; operator&lt;&lt;(ostream&amp;, const TinyVector&lt;T,N&gt;&amp; x)
+</pre></strong>
+This function outputs a TinyVector onto a stream.  Here's
+an illustration of the format for a length 3 vector:
+<p><strong><pre>[        0.5       0.2       0.9 ]
+</pre></strong>
+
+<p>
+
+<hr>
+<ul>
+    <li> <a href="blitz08.html">Next chapter</a>
+    <li> <a href="blitz06.html">Previous chapter</a>
+    <li> <a href="blitz.html">Table of contents</a>
+</ul>
+<hr>
+</body>
+</html>

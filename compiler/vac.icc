@@ -1,0 +1,8 @@
+option
+link(debug)
+{
+  target "bzjunk"
+  {
+    source type(cpp) "bzjunk.cpp"
+  }
+}

@@ -1,0 +1,20 @@
+srcdir = @srcdir@
+VPATH = @srcdir@
+BZDIR = @srcdir@/..
+
+CXX=@CXX@
+CXXFLAGS=@CXXFLAGS@
+
+BZ_CONFIG_H = $(BZDIR)/blitz/config.h
+
+all: $(BZ_CONFIG_H)
+
+###########################################################################
+
+$(BZ_CONFIG_H):	$(srcdir)/bzconfig
+	$(srcdir)/bzconfig --compiler=$(CXX) --flags="$(CXXFLAGS)" --srcdir="$(srcdir)"
+	cp config.h $(BZ_CONFIG_H)
+
+clean:
+	rm -f config.h logfile
+

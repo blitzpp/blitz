@@ -1,0 +1,48 @@
+##############################################################################
+#
+# Blitz++ demos makefile
+#
+
+srcdir = @srcdir@
+VPATH = @srcdir@
+
+BZDIR = $(srcdir)/..
+
+CXX = @CXX@
+CXXFLAGS = @CXXFLAGS@ @CXX_OPTIMIZE_FLAGS@ @CXXFFLAGS@ -I$(BZDIR)
+F77 = @F77@
+F77FLAGS = @F77_OPTIMIZE_FLAGS@
+F90 = @F90@
+F90FLAGS = @F90_OPTIMIZE_FLAGS@
+
+LIBS = -L$(BZDIR)/lib -lblitz -lm @BLASLIB@ @FORTLIBS@
+
+.SUFFIXES: .o .cpp .f
+
+.cpp.o:
+	$(CXX) $(CXXFLAGS) -c $*.cpp
+
+.f.o:
+	$(F77) $(F77FLAGS) -c $*.f
+
+############################################################################
+
+DEMOS = acoustic
+
+all:	$(DEMOS) 
+
+run:	all
+	@for demo in $(DEMOS) ; do \
+	  ./$$demo; \
+	done
+
+############################################################################
+
+acoustic:	acoustic.o
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o acoustic acoustic.o $(LIBS)
+
+###########################################################################
+
+clean:
+	rm -f *.o *.ii *.int.c *.s ${DEMOS}
+

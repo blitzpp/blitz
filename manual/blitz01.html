@@ -1,0 +1,379 @@
+<html>
+<head>
+<title>Blitz++ User's Guide </title>
+</head>
+<body fgcolor="#27408B" bgcolor="#FFFAF0"  >
+<hr>
+<ul>
+    <li> <a href="blitz02.html">Next chapter</a>
+    <li> <a href="blitz.html">Table of contents</a>
+</ul>
+<hr>
+
+<a name="l1"></a>
+<h1>Chapter 1: Introduction</h1>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>1.1: About this document</font></td></tr></table><br><a name="l2"></a>
+
+<p>To use the Blitz++ library,
+you will need a compiler with near-draft standard syntax support
+(see the following section for possible compilers).
+Information on what platforms are supported is
+available from
+<a href="http://oonumerics.org/blitz/platforms/">http://oonumerics.org/blitz/platforms/</a>.  To download Blitz++, please go to the
+download page at
+<a href="http://oonumerics.org/blitz/download/">http://oonumerics.org/blitz/download/</a>.
+<p>If you need to do something that Blitz++ doesn't support, 
+see a possible improvement, or notice an error in the documentation,
+please send a note to one of the Blitz++ mailing lists (described
+later).
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>1.2: Platform notes</font></td></tr></table><br><a name="l3"></a>
+
+<a name="platforms"></a>
+    For up-to-date information on supported platforms, please consult
+the Blitz++ web page:
+<p><a href="http://oonumerics.org/blitz/platforms/">http://oonumerics.org/blitz/platforms/</a>
+<p>The information in this document may be out of date.
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>1.2.1: KAI C++</font></td></tr></table><a name="l4"></a>
+
+<p>Blitz++ was developed and tested using KAI C++ under AIX.  It should
+(in theory) port to other KAI C++ platforms (Cray, SGI, HP, Sun,
+Linux, DEC) without difficulty.  Since KAI C++ uses an EDG front
+end, other EDG front-ended compilers (e.g. Comeau) should be able
+to compile Blitz++.
+<p><!-- BZINDEX KAI C++ --><a name="index00001">
+Recommended compile flags are:
+<p><pre>+K3 -O2 --restrict --abstract_pointer --abstract_float -tused
+</pre>
+<p>Note that you cannot compile with <code>-tall</code> (this will generate
+lots of errors).
+<p>Under Linux, you may need the flag <code>-D__signed__=</code>.  You should
+omit <code>-tused</code> since this template instantiation model is not
+supported by <code>gcc</code>, which is used as the back-end compiler.
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>1.2.2: Intel C++</font></td></tr></table><a name="l5"></a>
+
+<p><!-- BZINDEX Intel C++ --><a name="index00002">
+Intel has a drop-in compiler based on the EDG front end.  It used
+to compile Blitz++, but since that time I've made use of some language
+features it doesn't support.  However, there is a new beta version
+out (3.0) which may be able to compile Blitz++.  Allan Stokes is
+working on this.
+<p>More information:
+<p><a href="http://developer.intel.com/design/perftool/icl24/">http://developer.intel.com/design/perftool/icl24/</a>
+<p><a href="http://developer.intel.com/design/perftool/icl24/icl24wht.htm">http://developer.intel.com/design/perftool/icl24/icl24wht.htm</a>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>1.2.3: gcc</font></td></tr></table><a name="l6"></a>
+
+<p><!-- BZINDEX gcc --><a name="index00003">
+gcc is a free GNU C++ compiler.  It is a fast-moving version of gcc.
+It compiles Blitz++ reliably.
+<p>gcc may be downloaded from 
+<a href="http://gcc.cygnus.com/">http://gcc.cygnus.com/</a>.
+<p>If you are using gcc under Solaris, SunOS, or OSF/1, please see the
+README.binutils file included in the distribution.
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>1.2.4: DECcxx</font></td></tr></table><a name="l7"></a>
+
+<p><!-- BZINDEX DECcxx --><a name="index00004">
+<p>The Digital C++ compiler is supported.
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>1.2.5: Cray T3E/Cray T90/Cray C90/Cray J90</font></td></tr></table><a name="l8"></a>
+
+<p><!-- BZINDEX Cray compiler --><a name="index00005">
+<p>As of Version 0.2-alpha-02 of Blitz++, Version 3.0.0.0 of the
+Cray C++ compiler is supported (well, tolerated anyway).
+It seems to be based on an older version of the EDG front
+end, so some kludges are required.  It doesn't support
+partial ordering of member templates, so slicing arrays
+requires the workaround described in Section <a href="blitz02.html#slicing-combo">2.4.2</a>.
+Portions of the standard library are missing, such as
+&lt;limits&gt;, &lt;complex&gt;, and &lt;set&gt;.  This means you won't be
+able to use complex numbers (well, not the ISO/ANSI C++
+versions anyway), numeric inquiry functions, or
+fast traversal orders.
+<p>These compilation flags are recommended:
+<p><pre>-h instantiate=used
+</pre>
+<p>For optimization, you'll want:
+<p><pre>-O3 -h aggress
+</pre>
+<p>The ability of the Cray C++ compiler to optimize away temporary
+objects is disappointing.  It's not able to optimize away expression
+templates overhead or comma-delimited array initializers.
+<p>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>1.3: How to download Blitz++</font></td></tr></table><br><a name="l9"></a>
+
+<a name="download"></a>
+    
+<!-- BZINDEX downloading --><a name="index00006">
+<p>To download the Blitz++ library, go to the Blitz++
+download page, at
+<a href="http://oonumerics.org/blitz/download/">http://oonumerics.org/blitz/download/</a>
+<p>But please read the section on supported platforms and compilers
+first.
+<p>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>1.4: Installation and porting</font></td></tr></table><br><a name="l10"></a>
+
+<a name="install"></a>
+    <br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>1.4.1: Installation</font></td></tr></table><a name="l11"></a>
+
+<p><!-- BZINDEX installation --><a name="index00007">
+<!-- BZINDEX autoconf --><a name="index00008">
+<!-- BZINDEX makefiles --><a name="index00009">
+<p>Blitz++ uses GNU Autoconf, which handles rewriting Makefiles
+for various platforms and compilers.  It has greatly simplified
+installation and porting.  Many thanks for John W. Eaton
+and Brendan Kehoe for their help with this.
+<p>To install blitz, unpack the blitz-VERSION.tar.gz
+file (it will install into a subdirectory blitz-VERSION).
+For example:
+<p><pre>[tveldhui@n2001:~] 32: ls -l blitz*.gz
+-rw-r--r--   1 tveldhui users      480953 Jun 23 15:20 blitz-0.5.tar.gz
+[tveldhui@n2001:~] 33: gunzip blitz-0.5.tar.gz 
+[tveldhui@n2001:~] 34: tar xvf blitz-0.5.tar
+blitz-0.5/CHANGELOG
+blitz-0.5/COPYING
+blitz-0.5/INSTALL
+blitz-0.5/Makefile.in
+blitz-0.5/README
+blitz-0.5/THANKS
+  .
+  .
+</pre>
+<p>Then go into the main blitz directory, and type:
+<p><!-- BZINDEX configure script --><a name="index00010">
+<strong><pre>./configure --with-cxx=[compiler]
+</pre></strong>
+<p>where [compiler] is one of <code>gcc</code>, <code>KCC</code>, <code>cray</code>, <code>aCC</code>, 
+<code>DECcxx</code>, <code>pgCC</code>, <code>SGI32</code>, or <code>SGI64</code>.
+<p>If your compiler has been renamed (e.g. <code>eg++</code> for gcc instead of the usual
+<code>g++</code>), you can use this syntax to specify the command name for the compiler:
+<p><strong><pre>./configure --with-cxx=gcc:eg++
+</pre></strong>
+<p>You can also specify special command-line options for your compiler, using
+this syntax:
+<p><strong><pre>./configure --with-cxx="gcc:eg++ -ftemplate-depth-50"
+</pre></strong>
+<p>If you are interested in benchmarking, you may want to use
+the option <code>--with-blas=...</code> to specify the path where the
+blas library is found.
+<p>Once the configure script is done, you can do any of these
+things:
+<p><ul>
+<p><li><strong><code>make lib    </code></strong>     Check the compiler and create libblitz.a
+<p><li><strong><code>make check  </code></strong>     Do the above plus build and check the testsuite
+<p><li><strong><code>make all    </code></strong>     Do the above plus build the examples and benchmarks.
+This may take a <strong>long</strong> time.
+<p></ul>
+<p>Building the benchmark programs requires both a Fortran 77 and
+Fortran 90 compiler.
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>1.4.2: The Blitz++ directory tree</font></td></tr></table><a name="l12"></a>
+
+<p>The main Blitz++ directory contains these subdirectories:
+<p><ul>
+<p><li><strong><code>blitz/       </code></strong> Blitz++ headers and source files
+<p><li><strong><code>random/      </code></strong> Random number generators
+<p><li><strong><code>compiler/    </code></strong> Blitz++ compiler tests.  The <code>bzconfig</code> script is used
+   to test a compiler for ISO/ANSI C++ compatability.  This script creates
+   the <code>blitz/config.h</code> header file, which may enable various kludges
+   to compensate for deficiencies of your compiler.
+<p><li><strong><code>examples/    </code></strong> Example programs
+<p><li><strong><code>manual/      </code></strong> Documentation in HTML and PostScript.
+<p><li><strong><code>benchmarks/  </code></strong> Benchmark programs
+<p><li><strong><code>testsuite/   </code></strong> Testsuite programs
+<p><li><strong><code>src/         </code></strong> Source code for <code>libblitz.a</code>
+<p><li><strong><code>lib/         </code></strong> Where <code>libblitz.a</code> lives.
+<p></ul>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>1.4.3: Porting Blitz++</font></td></tr></table><a name="l13"></a>
+
+<p><!-- BZINDEX porting Blitz++ --><a name="index00011">
+<p>If you want to try porting Blitz++ to a new compiler or platform,
+I suggest the following approach:
+<p><ul>
+<p><li > First check the Blitz++ web page to make sure you have
+the latest snapshot, and that someone hasn't already ported
+blitz to your platform.
+<p><li > Go into the compiler subdirectory and run the bzconfig
+     script.  This will exercise your compiler to see what
+     language features it supports.  If it doesn't have
+     member templates and enum computations, just give up.
+<p><li > Install autoconf (from e.g. ftp://prep.ai.mit.edu/pub/gnu)
+     if you don't have it already.
+<p><li > Make a backup of configure.in, and edit configure.in
+     to add appropriate cases for your compiler.  Then invoke
+     autoconf to generate the configure script.  Then try
+     configure with your new --with-cxx= option.  Repeat
+     until it works..
+<p></ul>
+<p>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>1.5: Compiling with Blitz++</font></td></tr></table><br><a name="l14"></a>
+
+<a name="compiling"></a>
+    <br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>1.5.1: Header files</font></td></tr></table><a name="l15"></a>
+
+<p><!-- BZINDEX header files, convention --><a name="index00012">
+<!-- BZINDEX blitz/... header files --><a name="index00013">
+<p>Blitz++ follows an X-windows style convention for header files.
+All headers are referred to with a prefix of "blitz/".
+For example, to use the <code>Array&lt;T,N&gt;</code> class, one needs to include
+<code>&lt;blitz/array.h&gt;</code> instead of just <code>&lt;array.h&gt;</code>.
+To make this work, the main Blitz++ directory must be in
+your include path.  For example, if Blitz++ was installed
+in <code>/software/Blitz++</code>, you will need to compile with
+<code>-I /software/Blitz++</code>.
+<p>If you have root privileges, you may want to put in a symbolic
+link from the standard include path (e.g. <code>/usr/include/blitz/</code>)
+to the <code>blitz</code> directory of the distribution.  This will
+allow you to omit the <code>-I ...</code> option when compiling.
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>1.5.2: Linking to the Blitz++ library</font></td></tr></table><a name="l16"></a>
+
+<p><!-- BZINDEX libblitz.a --><a name="index00014">
+<!-- BZINDEX library (libblitz.a) --><a name="index00015">
+<p>The Blitz++ library file <code>libblitz.a</code> contains a few pieces of 
+global data.  You should ensure that the "lib/" subdirectory of the
+Blitz++ distribution is in your library path
+(e.g. <code>-L/usr/local/blitz-0.5/lib</code>) and include
+<code>-lblitz</code> on your command line.  If you use math functions,
+you should also compile with <code>-lm</code>.
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>1.5.3: An example Makefile</font></td></tr></table><a name="l17"></a>
+
+<p><!-- BZINDEX makefile, example --><a name="index00016">
+<p>Here is a typical skeletal Makefile for compiling with Blitz++
+under gcc:
+<p><pre># Path where Blitz++ is installed
+BZDIR = /usr/local/blitz-0.5
+
+CXX = g++
+
+# Flags for optimized executables
+# CXXFLAGS = -O2 -I$(BZDIR) -ftemplate-depth-30
+
+# Flags for debugging
+CXXFLAGS = -ftemplate-depth-30 -g -DBZ_DEBUG -I$(BZDIR)
+
+LDFLAGS =
+LIBS = -L$(BZDIR)/lib -lblitz -lm
+
+TARGETS = myprogram1 myprogram2
+
+.SUFFIXES: .o .cpp
+
+.cpp.o:
+        $(CXX) $(CXXFLAGS) -c $*.cpp
+
+$(TARGETS):
+        $(CXX) $(LDFLAGS) $@.o -o $@ $(LIBS)
+
+all:
+        $(TARGETS)
+
+myprogram1:      myprogram1.o
+myprogram2:      myprogram2.o
+
+clean:
+        rm -f *.o $(TARGETS)
+</pre>
+<p>There are more example makefiles in the examples, testsuite,
+and benchmarks directories of the distribution.
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>1.5.4: Explicit instantiation</font></td></tr></table><a name="l18"></a>
+
+<p><!-- BZINDEX explicit instantiation --><a name="index00017">
+<!-- BZINDEX Array!explicit instantiation --><a name="index00018">
+<p>It is not possible to do explicit instantiation of Blitz++
+arrays.  If you aren't familiar with explicit instantiation of
+templates, then this fact will never bother you.
+<p>The reason is that explicit instantiation results in all members
+of a class template being instantiated.  This is <strong>not</strong> the case
+for implicit instantiation, in which only required members are
+instantiated.  The <code>Array&lt;T,N&gt;</code> class contains members which
+are not valid for all types <code>T</code>: for example, the
+binary AND operation <code>&amp;=</code> is nonsensical if <code>T=float</code>.
+If you attempt to explicitly instantiate an array class, e.g.
+<p><pre>template class Array&lt;float,3&gt;;
+</pre>
+<p>then you will be rewarded with many compile errors, due to methods
+such as <code>&amp;=</code> which are nonsensical for <code>float</code>.
+<p>As some consolation, explicit instantiation would not be much
+help with Blitz++ arrays.  The typical use for explicit instantiation 
+is to instantiate all the templates you need in one 
+compilation unit, and turn off implicit instantiation in the
+others -- to avoid duplicate instantiations and reduce compile times.  
+This is only possible if you can predict 
+ahead of time what needs instantiation.  Easy for simple templates, 
+but impossible for classes like <code>Array</code>.  Almost every line of code 
+you write using <code>Array</code> will cause a different set of things to be 
+implicitly instantiated.
+<p>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>1.6: Licensing terms</font></td></tr></table><br><a name="l19"></a>
+
+<a name="legal"></a>
+    
+<!-- BZINDEX license terms --><a name="index00019">
+<p>The Blitz++ library is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+<p>Caveat: The library and the techniques behind are still experimental;
+please be patient.
+<p><strong>Note:</strong> numerous people have expressed concern about the GPL
+and its incompatibility with commercial software development.
+The licensing terms will be changed in a future release to
+be more friendly to commercial developers.
+<p>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>1.7: Mailing lists and support</font></td></tr></table><br><a name="l20"></a>
+
+<a name="help"></a>
+    
+<br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>1.7.1: How to get help</font></td></tr></table><a name="l21"></a>
+
+<p><!-- BZINDEX help, obtaining --><a name="index00020">
+<!-- BZINDEX support, obtaining --><a name="index00021">
+<p>The starting point for all bug reports, feature requests and
+support questions is the Blitz++ support page, at
+<a href="http://oonumerics.org/blitz/support/">http://oonumerics.org/blitz/support/</a>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>1.7.2: How to subscribe to a mailing list</font></td></tr></table><a name="l22"></a>
+
+<p><!-- BZINDEX mailing lists --><a name="index00022">
+<p>To subscribe to a Blitz++ mailing list, send a message containing 
+one (or more) of these lines to <code>majordomo@oonumerics.org</code>:
+<p><strong><pre>subscribe blitz-support
+subscribe blitz-bugs
+subscribe blitz-dev
+subscribe blitz
+</pre></strong>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>1.7.3: blitz-bugs</font></td></tr></table><a name="l23"></a>
+
+<p><!-- BZINDEX blitz-bugs list --><a name="index00023">
+You can report bugs (or things you suspect might
+be bugs) to <code>blitz-bugs@oonumerics.org</code>.
+<p>It's not a very interesting list to be subscribed to.  There
+are archives available from the Blitz++ web site.
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>1.7.4: blitz-dev</font></td></tr></table><a name="l24"></a>
+
+<p><!-- BZINDEX blitz-dev list --><a name="index00024">
+<!-- BZINDEX contributing to Blitz++ --><a name="index00025">
+<p>Blitz++ is in open development: anyone can contribute features and
+code to the library.  If you are interested in helping out with
+coding or porting, you should start by subscribing to the <code>blitz-dev</code>
+mailing list.  
+<p>This list is also the appropriate place to send suggestions for
+features; just send email to <code>blitz-dev@oonumerics.org</code>.
+We can't implement it if you don't suggest it.
+<p>Archives of this list are available from the Blitz++ web site.
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>1.7.5: blitz-support</font></td></tr></table><a name="l25"></a>
+
+<p><!-- BZINDEX blitz-support list --><a name="index00026">
+<p>This mailing list is for posting and answering questions about
+using the Blitz++ library.  Anyone can post questions; anyone
+can answer.
+<p>
+<p>
+
+<hr>
+<ul>
+    <li> <a href="blitz02.html">Next chapter</a>
+    <li> <a href="blitz.html">Table of contents</a>
+</ul>
+<hr>
+</body>
+</html>

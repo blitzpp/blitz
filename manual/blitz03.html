@@ -1,0 +1,1026 @@
+<html>
+<head>
+<title>Blitz++ User's Guide </title>
+</head>
+<body fgcolor="#27408B" bgcolor="#FFFAF0"  >
+<hr>
+<ul>
+    <li> <a href="blitz04.html">Next chapter</a>
+    <li> <a href="blitz02.html">Previous chapter</a>
+    <li> <a href="blitz.html">Table of contents</a>
+</ul>
+<hr>
+
+<a name="l62"></a>
+<h1>Chapter 3: Array Expressions</h1>
+<p><a name="arrays-expr"></a>
+    <a name="array-expressions"></a>
+<!-- BZINDEX expression templates --><a name="index00222">
+<!-- BZINDEX Array!expressions --><a name="index00223">
+<!-- BZINDEX Array!no temporaries --><a name="index00224">
+<!-- BZINDEX temporaries --><a name="index00225">
+<!-- BZINDEX Array!temporaries --><a name="index00226">
+<p>Array expressions in Blitz++ are implemented using the <em>expression
+templates</em> technique.  Unless otherwise noted, expression evaluation
+will never generate temporaries or multiple loops; an expression such
+as
+<p><pre>Array&lt;int,1&gt; A, B, C, D;    // ...
+
+A = B + C + D;
+</pre>
+<p>will result in code similar to
+<p><pre>for (int i=A.lbound(firstDim); i &lt;= A.ubound(firstDim); ++i)
+    A[i] = B[i] + C[i] + D[i];
+</pre>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>3.1: Expression evaluation order</font></td></tr></table><br><a name="l63"></a>
+
+<p><!-- BZINDEX Array!expression evaluation order --><a name="index00227">
+<!-- BZINDEX expression evaluation order --><a name="index00228">
+<!-- BZINDEX order of expression evaluation --><a name="index00229">
+<!-- BZINDEX traversal order --><a name="index00230">
+<p>A commonly asked question about Blitz++ is what order it uses
+to evaluate array expressions.  For example, in code such
+as
+<p><pre>A(Range(2,10)) = A(Range(1,9))
+</pre>
+<p>does the expression get evaluated at indices 1, 2, ..., 9 or
+at 9, 8, ..., 1?  This makes a big difference to the result:
+in one case, the array will be shifted to the right by one
+element; in the other case, most of the array elements will
+be set to the value in <code>A(1)</code>.
+<p>Blitz always selects the traversal order it thinks will be fastest.
+For 1D arrays, this means it will go from beginning to the end
+of the array in memory (see notes below).  For multidimensional arrays, it 
+will do one of two things:
+<p><ul>
+<p><li > try to go through the destination array in the order it is 
+laid out in memory (i.e.  row-major for row-major arrays, 
+column-major for column-major arrays).
+<p><li > if the expression is a stencil, Blitz will do tiling to
+improve cache use.  Under some circumstances blitz will even use 
+a traversal based on a hilbert curve (a fractal) for 3D arrays.  
+<p></ul>
+<p>Because the traversal order is not always predictable, it is
+safest to put the result in a new array if you are doing a
+stencil-style expression.  Blitz guarantees this
+will always work correctly.  If you try to put the result in one
+of the operands, you have to guess correctly which traversal order
+blitz will choose.  This is easy for the 1D case, but hard for
+the multidimensional case.
+<p>Some special notes about 1D array traversals:
+<p><ul>
+<p><li > if your array is stored in reverse order,
+  i.e. because of a A.reverse(firstDim) or funny storage order,
+  blitz will go through the array from end to beginning in
+  array coordinates, but from beginning to end in memory locations.
+<p><li > many compilers/architecture combinations are equally
+  fast at reverse order.  But blitz has a specialized version
+  for stride = +1, and it would be wasteful to also specialize
+  for the case stride = -1.  So 1D arrays are traversed from
+  beginning to end (in memory storage order).
+<p></ul>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>3.2: Expression operands</font></td></tr></table><br><a name="l64"></a>
+
+<p><!-- BZINDEX Array!expression operands --><a name="index00231">
+<p>An expression can contain any mix of these operands:
+<p><ul>
+<p><li >    An array of any type, so long as it is of the same rank.  Expressions
+        which contain a mixture of array types are handled through the
+        type promotion mechanism described below.
+<p><li >    Scalars of type <code>int</code>, <code>float</code>, <code>double</code>, <code>long double</code>,
+        or <code>complex&lt;T&gt;</code>
+<p><li >    Index placeholders, described below
+<p><li >    Other expressions (e.g. <code>A+(B+C)</code>)
+<p></ul>
+<p>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>3.3: Array operands</font></td></tr></table><br><a name="l65"></a>
+
+<p><h3>Using subarrays in an expression</h3><p>
+<p><!-- BZINDEX Array!using subarrays in expressions --><a name="index00232">
+<p>Subarrays may be used in an expression.  For example, this code example
+performs a 5-point average on a two-dimensional array:
+<p><pre>Array&lt;float,2&gt; A(64,64), B(64,64);   // ...
+Range I(1,62), J(1,62);
+
+A(I,J) = (B(I,J) + B(I+1,J) + B(I-1,J) 
+                 + B(I,J+1) + B(I,J-1)) / 5;
+</pre>
+<p><h3>Mixing arrays with different storage formats</h3><p>
+<p><!-- BZINDEX Array!expressions which mix arrays of different storage formats --><a name="index00233">
+Arrays with different storage formats (for example, C-style and
+Fortran-style) can be mixed in the same expression.  Blitz++
+will handle the different storage formats automatically.  However:
+<p><ul>
+<p><li >    Evaluation may be slower, since a different traversal order
+        may be used.
+<p><li >    If you are using index placeholders (see below) or reductions
+        in the expression, you may <strong>not</strong> mix array objects with
+        different starting bases.  
+<p></ul>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>3.4: Expression operators</font></td></tr></table><br><a name="l66"></a>
+
+<p><!-- BZINDEX operators, array expressions --><a name="index00234">
+<!-- BZINDEX Array!operators --><a name="index00235">
+<!-- BZINDEX Array!expression operators --><a name="index00236">
+<p>These binary operators are supported:
+<p><code>+ - * / % &gt; &lt; &gt;= &lt;= == != &amp;&amp; || ^ &amp; | </code>
+<p>Note: operator <code>&lt;&lt;</code> and <code>&gt;&gt;</code> are reserved for use in input/output.
+If you need a bit-shift operation on arrays, you may define one 
+yourself; see <a href="blitz03.html#user-et">3.10</a>.
+<p>These unary operators are supported:
+<p><code>- ~ !</code>
+<p>The operators <code>&gt; &lt; &gt;= &lt;= == != &amp;&amp; || !</code> result in a bool-valued
+expression.
+<p><!-- BZINDEX Array!operators applied elementwise --><a name="index00237">
+All operators are applied <em>elementwise</em>.
+<p><!-- BZINDEX Array!requirements for using operators --><a name="index00238">
+You can only use operators which are well-defined for the number type
+stored in the arrays.  For example, bitwise XOR (<code>^</code>) is meaningful
+for integers, so this code is all right:
+<p><pre>Array&lt;int,3&gt; A, B, C;   // ...
+A = B ^ C;
+</pre>
+<p>Bitwise XOR is <em>not</em> meaningful on floating point types, so this
+code will generate a compiler error:
+<p><pre>Array&lt;float,1&gt; A, B, C;   // ...
+C = B ^ C;
+</pre>
+<p>Here's the compiler error generated by KAI C++ for the above code:
+<p><center><table border cellpadding=20 align=top><tr><td bgcolor="C0C0C0"><pre>
+"../../blitz/ops.h", line 85: error: expression must have integral or enum type
+  BZ_DEFINE_OP(BitwiseXor,^);
+  ^
+          detected during:
+            instantiation of "blitz::BitwiseXor&lt;float, float&gt;::T_numtype
+                      blitz::BitwiseXor&lt;float, float&gt;::apply(float, float)" at
+                      line 210 of "../../blitz/arrayexpr.h"
+            instantiation of ...
+                     .
+                     .
+
+</pre>
+</td></tr></table></center>
+<p><!-- BZINDEX Array!arrays of user type --><a name="index00239">
+If you are creating arrays using a type you have created yourself,
+you will need to overload whatever operators you want to use on
+arrays.
+For example, if I create a class <code>Polynomial</code>, and want
+to write code such as:
+<p><pre>Array&lt;Polynomial,2&gt; A, B, C;   // ...
+C = A * B;
+</pre>
+<p>I would have to provide <code>operator*</code> for <code>Polynomial</code> by
+implementing
+<p><pre>Polynomial Polynomial::operator*(Polynomial);</pre>
+<p>or
+<p><pre>Polynomial operator*(Polynomial, Polynomial);</pre>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>3.5: Assignment operators</font></td></tr></table><br><a name="l67"></a>
+
+<p><!-- BZINDEX Array!assignment operators --><a name="index00240">
+These assignment operators are supported:
+<p><code>= += -= *= /= %= ^= &amp;= |= &gt;&gt;= &lt;&lt;=</code>
+<p>An array object should appear on the left side of the operator.  The
+right side can be:
+<p><ul>
+<p><li >   A constant (or literal) of type <code>T_numtype</code>
+<p><li >   An array of appropriate rank, possibly of a different numeric
+       type
+<p><li >   An array expression, with appropriate rank and shape
+<p></ul>
+<p>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>3.6: Index placeholders</font></td></tr></table><br><a name="l68"></a>
+ <a name="index-placeholders"></a>
+<p><!-- BZINDEX Array!index placeholders --><a name="index00241">
+<!-- BZINDEX index placeholders --><a name="index00242">
+<p>Blitz++ provides objects called <em>index placeholders</em> which represent
+array indices.  They can be used directly in expressions.
+<p>There is a distinct index placeholder type associated with each
+dimension of an array.  The types are called <code>firstIndex</code>,
+<code>secondIndex</code>, <code>thirdIndex</code>, ..., <code>tenthIndex</code>, <code>eleventhIndex</code>.
+<!-- BZINDEX firstIndex --> <!-- BZINDEX secondIndex --> <!-- BZINDEX thirdIndex --><a name="index00243">
+<!-- BZINDEX fourthIndex --><a name="index00244">
+Here's an example of using an index placeholder:
+<p><pre>Array&lt;float,1&gt; A(10);
+firstIndex i;
+A = i;
+</pre>
+<p>This generates code which is similar to:
+<p><pre>for (int i=0; i &lt; A.length(); ++i)
+    A(i) = i;
+</pre>
+<p>Here's an example which fills an array with a sampled sine wave:
+<p><pre>Array&lt;float,1&gt; A(16);
+firstIndex i;
+A = sin(2 * M_PI * i / 16.);
+</pre>
+<p>If your destination array has rank greater than 1, you may use
+multiple index placeholders:
+<!-- BZINDEX index placeholders!multiple --><a name="index00245">
+<p><center><table border cellpadding=20 align=top><tr><td bgcolor="C0C0C0"><pre>
+// Fill a two-dimensional array with a radially
+// symmetric, decaying sinusoid
+
+// Create the array
+int N = 64;           
+Array&lt;float,2&gt; F(N,N);
+
+// Some parameters
+float midpoint = (N-1)/2.;
+int cycles = 3;
+float omega = 2.0 * M_PI * cycles / double(N);
+float tau = - 10.0 / N;
+
+// Index placeholders
+firstIndex i;
+secondIndex j;
+
+// Fill the array
+F = cos(omega * sqrt(pow2(i-midpoint) + pow2(j-midpoint)))
+    * exp(tau * sqrt(pow2(i-midpoint) + pow2(j-midpoint)));
+
+</pre>
+</td></tr></table></center>
+<p>Here's a plot of the resulting array:
+<p>
+<a name="sinsoid"></a><p><center><img src="sinsoid.gif" align="bottom" alt="Figure 3 is shown here."><br> 
+Figure 3: Array filled using an index placeholder expression 
+</center><p><br>
+    
+<p>You can use index placeholder expressions in up to 11 dimensions.
+Here's a three dimensional example:
+<p><pre>// Fill a three-dimensional array with a Gaussian function
+Array&lt;float,3&gt; A(16,16,16);
+firstIndex i;
+secondIndex j;
+thirdIndex k;
+float midpoint = 15/2.;
+float c = - 1/3.0;
+A = exp(c * (sqr(i-midpoint) + sqr(j-midpoint) 
+    + sqr(k-midpoint)));
+</pre>
+<p>You can mix array operands and index placeholders:
+<p><pre>Array&lt;int,1&gt; A(5), B(5);
+firstIndex i;
+A = 0, 1, 1, 0, 2;
+B = i * A;          // Results in [ 0, 1, 2, 0, 8 ]
+</pre>
+<p>For your convenience, there is a namespace within blitz
+called <code>tensor</code> which declares all the index placeholders:
+<!-- BZINDEX tensor namespace --><a name="index00246">
+<!-- BZINDEX i (index placeholder) --><a name="index00247">
+<!-- BZINDEX j (index placeholder) --><a name="index00248">
+<!-- BZINDEX k (index placeholder) --><a name="index00249">
+<!-- BZINDEX l (index placeholder) --><a name="index00250">
+<!-- BZINDEX m (index placeholder) --><a name="index00251">
+<!-- BZINDEX n (index placeholder) --><a name="index00252">
+<p><pre>namespace blitz {
+  namespace tensor {
+    firstIndex i;
+    secondIndex j;
+    thirdIndex k;
+     ...
+    eleventhIndex t;
+  }
+}
+</pre>
+<p>So instead of declaring your own index placeholder objects,
+you can just say 
+<p><!-- BZINDEX blitz::tensor namespace --><a name="index00253">
+<p><pre>using namespace blitz::tensor;
+</pre>
+<p>when you would like to use them.  Alternately, you
+can just preface all the index placeholders with
+<code>tensor::</code>, for example:
+<p><pre>A = sin(2 * M_PI * tensor::i / 16.);
+</pre>
+<p>This will make your code more readable, since it
+is immediately clear that <code>i</code> is an index
+placeholder, rather than a scalar value.
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>3.7: Type promotion</font></td></tr></table><br><a name="l69"></a>
+
+<p><!-- BZINDEX type promotion --><a name="index00254">
+<!-- BZINDEX Array!type promotion --><a name="index00255">
+<p>
+<p>When operands of different numeric types are used in
+an expression, the result gets promoted according to the
+usual C-style type promotion.  For example, the result of
+adding an <code>Array&lt;int&gt;</code> to an <code>Arrray&lt;float&gt;</code> will be
+promoted to <code>float</code>.  Generally, the result is promoted
+to whichever type has greater precision.
+<p><h3>Type promotion for user-defined types</h3><p>
+<p><!-- BZINDEX type promotion!for user-defined types --><a name="index00256">
+<!-- BZINDEX Array!type promotion!for user-defined types --><a name="index00257">
+<p>The rules for type promotion of user-defined types (or
+types from another library) are a bit complicated.
+Here's how a pair of operand types are promoted:
+<p><ul>
+<p><li >    If both types are intrinsic (e.g. bool, int, float)
+        then type promotion follows the standard C rules.
+        This generally means that the result will be promoted
+        to whichever type has greater precision.  In Blitz++,
+        these rules have been extended to incorporate
+        <code>complex&lt;float&gt;</code>, <code>complex&lt;double&gt;</code>, and
+        <code>complex&lt;long double&gt;</code>.
+<p><li >    If one of the types is intrinsic (or complex), and
+        the other is a user-defined type, then the result
+        is promoted to the user-defined type.
+<p><li >    If both types are user-defined, then the result is
+        promoted to whichever type requires more storage space
+        (as determined by <code>sizeof()</code>).  The rationale is that
+        more storage space probably indicates more precision.
+<p></ul>
+<p>If you wish to alter the default type promotion rules
+above, you have two choices:
+<p><ul>
+<p><!-- BZINDEX promote_trait --><a name="index00258">
+<p><li >    If the type promotion behaviour isn't dependent on the
+        type of operation performed, then you can provide appropriate
+        specializations for the class <code>promote_trait&lt;A,B&gt;</code> which
+        is declared in <code>&lt;blitz/promote.h&gt;</code>.
+<p><li >    If type promotion does depend on the type of operation,
+        then you will need to specialize the appropriate function
+        objects in <code>&lt;blitz/ops.h&gt;</code>.
+<p></ul>
+<p>Note that you can do these specializations in your own header
+files (you don't have to edit promote.h or ops.h).
+<p><h3>Manual casts</h3><p>
+<p><!-- BZINDEX casts --><a name="index00259">
+<!-- BZINDEX Array!casts --><a name="index00260">
+<p>There are some inconvenient aspects of C-style type promotion.  For
+example, when you divide two integers in C, the result gets truncated.
+The same problem occurs when dividing two integer arrays in Blitz++:
+<p><pre>Array&lt;int,1&gt; A(4), B(4);
+Array&lt;float,1&gt; C(4);
+
+A = 1, 2, 3, 5;
+B = 2, 2, 2, 7;
+
+C = A / B;      // Result:  [ 0  1  1  0 ]
+</pre>
+<p>The usual solution to this problem is to cast one of the operands to a floating
+type.  For this purpose, Blitz++ provides a function <code>cast(expr,type)</code>
+which will cast the result of <em>expr</em> as <em>type</em>:
+<p><!-- BZINDEX cast() --><a name="index00261">
+<pre>C = A / cast(B, float());   // Result: [ 0.5  1  1.5  0.714 ]
+</pre>
+<p>The first argument to <code>cast()</code> is an array or expression.  The second
+argument is a dummy object of the type to which you want to cast.
+Once compilers support templates more thoroughly, it will be possible
+to use this cast syntax:
+<p><pre>C = A / cast&lt;float&gt;(B);
+</pre>
+<p>But this is not yet supported.
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>3.8: Single-argument math functions</font></td></tr></table><br><a name="l70"></a>
+
+<p><a name="math-functions"></a>
+<p>All of the functions described in this section are <em>element-wise</em>. 
+For example, this code--
+<p><pre>Array&lt;float,2&gt; A, B;   //
+A = sin(B);
+</pre>
+<p>results in <code>A(i,j) = sin(B(i,j))</code> for all (i,j).
+<p><h3>ANSI C++ math functions</h3><p>
+<p>These math functions are available on all platforms:
+<p><!-- BZINDEX math functions --><a name="index00262">
+<!-- BZINDEX complex math functions --><a name="index00263">
+<p><ul>
+<li><strong>abs()</strong> Absolute value <!-- BZINDEX abs() --><a name="index00264">
+<li><strong>acos()</strong> Inverse cosine.  For real arguments, the return value is
+            in the range [0, pi].  <!-- BZINDEX acos() --><a name="index00265">
+<li><strong>arg()</strong>  Argument of a complex number (atan2(Im,Re)). <!-- BZINDEX arg() --><a name="index00266">
+<li><strong>asin()</strong> Inverse sine.  For real arguments, the return value is
+            in the range [-pi/2, pi/2].  <!-- BZINDEX asin() --><a name="index00267">
+<li><strong>atan()</strong> Inverse tangent.  For real arguments, the return value is
+            in the range [-pi/2, pi/2].  See also <code>atan2()</code> in section 
+            <a href="blitz03.html#arrays-atan2">3.9</a>.  <!-- BZINDEX atan() --><a name="index00268">
+<li><strong>ceil()</strong> Ceiling function: smallest floating-point integer value not less
+            than the argument. <!-- BZINDEX ceil() --><a name="index00269">
+<li><strong>cexp()</strong> Complex exponential; same as exp(). <!-- BZINDEX cexp() --><a name="index00270">
+<li><strong>conj()</strong> Conjugate of a complex number. <!-- BZINDEX conj() --><a name="index00271">
+<li><strong>cos()</strong>  Cosine.  Works for <code>complex&lt;T&gt;</code>.  <!-- BZINDEX cos() --><a name="index00272">
+<li><strong>cosh()</strong> Hyperbolic cosine.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX cosh() --><a name="index00273">
+<li><strong>csqrt()</strong> Complex square root; same as sqrt(). <!-- BZINDEX csqrt() --><a name="index00274">
+<li><strong>exp()</strong>  Exponential.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX exp() --><a name="index00275">
+<li><strong>fabs()</strong> Same as abs().  <!-- BZINDEX fabs() --><a name="index00276">
+<li><strong>floor()</strong> Floor function: largest floating-point integer value not greater
+            than the argument. <!-- BZINDEX floor() --><a name="index00277">
+<li><strong>log()</strong>  Natural logarithm.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX log() --><a name="index00278">
+<li><strong>log10()</strong> Base 10 logarithm.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX log10() --><a name="index00279">
+<li><strong>pow2(), pow3(), pow4(), pow5(), pow6(), pow7(), pow8()</strong> These functions
+            compute an integer power.  They expand to a series of 
+            multiplications, so they can be used on any type for
+            which multiplication is well-defined. <!-- BZINDEX pow2() --><a name="index00280">
+            <!-- BZINDEX pow3() --> <!-- BZINDEX pow?() --><a name="index00281">
+<li><strong>sin()</strong>  Sine.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX sin() --><a name="index00282">
+<li><strong>sinh()</strong> Hyperbolic sine.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX cos() --><a name="index00283">
+<li><strong>sqr()</strong>  Same as pow2().  Computes x*x. Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX sqr() --><a name="index00284">
+<li><strong>sqrt()</strong> Square root.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX sqrt() --><a name="index00285">
+<li><strong>tan()</strong>  Tangent.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX tan() --><a name="index00286">
+<li><strong>tanh()</strong> Hyperbolic tangent.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX tanh() --><a name="index00287">
+<p></ul>
+<p><h3>IEEE/System V math functions</h3><p>
+<p><!-- BZINDEX IEEE math functions --><a name="index00288">
+<!-- BZINDEX System V math functions --><a name="index00289">
+<!-- BZINDEX libm.a --><a name="index00290">
+<!-- BZINDEX libmsaa.a --><a name="index00291">
+<p>These functions are only available on platforms which provide the
+IEEE Math library (libm.a) and/or System V Math Library (libmsaa.a).
+Apparently not all platforms provide all of these functions, so
+what you can use on your platform may be a subset of these.
+If you choose to use one of these functions, be aware that you
+may be limiting the portability of your code.
+<p><!-- BZINDEX XOPEN_SOURCE --><a name="index00292">
+<!-- BZINDEX XOPEN_SOURCE_EXTENDED --><a name="index00293">
+On some platforms, the preprocessor symbols <code>_XOPEN_SOURCE</code>
+and/or <code>_XOPEN_SOURCE_EXTENDED</code> need to be defined 
+to use these functions.  These symbols can be enabled
+by compiling with <code>-DBZ_ENABLE_XOPEN_SOURCE</code>.
+(In previous version of Blitz++, <code>_XOPEN_SOURCE</code> and
+<code>_XOPEN_SOURCE_EXTENDED</code> were declared by default.
+This was found to cause too many problems, so users
+must manually enable them with <code>-DBZ_ENABLE_XOPEN_SOURCE</code>.).
+<p>
+In the current version, Blitz++ divides these functions into two
+groups: IEEE and System V.  This distinction is probably artificial.
+If one of the functions in a group is missing,
+Blitz++ won't allow you to use any of them.  You can see the
+division of these functions in the files <code>Blitz++/compiler/ieeemath.cpp</code>
+and <code>Blitz++/compiler/sysvmath.cpp</code>.  This arrangement is
+unsatisfactory and will probably change in a future version.
+<p>You may have to link with <code>-lm</code> and/or <code>-lmsaa</code> to use these
+functions.
+<p>None of these functions are available for <code>complex&lt;T&gt;</code>.
+<p><ul>
+<p><li><strong>acosh()</strong>   Inverse hyperbolic cosine <!-- BZINDEX acosh() --><a name="index00294">
+<li><strong>asinh()</strong>   Inverse hyperbolic sine <!-- BZINDEX asinh() --><a name="index00295">
+<li><strong>atanh()</strong>   Inverse hyperbolic tangent <!-- BZINDEX atanh() --><a name="index00296">
+<li><strong>_class()</strong>  Classification of floating point values.  The return type
+               is integer and will be one of: <!-- BZINDEX _class() --><a name="index00297">
+   <ul>
+      <li><strong>FP_PLUS_NORM</strong> Positive normalized, nonzero <!-- BZINDEX FP_PLUS_NORM --><a name="index00298">
+      <li><strong>FP_MINUS_NORM</strong> Negative normalized, nonzero <!-- BZINDEX FP_MINUS_NORM --><a name="index00299">
+      <li><strong>FP_PLUS_DENORM</strong> Positive denormalized, nonzero <!-- BZINDEX FP_PLUS_DENORM --><a name="index00300">
+      <li><strong>FP_MINUS_DENORM</strong> Negative denormalized, nonzero <!-- BZINDEX FP_MINUS_DENORM --><a name="index00301">
+      <li><strong>FP_PLUS_ZERO</strong> +0.0 <!-- BZINDEX FP_PLUS_ZERO --><a name="index00302">
+      <li><strong>FP_MINUS_ZERO</strong> -0.0 <!-- BZINDEX FP_MINUS_ZERO --><a name="index00303">
+      <li><strong>FP_PLUS_INF</strong>  Positive infinity  <!-- BZINDEX FP_PLUS_INF --><a name="index00304">
+      <li><strong>FP_MINUS_INF</strong>  Negative infinity <!-- BZINDEX FP_MINUS_INF --><a name="index00305">
+      <li><strong>FP_NANS</strong>      Signalling Not a Number (NaNS) <!-- BZINDEX FP_NANS --><a name="index00306">
+      <li><strong>FP_NANQ</strong>      Quiet Not a Number (NaNQ) <!-- BZINDEX FP_NANQ --><a name="index00307">
+   </ul>
+<p><li><strong>cbrt()</strong>   Cubic root <!-- BZINDEX cbrt() --><a name="index00308">
+<li><strong>expm1()</strong>  Computes exp(x)-1 <!-- BZINDEX expm1() --><a name="index00309">
+<li><strong>erf()</strong>    Computes the error function:  <!-- BZINDEX erf() --><a name="index00310">
+              
+              erf(x) = 2/sqrt(Pi) * integral(exp(-t^2), t=0..x)
+              Note that for large values of the parameter, calculating
+               1.0-erf(x)
+              can result in extreme loss of accuracy.  Instead, use erfc().
+<li><strong>erfc()</strong>   Computes the complementary error function <!-- BZINDEX erfc() --><a name="index00311">
+              
+              erfc(x) = 1.0 - erf(x).  
+
+<li><strong>ilogb()</strong>  Returns an integer which is equal to the unbiased exponent
+              of the parameter.               <!-- BZINDEX ilogb() --><a name="index00312">
+<li><strong>isnan()</strong>  Returns a nonzero integer if the parameter is NaNQ or NaNS
+              (quiet or signalling Not a Number). <!-- BZINDEX isnan() --><a name="index00313">
+<li><strong>itrunc()</strong> Round a floating-point number to a signed integer.  Returns
+              the nearest signed integer to the parameter in the direction of
+              0. <!-- BZINDEX itrunc() --><a name="index00314">
+<li><strong>j0()</strong>     Bessel function of the first kind, order 0. <!-- BZINDEX Bessel functions --> <!-- BZINDEX j0() --><a name="index00315">
+<li><strong>j1()</strong>     Bessel function of the first kind, order 1. <!-- BZINDEX j1() --><a name="index00316">
+<li><strong>lgamma()</strong> Natural logarithm of the gamma function.  The gamma function
+              <!-- BZINDEX lgamma() --> <!-- BZINDEX Gamma function --><a name="index00317">
+               Gamma(x) is defined as:
+              
+              
+                Gamma(x) = integral(e^(-t) * t^(x-1), t=0..infinity)
+<li><strong>logb()</strong>   Returns a floating-point double that is equal to the
+              unbiased exponent of the parameter. <!-- BZINDEX logb() --><a name="index00318">
+<li><strong>log1p()</strong>  Calculates log(1+x), where x is the parameter. <!-- BZINDEX log1p() --><a name="index00319">
+<li><strong>nearest()</strong> Returns the nearest floating-point integer value to the
+              parameter.  If the parameter is exactly halfway between
+              two integer values, an even value is returned. <!-- BZINDEX nearest() --><a name="index00320">
+<li><strong>rint()</strong>   Rounds the parameter and returns a floating-point integer
+              value.  Whether <code>rint()</code> rounds up or down or to the nearest
+              integer depends on the current floating-point rounding mode.
+              If you haven't altered the rounding mode, <code>rint()</code> should be
+              equivalent to <code>nearest()</code>.  If rounding mode is set to round
+              towards +INF, <code>rint()</code> is equivalent to <code>ceil()</code>.  If the
+              mode is round toward -INF, <code>rint()</code> is equivalent to 
+              <code>floor()</code>.  If the mode is round toward zero, <code>rint()</code>
+              is equivalent to <code>trunc()</code>. <!-- BZINDEX rint() --><a name="index00321">
+              <!-- BZINDEX rounding: rint() -->)<a name="index00322">
+<li><strong>rsqrt()</strong>  Reciprocal square root. <!-- BZINDEX rsqrt() --><a name="index00323">
+
+<li><strong>uitrunc()</strong> Returns the nearest unsigned integer to the parameter in
+              the direction of zero. <!-- BZINDEX uitrunc() --><a name="index00324">
+<li><strong>y0()</strong>     Bessel function of the second kind, order 0. <!-- BZINDEX y0() --><a name="index00325">
+<li><strong>y1()</strong>     Bessel function of the second kind, order 1. <!-- BZINDEX y1() --><a name="index00326">
+<p></ul>
+<p>There may be better descriptions of these functions in your
+system man pages.
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>3.9: Two-argument math functions</font></td></tr></table><br><a name="l71"></a>
+
+<p>The math functions described in this section take two arguments.
+Most combinations of these types may be used as arguments:
+<p><ul>
+<p><li >    An Array object
+<p><li >    An Array expression
+<p><li >    An index placeholder
+<p><li >    A scalar of type <code>float</code>, <code>double</code>, <code>long double</code>,
+        or <code>complex&lt;T&gt;</code>
+<p></ul>
+<p><h3>ANSI C++ math functions</h3><p>
+<p>These math functions are available on all platforms, and work for
+complex numbers.
+<p><ul>
+<p><a name="arrays-atan2"></a>
+<p><!-- BZINDEX math functions --><a name="index00327">
+<!-- BZINDEX complex math functions --><a name="index00328">
+<p><li><strong>atan2(x,y)</strong>  Inverse tangent of (y/x).  The signs of both
+                 parameters are used to determine the quadrant of the
+                 return value, which is in the range [-pi, pi].
+                 Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX atan2() --><a name="index00329">
+<li><strong>blitz::polar(r,t)</strong>      Computes 
+                     r e<sup>it</sup>; i.e. converts
+                     polar-form to Cartesian form complex numbers.
+                 The <code>blitz::</code> scope qualifier is needed to
+                 disambiguate the ANSI C++ function template
+                 <code>polar(T,T)</code>.  This qualifier will hopefully
+                 disappear in a future version. <!-- BZINDEX polar() --><a name="index00330">
+<li><strong>pow(x,y)</strong>    Computes x to the exponent y.  Works for
+                 <code>complex&lt;T&gt;</code>. <!-- BZINDEX pow() --><a name="index00331">
+<p></ul>
+<p><h3>IEEE/System V math functions</h3><p>
+<p>See the notes about IEEE/System V math functions in the previous
+section.  None of these functions work for complex numbers.
+They will all cast their arguments to double precision.
+<p><ul>
+<p><li><strong>copysign(x,y)</strong>   Returns the x parameter with the same sign as
+                     the y parameter. <!-- BZINDEX copysign() --><a name="index00332">
+<li><strong>drem(x,y)</strong>       Computes a floating point remainder.  The return
+                     value r is equal to r = x - n * y, where n is
+                     equal to <code>nearest(x/y)</code> (the nearest integer to
+                     x/y).  The return value will lie in the range
+                     [ -y/2, +y/2 ].  If y is zero or x is +INF or -INF,
+                     NaNQ is returned. <!-- BZINDEX drem() --><a name="index00333">
+                     <!-- BZINDEX remainder, floating point drem() --><a name="index00334">
+<li><strong>fmod(x,y)</strong>       Computes a floating point modulo remainder.  The
+                     return value r is equal to r = x - n * y, where
+                     n is selected so that r has the same sign as x
+                     and magnitude less than abs(y).  In order words,
+                     if x &gt; 0, r is in the range [0, |y|], and if x &lt; 0,
+                     r is in the range [-|y|, 0]. <!-- BZINDEX fmod() --><a name="index00335">
+                     <!-- BZINDEX modulo, floating point fmod() --><a name="index00336">
+<li><strong>hypot(x,y)</strong>      Computes 
+                     sqrt(x<sup>2</sup> + y<sup>2</sup>) so
+                     that underflow does not occur and overflow occurs only
+                     if the final result warrants it. <!-- BZINDEX hypot() --><a name="index00337">
+<li><strong>nextafter(x,y)</strong>  Returns the next representable number after 
+                     x in the direction of y. <!-- BZINDEX nextafter() --><a name="index00338">
+<li><strong>remainder(x,y)</strong>  Equivalent to drem(x,y). <!-- BZINDEX remainder() --><a name="index00339">
+<li><strong>scalb(x,y)</strong>      Calculates  
+                     x * 2<sup>y</sup>. <!-- BZINDEX scalb() --><a name="index00340">
+<li><strong>unordered(x,y)</strong>  Returns a nonzero value if a floating-point comparison
+                     between x and y would be unordered.  Otherwise, it
+                     returns zero. <!-- BZINDEX unordered() --><a name="index00341">
+<p></ul>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>3.10: Declaring your own math functions on arrays</font></td></tr></table><br><a name="l72"></a>
+
+<p><a name="user-et"></a>
+<p><!-- BZINDEX math functions!declaring your own --><a name="index00342">
+<!-- BZINDEX Array!declaring your own math functions on --><a name="index00343">
+<p>There are four macros which make it easy to turn
+your own scalar functions into functions defined
+on arrays.  They are:
+<p><!-- BZINDEX BZ_DECLARE_FUNCTION... --><a name="index00344">
+<pre>
+BZ_DECLARE_FUNCTION(f)                   // 1
+BZ_DECLARE_FUNCTION_RET(f,return_type)   // 2
+BZ_DECLARE_FUNCTION2(f)                  // 3
+BZ_DECLARE_FUNCTION2_RET(f,return_type)  // 4
+</pre>
+<p>Use version 1 when you have a function which
+takes one argument and returns a result of the
+same type.  For example:
+<p><pre>
+#include &lt;blitz/array.h&gt;
+
+using namespace blitz;
+
+double myFunction(double x)
+{ 
+    return 1.0 / (1 + x); 
+}
+
+BZ_DECLARE_FUNCTION(myFunction)
+
+int main()
+{
+    Array&lt;double,2&gt; A(4,4), B(4,4);  // ...
+    B = myFunction(A);
+}
+</pre>
+<p>Use version 2 when you have a one argument function
+whose return type is different than the argument
+type, such as
+<p><pre>
+int g(double x);
+</pre>
+<p>Use version 3 for a function which takes two arguments
+and returns a result of the same type, such as:
+<p><pre>
+double g(double x, double y);
+</pre>
+<p>Use version 4 for a function of two arguments which
+returns a different type, such as:
+<p><pre>
+int g(double x, double y);
+</pre>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>3.11: Tensor notation</font></td></tr></table><br><a name="l73"></a>
+
+<p><!-- BZINDEX tensor notation --><a name="index00345">
+<!-- BZINDEX Array!tensor notation --><a name="index00346">
+<p>Blitz++ arrays support a tensor-like notation.  Here's an example of
+real-world tensor notation:
+<p>
+<pre>
+ ijk    ij k
+A    = B  C
+</pre>
+
+
+<p>A is a rank 3 tensor (a three dimensional array), B is a rank 2 tensor
+(a two dimensional array), and C is a rank 1 tensor (a one dimensional
+array).  The above expression sets 
+A(i,j,k) = B(i,j) * C(k).
+<p>To implement this product using Blitz++, we'll need the arrays and some
+index placeholders:
+<p><!-- BZINDEX index placeholders!used for tensor notation --><a name="index00347">
+<p><pre>
+Array&lt;float,3&gt; A(4,4,4);
+Array&lt;float,2&gt; B(4,4);
+Array&lt;float,1&gt; C(4);
+
+firstIndex i;    // Alternately, could just say
+secondIndex j;   // using namespace blitz::tensor;
+thirdIndex k;
+</pre>
+<p>Here's the Blitz++ code which is equivalent to the tensor expression:
+<p><pre>
+A = B(i,j) * C(k);
+</pre>
+<p>The index placeholder arguments tell an array how to map its dimensions
+onto the dimensions of the destination array.  
+For example, here's some real-world tensor notation:
+<p>
+<pre>
+ ijk    ij k    jk i
+C    = A  x  - A  y
+</pre>
+
+
+<p>In Blitz++, this would be coded as:
+<p><pre>
+    using namespace blitz::tensor;
+    C = A(i,j) * x(k) - A(j,k) * y(i);
+</pre>
+<p>This tensor expression can be visualized in the following way:
+<p><a name="tensor1"></a><p><center><img src="tensor1.gif" align="bottom" alt="Figure 4 is shown here."><br> 
+Figure 4: Examples of array indexing, subarrays, and slicing. 
+</center><p><br>
+    
+<p>Here's an example which computes an outer product of two one-dimensional
+arrays:
+<!-- BZINDEX outer product --><a name="index00348">
+<!-- BZINDEX kronecker product --><a name="index00349">
+<!-- BZINDEX tensor product --><a name="index00350">
+<p><center><table border cellpadding=20 align=top><tr><td bgcolor="COCOCO"><pre>
+#include &lt;blitz/array.h&gt;
+
+using namespace blitz;
+
+int main()
+{
+    Array&lt;float,1&gt; x(4), y(4);
+    Array&lt;float,2&gt; A(4,4);
+
+    x = 1, 2, 3, 4;
+    y = 1, 0, 0, 1;
+
+    firstIndex i;
+    secondIndex j;
+
+    A = x(i) * y(j);
+
+    cout &lt;&lt; A &lt;&lt; endl;
+
+    return 0;
+}
+
+</pre>
+</td></tr></table></center>
+<p>And the output:
+<p><center><table border cellpadding=20 align=top><tr><td bgcolor="COCOCO"><pre>
+4 x 4
+         1         0         0         1
+         2         0         0         2
+         3         0         0         3
+         4         0         0         4
+
+</pre>
+</td></tr></table></center>
+<p>Index placeholders can <em>not</em> be used on the left-hand side of an
+expression.  If you need to reorder the indices, you must do this
+on the right-hand side.
+<p>In real-world tensor notation, repeated indices imply a contraction
+(or summation).  For example, this tensor expression computes 
+a matrix-matrix product:
+<p>
+<pre>
+ ij    ik  kj
+C   = A   B
+</pre>
+
+
+<p>The repeated k index is interpreted as meaning
+<p>
+<pre>
+c    = sum of {a   * b  } over k
+ ij             ik    kj
+</pre>
+
+<p>
+<p><!-- BZINDEX contraction --><a name="index00351">
+<!-- BZINDEX tensor contraction --><a name="index00352">
+<p>In Blitz++, repeated indices do <em>not</em> imply contraction.  If you
+want to contract (sum along) an index, you must use the <code>sum()</code>
+function:
+<p><pre>Array&lt;float,2&gt; A, B, C;   // ...
+firstIndex i;
+secondIndex j;
+thirdIndex k;
+
+C = sum(A(i,k) * B(k,j), k);
+</pre>
+<p>The <code>sum()</code> function is an example of an <em>array reduction</em>, 
+described in the next section.
+<p>Index placeholders can be used in any order in an expression.
+This example computes a kronecker product of a pair of
+two-dimensional arrays, and permutes the indices along the
+way:
+<p><pre>Array&lt;float,2&gt; A, B;   // ...
+Array&lt;float,4&gt; C;      // ...
+fourthIndex l;
+
+C = A(l,j) * B(k,i);
+</pre>
+<p>This is equivalent to the tensor notation
+<p>
+<pre>
+ ijkl    lj ki
+C     = A  B
+</pre>
+
+
+<p>Tensor-like notation can be mixed with other array notations:
+<p><pre>Array&lt;float,2&gt; A, B;  // ...
+Array&lt;double,4&gt; C;    // ...
+
+C = cos(A(l,j)) * sin(B(k,i)) + 1./(i+j+k+l);
+</pre>
+<p><!-- BZINDEX tensor notation!efficiency issues --><a name="index00353">
+An important efficiency note about tensor-like notation: the
+right-hand side of an expression is <em>completely evaluated</em>
+for <em>every</em> element in the destination array.  For example,
+in this code:
+<p><pre>Array&lt;float,1&gt; x(4), y(4);
+Array&lt;float,2&gt; A(4,4):
+
+A = cos(x(i)) * sin(y(j));
+</pre>
+<p>The resulting implementation will look something like this:
+<p><pre>for (int n=0; n &lt; 4; ++n)
+  for (int m=0; m &lt; 4; ++m)
+    A(n,m) = cos(x(n)) * sin(y(m));
+</pre>
+<p>The functions <code>cos</code> and <code>sin</code> will be invoked sixteen times
+each.  It's possible that a good optimizing compiler could
+hoist the <code>cos</code> evaluation out of the inner loop, but don't
+hold your breath -- there's a lot of complicated machinery
+behind the scenes to handle tensor notation, and most optimizing
+compilers are easily confused.  In a situation like the above,
+you are probably best off manually creating temporaries for
+<code>cos(x)</code> and <code>sin(y)</code> first.
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>3.12: Array reductions</font></td></tr></table><br><a name="l74"></a>
+
+<p><!-- BZINDEX Array!reductions --><a name="index00354">
+<!-- BZINDEX reductions --><a name="index00355">
+<p>Currently, Blitz++ arrays support two forms of reduction: (A
+future version will likely support block reductions.)
+<p><ul>
+<p><li >     Reductions which transform an array into a scalar (for example,
+         summing the elements).  These are referred to as
+         <strong>complete reductions</strong>.
+<p><li >     Reducing an N dimensional array (or array expression) to an N-1 
+         dimensional array expression.  These are called <strong>partial
+         reductions</strong>.
+<p></ul>
+<p><!-- BZINDEX Array!reductions!complete --><a name="index00356">
+<!-- BZINDEX complete reductions --><a name="index00357">
+<!-- BZINDEX reductions!complete --><a name="index00358">
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>3.13: Complete reductions</font></td></tr></table><br><a name="l75"></a>
+
+<p>Complete reductions transform an array (or array expression) into 
+a scalar.  Here are some examples:
+<p><pre>Array&lt;float,2&gt; A(3,3);
+A = 0, 1, 2,
+    3, 4, 5,
+    6, 7, 8;
+cout &lt;&lt; sum(A) &lt;&lt; endl          // 36
+     &lt;&lt; min(A) &lt;&lt; endl          // 0
+     &lt;&lt; count(A &gt;= 4) &lt;&lt; endl;  // 5
+</pre>
+<p>Here are the available complete reductions:
+<p><ul>
+<p><li><strong>sum()</strong>      Summation (may be promoted to a higher-precision type)
+                <!-- BZINDEX sum() reduction --><a name="index00359">
+<li><strong>product()</strong>  Product <!-- BZINDEX product() reduction --><a name="index00360">
+<li><strong>mean()</strong>     Arithmetic mean (promoted to floating-point type if necessary)
+                <!-- BZINDEX mean() reduction --><a name="index00361">
+<li><strong>min()</strong>      Minimum value <!-- BZINDEX min() reduction --><a name="index00362">
+<li><strong>max()</strong>      Maximum value <!-- BZINDEX max() reduction --><a name="index00363">
+<li><strong>minIndex()</strong> Index of the minimum value (TinyVector&lt;int,N_rank&gt;)
+                <!-- BZINDEX minIndex() reduction --><a name="index00364">
+<li><strong>maxIndex()</strong> Index of the maximum value (TinyVector&lt;int,N_rank&gt;)
+                <!-- BZINDEX maxIndex() reduction --><a name="index00365">
+<li><strong>count()</strong>    Counts the number of times the expression is logical true (int)
+                <!-- BZINDEX count() reduction --><a name="index00366">
+<li><strong>any()</strong>      True if the expression is true anywhere (bool)
+                <!-- BZINDEX any() reduction --><a name="index00367">
+<li><strong>all()</strong>      True if the expression is true everywhere (bool)
+                <!-- BZINDEX all() reduction --><a name="index00368">
+<p></ul>
+<p><strong>Note: minIndex() and maxIndex() return TinyVectors, even when
+the rank of the array (or array expression) is 1.</strong>
+<p>Reductions can be combined with <code>where</code> expressions (<a href="blitz03.html#where-expr">3.15</a>)
+to reduce over some part of an array.  For example,
+<code>sum(where(A &gt; 0, A, 0))</code> sums only the positive elements
+in an array.
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>3.14: Partial Reductions</font></td></tr></table><br><a name="l76"></a>
+
+<p><!-- BZINDEX Array!reductions!partial --><a name="index00369">
+<!-- BZINDEX partial reductions --><a name="index00370">
+<!-- BZINDEX reductions!partial --><a name="index00371">
+<p>Here's an example which computes the sum of each row of a two-dimensional
+array:
+<p><pre>Array&lt;float,2&gt; A;    // ...
+Array&lt;float,1&gt; rs;   // ...
+firstIndex i;
+secondIndex j;
+
+rs = sum(A, j);
+</pre>
+<p>The reduction <code>sum()</code> takes two arguments:
+<p><ul>
+<p><li >    The first argument is an array or array expression.
+<p><li >    The second argument is an index placeholder indicating
+        the dimension over which the reduction is to occur.  
+<p></ul>
+<p>Reductions have an <strong>important restriction</strong>: It is currently only 
+possible to reduce over the <em>last</em> dimension of an array or array 
+expression.  Reducing a dimension other than the last would require
+Blitz++ to reorder the dimensions to fill the hole left behind.
+For example, in order for this reduction to work:
+<p><pre>Array&lt;float,3&gt; A;   // ...
+Array&lt;float,2&gt; B;   // ...
+secondIndex j;
+
+// Reduce over dimension 2 of a 3-D array?
+B = sum(A, j);
+</pre>
+<p>Blitz++ would have to remap the dimensions so that the third dimension
+became the second.  It's not currently smart enough to do this.
+<p>However, there is a simple workaround which solves some of the
+problems created by this limitation: you can do the reordering
+manually, prior to the reduction:
+<p><pre>B = sum(A(i,k,j), k);
+</pre>
+<p>Writing <code>A(i,k,j)</code> interchanges the second and third dimensions,
+permitting you to reduce over the second dimension.
+Here's a list of the reduction operations currently supported:
+<p><ul>
+<p><li><strong>sum()</strong>    Summation
+<li><strong>product()</strong> Product 
+<li><strong>mean()</strong>   Arithmetic mean (promoted to floating-point type if necessary)
+<li><strong>min()</strong>    Minimum value
+<li><strong>max()</strong>    Maximum value
+<li><strong>minIndex()</strong> Index of the minimum value (int)
+<li><strong>maxIndex()</strong> Index of the maximum value (int)
+<li><strong>count()</strong>    Counts the number of times the expression is logical true (int)
+<li><strong>any()</strong>      True if the expression is true anywhere (bool)
+<li><strong>all()</strong>      True if the expression is true everywhere (bool)
+<li><strong>first()</strong>    First index at which the expression is logical true (int); if
+		the expression is logical true nowhere, then <code>tiny(int())</code>
+                (INT_MIN) is returned.
+<li><strong>last()</strong>     Last index at which the expression is logical true (int); if
+                the expression is logical true nowhere, then <code>huge(int())</code>
+                (INT_MAX) is returned.
+</ul>
+<p>The reductions <code>any()</code>, <code>all()</code>, and <code>first()</code> have short-circuit
+semantics: the reduction will halt as soon as the answer is known.  For
+example, if you use <code>any()</code>, scanning of the expression will stop as
+soon as the first true value is encountered.
+<p>To illustrate, here's an example:
+<p><pre>Array&lt;int, 2&gt; A(4,4);
+
+A =  3,   8,   0,   1,
+     1,  -1,   9,   3,
+     2,  -5,  -1,   1,
+     4,   3,   4,   2;
+
+Array&lt;float, 1&gt; z;
+firstIndex i;
+secondIndex j;
+
+z = sum(A(j,i), j);
+</pre>
+<p>The array <code>z</code> now contains the sum of <code>A</code> along each column:
+<p><pre>[ 10    5     12    7 ]
+</pre>
+<p>This table shows what the result stored in <code>z</code> would be if
+<code>sum()</code> were replaced with other reductions:
+<p><pre>sum                     [         10         5        12         7 ]
+mean                    [        2.5      1.25         3      1.75 ]
+min                     [          1        -5        -1         1 ]
+minIndex                [          1         2         2         0 ]
+max                     [          4         8         9         3 ]
+maxIndex                [          3         0         1         1 ]
+first((A &lt; 0), j)       [ -2147483648        1         2 -2147483648 ]
+product                 [         24       120         0         6 ]
+count((A(j,i) &gt; 0), j)  [          4         2         2         4 ]
+any(abs(A(j,i)) &gt; 4, j) [          0         1         1         0 ]
+all(A(j,i) &gt; 0, j)      [          1         0         0         1 ]
+</pre>
+<p>Note: the odd numbers for first() are <code>tiny(int())</code> i.e. the
+smallest number representable by an int.  The exact value is
+machine-dependent.
+<p><!-- BZINDEX Array!reductions!chaining --><a name="index00372">
+<!-- BZINDEX partial reductions!chaining --><a name="index00373">
+<!-- BZINDEX reductions!chaining --><a name="index00374">
+<p>The result of a reduction is an array expression, so reductions
+can be used as operands in an array expression:
+<p><pre>Array&lt;int,3&gt; A;
+Array&lt;int,2&gt; B;
+Array&lt;int,1&gt; C;   // ...
+
+secondIndex j;
+thirdIndex k;
+
+B = sqrt(sum(sqr(A), k));
+
+// Do two reductions in a row
+C = sum(sum(A, k), j);
+</pre>
+<p>Note that this is not allowed:
+<p><pre>Array&lt;int,2&gt; A;
+firstIndex i;
+secondIndex j;
+
+// Completely sum the array?
+int result = sum(sum(A, j), i);
+</pre>
+<p>You cannot reduce an array to zero dimensions!
+Instead, use one of the global functions described in the
+previous section.
+<p>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>3.15: where statements</font></td></tr></table><br><a name="l77"></a>
+
+<p><a name="where-expr"></a>
+<p><!-- BZINDEX where statements --><a name="index00375">
+<!-- BZINDEX functional if (where) --><a name="index00376">
+<!-- BZINDEX if (where) --><a name="index00377">
+<p>Blitz++ provides the "where" function as an array expression
+version of the "?:" operator.  The syntax is:
+<p><pre>where(array-expr1, array-expr2, array-expr3)
+</pre>
+<p>Wherever <code>array-expr1</code> is true, <code>array-expr2</code> is returned.
+Where <code>array-expr1</code> is false, <code>array-expr3</code> is returned.
+For example, suppose we wanted to sum the squares of only
+the positive elements of an array.  This can be implemented
+using a where function:
+<p><pre>double posSquareSum = sum(where(A &gt; 0, pow2(A), 0));
+</pre>
+<p>
+<p>
+
+<hr>
+<ul>
+    <li> <a href="blitz04.html">Next chapter</a>
+    <li> <a href="blitz02.html">Previous chapter</a>
+    <li> <a href="blitz.html">Table of contents</a>
+</ul>
+<hr>
+</body>
+</html>

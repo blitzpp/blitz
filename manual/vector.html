@@ -1,0 +1,630 @@
+<html>
+<title>Blitz++ Class Reference: Vector&lt;T&gt;</title>
+<body>
+
+<h1>Blitz++ Class Reference: Vector&lt;T&gt;</h1>
+
+<table border cellpadding=10 align=top>
+<tr valign=top><td>
+<h3>Sections</h3>
+<ul>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#synopsis">Synopsis</a></li>
+<li><a href="#template">Template parameter</a></li>
+<li><a href="#publictype">Public types</a></li>
+<li><a href="#construct">Constructors</a></li>
+<li><a href="#member">Member functions</a></li>
+<li><a href="#memberops">Member operators</a></li>
+<li><a href="#ops">Operators</a></li>
+<li><a href="#global">Global math functions</a></li>
+<li><a href="#global2">Other global functions</a></li>
+<li><a href="#example">Example</a></li>
+</ul>
+</td>
+<td>
+<h3>Related topics and classes</h3>
+<ul>
+<li>The <a href="range.html">Range</a> class</li>
+<!-- <li>Aliasing and the <a href="restrict.html">restrict</a> keyword</li> -->
+<!-- <li>Data/view model</li> -->
+<!-- <li>Expression templates</li> -->
+<!-- <li>Type promotion</li> -->
+<!-- <li>Performance benchmarks</li> -->
+<!-- <li>where/elsewhere/endwhere</li> -->
+<!-- <li>Matrix&lt;T&gt;</li> -->
+<!-- <li>FFTServer&lt;T&gt;</li> -->
+</ul>
+</td>
+
+<td align=center>
+<h3>Inheritance diagram</h3>
+MemoryBlockReference&lt;T&gt;<br>
+|<br>
+Vector&lt;T&gt;
+</td>
+</table>
+
+<a name="summary">
+<!-- <h2>Summary</h2> -->
+
+<a name="synopsis">
+<h2>Synopsis</h2>
+
+<pre>
+#include &lt;blitz/vector.h&gt;
+using namespace blitz;
+Vector&lt;double&gt; x(100);
+</pre>
+
+<a name="template">
+<h2>Template parameter</h2>
+
+<p>
+The template parameter of Vector&lt;T&gt; is the element type of the 
+vector.  This should an integral, floating point, or complex type.  
+These choices of <b>T</b> should work: 
+<ul>
+<li>bool, char, unsigned char, short int, short unsigned int, int, unsigned int,
+long, unsigned long</li>
+<li>float, double, long double</li>
+<li>complex&lt;float&gt;, complex&lt;double&gt;, and 
+complex&lt;long double&gt;</li>
+</ul>
+Other types
+may work provided they have the necessary numeric semantics.
+</p>
+
+<a name="publictype">
+<h2>Public types</h2>
+
+<p>Vector&lt;T&gt; declares several publicly accessible
+types.  They may be accessed using the scope (::) operator: e.g.
+<pre>
+Vector&lt;double&gt; x(50);                       // Create a vector of length 50
+Vector&lt;double&gt;::T_iterator z = x.begin();   // Get an iterator for x
+</pre>
+
+<table border cellpadding=2>
+<tr>
+<th>
+Type
+</th>
+<th>
+Description
+</th>
+</tr>
+<tr align=left>
+<td>
+<b>T_numtype</b></td>
+<td>The numeric type of the vector elements (e.g. double)</td>
+</tr>
+
+<tr align=left><td>
+<b>T_vector</b></td>
+<td>Complete type of the vector itself (e.g. Vector&lt;double&gt;)</td></tr>
+
+<tr align=left><td>
+<b>T_iterator</b></td>
+<td>STL-like iterator to be used on this vector (see begin(), end())
+** Not yet supported</td>
+</tr>
+
+<tr align=left><td>
+<b>T_constIterator</b></td>
+<td>STL-like const iterator to be used on this vector (see begin(), end())
+** Not yet supported</td>
+</tr>
+</table>
+
+<a name="construct">
+<h2>Constructors</h2>
+
+<ul>
+<li><b>Vector()</b><br><br>
+Default constructor.  No memory is allocated; the length of the vector is
+zero. The
+vector may subsequently be resized using resize(), or used to refer to another
+vector's data using reference().<br></li>
+
+<br><li>
+<b>Vector(size_t length)</b><br><br>
+Create a new vector of the given length.  Memory is allocated using
+<b>new</b>.  Elements are not initialized.<br></li>
+
+<br><li>
+<b>Vector(Vector&lt;T_numtype&gt;& x)</b><br><br>
+Creates a reference (or alias) to the data of vector x.  Both x and this
+vector now refer to the same underlying data, so any changes made to the
+data via x will be visible in this vector.  (Note: T_numtype is a publicly
+declared typedef for the template parameter).<br></li>
+
+<br><li>
+<b>Vector(Vector&lt;T_numtype&gt;& x, <a href="range.html">Range</a> r)</b><br><br>
+Creates a reference (or alias) to a portion of the data of vector x.  
+The range object specifies an interval of the index set.  For example,
+<pre>
+Vector&lt;double&gt; x(50);                // Create a vector of length 50
+Vector&lt;double&gt; y(x, Range(10,20));  // y is now of length 11, and
+                                     // refers to elements 10-20 of x
+y[5] = 3;                            // y[5] is aliased to x[15]
+</pre>
+</li>
+
+<li>
+<b>Vector(size_t length, T_numtype initValue)</b><br><br>
+Creates a new vector of the given length, and initializes all elements
+to initValue.  Memory is allocated using <b>new</b>.</li>
+
+<br><br><li>
+<b>Vector(size_t length, T_numtype firstValue, T_numtype inc)</b><br><br>
+Creates a new vector of the given length, and initializes the elements
+to [ firstValue, firstValue + inc, firstValue + 2 * inc, ...,
+firstValue + (length-1) * inc ].  Memory is allocated using <b>new</b>.</li>
+
+<br><br><li>
+<b>Vector(<a href="range.html">Range</a> r)</b><br><br>
+Creates a vector and initializes the elements to the range r.  For
+example,
+<pre>
+Vector&lt;int&gt; z(Range(0,5));    // z = [ 0, 1, 2, 3, 4, 5 ]
+</pre>
+</li>
+
+<li>
+<b>Vector(size_t length, Random&lt;P_distribution&gt;& random)</b><br><br>
+Creates a vector and initializes its elements with random numbers.
+For example,
+<pre>
+#include &lt;blitz/rand-normal.h&gt;
+Random&lt;Normal&gt; gaussianNoise(0.0, 2.5);     // Zero-mean, variance 2.5
+Vector&lt;double&gt; x(50, gaussianNoise);  
+</pre>
+</li>
+
+<li>
+<b>Vector(size_t length, T_numtype* [restrict] data, int stride = 1)</b><br><br>
+Creates a vector which refers to the given data.  The <a href="restrict.html">
+NCEG <b>restrict</b></a>
+keyword can be used only with compilers which support it.  The stride
+parameter gives the spacing of elements: in the created vector, element 
+<b>i</b> will be <b>data[i * stride]</b>.  When the vector object is
+destroyed, the memory is not freed (i.e. the vector does not assume
+ownership of the data).</li>
+
+<br><br><li>
+<b>Vector(<i>vector expression</i>)</b><br><br>
+Creates a vector of appropriate length and stores the result of
+<i>vector expression</i> in it.  (See the explanation of expression
+templates).   Examples:
+<pre>
+// Create a vector of length 16 containing a sampled cosine (full period)
+Vector&lt;double&gt; x(cos(Range(0,15) * 2 * M_PI / 16.0));
+
+// Create a new vector containing an approximation of the derivative
+// of x.
+Range I(1,15);
+double delta = 1 / 16.;    // Spacing between samples
+Vector&lt;double&gt; y = (x(I) - x(I-1)) / delta;
+</pre>
+</li>
+
+</ul>
+
+
+
+<a name="member">
+<h2>Member functions</h2>
+
+<ul>
+<li>
+<b>T_iterator      begin()</b>    ** NOT YET SUPPORTED<br><br>
+Returns an STL-compliant iterator positioned at the beginning of the vector's
+data.  T_iterator is a public type declared by Vector&lt;T_numtype&gt;, and
+should be used to specify the type of the iterator:
+<pre>
+Vector&lt;double&gt; x(50);
+Vector&lt;double&gt;::T_iterator iter = x.begin();
+</pre>
+Since T_iterator is STL-compliant, it may be used with the standard
+template library routines.  [GIVE EXAMPLES]  See also end().
+</li>
+
+<br><br><li>
+<b>T_constIterator begin()  const</b>    ** NOT YET SUPPORTED<br><br>
+Returns an STL-compliant const iterator positioned at the beginning of
+the vector's data.  A const iterator has read-only access to the vector
+elements.  T_constIterator is a public type declared by Vector&lt;T_numtype&gt;,
+and should be used to specify the type of the iterator:
+<pre>
+Vector&lt;int&gt; z(50,0,1);       // Creates the vector [ 0 1 2 ... 49 ]
+const Vector&lt;int&gt;& zref = z; // Create a const reference to z
+Vector&lt;int&gt;::T_constIterator iter = zref.begin();
+</pre>
+Since T_constIterator is STL-compliant, it may be used with the
+standard template library routines.  [GIVE EXAMPLES]  See also end().<br><br>
+
+The begin() method is const-overloaded.  By default, a non-const iterator
+is returned.  A const iterator is returned only when the vector itself
+is const.
+</li>
+
+<br><br><li>
+<b>T_vector        copy()   const</b><br><br>
+Returns a copy of the vector.  A new block of memory is allocated, and
+the vector copy is guaranteed to have unit stride.
+</li>
+
+<br><br><li>
+<b>T_iterator      end()</b><br><br>
+Returns an STL-compliant iterator positioned at the end of the
+vector's data.  See begin() above.
+</li>
+
+<br><br><li>
+<b>T_constIterator end()    const</b><br><br>
+Returns an STL-compliant const iterator positioned at the end of the
+vector's data.  See begin() above.
+</li>
+
+<br><br><li>
+<b>T_numtype * [<i>restrict</i>] data()<br>
+const T_numtype * [<i>restrict</i>] data() const</b><br><br>
+Obtain a pointer to the beginning of the vector data.  This method
+should be used with caution, since it has the potential to
+cause data corruption and/or segment violations if used improperly.
+The vector data is not necessarily stored contiguously; the
+spacing between vector elements can be obtained via the stride()
+member function.  Here is an example:
+<pre>
+Vector&lt;float&gt; x(10,0,1);          // Creates [ 0 1 2 3 4 5 6 7 8 9 ]
+float* xptr = x.data();           // Get a pointer to the vector data
+int length = x.length();          // Obtain the length of the vector (10)
+int stride = x.stride();          // Note that stride may be negative
+
+for (int i=0; i < length; ++i)
+    xptr[i * stride] = 7;         // Set each element to 7
+
+// Now the vector contains [ 7 7 7 7 7 7 7 7 7 7 ]
+// Note that "x = 7;" would accomplish the same result.
+</pre>
+The <a href="restrict.html">NCEG restrict</a> keyword is applicable 
+only if the compiler supports it.<br><br>
+
+The data() method is const-overloaded: if the vector is const, then 
+data() returns a const T_numtype* pointer.
+</li>
+
+<br><br><li>
+<b>size_t          length() const</b><br><br>
+Returns the length of the vector.</li>
+
+<br><br><li>
+<b>void            makeUnique()</b><br><br>
+If the vector's elements are referenced (or aliased) by another vector,
+a copy is made, and on return the vector refers to the new copy.
+</li>
+
+<br><br><li>
+<b>void            reference(T_vector& x)</b><br><br>
+Makes the vector an alias for vector x.  After this member function is
+used, both the vector and x refer to the same underlying data.</li>
+
+<br><br><li>
+<b>void            resize(size_t length)</b><br><br>
+If length is different than the current length of the vector, the
+vector is resized.  The current contents are lost.
+</li>
+
+<br><br><li>
+<b>void            resizeAndPreserve(size_t newLength)</b><br><br>
+Allocates a new vector of size newLength, and copies as much of
+the current vector as will fit into the new vector.  If the new
+vector is larger than the previous vector, then the unused elements
+are left uninitialized.</li>
+
+<br><br><li>
+<b>Vector&lt;T_numtype&gt; reverse()</b><br><br>
+Returns a view of the vector in reverse order.  This is done using
+a negative stride.</li>
+
+<br><br><li>
+<b>int             stride() const</b><br><br>
+Returns the distance between vector elements in memory.  This
+will normally be 1 (referred to as <i>unit stride</i>).</li>
+
+</ul>
+
+<a name="memberops">
+<h2>Member operators</h2>
+
+<pre>
+T_numtype        operator()(unsigned i) const
+T_numtype&       operator()(unsigned i)
+T_numtype        operator[](unsigned i) const
+T_numtype&       operator[](unsigned i)
+T_vector         operator()(Range r)
+T_vector         operator[](Range r)
+T_pick           operator[](Vector&lt;int&gt;)        ** Currently broken
+</pre>
+
+<a name="ops">
+
+<h3>Iostream operators</h3>
+
+<pre>
+ostream& operator>>(ostream& os, const <i>vector expression</i>&);
+</pre>
+Formats a vector or vector expression for output.  In future releases,
+several output formats will be supported.
+
+<h3>Arithmetic operators</h3>
+
+Arithmetic operators are implemented using expression templates.  These
+assignment operators are supported:
+
+<pre>
+operator=(<i>vector expression</i>)
+operator+=(<i>vector expression</i>)
+operator-=(<i>vector expression</i>)
+operator*=(<i>vector expression</i>)
+operator/=(<i>vector expression</i>)
+operator%=(<i>vector expression</i>)
+operator^=(<i>vector expression</i>)
+operator&=(<i>vector expression</i>)
+operator|=(<i>vector expression</i>)
+operator>>=(<i>vector expression</i>)
+operator=(<i>vector expression</i>)
+</pre>
+
+<p>
+A <i>vector expression</i> can be any combination of these operators
+and operands, as well as use of the math functions listed later.
+</p>
+
+<h4>Vector expression operators</h4>
+<pre>
++ - * / % ^ & | >> << 
+> < >= <= == != && ||
+</pre>
+
+<h4>Vector expression operands</h4>
+<ul>
+<li>Vector&lt;T_numtype&gt;</li>
+<li>Vector&lt;T_numtype2&gt; (A vector of a different type)</li>
+<li>VectorPick&lt;T_numtype&gt;</li>
+<li><a href="range.html">Range</a></li>
+<li>Random  ** NOT YET FULLY SUPPORTED</li>
+<li>Scalar constants (int,float,double,long double)</li>
+<li>Complex constants (complex&lt;float&gt;, complex&lt;double&gt;, 
+    complex&lt;long double&gt;)</li>
+</ul>
+
+<p>
+Arithmetic type promotion for vectors is identical to type promotion
+for built-in types. For example, adding a double constant to a 
+Vector&lt;int&gt; will result in a Vector&lt;double&gt;; multiplying
+a Vector&lt;long double&gt; by a Vector&lt;float&gt; will result in
+a Vector&lt;long double&gt;.  Generally, the result is promoted to
+which ever type preserves the greatest precision.</p>
+
+<p>Note that division and multiplication of integers may result in
+truncation and/or wraparound, since the result remains an integer
+type.  The solution is to cast the elements of one of the vectors 
+as floating-point types; see <b>cast&lt;T2&gt;</b> below.
+** the cast() function is not yet implemented</p>
+
+<pre>
+Vector&lt;int&gt; x(5), y(5);
+Vector&lt;double&gt; z(5);
+
+// ...
+
+z = x / y;      // Calculated using integer math, then cast as double
+                // Results in truncation
+
+z = x / cast&lt;double&gt;(y);   // Calculated using floating point 
+
+</pre>
+
+<a name="global">
+<!-- <h2>Global functions</h2> -->
+
+<h3>Single-operand math functions</h3>
+
+<h5>Notes</h5>
+<ul>
+<li>Single operand math functions are evaluated using expression templates.</li>
+<li>If used on an integer vector, most of the functions below will return
+the answer type as a double.</li>
+</ul>
+
+<table border cellpadding=2>
+<tr align=center><th>Function</th><th>Description</th><th>Real vectors</th><th>Complex vectors</th><th>Availability</th></tr>
+<tr><td>abs</td><td>Absolute value</td>     <td>Y</td>     <td>Y</td>  <td>all</td><td>     </td></tr>
+<tr><td>acos</td><td>Inverse cosine.  Elements must be in the range [-1,+1].  The resulting elements lie in [-Pi,+Pi].</td>     <td>Y</td>     <td>Y</td>  <td>all</td><td>     </td></tr>
+<tr><td>acosh</td><td>Inverse hyperbolic cosine</td> <td>Y</td>     <td></td>  <td>all</td><td>     </td></tr>
+
+<tr><td>arg</td>
+<td>Argument (phase/angle) of a complex vector. Result is a scalar vector whose elements lie in [-Pi, +Pi].</td>
+<td></td>
+<td>Y</td>
+<td>all<sup>b</sup></td></tr>
+
+<tr><td>asin</td><td>Inverse sine.  Elements must be in the range [-1,+1].  The resulting elements lie in [-Pi,+Pi].</td>     <td>Y</td>     <td>Y</td>  <td>all</td><td>     </td></tr>
+<tr><td>asinh</td><td>Inverse hyperbolic sine</td>     <td>Y</td>     <td></td>  <td>all</td><td>     </td></tr>
+<tr><td>atan</td><td>Inverse tangent.  Resulting elements lie in [-Pi,+Pi].</td>     <td>Y</td>     <td>Y</td>  <td>all</td><td>     </td></tr>
+<tr><td>atanh</td><td>Inverse hyperbolic tangent</td>     <td>Y</td>     <td></td>  <td>all</td><td>     </td></tr>
+<tr><td>cast&lt;T2&gt;</td><td>Cast vector elements to type T2<br>** NOT YET AVAILABLE</td><td>Y</td><td>Y</td><td>some<sup>e</sup></td></tr>
+<tr><td>cbrt</td><td>Cubic root</td>     <td>Y</td>     <td></td>  <td>some<sup>d</sup></td><td>     </td></tr>
+<tr><td>ceil</td><td>Smallest floating integer not less than element</td>     <td>Y</td>     <td></td>  <td>all</td><td>     </td></tr>
+<tr><td>class</td><td>Floating-point classification.  Result is an integer
+vector with elements taking values FP_PLUS_NORM,
+FP_MINUS_NORM, FP_PLUS_ZERO, FP_MINUS_ZERO, FP_PLUS_INF, FP_MINUS_INF,
+FP_PLUS_DENORM, FP_MINUS_DENORM, FP_SNAN, FP_QNAN as defined in &lt;float.h&gt;
+</td>
+     <td>Y</td>     <td></td>  <td>some<sup>d</sup></td><td>     </td></tr>
+
+<tr><td>conj</td>
+<td>Complex conjugate</td>
+<td></td>
+<td>Y</td>
+<td>all<sup>b</sup></td></tr>
+
+<tr><td>cos</td><td>Cosine.  Resulting elements lie in [-1,+1].</td>     <td>Y</td>     <td>Y</td>  <td>all</td><td>     </td></tr>
+<tr><td>cosh</td><td>Hyperbolic cosine</td>     <td>Y</td>     <td>Y</td>  <td>all</td><td>     </td></tr>
+<tr><td>exp</td><td>Exponential.</td>     <td>Y</td>     <td>Y</td>  <td>all</td><td>     </td></tr>
+<tr><td>expm1</td><td>Exponential minus one: exp(x)-1</td>     <td>Y</td>     <td></td>  <td>some<sup>c</sup></td><td>     </td></tr>
+<tr><td>erf</td><td>Error function</td>     <td>Y</td>     <td></td>  <td>some<sup>c</sup></td><td>     </td></tr>
+<tr><td>erfc</td><td>Complementary error function (1-erf(x)).</td>     <td>Y</td>     <td></td>  <td>some<sup>c</sup></td><td>     </td></tr>
+<tr><td>fabs</td><td>Same as <b>abs</b></td>     <td>Y</td>     <td></td>  <td>all</td><td>     </td></tr>
+<tr><td>finite</td><td>Nonzero if finite.  Result is integer.</td>     <td>Y</td>     <td></td>  <td>some<sup>d</sup></td><td>     </td></tr>
+<tr><td>floor</td><td>Largest floating int not greater than x</td>     <td>Y</td>     <td></td>  <td>all</td><td>     </td></tr>
+<tr><td>ilogb</td><td>Integer unbiased exponent</td>     <td>Y</td>     <td></td>  <td>some<sup>d</sup></td><td>     </td></tr>
+
+<tr><td>imag</td>
+<td>Imaginary portion of a complex vector. Result is a scalar vector which
+may be used as an lvalue.</td>
+<td></td>
+<td>Y</td>
+<td>all<sup>b</sup></td></tr>
+
+<tr><td>isnan</td><td>Nonzero if x is NaNS (Signalling Not a Number) or NaNQ (Quiet Not A Number).  Result is integer.</td>     <td>Y</td>     <td></td>  <td>some<sup>d</sup></td><td>     </td></tr>
+<tr><td>itrunc</td><td>Truncate and convert to integer.  Result is integer.</td>     <td>Y</td>     <td></td>  <td>some<sup>d</sup></td><td>     </td></tr>
+
+<tr><td>inv</td>
+<td>Inverse of a complex number</td>
+<td></td>
+<td>Y</td>
+<td>all<sup>b</sup></td></tr>
+
+<tr><td>j0</td><td>Bessel function first kind, order 0</td>     <td>Y</td>     <td></td>  <td>some<sup>c</sup></td><td>     </td></tr>
+<tr><td>j1</td><td>Bessel function first kind, order 1<br>
+See also y0(x), y1(x), jn(x,y) and yn(x,y).
+</td>     <td>Y</td>     <td></td>  <td>some<sup>c</sup></td><td>     </td></tr>
+<tr><td>lgamma</td><td>Log absolute gamma</td>     <td>Y</td>     <td></td>  <td>some<sup>c</sup></td><td>     </td></tr>
+<tr><td>log</td><td>Natural logarithm</td>     <td>Y</td>     <td>Y</td>  <td>all</td><td>     </td></tr>
+<tr><td>logb</td><td>Unbiased exponent (IEEE)</td>     <td>Y</td>     <td></td>  <td>some<sup>c</sup></td><td>     </td></tr>
+<tr><td>log1p</td><td>Natural logarithm of (1+x)</td>     <td>Y</td>     <td></td>  <td>some<sup>c</sup></td><td>     </td></tr>
+<tr><td>log10</td><td>Logarithm base 10</td>     <td>Y</td>     <td>Y</td>  <td>all</td><td>     </td></tr>
+<tr><td>nearest</td><td>Nearest floating point integer to x.</td>     <td>Y</td>     <td></td>  <td>some<sup>d</sup></td><td>     </td></tr>
+
+<tr><td>norm</td>
+<td>Norm (magnitude) of a complex vector. Result is a scalar vector.</td>
+<td></td>
+<td>Y</td>
+<td>all<sup>b</sup></td></tr>
+
+<tr><td>real</td>
+<td>Real portion of a complex vector. Result is a scalar vector which may
+be used as an lvalue.</td>
+<td></td>
+<td>Y</td>  
+<td>all<sup>b</sup></td></tr>
+
+<tr><td>rint</td><td>Round to floating point integer, using the current 
+floating-point rounding mode.  Rounding mode is read and set by
+the functions fp_read_rnd() and fp_swap_rnd().  (See system man pages)</td>       <td>Y</td>     <td></td>  <td>some<sup>c</sup></td><td>     </td></tr>
+<tr><td>rsqrt</td><td>Reciprocal square root (i.e. 1.0/sqrt(x))</td>     <td>Y</td>     <td></td>  <td>some<sup>d</sup></td><td>     </td></tr>
+<tr><td>sin</td><td>Sine.  Resulting elements lie in [-1,+1].</td>     <td>Y</td>     <td>Y</td>  <td>all</td><td>     </td></tr>
+<tr><td>sinh</td><td>Hyperbolic sine</td>     <td>Y</td>     <td>Y</td>  <td>all</td><td>     </td></tr>
+<tr><td>sqr</td><td>Square: equivalent to x*x</td>     <td>Y</td>     <td>Y</td>  <td>all<sup>e</sup></td><td>     </td></tr>
+<tr><td>sqrt</td><td>Square root</td>     <td>Y</td>     <td>Y</td>  <td>all</td><td>     </td></tr>
+<tr><td>tan</td><td>Tangent</td>     <td>Y</td>     <td>Y</td>  <td>all</td><td>     </td></tr>
+<tr><td>tanh</td><td>Hyperbolic tangent</td>     <td>Y</td>     <td>Y</td>  <td>all</td><td>     </td></tr>
+<tr><td>trunc</td><td>Nearest floating-point integer in the direction of zero</td>     <td>Y</td>     <td></td>  <td>some<sup>c</sup></td><td>     </td></tr>
+<tr><td>uitrunc</td><td>Truncate and convert to unsigned.  Result is unsigned integer.</td>     <td>Y</td>     <td></td> <td>some<sup>d</sup></td>  </tr>
+<tr><td>y0</td><td>Bessel function 2nd kind, order 0</td>     <td>Y</td>     <td></td>  <td>some<sup>c</sup></td><td>     </td></tr>
+<tr><td>y1</td><td>Bessel function 2nd kind, order 1
+<br>See also yn(x,y) below</br></td>     <td>Y</td>     <td></td>  <td>some<sup>c</sup></td><td>     </td></tr>
+</table>
+
+<sup>a</sup>ANSI C math function<br>
+<sup>b</sup>ANSI C++ math function<br>
+<sup>c</sup>IEEE 754 standard required function<br>
+<sup>d</sup>IEEE 754 recommended function<br>
+<sup>e</sup>Nonstandard function specific to Blitz++<br>
+<br>
+
+<h3>Global math functions with two operands</h3>
+
+** These functions are not yet implemented **
+<pre>
+
+All the two operand math functions are provided in three forms:<br>
+atan2(double,vector)
+atan2(vector,double)
+atan2(vector,vector)
+copysign(vector,double)
+drem(d,d)
+fmod(d,d)
+frexp(d, Vector&lt;int&gt;& e)  NOT INCLUDED
+hypot(d,d)
+jn(int, d)                      NOT INCLUDED
+ldexp(d,i)                      NOT INCLUDED
+modf(d, Vector&lt;int&gt;& e)   NOT INCLUDED
+max(d, d)
+min(d, d)
+nextafter(d, d)
+polar(d,d)                      NOT INCLUDED
+pow(d,d)
+remainder(d,d)
+scalb(d,d)
+unordered(d,d)
+yn(int,d)                       NOT INCLUDED
+</pre>
+
+<a name="global2">
+<h2>Other global functions</h2>
+
+(These functions <i>are</i> available)
+
+<pre>
+accumulate
+<!-- convolve -->
+dot 
+delta
+<!-- even -->
+<!-- innerProduct  (same as dot) -->
+<!-- imag -->
+<!-- inversePermute -->
+<!-- kronecker -->
+<!-- kurtosis -->
+max
+maxIndex
+maxValue
+mean
+min
+minIndex
+minValue
+norm
+<!-- odd -->
+<!-- outerProduct  (same as kronecker) -->
+<!-- permute -->
+<!-- real -->
+reverse
+<!-- skewness -->
+<!-- sort -->
+sum
+<!-- variance -->
+</pre>
+
+<h2>The <i>where</i> function</h2>
+
+<p>
+The <i>where(X,Y,Z)</i> function provides the same functionality as
+the operator X ? Y : Z.  If X is logical true, then Y is returned;
+otherwise, Z is returned.
+</p>
+
+<p>
+The <i>where</i> function is implemented using expression templates.
+The arguments X, Y, and Z can each be vectors, vector expressions,
+<a href="range.html">Range</a>, or Vector picks.
+</p>
+
+<a name="example">
+<h2>Example</h2>
+
+Please see the files in the <a href="../examples/"><b>Blitz++/examples</b></a> directory.
+</body>
+</html>

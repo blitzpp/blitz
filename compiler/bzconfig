@@ -1,0 +1,396 @@
+#! /bin/sh
+#
+# Evaluate C++ compiler implementation, to determine which kludges the
+# Blitz++ library should use.
+#
+# With thanks to Tom Keffer (Rogue Wave Software) and Larry Wall
+#
+# $Id$
+# 
+# $Log$
+# Revision 1.1  2000/06/19 12:26:15  tveldhui
+# Initial revision
+#
+# Revision 1.5  1998/04/03 19:37:14  tveldhui
+# Added command-line options, noninteractive mode
+#
+# Revision 1.4  1997/07/16 20:02:44  tveldhui
+# Update: Alpha release 0.2 (Arrays)
+#
+# Revision 1.3  1996/11/01 22:41:42  tveldhui
+# Added type promotion check; tidied up.
+#
+# Revision 1.2  1996/04/16  11:28:54  todd
+# All important features checked.
+#
+# Revision 1.1  1996/04/16  03:09:38  todd
+# Initial revision
+
+# If you need to debug this script, try uncommenting the
+# next line
+# set -x
+
+# Alternately, try setting verbose=1 on the next line
+verbose=0
+
+# If your platform generates .OBJ instead of .o files, you'll need
+# to edit the next line
+objextension='o'
+
+if test ! -t 0; then
+    echo "Use 'sh bzconfig', not 'sh < bzconfig'"
+    exit 1
+fi
+
+# clean="rm -f a.out core bztemp bztest bzjunk.cpp bzjunk.o bzjunk.ii bzjunk.int.c bzjunk.s"
+clean="rm -f core"
+trap '$clean; exit 1' 1 2 3 15
+
+# Information about the system:
+link='ln -s'
+
+# Information about invoking the compiler
+cppinvoke=''
+extension='cpp'
+special=''
+srcdir='.'
+install=0
+interactive=1
+
+# Don't bother using symbolic links, just copy
+
+# Does the system support symbolic links?
+# echo "foo" >test.1
+# ln -s test.1 test.2 >>bztemp 2>&1
+# if grep foo test.2 >>bztemp 2>&1; then
+#   copy='ln -s'
+# else
+#   copy='cp'
+# fi
+# rm -f test.1 test.2
+copy='cp'
+
+# Determine if we're running in interactive mode, or if the
+# arguments were passed on the command line
+
+ac_prev=
+for ac_option
+do
+  case "$ac_option" in
+  -*=*) ac_optarg=`echo "$ac_option" | sed 's/[-_a-zA-Z0-9]*=//'` ;;
+  *) ac_optarg= ;;
+  esac
+
+  case "$ac_option" in
+    --compiler=*)
+      cppinvoke="$ac_optarg" 
+      interactive=0 ;;
+    --flags=*)
+      special="$ac_optarg" ;;
+    --srcdir=*)
+      srcdir="$ac_optarg" ;;
+    --extension=*)
+      extension="$ac_optarg" ;;
+    --install)
+      install=1 ;;
+    --help)
+      cat << EOF
+Usage: bzconfig [options]
+Options: 
+  --compiler=PROGRAM  Compiler invokation (cc, KCC, g++, vacbld, etc.)
+                      You will be prompted if this option is missing.
+  --flags=FLAGS       Flags for the compiler.  Multiple flags can be
+                      indicated using quotes, e.g. --flags="-x -g"
+  --extension=EXT     Extension for C++ programs (cpp, C, cxx)
+                      Defaults to cpp
+  --install           Automatically install the resulting config.h
+                      file to ../blitz/config.h  (default is not to)
+EOF
+      exit 0;; 
+    -*) { echo "bzconfig: error: $ac_option: invalid option; use --help to show usage" 1>&2; exit 1; }
+      ;;
+  esac
+done
+
+cat << 'EOH'
+
+Blitz++ compiler evaluation
+
+This script will test your compiler to determine which language
+features it supports.  
+
+EOH
+
+if test $interactive -eq 1; then
+
+echo "Running in interactive mode (the --compiler option was not specified)"
+
+echo "What is the command to invoke your C++ compiler? "
+read cppinvoke
+
+echo " "
+echo "Suggested flags:"
+echo "KCC: -x --restrict"
+echo "KCC under Linux: -x --restrict -D__signed__="
+echo "SGi: -n32 -experimental"
+echo " "
+echo "* If your compiler does not recognize the new ISO C++ keyword"
+echo "  \"typename,\" you should compile with -DBZ_NO_TYPENAME"
+echo "* If your compiler does not implement namespaces, you should"
+echo "  compile with -DBZ_NO_NAMESPACES"
+echo "* If your compiler needs special flags for exceptions and RTTI, don't "
+echo "  bother -- Blitz++ doesn't use these features, although this suite does "
+echo "  test for them."
+echo " "
+echo "Any special compile flags? (ENTER for none) "
+read special
+
+echo " "
+echo "I am assuming your compiler recognizes .cpp extensions.  If not,"
+echo "start bzconfig again and use the --extension=EXT option."
+fi
+
+
+case "$cppinvoke" in
+  vacbld)
+    vacbld=1
+    echo Using special setup for vacbld.
+  ;;
+  *)
+    vacbld=0
+  ;;
+esac
+
+echo " "
+echo "I am now going to try a simple program."
+cat <<'EOP' >bzjunk.$extension
+int main() { return 0; }
+EOP
+
+if test $vacbld -eq 1; then
+   echo Checking vacbld...
+   rm -f bzjunk
+   if vacbld $special $srcdir/vac.icc >>bztemp 2>&1 &&
+     test -x bzjunk
+   then
+      echo vacbld ran successfully.
+   else
+     echo "Hmmm.. I was unable to compile a simple program."
+     echo "The command used was:"
+     echo "vacbld $special $srcdir/vac.icc"
+     $clean
+     exit 1
+   fi
+else
+if test $verbose -eq 1; then
+   echo $cppinvoke $special -c bzjunk.$extension 
+   echo test -f bzjunk.$objextension
+fi
+
+if $cppinvoke $special -c bzjunk.$extension && # >>bztemp 2>&1 &&
+   test -f bzjunk.$objextension
+then
+   echo "Okay, it compiled.  But will it link?"
+else
+   echo "Hmmm.. I was unable to compile a simple program."
+   echo "The command line I used was:"
+   echo "$cppinvoke $special -c bzjunk.$extension"
+   echo "If your platform uses .OBJ instead of .o files, you'll need"
+   echo "to edit the bzconfig script and set objextension correctly."
+   $clean
+   exit 1
+fi
+
+if test $verbose -eq 1; then
+   echo $cppinvoke $special bzjunk.$objextension -o bzjunk
+   echo test -x bzjunk
+   echo sh -c ./bzjunk
+fi
+
+if $cppinvoke $special bzjunk.$objextension -o bzjunk -lm >>bztemp 2>&1 &&
+   sh -c ./bzjunk >>bztemp 2>&1
+then
+   echo "Yes, it linked too.  Great."
+   echo " "
+   rm -f bzjunk.$extension bzjunk.o bzjunk
+else
+   echo "No, I could compile, but couldn't link (or couldn't execute"
+   echo "the resulting file."
+   echo "The command line I used was:"
+   echo "$cppinvoke $special bzjunk.$objextension -o bzjunk -lm"
+   $clean
+   exit 1
+fi
+fi
+
+########################################################################
+
+echo " "
+echo "Okay, now the fun begins."
+echo " "
+
+rm -f config.h logfile
+cat << 'EOH' >config.h
+/******************************************************************************
+ * config.h           Compiler language support flags
+ *
+ * This file was generated automatically by the script bzconfig.
+ * You should rerun bzconfig each time you switch compilers, install new
+ * standard libraries, or change compiler versions.
+ *
+ */
+
+EOH
+
+echo " " >>config.h
+echo "#ifndef BZ_CONFIG_H"    >>config.h
+echo "#define BZ_CONFIG_H"    >>config.h
+echo " " >>config.h
+echo "#define BZ_COMPILER_NAME   \"$cppinvoke\"" >>config.h
+echo "#define BZ_COMPILER_OPTIONS \"$special\"" >>config.h
+echo "#define BZ_OS_NAME         \"`uname -s -r`\"" >>config.h
+echo "#define BZ_BZCONFIG_DATE   \"`date`\"" >>config.h
+echo "#define BZ_PLATFORM        \"`$srcdir/../config.guess`\"" >>config.h
+echo " " >>config.h
+
+# Set up a little script to make this easier
+echo \#\!/bin/sh > bztest
+echo cppinvoke=\"$cppinvoke\" >> bztest
+echo special=\"$special\" >> bztest
+echo copy=\"$copy\" >> bztest
+echo extension=\"$extension\" >> bztest
+echo verbose=\"$verbose\" >> bztest
+echo srcdir=\"$srcdir\" >> bztest
+cat << 'EOSC' >>bztest
+# set -x
+echo " "
+echo $3
+echo " " >>logfile
+echo " " >>logfile
+echo " " >>logfile
+echo $3 >>logfile
+echo $cppinvoke $special $srcdir/$2 >>logfile
+
+rm -f bzjunk bzjunk.$extension bzjunk.o
+if test $verbose -eq 1; then echo $copy $srcdir/$2 bzjunk.$extension; fi
+
+$copy $srcdir/$2 bzjunk.$extension
+
+if test $verbose -eq 1; then 
+    echo $cppinvoke $special bzjunk.$extension -o bzjunk
+fi
+
+case $cppinvoke in
+  vacbld)
+    build="vacbld $special vac.icc"
+    ;;
+  *)
+    build="$cppinvoke $special bzjunk.$extension -o bzjunk -lm"
+    ;;
+esac
+
+if $build >>logfile 2>&1 &&
+    test -x bzjunk &&
+    sh -c ./bzjunk >>bztemp 2>&1
+then
+    echo "Yes."
+    echo "#define $1" >>config.h
+    echo "Success: $1" >>logfile
+else
+    echo "Nope."
+    echo "#undef  $1" >>config.h
+    echo "Failed:  $1" >>logfile
+fi
+EOSC
+chmod +x bztest
+
+# Major language features
+./bztest BZ_NAMESPACES namespac.cpp "Does your compiler implement namespaces?"
+./bztest BZ_EXCEPTIONS except.cpp "What about exceptions?"
+./bztest BZ_RTTI rtti.cpp "Run-Time Type Identification?"
+./bztest BZ_MEMBER_CONSTANTS membcnst.cpp "Member constants?"
+./bztest BZ_OLD_FOR_SCOPING oldfor.cpp "Does your compiler cling to the old 'for' scoping rules?"
+
+# New keywords
+echo " "
+echo "Now for some of the new keywords."
+./bztest BZ_EXPLICIT explicit.cpp "How about the 'explicit' keyword?"
+./bztest BZ_MUTABLE mutable.cpp "What about the 'mutable' keyword?"
+./bztest BZ_TYPENAME typename.cpp "Does your compiler recognize 'typename'?"
+./bztest BZ_NCEG_RESTRICT restrict.cpp "Just on the off chance... the NCEG 'restrict' keyword?"
+./bztest BZ_NCEG_RESTRICT_EGCS restric2.cpp "Maybe it recognizes __restrict__?"
+./bztest BZ_BOOL bool.cpp "Does it recognize bool as a built-in type?"
+
+# Typecasting
+echo " "
+echo "Does your compiler understand the newfangled casting syntax?"
+./bztest BZ_CONST_CAST constcst.cpp "What about const_cast<>?"
+./bztest BZ_STATIC_CAST statcast.cpp "static_cast<>?"
+./bztest BZ_REINTERPRET_CAST reinterp.cpp "reinterpret_cast<>?"
+./bztest BZ_DYNAMIC_CAST dynamic.cpp "dynamic_cast<>?"
+
+# Templates (most important)
+echo " "
+echo "Okay, now the important stuff -- templates."
+
+./bztest BZ_TEMPLATES template.cpp "Will it handle basic templates? (If not, just give up now.)"
+./bztest BZ_PARTIAL_SPECIALIZATION partial.cpp "Partial specialization?"
+./bztest BZ_PARTIAL_ORDERING porder.cpp "Partial ordering?"
+./bztest BZ_DEFAULT_TEMPLATE_PARAMETERS default.cpp "Default template parameters?"
+./bztest BZ_MEMBER_TEMPLATES membtmpl.cpp "Member templates?"
+./bztest BZ_MEMBER_TEMPLATES_OUTSIDE_CLASS membtmp2.cpp "Member templates outside the class declaration?"
+./bztest BZ_FULL_SPECIALIZATION_SYNTAX fullspec.cpp "Does it recognize the full specialization syntax?"
+./bztest BZ_FUNCTION_NONTYPE_PARAMETERS nontype.cpp "Function templates with non-type parameters?"
+./bztest BZ_TEMPLATE_QUALIFIED_BASE_CLASS elabbase.cpp "Template-qualified base class specifiers?"
+./bztest BZ_TEMPLATE_QUALIFIED_RETURN_TYPE elabret.cpp "Template-qualified return types (necessary for vector type promotion)?"
+./bztest BZ_EXPLICIT_TEMPLATE_FUNCTION_QUALIFICATION tempqual.cpp "Explicit template function qualification?"
+./bztest BZ_TEMPLATES_AS_TEMPLATE_ARGUMENTS temptemp.cpp "Templates as template arguments?"
+./bztest BZ_TEMPLATE_KEYWORD_QUALIFIER tempkey.cpp "Use of the template keyword as a qualifier?"
+./bztest BZ_TEMPLATE_SCOPED_ARGUMENT_MATCHING tempqmt.cpp "Function matching with argument types which are template scope-qualified?"
+./bztest BZ_TYPE_PROMOTION promote.cpp "Will it support the vector type promotion mechanism?"
+./bztest BZ_USE_NUMTRAIT numtrait.cpp "Numeric traits promotions (sum type, etc.)?"
+./bztest BZ_ENUM_COMPUTATIONS enumcomp.cpp "Can your compiler handle computations inside an enum?"
+./bztest BZ_ENUM_COMPUTATIONS_WITH_CAST enumcmp2.cpp "Does it handle (int) casts in enum computations?"
+
+# Standard library
+echo " "
+echo "Which library features does your compiler provide?"
+./bztest BZ_HAVE_COMPLEX complex.cpp "Does it have complex<T>?"
+./bztest BZ_HAVE_NUMERIC_LIMITS numlimit.cpp "Does it have numeric_limits<T>?"
+./bztest BZ_HAVE_CLIMITS climits.cpp "Does it have <climits>?"
+./bztest BZ_HAVE_VALARRAY valarray.cpp "Does it have valarray<T>?"
+./bztest BZ_HAVE_COMPLEX_MATH compmath.cpp "Complex math functions?"
+./bztest BZ_HAVE_IEEE_MATH ieeemath.cpp "IEEE Math library?"
+./bztest BZ_HAVE_SYSTEM_V_MATH sysvmath.cpp "System V Math library?"
+./bztest BZ_MATH_FN_IN_NAMESPACE_STD mathscop.cpp "Are C math functions in <cmath> and std::?"
+./bztest BZ_COMPLEX_MATH_IN_NAMESPACE_STD cmthscop.cpp "Are complex math functions in std::?"
+./bztest BZ_HAVE_STD std.cpp "ISO C++ Standard library?"
+./bztest BZ_HAVE_STL stl.cpp "Standard template library?"
+./bztest BZ_HAVE_RUSAGE getruse.cpp "What about getrusage()?"
+# Clean up
+$clean
+
+echo " " >>config.h
+echo "#endif // BZ_CONFIG_H"    >>config.h
+
+echo " "
+echo The results have been written to the file config.h.
+
+if test $interactive -eq 1; then
+
+echo You should now copy this file to the location of the Blitz++ header
+echo files, overwriting the current version of "<blitz/config.h>".
+echo " "
+echo If you have installed this library in the usual fashion, the command
+echo you should run is:
+echo " "
+echo cp config.h ../blitz
+echo " "
+
+fi
+
+echo If you\'re curious about which tests passed and failed and why, see
+echo this file:
+ls -l logfile
+
+

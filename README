@@ -1,0 +1,252 @@
+                       Blitz++ Version 0.4
+                           August 1998
+
+Blitz++ is a C++ template class library for scientific computing.  
+It offers a high level of abstraction, but performance which rivals
+Fortran.  The current version supports arrays and vectors.
+
+I've put the documentation for the Array classes up on the web; you're
+welcome (and encouraged) to browse through it and make suggestions, even
+if you're not able to compile the alpha version.  The URL is:
+
+    http://monet.uwaterloo.ca/blitz/manual/
+
+Blitz++ is now distributed under the terms of the GNU General
+Public License.
+
+
+HOW TO DOWNLOAD BLITZ++
+=======================
+
+The easy way: go to http://monet.uwaterloo.ca/blitz/download/
+and follow the instructions.  You will probably want to look
+at the list of supported platforms too:
+http://monet.uwaterloo.ca/blitz/platforms/
+
+The harder way:
+Send an email message containing the line "subscribe blitz" to
+<majordomo@monet.uwaterloo.ca>.  Download instructions will follow.
+
+
+The following information is oldish; see the web pages for
+up to date information.
+
+1.  Contents of Blitz++ 
+
+* Array<T,N>
+   Numerical array class.  Supports integral, floating, complex or user types.
+   Shallow copies and reference counting
+   Subarrays and flexible slicing (with any combination of int and Range
+      arguments)
+   Flexible storage format: arbitrary storage ordering of dimensions, each
+      dimension can be stored in ascending or descending order
+   Arbitrary dimension bases e.g. valid index ranges 3..7,15..20
+   Arrays of user-defined types
+   Neat comma-delimited initialization syntax: A = 0, 3, 2, 4;
+   Rudimentary output formatting
+   Debug mode with bounds and precondition checking
+   Uses the NCEG restrict keyword if supported by your compiler
+   Arrays up to rank 11 can be indexed directly using A(i,j,...)
+      notation.  Higher ranked arrays can be indexed using vectors.
+   Reasonably thorough documentation
+   Easy to create arrays of user-defined types
+   Support for multicomponent (multi-spectral) arrays
+   Stencil operators and objects; central, forward, and backward
+     differences; div, grad, curl, laplacian, partial derivative
+     operators
+   Indirection: operate on arrays at a list of select points or
+     subdomains
+   Preliminary integration with the Tau profiling package
+     (http://www.acl.lanl.gov/Tau/)
+
+* Array Expressions
+   Expressions parsed and evaluated using expression templates
+   Nifty tensor-like notation
+   Array indices can be used as expression operands e.g. A = exp(-i/10.0);
+   Cache optimized 2D and 3D array stencilling
+   Reduction operations: sum, mean, min, max, minIndex, maxIndex, product,
+     count, any, all
+   Partial reductions which turn an N-dimensional array (or expression) 
+     into an N-1 dimensional array expression
+   Full reductions which turn an N-dimensional array (or expression)
+     into a scalar
+   Customizable type promotion (defaults to C-style promotion)
+   Operators + - * / % > >= < <= == != && || ^ & | >> << ~ !
+   Assignment operators = += -= *= /= %= ^= &= |= >>= <<=
+   Loops are interchanged to take advantage of memory storage order
+   Multidimensional loops collapsed to 1D whenever possible
+   where(X,Y,Z)
+   Tiling for stencils
+
+   One operand math functions:
+   abs       acos      acosh     asin      asinh     atan
+   atnh      cbrt      ceil      cexp      cos       cosh      
+   csqrt     exp       expm1     erf       erfc      fabs      
+   finite    floor     ilogb     isnan     itrunc    j0        
+   j1        lgamma    log       logb      log1p     log10     
+   nearest   pow2      pow3      pow4      pow5      pow6
+   pow7      pow8      rint      rsqrt     sin       sinh      
+   sqrt      tan       tanh      trunc     uitrunc   y0        
+   y1        _class
+
+   Two operand math functions:
+   atan2     copysign  drem      fmod      hypot     nextafter
+   pow       remainder scalb     unordered
+
+   Some math functions require IEEE/System V Math libraries.
+
+* Vector<T>
+   Numerical vector class; supports integral, floating, or complex types
+   Shallow copies and reference counting
+   Subvectors, possibly with non-unit stride
+   Rudimentary output formatting
+   Debug mode with bounds checking
+   Uses the NCEG restrict keyword if supported
+
+* TinyVector<T,N>
+   For small vectors (recommended less than 10 elements)
+   Loops are unrolled for many operations
+   Debug mode with bounds checking
+   Uses restrict if supported
+  
+* TinyVector<T,N,M>
+   Only partially supported so far.  Unrolled matrix-vector products.
+ 
+* Vector expressions
+   Evaluated using expression templates, which rival Fortran 77 
+     performance when used with KAI C++
+   Operators + - * / % ^ & | >> << > >= < <= == != 
+   Assignment operators = += -= *= /= %= ^= &= |= >>= <<=
+   Operands: vectors, tiny vectors, scalars, expressions, vector picks, Range
+   Arithmetic type promotion (in the C style)
+   where(X,Y,Z) implementation of the ?: operator
+
+* Math functions (Vector, Range, or vector expression arguments)
+   abs       acos      acosh     asin      asinh     atan
+   atnh      cbrt      ceil      cos       cosh      exp
+   expm1     erf       erfc      fabs      finite    floor
+   ilogb     isnan     itrunc    j0        j1        lgamma
+   log       logb      log1p     log10     nearest   rint
+   rsqrt     sin       sinh      sqrt      tan       tanh
+   trunc     uitrunc   y0        y1
+
+* Global vector functions
+   accumulate         dot           delta            max 
+   maxIndex           maxValue      mean             min 
+   minIndex           minValue      norm             norm1
+   sum
+ 
+* VectorPick
+   Selects an arbitrary subset or reordering of vector elements; may
+    be used as an lvalue
+   Rudimentary output formatting
+ 
+* Random number generators
+   Uniform
+   Normal
+   TT800 generator which has a period of 2^800-1 
+
+* Numeric inquiry functions
+   Obtain epsilon, min, max, etc. for numeric types; in <blitz/numinquire.h>
+
+* Benchmark classes
+   Benchmark (a base class from which you inherit)
+   BenchmarkExt (a glorified timer object)
+   Timer
+
+* Example programs
+  
+* Test suite
+ 
+* Benchmarks
+   23 loop kernels
+   DAXPY
+   3D Array stencilling
+   Quantum Chromodynamics
+   2D Finite difference
+   3D Finite difference
+
+
+2.  Is it faster than Fortran 77?
+
+Blitz++ has achieved a median performance of 95-98% that of Fortran
+on the Cray T3E over a suite of 23 loop kernels.  See
+http://monet.uwaterloo.ca/blitz/benchmarks/ for other benchmark
+results.
+
+3.  Availability and system requirements
+
+The Blitz++ library uses many new language features
+which are not yet widely supported.  These platforms are
+actively supported:
+
+* recent snapshots of egcs (NOTE: egcs 1.0.x releases will crash
+  when confronted with blitz; you need a development snapshot, such
+  as egcs-19980621).  egcs 1.1 will be supported.
+* KAI C++ (available on all major Unix platforms, and Linux too)
+* DECcxx
+
+The egcs compiler is free; the KAI compiler is commercial,
+but is an excellent optimizing C++ compiler.  Slow compile
+times, but it generates great code.
+
+For more information on supported platforms and compilers, please
+see http://monet.uwaterloo.ca/blitz/platforms/
+
+
+4.  Installation
+
+See the INSTALL file which comes with the distribution.
+
+
+5.  Directories
+
+blitz         Blitz++ headers and source files
+blitz/meta    More Blitz++ headers
+blitz/array   Yet more Blitz++ headers
+compiler      Compiler tests.  Use "bzconfig" to generate a config.h
+              file for your compiler.
+examples      Example programs ("make all")
+manual        Documentation in HTML format, for Arrays, vectors, and Range.
+              The Arrays documentation is the most complete.
+              A postscript version of the arrays documentation (arrays.ps)
+              is also provided.
+benchmarks    Benchmark programs ("make all")
+testsuite     Test suite ("make check")
+
+
+6.  Compiling programs
+
+The Blitz++ library uses the X windows convention for header files.
+All headers are referred to with a prefix of "blitz/".
+For example, to use the Vector<T> class, one needs to include
+<blitz/vector.h> instead of just <vector.h>.
+To make this work, the main Blitz++ directory must be in
+your include path.  For example, if Blitz++ was installed
+in /software/Blitz++, you will need to compile with
+-I /software/Blitz++.
+
+
+7.  Email addresses
+
+Please report bugs to <blitz-bugs@monet.uwaterloo.ca>
+
+Please send suggestions, results, and feature requests to
+<blitz-dev@monet.uwaterloo.ca>.
+
+
+8.  Legal mumbo-jumbo
+
+The Blitz++ library is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+Caveat: The library and the techniques behind are still experimental;
+please be patient.
+

@@ -1,0 +1,31 @@
+srcdir = @srcdir@
+VPATH = @srcdir@
+BZDIR = ..
+
+CXX=@CXX@
+CXXFLAGS=@CXXFLAGS@ -I$(srcdir)/$(BZDIR)
+
+AR=@AR@
+AR_FLAGS=cq
+RANLIB=@RANLIB@
+
+OBJECTS = globals.o
+LIBRARY = libblitz.a
+
+all: $(LIBRARY)
+
+.SUFFIXES: .o .cpp 
+
+.cpp.o:
+	$(CXX) $(CXXFLAGS) -c $(srcdir)/$*.cpp
+
+###########################################################################
+
+$(LIBRARY):	$(OBJECTS)
+	rm -f $@
+	$(AR) $(AR_FLAGS) $@ ${OBJECTS}
+	cp $(LIBRARY) ../lib/$(LIBRARY)
+#	$(RANLIB) ../lib/$(LIBRARY)
+
+clean:
+	rm -f *.o *.ii *.int.c *.s $(OBJECTS) $(LIBRARY) ../lib/$(LIBRARY)

@@ -1,0 +1,202 @@
+
+
+
+<a name="blitzmacros"></a>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html><head><title>Blitz++ User's Guide</title>
+
+<link rev="made" href="mailto:tveldhui@acm.org">
+</head>
+<body fgcolor="#27408B" bgcolor="#FFFAF0">
+
+<hr>
+
+<h1>Blitz++ User's Guide</h1>
+<h2>Todd Veldhuizen <br> &lt;<code>tveldhui@acm.org</code>&gt;</h2>
+<h2>Version 0.5, June 1999</h2>
+
+    
+<p><hr><p><br><a href="blitz01.html#l1"><h1>Chapter 1: Introduction</h1> </a>
+<a href="blitz01.html#l2"><b>1.1: About this document</b><br> </a>
+<a href="blitz01.html#l3"><b>1.2: Platform notes</b><br> </a>
+<a href="blitz01.html#l4"><dd>1.2.1: KAI C++<br> </a>
+<a href="blitz01.html#l5"><dd>1.2.2: Intel C++<br> </a>
+<a href="blitz01.html#l6"><dd>1.2.3: gcc<br> </a>
+<a href="blitz01.html#l7"><dd>1.2.4: DECcxx<br> </a>
+<a href="blitz01.html#l8"><dd>1.2.5: Cray T3E/Cray T90/Cray C90/Cray J90<br> </a>
+<a href="blitz01.html#l9"><b>1.3: How to download Blitz++</b><br> </a>
+<a href="blitz01.html#l10"><b>1.4: Installation and porting</b><br> </a>
+<a href="blitz01.html#l11"><dd>1.4.1: Installation<br> </a>
+<a href="blitz01.html#l12"><dd>1.4.2: The Blitz++ directory tree<br> </a>
+<a href="blitz01.html#l13"><dd>1.4.3: Porting Blitz++<br> </a>
+<a href="blitz01.html#l14"><b>1.5: Compiling with Blitz++</b><br> </a>
+<a href="blitz01.html#l15"><dd>1.5.1: Header files<br> </a>
+<a href="blitz01.html#l16"><dd>1.5.2: Linking to the Blitz++ library<br> </a>
+<a href="blitz01.html#l17"><dd>1.5.3: An example Makefile<br> </a>
+<a href="blitz01.html#l18"><dd>1.5.4: Explicit instantiation<br> </a>
+<a href="blitz01.html#l19"><b>1.6: Licensing terms</b><br> </a>
+<a href="blitz01.html#l20"><b>1.7: Mailing lists and support</b><br> </a>
+<a href="blitz01.html#l21"><dd>1.7.1: How to get help<br> </a>
+<a href="blitz01.html#l22"><dd>1.7.2: How to subscribe to a mailing list<br> </a>
+<a href="blitz01.html#l23"><dd>1.7.3: blitz-bugs<br> </a>
+<a href="blitz01.html#l24"><dd>1.7.4: blitz-dev<br> </a>
+<a href="blitz01.html#l25"><dd>1.7.5: blitz-support<br> </a>
+<a href="blitz02.html#l26"><h1>Chapter 2: Arrays</h1> </a>
+<a href="blitz02.html#l27"><b>2.1: Getting started</b><br> </a>
+<a href="blitz02.html#l28"><dd>2.1.1: Template parameters<br> </a>
+<a href="blitz02.html#l29"><dd>2.1.2: Array types<br> </a>
+<a href="blitz02.html#l30"><dd>2.1.3: A simple example<br> </a>
+<a href="blitz02.html#l31"><dd>2.1.4: Storage orders<br> </a>
+<a href="blitz02.html#l32"><b>2.2: Public types</b><br> </a>
+<a href="blitz02.html#l33"><b>2.3: Constructors</b><br> </a>
+<a href="blitz02.html#l34"><dd>2.3.1: Default constructor<br> </a>
+<a href="blitz02.html#l35"><dd>2.3.2: Creating an array from an expression<br> </a>
+<a href="blitz02.html#l36"><dd>2.3.3: Constructors which take extent parameters<br> </a>
+<a href="blitz02.html#l37"><dd>2.3.4: Constructors with Range arguments<br> </a>
+<a href="blitz02.html#l38"><dd>2.3.5: Referencing another array<br> </a>
+<a href="blitz02.html#l39"><dd>2.3.6: Constructing an array from an expression<br> </a>
+<a href="blitz02.html#l40"><dd>2.3.7: Creating an array from pre-existing data<br> </a>
+<a href="blitz02.html#l41"><dd>2.3.8: Interlacing arrays<br> </a>
+<a href="blitz02.html#l42"><dd>2.3.9: A note about reference counting<br> </a>
+<a href="blitz02.html#l43"><b>2.4: Indexing, subarrays, and slicing</b><br> </a>
+<a href="blitz02.html#l44"><dd>2.4.1: Indexing<br> </a>
+<a href="blitz02.html#l45"><dd>2.4.2: Subarrays<br> </a>
+<a href="blitz02.html#l46"><dd>2.4.3: Slicing<br> </a>
+<a href="blitz02.html#l47"><dd>2.4.4: More about Range objects<br> </a>
+<a href="blitz02.html#l48"><dd>2.4.5: A note about assignment<br> </a>
+<a href="blitz02.html#l49"><dd>2.4.6: An example<br> </a>
+<a href="blitz02.html#l50"><b>2.5: Debug mode</b><br> </a>
+<a href="blitz02.html#l51"><b>2.6: Member functions</b><br> </a>
+<a href="blitz02.html#l52"><dd>2.6.1: A note about dimension parameters<br> </a>
+<a href="blitz02.html#l53"><dd>2.6.2: Member function descriptions<br> </a>
+<a href="blitz02.html#l54"><b>2.7: Global functions</b><br> </a>
+<a href="blitz02.html#l55"><b>2.8: Inputting and Outputting Arrays</b><br> </a>
+<a href="blitz02.html#l56"><dd>2.8.1: Output formatting<br> </a>
+<a href="blitz02.html#l57"><dd>2.8.2: Inputting arrays<br> </a>
+<a href="blitz02.html#l58"><b>2.9: Array storage orders</b><br> </a>
+<a href="blitz02.html#l59"><dd>2.9.1: Fortran and C-style arrays<br> </a>
+<a href="blitz02.html#l60"><dd>2.9.2: Creating custom storage orders<br> </a>
+<a href="blitz02.html#l61"><dd>2.9.3: Storage orders example<br> </a>
+<a href="blitz03.html#l62"><h1>Chapter 3: Array Expressions</h1> </a>
+<a href="blitz03.html#l63"><b>3.1: Expression evaluation order</b><br> </a>
+<a href="blitz03.html#l64"><b>3.2: Expression operands</b><br> </a>
+<a href="blitz03.html#l65"><b>3.3: Array operands</b><br> </a>
+<a href="blitz03.html#l66"><b>3.4: Expression operators</b><br> </a>
+<a href="blitz03.html#l67"><b>3.5: Assignment operators</b><br> </a>
+<a href="blitz03.html#l68"><b>3.6: Index placeholders</b><br> </a>
+<a href="blitz03.html#l69"><b>3.7: Type promotion</b><br> </a>
+<a href="blitz03.html#l70"><b>3.8: Single-argument math functions</b><br> </a>
+<a href="blitz03.html#l71"><b>3.9: Two-argument math functions</b><br> </a>
+<a href="blitz03.html#l72"><b>3.10: Declaring your own math functions on arrays</b><br> </a>
+<a href="blitz03.html#l73"><b>3.11: Tensor notation</b><br> </a>
+<a href="blitz03.html#l74"><b>3.12: Array reductions</b><br> </a>
+<a href="blitz03.html#l75"><b>3.13: Complete reductions</b><br> </a>
+<a href="blitz03.html#l76"><b>3.14: Partial Reductions</b><br> </a>
+<a href="blitz03.html#l77"><b>3.15: where statements</b><br> </a>
+<a href="blitz04.html#l78"><h1>Chapter 4: Stencils</h1> </a>
+<a href="blitz04.html#l79"><b>4.1: Motivation: a nicer notation for stencils</b><br> </a>
+<a href="blitz04.html#l80"><b>4.2: Declaring stencil objects</b><br> </a>
+<a href="blitz04.html#l81"><b>4.3: Automatic determination of stencil extent</b><br> </a>
+<a href="blitz04.html#l82"><b>4.4: Stencil operators</b><br> </a>
+<a href="blitz04.html#l83"><dd>4.4.1: Central differences<br> </a>
+<a href="blitz04.html#l84"><dd>4.4.2: Forward differences<br> </a>
+<a href="blitz04.html#l85"><dd>4.4.3: Backward differences<br> </a>
+<a href="blitz04.html#l86"><dd>4.4.4: Laplacian operators<br> </a>
+<a href="blitz04.html#l87"><dd>4.4.5: Gradient operators<br> </a>
+<a href="blitz04.html#l88"><dd>4.4.6: Jacobian operators<br> </a>
+<a href="blitz04.html#l89"><dd>4.4.7: Grad-squared operators<br> </a>
+<a href="blitz04.html#l90"><dd>4.4.8: Curl operators<br> </a>
+<a href="blitz04.html#l91"><dd>4.4.9: Divergence operators<br> </a>
+<a href="blitz04.html#l92"><dd>4.4.10: Mixed partial derivatives<br> </a>
+<a href="blitz04.html#l93"><b>4.5: Declaring your own stencil operators</b><br> </a>
+<a href="blitz04.html#l94"><b>4.6: Applying a stencil</b><br> </a>
+<a href="blitz05.html#l95"><h1>Chapter 5: Multicomponent, complex, and user type arrays</h1> </a>
+<a href="blitz05.html#l96"><b>5.1: Multicomponent and complex arrays</b><br> </a>
+<a href="blitz05.html#l97"><dd>5.1.1: Extracting components<br> </a>
+<a href="blitz05.html#l98"><dd>5.1.2: Special support for complex arrays<br> </a>
+<a href="blitz05.html#l99"><dd>5.1.3: Zipping together expressions<br> </a>
+<a href="blitz05.html#l100"><b>5.2: Creating arrays of a user type</b><br> </a>
+<a href="blitz06.html#l101"><h1>Chapter 6: Indirection</h1> </a>
+<a href="blitz06.html#l102"><b>6.1: Indirection</b><br> </a>
+<a href="blitz06.html#l103"><b>6.2: Indirection using lists of array positions</b><br> </a>
+<a href="blitz06.html#l104"><b>6.3: Cartesian-product indirection</b><br> </a>
+<a href="blitz06.html#l105"><b>6.4: Indirection with lists of strips</b><br> </a>
+<a href="blitz07.html#l106"><h1>Chapter 7: TinyVector</h1> </a>
+<a href="blitz07.html#l107"><b>7.1: Template parameters and types</b><br> </a>
+<a href="blitz07.html#l108"><b>7.2: Constructors</b><br> </a>
+<a href="blitz07.html#l109"><b>7.3: Member functions</b><br> </a>
+<a href="blitz07.html#l110"><b>7.4: Assignment operators</b><br> </a>
+<a href="blitz07.html#l111"><b>7.5: Expressions</b><br> </a>
+<a href="blitz07.html#l112"><b>7.6: Global functions</b><br> </a>
+<a href="blitz07.html#l113"><b>7.7: Arrays of TinyVector</b><br> </a>
+<a href="blitz07.html#l114"><b>7.8: Input/output</b><br> </a>
+<a href="blitz08.html#l115"><h1>Chapter 8: Random Number Generators</h1> </a>
+<a href="blitz08.html#l116"><b>8.1: Overview</b><br> </a>
+<a href="blitz08.html#l117"><b>8.2: Note: Parallel random number generators</b><br> </a>
+<a href="blitz08.html#l118"><b>8.3: Seeding a random number generator</b><br> </a>
+<a href="blitz08.html#l119"><b>8.4: Detailed description of RNGs</b><br> </a>
+<a href="blitz08.html#l120"><b>8.5: Template parameters</b><br> </a>
+<a href="blitz08.html#l121"><b>8.6: Member functions</b><br> </a>
+<a href="blitz08.html#l122"><b>8.7: Detailed listing of RNGs</b><br> </a>
+<a href="blitz08.html#l123"><dd>8.7.1: <code>random/uniform.h</code><br> </a>
+<a href="blitz08.html#l124"><dd>8.7.2: <code>random/normal.h</code><br> </a>
+<a href="blitz08.html#l125"><dd>8.7.3: <code>random/exponential.h</code><br> </a>
+<a href="blitz08.html#l126"><dd>8.7.4: <code>random/beta.h</code><br> </a>
+<a href="blitz08.html#l127"><dd>8.7.5: <code>random/chisquare.h</code><br> </a>
+<a href="blitz08.html#l128"><dd>8.7.6: <code>random/gamma.h</code><br> </a>
+<a href="blitz08.html#l129"><dd>8.7.7: <code>random/F.h</code><br> </a>
+<a href="blitz08.html#l130"><dd>8.7.8: <code>random/discrete-uniform.h</code><br> </a>
+<a href="blitz09.html#l131"><h1>Chapter 9: Numeric properties</h1> </a>
+<a href="blitz09.html#l132"><b>9.1: Introduction</b><br> </a>
+<a href="blitz09.html#l133"><b>9.2: Function descriptions</b><br> </a>
+<a href="blitz10.html#l134"><h1>Chapter 10: Frequently Asked Questions</h1> </a>
+<a href="blitz10.html#l135"><b>10.1: Questions about installation</b><br> </a>
+<a href="blitz10.html#l136"><b>10.2: Questions about Blitz++ functionality</b><br> </a>
+ 
+<p><hr><p><br>
+<p>
+<p>
+
+</body>
+</html>

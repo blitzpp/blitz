@@ -1,0 +1,1837 @@
+<html>
+<head>
+<title>Blitz++ User's Guide </title>
+</head>
+<body fgcolor="#27408B" bgcolor="#FFFAF0"  >
+<hr>
+<ul>
+    <li> <a href="blitz03.html">Next chapter</a>
+    <li> <a href="blitz01.html">Previous chapter</a>
+    <li> <a href="blitz.html">Table of contents</a>
+</ul>
+<hr>
+
+<a name="l26"></a>
+<h1>Chapter 2: Arrays</h1>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>2.1: Getting started</font></td></tr></table><br><a name="l27"></a>
+
+<a name="arrays-intro"></a>
+    <!-- BZINDEX Array --><a name="index00027">
+<!-- BZINDEX Array!overview --><a name="index00028">
+Currently, Blitz++ provides a single array class, called 
+<code>Array&lt;T_numtype,N_rank&gt;</code>.
+This array class provides a
+dynamically allocated N-dimensional array, with reference
+counting, arbitrary storage ordering, subarrays and slicing, 
+flexible expression handling, and many other useful
+features.
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.1.1: Template parameters</font></td></tr></table><a name="l28"></a>
+
+<p><!-- BZINDEX Array!template parameters --><a name="index00029">
+<p>The <code>Array</code> class takes two template parameters:
+<p><ul>
+<p><li >   <code>T_numtype</code> is the numeric type to be stored in the array.
+       <code>T_numtype</code> can be an integral type (bool, char, unsigned char,
+       short int, short unsigned int, int, unsigned int, long,
+       unsigned long), floating point type (float, double, long double)
+       complex type (complex&lt;float&gt;, complex&lt;double&gt;, complex&lt;long double&gt;)
+       or any user-defined type with appropriate numeric semantics.
+<p><li >   <code>N_rank</code> is the <strong>rank</strong> (or dimensionality) of the array.  
+       This should be a positive integer. <!-- BZINDEX Array!rank parameter --><a name="index00030">
+       <!-- BZINDEX rank parameter of arrays --><a name="index00031">
+<p></ul>
+<p>To use the <code>Array</code> class, include the header
+<code>&lt;blitz/array.h&gt;</code> and use the namespace <code>blitz</code>:
+<!-- BZINDEX using namespace blitz --><a name="index00032">
+<!-- BZINDEX namespace blitz --><a name="index00033">
+<!-- BZINDEX blitz namespace --><a name="index00034">
+<pre>#include &lt;blitz/array.h&gt;
+
+using namespace blitz;
+
+Array&lt;int,1&gt;    x;    // A one-dimensional array of int
+Array&lt;double,2&gt; y;    // A two-dimensional array of double
+.
+.
+Array&lt;complex&lt;float&gt;, 12&gt; z; // A twelve-dimensional array of complex&lt;float&gt;</pre>
+When no constructor arguments are provided, the array is empty, and
+no memory is allocated.  To create an array which contains some data,
+provide the size of the array as constructor arguments:
+<p><pre>Array&lt;double,2&gt; y(4,4);   // A 4x4 array of double</pre>
+The contents of a newly-created array are garbage.  To initialize
+the array, you can write:
+<pre>y = 0;</pre>
+and all the elements of the array will be set to zero.  If the
+contents of the array are known, you can initialize it using
+a comma-delimited list of values.  For example, this code
+excerpt sets <code>y</code> equal to a 4x4 identity matrix:
+<pre>y = 1, 0, 0, 0
+    0, 1, 0, 0
+    0, 0, 1, 0
+    0, 0, 0, 1;</pre>
+<br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.1.2: Array types</font></td></tr></table><a name="l29"></a>
+
+<p><!-- BZINDEX Array!types --><a name="index00035">
+<p>The <code>Array&lt;T,N&gt;</code> class supports a variety of arrays:
+<p><ul>
+<p><li > Arrays of scalar types, such as <code>Array&lt;int,1&gt;</code> and <code>Array&lt;float,3&gt;</code>
+<!-- BZINDEX Array!scalar arrays --><a name="index00036">
+<p><li > Complex arrays, such as <code>Array&lt;complex&lt;float&gt;,2&gt;</code>
+<!-- BZINDEX Array!complex arrays --><a name="index00037">
+<!-- BZINDEX complex arrays --><a name="index00038">
+<p><li > Arrays of user-defined types.  If you have a class called
+<code>Polynomial</code>, then <code>Array&lt;Polynomial,2&gt;</code> is an array of
+<code>Polynomial</code> objects.
+<!-- BZINDEX Array!of user-defined types --><a name="index00039">
+<p><!-- BZINDEX Array!of TinyVector --><a name="index00040">
+<!-- BZINDEX vector field --><a name="index00041">
+<!-- BZINDEX Array!of TinyMatrix --><a name="index00042">
+<!-- BZINDEX Array!nested --><a name="index00043">
+<!-- BZINDEX Array!nested!homogeneous --><a name="index00044">
+<!-- BZINDEX nested arrays --><a name="index00045">
+<!-- BZINDEX nested arrays!homogeneous --><a name="index00046">
+<p><li > Nested homogeneous arrays using <code>TinyVector</code> and <code>TinyMatrix</code>,
+in which each element is a fixed-size vector or array.
+For example, <code>Array&lt;TinyVector&lt;float,3&gt;,3&gt;</code> is a three-dimensional
+vector field.
+<p><!-- BZINDEX Array!of Array --><a name="index00047">
+<!-- BZINDEX Array!nested!heterogeneous --><a name="index00048">
+<!-- BZINDEX nested arrays!heterogeneous --><a name="index00049">
+<p><li > Nested heterogeneous arrays, such as <code>Array&lt;Array&lt;int,1&gt;,1&gt;</code>, in
+which each element is a variable-length array.
+<p>
+<p></ul>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.1.3: A simple example</font></td></tr></table><a name="l30"></a>
+
+<p>Here's an example program which creates two 3x3 arrays, initializes
+them, and adds them:
+<p>
+<center><table border cellpadding=20 align=top><tr><td bgcolor="COCOCO"><pre>
+#include &lt;blitz/array.h&gt;
+
+using namespace blitz;
+
+int main()
+{
+    Array&lt;float,2&gt; A(3,3), B(3,3), C(3,3);
+
+    A = 1, 0, 0,
+        2, 2, 2,
+        1, 0, 0;
+
+    B = 0, 0, 7,
+        0, 8, 0,
+        9, 9, 9;
+
+    C = A + B;
+
+    cout &lt;&lt; "A = " &lt;&lt; A &lt;&lt; endl
+         &lt;&lt; "B = " &lt;&lt; B &lt;&lt; endl
+         &lt;&lt; "C = " &lt;&lt; C &lt;&lt; endl;
+
+    return 0;
+}
+
+</pre>
+</td></tr></table></center>
+and the output:
+<center><table border cellpadding=20 align=top><tr><td bgcolor="C0C0C0"><pre>
+
+A = 3 x 3
+         1         0         0
+         2         2         2
+         1         0         0
+
+B = 3 x 3
+         0         0         7
+         0         8         0
+         9         9         9
+
+C = 3 x 3
+         1         0         7
+         2        10         2
+        10         9         9
+
+</pre>
+</td></tr></table></center>
+<br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.1.4: Storage orders</font></td></tr></table><a name="l31"></a>
+
+<p><!-- BZINDEX Array!storage order --><a name="index00050">
+<!-- BZINDEX storage orders for arrays --><a name="index00051">
+<!-- BZINDEX row major --><a name="index00052">
+<!-- BZINDEX column major --><a name="index00053">
+<!-- BZINDEX fortranArray --><a name="index00054">
+<!-- BZINDEX Array!row major --><a name="index00055">
+<!-- BZINDEX Array!column major --><a name="index00056">
+<!-- BZINDEX Array!fortran-style --><a name="index00057">
+Blitz++ is very flexible about the way arrays are stored in memory.
+<p>The default storage format is row-major, C-style arrays whose indices
+start at zero.
+<p>Fortran-style arrays can also be created.  Fortran arrays are
+stored in column-major order, and have indices which start at one.
+To create a Fortran-style array, use this syntax:
+<pre>Array&lt;int,2&gt; A(3, 3, fortranArray);</pre>
+The last parameter, <code>fortranArray</code>, tells the <code>Array</code> constructor
+to use a fortran-style array format.  
+<p><code>fortranArray</code> is a global object which has an automatic
+conversion to type <code>GeneralArrayStorage&lt;N&gt;</code>.
+<code>GeneralArrayStorage&lt;N&gt;</code> encapsulates information about how an 
+array is laid out in memory.
+By altering the contents of a <code>GeneralArrayStorage&lt;N&gt;</code> object, you
+can lay out your arrays any way you want: the dimensions can
+be ordered arbitrarily and stored in ascending or descending order,
+and the starting indices can be arbitrary.
+<p>Creating custom array storage formats is described in a later section 
+(<a href="blitz02.html#arrays-storage-detailed">2.9</a>).
+<p>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>2.2: Public types</font></td></tr></table><br><a name="l32"></a>
+
+<a name="arrays-types"></a>
+    The <code>Array</code> class declares these public types:
+<p><ul>
+<p><li >    <code>T_numtype</code> is the element type stored in the array.  For example,
+        the type <code>Array&lt;double,2&gt;::T_numtype</code> would be <code>double</code>.
+<p><li >    <code>T_index</code> is a vector index into the array.  The class
+        <code>TinyVector</code> is used for this purpose.
+<p><li >    <code>T_array</code> is the array type itself (<code>Array&lt;T_numtype,N_rank&gt;</code>)
+<p><li >    <code>T_iterator</code> is an iterator type.  NB: this iterator is 
+        not yet fully implemented, and is NOT STL compatible at the
+        present time.
+<p></ul>
+<p>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>2.3: Constructors</font></td></tr></table><br><a name="l33"></a>
+
+<a name="arrays-ctors"></a>
+    
+<br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.3.1: Default constructor</font></td></tr></table><a name="l34"></a>
+
+<p><!-- BZINDEX Array!default ctor --><a name="index00058">
+<p><pre>
+Array();
+Array(GeneralArrayStorage&lt;N_rank&gt; storage)
+</pre>
+<p>The default constructor creates a C-style array of zero size.  Any attempt
+to access data in the array may result in a run-time error, because there
+isn't any data to access!
+<p>An optional argument specifies a storage order for the array.
+<p>Arrays created using the default constructor can subsequently be given
+data by the <code>resize()</code>, <code>resizeAndPreserve()</code>, or <code>reference()</code>
+member functions.
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.3.2: Creating an array from an expression</font></td></tr></table><a name="l35"></a>
+
+<p><pre>
+Array(expression...)
+</pre>
+<p>You may create an array from an array expression.  For example,
+<p><pre>
+    Array&lt;float,2&gt; A(4,3), B(4,3);   // ...
+    Array&lt;float,2&gt; C(A*2.0+B);
+</pre>
+<p>This is an explicit constructor (it will not be used to
+perform implicit type conversions).  The newly constructed
+array will have the same storage format as the arrays in
+the expression.  If arrays with different storage formats
+appear in the expression, an error will result.
+(In this case, you must first construct the array, then
+assign the expression to it).
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.3.3: Constructors which take extent parameters</font></td></tr></table><a name="l36"></a>
+
+<p><!-- BZINDEX Array!ctors with extent parameters --><a name="index00059">
+<p><pre>
+Array(int extent1);
+Array(int extent1, int extent2);
+Array(int extent1, int extent2, int extent3);
+...
+Array(int extent1, int extent2, int extent3, ..., int extent11)
+</pre>
+<p>These constructors take arguments which specify the size of the
+array to be constructed.  You should provide as many arguments
+as there are dimensions in the array. (If you provide
+fewer than N_rank arguments, the missing arguments will be
+filled in using the last provided argument.  However, for
+code clarity, it makes sense to provide all N_rank parameters.)
+<p>An optional last parameter specifies a storage format:
+<p><pre>
+Array(int extent1, GeneralArrayStorage&lt;N_rank&gt; storage);
+Array(int extent1, int extent2, GeneralArrayStorage&lt;N_rank&gt; storage);
+...
+</pre>
+<p>For high-rank arrays, it may be convenient to use this constructor:
+<!-- BZINDEX Array!high-rank --><a name="index00060">
+<p><pre>Array(const TinyVector&lt;int, N_rank&gt;&amp; extent);
+Array(const TinyVector&lt;int, N_rank&gt;&amp; extent, 
+    GeneralArrayStorage&lt;N_rank&gt; storage);
+</pre>
+<p>The argument <code>extent</code> is a vector containing the extent (length) of
+the array in each dimension.  The optional second parameter indicates
+a storage format.  Note that you can construct <code>TinyVector&lt;int,N&gt;</code>
+objects on the fly with the <code>shape(i1,i2,...)</code> global function.  For
+example, <code>Array&lt;int,2&gt; A(shape(3,5))</code> will create a 3x5 array.
+<p>A similar constructor lets you provide both a vector of base
+index values (lbounds) and extents:
+<p><pre>Array(const TinyVector&lt;int, N_rank&gt;&amp; lbound, 
+    const TinyVector&lt;int, N_rank&gt;&amp; extent);
+Array(const TinyVector&lt;int, N_rank&gt;&amp; lbound,
+    const TinyVector&lt;int, N_rank&gt;&amp; extent,
+    GeneralArrayStorage&lt;N_rank&gt; storage);
+</pre>
+<p>The argument <code>lbound</code> is a vector containing the base index value
+(or lbound) of the array in each dimension.
+The argument <code>extent</code> is a vector containing the extent (length) of
+the array in each dimension.  The optional third parameter indicates
+a storage format.  As with the above constructor, you can use the
+<code>shape(i1,i2,...)</code> global function to create the <code>lbound</code>
+and <code>extent</code> parameters.
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.3.4: Constructors with Range arguments</font></td></tr></table><a name="l37"></a>
+
+<p><!-- BZINDEX Array!ctor with Range args --><a name="index00061">
+These constructors allow arbitrary bases (starting indices) to be set:
+<p><pre>Array(Range r1);
+Array(Range r1, Range r2);
+Array(Range r1, Range r2, Range r3);
+...
+Array(Range r1, Range r2, Range r3, ..., Range r11);
+</pre>
+<p>For example, this code:
+<p><pre>Array&lt;int,2&gt; A(Range(10,20), Range(20,30));
+</pre>
+<p>will create an 11x11 array whose indices are 10..20 and 20..30.  An optional
+last parameter provides a storage order:
+<p><pre>Array(Range r1, GeneralArrayStorage&lt;N_rank&gt; storage);
+Array(Range r1, Range r2, GeneralArrayStorage&lt;N_rank&gt; storage);
+...
+</pre>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.3.5: Referencing another array</font></td></tr></table><a name="l38"></a>
+
+<p><!-- BZINDEX Array!referencing another array --><a name="index00062">
+<p>This constructor makes a shared view of another array's data:
+<!-- BZINDEX Array!creating a reference of another array --><a name="index00063">
+<p><pre>Array(Array&lt;T_numtype, N_rank&gt;&amp; array);
+</pre>
+<p>After this constructor is used, both <code>Array</code> objects refer to the
+<em>same data</em>.  Any changes made to one array will appear in the
+other array.  If you want to make a duplicate copy of an array,
+use the <code>copy()</code> member function.
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.3.6: Constructing an array from an expression</font></td></tr></table><a name="l39"></a>
+
+<p>Arrays may be constructed from expressions, which are described
+in <a href="blitz03.html#array-expressions">3</a>.  The syntax is:
+<p><pre>Array(...array expression...);
+</pre>
+<p>For example, this code creates an array B which contains
+the square roots of the elements in A:
+<p><pre>Array&lt;float,2&gt; A(N,N);   // ...
+
+Array&lt;float,2&gt; B(sqrt(A));
+</pre>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.3.7: Creating an array from pre-existing data</font></td></tr></table><a name="l40"></a>
+
+<p><!-- BZINDEX Array!creating from pre-existing data --><a name="index00064">
+When creating an array using a pointer to already existing data,
+you have three choices for how Blitz++ will handle the data.  These
+choices are enumerated by the enum type <code>preexistingMemoryPolicy</code>:
+<!-- BZINDEX Array!creating a reference of another array --><a name="index00065">
+<p><pre>enum preexistingMemoryPolicy { 
+  duplicateData, 
+  deleteDataWhenDone, 
+  neverDeleteData 
+};
+</pre>
+<p><!-- BZINDEX preexistingMemoryPolicy --><a name="index00066">
+<!-- BZINDEX duplicateData --><a name="index00067">
+<!-- BZINDEX deleteDataWhenDone --><a name="index00068">
+<!-- BZINDEX neverDeleteData --><a name="index00069">
+<p>If you choose <code>duplicateData</code>, Blitz++ will create an array object
+using a copy of the data you provide.  If you choose
+<code>deleteDataWhenDone</code>, Blitz++ will not create a copy of the data;
+and when no array objects refer to the data anymore, it will
+deallocate the data using <code>delete []</code>.  Note that to use
+<code>deleteDataWhenDone</code>, your array data must have been allocated
+using the C++ <code>new</code> operator -- for example, you cannot allocate
+array data using Fortran or <code>malloc</code>, then create a Blitz++ array 
+from it using the <code>deleteDataWhenDone</code> flag.  The third option
+is <code>neverDeleteData</code>, which means that Blitz++ will not never
+deallocate the array data.  This means it
+is your responsibility to determine when the array data is no
+longer needed, and deallocate it.  You should use this option
+for memory which has not been allocated using the C++ <code>new</code>
+operator.
+<p>These constructors create array objects from pre-existing data:
+<p><pre>Array(T_numtype* dataFirst, TinyVector&lt;int, N_rank&gt; shape,
+    preexistingMemoryPolicy deletePolicy);
+Array(T_numtype* dataFirst, TinyVector&lt;int, N_rank&gt; shape,
+    preexistingMemoryPolicy deletePolicy, 
+    GeneralArrayStorage&lt;N_rank&gt; storage);
+</pre>
+<p>The first argument is a pointer to the array data.  It should point to
+the element of the array which is stored first in memory.  The second
+argument indicates the shape of the array.  You can create this argument
+using the <code>shape()</code> function.  For example:
+<p><pre>double data[] = { 1, 2, 3, 4 };
+Array&lt;double,2&gt; A(data, shape(2,2), neverDeleteData);   // Make a 2x2 array
+</pre>
+<p><!-- BZINDEX shape() --><a name="index00070">
+The <code>shape()</code> function takes N integer arguments and returns a
+<code>TinyVector&lt;int,N&gt;</code>.
+<p>By default, Blitz++ arrays are row-major.  If you want to work with
+data which is stored in column-major order (e.g. a Fortran array),
+use the second version of the constructor:
+<!-- BZINDEX Array!creating from Fortran arrays --><a name="index00071">
+<p><pre>Array&lt;double,2&gt; B(data, shape(2,2), neverDeleteData,
+    FortranArray&lt;2&gt;());
+</pre>
+<p>This is a tad awkward, so Blitz++ provides the global
+object <code>fortranArray</code> which will convert to an
+instance of <code>GeneralArrayStorage&lt;N_rank&gt;</code>:
+<p><pre>Array&lt;double,2&gt; B(data, shape(2,2), neverDeleteData, fortranArray);
+</pre>
+<p>Another version of this constructor allows you to pass an arbitrary
+vector of strides:
+<p><pre>Array(T_numtype* _bz_restrict dataFirst, TinyVector&lt;int, N_rank&gt; shape,
+    TinyVector&lt;int, N_rank&gt; stride, 
+    preexistingMemoryPolicy deletePolicy,
+    GeneralArrayStorage&lt;N_rank&gt; storage = GeneralArrayStorage&lt;N_rank&gt;())
+</pre>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.3.8: Interlacing arrays</font></td></tr></table><a name="l41"></a>
+
+<p><!-- BZINDEX Array!interlacing --><a name="index00072">
+<!-- BZINDEX interlaceArrays() --><a name="index00073">
+<!-- BZINDEX allocateArrays() --><a name="index00074">
+For some platforms, it can be advantageous to store a set of arrays
+interlaced together in memory.  Blitz++ provides support for 
+this through the routines <code>interlaceArrays()</code> and <code>allocateArrays()</code>.
+An example:
+<p><pre>Array&lt;int,2&gt; A, B;
+interlaceArrays(shape(10,10), A, B);
+</pre>
+<p>The first parameter of <code>interlaceArrays()</code> is the shape for the
+arrays (10x10).  The subsequent arguments are the set of arrays to
+be interlaced together.  Up to 11 arrays may be interlaced.
+All arrays must store the same data type and be of the same
+rank.
+In the above example, storage is allocated so that
+<code>A(0,0)</code> is followed immediately by <code>B(0,0)</code> in memory,
+which is folloed by <code>A(0,1)</code> and <code>B(0,1)</code>, and so on.
+<p>A related routine is <code>allocateArrays()</code>, which has identical syntax:
+<p><pre>Array&lt;int,2&gt; A, B;
+allocateArrays(shape(10,10), A, B);
+</pre>
+<p>Unlike <code>interlaceArrays()</code>, which always interlaces the arrays,
+the routine <code>allocateArrays()</code> may or may not interlace them,
+depending on whether interlacing is considered advantageous for your
+platform.  If the tuning flag <code>BZ_INTERLACE_ARRAYS</code> is
+defined in <code>&lt;blitz/tuning.h&gt;</code>, then the arrays are
+interlaced.
+<p>Note that the performance effects of interlacing are
+unpredictable: in some situations it can be a benefit, and in
+most others it can slow your code down substantially.  You should
+only use <code>interlaceArrays()</code> after
+running some benchmarks to determine whether interlacing
+is beneficial for your particular algorithm and architecture.
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.3.9: A note about reference counting</font></td></tr></table><a name="l42"></a>
+
+<p><!-- BZINDEX Array!reference counting --><a name="index00075">
+<!-- BZINDEX reference counting --><a name="index00076">
+<p>Blitz++ arrays use reference counting.  When you create a new array,
+a memory block is allocated.  The <code>Array</code> object acts like a handle
+for this memory block.  A memory block can be shared among multiple
+<code>Array</code> objects -- for example, when you take subarrays and slices.
+The memory block keeps track of how many <code>Array</code> objects are
+referring to it.  When a memory block is orphaned -- when no
+<code>Array</code> objects are referring to it -- it automatically
+deletes itself and frees the allocated memory.
+<p>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>2.4: Indexing, subarrays, and slicing</font></td></tr></table><br><a name="l43"></a>
+
+<a name="arrays-slicing"></a>
+    
+This section describes how to access the elements of an array.  There
+are three main ways:
+<p><ul>
+<p><li >   <strong>Indexing</strong> obtains a single element 
+<li >   Creating a <strong>subarray</strong> which refers to a smaller portion of an 
+       array 
+<li >   <strong>Slicing</strong> to produce a smaller-dimensional view of a portion
+       of an array 
+<p></ul>
+<p>Indexing, subarrays and slicing all use the overloaded parenthesis
+operator().
+<p>As a running example, we'll consider the three dimensional array
+pictured below,
+which has index ranges (0..7, 0..7, 0..7).  Shaded portions of
+the array show regions which have been obtained by indexing,
+creating a subarray, and slicing.
+<p>
+<a name="slice"></a><p><center><img src="slice.gif" align="bottom" alt="Figure 1 is shown here."><br> 
+Figure 1: Examples of array indexing, subarrays, and slicing. 
+</center><p><br>
+    
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.4.1: Indexing</font></td></tr></table><a name="l44"></a>
+
+<p><!-- BZINDEX Array!indexing --><a name="index00077">
+<!-- BZINDEX indexing an array --><a name="index00078">
+<p>There are two ways to get a single element from
+an array.  The simplest is to provide a set of integer operands to
+<code>operator()</code>:
+<pre>
+A(7,0,0) = 5;    
+cout &lt;&lt; "A(7,0,0) = " &lt;&lt; A(7,0,0) &lt;&lt; endl;
+</pre>
+This version of indexing is available for arrays of rank one through
+eleven.  If the array object isn't <strong>const</strong>, the return type of
+<code>operator()</code> is a reference; if the array object is <strong>const</strong>, the
+return type is a value.
+<p>You can also get an element by providing an operand
+of type <strong>TinyVector&lt;int,N_rank&gt;</strong> where <code>N_rank</code> is the
+rank of the array object:
+<pre>
+TinyVector&lt;int,3&gt; index;
+index = 7, 0, 0;
+A(index) = 5;
+cout &lt;&lt; "A(7,0,0) = " &lt;&lt; A(index) &lt;&lt; endl;
+</pre>
+<p>This version of <code>operator()</code> is also available in a const-overloaded
+version.
+<p>It's possible to use fewer than <code>N_rank</code> indices.  However, missing
+indices are <strong>assumed to be zero</strong>, which will cause bounds errors
+if the valid index range does not include zero (e.g. Fortran arrays).
+For this reason, and for code clarity, it's a bad idea to omit indices.
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.4.2: Subarrays</font></td></tr></table><a name="l45"></a>
+
+<p><!-- BZINDEX Array!subarrays --><a name="index00079">
+<!-- BZINDEX subarrays --><a name="index00080">
+<!-- BZINDEX Range objects --><a name="index00081">
+<p>You can obtain a subarray by providing <code>Range</code>
+operands to <code>operator()</code>.  A <code>Range</code> object represents a
+set of regularly spaced index values.  For example,
+<pre>
+Array&lt;int,3&gt; B = A(Range(5,7), Range(5,7), Range(0,2));
+</pre>
+<p>The object B now refers to elements (5..7,5..7,0..2) of the
+array A.
+<p>The returned subarray is of type <code>Array&lt;T_numtype,N_rank&gt;</code>. This
+means that subarrays can be used wherever arrays can be: in expressions,
+as lvalues, etc.  Some examples:
+<pre>
+// A three-dimensional stencil (used in solving PDEs)
+Range I(1,6), J(1,6), K(1,6);
+B = (A(I,J,K) + A(I+1,J,K) + A(I-1,J,K) + A(I,J+1,K)
+ + A(I,J-1,K) + A(I,J+1,K) + A(I,J,K+1) + A(I,J,K-1)) / 7.0;
+
+// Set a subarray of A to zero
+A(Range(5,7), Range(5,7), Range(5,7)) = 0.;
+</pre>
+<p>The bases of the subarray are equal to the bases of the original array:
+<pre>
+Array&lt;int,2&gt; D(Range(1,5), Range(1,5));     // 1..5, 1..5
+Array&lt;int,2&gt; E = D(Range(2,3), Range(2,3)); // 1..2, 1..2
+</pre>
+<p>An array can be used on both sides of an expression only if the
+subarrays don't overlap.  If the arrays overlap, the result may
+depend on the order in which the array is traversed.  
+<p><a name="slicing-combo"></a>
+<br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.4.3: Slicing</font></td></tr></table><a name="l46"></a>
+
+<p><!-- BZINDEX Array!slicing --><a name="index00082">
+<!-- BZINDEX slicing arrays --><a name="index00083">
+<p>A combination of integer and Range operands produces a <strong>slice</strong>.
+Each integer operand reduces the rank of the array by one.  For
+example:
+<pre>
+Array&lt;int,2&gt; F = A(Range::all(), 2, Range::all());
+Array&lt;int,1&gt; G = A(2,            7, Range::all());
+</pre>
+<p>Range and integer operands can be used in any combination, for arrays
+up to rank 11.
+<p><strong>Note:</strong> Using a combination of integer and Range operands requires
+a newer language feature (partial ordering of member templates) which
+not all compilers support.  If your compiler does provide this
+feature, <code>BZ_PARTIAL_ORDERING</code> will be defined in <code>&lt;blitz/config.h&gt;</code>.
+If not, you can use this workaround:
+<p><pre>
+Array&lt;int,3&gt; F = A(Range::all(), Range(2,2), Range::all());
+Array&lt;int,3&gt; G = A(Range(2,2),   Range(7,7), Range::all());
+</pre>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.4.4: More about Range objects</font></td></tr></table><a name="l47"></a>
+
+<p><!-- BZINDEX Range objects --><a name="index00084">
+<p>A <code>Range</code> object represents an ordered set of uniformly spaced
+integers.  Here are some examples of using Range objects to obtain
+subarrays:
+<p><pre>Array&lt;int,1&gt; A(7);
+A = 0, 1, 2, 3, 4, 5, 6;
+
+cout &lt;&lt; A(Range::all())  &lt;&lt; endl          // [ 0 1 2 3 4 5 6 ]
+     &lt;&lt; A(Range(3,5))    &lt;&lt; endl          // [ 3 4 5 ]
+     &lt;&lt; A(Range(3,toEnd)) &lt;&lt; endl         // [ 3 4 5 6 ]
+     &lt;&lt; A(Range(fromStart,3)) &lt;&lt; endl     // [ 0 1 2 3 ]
+     &lt;&lt; A(Range(1,5,2)) &lt;&lt; endl           // [ 1 3 5 ]
+     &lt;&lt; A(Range(5,1,-2)) &lt;&lt; endl          // [ 5 3 1 ]
+     &lt;&lt; A(Range(fromStart,toEnd,2)) &lt;&lt; endl; // [ 0 2 4 6 ]
+</pre>
+<p>The optional third constructor argument specifies
+a stride.  For example, <code>Range(1,5,2)</code> refers to elements
+[1 3 5].  Strides can also be negative: <code>Range(5,1,-2)</code>
+refers to elements [5 3 1].
+<p>Note that if you use the same Range frequently, you can just
+construct one object and use it multiple times.  For example:
+<p><pre>Range all = Range::all();
+A(0,all,all) = A(N-1,all,all);
+A(all,0,all) = A(all,N-1,all);
+A(all,all,0) = A(all,all,N-1);
+</pre>
+<p>Here's an example of using strides with a two-dimensional
+array:
+<p><center><table border cellpadding=20 align=top><tr><td bgcolor="C0C0C0"><pre>
+#include &lt;blitz/array.h&gt;
+
+using namespace blitz;
+
+int main()
+{
+    Array&lt;int,2&gt; A(8,8);
+    A = 0;
+
+    Array&lt;int,2&gt; B = A(Range(1,7,3), Range(1,5,2));
+    B = 1;
+
+    cout &lt;&lt; "A = " &lt;&lt; A &lt;&lt; endl;
+    return 0;
+}
+
+</pre>
+</td></tr></table></center>
+<p>Here's an illustration of the <code>B</code> subarray:
+<p><a name="strideslice"></a><p><center><img src="strideslice.gif" align="bottom" alt="Figure 2 is shown here."><br> 
+Figure 2: Using strides to create non-contiguous subarrays 
+</center><p><br>
+    
+<p>And the program output:
+<p><center><table border cellpadding=20 align=top><tr><td bgcolor="C0C0C0"><pre>
+0    0    0    0    0    0    0    0 
+0    1    0    1    0    1    0    0
+0    0    0    0    0    0    0    0
+0    0    0    0    0    0    0    0
+0    1    0    1    0    1    0    0
+0    0    0    0    0    0    0    0
+0    0    0    0    0    0    0    0
+0    1    0    1    0    1    0    0
+
+</pre>
+</td></tr></table></center>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.4.5: A note about assignment</font></td></tr></table><a name="l48"></a>
+
+<p><!-- BZINDEX Array!=, meaning of --><a name="index00085">
+<!-- BZINDEX =, meaning of --><a name="index00086">
+<!-- BZINDEX shallow copies, see also reference() --><a name="index00087">
+<!-- BZINDEX assignment operator --><a name="index00088">
+<p>The assignment operator (=) always results in the expression
+on the right-hand side (rhs) being <em>copied</em> to the lhs (i.e. the
+data on the lhs is overwritten with the result from the rhs).  This
+is different from some array packages in which the assignment operator
+makes the lhs a reference (or alias) to the rhs.  To further confuse
+the issue, the copy constructor for arrays <em>does</em> have reference
+semantics.  Here's an example which should clarify things:
+<p><pre>Array&lt;int,1&gt; A(5), B(10);
+A = B(Range(0,4));               // Statement 1
+Array&lt;int,1&gt; C = B(Range(0,4));  // Statement 2
+</pre>
+<p>Statement 1 results in a portion of <code>B</code>'s data being copied into 
+<code>A</code>.  After Statement 1, both <code>A</code> and <code>B</code> have their own 
+(nonoverlapping) blocks of data.  Contrast this behaviour with that
+of Statement 2, which is <strong>not</strong> an assignment (it uses the copy 
+constructor).  After Statement 2 is executed, the array <code>C</code> is a 
+reference (or alias) to B's data.
+<p>So to summarize: If you want to copy the rhs, use an assignment
+operator.  If you want to reference (or alias) the rhs, use the
+copy constructor (or alternately, the reference() member function
+in <a href="blitz02.html#arrays-reference">2.6.2</a>).
+<p><strong>Very important:</strong> whenever you have an assignment operator
+(=, +=, -=, etc.) the lhs <strong>must</strong> have the same shape as the
+<strong>rhs</strong>.  If you want the array on the left hand side to be
+resized to the proper shape, you must do so by calling the
+<strong>resize</strong> method, for example:
+<p><pre>A.resize(B.shape());    // Make A the same size as B
+A = B;
+</pre>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.4.6: An example</font></td></tr></table><a name="l49"></a>
+
+<p><center><table border cellpadding=20 align=top><tr><td bgcolor="C0C0C0"><pre>
+
+#include &lt;blitz/array.h&gt;
+
+using namespace blitz;
+
+int main()
+{
+    Array&lt;int,2&gt; A(6,6), B(3,3);
+  
+    // Set the upper left quadrant of A to 5 
+    A(Range(0,2), Range(0,2)) = 5; 
+
+    // Set the upper right quadrant of A to an identity matrix
+    B = 1, 0, 0,
+        0, 1, 0,
+        0, 0, 1;
+    A(Range(0,2), Range(3,5)) = B;
+
+    // Set the fourth row to 1
+    A(3, Range::all()) = 1;
+
+    // Set the last two rows to 0
+    A(Range(4, toEnd), Range::all()) = 0;
+
+    // Set the bottom right element to 8
+    A(5,5) = 8;
+
+    cout &lt;&lt; "A = " &lt;&lt; A &lt;&lt; endl;
+
+    return 0;
+}
+
+</pre>
+</td></tr></table></center>
+<p>The output:
+<p><center><table border cellpadding=20 align=top><tr><td bgcolor="C0C0C0"><pre>
+
+A = 6 x 6
+         5         5         5         1         0         0
+         5         5         5         0         1         0
+         5         5         5         0         0         1
+         1         1         1         1         1         1
+         0         0         0         0         0         0
+         0         0         0         0         0         8
+
+</pre>
+</td></tr></table></center>
+
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>2.5: Debug mode</font></td></tr></table><br><a name="l50"></a>
+
+<a name="arrays-debug"></a>
+    <!-- BZINDEX debugging mode --><a name="index00089">
+<!-- BZINDEX bounds checking --><a name="index00090">
+<!-- BZINDEX Array!bounds checking --><a name="index00091">
+The Blitz++ library has a debugging mode which is enabled by defining
+the preprocessor symbol <code>BZ_DEBUG</code>.  For most compilers, the command
+line argument <code>-DBZ_DEBUG</code> should work.
+<p>In debugging mode, your programs will run <em>very slowly</em>.  This is
+because Blitz++ is doing lots of precondition checking and bounds
+checking.  When it detects something fishy, it will likely halt your 
+program and display an error message.
+<p>For example, this program attempts to access an element of a 4x4
+array which doesn't exist:
+<p><center><table border cellpadding=20 align=top><tr><td bgcolor="C0C0C0"><pre>
+
+#include &lt;blitz/array.h&gt;
+
+using namespace blitz;
+
+int main()
+{
+    Array&lt;complex&lt;float&gt;, 2&gt; Z(4,4);
+
+    // Since this is a C-style array, the valid index 
+    // ranges are 0..3 and 0..3
+    Z(4,4) = complex&lt;float&gt;(1.0, 0.0);
+
+    return 0;
+}
+
+</pre>
+</td></tr></table></center>
+<p>When compiled with <code>-DBZ_DEBUG</code>, the out of bounds indices are
+detected and an error message results:
+<p><center><table border cellpadding=20 align=top><tr><td bgcolor="C0C0C0"><pre>
+[Blitz++] Precondition failure: Module ../../blitz/array.h line 1070
+Array index out of range: (4, 4)
+Lower bounds: [          0         0 ]
+Upper bounds: [          3         3 ]
+
+Assertion failed: __EX, file  ../../blitz/array.h, line 1070
+IOT/Abort trap (core dumped)
+
+</pre>
+</td></tr></table></center>
+<p>Precondition failures send their error messages to the standard
+error stream (<code>cerr</code>).  After displaying the error message,
+<code>assert(0)</code> is invoked.  
+<p>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>2.6: Member functions</font></td></tr></table><br><a name="l51"></a>
+
+<a name="arrays-members"></a>
+    <!-- BZINDEX dimension parameters --><a name="index00092">
+<!-- BZINDEX Array!dimension parameters --><a name="index00093">
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.6.1: A note about dimension parameters</font></td></tr></table><a name="l52"></a>
+
+<p>Several of the member functions take a <em>dimension parameter</em> which
+is an integer in the range 0 .. N_rank - 1.  For example, the method
+<code>extent(int n)</code> returns the extent (or length) of the
+array in dimension <code>n</code>.  
+<p>These parameters are problematic:
+<p><ul>
+<p><li >    They make the code cryptic.  Someone unfamiliar
+        with the <code>reverse()</code> member function won't stand a chance of
+        understanding what <code>A.reverse(2)</code> does.
+<p><li >    Some users are used to dimensions being
+        1 .. N_rank, rather than 0 .. N_rank - 1.  This makes
+        dimension numbers inherently error-prone.  Even though
+        I'm a experienced C/C++ programmer, I <em>still</em> want
+        to think of the first dimension as 1 -- it doesn't make
+        sense to talk about the "zeroth" dimension.
+<p></ul>
+<p>As a solution to this problem, Blitz++ provides a series
+of symbolic constants which you can use to refer to dimensions:
+<p><!-- BZINDEX firstDim --><a name="index00094">
+<!-- BZINDEX secondDim --><a name="index00095">
+<!-- BZINDEX thirdDim --><a name="index00096">
+<!-- BZINDEX fourthDim --><a name="index00097">
+<pre>const int firstDim    = 0;
+const int secondDim   = 1;
+const int thirdDim    = 2;
+   .
+   .
+const int eleventhDim = 10;
+</pre>
+<p>These symbols should be used in place of the numerals 
+0, 1, ... N_rank - 1.  For example:
+<p><pre>A.reverse(thirdDim);
+</pre>
+<p>This code is clearer: you can see that the parameter refers
+to a dimension, and it isn't much of a leap to realize that it's
+reversing the element ordering in the third dimension.
+<p>If you find <code>firstDim</code>, <code>secondDim</code>, ... aesthetically unpleasing,
+there are equivalent symbols <code>firstRank</code>, <code>secondRank</code>,
+<code>thirdRank</code>, ..., <code>eleventhRank</code>.
+<p><!-- BZINDEX eleven, end of the universe at --><a name="index00098">
+<p><p><strong>Why stop at eleven?</strong><br><br>
+    
+<p>The symbols
+had to stop somewhere, and eleven seemed an appropriate
+place to stop.  Besides, if you're working in more than eleven
+dimensions your code is going to be confusing no matter what help
+Blitz++ provides.
+<p><!-- BZINDEX Array!member functions --><a name="index00099">
+<br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.6.2: Member function descriptions</font></td></tr></table><a name="l53"></a>
+
+<p><!-- BZINDEX Array!member functions!base() --><a name="index00100">
+<!-- BZINDEX base() --><a name="index00101">
+<strong><pre>const TinyVector&lt;int, N_rank&gt;&amp;    base() const;
+int                               base(int dimension) const;</pre></strong>
+The <em>base</em> of a dimension is the first valid index value.  A typical
+C-style array will have base of zero; a Fortran-style array will have
+base of one.  The base can be different for each dimension, but only
+if you deliberately use a Range-argument constructor
+or design a custom storage ordering.
+<p>The first version returns a reference to the vector of base values.
+The second version returns the base for just one dimension; it's
+equivalent to the <code>lbound()</code> member function.  See the
+note on dimension parameters such as <code>firstDim</code> above.
+<p><!-- BZINDEX iterators for arrays --><a name="index00102">
+<!-- BZINDEX const_iterator --><a name="index00103">
+<!-- BZINDEX Array!iterators --><a name="index00104">
+<!-- BZINDEX Array!member functions!begin() --><a name="index00105">
+<!-- BZINDEX STL iterators for arrays --><a name="index00106">
+<!-- BZINDEX begin() --><a name="index00107">
+<strong><pre>Array&lt;T,N&gt;::iterator              begin();
+Array&lt;T,N&gt;::const_iterator        begin() const;</pre></strong>
+These functions return STL-style forward and
+input iterators, respectively, positioned at the first
+element of the array.  Note that the array data
+is traversed in memory order (i.e. by rows for C-style
+arrays, and by columns for Fortran-style arrays).
+The <code>Array&lt;T,N&gt;::const_iterator</code> has these methods:
+<pre>
+    const_iterator(const Array&lt;T,N&gt;&amp;);
+    T operator*() const;
+    const T* [restrict] operator-&gt;() const;
+    const_iterator&amp; operator++();
+    void operator++(int);
+    bool operator==(const const_iterator&lt;T,N&gt;&amp;) const;
+    bool operator!=(const const_iterator&lt;T,N&gt;&amp;) const;
+    const TinyVector&lt;int,N&gt;&amp; position() const;
+</pre>
+Note that postfix ++ returns void (this is not STL-compliant,
+but is done for efficiency).  The method <code>position()</code> returns
+a vector containing current index positions of the iterator.
+The <code>Array&lt;T,N&gt;::iterator</code> has the same methods as
+<code>const_iterator</code>, with these exceptions:
+<pre>
+    iterator&amp; operator++();
+    T&amp; operator*();
+    T* [restrict] operator-&gt;();
+</pre>
+The <code>iterator</code> type may be used to modify array elements.
+To obtain iterator positioned at the end of the array,
+use the <code>end()</code> methods.
+<p><!-- BZINDEX Array!member functions!cols() --><a name="index00108">
+<!-- BZINDEX Array!member functions!columns() --><a name="index00109">
+<!-- BZINDEX cols() --><a name="index00110">
+<!-- BZINDEX columns() --><a name="index00111">
+<strong><pre>int                               cols() const;
+int                               columns() const;</pre></strong>
+Both of these functions return the extent of the array in the
+second dimension.  Equivalent to <code>extent(secondDim)</code>.
+See also <code>rows()</code> and <code>depth()</code>.
+<p><!-- BZINDEX Array!member functions!copy() --><a name="index00112">
+<!-- BZINDEX Array!copying --><a name="index00113">
+<!-- BZINDEX copy() --><a name="index00114">
+<strong><pre>Array&lt;T_numtype, N_rank&gt;          copy() const;</pre></strong>
+This method creates a copy of the array's data, using the same
+storage ordering as the current array.  The returned array is
+guaranteed to be stored contiguously in memory, and to be
+the only object referring to its memory block (i.e. the data
+isn't shared with any other array object).
+<p><!-- BZINDEX Array!getting pointer to array data --><a name="index00115">
+<!-- BZINDEX data() --><a name="index00116">
+<!-- BZINDEX Array!member functions!data() --><a name="index00117">
+<!-- BZINDEX dataZero() --><a name="index00118">
+<!-- BZINDEX Array!member functions!dataZero() --><a name="index00119">
+<!-- BZINDEX dataFirst() --><a name="index00120">
+<!-- BZINDEX Array!member functions!dataFirst() --><a name="index00121">
+<strong><pre>const T_numtype* [restrict]       data() const;
+      T_numtype* [restrict]       data();
+const T_numtype* [restrict]       dataZero() const;
+      T_numtype* [restrict]       dataZero();
+const T_numtype* [restrict]       dataFirst() const;
+      T_numtype* [restrict]       dataFirst();</pre></strong>
+These member functions all return pointers to the array data.
+The NCEG <code>restrict</code> qualifier is used only if your compiler
+supports it.
+If you're working with the default storage order (C-style arrays
+with base zero), you'll only need to use <code>data()</code>.
+Otherwise, things get complicated:
+<p><code>data()</code> returns a pointer to the element whose indices
+are equal to the array base.  With a C-style array, this means
+the element (0,0,...,0); with a Fortran-style array, this means
+the element (1,1,...,1).  If <code>A</code> is an array object,
+<code>A.data()</code> is equivalent to (&amp;A(A.base(firstDim), A.base(secondDim), ...)).
+If any of the dimensions are stored in reverse order, 
+<code>data()</code> will not refer to the element which comes first in
+memory.
+<p><code>dataZero()</code> returns a pointer to the element (0,0,...,0),
+even if such an element does not exist in the array.  What's
+the point of having such a pointer?  Say you want to access
+the element (i,j,k).  If you add to the pointer the dot product
+of (i,j,k) with the stride vector (<code>A.stride()</code>), you get
+a pointer to the element (i,j,k).
+<p><code>dataFirst()</code> returns a pointer to the element of the array
+which comes first in memory.  Note however, that under some
+circumstances (e.g. subarrays), the data will
+not be stored contiguously in memory.  You have to be very
+careful when meddling directly with an array's data.
+<p>Other relevant functions are: <code>isStorageContiguous()</code> and
+<code>zeroOffset()</code>.
+<p><!-- BZINDEX Array!member functions!depth() --><a name="index00122">
+<!-- BZINDEX depth() --><a name="index00123">
+<strong><pre>int                               depth() const;</pre></strong>
+Returns the extent of the array in the third dimension.  This
+function is equivalent to <code>extent(thirdDim)</code>.
+See also <code>rows()</code> and <code>columns()</code>.
+<p><!-- BZINDEX dimensions() --><a name="index00124">
+<!-- BZINDEX Array!member functions!dimensions() --><a name="index00125">
+<strong><pre>int                               dimensions() const;</pre></strong>
+Returns the number of dimensions (rank) of the array.  The return
+value is the second template parameter (N_rank) of the
+<code>Array</code> object.  Same as <code>rank()</code>.
+<p><!-- BZINDEX domain() --><a name="index00126">
+<!-- BZINDEX Array!member functions!domain() --><a name="index00127">
+<!-- BZINDEX Array!obtaining domain of --><a name="index00128">
+<strong><pre>RectDomain&lt;N_rank&gt;                domain() const;</pre></strong>
+Returns the domain of the array.  The domain consists of
+a vector of lower bounds and a vector of upper bounds for
+the indices.  NEEDS_WORK-- need a section to explain
+methods of <code>RectDomain&lt;N&gt;</code>.
+<p><!-- BZINDEX end() --><a name="index00129">
+<!-- BZINDEX Array!member functions!end() --><a name="index00130">
+<strong><pre>Array&lt;T,N&gt;::iterator              end();
+Array&lt;T,N&gt;::const_iterator        end() const;</pre></strong>
+Returns STL-style forward and input iterators (respectively)
+for the array, positioned at the end of the array.
+<p><!-- BZINDEX extent() --><a name="index00131">
+<!-- BZINDEX Array!member functions!extent() --><a name="index00132">
+<strong><pre>int                               extent(int dimension) const;</pre></strong>
+The first version the extent (length) of the array in the specified dimension.
+See the note about dimension 
+parameters such as <code>firstDim</code> in the previous section.
+<p><!-- BZINDEX extractComponent() --><a name="index00133">
+<!-- BZINDEX Array!member functions!extractComponent() --><a name="index00134">
+<!-- BZINDEX Array!extracting components --><a name="index00135">
+<strong><pre>Array&lt;T_numtype2,N_rank&gt;          extractComponent(T_numtype2,
+                                    int componentNumber, int numComponents);</pre></strong>
+This method returns an array view of a single component of a
+multicomponent array.  In a multicomponent array, each element
+is a tuple of fixed size.  The components are numbered 0, 1, ...,
+<code>numComponents-1</code>.  Example:
+<p><pre>Array&lt;TinyVector&lt;int,3&gt;,2&gt; A(128,128);  // A 128x128 array of int[3]
+    Array&lt;int,2&gt; B = A.extractComponent(int(), 1, 3);</pre>
+<p>Now the B array refers to the 2nd component of every element in A.
+Note: for complex arrays, special global functions <code>real(A)</code> and
+<code>imag(A)</code> are provided to obtain real and imaginary components of
+an array.  See the <strong>Global Functions</strong> section.
+<p><!-- BZINDEX free() --><a name="index00136">
+<!-- BZINDEX Array!member functions!free() --><a name="index00137">
+<!-- BZINDEX Array!freeing an --><a name="index00138">
+<strong><pre>void                              free();</pre></strong>
+This method resizes an array to zero size.  If the array data is
+not being shared with another array object, then it is freed.
+<p><!-- BZINDEX isMajorRank() --><a name="index00139">
+<!-- BZINDEX Array!member functions!isMajorRank() --><a name="index00140">
+<strong><pre>bool                              isMajorRank(int dimension) const;</pre></strong>
+Returns true if the dimension has the largest stride.  For
+C-style arrays (the default), the first dimension always has
+the largest stride.  For Fortran-style arrays, the last dimension
+has the largest stride.  See also <code>isMinorRank()</code> below and
+the note about dimension parameters such as <code>firstDim</code> in the
+previous section.
+<p><!-- BZINDEX isMinorRank() --><a name="index00141">
+<!-- BZINDEX Array!member functions!isMinorRank() --><a name="index00142">
+<strong><pre>bool                              isMinorRank(int dimension) const;</pre></strong>
+Returns true if the dimension <em>does not</em> have the largest stride.
+See also <code>isMajorRank()</code>.
+<p><!-- BZINDEX isRankStoredAscending() --><a name="index00143">
+<!-- BZINDEX Array!member functions!isRankStoredAscending() --><a name="index00144">
+<strong><pre>bool                              isRankStoredAscending(int dimension) const;</pre></strong>
+Returns true if the dimension is stored in ascending order in memory.
+This is the default.  It will only return false if you have reversed
+a dimension using <code>reverse()</code> or have created a custom storage order
+with a descending dimension.
+<p><!-- BZINDEX isStorageContiguous() --><a name="index00145">
+<!-- BZINDEX Array!member functions!isStorageContiguous() --><a name="index00146">
+<strong><pre>bool                              isStorageContiguous() const;</pre></strong>
+Returns true if the array data is stored contiguously in memory.
+If you slice the array or work on subarrays, there can be
+skips -- the array data is interspersed with other data not
+part of the array.  See also the various <code>data..()</code> functions.
+If you need to ensure that the storage is contiguous, try
+<code>reference(copy())</code>.
+<p><!-- BZINDEX lbound() --><a name="index00147">
+<!-- BZINDEX Array!member functions!lbound() --><a name="index00148">
+<strong><pre>int                               lbound(int dimension) const;
+TinyVector&lt;int,N_rank&gt;            lbound() const;</pre></strong>
+The first version returns the lower bound of the valid index range
+for a dimension.  The second version returns a vector of lower bounds
+for all dimensions.
+The
+lower bound is the first valid index value.  If you're
+using a C-style array (the default), the lbound will be zero;
+Fortran-style arrays have lbound equal to one.  The lbound can
+be different for each dimension, but only if you deliberately
+set them that way using a Range constructor or a custom storage
+ordering.  This function is equivalent to <code>base(dimension)</code>.
+See the note about dimension parameters such as <code>firstDim</code>
+in the previous section.
+<p>
+<p><!-- BZINDEX makeUnique() --><a name="index00149">
+<!-- BZINDEX Array!member functions!makeUnique() --><a name="index00150">
+<!-- BZINDEX Array!making unique copy --><a name="index00151">
+<strong><pre>void                              makeUnique();</pre></strong>
+If the array's data is being shared with another Blitz++ array
+object, this member function creates a copy so the array object has
+a unique view of the data.  
+
+<p><!-- BZINDEX numElements() --><a name="index00152">
+<!-- BZINDEX Array!member functions!numElements() --><a name="index00153">
+<!-- BZINDEX Array!number of elements in --><a name="index00154">
+<strong><pre>int                               numElements() const;</pre></strong>
+Returns the total number of elements in the array, calculated
+by taking the product of the extent in each dimension.  Same
+as <code>size()</code>.
+<p><!-- BZINDEX ordering() --><a name="index00155">
+<!-- BZINDEX Array!member functions!ordering() --><a name="index00156">
+<!-- BZINDEX Array!storage ordering of --><a name="index00157">
+<strong><pre>const TinyVector&lt;int, N_rank&gt;&amp;    ordering() const;
+int                               ordering(int storageRankIndex) const;</pre></strong>
+These member functions return information about how the data is
+ordered in memory.  The first version returns the complete ordering
+vector; the second version returns a single element from the
+ordering vector.  The argument for the second version must be
+in the range 0 .. N_rank-1.
+The ordering vector is a list of dimensions in increasing order 
+of stride;  <code>ordering(0)</code> will return the dimension number
+with the smallest stride, and <code>ordering(N_rank-1)</code> will return
+the dimension number with largest stride.  For a C-style
+array, the ordering vector contains the elements
+(N_rank-1, N_rank-2, ..., 0).  For a Fortran-style array,
+the ordering vector is (0, 1, ..., N_rank-1).  See also the
+description of custom storage orders in section <a href="blitz02.html#arrays-storage-detailed">2.9</a>.
+<p><!-- BZINDEX rank() --><a name="index00158">
+<!-- BZINDEX Array!member functions!rank() --><a name="index00159">
+<strong><pre>int                               rank() const;</pre></strong>
+Returns the rank (number of dimensions) of the array.  The return
+value is equal to N_rank.  Equivalent to <code>dimensions()</code>.
+<p><!-- BZINDEX reference() --><a name="index00160">
+<!-- BZINDEX Array!member functions!reference() --><a name="index00161">
+<!-- BZINDEX Array!referencing another --><a name="index00162">
+<a name="arrays-reference"></a>
+<strong><pre>void                              reference(Array&lt;T_numtype,N_rank&gt;&amp; A);</pre></strong>
+This causes the array to adopt another array's data as its own.
+After this member function is used, the array object and the array
+<code>A</code> are indistinguishable -- they have identical sizes, index
+ranges, and data.  The data is shared between the two arrays.
+<p><!-- BZINDEX reindex(), reindexSelf() --><a name="index00163">
+<!-- BZINDEX Array!member functions!reindex() --><a name="index00164">
+<!-- BZINDEX Array!member functions!reindexSelf() --><a name="index00165">
+<!-- BZINDEX Array!reindexing --><a name="index00166">
+<strong><pre>void                              reindexSelf(const TinyVector&lt;int,N_rank&gt;&amp;);
+Array&lt;T,N&gt;                        reindex(const TinyVector&lt;int,N_rank&gt;&amp;);</pre></strong>
+These methods reindex an array to use a new base vector.  The
+first version reindexes the array, and the second just returns a
+reindexed view of the array, leaving the original array unmodified.
+<p><!-- BZINDEX resize() --><a name="index00167">
+<!-- BZINDEX Array!member functions!resize() --><a name="index00168">
+<!-- BZINDEX Array!resizing --><a name="index00169">
+<strong><pre>void                              resize(int extent1, ...);
+void                              resize(const TinyVector&lt;int,N_rank&gt;&amp;);</pre></strong>
+
+These functions resize an array to the specified size.  If
+the array is already the size specified, then no memory is
+allocated.  After resizing, the contents of the array are
+garbage.  See also <code>resizeAndPreserve()</code>.
+<p><!-- BZINDEX resizeAndPreserve() --><a name="index00170">
+<!-- BZINDEX Array!member functions!resizeAndPreserve() --><a name="index00171">
+<strong><pre>void                              resizeAndPreserve(int extent1, ...);</pre></strong>
+These functions resize an array to the specified size.  If
+the array is already the size specified, then no change
+occurs (the array is not reallocated and copied).
+The contents of the array are preserved whenever possible;
+if the new array size is smaller, then some data will be
+lost.  Any new elements created by resizing the array
+are left uninitialized.
+<p><!-- BZINDEX reverse(), reverseSelf() --><a name="index00172">
+<!-- BZINDEX Array!member functions!reverse() --><a name="index00173">
+<!-- BZINDEX Array!member functions!reverseSelf() --><a name="index00174">
+<!-- BZINDEX Array!reversing --><a name="index00175">
+<strong><pre>Array&lt;T,N&gt;                        reverse(int dimension);
+void                              reverseSelf(int dimension);</pre></strong>
+This method reverses the array in the specified dimension.
+For example, if <code>reverse(firstDim)</code> is invoked on a
+2-dimensional array, then the ordering of rows in the
+array will be reversed; <code>reverse(secondDim)</code> would
+reverse the order of the columns.  Note that this is
+implemented by twiddling the strides of the array, and
+doesn't cause any data copying.  The first version
+returns a reversed "view" of the array data; the second
+version applies the reversal to the array itself.
+<p><!-- BZINDEX rows() --><a name="index00176">
+<!-- BZINDEX Array!member functions!rows() --><a name="index00177">
+<strong><pre>int                               rows() const;</pre></strong>
+Returns the extent (length) of the array in the first dimension.
+This function is equivalent to <code>extent(firstDim)</code>.
+See also <code>columns()</code>, and <code>depth()</code>.
+<p><!-- BZINDEX size() --><a name="index00178">
+<!-- BZINDEX Array!member functions!size() --><a name="index00179">
+<strong><pre>int                               size() const;</pre></strong>
+Returns the total number of elements in the array, calculated
+by taking the product of the extent in each dimension.  Same
+as <code>numElements()</code>.
+<p>
+<p><!-- BZINDEX shape() (Array method) --><a name="index00180">
+<!-- BZINDEX Array!member functions!shape() --><a name="index00181">
+<!-- BZINDEX Array!shape of --><a name="index00182">
+<strong><pre>const TinyVector&lt;int, N_rank&gt;&amp;    shape() const;</pre></strong>
+Returns the vector of extents (lengths) of the array.
+<p><!-- BZINDEX stride() --><a name="index00183">
+<!-- BZINDEX Array!member functions!stride() --><a name="index00184">
+<!-- BZINDEX Array!strides of --><a name="index00185">
+<strong><pre>const TinyVector&lt;int, N_rank&gt;&amp;    stride() const;
+int                               stride(int dimension) const;</pre></strong>
+The first version returns the stride vector; the second version returns
+the stride associated with a dimension.  A stride is the distance
+between pointers to two array elements which are adjacent in a 
+dimension.  For example, <code>A.stride(firstDim)</code> is equal to
+<code>&amp;A(1,0,0) - &amp;A(0,0,0)</code>.  The stride for the second dimension,
+<code>A.stride(secondDim)</code>, is equal to <code>&amp;A(0,1,0) - &amp;A(0,0,0)</code>,
+and so on.  For more information about strides, see the description
+of custom storage formats in Section <a href="blitz02.html#arrays-storage-detailed">2.9</a>. 
+See also the description of parameters like <code>firstDim</code> and
+<code>secondDim</code> in the previous section.
+<p><!-- BZINDEX Array!member functions!transpose() --><a name="index00186">
+<!-- BZINDEX Array!member functions!transposeSelf() --><a name="index00187">
+<!-- BZINDEX Array!transposing --><a name="index00188">
+<!-- BZINDEX transposing arrays --><a name="index00189">
+<!-- BZINDEX transpose(), transposeSelf() --><a name="index00190">
+<strong><pre>Array&lt;T,N&gt;                        transpose(int dimension1, int dimension2, ...);
+void                              transposeSelf(int dimension1, 
+                                      int dimension2, ...);</pre></strong>
+These methods permute the dimensions of the array.  The
+dimensions of the array are reordered so that the first dimension is
+<code>dimension1</code>, the second is <code>dimension2</code>, and so on.  The
+arguments should be a permutation of the symbols <code>firstDim,
+secondDim, ...</code>.  Note that this is implemented by twiddling the
+strides of the array, and doesn't cause any data copying.
+The first version returns a transposed "view"
+of the array data; the second version transposes the array itself.
+<p><!-- BZINDEX Array!member functions!ubound() --><a name="index00191">
+<!-- BZINDEX ubound() --><a name="index00192">
+<strong><pre>int                               ubound(int dimension) const;
+TinyVector&lt;int,N_rank&gt;            ubound() const;</pre></strong>
+The first version returns the upper bound of the valid index range for a dimension.  
+The second version returns a vector of upper bounds for all dimensions.
+The upper bound is the last valid index value.  If you're using
+a C-style array (the default), the ubound will be equal to the
+<code>extent(dimension)-1</code>.  Fortran-style arrays will have
+ubound equal to <code>extent(dimension)</code>.  The ubound can be
+different for each dimension.  The return value of
+<code>ubound(dimension)</code> will always be equal to
+<code>lbound(dimension) + extent(dimension) - 1</code>.
+See the note about dimension parameters such as <code>firstDim</code>
+in the previous section.
+<p><!-- BZINDEX zeroOffset() --><a name="index00193">
+<!-- BZINDEX Array!member functions!zeroOffset() --><a name="index00194">
+<strong><pre>int                               zeroOffset() const;</pre></strong>
+This function has to do with the storage of arrays in memory.  You
+may want to refer to the description of the <code>data..()</code> member
+functions and of custom storage orders in Section <a href="blitz02.html#arrays-storage-detailed">2.9</a> 
+for clarification.  The return value of <code>zeroOffset()</code> is the
+distance from the first element in the array to the (possibly nonexistant)
+element <code>(0,0,...,0)</code>.  In this context, "first element" returns to the 
+element <code>(base(firstDim),base(secondDim),...)</code>.
+<p>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>2.7: Global functions</font></td></tr></table><br><a name="l54"></a>
+
+<a name="arrays-globals"></a>
+    <strong><pre>void                              allocateArrays(TinyVector&lt;int,N&gt;&amp; shape,
+                                    Array&lt;T,N&gt;&amp; A, Array&lt;T,N&gt;&amp; B, ...);
+</pre></strong> <!-- BZINDEX allocateArrays() --><a name="index00195">
+This function will allocate interlaced arrays, but only if interlacing
+is desirable for your architecture.  This is controlled by the
+<code>BZ_INTERLACE_ARRAYS</code> flag in &lt;blitz/tuning.h&gt;.  You can provide up
+to 11 arrays as parameters.  Any views currently associated with the
+array objects are lost.  Here is a typical use:
+<p><pre>
+    Array&lt;int,2&gt; A, B, C;
+    allocateArrays(shape(64,64),A,B,C);
+</pre>
+<p><!-- BZINDEX interlacing --> <!-- BZINDEX Array!interlacing --><a name="index00196">
+If array interlacing is enabled, then the arrays are stored in
+memory like this:  A(0,0), B(0,0), C(0,0), A(0,1), B(0,1), ...
+If interlacing is disabled, then the arrays are allocated in
+the normal fashion: each array has its own block of memory.
+Once interlaced arrays are allocated, they can be used just
+like regular arrays.
+<p><!-- BZINDEX convolution, 1-D --> <a name="index00197">
+<!-- BZINDEX Array!convolution --><a name="index00198">
+<strong><pre>#include &lt;blitz/array/convolve.h&gt;
+Array&lt;T,1&gt;                        convolve(const Array&lt;T,1&gt;&amp; B, 
+                                     const Array&lt;T,1&gt;&amp; C);
+</pre></strong>
+This function computes the 1-D convolution of the arrays B and C:
+
+A[i] = sum(B[j] * C[i-j], j)
+<p>
+<p>
+If the array B has domain bl..bh, and array C has domain cl..ch,
+then the resulting array has domain al..ah, with al=bl+cl and
+ah=bh+ch.
+<p>
+<p>A new array is allocated to contain the result.  To avoid copying
+the result array, you should use it as a constructor argument.
+For example:
+<pre>Array&lt;float,1&gt; A = convolve(B,C);</pre>
+The convolution is computed in the spatial domain.  Frequency-domain
+transforms are not used.  If you are convolving two large arrays,
+then this will be slower than using a Fourier transform.
+<p><!-- BZINDEX correlation --> <!-- BZINDEX Array!correlation --><a name="index00199">
+Note that if you need a cross-correlation, you can use the
+convolve function with one of the arrays reversed.  For
+example:
+<pre>Array&lt;float,1&gt; A = convolve(B,C.reverse());</pre>
+Autocorrelation can be performed using the same approach.
+<p><strong><pre>void                              cycleArrays(Array&lt;T,N&gt;&amp; A, Array&lt;T,N&gt;&amp; B);
+void                              cycleArrays(Array&lt;T,N&gt;&amp; A, Array&lt;T,N&gt;&amp; B, 
+                                    Array&lt;T,N&gt;&amp; C);
+void                              cycleArrays(Array&lt;T,N&gt;&amp; A, Array&lt;T,N&gt;&amp; B, 
+                                    Array&lt;T,N&gt;&amp; C, Array&lt;T,N&gt;&amp; D);
+void                              cycleArrays(Array&lt;T,N&gt;&amp; A, Array&lt;T,N&gt;&amp; B, 
+                                    Array&lt;T,N&gt;&amp; C, Array&lt;T,N&gt;&amp; D, 
+                                    Array&lt;T,N&gt;&amp; E);
+</pre></strong> <!-- BZINDEX cycleArrays() --> <!-- BZINDEX time-stepping --><a name="index00200">
+These routines are useful for time-stepping PDEs.  They take a set of
+arrays such as [A,B,C,D] and cyclically rotate them to [B,C,D,A]; i.e.
+the A array then refers to what was B's data, the B array refers to what
+was C's data, and the D array refers to what was A's data.  These functions
+operate in constant time, since only the handles change (i.e. no data
+is copied; only pointers change).
+<p><strong><pre>Array&lt;T,N&gt;                        imag(Array&lt;complex&lt;T&gt;,N&gt;&amp;);
+</pre></strong>
+This method returns a view of the imaginary portion of the array.
+<!-- BZINDEX imag() --><a name="index00201">
+<p><strong><pre>void                              interlaceArrays(TinyVector&lt;int,N&gt;&amp; shape,
+                                    Array&lt;T,N&gt;&amp; A, Array&lt;T,N&gt;&amp; B, ...);
+</pre></strong>
+This function is similar to <code>allocateArrays()</code> above, except that
+the arrays are <strong>always</strong> interlaced, regardless of the setting of
+the <code>BZ_INTERLACE_ARRAYS</code> flag.
+<!-- BZINDEX interlaceArrays() --><a name="index00202">
+<p><strong><pre>Array&lt;T,N&gt;                        real(Array&lt;complex&lt;T&gt;,N&gt;&amp;);
+</pre></strong>
+This method returns a view of the real portion of the array.
+<!-- BZINDEX real() --><a name="index00203">
+<p><strong><pre>TinyVector&lt;int,1&gt;                 shape(int L);
+TinyVector&lt;int,2&gt;                 shape(int L, int M);
+TinyVector&lt;int,3&gt;                 shape(int L, int M, int N);
+TinyVector&lt;int,4&gt;                 shape(int L, int M, int N, int O);
+... [up to 11 dimensions]
+</pre></strong>
+<!-- BZINDEX shape() --><a name="index00204">
+These functions may be used to create shape parameters.
+They package the set of integer arguments as a <code>TinyVector</code> of
+appropriate length.  For an example use, see <code>allocateArrays()</code>
+above.
+<p>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>2.8: Inputting and Outputting Arrays</font></td></tr></table><br><a name="l55"></a>
+
+<a name="arrays-io"></a>
+    
+<br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.8.1: Output formatting</font></td></tr></table><a name="l56"></a>
+
+<p><!-- BZINDEX persistence --><a name="index00205">
+<!-- BZINDEX Array!persistence --><a name="index00206">
+<!-- BZINDEX output formatting --><a name="index00207">
+<!-- BZINDEX Array!output formatting --><a name="index00208">
+<!-- BZINDEX saving arrays --><a name="index00209">
+<!-- BZINDEX writing arrays to output streams --><a name="index00210">
+<!-- BZINDEX Array!saving to output stream --><a name="index00211">
+<!-- BZINDEX Array!writing to output stream --><a name="index00212">
+<p>The current version of Blitz++ includes rudimentary output formatting
+for arrays.  Here's an example:
+<p><center><table border cellpadding=20 align=top><tr><td bgcolor="C0C0C0"><pre>
+#include &lt;blitz/array.h&gt;
+
+using namespace blitz;
+
+int main()
+{
+    Array&lt;int,2&gt; A(4,5,FortranArray&lt;2&gt;());
+    firstIndex i;
+    secondIndex j;
+    A = 10*i + j;
+
+    cout &lt;&lt; "A = " &lt;&lt; A &lt;&lt; endl;
+
+    Array&lt;float,1&gt; B(20);
+    B = exp(-i/100.);
+    
+    cout &lt;&lt; "B = " &lt;&lt; endl &lt;&lt; B &lt;&lt; endl;
+
+    return 0;
+}
+</pre>
+</td></tr></table></center>
+<p>And the output:
+<p><center><table border cellpadding=20 align=top><tr><td bgcolor="C0C0C0"><pre>
+A = 4 x 5
+[       11        12        13        14        15
+        21        22        23        24        25
+        31        32        33        34        35
+        41        42        43        44        45 ]
+
+B = 20
+[          1   0.99005  0.980199  0.970446  0.960789  0.951229  0.941765
+    0.932394  0.923116  0.913931  0.904837  0.895834   0.88692  0.878095
+    0.869358  0.860708  0.852144  0.843665   0.83527  0.826959 ]
+
+</pre>
+</td></tr></table></center>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.8.2: Inputting arrays</font></td></tr></table><a name="l57"></a>
+
+<p><!-- BZINDEX inputting arrays from an input stream --><a name="index00213">
+<!-- BZINDEX Array!inputting from istream --><a name="index00214">
+<!-- BZINDEX restoring arrays from an input stream --><a name="index00215">
+<!-- BZINDEX Array!restoring from istream --><a name="index00216">
+<p>Arrays may be restored from an istream using the <code>&gt;&gt;</code> operator.
+<strong>Note:</strong> you must know the dimensionality of the array being
+restored from the stream.  The <code>&gt;&gt;</code> operator expects an
+array in the same input format as generated by the <code>&lt;&lt;</code> operator,
+namely:
+<p><!-- BZINDEX Array!persistence format --><a name="index00217">
+<p><ul>
+<li > The size of the array, for example "32" for a 1-dimensional
+array of 32 elements, "12 x 64 x 128" for a 3-dimensional array
+of size 12x64x128.
+<p><li > The symbol <code>'['</code> indicating the start of the array data
+<p><li > The array elements, listed in memory storage order
+<p><li > The symbol <code>']'</code> indicating the end of the array data
+<p></ul>
+<p>The operator prototype is:
+<p><pre>
+
+template&lt;class T, int N&gt;
+istream&amp; operator&gt;&gt;(istream&amp;, Array&lt;T,N&gt;&amp;);
+
+</pre>
+
+<p>Here is an example of saving and restoring arrays from files.
+You can find this example in the Blitz++ distribution as
+<code>examples/io.cpp</code>.
+<p><center><table border cellpadding=20 align=top><tr><td bgcolor="C0C0C0"><pre>
+
+#include &lt;blitz/array.h&gt;
+#include &lt;fstream.h&gt;
+
+BZ_USING_NAMESPACE(blitz)
+
+const char* filename = "io.data";
+
+void write_arrays()
+{
+    ofstream ofs(filename);
+    if (ofs.bad())
+    {
+        cerr &lt;&lt; "Unable to write to file: " &lt;&lt; filename &lt;&lt; endl;
+        exit(1);
+    }
+
+    Array&lt;float,3&gt; A(3,4,5);
+    A = 111 + tensor::i + 10 * tensor::j + 100 * tensor::k;
+    ofs &lt;&lt; A &lt;&lt; endl;
+
+    Array&lt;float,2&gt; B(3,4);
+    B = 11 + tensor::i + 10 * tensor::j;
+    ofs &lt;&lt; B &lt;&lt; endl;
+
+    Array&lt;float,1&gt; C(4);
+    C = 1 + tensor::i;
+    ofs &lt;&lt; C &lt;&lt; endl;
+}
+
+int main()
+{
+    write_arrays();
+
+    ifstream ifs(filename);
+    if (ifs.bad())
+    {
+        cerr &lt;&lt; "Unable to open file: " &lt;&lt; filename &lt;&lt; endl;
+        exit(1);
+    }
+
+    Array&lt;float,3&gt; A;
+    Array&lt;float,2&gt; B;
+    Array&lt;float,1&gt; C;
+
+    ifs &gt;&gt; A &gt;&gt; B &gt;&gt; C;
+
+    cout &lt;&lt; "Arrays restored from file: " &lt;&lt; A &lt;&lt; B &lt;&lt; C &lt;&lt; endl;
+
+    return 0;
+}
+
+</pre>
+</td></tr></table></center>
+<p><strong>Note:</strong> The storage order and starting indices are not restored
+from the input stream.  If you are restoring (for example) a
+Fortran-style array, you must create a Fortran-style array, and
+then restore it.  For example, this code restores a Fortran-style
+array from the standard input stream:
+<p><pre>
+
+    Array&lt;float,2&gt; B(fortranArray);
+    cin &gt;&gt; B;
+
+</pre>
+
+<p>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>2.9: Array storage orders</font></td></tr></table><br><a name="l58"></a>
+
+<a name="arrays-storage"></a>
+    <a name="arrays-storage-detailed"></a>
+<p><!-- BZINDEX Array!storage formats --><a name="index00218">
+<!-- BZINDEX storage of arrays --><a name="index00219">
+<p>Blitz++ is very flexible about the way arrays are stored in memory.  
+Starting indices can be 0, 1, or arbitrary numbers; arrays
+can be stored in row major, column major or an order based on
+any permutation of the dimensions; each dimension can be stored
+in either ascending or descending order.  An N dimensional
+array can be stored in N!2<sup>N</sup>
+possible ways.
+<p>Before getting into the messy details, a review of array storage formats is
+useful.  If you're already familiar with strides and bases, you might
+want to skip on to the next section.
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.9.1: Fortran and C-style arrays</font></td></tr></table><a name="l59"></a>
+
+<p>Suppose we want to store this two-dimensional array in memory:
+<p><pre>
+[ 1 2 3 ]
+[ 4 5 6 ]
+[ 7 8 9 ]
+</pre>
+<p><p><strong>Row major vs. column major</strong><br><br>
+    
+<p>To lay the array out in memory, it's necessary to map the indices (i,j)
+into a one-dimensional block.  Here are two ways the array might appear
+in memory:
+<p><pre>
+[ 1 2 3 4 5 6 7 8 9 ]
+[ 1 4 7 2 5 8 3 6 9 ]
+</pre>
+<p>The first order corresponds to a C or C++ style array, and is called
+<em>row-major ordering</em>: the data is stored first by row, and then
+by column.  The second order corresponds to a Fortran style array,
+and is called <em>column-major ordering</em>: the data is stored first
+by column, and then by row.
+<p>The simplest way of mapping the indices (i,j) into one-dimensional
+memory is to take a linear combination. (Taking a linear
+combination is sufficient for dense, asymmetric arrays, such as
+are provided by the Blitz++ <code>Array</code> class.)  Here's the appropriate
+linear combination for row major ordering:
+<p><pre>
+memory offset = 3*i + 1*j
+</pre>
+<p>And for column major ordering:
+<p><pre>
+memory offset = 1*i + 3*j
+</pre>
+<p>The coefficients of the (i,j) indices are called <em>strides</em>.  For a
+row major storage of this array, the <em>row stride</em> is 3 -- you have to skip
+three memory locations to move down a row.  The <em>column stride</em>
+is 1 -- you move one memory location to move to the next column.
+This is also known as <em>unit stride</em>.
+For column major ordering, the row and column strides are 1 and 3,
+respectively.
+<p><p><strong>Bases</strong><br><br>
+    
+<p>To throw another complication into this scheme, C-style arrays
+have indices which start at zero, and Fortran-style arrays
+have indices which start at one.  The first valid index value
+is called the <em>base</em>.  To account for a non-zero base, it's
+necessary to include an offset term in addition to the linear
+combination.
+Here's
+the mapping for a C-style array with i=0..3 and j=0..3:
+<p><pre>
+memory offset =  0 + 3*i + 1*j 
+</pre>
+<p>No offset is necessary since the indices start at zero for C-style
+arrays.  For a Fortran-style array with i=1..4 and j=1..4, the mapping 
+would be:
+<p><pre>
+memory offset = -4 + 3*i + 1*j
+</pre>
+<p>
+<p>By default, Blitz++ creates arrays in the C-style storage format (base
+zero, row major ordering).  To create a Fortran-style array, you can
+use this syntax:
+<p><pre>
+Array&lt;int,2&gt; A(3, 3, FortranArray&lt;2&gt;());
+</pre>
+<p>The third parameter, <code>FortranArray&lt;2&gt;()</code>, tells the <code>Array</code> constructor
+to use a storage format appropriate for two-dimensional Fortran arrays
+(base one, column major ordering).
+<p>A similar object, <code>ColumnMajor&lt;N&gt;</code>, tells the <code>Array</code> constructor
+to use column major ordering, with base zero:
+<p><pre>
+Array&lt;int,2&gt; B(3, 3, ColumnMajor&lt;2&gt;());
+</pre>
+<p>This creates a 3x3 array with indices i=0..2 and j=0..2.
+<p>In addition to supporting the 0 and 1 conventions for C and Fortran-style 
+arrays, Blitz++ allows you to choose arbitrary bases, possibly different
+for each dimension.  For example, this declaration creates an array
+whose indices have ranges i=5..8 and j=2..5:
+<p><pre>
+Array&lt;int,2&gt; A(Range(5,8), Range(2,5));
+</pre>
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.9.2: Creating custom storage orders</font></td></tr></table><a name="l60"></a>
+
+<p><!-- BZINDEX storage order, creating your own --><a name="index00220">
+<!-- BZINDEX Array!storage order, creating your own --><a name="index00221">
+<p>All <code>Array</code> constructors take an optional parameter of type
+<code>GeneralArrayStorage&lt;N_rank&gt;</code>.  This parameter encapsulates
+a complete description of the storage format.  If you want a
+storage format other than C or Fortran-style, you have two
+choices:
+<p><ul>
+<p><li >     You can create an object of type <code>GeneralArrayStorage&lt;N_rank&gt;</code>,
+         customize the storage format, and use the object as a argument
+         for the <code>Array</code> constructor.
+<p><li >     You can create your own storage format object which inherits
+         from <code>GeneralArrayStorage&lt;N_rank&gt;</code>.  This is useful if you
+         will be using the storage format many times.  This approach
+         (inheriting from <code>GeneralArrayStorage&lt;N_rank&gt;</code>) was used
+         to create the <code>FortranArray&lt;N_rank&gt;</code> objects.  If you want
+         to take this approach, you can use the declaration of
+         <code>FortranArray&lt;N_rank&gt;</code> in <code>&lt;blitz/array.h&gt;</code> as a guide.
+<p></ul>
+<p>The next sections describe how to modify a <code>GeneralArrayStorage&lt;N_rank&gt;</code>
+object to suit your needs.
+<p><p><strong>In higher dimensions</strong><br><br>
+    
+<p>In more than two dimensions, the choice of storage order becomes more
+complicated.  Suppose we had a 3x3x3 array.  To map the indices (i,j,k)
+into memory, we might choose one of these mappings:
+<p><pre>
+memory offset = 9*i + 3*j + 1*k
+memory offset = 1*i + 3*j + 9*k
+</pre>
+<p>The first corresponds to a C-style array, and the second to a Fortran-style
+array.  But there are other choices; we can permute the strides (1,3,9)
+any which way:
+<p><pre>
+memory offset = 1*i + 9*j + 3*k
+memory offset = 3*i + 1*j + 9*k
+memory offset = 3*i + 9*j + 1*k
+memory offset = 9*i + 1*j + 3*k
+</pre>
+<p>For an N dimensional array, there are N! such permutations.  Blitz++
+allows you to select any permutation of the dimensions as a storage
+order.  First you need to create an object of type 
+<code>GeneralArrayStorage&lt;N_rank&gt;</code>:
+<p><pre>
+GeneralArrayStorage&lt;3&gt; storage;
+</pre>
+<p><code>GeneralArrayStorage&lt;N_rank&gt;</code> contains a vector called <code>ordering</code>
+which controls the order in which dimensions are stored in memory.
+The <code>ordering</code> vector will contain a permutation of the numbers
+0, 1, ...,  N_rank-1.  Since some people are used to the first
+dimension being 1 rather than 0, a set of symbols (firstDim, secondDim,
+..., eleventhDim) are provided which make the code more legible.  
+<p>The <code>ordering</code> vector lists the dimensions in increasing order of
+stride.  You can access this vector using the member function
+<code>ordering()</code>.  A C-style array, the default, would have:
+<p><pre>
+storage.ordering() = thirdDim, secondDim, firstDim;
+</pre>
+<p>meaning that the third index (k) is associated with the smallest
+stride, and the first index (i) is associated with the largest
+stride.  A Fortran-style array would have:
+<p><pre>
+storage.ordering() = firstDim, secondDim, thirdDim;
+</pre>
+<p><p><strong>Reversed dimensions</strong><br><br>
+    
+<p>To add yet another wrinkle, there are some applications where the
+rows or columns need to be stored in reverse order. (For example,
+certain bitmap formats store image rows from bottom to top rather than
+top to bottom.)
+<p>Blitz++ allows you to store each dimension in either ascending or
+descending order.  By default, arrays are always stored in ascending
+order.  The <code>GeneralArrayStorage&lt;N_rank&gt;</code> object contains a
+vector called <code>ascendingFlag</code> which indicates whether each
+dimension is stored ascending (<code>true</code>) or descending (<code>false</code>).  
+To alter the contents of this vector, use the <code>ascendingFlag()</code> method:
+<p><pre>
+// Store the third dimension in descending order
+storage.ascendingFlag() = true, true, false;
+
+// Store all the dimensions in descending order
+storage.ascendingFlag() = false, false, false;
+</pre>
+<p><p><strong>Setting the base vector</strong><br><br>
+    
+<p><code>GeneralArrayStorage&lt;N_rank&gt;</code> also has a <code>base</code> vector which
+contains the base index value for each dimension.  By default,
+the base vector is set to zero.  <code>FortranArray&lt;N_rank&gt;</code> sets
+the base vector to one.  
+<p>To set your own set of bases, you have two choices:
+<p><ul>
+<p><li >      You can modify the <code>base</code> vector inside the
+          <code>GeneralArrayStorage&lt;N_rank&gt;</code> object.  The method
+          <code>base()</code> returns a mutable reference to the <code>base</code>
+          vector which you can use to set the bases.
+<p><li >      You can provide a set of <code>Range</code> arguments to the
+          <code>Array</code> constructor.
+<p></ul>
+<p>Here are some examples of the first approach:
+<p><pre>
+// Set all bases equal to 5
+storage.base() = 5;    
+
+// Set the bases to [ 1 0 1 ]
+storage.base() = 1, 0, 1;
+</pre>
+<p>And of the second approach:
+<p><pre>
+// Have bases of 5, but otherwise C-style storage
+Array&lt;int,3&gt; A(Range(5,7), Range(5,7), Range(5,7));
+
+// Have bases of [ 1 0 1 ] and use a custom storage
+Array&lt;int,3&gt; B(Range(1,4), Range(0,3), Range(1,4), storage);
+</pre>
+<p><p><strong>Working simultaneously with different storage orders</strong><br><br>
+    
+<p>Once you have created an array object, you will probably never
+have to worry about its storage order.  Blitz++ should handle
+arrays of different storage orders transparently.  It's possible
+to mix arrays of different storage orders in one expression,
+and still get the correct result.
+<p>Note however, that mixing different storage orders in an
+expression may incur a performance penalty, since Blitz++ will
+have to pay more attention to differences in indexing than
+it normally would.
+<p>You may not mix arrays with different domains in the
+same expression.  For example, adding a base zero to
+a base one array is a no-no.  The reason for this
+restriction is that certain expressions become
+ambiguous, for example:
+<p><pre>
+Array&lt;int,1&gt; A(Range(0,5)), B(Range(1,6));
+A=0;
+B=0;
+using namespace blitz::tensor;
+int result = sum(A+B+i);
+</pre>
+<p>Should the index <code>i</code> take its domain from array <code>A</code>
+or array <code>B</code>?  To avoid such ambiguities, users are
+forbidden from mixing arrays with different domains
+in an expression. 
+<p><p><strong>Debug dumps of storage order information</strong><br><br>
+    
+<p>In debug mode (<code>-DBZ_DEBUG</code>), class <code>Array</code> provides a member
+function <code>dumpStructureInformation()</code> which displays information
+about the array storage:
+<p><pre>Array&lt;float,4&gt; A(3,7,8,2,FortranArray&lt;4&gt;());
+A.dumpStructureInformation(cerr);
+</pre>
+<p>The optional argument is an <code>ostream</code> to dump information
+to.  It defaults to <code>cout</code>.  Here's the output:
+<p><pre>Dump of Array&lt;float, 4&gt;:
+ordering_      = [          0         1         2         3 ]
+ascendingFlag_ = [ 1111 ]
+base_          = [          1         1         1         1 ]
+length_        = [          3         7         8         2 ]
+stride_        = [          1         3        21       168 ]
+zeroOffset_    = -193
+numElements()  = 336
+storageContiguous = 1
+</pre>
+<p><p><strong>A note about storage orders and initialization</strong><br><br>
+    
+<p>When initializing arrays with comma delimited lists, note
+that the array is filled in storage order: from the first
+memory location to the last memory location.  This won't
+cause any problems if you stick with C-style arrays, but
+it can be confusing for Fortran-style arrays:
+<p><pre>
+Array&lt;int,2&gt; A(3, 3, FortranArray&lt;2&gt;());
+A = 1, 2, 3,
+    4, 5, 6,
+    7, 8, 9;
+cout &lt;&lt; A &lt;&lt; endl;
+</pre>
+<p>The output from this code excerpt will be:
+<p><pre>
+A = 3 x 3
+         1         4         7 
+         2         5         8
+         3         6         9
+</pre>
+<p>This is because Fortran-style arrays are stored in column
+major order.
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.9.3: Storage orders example</font></td></tr></table><a name="l61"></a>
+
+<p><center><table border cellpadding=20 align=top><tr><td bgcolor="COCOCO"><pre>
+/*****************************************************************************
+ * storage.cpp        Blitz++ Array custom storage orders example
+ *
+ * $Id$
+ *
+ * $Log$
+ * Revision 1.1  2000/06/19 12:26:19  tveldhui
+ * Initial revision
+ *
+ * Revision 1.1  1997/07/16 19:38:23  tveldhui
+ * Update: Alpha release 0.2 (Arrays)
+ *
+ *****************************************************************************
+ */
+#include &lt;blitz/array.h&gt;
+
+BZ_USING_NAMESPACE(blitz)
+
+int main()
+{
+    // 3x3 C-style row major storage, base zero
+    Array&lt;int,2&gt; A(3, 3);
+
+    // 3x3 column major storage, base zero
+    Array&lt;int,2&gt; B(3, 3, ColumnMajorArray&lt;2&gt;());
+
+    // A custom storage format: 
+    // Indices have range 0..3, 0..3
+    // Column major ordering
+    // Rows are stored ascending, columns stored descending
+    GeneralArrayStorage&lt;2&gt; storage;
+    storage.ordering() = firstRank, secondRank;
+    storage.base() = 0, 0;
+    storage.ascendingFlag() = true, false;
+
+    Array&lt;int,2&gt; C(3, 3, storage);
+
+    // Set each array equal to
+    // [ 1 2 3 ]
+    // [ 4 5 6 ]
+    // [ 7 8 9 ]
+
+    A = 1, 2, 3,
+        4, 5, 6, 
+        7, 8, 9;
+
+    cout &lt;&lt; "A = " &lt;&lt; A &lt;&lt; endl;
+
+    // Comma-delimited lists initialize in memory-storage order only.
+    // Hence we list the values in column-major order to initialize B:
+
+    B = 1, 4, 7, 2, 5, 8, 3, 6, 9;
+
+    cout &lt;&lt; "B = " &lt;&lt; B &lt;&lt; endl;
+
+    // Array C is stored in column major, plus the columns are stored
+    // in descending order!
+
+    C = 3, 6, 9, 2, 5, 8, 1, 4, 7;
+
+    cout &lt;&lt; "C = " &lt;&lt; C &lt;&lt; endl;
+
+    Array&lt;int,2&gt; D(3,3);
+    D = A + B + C;
+
+#ifdef BZ_DEBUG
+    A.dumpStructureInformation();
+    B.dumpStructureInformation();
+    C.dumpStructureInformation();
+    D.dumpStructureInformation();
+#endif
+
+    cout &lt;&lt; "D = " &lt;&lt; D &lt;&lt; endl;
+
+    return 0;
+}
+
+</pre>
+</td></tr></table></center>
+<p>And the output:
+<p><center><table border cellpadding=20 align=top><tr><td bgcolor="COCOCO"><pre>
+A = 3 x 3
+         1         2         3
+         4         5         6
+         7         8         9
+
+B = 3 x 3
+         1         2         3
+         4         5         6
+         7         8         9
+
+C = 3 x 3
+         1         2         3
+         4         5         6
+         7         8         9
+
+D = 3 x 3
+         3         6         9
+        12        15        18
+        21        24        27
+
+</pre>
+</td></tr></table></center>
+<p>
+<p>
+
+<hr>
+<ul>
+    <li> <a href="blitz03.html">Next chapter</a>
+    <li> <a href="blitz01.html">Previous chapter</a>
+    <li> <a href="blitz.html">Table of contents</a>
+</ul>
+<hr>
+</body>
+</html>
