@@ -1,0 +1,4 @@
+Some matrix headers are included in this release, but only because
+the Benchmark class needs them.  Their design is not yet stable,
+and they are untested, so use them at your own peril.
+
