@@ -88,7 +88,7 @@ int main()
 
     for (int i=0; i < numSizes; ++i)
     {
-        parameters[i] = (int)pow(10.0, double(i+1)/4.0);
+        parameters[i] = static_cast<int>(pow(10.0, 0.25*(i+1)));
         iters[i] = 50000000L / parameters[i];
         if (iters[i] < 2)
             iters[i] = 2;
