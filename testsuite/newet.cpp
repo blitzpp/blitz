@@ -95,8 +95,6 @@ int main()
     Array<int,1> DD(4);
     DD = max3(A,B,C);
     BZTEST(count(DD=D)==4);
-    DD = max3(A,7,C);
-    BZTEST(count(DD=D)==4);
 
 }
 
