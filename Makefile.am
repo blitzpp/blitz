@@ -29,5 +29,5 @@ lib: check-compiler
 	@(cd lib && $(MAKE) $(AM_MAKEFLAGS)) || exit 1;
 
 clean-local:
-	-rm -rf .deps
+	-rm -rf .deps so_locations cxx_repository 
 
