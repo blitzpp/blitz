@@ -1,4 +1,4 @@
-#include <blitz/Array.h>
+#include <blitz/array.h>
 #include <stdio.h>
 
 BZ_USING_NAMESPACE(blitz)

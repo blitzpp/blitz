@@ -1,6 +1,6 @@
 // Div, grad, curl and all that
 
-#include <blitz/Array.h>
+#include <blitz/array.h>
 
 BZ_USING_NAMESPACE(blitz)
 BZ_USING_NAMESPACE(blitz::tensor)

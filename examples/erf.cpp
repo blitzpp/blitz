@@ -4,6 +4,9 @@
  * $Id$
  *
  * $Log$
+ * Revision 1.3  2002/07/02 19:49:02  jcumming
+ * Updated to use new header file names that avoid capitalization.
+ *
  * Revision 1.2  2001/01/26 18:30:50  tveldhui
  * More source code reorganization to reduce compile times.
  *
@@ -20,7 +23,7 @@
 
 #ifdef BZ_HAVE_IEEE_MATH
 
-#include <blitz/Vector.h>
+#include <blitz/vector-et.h>
 
 // This program uses erf(), which is not part of ANSI C/C++.  In order
 // to compile this example, you must have a Posix or X/Open-compliant 

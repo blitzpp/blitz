@@ -1,4 +1,4 @@
-#include <blitz/Array.h>
+#include <blitz/array.h>
 #ifdef BZ_HAVE_STD
 	#include <fstream>
 #else
