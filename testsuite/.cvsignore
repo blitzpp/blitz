@@ -5,8 +5,12 @@ Makefile.in
 *.la
 .deps
 .libs
+*.ii
+*.ti
 cxx_repository
+Template.dir
 ii_files
+ti_files
 Adnene-Ben-Abdallah-1
 Adnene-Ben-Abdallah-2
 Josef-Wagenhuber
