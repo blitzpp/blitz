@@ -1335,10 +1335,10 @@ public:
 };
 #endif
 
-// isnan(P_numtype1)    Nonzero if NaNS or NaNQ
+// blitz_isnan(P_numtype1)    Nonzero if NaNS or NaNQ
 #ifdef BZ_HAVE_IEEE_MATH
 template<class P_numtype1>
-class _bz_isnan : public OneOperandApplicativeTemplatesBase {
+class _bz_blitz_isnan : public OneOperandApplicativeTemplatesBase {
 public:
     typedef P_numtype1 T_numtype1;
     typedef int T_numtype;
@@ -1350,7 +1350,7 @@ public:
     static void prettyPrint(string& str, prettyPrintFormat& format,
         const T1& a)
     {
-        str += "isnan(";
+        str += "blitz_isnan(";
         a.prettyPrint(str,format);
         str += ")";
     }

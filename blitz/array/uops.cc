@@ -21,8 +21,12 @@
  *
  ***************************************************************************
  * $Log$
- * Revision 1.1  2000/06/19 12:26:14  tveldhui
- * Initial revision
+ * Revision 1.2  2001/01/26 20:11:25  tveldhui
+ * Changed isnan to blitz_isnan, to avoid conflicts with implementations
+ * that define isnan as a preprocessor macro.
+ *
+ * Revision 1.1.1.1  2000/06/19 12:26:14  tveldhui
+ * Imported sources
  *
  */ 
 
@@ -2565,38 +2569,38 @@ ilogb(IndexPlaceholder<N_index1> d1)
 #endif
 
 /****************************************************************************
- * isnan
+ * blitz_isnan
  ****************************************************************************/
 
 #ifdef BZ_HAVE_IEEE_MATH
 template<class T_numtype1, int N_rank1>
 inline
 _bz_ArrayExpr<_bz_ArrayExprUnaryOp<ArrayIterator<T_numtype1, N_rank1>,
-    _bz_isnan<T_numtype1> > >
-isnan(const Array<T_numtype1, N_rank1>& d1)
+    _bz_blitz_isnan<T_numtype1> > >
+blitz_isnan(const Array<T_numtype1, N_rank1>& d1)
 {
     return _bz_ArrayExprUnaryOp<ArrayIterator<T_numtype1, N_rank1>,
-    _bz_isnan<T_numtype1> >(d1.begin());
+    _bz_blitz_isnan<T_numtype1> >(d1.begin());
 }
 
 template<class P_expr1>
 inline
 _bz_ArrayExpr<_bz_ArrayExprUnaryOp<_bz_ArrayExpr<P_expr1>,
-    _bz_isnan<_bz_typename P_expr1::T_numtype> > >
-isnan(_bz_ArrayExpr<P_expr1> d1)
+    _bz_blitz_isnan<_bz_typename P_expr1::T_numtype> > >
+blitz_isnan(_bz_ArrayExpr<P_expr1> d1)
 {
     return _bz_ArrayExprUnaryOp<_bz_ArrayExpr<P_expr1>,
-    _bz_isnan<_bz_typename P_expr1::T_numtype> >(d1);
+    _bz_blitz_isnan<_bz_typename P_expr1::T_numtype> >(d1);
 }
 
 template<int N_index1>
 inline
 _bz_ArrayExpr<_bz_ArrayExprUnaryOp<IndexPlaceholder<N_index1>,
-    _bz_isnan<int> > >
-isnan(IndexPlaceholder<N_index1> d1)
+    _bz_blitz_isnan<int> > >
+blitz_isnan(IndexPlaceholder<N_index1> d1)
 {
     return _bz_ArrayExprUnaryOp<IndexPlaceholder<N_index1>,
-    _bz_isnan<int> >(d1);
+    _bz_blitz_isnan<int> >(d1);
 }
 
 #endif

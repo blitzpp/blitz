@@ -623,8 +623,8 @@ dit(finite()) Returns a nonzero integer if the parameter is a finite
 )
 dit(ilogb())  Returns an integer which is equal to the unbiased exponent
               of the parameter.               bzindex(ilogb())
-dit(isnan())  Returns a nonzero integer if the parameter is NaNQ or NaNS
-              (quiet or signalling Not a Number). bzindex(isnan())
+dit(blitz_isnan())  Returns a nonzero integer if the parameter is NaNQ or NaNS
+              (quiet or signalling Not a Number). bzindex(blitz_isnan()) bzindex(isnan())
 dit(itrunc()) Round a floating-point number to a signed integer.  Returns
               the nearest signed integer to the parameter in the direction of
               0. bzindex(itrunc())

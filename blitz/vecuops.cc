@@ -13,21 +13,26 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * Suggestions:          blitz-dev@oonumerics.org
- * Bugs:                 blitz-bugs@oonumerics.org
+ * Suggestions:          blitz-suggest@cybervision.com
+ * Bugs:                 blitz-bugs@cybervision.com
  *
  * For more information, please see the Blitz++ Home Page:
- *    http://oonumerics.org/blitz/
+ *    http://seurat.uwaterloo.ca/blitz/
  *
  ***************************************************************************
  * $Log$
- * Revision 1.1  2000/06/19 12:26:10  tveldhui
- * Initial revision
+ * Revision 1.2  2001/01/26 20:11:25  tveldhui
+ * Changed isnan to blitz_isnan, to avoid conflicts with implementations
+ * that define isnan as a preprocessor macro.
+ * 
+ * Revision 1.1  2000/06/19 13:02:47  tveldhui
+ * Initial source check-in; added files not usually released in the
+ * distribution.
  *
  */ 
 
 // Generated source file.  Do not edit. 
-// genvecuops.cpp Dec  5 1998 17:06:25
+// genvecuops.cpp Jan 26 2001 14:32:45
 
 #ifndef BZ_VECUOPS_CC
 #define BZ_VECUOPS_CC
@@ -1292,18 +1297,18 @@ ilogb(const TinyVector<P_numtype1, N_length1>& d1)
 #endif
 
 /****************************************************************************
- * isnan
+ * blitz_isnan
  ****************************************************************************/
 
 #ifdef BZ_HAVE_IEEE_MATH
 template<class P_numtype1>
 inline
 _bz_VecExpr<_bz_VecExprUnaryOp<VectorIterConst<P_numtype1>,
-    _bz_isnan<P_numtype1> > >
-isnan(const Vector<P_numtype1>& d1)
+    _bz_blitz_isnan<P_numtype1> > >
+blitz_isnan(const Vector<P_numtype1>& d1)
 {
     typedef _bz_VecExprUnaryOp<VectorIterConst<P_numtype1>,
-        _bz_isnan<P_numtype1> > T_expr;
+        _bz_blitz_isnan<P_numtype1> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1.begin()));
 }
@@ -1311,11 +1316,11 @@ isnan(const Vector<P_numtype1>& d1)
 template<class P_expr1>
 inline
 _bz_VecExpr<_bz_VecExprUnaryOp<_bz_VecExpr<P_expr1>,
-    _bz_isnan<_bz_typename P_expr1::T_numtype> > >
-isnan(_bz_VecExpr<P_expr1> d1)
+    _bz_blitz_isnan<_bz_typename P_expr1::T_numtype> > >
+blitz_isnan(_bz_VecExpr<P_expr1> d1)
 {
     typedef _bz_VecExprUnaryOp<_bz_VecExpr<P_expr1>,
-        _bz_isnan<_bz_typename P_expr1::T_numtype> > T_expr;
+        _bz_blitz_isnan<_bz_typename P_expr1::T_numtype> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1));
 }
@@ -1323,11 +1328,11 @@ isnan(_bz_VecExpr<P_expr1> d1)
 template<class P_numtype1>
 inline
 _bz_VecExpr<_bz_VecExprUnaryOp<VectorPickIterConst<P_numtype1>,
-    _bz_isnan<P_numtype1> > >
-isnan(const VectorPick<P_numtype1>& d1)
+    _bz_blitz_isnan<P_numtype1> > >
+blitz_isnan(const VectorPick<P_numtype1>& d1)
 {
     typedef _bz_VecExprUnaryOp<VectorPickIterConst<P_numtype1>,
-        _bz_isnan<P_numtype1> > T_expr;
+        _bz_blitz_isnan<P_numtype1> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1.begin()));
 }
@@ -1335,11 +1340,11 @@ isnan(const VectorPick<P_numtype1>& d1)
 
 inline
 _bz_VecExpr<_bz_VecExprUnaryOp<Range,
-    _bz_isnan<int> > >
-isnan(Range d1)
+    _bz_blitz_isnan<int> > >
+blitz_isnan(Range d1)
 {
     typedef _bz_VecExprUnaryOp<Range,
-        _bz_isnan<int> > T_expr;
+        _bz_blitz_isnan<int> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1));
 }
@@ -1347,11 +1352,11 @@ isnan(Range d1)
 template<class P_numtype1, int N_length1>
 inline
 _bz_VecExpr<_bz_VecExprUnaryOp<TinyVectorIterConst<P_numtype1, N_length1>,
-    _bz_isnan<P_numtype1> > >
-isnan(const TinyVector<P_numtype1, N_length1>& d1)
+    _bz_blitz_isnan<P_numtype1> > >
+blitz_isnan(const TinyVector<P_numtype1, N_length1>& d1)
 {
     typedef _bz_VecExprUnaryOp<TinyVectorIterConst<P_numtype1, N_length1>,
-        _bz_isnan<P_numtype1> > T_expr;
+        _bz_blitz_isnan<P_numtype1> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1.begin()));
 }

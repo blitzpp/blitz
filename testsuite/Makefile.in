@@ -22,7 +22,7 @@ SINGLE_TESTS = ctors initialize storage shapecheck reduce derrick-bass-1 \
 	peter-bienstman-2 iter contiguous exprctor Olaf-Ronneberger-1 \
 	peter-bienstman-4 tinymat wei-ku-1 \
 	theodore-papadopoulo-1 peter-bienstman-5 Adnene-Ben-Abdallah-2 \
-	Josef-Wagenhuber
+	Josef-Wagenhuber 
 
 MULTIPLE_TESTS = modules
 

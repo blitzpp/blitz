@@ -97,7 +97,7 @@ ofs <<
     two("fmod", bsdflag);
     two("hypot", bsdflag);
     one("ilogb", bsdflag);
-    one("isnan", ieeeflag);
+    one("blitz_isnan", ieeeflag);
     one("itrunc", bsdflag);
     one("j0", ieeeflag);
     one("j1", ieeeflag);

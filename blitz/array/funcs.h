@@ -23,6 +23,10 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2001/01/26 20:11:25  tveldhui
+ * Changed isnan to blitz_isnan, to avoid conflicts with implementations
+ * that define isnan as a preprocessor macro.
+ *
  * Revision 1.2  2001/01/25 00:25:55  tveldhui
  * Ensured that source files have cvs logs.
  *
@@ -113,7 +117,7 @@ BZ_DECLARE_ARRAY_ET_UOP(expm1,  _bz_expm1)
 BZ_DECLARE_ARRAY_ET_UOP(erf,    _bz_erf)
 BZ_DECLARE_ARRAY_ET_UOP(erfc,   _bz_erfc)
 // BZ_DECLARE_ARRAY_ET_UOP(finite, _bz_finite)
-BZ_DECLARE_ARRAY_ET_UOP(isnan,  _bz_isnan)
+BZ_DECLARE_ARRAY_ET_UOP(blitz_isnan,  _bz_blitz_isnan)
 BZ_DECLARE_ARRAY_ET_UOP(j0,     _bz_j0)
 BZ_DECLARE_ARRAY_ET_UOP(j1,     _bz_j1)
 BZ_DECLARE_ARRAY_ET_UOP(lgamma, _bz_lgamma)

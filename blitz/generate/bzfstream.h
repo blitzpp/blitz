@@ -33,9 +33,13 @@ public:
 " *\n"
 " ***************************************************************************\n"
 " * $Log$
-" * Revision 1.1  2000/06/19 13:02:47  tveldhui
-" * Initial source check-in; added files not usually released in the
-" * distribution.
+" * Revision 1.2  2001/01/26 20:11:26  tveldhui
+" * Changed isnan to blitz_isnan, to avoid conflicts with implementations
+" * that define isnan as a preprocessor macro.
+" * \n"
+" * Revision 1.1  2000/06/19 13:02:47  tveldhui\n"
+" * Initial source check-in; added files not usually released in the\n"
+" * distribution.\n"
 " *\n"
 " */ " 
        << endl << endl
