@@ -2,11 +2,14 @@
  * $Id$
  *
  * $Log$
+ * Revision 1.3  2001/01/26 18:30:50  tveldhui
+ * More source code reorganization to reduce compile times.
+ *
  * Revision 1.2  2001/01/24 23:41:53  tveldhui
  * Widespread changes to reduce compile time.  For backwards
  * compatibility, #include <blitz/array.h> enables BZ_GANG_INCLUDE
  * mode which includes all array and vector functionality (about
- * 120000 lines of code).  #include <blitz/array-only.h> includes
+ * 120000 lines of code).  #include <blitz/Array.h> includes
  * a minimal subset of Array funcitonality; other features must
  * be included explicitly.
  *
@@ -390,7 +393,14 @@ template<class P_numtype, int N_rank>
 _bz_inline2 void Array<P_numtype, N_rank>::reindexSelf(const 
     TinyVector<int, N_rank>& newBase) 
 {
-    data_ += dot(base() - newBase, stride_);
+    int delta = 0;
+    for (int i=0; i < N_rank; ++i)
+      delta += (base(i) - newBase(i)) * stride_(i);
+
+    data_ += delta;
+
+    // WAS: dot(base() - newBase, stride_);
+
     storage_.setBase(newBase);
     calculateZeroOffset();
 }

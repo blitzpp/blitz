@@ -1,4 +1,4 @@
-#include <blitz/array.h>
+#include <blitz/Array.h>
 #include <iostream.h>
 
 using namespace blitz;

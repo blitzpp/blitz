@@ -4,8 +4,11 @@
  * $Id$
  *
  * $Log$
- * Revision 1.1  2000/06/19 12:26:17  tveldhui
- * Initial revision
+ * Revision 1.2  2001/01/26 18:30:51  tveldhui
+ * More source code reorganization to reduce compile times.
+ *
+ * Revision 1.1.1.1  2000/06/19 12:26:17  tveldhui
+ * Imported sources
  *
  * Revision 1.2  1997/07/16 19:38:23  tveldhui
  * Update: Alpha release 0.2 (Arrays)
@@ -16,7 +19,7 @@
  * This example illustrates the tensor-like notation provided by Blitz++.
  */
 
-#include <blitz/array.h>
+#include <blitz/Array.h>
 
 // Kludge for KAI C++ 3.2c
 #ifndef M_PI

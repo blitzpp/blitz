@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2001/01/26 18:30:50  tveldhui
+ * More source code reorganization to reduce compile times.
+ *
  * Revision 1.2  2001/01/24 20:22:50  tveldhui
  * Updated copyright date in headers.
  *
@@ -57,10 +60,8 @@
  #include <blitz/blitz.h>
 #endif
 
-#ifdef BZ_GANG_INCLUDE
 #ifndef BZ_VECEXPRWRAP_H
  #include <blitz/vecexprwrap.h>      // _bz_VecExpr wrapper
-#endif
 #endif
 
 #include <blitz/wrap-climits.h>                  // for INT_MIN
@@ -225,10 +226,8 @@ public:
         return length();
     }
 
-#ifdef BZ_GANG_INCLUDE
     _bz_VecExpr<Range> _bz_asVecExpr() const
     { return _bz_VecExpr<Range>(*this); }
-#endif
 
 private:
     int first_, last_, stride_;

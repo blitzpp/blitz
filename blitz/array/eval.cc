@@ -2,6 +2,9 @@
  * $Id$
  *
  * $Log$
+ * Revision 1.3  2001/01/26 18:30:50  tveldhui
+ * More source code reorganization to reduce compile times.
+ *
  * Revision 1.2  2001/01/24 22:51:51  tveldhui
  * Reorganized #include orders to avoid including the huge Vector e.t.
  * implementation when using Array.
@@ -54,6 +57,7 @@ BZ_NAMESPACE(blitz)
 
 // Fast traversals require <set> from the ISO/ANSI C++ standard library
 #ifdef BZ_HAVE_STD
+#ifdef BZ_ARRAY_SPACE_FILLING_TRAVERSAL
 
 template<_bz_bool canTryFastTraversal>
 struct _bz_tryFastTraversal {
@@ -104,6 +108,7 @@ cout.flush();
     }
 };
 
+#endif // BZ_ARRAY_SPACE_FILLING_TRAVERSAL
 #endif // BZ_HAVE_STD
 
 template<class T_numtype, int N_rank> template<class T_expr, class T_update>
@@ -196,6 +201,7 @@ cout << "T_expr::numIndexPlaceholders = " << T_expr::numIndexPlaceholders
         // library.
 
 #ifdef BZ_HAVE_STD
+#ifdef BZ_ARRAY_SPACE_FILLING_TRAVERSAL
 
         enum { isStencil = (N_rank >= 3) && (T_expr::numArrayOperands > 6)
             && (T_expr::numIndexPlaceholders == 0) };
@@ -203,6 +209,7 @@ cout << "T_expr::numIndexPlaceholders = " << T_expr::numIndexPlaceholders
         if (_bz_tryFastTraversal<isStencil>::tryFast(*this, expr, T_update()))
             return *this;
 
+#endif
 #endif
 
 #ifdef BZ_ARRAY_2D_STENCIL_TILING
@@ -780,6 +787,7 @@ cout.flush();
 // Fast traversals require <set> from the ISO/ANSI C++ standard library
 
 #ifdef BZ_HAVE_STD
+#ifdef BZ_ARRAY_SPACE_FILLING_TRAVERSAL
 
 template<class T_numtype, int N_rank> template<class T_expr, class T_update>
 inline Array<T_numtype, N_rank>&
@@ -905,6 +913,8 @@ cerr << "maxRank = " << maxRank << " secondLastRank = " << secondLastRank
 
     return *this;
 }
+
+#endif // BZ_ARRAY_SPACE_FILLING_TRAVERSAL
 #endif // BZ_HAVE_STD
 
 #ifdef BZ_ARRAY_2D_NEW_STENCIL_TILING

@@ -1,6 +1,6 @@
 // Example of using Array<T,N>::iterator 
 
-#include <blitz/array.h>
+#include <blitz/Array.h>
 
 BZ_USING_NAMESPACE(blitz)
 

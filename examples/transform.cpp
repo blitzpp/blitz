@@ -1,5 +1,5 @@
-#include <blitz/tinymat.h>
-#include <blitz/tinyvec.h>
+#include <blitz/TinyMat.h>
+#include <blitz/TinyVec.h>
 
 #ifdef BZ_NAMESPACES
 using namespace blitz;

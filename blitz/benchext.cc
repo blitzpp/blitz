@@ -6,8 +6,11 @@
  * conditions of use.
  *
  * $Log$
- * Revision 1.1  2000/06/19 12:26:11  tveldhui
- * Initial revision
+ * Revision 1.2  2001/01/26 18:30:50  tveldhui
+ * More source code reorganization to reduce compile times.
+ *
+ * Revision 1.1.1.1  2000/06/19 12:26:11  tveldhui
+ * Imported sources
  *
  * Revision 1.2  1998/03/14 00:04:47  tveldhui
  * 0.2-alpha-05
@@ -23,6 +26,8 @@
 #ifndef BZ_BENCHEXT_H
  #error <blitz/benchext.cc> must be included via <blitz/benchext.h>
 #endif
+
+#include <blitz/Vector.h>
 
 #ifdef BZ_HAVE_STD
  #include <fstream>

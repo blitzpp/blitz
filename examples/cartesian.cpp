@@ -1,4 +1,4 @@
-#include <blitz/array-only.h>
+#include <blitz/Array.h>
 #include <blitz/array/cartesian.h>
 #include <list>
 

@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.4  2001/01/26 18:30:50  tveldhui
+ * More source code reorganization to reduce compile times.
+ *
  * Revision 1.3  2001/01/24 22:51:50  tveldhui
  * Reorganized #include orders to avoid including the huge Vector e.t.
  * implementation when using Array.
@@ -498,13 +501,6 @@ BZ_NAMESPACE_END
 #include <blitz/veciter.h>          // Iterators
 #include <blitz/vecpick.h>          // VectorPick
 #include <blitz/vecexpr.h>          // Expression template classes
-
-#ifdef BZ_GANG_INCLUDE
-#include <blitz/vecbops.cc>         // Operators with two operands
-#include <blitz/vecuops.cc>         // Functions with one argument
-#include <blitz/vecbfn.cc>          // Functions with two arguments
-#endif
-
 #include <blitz/vecglobs.h>         // Global functions
 #include <blitz/vector.cc>          // Member functions
 #include <blitz/vecio.cc>           // IO functions

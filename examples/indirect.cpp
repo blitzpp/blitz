@@ -1,4 +1,4 @@
-#include <blitz/array.h>
+#include <blitz/Array.h>
 #include <blitz/array/indirect.h>
 #include <list>
 #include <vector>

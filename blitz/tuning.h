@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2001/01/26 18:30:50  tveldhui
+ * More source code reorganization to reduce compile times.
+ *
  * Revision 1.2  2001/01/24 20:22:50  tveldhui
  * Updated copyright date in headers.
  *
@@ -71,6 +74,7 @@
 #define BZ_COLLAPSE_LOOPS
 #define BZ_USE_FAST_READ_ARRAY_EXPR
 #define BZ_ARRAY_EXPR_USE_COMMON_STRIDE
+#undef  BZ_ARRAY_SPACE_FILLING_TRAVERSAL
 #undef  BZ_ARRAY_FAST_TRAVERSAL_UNROLL
 #undef  BZ_ARRAY_STACK_TRAVERSAL_CSE_AND_ANTIALIAS
 #undef  BZ_ARRAY_STACK_TRAVERSAL_UNROLL
