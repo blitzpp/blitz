@@ -16,7 +16,7 @@ int main()
     Array<float,2> A(4,4);
     A = 1.0 / (1 + i + j);
 
-    float r = sum(A);
+    sum(A);
     return module2();
 }
 
