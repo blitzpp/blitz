@@ -65,7 +65,7 @@ struct asExpr<IndexPlaceholder<N> > {
     static T_expr getExpr(T_expr x) { return x; }
 };
 
-#ifdef BZ_TEMPLATES_AS_TEMPLATE_ARGUMENTS
+#ifdef BZ_HAVE_TEMPLATES_AS_TEMPLATE_ARGUMENTS
 
 //  A traits class that provides the return type of a binary operation.
 
@@ -98,7 +98,7 @@ struct BzTernaryExprResult {
            typename asExpr<O3>::T_expr::T_numtype> > > T_result;
 };
 
-#endif /* BZ_TEMPLATES_AS_TEMPLATE_ARGUMENTS */
+#endif /* BZ_HAVE_TEMPLATES_AS_TEMPLATE_ARGUMENTS */
 
 BZ_NAMESPACE_END
 
