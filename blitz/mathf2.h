@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/mathf2.h  Declaration of additional math functions
  *
@@ -30,9 +31,7 @@
  #error <blitz/mathf2.h> should be included via <blitz/applics.h>
 #endif
 
-#ifndef BZ_PRETTYPRINT_H
- #include <blitz/prettyprint.h>
-#endif
+#include <blitz/prettyprint.h>
 
 BZ_NAMESPACE(blitz)
 
@@ -47,7 +46,7 @@ public:
     { return _bz_exp<T_numtype1>::apply(x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "cexp(";
@@ -67,7 +66,7 @@ public:
     { return _bz_sqrt<T_numtype1>::apply(x); }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "csqrt(";
@@ -89,7 +88,7 @@ public:
     }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "pow2(";
@@ -112,7 +111,7 @@ public:
     }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "pow3(";
@@ -135,7 +134,7 @@ public:
     }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "pow4(";
@@ -159,7 +158,7 @@ public:
     }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "pow5(";
@@ -183,7 +182,7 @@ public:
     }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "pow6(";
@@ -209,7 +208,7 @@ public:
     }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "pow7(";
@@ -233,7 +232,7 @@ public:
     }
 
     template<typename T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
         const T1& a)
     {
         str += "pow8(";

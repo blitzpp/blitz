@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/update.h      Declaration of the _bz_XXXX updater classes
  *
@@ -26,22 +27,20 @@
 #ifndef BZ_UPDATE_H
 #define BZ_UPDATE_H
 
-#ifndef BZ_BLITZ_H
- #include <blitz/blitz.h>
-#endif
+#include <blitz/blitz.h>
 
 BZ_NAMESPACE(blitz)
 
 class _bz_updater_base { };
 
-#define BZ_DECL_UPDATER(name,op,symbol)               \
+#define BZ_DECL_UPDATER(name,op,symbol)                     \
   template<typename X, typename Y>                          \
-  class name : public _bz_updater_base {              \
-  public:                                             \
-    static inline void update(X& restrict x, Y y) \
-    { x op y; }                                       \
-    static void prettyPrint(string& str)              \
-    { str += symbol; }                                \
+  class name : public _bz_updater_base {                    \
+  public:                                                   \
+    static inline void update(X& restrict x, Y y)           \
+    { x op y; }                                             \
+    static void prettyPrint(BZ_STD_SCOPE(string) &str)      \
+    { str += symbol; }                                      \
   }
 
 template<typename X, typename Y>
@@ -50,7 +49,7 @@ class _bz_update : public _bz_updater_base {
     static inline void update(X& restrict x, Y y)
     { x = (X)y; }
 
-    static void prettyPrint(string& str)
+    static void prettyPrint(BZ_STD_SCOPE(string) &str)
     { str += "="; }
 };
 

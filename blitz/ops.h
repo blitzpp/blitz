@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/ops.h           Function objects for math operators
  *
@@ -26,17 +27,9 @@
 #ifndef BZ_OPS_H
 #define BZ_OPS_H
 
-#ifndef BZ_BLITZ_H
- #include <blitz/blitz.h>
-#endif
-
-#ifndef BZ_PROMOTE_H
- #include <blitz/promote.h>
-#endif
-
-#ifndef BZ_PRETTYPRINT_H
- #include <blitz/prettyprint.h>
-#endif
+#include <blitz/blitz.h>
+#include <blitz/promote.h>
+#include <blitz/prettyprint.h>
 
 BZ_NAMESPACE(blitz)
 
@@ -74,22 +67,22 @@ BZ_NAMESPACE(blitz)
     
 /* Unary operators that return same type as argument */
     
-#define BZ_DEFINE_UNARY_OP(name,op)                         \
+#define BZ_DEFINE_UNARY_OP(name,op)                            \
 template<typename T_numtype1>                                  \
-struct name {                                               \
-    typedef T_numtype1 T_numtype;                           \
-                                                            \
-    static inline T_numtype                                 \
-    apply(T_numtype1 a)                                     \
-    { return op a; }                                        \
-							    \
+struct name {                                                  \
+    typedef T_numtype1 T_numtype;                              \
+                                                               \
+    static inline T_numtype                                    \
+    apply(T_numtype1 a)                                        \
+    { return op a; }                                           \
+							       \
     template<typename T1>                                      \
-    static inline void prettyPrint(string& str,             \
-        prettyPrintFormat& format, const T1& t1)            \
-    {                                                       \
-        str += #op;                                         \
-        t1.prettyPrint(str, format);                        \
-    }                                                       \
+    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,  \
+        prettyPrintFormat& format, const T1& t1)               \
+    {                                                          \
+        str += #op;                                            \
+        t1.prettyPrint(str, format);                           \
+    }                                                          \
 };
 
 BZ_DEFINE_UNARY_OP(BitwiseNot,~)
@@ -99,21 +92,21 @@ BZ_DEFINE_UNARY_OP(UnaryMinus,-)
     
 /* Unary operators that return a specified type */
     
-#define BZ_DEFINE_UNARY_OP_RET(name,op,ret)                 \
+#define BZ_DEFINE_UNARY_OP_RET(name,op,ret)                    \
 template<typename T_numtype1>                                  \
-struct name {                                               \
-    typedef ret T_numtype;                                  \
-    static inline T_numtype                                 \
-    apply(T_numtype1 a)                                     \
-    { return op a; }                                        \
-                                                            \
+struct name {                                                  \
+    typedef ret T_numtype;                                     \
+    static inline T_numtype                                    \
+    apply(T_numtype1 a)                                        \
+    { return op a; }                                           \
+                                                               \
     template<typename T1>                                      \
-    static inline void prettyPrint(string& str,             \
-        prettyPrintFormat& format, const T1& t1)            \
-    {                                                       \
-        str += #op;                                         \
-        t1.prettyPrint(str, format);                        \
-    }                                                       \
+    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,  \
+        prettyPrintFormat& format, const T1& t1)               \
+    {                                                          \
+        str += #op;                                            \
+        t1.prettyPrint(str, format);                           \
+    }                                                          \
 };
 
 BZ_DEFINE_UNARY_OP_RET(LogicalNot,!,bool)
@@ -121,26 +114,26 @@ BZ_DEFINE_UNARY_OP_RET(LogicalNot,!,bool)
     
 /* Binary operators that return type based on type promotion */
     
-#define BZ_DEFINE_BINARY_OP(name,op)                        \
+#define BZ_DEFINE_BINARY_OP(name,op)                              \
 template<typename T_numtype1, typename T_numtype2>                \
-struct name {                                               \
-    typedef BZ_PROMOTE(T_numtype1, T_numtype2) T_numtype;   \
-                                                            \
-    static inline T_numtype                                 \
-    apply(T_numtype1 a, T_numtype2 b)                       \
-    { return a op b; }                                      \
-							    \
+struct name {                                                     \
+    typedef BZ_PROMOTE(T_numtype1, T_numtype2) T_numtype;         \
+                                                                  \
+    static inline T_numtype                                       \
+    apply(T_numtype1 a, T_numtype2 b)                             \
+    { return a op b; }                                            \
+							          \
     template<typename T1, typename T2>                            \
-    static inline void prettyPrint(string& str,             \
-        prettyPrintFormat& format, const T1& t1,            \
-        const T2& t2)                                       \
-    {                                                       \
-        str += "(";                                         \
-        t1.prettyPrint(str, format);                        \
-        str += #op;                                         \
-        t2.prettyPrint(str, format);                        \
-        str += ")";                                         \
-    }                                                       \
+    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,     \
+        prettyPrintFormat& format, const T1& t1,                  \
+        const T2& t2)                                             \
+    {                                                             \
+        str += "(";                                               \
+        t1.prettyPrint(str, format);                              \
+        str += #op;                                               \
+        t2.prettyPrint(str, format);                              \
+        str += ")";                                               \
+    }                                                             \
 };
 
 BZ_DEFINE_BINARY_OP(Add,+)
@@ -157,25 +150,25 @@ BZ_DEFINE_BINARY_OP(ShiftLeft,<<)
     
 /* Binary operators that return a specified type */
     
-#define BZ_DEFINE_BINARY_OP_RET(name,op,ret)                \
+#define BZ_DEFINE_BINARY_OP_RET(name,op,ret)                      \
 template<typename T_numtype1, typename T_numtype2>                \
-struct name {                                               \
-    typedef ret T_numtype;                                  \
-    static inline T_numtype                                 \
-    apply(T_numtype1 a, T_numtype2 b)                       \
-    { return a op b; }                                      \
-                                                            \
+struct name {                                                     \
+    typedef ret T_numtype;                                        \
+    static inline T_numtype                                       \
+    apply(T_numtype1 a, T_numtype2 b)                             \
+    { return a op b; }                                            \
+                                                                  \
     template<typename T1, typename T2>                            \
-    static inline void prettyPrint(string& str,             \
-        prettyPrintFormat& format, const T1& t1,            \
-        const T2& t2)                                       \
-    {                                                       \
-        str += "(";                                         \
-        t1.prettyPrint(str, format);                        \
-        str += #op;                                         \
-        t2.prettyPrint(str, format);                        \
-        str += ")";                                         \
-    }                                                       \
+    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,     \
+        prettyPrintFormat& format, const T1& t1,                  \
+        const T2& t2)                                             \
+    {                                                             \
+        str += "(";                                               \
+        t1.prettyPrint(str, format);                              \
+        str += #op;                                               \
+        t2.prettyPrint(str, format);                              \
+        str += ")";                                               \
+    }                                                             \
 };
 
 BZ_DEFINE_BINARY_OP_RET(Greater,>,bool)
