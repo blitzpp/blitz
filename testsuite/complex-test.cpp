@@ -6,7 +6,7 @@
 
 BZ_USING_NAMESPACE(blitz)
 
-#ifndef BZ_HAVE_COMPLEX_MATH
+#ifndef BZ_HAVE_COMPLEX_FCNS
 
 
 int main()
