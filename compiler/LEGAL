@@ -1,0 +1,8 @@
+This compiler test suite is (C) 1997 Todd Veldhuizen.  Permission is
+granted to use this test suite for non-commercial purposes only.  This
+suite may be redistributed so long as no fee is charged, and all the
+files in the original distribution are included intact.
+
+If you wish to use this suite for a commercial project (i.e. testing
+ISO/ANSI C++ standard compliance for a compiler), please contact me
+for licensing information at <tveldhui@monet.uwaterloo.ca>.

@@ -1,0 +1,22 @@
+                      Blitz++ Compiler Feature Tests
+
+                http://monet.uwaterloo.ca/blitz/compilers/
+
+August 1997
+
+This tar file (bzconfig.tar.gz) contains a set of small programs to
+test your compiler's support of new C++ language features.  Some of
+these features are necessary for the Blitz++ library; others aren't.
+
+Run the script bzconfig by invoking bash (or sh) on it:
+bash ./bzconfig
+
+After asking a few questions about invoking your compiler, the script
+will compile and run a series of small C++ programs.  The results of
+the tests are written to a file config.h.
+
+* If you have problems getting the script to work, try setting
+  "verbose=1" or "set -x" at the beginning of the script file.
+
+Thanks,
+Todd
