@@ -1964,11 +1964,11 @@ if test "${with_cxx+set}" = set; then
      ;;
      *:*)                   # Simple initialization syntax
        CXX=`echo "$cxxwith" | sed  -n -e 's/.*:\(.*\)/\1/p'`
-       CXXFLAGS=""
+       CXXFLAGS="-qrtti=all"
      ;;
      *)                     # Default values
        CXX="xlC"
-       CXXFLAGS=""
+       CXXFLAGS="-qrtti=all"
      ;;
    esac
        CXX_OPTIMIZE_FLAGS="-O3 -qstrict -Q -qansialias"
