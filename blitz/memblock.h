@@ -23,6 +23,13 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.6  2002/03/06 18:07:42  patricg
+ *
+ * in the constructor
+ * MemoryBlock(size_t length, T_type* _bz_restrict data)
+ * dataBlockAddress_ = data replaced by dataBlockAddress_ = 0
+ * as it was before. (testsuite/extract does not crash then)
+ *
  * Revision 1.5  2002/02/28 23:38:20  tveldhui
  * Fixed extra semicolon problem with KCC
  *
@@ -138,7 +145,7 @@ protected:
     {
         length_ = length;
         data_ = data;
-        dataBlockAddress_ = data;
+        dataBlockAddress_ = 0;
         references_ = 0;
         BZ_MUTEX_INIT(mutex);
     }
