@@ -10,7 +10,7 @@ AC_CONFIG_HEADERS(blitz/config.h)
 
 AC_CANONICAL_TARGET
 
-AM_INIT_AUTOMAKE([foreign 1.8 dist-bzip2 nostdinc])
+AM_INIT_AUTOMAKE([foreign 1.9 dist-bzip2 nostdinc])
 
 # Avoid generating makefile rules to rebuild maintainer-only files by
 # default.  Maintainers may override this default and generate these
@@ -30,14 +30,16 @@ Configuring $PACKAGE_STRING for $target
 
 # Fortran compiler
 AC_LANG(Fortran 77)
-AC_PROG_F77([xlf ifort ifc f77 g77 pgf77 fort77])
+AC_PROG_F77([xlf ifort ifc gfortran f77 g77 pgf77 fort77])
+AC_F77_LIBRARY_LDFLAGS
 AC_LANG(Fortran)
-AC_PROG_FC([xlf90 ifort ifc f90 pgf90])
+AC_PROG_FC([xlf90 ifort ifc gfortran f90 pgf90])
+AC_FC_LIBRARY_LDFLAGS
 
-if test x"$FC" != x; then
+if test -n "$FC"; then
     AC_FC_FREEFORM(,FC=)
 fi
-if test x"$FC" != x; then
+if test -n "$FC"; then
     AC_FC_SRCEXT(f90,,FC=)
 fi
 AC_FORTRAN_FLAGS_PRESET
@@ -61,7 +63,7 @@ AC_COMPILERS_ENABLE_64BITS
 AM_DISABLE_SHARED
 AC_PROG_LIBTOOL
 
-AC_CHECK_LIB(m, sin)
+AC_CHECK_FUNC([sin],,[AC_CHECK_LIB(m,sin)])
 
 AC_LIB_BLAS
 
@@ -72,11 +74,6 @@ AC_CXX_ENABLE_DEBUG
 
 # autoconf replacement of bzconfig
 AC_CHECK_CXX_FEATURES
-
-# Create the lib subdirectory by hand, since it has no Makefile.in
-if test ! -d lib ; then
-  mkdir lib
-fi
 
 # Summarize variables
 AC_ENV
