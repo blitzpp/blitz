@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/indexexpr.h     Declaration of the IndexPlaceholder<N> class
  *
@@ -26,17 +27,9 @@
 #ifndef BZ_INDEXEXPR_H
 #define BZ_INDEXEXPR_H
 
-#ifndef BZ_TINYVEC_H
- #include <blitz/tinyvec.h>
-#endif
-
-#ifndef BZ_PRETTYPRINT_H
- #include <blitz/prettyprint.h>
-#endif
-
-#ifndef BZ_ETBASE_H
- #include <blitz/etbase.h>
-#endif
+#include <blitz/tinyvec.h>
+#include <blitz/prettyprint.h>
+#include <blitz/etbase.h>
 
 BZ_NAMESPACE(blitz)
 
@@ -134,7 +127,7 @@ public:
         return true;
     }
 
-    void prettyPrint(string& str, prettyPrintFormat&) const {
+    void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat&) const {
         // NEEDS_WORK-- do real formatting for reductions
         str += "index-expr[NEEDS_WORK]";
     }
