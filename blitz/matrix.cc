@@ -6,8 +6,12 @@
  * conditions of use.
  *
  * $Log$
- * Revision 1.1  2000/06/19 12:26:11  tveldhui
- * Initial revision
+ * Revision 1.2  2002/03/06 16:29:28  patricg
+ *
+ * data_ replaced by this->data_
+ *
+ * Revision 1.1.1.1  2000/06/19 12:26:11  tveldhui
+ * Imported sources
  *
  * Revision 1.4  1998/03/14 00:04:47  tveldhui
  * 0.2-alpha-05
@@ -43,7 +47,7 @@ Matrix<P_numtype, P_structure>::operator=(_bz_MatExpr<P_expr> expr)
     _bz_typename P_structure::T_iterator iter(rows(), cols());
     while (iter)
     {
-        data_[iter.offset()] = expr(iter.row(), iter.col());
+        this->data_[iter.offset()] = expr(iter.row(), iter.col());
         ++iter;
     }
 
