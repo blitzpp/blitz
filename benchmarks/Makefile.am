@@ -12,9 +12,9 @@ loop4.cpp loop4f.f loop4f90.f90 loopstruct.cpp looptest.cpp makelogo.cpp \
 makeloops.cpp qcd.txt quinlan.cpp stenciln.cpp tiny3.cpp
 
 
-AM_CXXFLAGS = -I$(top_srcdir) @CXXFLAGS@ @CXX_OPTIMIZE_FLAGS@ @CXXFFLAGS@ @CXXFCFLAG@
+AM_CXXFLAGS = -I$(srcdir) -I$(top_srcdir) @CXXFLAGS@ @CXX_OPTIMIZE_FLAGS@ @CXXFFLAGS@ @CXXFCFLAG@
 AM_FFLAGS = @F77_OPTIMIZE_FLAGS@
-LIBS = -L$(top_srcdir)/lib -lblitz -lm @BLASLIB@ @FORTLIBS@ @CXX_LIBS@
+LIBS = -L$(top_builddir)/lib -lblitz -lm @BLASLIB@ @FORTLIBS@ @CXX_LIBS@
 
 if F90_COMPILER
 
@@ -44,33 +44,6 @@ f90.f.lo:
 
 endif
 
-
-# install these files
-#benchmarkdir = $(prefix)/benchmarks
-#benchmark_DATA = acou3d.cpp acou3db1.cpp acou3db2.cpp acou3db3.cpp \
-#acou3db4.cpp acou3df.f acou3df2.f acou3df90.f90 acou3df902.f90 acoustic.cpp \
-#acousticf.f acousticf2.f acousticf90.f90 acousticf902.f90 arrdaxpy.cpp \
-#arrdaxpy.m arrdaxpy2.m arrdaxpyf.f arrexpr1.cpp arrexpr1.m cfd.cpp cfdf.f \
-#chunky.cpp compiletime.cpp ctime1.cpp ctime1v.cpp ctime2.cpp \
-#ctime2v.cpp ctime3.cpp ctime3v.cpp ctime4.cpp ctime4v.cpp ctime5.cpp \
-#ctime5c.cpp ctime5v.cpp daxpy.cpp daxpy2.cpp daxpyf90-2.f90 daxpyf90.f90 \
-#dot.cpp dot2.cpp echof2-back.f echotune.cpp echotune.m echotunef.f fdaxpy.f \
-#fidaxpy.f frek.m haney.cpp haneyf.f hao-he-mark.cpp hao-he.cpp kepler.cpp \
-#loop1-bug.cpp loop1.cpp loop10.cpp loop10f.f loop10f90.f90 loop11.cpp \
-#loop11f.f loop11f90.f90 loop12.cpp loop12f.f loop12f90.f90 loop13.cpp \
-#loop13f.f loop13f90.f90 loop14.cpp loop14f.f loop14f90.f90 loop15.cpp \
-#loop15f.f loop15f90.f90 loop16.cpp loop16f.f loop16f90.f90 loop17.cpp \
-#loop17f.f loop17f90.f90 loop18.cpp loop18f.f loop18f90.f90 loop19.cpp \
-#loop19f.f loop19f90.f90 loop1f.f loop1f90.f90 loop2.cpp loop21.cpp loop21f.f \
-#loop21f90.f90 loop22.cpp loop22f.f loop22f90.f90 loop23.cpp loop23f.f \
-#loop23f90.f90 loop24.cpp loop24f.f loop24f90.f90 loop25.cpp loop25f.f \
-#loop25f90.f90 loop2f.f loop2f90.f90 loop3.cpp loop36.cpp loop36f.f \
-#loop36f90.f90 loop3f.f loop3f90.f90 loop4.cpp loop4f.f loop4f90.f90 \
-#loop5.cpp loop5f.f loop5f90.f90 loop6.cpp loop6f.f loop6f90.f90 loop8.cpp \
-#loop8f.f loop8f90.f90 loop9.cpp loop9f.f loop9f90.f90 loopstruct.cpp \
-#looptest.cpp makelogo.cpp makeloops.cpp qcd.cpp qcdf.f quinlan.cpp \
-#stencil.cpp stencilf.f stencilf2.f stencilf90.f90 stenciln.cpp tiny3.cpp \
-#tinydaxpy.cpp
 
 ############################################################################
 

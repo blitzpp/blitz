@@ -2,16 +2,9 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-# install these files
-#docdir = $(prefix)/doc/blitz/examples
-#doc_DATA = cast.cpp debug.cpp dump.cpp fixed.cpp fixed-point.h outer.cpp \
-#output.cpp range.cpp simple.cpp slicing.cpp storage.cpp strideslice.cpp \
-#xor.cpp
-
 EXTRA_DIST = fixed-class.cpp fixed-point.h makefile.example io.data
 
-INCLUDES = -I$(top_srcdir) -I$(top_builddir)
-AM_CXXFLAGS = @CXXFLAGS@ @CXX_DEBUG_FLAGS@
+AM_CXXFLAGS = -I$(srcdir) -I$(top_srcdir) @CXXFLAGS@ @CXX_DEBUG_FLAGS@
 LDADD = -L$(top_builddir)/lib -lblitz
 
 EXAMPLES = simple storage outer strideslice slicing debug output io dump xor \

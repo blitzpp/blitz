@@ -4,18 +4,8 @@
 
 EXTRA_DIST = stencil4.f profile.cpp tiny2.cpp tiny3.cpp
 
-INCLUDES = -I$(top_srcdir) -I$(top_builddir)
+AM_CXXFLAGS = -I$(srcdir) -I$(top_srcdir) @CXXFLAGS@
 LDADD = -L$(top_builddir)/lib -lblitz
-
-# install these files
-#examplesdir = $(prefix)/examples
-#examples_DATA = array.cpp cartesian.cpp cast.cpp cfd.cpp complex-test.cpp \
-#convolve.cpp curldiv.cpp deriv.cpp diff.cpp erf.cpp fixed.cpp indirect.cpp \
-#io.cpp iter.cpp matmult.cpp nested.cpp numinquire.cpp outer.cpp pauli.cpp \
-#pick.cpp polymorph.cpp prettyprint.cpp profile.cpp qcd.cpp rand2.cpp \
-#random.cpp rangexpr.cpp reduce.cpp simple.cpp slicing.cpp stencil.cpp \
-#stencil2.cpp stencil3.cpp stencilet.cpp storage.cpp tiny.cpp tiny2.cpp \
-#tiny3.cpp transform.cpp useret.cpp where.cpp whitt.cpp Makefile
 
 EXTRA_PROGRAMS = array cartesian cast cfd complex-test convolve curldiv \
 deriv diff erf fixed indirect io iter matmult nested numinquire outer pauli \
