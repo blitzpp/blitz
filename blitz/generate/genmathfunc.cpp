@@ -296,7 +296,7 @@ int main()
 {
     std::cout << "Generating <mathfunc.h>" << std::endl;
 
-    ofs.open("mathfunc.h");
+    ofs.open("../mathfunc.h");
 
     ofs <<  
 "// Generated: " << __FILE__ << " " << __DATE__ << " " << __TIME__ 
