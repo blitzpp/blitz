@@ -53,8 +53,8 @@
  * unsigned cols()    const;
  * unsigned firstInRow() const;
  * unsigned firstInCol() const;
- * template<class T> T& get(T* data, unsigned i, unsigned j);
- * template<class T> T  get(const T* data, unsigned i, unsigned j) const;
+ * template<typename T> T& get(T* data, unsigned i, unsigned j);
+ * template<typename T> T  get(const T* data, unsigned i, unsigned j) const;
  * bool inRange(unsigned i, unsigned j) const
  * unsigned lastInRow() const;
  * unsigned lastInCol() const;
@@ -88,25 +88,20 @@ public:
         : rows_(rows), cols_(cols)
     { }
 
-    unsigned columns() const
-    { return cols_; }
+    unsigned columns() const { return cols_; }
 
-    unsigned cols() const
-    { return cols_; }
+    unsigned cols() const { return cols_; }
 
-    _bz_bool inRange(unsigned i, unsigned j) const
-    {
-        return (i < rows_) && (j < cols_);
+    bool inRange(const unsigned i,const unsigned j) const {
+        return (i<rows_) && (j<cols_);
     }
 
-    void resize(unsigned rows, unsigned cols)
-    {
+    void resize(unsigned rows, unsigned cols) {
         rows_ = rows;
         cols_ = cols;
     }
 
-    unsigned rows() const
-    { return rows_; }
+    unsigned rows() const { return rows_; }
 
 protected:
     unsigned rows_, cols_;
