@@ -3,8 +3,11 @@
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
 ! $Log$
-! Revision 1.1  2000/06/19 12:26:03  tveldhui
-! Initial revision
+! Revision 1.2  2002/10/08 20:10:52  julianc
+! Removed some extraneous semicolons that were inhibiting compilation of these Fortran sources with some compilers.
+!
+! Revision 1.1.1.1  2000/06/19 12:26:03  tveldhui
+! Imported sources
 !
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -83,10 +86,10 @@
       DO k=1,N
         DO j=1,N
           DO i=1,N/2
-            c(i,j,k) = 0.05;
+            c(i,j,k) = 0.05
           END DO
           DO i=N/2+1,N
-            c(i,j,k) = 0.3;
+            c(i,j,k) = 0.3
           END DO
         END DO
       END DO
@@ -105,7 +108,7 @@
       DO k=cavityFront, cavityBack
         DO j=cavityLeft, cavityRight
           DO i=cavityTop, cavityBottom
-            c(i,j,k) = 0.02;
+            c(i,j,k) = 0.02
           END DO
           DO i=cavityTop2, cavityBottom2
             c(i,j,k) = 0.001
@@ -118,7 +121,7 @@
       ci = N/2.0
       cj = N/2.0
       ck = N/2.0
-      s2 = 64.0 * 9.0 / ((N/2.0) ** 2);
+      s2 = 64.0 * 9.0 / ((N/2.0) ** 2)
   
       DO k=1,N
         DO j=1,N
