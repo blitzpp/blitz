@@ -23,6 +23,13 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.9  2002/06/28 01:33:03  jcumming
+ * Modified the isInRange() methods to check that each index value is
+ * greater than or equal to the base index value, rather than just
+ * casting (index-base) to an unsigned int.  The latter gives unpredictable
+ * results if index<base and produces compiler warnings about comparisons
+ * between unsigned and signed quantities.
+ *
  * Revision 1.8  2002/06/27 00:28:50  jcumming
  * Changed template parameter name T_numtype2 to P_numtype2 in member function
  * template declarataions for consistency with definitions and to avoid any
@@ -1221,129 +1228,129 @@ public:
 
     _bz_bool isInRangeForDim(int i, int d) const
     {
-        return unsigned(i - base(d)) < length_[d];
+        return i >= base(d) && (i - base(d)) < length_[d];
     }
 
     _bz_bool isInRange(int i0) const
     {
-        return unsigned(i0 - base(0)) < length_[0];
+        return i0 >= base(0) && (i0 - base(0)) < length_[0];
     }
 
     _bz_bool isInRange(int i0, int i1) const
     {
-        return unsigned(i0 - base(0)) < length_[0]
-            && unsigned(i1 - base(1)) < length_[1];
+        return i0 >= base(0) && (i0 - base(0)) < length_[0]
+            && i1 >= base(1) && (i1 - base(1)) < length_[1];
     }
 
     _bz_bool isInRange(int i0, int i1, int i2) const
     {
-        return unsigned(i0 - base(0)) < length_[0]
-            && unsigned(i1 - base(1)) < length_[1]
-            && unsigned(i2 - base(2)) < length_[2];
+        return i0 >= base(0) && (i0 - base(0)) < length_[0]
+            && i1 >= base(1) && (i1 - base(1)) < length_[1]
+            && i2 >= base(2) && (i2 - base(2)) < length_[2];
     }
 
     _bz_bool isInRange(int i0, int i1, int i2, int i3) const
     {
-        return unsigned(i0 - base(0)) < length_[0]
-            && unsigned(i1 - base(1)) < length_[1]
-            && unsigned(i2 - base(2)) < length_[2]
-            && unsigned(i3 - base(3)) < length_[3];
+        return i0 >= base(0) && (i0 - base(0)) < length_[0]
+            && i1 >= base(1) && (i1 - base(1)) < length_[1]
+            && i2 >= base(2) && (i2 - base(2)) < length_[2]
+            && i3 >= base(3) && (i3 - base(3)) < length_[3];
     }
 
     _bz_bool isInRange(int i0, int i1, int i2, int i3, int i4) const
     {
-        return unsigned(i0 - base(0)) < length_[0]
-            && unsigned(i1 - base(1)) < length_[1]
-            && unsigned(i2 - base(2)) < length_[2]
-            && unsigned(i3 - base(3)) < length_[3]
-            && unsigned(i4 - base(4)) < length_[4];
+        return i0 >= base(0) && (i0 - base(0)) < length_[0]
+            && i1 >= base(1) && (i1 - base(1)) < length_[1]
+            && i2 >= base(2) && (i2 - base(2)) < length_[2]
+            && i3 >= base(3) && (i3 - base(3)) < length_[3]
+            && i4 >= base(4) && (i4 - base(4)) < length_[4];
     }
 
     _bz_bool isInRange(int i0, int i1, int i2, int i3, int i4,
         int i5) const
     {
-        return unsigned(i0 - base(0)) < length_[0]
-            && unsigned(i1 - base(1)) < length_[1]
-            && unsigned(i2 - base(2)) < length_[2]
-            && unsigned(i3 - base(3)) < length_[3]
-            && unsigned(i4 - base(4)) < length_[4]
-            && unsigned(i5 - base(5)) < length_[5];
+        return i0 >= base(0) && (i0 - base(0)) < length_[0]
+            && i1 >= base(1) && (i1 - base(1)) < length_[1]
+            && i2 >= base(2) && (i2 - base(2)) < length_[2]
+            && i3 >= base(3) && (i3 - base(3)) < length_[3]
+            && i4 >= base(4) && (i4 - base(4)) < length_[4]
+            && i5 >= base(5) && (i5 - base(5)) < length_[5];
     }
 
     _bz_bool isInRange(int i0, int i1, int i2, int i3, int i4,
         int i5, int i6) const
     {
-        return unsigned(i0 - base(0)) < length_[0]
-            && unsigned(i1 - base(1)) < length_[1]
-            && unsigned(i2 - base(2)) < length_[2]
-            && unsigned(i3 - base(3)) < length_[3]
-            && unsigned(i4 - base(4)) < length_[4]
-            && unsigned(i5 - base(5)) < length_[5]
-            && unsigned(i6 - base(6)) < length_[6];
+        return i0 >= base(0) && (i0 - base(0)) < length_[0]
+            && i1 >= base(1) && (i1 - base(1)) < length_[1]
+            && i2 >= base(2) && (i2 - base(2)) < length_[2]
+            && i3 >= base(3) && (i3 - base(3)) < length_[3]
+            && i4 >= base(4) && (i4 - base(4)) < length_[4]
+            && i5 >= base(5) && (i5 - base(5)) < length_[5]
+            && i6 >= base(6) && (i6 - base(6)) < length_[6];
     }
 
     _bz_bool isInRange(int i0, int i1, int i2, int i3, int i4,
         int i5, int i6, int i7) const
     {
-        return unsigned(i0 - base(0)) < length_[0]
-            && unsigned(i1 - base(1)) < length_[1]
-            && unsigned(i2 - base(2)) < length_[2]
-            && unsigned(i3 - base(3)) < length_[3]
-            && unsigned(i4 - base(4)) < length_[4]
-            && unsigned(i5 - base(5)) < length_[5]
-            && unsigned(i6 - base(6)) < length_[6]
-            && unsigned(i7 - base(7)) < length_[7];
+        return i0 >= base(0) && (i0 - base(0)) < length_[0]
+            && i1 >= base(1) && (i1 - base(1)) < length_[1]
+            && i2 >= base(2) && (i2 - base(2)) < length_[2]
+            && i3 >= base(3) && (i3 - base(3)) < length_[3]
+            && i4 >= base(4) && (i4 - base(4)) < length_[4]
+            && i5 >= base(5) && (i5 - base(5)) < length_[5]
+            && i6 >= base(6) && (i6 - base(6)) < length_[6]
+            && i7 >= base(7) && (i7 - base(7)) < length_[7];
     }
 
     _bz_bool isInRange(int i0, int i1, int i2, int i3, int i4,
         int i5, int i6, int i7, int i8) const
     {
-        return unsigned(i0 - base(0)) < length_[0]
-            && unsigned(i1 - base(1)) < length_[1]
-            && unsigned(i2 - base(2)) < length_[2]
-            && unsigned(i3 - base(3)) < length_[3]
-            && unsigned(i4 - base(4)) < length_[4]
-            && unsigned(i5 - base(5)) < length_[5]
-            && unsigned(i6 - base(6)) < length_[6]
-            && unsigned(i7 - base(7)) < length_[7]
-            && unsigned(i8 - base(8)) < length_[8];
+        return i0 >= base(0) && (i0 - base(0)) < length_[0]
+            && i1 >= base(1) && (i1 - base(1)) < length_[1]
+            && i2 >= base(2) && (i2 - base(2)) < length_[2]
+            && i3 >= base(3) && (i3 - base(3)) < length_[3]
+            && i4 >= base(4) && (i4 - base(4)) < length_[4]
+            && i5 >= base(5) && (i5 - base(5)) < length_[5]
+            && i6 >= base(6) && (i6 - base(6)) < length_[6]
+            && i7 >= base(7) && (i7 - base(7)) < length_[7]
+            && i8 >= base(8) && (i8 - base(8)) < length_[8];
     }
 
     _bz_bool isInRange(int i0, int i1, int i2, int i3, int i4,
         int i5, int i6, int i7, int i8, int i9) const
     {
-        return unsigned(i0 - base(0)) < length_[0]
-            && unsigned(i1 - base(1)) < length_[1]
-            && unsigned(i2 - base(2)) < length_[2]
-            && unsigned(i3 - base(3)) < length_[3]
-            && unsigned(i4 - base(4)) < length_[4]
-            && unsigned(i5 - base(5)) < length_[5]
-            && unsigned(i6 - base(6)) < length_[6]
-            && unsigned(i7 - base(7)) < length_[7]
-            && unsigned(i8 - base(8)) < length_[8]
-            && unsigned(i9 - base(9)) < length_[9];
+        return i0 >= base(0) && (i0 - base(0)) < length_[0]
+            && i1 >= base(1) && (i1 - base(1)) < length_[1]
+            && i2 >= base(2) && (i2 - base(2)) < length_[2]
+            && i3 >= base(3) && (i3 - base(3)) < length_[3]
+            && i4 >= base(4) && (i4 - base(4)) < length_[4]
+            && i5 >= base(5) && (i5 - base(5)) < length_[5]
+            && i6 >= base(6) && (i6 - base(6)) < length_[6]
+            && i7 >= base(7) && (i7 - base(7)) < length_[7]
+            && i8 >= base(8) && (i8 - base(8)) < length_[8]
+            && i9 >= base(9) && (i9 - base(9)) < length_[9];
     }
 
     _bz_bool isInRange(int i0, int i1, int i2, int i3, int i4,
         int i5, int i6, int i7, int i8, int i9, int i10) const
     {
-        return unsigned(i0 - base(0)) < length_[0]
-            && unsigned(i1 - base(1)) < length_[1]
-            && unsigned(i2 - base(2)) < length_[2]
-            && unsigned(i3 - base(3)) < length_[3]
-            && unsigned(i4 - base(4)) < length_[4]
-            && unsigned(i5 - base(5)) < length_[5]
-            && unsigned(i6 - base(6)) < length_[6]
-            && unsigned(i7 - base(7)) < length_[7]
-            && unsigned(i8 - base(8)) < length_[8]
-            && unsigned(i9 - base(9)) < length_[9]
-            && unsigned(i10 - base(10)) < length_[10];
+        return i0 >= base(0) && (i0 - base(0)) < length_[0]
+            && i1 >= base(1) && (i1 - base(1)) < length_[1]
+            && i2 >= base(2) && (i2 - base(2)) < length_[2]
+            && i3 >= base(3) && (i3 - base(3)) < length_[3]
+            && i4 >= base(4) && (i4 - base(4)) < length_[4]
+            && i5 >= base(5) && (i5 - base(5)) < length_[5]
+            && i6 >= base(6) && (i6 - base(6)) < length_[6]
+            && i7 >= base(7) && (i7 - base(7)) < length_[7]
+            && i8 >= base(8) && (i8 - base(8)) < length_[8]
+            && i9 >= base(9) && (i9 - base(9)) < length_[9]
+            && i10 >= base(10) && (i10 - base(10)) < length_[10];
     }
 
     _bz_bool isInRange(const T_index& index) const
     {
         for (int i=0; i < N_rank; ++i)
-            if (unsigned(index[i] - base(i)) >= length_[i])
+            if (index[i] < base(i) || (index[i] - base(i)) >= length_[i])
                 return _bz_false;
 
         return _bz_true;
