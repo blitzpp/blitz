@@ -21,6 +21,6 @@ public:
 
 int main()
 {
-    Array<Material&,1> A(4);
+    Array<Material*,1> A(4);
 }
 
