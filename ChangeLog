@@ -1,3 +1,32 @@
+2004-10-26  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* doc/Makefile.am: Added blitz.dvi to EXTRA_DIST, so we don't need
+	to rebuild it from the blitz.texi file after unpacking the
+	distribution tarball.
+
+2004-10-25  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/generate/Makefile.am: Move header-generating programs to
+	EXTRA_PROGRAMS so they are not built by the default target.  They
+	will only be built if a generated header file needs to be updated.
+	* blitz/generate/Makefile.am: Made generated header files depend
+	directly on the source code file needed to generate header, rather
+	than the executable.  Modified build rules for generated headers
+	to build executable first and then run it to create header.  This
+	should allow the tarball distribution to skip generation of header
+	files if they are already provided in distribution and are
+	up-to-date.
+
+	* doc/examples/Makefile.am: Made .out output files depend on .cpp
+	source file rather than executable.  Modified build rule for
+	output files to first build executable, then run it to produce
+	output file.  With these changes, the tarball distribution can use
+	the given output files without having to rebuild all the
+	executables.
+
+	* doc/Makefile.am: Added HTML and image files to doc_DATA and to
+	EXTRA_DIST, so HTML documentation will be installed and included
+	in distribution tarball.
 
 2004-10-22  Patrick Guio  <patrick.guio@ii.uib.no>
 
@@ -9,6 +38,11 @@
 	replaced by tag option '-t' since '-s' is deprecated in recent doxygen
 	version.
 
+2004-10-21  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* doc/Makefile.am: Added new PDF versions of the figures to
+	EXTRA_DIST.  Moved blitz.ps from doc_DATA to EXTRA_DIST, so that
+	TeX is not required for installation.
 
 2004-10-16  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
