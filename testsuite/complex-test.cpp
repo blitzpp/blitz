@@ -2,7 +2,7 @@
 
 #include "testsuite.h"
 
-#include <blitz/Array.h>
+#include <blitz/array.h>
 
 BZ_USING_NAMESPACE(blitz)
 
@@ -41,23 +41,23 @@ int main()
 
     Array<float,1> Ab(2);
     Ab = abs(A);
-    BZTEST(abs(Ab(0) - 2.236068) < 0.0001);
-    BZTEST(abs(Ab(1) - 5.0) < 0.0001);
+    BZTEST(fabs(Ab(0) - 2.236068) < 0.0001);
+    BZTEST(fabs(Ab(1) - 5.0) < 0.0001);
 
     Ab = arg(A);
-    BZTEST(abs(Ab(0) - atan(2.0)) < 0.0001);
-    BZTEST(abs(Ab(1) - atan(4.0/3.0)) < 0.0001);
+    BZTEST(fabs(Ab(0) - atan(2.0)) < 0.0001);
+    BZTEST(fabs(Ab(1) - atan(4.0/3.0)) < 0.0001);
 
     Array<float,1> r(2), theta(2);
-    r(0) = 4.0;
-    r(1) = 15.0;
-    theta(0) = 3.141592/3.0;
-    theta(1) = 3.0*3.141592/2.0;
+    r(0) = 4.0f;
+    r(1) = 15.0f;
+    theta(0) = float(3.141592/3.0);
+    theta(1) = float(3.0*3.141592/2.0);
     Ac = blitz::polar(r,theta);
-    BZTEST(abs(real(Ac(0)) - 2) < 0.0001);
-    BZTEST(abs(imag(Ac(0)) - 3.4641012) < 0.0001);
-    BZTEST(abs(real(Ac(1)) - 0.0) < 0.0001);
-    BZTEST(abs(imag(Ac(1)) + 15.0) < 0.0001);
+    BZTEST(fabs(real(Ac(0)) - 2) < 0.0001);
+    BZTEST(fabs(imag(Ac(0)) - 3.4641012) < 0.0001);
+    BZTEST(fabs(real(Ac(1)) - 0.0) < 0.0001);
+    BZTEST(fabs(imag(Ac(1)) + 15.0) < 0.0001);
 
     return 0;
 }
