@@ -190,7 +190,9 @@ name(IndexPlaceholder<N1> d1, const T_other& d2)                                
 
 #else
 
+#define BZ_NO_TEMPLATES_AS_TEMPLATE_ARGUMENTS
 #include <blitz/array/newet-macros-old.h>
+#undef BZ_NO_TEMPLATES_AS_TEMPLATE_ARGUMENTS
 
 #endif /* BZ_TEMPLATES_AS_TEMPLATE_ARGUMENTS */
 
