@@ -6,6 +6,15 @@
 	* doc/examples/Makefile.am: Added *.texi and *.out in clean-local target.
 	Prefix ./ to $<  in .out building rule.
 	* configure.in: Removed unecessary AC_PROG_MAKE_SET.
+	* blitz/generate/genmathfunc.cpp: Fixed the generation of a few functions:
+	the `isnan' function into `blitz_isnan' to avoid trouble with the macro
+	definition of `isnan' on some platforms like Compaq/cxx and HP/aCC,
+	added prettyPrint template member function for class template _bz_negate,
+	added condition BZ_HAVE_COMPLEX_MATH for the specialization of _bz_sqr for
+	complex<T>.
+	* blitz/generate/genmatuops.cpp: Undo blitz_isnan to isnan.
+	* blitz/generate/genvecuops.cpp: Undo blitz_isnan to isnan.
+
 
 2003-01-21  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 	* blitz/generate/genmathfunc.cpp: Fixed categorization and scoping
