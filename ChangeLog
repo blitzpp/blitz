@@ -1,3 +1,8 @@
+
+2003-01-23 Patrick Guio <patrick.guio@fys.uio.no>
+	* blitz/Makefile.am blitz/generate/Makefile.am: Added dependencies
+	and building rule for the generated .cc and .h files.
+
 2003-01-22  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* blitz/array/asexpr.h: Placed a guard around new
