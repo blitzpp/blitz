@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.8  2001/02/15 13:13:30  tveldhui
+ * Fixed problem with BZ_THREADSAFE macros
+ *
  * Revision 1.7  2001/02/11 22:03:44  tveldhui
  * Fixed minor typo in blitz.h
  *
@@ -134,12 +137,24 @@ BZ_NAMESPACE(blitz)
 
 BZ_NAMESPACE_END
 
+/*
+ * Thread safety issues.
+ * Compiling with -pthread under gcc, or -mt under solaris,
+ * should automatically turn on BZ_THREADSAFE.
+ */
 #ifdef _REENTRANT
- #define BZ_THREADSAFE
+ #ifndef BZ_THREADSAFE
+  #define BZ_THREADSAFE
+ #endif
 #endif
 
+/*
+ * Which mutex implementation should be used for synchronizing
+ * reference counts.   Currently only one option -- pthreads.
+ */
 #ifdef BZ_THREADSAFE
 #define BZ_THREADSAFE_USE_PTHREADS
+#endif
 
 #ifdef BZ_THREADSAFE_USE_PTHREADS
  #include <pthread.h>
@@ -156,8 +171,6 @@ BZ_NAMESPACE_END
  #define BZ_MUTEX_UNLOCK(name)
  #define BZ_MUTEX_DESTROY(name)
 #endif
-
-#endif  // BZ_THREADSAFE
 
 #include <blitz/bzdebug.h>           // Debugging macros
 
