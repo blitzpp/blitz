@@ -4,9 +4,10 @@
 
 EXTRA_DIST = dump-stencil.cpp
 
-INCLUDES = -I$(srcdir) -I$(top_srcdir)
+AM_CXXFLAGS = -I$(srcdir) -I$(top_srcdir)
 LDADD = -L$(top_builddir)/lib -lblitz -lm
-COMPILE = $(CXX) $(CXXFLAGS) $(INCLUDES) 
+COMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 
 LTCXXCOMPILE = $(LIBTOOL) --mode=link $(CXX) $(DEFS) \
 	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
