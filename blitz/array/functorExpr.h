@@ -732,7 +732,9 @@ BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr2)<           \
     classname,                                                            \
     _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,                 \
     _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,                 \
-    BZ_PROMOTE(BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,        \
+    BZ_PROMOTE(_bz_typename                                               \
+               BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,        \
+               _bz_typename                                               \
                BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_numtype)> >     \
 operator()(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                      \
            const BZ_BLITZ_SCOPE(ETBase)<P_expr2>& b) const                \
@@ -741,7 +743,9 @@ operator()(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                      \
         BZ_BLITZ_SCOPE(_bz_FunctorExpr2)<classname,                       \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,             \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,             \
-        BZ_PROMOTE(BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,    \
+        BZ_PROMOTE(_bz_typename                                           \
+                   BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,    \
+                   _bz_typename                                           \
                    BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_numtype)> > \
         (*this, static_cast<const P_expr1&>(a),                           \
                 static_cast<const P_expr2&>(b));                          \
@@ -754,8 +758,11 @@ BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr3)<           \
     _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,                 \
     _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,                 \
     _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr,                 \
-    BZ_PROMOTE(BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,        \
-    BZ_PROMOTE(BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_numtype,        \
+    BZ_PROMOTE(_bz_typename                                               \
+               BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,        \
+    BZ_PROMOTE(_bz_typename                                               \
+               BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_numtype,        \
+               _bz_typename                                               \
                BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr::T_numtype))> >    \
 operator()(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                      \
            const BZ_BLITZ_SCOPE(ETBase)<P_expr2>& b,                      \
@@ -766,8 +773,11 @@ operator()(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                      \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,             \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,             \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr,             \
-        BZ_PROMOTE(BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,    \
-        BZ_PROMOTE(BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_numtype,    \
+        BZ_PROMOTE(_bz_typename                                           \
+                   BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,    \
+        BZ_PROMOTE(_bz_typename                                           \
+                   BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_numtype,    \
+                   _bz_typename                                           \
                    BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr::T_numtype))> >\
         (*this, static_cast<const P_expr1&>(a),                           \
                 static_cast<const P_expr2&>(b),                           \
@@ -857,7 +867,9 @@ BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr2)<           \
     _bz_Functor ## classname ## funcname,                                 \
     _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,                 \
     _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,                 \
-    BZ_PROMOTE(BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,        \
+    BZ_PROMOTE(_bz_typename                                               \
+               BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,        \
+               _bz_typename                                               \
                BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_numtype)> >     \
 funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                        \
          const BZ_BLITZ_SCOPE(ETBase)<P_expr2>& b) const                  \
@@ -867,9 +879,10 @@ funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                        \
         _bz_Functor ## classname ## funcname,                             \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,             \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,             \
-        BZ_PROMOTE(                                                       \
-        BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,               \
-        BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_numtype)> >            \
+        BZ_PROMOTE(_bz_typename                                           \
+                   BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,    \
+                   _bz_typename                                           \
+                   BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_numtype)> > \
         (*this, static_cast<const P_expr1&>(a),                           \
                 static_cast<const P_expr2&>(b));                          \
 }
@@ -882,8 +895,11 @@ BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr3)<           \
     _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,                 \
     _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,                 \
     _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr,                 \
-    BZ_PROMOTE(BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,        \
-    BZ_PROMOTE(BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_numtype,        \
+    BZ_PROMOTE(_bz_typename                                               \
+               BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,        \
+    BZ_PROMOTE(_bz_typename                                               \
+               BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_numtype,        \
+               _bz_typename                                               \
                BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr::T_numtype))> >    \
 funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                        \
          const BZ_BLITZ_SCOPE(ETBase)<P_expr2>& b,                        \
@@ -895,11 +911,12 @@ funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                        \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,             \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,             \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr,             \
-        BZ_PROMOTE(                                                       \
-        BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,               \
-        BZ_PROMOTE(                                                       \
-        BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_numtype,               \
-        BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr::T_numtype))> >           \
+        BZ_PROMOTE(_bz_typename                                           \
+                   BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,    \
+        BZ_PROMOTE(_bz_typename                                           \
+                   BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_numtype,    \
+                   _bz_typename                                           \
+                   BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr::T_numtype))> >\
         (*this, static_cast<const P_expr1&>(a),                           \
                 static_cast<const P_expr2&>(b),                           \
                 static_cast<const P_expr3&>(c));                          \
