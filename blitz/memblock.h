@@ -238,18 +238,11 @@ public:
         data_ = 0;
     }
 
-    MemoryBlockReference(MemoryBlockReference<T_type>& ref)
+    MemoryBlockReference(MemoryBlockReference<T_type>& ref, size_t offset=0)
     {
         block_ = ref.block_;
         block_->addReference();
-        data_ = block_->data();
-    }
-
-    MemoryBlockReference(MemoryBlockReference<T_type>& ref, size_t offset)
-    {
-        block_ = ref.block_;
-        block_->addReference();
-        data_ = block_->data() + offset;
+        data_ = ref.data_ + offset;
     }
 
     MemoryBlockReference(size_t length, T_type* data, 
@@ -324,12 +317,12 @@ protected:
         data_ = 0;
     }
 
-    void changeBlock(MemoryBlockReference<T_type>& ref, size_t offset)
+    void changeBlock(MemoryBlockReference<T_type>& ref, size_t offset=0)
     {
         blockRemoveReference();
         block_ = ref.block_;
         block_->addReference();
-        data_ = block_->data() + offset;
+        data_ = ref.data_ + offset;
     }
 
     void newBlock(size_t items)
