@@ -112,9 +112,9 @@ tiny3.cpp transform.cpp useret.cpp where.cpp whitt.cpp Makefile
 
 EXTRA_PROGRAMS = array cartesian cast cfd complex-test convolve curldiv \
 deriv diff erf fixed indirect io iter matmult nested numinquire outer pauli \
-pick polymorph prettyprint profile qcd rand2 random rangexpr reduce simple \
-slicing stencil2 stencil3 stencil stencilet storage tiny2 tiny3 tiny \
-transform useret where whitt
+pick polymorph prettyprint qcd rand2 random rangexpr reduce simple \
+slicing stencil2 stencil3 stencil stencilet storage tiny \
+transform useret where whitt 
 
 
 array_SOURCES = array.cpp
@@ -139,7 +139,7 @@ pauli_SOURCES = pauli.cpp
 pick_SOURCES = pick.cpp
 polymorph_SOURCES = polymorph.cpp
 prettyprint_SOURCES = prettyprint.cpp
-profile_SOURCES = profile.cpp
+#profile_SOURCES = profile.cpp
 qcd_SOURCES = qcd.cpp
 rand2_SOURCES = rand2.cpp
 random_SOURCES = random.cpp
@@ -152,8 +152,8 @@ stencil3_SOURCES = stencil3.cpp
 stencil_SOURCES = stencil.cpp
 stencilet_SOURCES = stencilet.cpp
 storage_SOURCES = storage.cpp
-tiny2_SOURCES = tiny2.cpp
-tiny3_SOURCES = tiny3.cpp
+#tiny2_SOURCES = tiny2.cpp
+#tiny3_SOURCES = tiny3.cpp
 tiny_SOURCES = tiny.cpp
 transform_SOURCES = transform.cpp
 useret_SOURCES = useret.cpp
@@ -276,11 +276,6 @@ prettyprint_OBJECTS =  $(am_prettyprint_OBJECTS)
 prettyprint_LDADD = $(LDADD)
 prettyprint_DEPENDENCIES = 
 prettyprint_LDFLAGS = 
-am_profile_OBJECTS =  profile.o
-profile_OBJECTS =  $(am_profile_OBJECTS)
-profile_LDADD = $(LDADD)
-profile_DEPENDENCIES = 
-profile_LDFLAGS = 
 am_qcd_OBJECTS =  qcd.o
 qcd_OBJECTS =  $(am_qcd_OBJECTS)
 qcd_LDADD = $(LDADD)
@@ -346,16 +341,6 @@ tiny_OBJECTS =  $(am_tiny_OBJECTS)
 tiny_LDADD = $(LDADD)
 tiny_DEPENDENCIES = 
 tiny_LDFLAGS = 
-am_tiny2_OBJECTS =  tiny2.o
-tiny2_OBJECTS =  $(am_tiny2_OBJECTS)
-tiny2_LDADD = $(LDADD)
-tiny2_DEPENDENCIES = 
-tiny2_LDFLAGS = 
-am_tiny3_OBJECTS =  tiny3.o
-tiny3_OBJECTS =  $(am_tiny3_OBJECTS)
-tiny3_LDADD = $(LDADD)
-tiny3_DEPENDENCIES = 
-tiny3_LDFLAGS = 
 am_transform_OBJECTS =  transform.o
 transform_OBJECTS =  $(am_transform_OBJECTS)
 transform_LDADD = $(LDADD)
@@ -385,12 +370,11 @@ $(curldiv_SOURCES) $(deriv_SOURCES) $(diff_SOURCES) $(erf_SOURCES) \
 $(fixed_SOURCES) $(indirect_SOURCES) $(io_SOURCES) $(iter_SOURCES) \
 $(matmult_SOURCES) $(nested_SOURCES) $(numinquire_SOURCES) \
 $(outer_SOURCES) $(pauli_SOURCES) $(pick_SOURCES) $(polymorph_SOURCES) \
-$(prettyprint_SOURCES) $(profile_SOURCES) $(qcd_SOURCES) \
-$(rand2_SOURCES) $(random_SOURCES) $(rangexpr_SOURCES) \
-$(reduce_SOURCES) $(simple_SOURCES) $(slicing_SOURCES) \
-$(stencil_SOURCES) $(stencil2_SOURCES) $(stencil3_SOURCES) \
-$(stencilet_SOURCES) $(storage_SOURCES) $(tiny_SOURCES) \
-$(tiny2_SOURCES) $(tiny3_SOURCES) $(transform_SOURCES) \
+$(prettyprint_SOURCES) $(qcd_SOURCES) $(rand2_SOURCES) \
+$(random_SOURCES) $(rangexpr_SOURCES) $(reduce_SOURCES) \
+$(simple_SOURCES) $(slicing_SOURCES) $(stencil_SOURCES) \
+$(stencil2_SOURCES) $(stencil3_SOURCES) $(stencilet_SOURCES) \
+$(storage_SOURCES) $(tiny_SOURCES) $(transform_SOURCES) \
 $(useret_SOURCES) $(where_SOURCES) $(whitt_SOURCES)
 DATA =  $(examples_DATA)
 
@@ -401,8 +385,8 @@ DIST_COMMON =  Makefile.am Makefile.in
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 
 GZIP_ENV = --best
-SOURCES = $(array_SOURCES) $(cartesian_SOURCES) $(cast_SOURCES) $(cfd_SOURCES) $(complex_test_SOURCES) $(convolve_SOURCES) $(curldiv_SOURCES) $(deriv_SOURCES) $(diff_SOURCES) $(erf_SOURCES) $(fixed_SOURCES) $(indirect_SOURCES) $(io_SOURCES) $(iter_SOURCES) $(matmult_SOURCES) $(nested_SOURCES) $(numinquire_SOURCES) $(outer_SOURCES) $(pauli_SOURCES) $(pick_SOURCES) $(polymorph_SOURCES) $(prettyprint_SOURCES) $(profile_SOURCES) $(qcd_SOURCES) $(rand2_SOURCES) $(random_SOURCES) $(rangexpr_SOURCES) $(reduce_SOURCES) $(simple_SOURCES) $(slicing_SOURCES) $(stencil_SOURCES) $(stencil2_SOURCES) $(stencil3_SOURCES) $(stencilet_SOURCES) $(storage_SOURCES) $(tiny_SOURCES) $(tiny2_SOURCES) $(tiny3_SOURCES) $(transform_SOURCES) $(useret_SOURCES) $(where_SOURCES) $(whitt_SOURCES)
-OBJECTS = $(am_array_OBJECTS) $(am_cartesian_OBJECTS) $(am_cast_OBJECTS) $(am_cfd_OBJECTS) $(am_complex_test_OBJECTS) $(am_convolve_OBJECTS) $(am_curldiv_OBJECTS) $(am_deriv_OBJECTS) $(am_diff_OBJECTS) $(am_erf_OBJECTS) $(am_fixed_OBJECTS) $(am_indirect_OBJECTS) $(am_io_OBJECTS) $(am_iter_OBJECTS) $(am_matmult_OBJECTS) $(am_nested_OBJECTS) $(am_numinquire_OBJECTS) $(am_outer_OBJECTS) $(am_pauli_OBJECTS) $(am_pick_OBJECTS) $(am_polymorph_OBJECTS) $(am_prettyprint_OBJECTS) $(am_profile_OBJECTS) $(am_qcd_OBJECTS) $(am_rand2_OBJECTS) $(am_random_OBJECTS) $(am_rangexpr_OBJECTS) $(am_reduce_OBJECTS) $(am_simple_OBJECTS) $(am_slicing_OBJECTS) $(am_stencil_OBJECTS) $(am_stencil2_OBJECTS) $(am_stencil3_OBJECTS) $(am_stencilet_OBJECTS) $(am_storage_OBJECTS) $(am_tiny_OBJECTS) $(am_tiny2_OBJECTS) $(am_tiny3_OBJECTS) $(am_transform_OBJECTS) $(am_useret_OBJECTS) $(am_where_OBJECTS) $(am_whitt_OBJECTS)
+SOURCES = $(array_SOURCES) $(cartesian_SOURCES) $(cast_SOURCES) $(cfd_SOURCES) $(complex_test_SOURCES) $(convolve_SOURCES) $(curldiv_SOURCES) $(deriv_SOURCES) $(diff_SOURCES) $(erf_SOURCES) $(fixed_SOURCES) $(indirect_SOURCES) $(io_SOURCES) $(iter_SOURCES) $(matmult_SOURCES) $(nested_SOURCES) $(numinquire_SOURCES) $(outer_SOURCES) $(pauli_SOURCES) $(pick_SOURCES) $(polymorph_SOURCES) $(prettyprint_SOURCES) $(qcd_SOURCES) $(rand2_SOURCES) $(random_SOURCES) $(rangexpr_SOURCES) $(reduce_SOURCES) $(simple_SOURCES) $(slicing_SOURCES) $(stencil_SOURCES) $(stencil2_SOURCES) $(stencil3_SOURCES) $(stencilet_SOURCES) $(storage_SOURCES) $(tiny_SOURCES) $(transform_SOURCES) $(useret_SOURCES) $(where_SOURCES) $(whitt_SOURCES)
+OBJECTS = $(am_array_OBJECTS) $(am_cartesian_OBJECTS) $(am_cast_OBJECTS) $(am_cfd_OBJECTS) $(am_complex_test_OBJECTS) $(am_convolve_OBJECTS) $(am_curldiv_OBJECTS) $(am_deriv_OBJECTS) $(am_diff_OBJECTS) $(am_erf_OBJECTS) $(am_fixed_OBJECTS) $(am_indirect_OBJECTS) $(am_io_OBJECTS) $(am_iter_OBJECTS) $(am_matmult_OBJECTS) $(am_nested_OBJECTS) $(am_numinquire_OBJECTS) $(am_outer_OBJECTS) $(am_pauli_OBJECTS) $(am_pick_OBJECTS) $(am_polymorph_OBJECTS) $(am_prettyprint_OBJECTS) $(am_qcd_OBJECTS) $(am_rand2_OBJECTS) $(am_random_OBJECTS) $(am_rangexpr_OBJECTS) $(am_reduce_OBJECTS) $(am_simple_OBJECTS) $(am_slicing_OBJECTS) $(am_stencil_OBJECTS) $(am_stencil2_OBJECTS) $(am_stencil3_OBJECTS) $(am_stencilet_OBJECTS) $(am_storage_OBJECTS) $(am_tiny_OBJECTS) $(am_transform_OBJECTS) $(am_useret_OBJECTS) $(am_where_OBJECTS) $(am_whitt_OBJECTS)
 
 all: all-redirect
 .SUFFIXES:
@@ -513,10 +497,6 @@ prettyprint: $(prettyprint_OBJECTS) $(prettyprint_DEPENDENCIES)
 	@rm -f prettyprint
 	$(CXXLINK) $(prettyprint_LDFLAGS) $(prettyprint_OBJECTS) $(prettyprint_LDADD) $(LIBS)
 
-profile: $(profile_OBJECTS) $(profile_DEPENDENCIES)
-	@rm -f profile
-	$(CXXLINK) $(profile_LDFLAGS) $(profile_OBJECTS) $(profile_LDADD) $(LIBS)
-
 qcd: $(qcd_OBJECTS) $(qcd_DEPENDENCIES)
 	@rm -f qcd
 	$(CXXLINK) $(qcd_LDFLAGS) $(qcd_OBJECTS) $(qcd_LDADD) $(LIBS)
@@ -568,14 +548,6 @@ storage: $(storage_OBJECTS) $(storage_DEPENDENCIES)
 tiny: $(tiny_OBJECTS) $(tiny_DEPENDENCIES)
 	@rm -f tiny
 	$(CXXLINK) $(tiny_LDFLAGS) $(tiny_OBJECTS) $(tiny_LDADD) $(LIBS)
-
-tiny2: $(tiny2_OBJECTS) $(tiny2_DEPENDENCIES)
-	@rm -f tiny2
-	$(CXXLINK) $(tiny2_LDFLAGS) $(tiny2_OBJECTS) $(tiny2_LDADD) $(LIBS)
-
-tiny3: $(tiny3_OBJECTS) $(tiny3_DEPENDENCIES)
-	@rm -f tiny3
-	$(CXXLINK) $(tiny3_LDFLAGS) $(tiny3_OBJECTS) $(tiny3_LDADD) $(LIBS)
 
 transform: $(transform_OBJECTS) $(transform_DEPENDENCIES)
 	@rm -f transform
@@ -804,6 +776,8 @@ installdirs-am installdirs mostlyclean-generic distclean-generic \
 clean-generic maintainer-clean-generic clean mostlyclean distclean \
 maintainer-clean
 
+
+compile: $(EXTRA_PROGRAMS)
 
 check-examples: $(EXTRA_PROGRAMS)
 	@echo Running examples...

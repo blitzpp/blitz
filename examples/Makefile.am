@@ -20,9 +20,9 @@ tiny3.cpp transform.cpp useret.cpp where.cpp whitt.cpp Makefile
 
 EXTRA_PROGRAMS = array cartesian cast cfd complex-test convolve curldiv \
 deriv diff erf fixed indirect io iter matmult nested numinquire outer pauli \
-pick polymorph prettyprint profile qcd rand2 random rangexpr reduce simple \
-slicing stencil2 stencil3 stencil stencilet storage tiny2 tiny3 tiny \
-transform useret where whitt
+pick polymorph prettyprint qcd rand2 random rangexpr reduce simple \
+slicing stencil2 stencil3 stencil stencilet storage tiny \
+transform useret where whitt 
 
 array_SOURCES = array.cpp
 cartesian_SOURCES = cartesian.cpp
@@ -46,7 +46,7 @@ pauli_SOURCES = pauli.cpp
 pick_SOURCES = pick.cpp
 polymorph_SOURCES = polymorph.cpp
 prettyprint_SOURCES = prettyprint.cpp
-profile_SOURCES = profile.cpp
+#profile_SOURCES = profile.cpp
 qcd_SOURCES = qcd.cpp
 rand2_SOURCES = rand2.cpp
 random_SOURCES = random.cpp
@@ -59,13 +59,15 @@ stencil3_SOURCES = stencil3.cpp
 stencil_SOURCES = stencil.cpp
 stencilet_SOURCES = stencilet.cpp
 storage_SOURCES = storage.cpp
-tiny2_SOURCES = tiny2.cpp
-tiny3_SOURCES = tiny3.cpp
+#tiny2_SOURCES = tiny2.cpp
+#tiny3_SOURCES = tiny3.cpp
 tiny_SOURCES = tiny.cpp
 transform_SOURCES = transform.cpp
 useret_SOURCES = useret.cpp
 where_SOURCES = where.cpp
 whitt_SOURCES = whitt.cpp
+
+compile: $(EXTRA_PROGRAMS)
 
 check-examples: $(EXTRA_PROGRAMS)
 	@echo Running examples...
