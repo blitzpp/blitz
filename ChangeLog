@@ -1,5 +1,17 @@
+2004-10-29  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
+	* doc/doxygen/Makefile.am: Set docdir to
+	$(datadir)/doc/$(PACKAGE)-doc-$(VERSION) for the doxygen generated
+	documentation, to distinguish from the texinfo generated docs.
+	Removed $(VERSION) from names of PS and PDF manuals.  There is
+	still something wrong with the ps and pdf targets.  How do you get
+	doxygen to generate the manuals?  Patrick, please fix!
+	* doc/Makefile.am: Changed docdir to standard value
+	$(datadir)/doc/$(PACKAGE)-$(VERSION).
 
+	* doc/doxygen/Doxyfile.in: Changed FILE_PATTERNS from *.cpp to
+	*.cc, since that is the extension used for blitz template
+	implementation header files.
 2004-10-26  Patrick Guio  <patrick.guio@ii.uib.no>
 
 	* doc/Makefile.am: Assigned variable docdir the value
