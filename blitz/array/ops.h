@@ -23,6 +23,10 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2002/07/02 19:12:50  jcumming
+ * Use new style of Array ET macros to create unary and binary operators
+ * that act on Array types.
+ *
  * Revision 1.2  2001/01/25 00:25:55  tveldhui
  * Ensured that source files have cvs logs.
  *
@@ -40,34 +44,39 @@
 #endif
 
 BZ_NAMESPACE(blitz)
+    
+// unary operators
+    
+BZ_DECLARE_ARRAY_ET_UNARY(operator~, BitwiseNot)
+BZ_DECLARE_ARRAY_ET_UNARY(operator!, LogicalNot)
+BZ_DECLARE_ARRAY_ET_UNARY(operator+, UnaryPlus)
+BZ_DECLARE_ARRAY_ET_UNARY(operator-, UnaryMinus)
 
+// binary operators
+    
 // operator<< has been commented out because it causes ambiguity
 // with statements like "cout << A".  NEEDS_WORK
 // ditto operator<<
 
-BZ_DECLARE_ARRAY_ET(operator+,  Add)
-BZ_DECLARE_ARRAY_ET(operator-,  Subtract)
-BZ_DECLARE_ARRAY_ET(operator*,  Multiply)
-BZ_DECLARE_ARRAY_ET(operator/,  Divide)
-BZ_DECLARE_ARRAY_ET(operator%,  Modulo)
-BZ_DECLARE_ARRAY_ET(operator^,  BitwiseXor)
-BZ_DECLARE_ARRAY_ET(operator&,  BitwiseAnd)
-BZ_DECLARE_ARRAY_ET(operator|,  BitwiseOr)
-// BZ_DECLARE_ARRAY_ET(operator>>, ShiftRight)
-// BZ_DECLARE_ARRAY_ET(operator<<, ShiftLeft)
-BZ_DECLARE_ARRAY_ET(operator>,  Greater)
-BZ_DECLARE_ARRAY_ET(operator<,  Less)
-BZ_DECLARE_ARRAY_ET(operator>=, GreaterOrEqual)
-BZ_DECLARE_ARRAY_ET(operator<=, LessOrEqual)
-BZ_DECLARE_ARRAY_ET(operator==, Equal)
-BZ_DECLARE_ARRAY_ET(operator!=, NotEqual)
-BZ_DECLARE_ARRAY_ET(operator&&, LogicalAnd)
-BZ_DECLARE_ARRAY_ET(operator||, LogicalOr)
-
-BZ_DECLARE_ARRAY_ET_UOP(operator-, _bz_negate)
-
-// NEEDS_WORK: operator!, operator~
+BZ_DECLARE_ARRAY_ET_BINARY(operator+,  Add)
+BZ_DECLARE_ARRAY_ET_BINARY(operator-,  Subtract)
+BZ_DECLARE_ARRAY_ET_BINARY(operator*,  Multiply)
+BZ_DECLARE_ARRAY_ET_BINARY(operator/,  Divide)
+BZ_DECLARE_ARRAY_ET_BINARY(operator%,  Modulo)
+BZ_DECLARE_ARRAY_ET_BINARY(operator^,  BitwiseXor)
+BZ_DECLARE_ARRAY_ET_BINARY(operator&,  BitwiseAnd)
+BZ_DECLARE_ARRAY_ET_BINARY(operator|,  BitwiseOr)
+// BZ_DECLARE_ARRAY_ET_BINARY(operator>>, ShiftRight)
+// BZ_DECLARE_ARRAY_ET_BINARY(operator<<, ShiftLeft)
+BZ_DECLARE_ARRAY_ET_BINARY(operator>,  Greater)
+BZ_DECLARE_ARRAY_ET_BINARY(operator<,  Less)
+BZ_DECLARE_ARRAY_ET_BINARY(operator>=, GreaterOrEqual)
+BZ_DECLARE_ARRAY_ET_BINARY(operator<=, LessOrEqual)
+BZ_DECLARE_ARRAY_ET_BINARY(operator==, Equal)
+BZ_DECLARE_ARRAY_ET_BINARY(operator!=, NotEqual)
+BZ_DECLARE_ARRAY_ET_BINARY(operator&&, LogicalAnd)
+BZ_DECLARE_ARRAY_ET_BINARY(operator||, LogicalOr)
 
 BZ_NAMESPACE_END
 
-#endif
+#endif // BZ_ARRAY_OPS_H
