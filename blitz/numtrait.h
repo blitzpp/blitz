@@ -66,7 +66,7 @@ public:
         enum { hasTrivialCtor = 1 };                                \
     }                                                               
 
-#ifdef BZ_BOOL
+#ifdef BZ_HAVE_BOOL
     BZDECLNUMTRAIT(bool,unsigned,int,float,int);
 #endif
 
