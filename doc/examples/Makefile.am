@@ -4,7 +4,8 @@
 
 EXTRA_DIST = fixed-class.cpp fixed-point.h makefile.example io.data
 
-AM_CXXFLAGS = -I$(srcdir) -I$(top_srcdir) @CXX_DEBUG_FLAGS@
+AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir)
+AM_CXXFLAGS = @CXX_DEBUG_FLAGS@
 LDADD = -L$(top_builddir)/lib -lblitz
 
 EXAMPLES = simple storage outer strideslice slicing debug output io dump xor \
