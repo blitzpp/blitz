@@ -206,11 +206,7 @@ void Array<P_numtype, N_rank>::reference(const Array<P_numtype, N_rank>& array)
     stride_ = array.stride_;
     zeroOffset_ = array.zeroOffset_;
 
-    MemoryBlockReference<P_numtype>::changeBlock(array.noConst(),
-        array.zeroOffset_);
-
-    // JCC: changeBlock() already resets the data_ pointer to zeroth element
-    // data_ = const_cast<P_numtype*>(array.data_);
+    MemoryBlockReference<P_numtype>::changeBlock(array.noConst());
 }
 
 /*
@@ -255,7 +251,11 @@ _bz_inline2 void Array<P_numtype, N_rank>::setupStorage(int lastRankInitialized)
     computeStrides();
 
     // Allocate a block of memory
-    MemoryBlockReference<P_numtype>::newBlock(numElements());
+    int numElem = numElements();
+    if (numElem==0)
+        MemoryBlockReference<P_numtype>::changeToNullBlock();
+    else
+        MemoryBlockReference<P_numtype>::newBlock(numElem);
 
     // Adjust the base of the array to account for non-zero base
     // indices and reversals
