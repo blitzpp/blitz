@@ -7,7 +7,7 @@ ACLOCAL_AMFLAGS  = -I m4
 SUBDIRS = bin blitz random lib testsuite \
 	examples benchmarks doc manual
 
-EXTRA_DIST = LEGAL LICENSE README.binutils README-VS.NET Blitz-VS.NET.zip \
+EXTRA_DIST = LEGAL LICENSE README.binutils README-VS.NET.txt Blitz-VS.NET.zip \
 	ChangeLog.1 
 
 pkgconfigdir = $(libdir)/pkgconfig
