@@ -387,13 +387,14 @@ AC_ARG_ENABLE(debug,
 echo ""
 
 # Check tools
-AC_CHECK_TOOL(AR, ar)
-AC_PROG_RANLIB
+#AC_CHECK_TOOL(AR, ar)
+#AC_PROG_RANLIB
 
 # Disable shared library building
 #AM_DISABLE_SHARED
 # Libtool stuff check
-#AC_PROG_LIBTOOL
+
+AC_PROG_LIBTOOL
 
 AC_LANG([C++])
 AC_PROG_CXX

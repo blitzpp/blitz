@@ -1,3 +1,15 @@
+2003-03-28 Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+
+    * configure.in: Re-enable AC_PROG_LIBTOOL and disable AC_PROG_RANLIB
+    since now libtool is used.
+
+2003-03-28 Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+
+    * doc/examples/Makefile.am: Added $(top_builddir) in include path
+    for compilation in separate directory. Link against $(top_builddir)
+    instead of $(top_srcdir) for the same reason.
+    * doc/stencils/Makefile.am: Ditto.
+
 2003-03-13  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* blitz/range.h: Corrected my silly typo.
