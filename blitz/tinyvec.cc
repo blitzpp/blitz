@@ -23,6 +23,14 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.4  2002/06/27 00:09:37  jcumming
+ * Changed T_numtype to P_numtype when used outside the argument list or body
+ * of a member function definition (i.e., outside the class scope).  Inside
+ * the class scope, we can use the typedef T_numtype.  The IBM xlC compiler
+ * gets confused if P_numtype is used as a template parameter name in a member
+ * function declaration and then T_numtype is used as the parameter name in
+ * the member function definition.  Fixed usage to be more consistent.
+ *
  * Revision 1.3  2001/01/25 00:25:55  tveldhui
  * Ensured that source files have cvs logs.
  *
@@ -47,24 +55,24 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class T_numtype, int N_length>
-inline TinyVector<T_numtype, N_length>::TinyVector(T_numtype initValue)
+template<class P_numtype, int N_length>
+inline TinyVector<P_numtype, N_length>::TinyVector(T_numtype initValue)
 {
     for (int i=0; i < N_length; ++i)
         data_[i] = initValue;
 }
 
-template<class T_numtype, int N_length>
-inline TinyVector<T_numtype, N_length>::TinyVector(const 
+template<class P_numtype, int N_length>
+inline TinyVector<P_numtype, N_length>::TinyVector(const 
     TinyVector<T_numtype, N_length>& x)
 {
     for (int i=0; i < N_length; ++i)
         data_[i] = x.data_[i];
 }
 
-template<class T_numtype, int N_length> template<class P_expr, class P_updater>
+template<class P_numtype, int N_length> template<class P_expr, class P_updater>
 inline
-void TinyVector<T_numtype, N_length>::_bz_assign(P_expr expr, P_updater up)
+void TinyVector<P_numtype, N_length>::_bz_assign(P_expr expr, P_updater up)
 {
     BZPRECHECK(expr.length(N_length) == N_length,
         "An expression with length " << expr.length(N_length)
@@ -85,7 +93,7 @@ void TinyVector<T_numtype, N_length>::_bz_assign(P_expr expr, P_updater up)
 template<class P_numtype, int N_length> template<class P_expr>
 inline TinyVector<P_numtype, N_length>::TinyVector(_bz_VecExpr<P_expr> expr) 
 {
-  _bz_assign(expr, _bz_update<P_numtype, _bz_typename P_expr::T_numtype>());
+  _bz_assign(expr, _bz_update<T_numtype, _bz_typename P_expr::T_numtype>());
 }
 
 /*****************************************************************************
@@ -96,7 +104,7 @@ template<class P_numtype, int N_length> template<class P_expr>
 inline TinyVector<P_numtype, N_length>& 
 TinyVector<P_numtype, N_length>::operator=(_bz_VecExpr<P_expr> expr)
 {
-    _bz_assign(expr, _bz_update<P_numtype, _bz_typename P_expr::T_numtype>());
+    _bz_assign(expr, _bz_update<T_numtype, _bz_typename P_expr::T_numtype>());
     return *this;
 }
 
@@ -104,7 +112,7 @@ template<class P_numtype, int N_length> template<class P_expr>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator+=(_bz_VecExpr<P_expr> expr)
 {
-    _bz_assign(expr, _bz_plus_update<P_numtype, 
+    _bz_assign(expr, _bz_plus_update<T_numtype, 
         _bz_typename P_expr::T_numtype>());
     return *this;
 }
@@ -113,7 +121,7 @@ template<class P_numtype, int N_length> template<class P_expr>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator-=(_bz_VecExpr<P_expr> expr)
 {
-    _bz_assign(expr, _bz_minus_update<P_numtype,
+    _bz_assign(expr, _bz_minus_update<T_numtype,
         _bz_typename P_expr::T_numtype>());
     return *this;
 }
@@ -122,7 +130,7 @@ template<class P_numtype, int N_length> template<class P_expr>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator*=(_bz_VecExpr<P_expr> expr)
 {
-    _bz_assign(expr, _bz_multiply_update<P_numtype,
+    _bz_assign(expr, _bz_multiply_update<T_numtype,
         _bz_typename P_expr::T_numtype>());
     return *this;
 }
@@ -131,7 +139,7 @@ template<class P_numtype, int N_length> template<class P_expr>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator/=(_bz_VecExpr<P_expr> expr)
 {
-    _bz_assign(expr, _bz_divide_update<P_numtype,
+    _bz_assign(expr, _bz_divide_update<T_numtype,
         _bz_typename P_expr::T_numtype>());
     return *this;
 }
@@ -140,7 +148,7 @@ template<class P_numtype, int N_length> template<class P_expr>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator%=(_bz_VecExpr<P_expr> expr)
 {
-    _bz_assign(expr, _bz_mod_update<P_numtype,
+    _bz_assign(expr, _bz_mod_update<T_numtype,
         _bz_typename P_expr::T_numtype>());
     return *this;
 }
@@ -149,7 +157,7 @@ template<class P_numtype, int N_length> template<class P_expr>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator^=(_bz_VecExpr<P_expr> expr)
 {
-    _bz_assign(expr, _bz_xor_update<P_numtype,
+    _bz_assign(expr, _bz_xor_update<T_numtype,
         _bz_typename P_expr::T_numtype>());
     return *this;
 }
@@ -158,7 +166,7 @@ template<class P_numtype, int N_length> template<class P_expr>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator&=(_bz_VecExpr<P_expr> expr)
 {
-    _bz_assign(expr, _bz_bitand_update<P_numtype,
+    _bz_assign(expr, _bz_bitand_update<T_numtype,
         _bz_typename P_expr::T_numtype>());
     return *this;
 }
@@ -167,7 +175,7 @@ template<class P_numtype, int N_length> template<class P_expr>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator|=(_bz_VecExpr<P_expr> expr)
 {
-    _bz_assign(expr, _bz_bitor_update<P_numtype,
+    _bz_assign(expr, _bz_bitor_update<T_numtype,
         _bz_typename P_expr::T_numtype>());
     return *this;
 }
@@ -176,7 +184,7 @@ template<class P_numtype, int N_length> template<class P_expr>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator<<=(_bz_VecExpr<P_expr> expr)
 {
-    _bz_assign(expr, _bz_shiftl_update<P_numtype,
+    _bz_assign(expr, _bz_shiftl_update<T_numtype,
         _bz_typename P_expr::T_numtype>());
     return *this;
 }
@@ -185,7 +193,7 @@ template<class P_numtype, int N_length> template<class P_expr>
 inline TinyVector<P_numtype, N_length>&
 TinyVector<P_numtype, N_length>::operator>>=(_bz_VecExpr<P_expr> expr)
 {
-    _bz_assign(expr, _bz_shiftr_update<P_numtype,
+    _bz_assign(expr, _bz_shiftr_update<T_numtype,
         _bz_typename P_expr::T_numtype>());
     return *this;
 }
@@ -196,10 +204,10 @@ TinyVector<P_numtype, N_length>::operator>>=(_bz_VecExpr<P_expr> expr)
 
 template<class P_numtype, int N_length> 
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::initialize(P_numtype x)
+TinyVector<P_numtype, N_length>::initialize(T_numtype x)
 {
 #ifndef BZ_KCC_COPY_PROPAGATION_KLUDGE
-    typedef _bz_VecExprConstant<P_numtype> T_expr;
+    typedef _bz_VecExprConstant<T_numtype> T_expr;
     (*this) = _bz_VecExpr<T_expr>(T_expr(x));
 #else
     // Avoid using the copy propagation kludge for this simple
@@ -212,72 +220,72 @@ TinyVector<P_numtype, N_length>::initialize(P_numtype x)
 
 template<class P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator+=(P_numtype x)
+TinyVector<P_numtype, N_length>::operator+=(T_numtype x)
 {
-    typedef _bz_VecExprConstant<P_numtype> T_expr;
+    typedef _bz_VecExprConstant<T_numtype> T_expr;
     (*this) += _bz_VecExpr<T_expr>(T_expr(x));
     return *this;
 }
 
 template<class P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator-=(P_numtype x)
+TinyVector<P_numtype, N_length>::operator-=(T_numtype x)
 {
-    typedef _bz_VecExprConstant<P_numtype> T_expr;
+    typedef _bz_VecExprConstant<T_numtype> T_expr;
     (*this) -= _bz_VecExpr<T_expr>(T_expr(x));
     return *this;
 }
 
 template<class P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator*=(P_numtype x)
+TinyVector<P_numtype, N_length>::operator*=(T_numtype x)
 {
-    typedef _bz_VecExprConstant<P_numtype> T_expr;
+    typedef _bz_VecExprConstant<T_numtype> T_expr;
     (*this) *= _bz_VecExpr<T_expr>(T_expr(x));
     return *this;
 }
 
 template<class P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator/=(P_numtype x)
+TinyVector<P_numtype, N_length>::operator/=(T_numtype x)
 {
-    typedef _bz_VecExprConstant<P_numtype> T_expr;
+    typedef _bz_VecExprConstant<T_numtype> T_expr;
     (*this) /= _bz_VecExpr<T_expr>(T_expr(x));
     return *this;
 }
 
 template<class P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator%=(P_numtype x)
+TinyVector<P_numtype, N_length>::operator%=(T_numtype x)
 {
-    typedef _bz_VecExprConstant<P_numtype> T_expr;
+    typedef _bz_VecExprConstant<T_numtype> T_expr;
     (*this) %= _bz_VecExpr<T_expr>(T_expr(x));
     return *this;
 }
 
 template<class P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator^=(P_numtype x)
+TinyVector<P_numtype, N_length>::operator^=(T_numtype x)
 {
-    typedef _bz_VecExprConstant<P_numtype> T_expr;
+    typedef _bz_VecExprConstant<T_numtype> T_expr;
     (*this) ^= _bz_VecExpr<T_expr>(T_expr(x));
     return *this;
 }
 
 template<class P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator&=(P_numtype x)
+TinyVector<P_numtype, N_length>::operator&=(T_numtype x)
 {
-    typedef _bz_VecExprConstant<P_numtype> T_expr;
+    typedef _bz_VecExprConstant<T_numtype> T_expr;
     (*this) &= _bz_VecExpr<T_expr>(T_expr(x));
     return *this;
 }
 
 template<class P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator|=(P_numtype x)
+TinyVector<P_numtype, N_length>::operator|=(T_numtype x)
 {
-    typedef _bz_VecExprConstant<P_numtype> T_expr;
+    typedef _bz_VecExprConstant<T_numtype> T_expr;
     (*this) |= _bz_VecExpr<T_expr>(T_expr(x));
     return *this;
 }
