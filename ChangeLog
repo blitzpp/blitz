@@ -1,3 +1,30 @@
+2002-09-19  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+	* testsuite/Adnene-Ben-Abdallah-2.cpp: Skip part of this test when
+	using IBM xlC compiler, since it can't handle it.
+	* testsuite/extract.cpp: Added workaround for IBM xlC compiler
+	bug.
+	* compiler/ieeemath.cpp: Commented out unused variable.  Added
+	test to skip over testing of lgamma() function if building on AIX
+	platform in threaded mode.  This test causes a failure in this
+	case because the lgamma function has a slightly different
+	interface in thread-safe mode on AIX.
+	* src/Makefile.am: Added explicit command for building libblitz.a
+	that utilizes $AR_FLAGS.
+	* src/Makefile.in: Regenerated from Makefile.am using automake.
+	* configure.in: Cleaned up some of the settings of compiler flags
+	and added use of the C++ compiler as the archiver for KCC and SGI
+	CC.  Added new --enable-64bit option to trigger 64-bit
+	configuration and builds.  This currently works for the SGI and
+	IBM platforms with the native compilers or with KCC or gcc.  Note:
+	I have left the old SGI64 and SGI32 compiler options in for now,
+	but there is also a new plain old SGI option that will build with
+	the default ABI.  Using the --enable-64bit option should then
+	force 64-bit compiles.
+	* configure: Regenerated from configure.in using autoconf.
+	* blitz/array/fastiter.h: Removed meaningless restrict qualifier
+	inside const_cast that generates compiler warnings under SGI and
+	KCC compilers.
+
 2002-09-05  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 	* configure: Regenerated from configure.in using autoconf.
 	* configure.in: Added flag -qrtti=all when using IBM's xlC
