@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.5  2002/03/06 16:09:46  patricg
+ * *** empty log message ***
+ *
  * Revision 1.4  2001/01/26 18:30:50  tveldhui
  * More source code reorganization to reduce compile times.
  *
@@ -176,7 +179,7 @@ public:
         length_ = length;
         stride_ = 1;
         for (int i=0; i < length; ++i)
-            data_[i] = firstValue + i * delta;
+            this->data_[i] = firstValue + i * delta;
     }
 
     template<class P_distribution>
@@ -245,10 +248,10 @@ public:
     // T_constIterator end()    const;
 
     T_numtype * _bz_restrict data()  
-    { return data_; }
+    { return this->data_; }
 
     const T_numtype * _bz_restrict data() const
-    { return data_; }
+    { return this->data_; }
 
     _bz_bool        isUnitStride() const
     { return stride_ == 1; }
@@ -292,10 +295,10 @@ public:
     { return stride_ == 1; }
 
     T_numtype&      _bz_fastAccess(int i)
-    { return data_[i]; }
+    { return this->data_[i]; }
 
     T_numtype       _bz_fastAccess(int i) const
-    { return data_[i]; }
+    { return this->data_[i]; }
 
     template<class P_expr, class P_updater>
     void            _bz_assign(P_expr, P_updater);
@@ -313,7 +316,7 @@ public:
     {
         BZPRECONDITION(i < length_);
         BZPRECONDITION(stride_ == 1);
-        return data_[i];
+        return this->data_[i];
     }
 
     // operator()(int) may be used only when the vector has unit
@@ -322,19 +325,19 @@ public:
     {
         BZPRECONDITION(i < length_);
         BZPRECONDITION(stride_ == 1);
-        return data_[i];
+        return this->data_[i];
     }
 
     T_numtype        operator[](int i) const
     {
         BZPRECONDITION(i < length_);
-        return data_[i * stride_];
+        return this->data_[i * stride_];
     }
 
     T_numtype& _bz_restrict operator[](int i)
     {
         BZPRECONDITION(i < length_);
-        return data_[i * stride_];
+        return this->data_[i * stride_];
     }
 
     T_vector      operator()(Range r)

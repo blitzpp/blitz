@@ -59,5 +59,7 @@ Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	removed struct _bz_endTag { }; declaration
 	* blitz/array/io.cc: added typename (_bz_typename) qualifier to the
 	iterator and const_iterator of Array<T_numtype,N_rank>
+	* blitz/ops.h: os replaced by str in the BitwiseNot template
+	* blitz/vector.h: data_ replaced by this->data_ everywhere
 
 
