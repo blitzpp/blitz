@@ -182,7 +182,7 @@ private:   // Disabled member functions
 
 private:   // Data members
     T_type * _bz_restrict data_;
-    T_type * _bz_restrict dataBlockAddress_;
+    T_type *              dataBlockAddress_;
 
 #ifdef BZ_DEBUG_REFERENCE_ROLLOVER
     volatile unsigned char references_;
