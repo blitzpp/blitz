@@ -37,7 +37,7 @@
 BZ_NAMESPACE(blitz)
 
 // cexp(z)     Complex exponential
-template<class P_numtype1>
+template<typename P_numtype1>
 class _bz_cexp : public OneOperandApplicativeTemplatesBase {
 public:
     typedef P_numtype1 T_numtype1;
@@ -46,7 +46,7 @@ public:
     static inline T_numtype apply(T_numtype1 x)
     { return _bz_exp<T_numtype1>::apply(x); }
 
-    template<class T1>
+    template<typename T1>
     static void prettyPrint(string& str, prettyPrintFormat& format,
         const T1& a)
     {
@@ -57,7 +57,7 @@ public:
 };
 
 // csqrt(z)    Complex square root
-template<class P_numtype1>
+template<typename P_numtype1>
 class _bz_csqrt : public OneOperandApplicativeTemplatesBase {
 public:
     typedef P_numtype1 T_numtype1;
@@ -66,7 +66,7 @@ public:
     static inline T_numtype apply(T_numtype1 x)
     { return _bz_sqrt<T_numtype1>::apply(x); }
 
-    template<class T1>
+    template<typename T1>
     static void prettyPrint(string& str, prettyPrintFormat& format,
         const T1& a)
     {
@@ -77,7 +77,7 @@ public:
 };
 
 // pow2        Square
-template<class P_numtype1>
+template<typename P_numtype1>
 class _bz_pow2 : public OneOperandApplicativeTemplatesBase {
 public:
     typedef P_numtype1 T_numtype1;
@@ -88,7 +88,7 @@ public:
         return BZ_NO_PROPAGATE(x) * BZ_NO_PROPAGATE(x);
     }
 
-    template<class T1>
+    template<typename T1>
     static void prettyPrint(string& str, prettyPrintFormat& format,
         const T1& a)
     {
@@ -99,7 +99,7 @@ public:
 };
 
 // pow3        Cube
-template<class P_numtype1>
+template<typename P_numtype1>
 class _bz_pow3 : public OneOperandApplicativeTemplatesBase {
 public:
     typedef P_numtype1 T_numtype1;
@@ -111,7 +111,7 @@ public:
           BZ_NO_PROPAGATE(x);
     }
 
-    template<class T1>
+    template<typename T1>
     static void prettyPrint(string& str, prettyPrintFormat& format,
         const T1& a)
     {
@@ -122,7 +122,7 @@ public:
 };
 
 // pow4        Fourth power
-template<class P_numtype1>
+template<typename P_numtype1>
 class _bz_pow4 : public OneOperandApplicativeTemplatesBase {
 public:
     typedef P_numtype1 T_numtype1;
@@ -134,7 +134,7 @@ public:
         return BZ_NO_PROPAGATE(t1) * BZ_NO_PROPAGATE(t1);
     }
 
-    template<class T1>
+    template<typename T1>
     static void prettyPrint(string& str, prettyPrintFormat& format,
         const T1& a)
     {
@@ -145,7 +145,7 @@ public:
 };
 
 // pow5        Fifth power
-template<class P_numtype1>
+template<typename P_numtype1>
 class _bz_pow5 : public OneOperandApplicativeTemplatesBase {
 public:
     typedef P_numtype1 T_numtype1;
@@ -158,7 +158,7 @@ public:
             * BZ_NO_PROPAGATE(t1);
     }
 
-    template<class T1>
+    template<typename T1>
     static void prettyPrint(string& str, prettyPrintFormat& format,
         const T1& a)
     {
@@ -169,7 +169,7 @@ public:
 };
 
 // pow6        Sixth power
-template<class P_numtype1>
+template<typename P_numtype1>
 class _bz_pow6 : public OneOperandApplicativeTemplatesBase {
 public:
     typedef P_numtype1 T_numtype1;
@@ -182,7 +182,7 @@ public:
         return BZ_NO_PROPAGATE(t1) * BZ_NO_PROPAGATE(t1);
     }
 
-    template<class T1>
+    template<typename T1>
     static void prettyPrint(string& str, prettyPrintFormat& format,
         const T1& a)
     {
@@ -194,7 +194,7 @@ public:
 
 
 // pow7        Seventh power
-template<class P_numtype1>
+template<typename P_numtype1>
 class _bz_pow7 : public OneOperandApplicativeTemplatesBase {
 public:
     typedef P_numtype1 T_numtype1;
@@ -208,7 +208,7 @@ public:
             * BZ_NO_PROPAGATE(x);
     }
 
-    template<class T1>
+    template<typename T1>
     static void prettyPrint(string& str, prettyPrintFormat& format,
         const T1& a)
     {
@@ -219,7 +219,7 @@ public:
 };
 
 // pow8        Eighth power
-template<class P_numtype1>
+template<typename P_numtype1>
 class _bz_pow8 : public OneOperandApplicativeTemplatesBase {
 public:
     typedef P_numtype1 T_numtype1;
@@ -232,7 +232,7 @@ public:
         return BZ_NO_PROPAGATE(t2) * BZ_NO_PROPAGATE(t2);
     }
 
-    template<class T1>
+    template<typename T1>
     static void prettyPrint(string& str, prettyPrintFormat& format,
         const T1& a)
     {
