@@ -1264,7 +1264,6 @@ public:
 };
 
 // fmod(P_numtype1, P_numtype2)    Modulo remainder
-#ifdef BZ_HAVE_SYSTEM_V_MATH
 template<class P_numtype1, class P_numtype2>
 class _bz_fmod : public TwoOperandApplicativeTemplatesBase {
 public:
@@ -1286,7 +1285,6 @@ public:
         str += ")";
     }
 };
-#endif
 
 // hypot(P_numtype1, P_numtype2)    sqrt(x*x+y*y)
 #ifdef BZ_HAVE_SYSTEM_V_MATH
@@ -1314,7 +1312,7 @@ public:
 #endif
 
 // ilogb(P_numtype1)    Integer unbiased exponent
-#ifdef BZ_HAVE_SYSTEM_V_MATH
+#ifdef BZ_HAVE_IEEE_MATH
 template<class P_numtype1>
 class _bz_ilogb : public OneOperandApplicativeTemplatesBase {
 public:
