@@ -1,6 +1,8 @@
 Makefile
+Makefile.in
 .deps
 cxx_repository
+ii_files
 genarrbops
 genarruops
 genmatbops
