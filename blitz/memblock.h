@@ -23,6 +23,10 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.7  2002/05/27 19:35:37  jcumming
+ * Changed this->addReference() to MemoryBlock<P_type>::addReference().
+ * Use base class name as scoping qualifier rather than "this" pointer.
+ *
  * Revision 1.6  2002/03/06 18:07:42  patricg
  *
  * in the constructor
@@ -264,7 +268,7 @@ public:
     { 
         // This ensures that the delete operator will not be invoked
         // on an instance of NullMemoryBlock in removeReference().
-        this->addReference();        
+        MemoryBlock<P_type>::addReference();        
     }
 
     virtual ~NullMemoryBlock()  
