@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/etbase.h    Declaration of the ETBase<T> class
  *
@@ -36,6 +37,10 @@ public:
 
     ETBase(const ETBase<T>&)
     { }
+    
+    T& unwrap() { return static_cast<T&>(*this); }
+    
+    const T& unwrap() const { return static_cast<const T&>(*this); }
 };
 
 BZ_NAMESPACE_END
