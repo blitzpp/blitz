@@ -110,8 +110,8 @@ protected:
     const char* parameterDescription_;
     const char* rateDescription_;
 
-    int numParameters_;
-    int parameterNumber_;
+    unsigned numParameters_;
+    unsigned parameterNumber_;
 };
 
 BZ_NAMESPACE_END
