@@ -1,0 +1,6 @@
+The .yo files that were previously contained in this directory have been
+replaced by the .texi files in the doc subdirectory and are now obsolete.
+Please consult the doc subdirectory for current blitz documentation.
+
+Julian C. Cummings
+09-17-04
