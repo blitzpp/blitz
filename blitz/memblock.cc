@@ -47,15 +47,15 @@ inline void MemoryBlock<P_type>::allocate(int length)
     TAU_PROFILE(p1, "void ()", TAU_BLITZ);
 
 #ifndef BZ_ALIGN_BLOCKS_ON_CACHELINE_BOUNDARY
-    data_ =  new T_type[length];
-    dataBlockAddress_ = data_;
+    dataBlockAddress_ = new T_type[length];
+    data_ = dataBlockAddress_;
 #else
     int numBytes = length * sizeof(T_type);
 
     if (numBytes < 1024)
     {
-        data_ =  new T_type[length];
-        dataBlockAddress_ = data_;
+        dataBlockAddress_ = new T_type[length];
+        data_ = dataBlockAddress_;
     }
     else
     {
