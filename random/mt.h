@@ -42,6 +42,10 @@
  * $Id$
  *
  * $Log$
+ * Revision 1.3  2002/03/07 14:37:19  patricg
+ *
+ * fixed use of STL iterator
+ *
  * Revision 1.2  2001/01/26 19:52:34  tveldhui
  * Incorporated changes from Max Domeika for STL compatibility.
  *
@@ -163,10 +167,10 @@ public:
     Iter pM = p0 + PF;
     BitMixer twist;
     twist (S[0]); // prime the pump
-    for (Iter pf_end = (Iter)&S[N-PF]; p0 != pf_end; ++p0, ++pM)
+    for (Iter pf_end = S.begin()+(N-PF); p0 != pf_end; ++p0, ++pM)
       *p0 = *pM ^ twist (p0[1]);
     pM = S.begin();
-    for (Iter s_end = (Iter)&S[N-1]; p0 != s_end; ++p0, ++pM)
+    for (Iter s_end = S.begin()+(N-1); p0 != s_end; ++p0, ++pM)
       *p0 = *pM ^ twist (p0[1]);
     *p0 = *pM ^ twist (S[0]);
 
