@@ -1,5 +1,11 @@
 Makefile
 Makefile.in
+*.ii
+*.ti
+cxx_repository
+Template.dir
+ii_files
+ti_files
 aclocal.m4
 autom4te.cache
 blitz-uninstalled.pc
@@ -20,5 +26,4 @@ libtool
 ltmain.sh
 mkinstalldirs
 missing
-.deps
 

@@ -28,5 +28,5 @@ check-benchmarks: lib
 	@(cd benchmarks && $(MAKE) $(AM_MAKEFLAGS) $@) || exit 1;
 
 clean-local:
-	-rm -rf .deps so_locations cxx_repository 
+	-rm -rf *.ii *.ti cxx_repository Template.dir ii_files ti_files
 
