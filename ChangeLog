@@ -1,5 +1,19 @@
 
 
+Tue Dec 17 16:23:11 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* benchmarks/acousticf2.f: fixed in commented test prog call to 
+	echo_f77Tuned instead of echo_f77, duplicate echo_f77_set into echo_f77_set2
+	to allow independant compilation of test prog
+	* benchmarks/acou3df.f: added support for test prog 
+	* benchmarks/acou3df2.f: added support for test prog, added explicit INTEGER
+	declaration for i,j,k in subroutine acoustic3d_f77Tuned_stencil
+	* benchmarks/acou3d.cpp: number of operations in variable Mflops corrected
+	from 9 (in acoustic.cpp) to 11  
+	* benchmarks/ctime3v.cpp benchmarks/ctime4v.cpp benchmarks/ctime5v.cpp: added
+	necessary overloaded math functions for float type argument for gcc 2.95.3
+	* benchmarks/ctime5.cpp: replaced in macro BZ_USING_NAMESPACE
+
+
 Mon Dec 16 16:24:43 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* configure.in: added as suggested by Zane Dodson <zdodson@zdodson.com> 
 	the AM_MAINTAINER_MODE automake macro to avoid generating the rules to
