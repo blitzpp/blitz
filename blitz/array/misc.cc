@@ -30,7 +30,7 @@
 BZ_NAMESPACE(blitz)
 
 #define BZ_ARRAY_DECLARE_UOP(fn, fnobj)                                \
-template<class T_numtype, int N_rank>                                  \
+template<typename T_numtype, int N_rank>                                  \
 inline                                                                 \
 _bz_ArrayExpr<_bz_ArrayExprUnaryOp<FastArrayIterator<T_numtype,N_rank>, \
     fnobj<T_numtype> > >                                               \
@@ -40,7 +40,7 @@ fn(const Array<T_numtype,N_rank>& array)                               \
         fnobj<T_numtype> >(array.beginFast());                         \
 }                                                                      \
                                                                        \
-template<class T_expr>                                                 \
+template<typename T_expr>                                                 \
 inline                                                                 \
 _bz_ArrayExpr<_bz_ArrayExprUnaryOp<_bz_ArrayExpr<T_expr>,              \
     fnobj<_bz_typename T_expr::T_numtype> > >                          \
@@ -58,7 +58,7 @@ BZ_ARRAY_DECLARE_UOP(operator-, Negate)
  * cast() functions, for explicit type casting
  */
 
-template<class T_numtype, int N_rank, class T_cast>
+template<typename T_numtype, int N_rank, typename T_cast>
 inline                                                                 
 _bz_ArrayExpr<_bz_ArrayExprUnaryOp<FastArrayIterator<T_numtype,N_rank>,   
     Cast<T_numtype, T_cast> > >
@@ -68,7 +68,7 @@ cast(const Array<T_numtype,N_rank>& array, T_cast)
         Cast<T_numtype,T_cast> >(array.beginFast());                            
 }                                                                      
                                                                        
-template<class T_expr, class T_cast>
+template<typename T_expr, typename T_cast>
 inline                                                                 
 _bz_ArrayExpr<_bz_ArrayExprUnaryOp<_bz_ArrayExpr<T_expr>,              
     Cast<_bz_typename T_expr::T_numtype,T_cast> > >                          
