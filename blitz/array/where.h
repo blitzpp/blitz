@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/array/where.h  where(X,Y,Z) operator for array expressions
  *
@@ -148,7 +149,6 @@ public:
 
     bool canCollapse(int outerLoopRank, int innerLoopRank) const
     {
-        // BZ_DEBUG_MESSAGE("_bz_ArrayExprOp<>::canCollapse");
         return iter1_.canCollapse(outerLoopRank, innerLoopRank)
             && iter2_.canCollapse(outerLoopRank, innerLoopRank)
             && iter3_.canCollapse(outerLoopRank, innerLoopRank);
