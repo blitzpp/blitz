@@ -68,6 +68,6 @@ check-examples: $(EXTRA_PROGRAMS)
 #all:
 
 clean-local:
-	-rm -rf cxx_repository $(EXTRA_PROGRAMS)
+	-rm -rf *.ii *.ti cxx_repository Template.dir ii_files ti_files $(EXTRA_PROGRAMS)
 
 

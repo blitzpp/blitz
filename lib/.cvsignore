@@ -4,9 +4,13 @@ Makefile.in
 *.a
 *.lo
 *.la
+*.ii
+*.ti
 .deps
 .libs
 cxx_repository
+Template.dir
 ii_files
+ti_files
 config.h
 
