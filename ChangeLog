@@ -4,6 +4,14 @@
 	since generated running `autoreconf -v -i'.
 	* Makefile.am: Added a guard to avoid overwriting COPYING and INSTALL
 	files when running `autoreconf -v -i -f'.
+	* benchmarks/Makefile.am doc/Makefile.am doc/examples/Makefile.am
+	doc/stencils/Makefile.am examples/Makefile.am testsuite/Makefile.am:
+	Do not install anything from these directories except blit.info into
+	$prefix/info and  blitz.ps into $prefix/doc.
+	* config.guess config.sub: Removed from repository. Added automatically
+	when running `autoreconf -v -i' for recent versions of autoconf or copied
+	manually from the `share' directory of automake for earlier version of
+	autoconf.
 
 2003-01-23 Patrick Guio <patrick.guio@fys.uio.no>
 	* blitz/Makefile.am blitz/generate/Makefile.am: Added dependencies
