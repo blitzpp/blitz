@@ -1,5 +1,7 @@
 2003-01-06 Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
-    * configure.in: Do not substitute the variable SUBDIRS.
+    * configure.in: Do not substitute the variable SUBDIRS. Created
+      a new old-gcc compiler option. Updated the gcc compiler option
+      for modern gcc (at least >=3.1).
     * All Makefiles.am: Remove SUBDIRS where appropriate.
     * testsuite/Makefile.am, examples/Makefile.am: Use top_builddir
       instead of top_srcdir to allow building in a separate directory.
