@@ -1,3 +1,25 @@
+2002-07-16  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+	* Makefile.am: Added line to specify subdirectories and insure
+	that compiler subdirectory is visited before blitz subdirectory.
+	This is necessary because the compiler subdirectory generates the
+	config.h header file needed in blitz subdirectory.
+	* Makefile.in: Rebuilt from Makefile.am.
+	* configure: Rebuilt from configure.in.  Includes changes to IBM
+	xlf90 flags.
+	* aclocal.m4: Rebuilt using aclocal 1.6.2.
+	* blitz/Makefile.am: Added config.h to blitz_HEADERS list and
+	removed all the compiler-specific config files.  These
+	compiler-specific files should no longer be needed because we
+	normally generate the config.h file automatically.  Moved the
+	compiler-specific headers to the EXTRA_DIST list so they will
+	still be included in the distribution tarball.
+	* blitz/Makefile.in: Rebuilt from Makefile.am.
+	* blitz/array/funcs.h: Removed ET support for Array expressions
+	involving ldexp(), jn() and yn() functions.  These functions
+	require specialized macros that allow one of the function
+	arguments to be an ordinary int.  Such macros have not yet been
+	added to <blitz/funcs.h>.
+
 2002-07-02  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 	* examples/cast.cpp: Added check for use of new-style expression
 	templates.  I changed the syntax for casting the type of a blitz
