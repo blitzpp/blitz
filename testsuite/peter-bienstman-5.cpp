@@ -1,6 +1,6 @@
 // Creating arrays from array-expressions
 #include "testsuite.h"
-#include <blitz/Array.h>
+#include <blitz/array.h>
 
 BZ_USING_NAMESPACE(blitz)
 
