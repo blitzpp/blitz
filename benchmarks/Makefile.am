@@ -12,9 +12,10 @@ loop4.cpp loop4f.f loop4f90.f90 loopstruct.cpp looptest.cpp makelogo.cpp \
 makeloops.cpp qcd.txt quinlan.cpp stenciln.cpp tiny3.cpp
 
 
-AM_CXXFLAGS = -I$(srcdir) -I$(top_srcdir) @CXX_OPTIMIZE_FLAGS@ @CXXFFLAGS@ @CXXFCFLAG@
+AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir)
+AM_CXXFLAGS = @CXX_OPTIMIZE_FLAGS@ @CXXFFLAGS@ @CXXFCFLAG@
 AM_FFLAGS = @F77_OPTIMIZE_FLAGS@
-LIBS = -L$(top_builddir)/lib -lblitz -lm @BLASLIB@ @FORTLIBS@ @CXX_LIBS@
+LIBS = -L$(top_builddir)/lib -lblitz @BLASLIB@ @FORTLIBS@ -lm
 
 if F90_COMPILER
 
