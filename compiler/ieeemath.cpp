@@ -22,7 +22,7 @@
 int main()
 {
     double x = 1.0;
-    double y = 1.0;
+    // double y = 1.0;
 
     acosh(x);
     asinh(x);
@@ -36,7 +36,10 @@ int main()
     isnan(x);
     j0(x);
     j1(x);
+// lgamma function has different interface under AIX in threaded mode
+#if !(defined(_AIX) && defined(_THREAD_SAFE))
     lgamma(x);
+#endif
     logb(x);
     log1p(x);
     rint(x);
