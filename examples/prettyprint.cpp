@@ -8,7 +8,7 @@ int main()
     Array<int,2> C(4,4);
 
     prettyPrintFormat f1;
-    prettyPrintFormat f2(_bz_true);
+    prettyPrintFormat f2(true);
 
     string s1, s2, s3, s4;
 
@@ -21,7 +21,7 @@ int main()
     (A+5*C).prettyPrint(s4,f1);
     cout << s4 << endl;
     {
-    prettyPrintFormat f2(_bz_true);
+    prettyPrintFormat f2(true);
     string s5;
     (A+5*C+cos(B)*A+A+pow2(B)+C).prettyPrint(s5,f2);
     cout << s5 << endl;
