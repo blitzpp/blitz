@@ -23,6 +23,11 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2002/03/21 15:03:01  patricg
+ *
+ * replaced iter_ by this->iter_ in derived template classes of StencilExpr
+ * template class
+ *
  * Revision 1.2  2001/01/25 00:25:55  tveldhui
  * Ensured that source files have cvs logs.
  *
@@ -134,15 +139,15 @@ public: \
         : StencilExpr<T_numtype,N_rank,result>(A) \
     { } \
     result operator*() \
-    { return name(iter_); } \
+    { return name(this->iter_); } \
     result operator()(const TinyVector<int,N_rank>& a) \
-    { iter_.moveTo(a); return name(iter_); } \
+    { this->iter_.moveTo(a); return name(this->iter_); } \
     result fastRead(int i) \
     { \
-      const T_numtype* tmp = iter_.data(); \
-      iter_._bz_setData(tmp + i); \
-      T_numtype r = name(iter_); \
-      iter_._bz_setData(tmp); \
+      const T_numtype* tmp = this->iter_.data(); \
+      this->iter_._bz_setData(tmp + i); \
+      T_numtype r = name(this->iter_); \
+      this->iter_._bz_setData(tmp); \
       return r; \
     } \
 }; \
@@ -165,15 +170,15 @@ public: \
         : StencilExpr<T_numtype,N_rank,result>(A) \
     { } \
     result operator*() \
-    { return name(iter_); } \
+    { return name(this->iter_); } \
     result operator()(const TinyVector<int,N_rank>& a) \
-    { iter_.moveTo(a); return name(iter_); } \
+    { this->iter_.moveTo(a); return name(this->iter_); } \
     result fastRead(int i) \
     { \
-      const T_numtype* tmp = iter_.data(); \
-      iter_._bz_setData(tmp + i); \
-      T_numtype r = name(iter_); \
-      iter_._bz_setData(tmp); \
+      const T_numtype* tmp = this->iter_.data(); \
+      this->iter_._bz_setData(tmp + i); \
+      T_numtype r = name(this->iter_); \
+      this->iter_._bz_setData(tmp); \
       return r; \
     } \
 }; \
@@ -194,15 +199,15 @@ public: \
         : StencilExpr<T_numtype,N_rank,P_numtype>(A), dim_(dim) \
     { } \
     T_numtype operator*() \
-    { return name(iter_); } \
+    { return name(this->iter_); } \
     T_numtype operator()(const TinyVector<int,N_rank>& a) \
-    { iter_.moveTo(a); return name(iter_,dim_); } \
+    { this->iter_.moveTo(a); return name(this->iter_,dim_); } \
     T_numtype fastRead(int i) \
     { \
-      const T_numtype* tmp = iter_.data(); \
-      iter_._bz_setData(tmp + i); \
-      T_numtype r = name(iter_,dim_); \
-      iter_._bz_setData(tmp); \
+      const T_numtype* tmp = this->iter_.data(); \
+      this->iter_._bz_setData(tmp + i); \
+      T_numtype r = name(this->iter_,dim_); \
+      this->iter_._bz_setData(tmp); \
       return r; \
     } \
 private: \
