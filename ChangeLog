@@ -105,3 +105,11 @@ Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* benchmarks/acou3db4.cpp: corrected typo in 
 	#include <blitz/array/stencil.h>, should be 
 	#include <blitz/array/stencils.h>
+	* benchmarks/acou3d.cpp: added #include <blitz/traversal.h> for call to
+	generateFastTraversalOrder function
+	* benchmarks/stencil.cpp: likewise
+	* blitz/memblock.h: in the constructor
+	MemoryBlock(size_t length, T_type* _bz_restrict data)
+	dataBlockAddress_ = data replaced by dataBlockAddress_ = 0
+	as it was before. (testsuite/extract does not crash then)
+	
