@@ -1,8 +1,6 @@
 /***************************************************************************
  * blitz/array/interlace.cc
  *
- * $Id$
- *
  * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
@@ -21,17 +19,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.2  2001/01/24 20:22:50  tveldhui
- * Updated copyright date in headers.
- *
- * Revision 1.1.1.1  2000/06/19 12:26:13  tveldhui
- * Imported sources
- *
- *
- */
-
+ ****************************************************************************/
 #ifndef BZ_ARRAYINTERLACE_CC
 #define BZ_ARRAYINTERLACE_CC
 

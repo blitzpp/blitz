@@ -1,8 +1,6 @@
 /***************************************************************************
  * blitz/array/iter.h  Basic iterator for arrays.
  *
- * $Id$
- *
  * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
@@ -21,23 +19,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.4  2002/05/27 19:41:24  jcumming
- * Removed use of this->.  data_ is now declared in scope of class definition.
- *
- * Revision 1.3  2002/03/06 15:56:43  patricg
- *
- * data_ replaced by this->data_ in
- * template<class T, int N>
- * class ArrayIterator : public ConstArrayIterator<T,N> {},
- * removed struct _bz_endTag { }; declaration
- *
- * Revision 1.2  2001/01/25 00:25:55  tveldhui
- * Ensured that source files have cvs logs.
- *
- */
-
+ ****************************************************************************/
 #ifndef BZ_ARRAY_H
  #error <blitz/array/iter.h> must be included via <blitz/array.h>
 #endif

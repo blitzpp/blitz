@@ -2,8 +2,6 @@
  * blitz/array/geometry.h  Basic mapping from Array to physical geometry,
  *                         used for some stencil operations.
  *
- * $Id$
- *
  * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
@@ -22,13 +20,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.2  2001/01/25 00:25:55  tveldhui
- * Ensured that source files have cvs logs.
- *
- */
-
+ ****************************************************************************/
 #ifndef BZ_GEOMETRY_H
 #define BZ_GEOMETRY_H
 

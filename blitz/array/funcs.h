@@ -21,27 +21,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.5  2002/07/16 22:05:54  jcumming
- * Removed ET support for Array expressions involving ldexp(), jn() and yn()
- * functions.  These functions require specialized macros that allow one of
- * the function arguments to be an ordinary int.  Such macros have not yet
- * been added to <blitz/funcs.h>.
- *
- * Revision 1.4  2002/07/02 19:14:01  jcumming
- * Use new style of Array ET macros to declare unary and binary math functions
- * that act on Array types.
- *
- * Revision 1.3  2001/01/26 20:11:25  tveldhui
- * Changed isnan to blitz_isnan, to avoid conflicts with implementations
- * that define isnan as a preprocessor macro.
- *
- * Revision 1.2  2001/01/25 00:25:55  tveldhui
- * Ensured that source files have cvs logs.
- *
- */
-
+ ****************************************************************************/
 #ifndef BZ_ARRAY_FUNCS_H
 #define BZ_ARRAY_FUNCS_H
 

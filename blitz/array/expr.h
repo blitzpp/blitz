@@ -1,8 +1,6 @@
 /***************************************************************************
  * blitz/arrayexpr.h     Array<T,N> expression templates
  *
- * $Id$
- *
  * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
@@ -21,38 +19,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.4  2002/07/23 23:14:09  jcumming
- * Added a four-argument templated constructor for _bz_ArrayExpr, which is
- * needed when building an Array expression containing a functor that takes
- * three arguments.  This is needed to support functorExpr.h, which allows
- * functors with up to three arguments.
- *
- * Revision 1.3  2002/03/07 14:36:47  patricg
- *
- * line 124
- * #ifdef BZ_NEW_EXPRESSION_TEMPLATES replaced by
- * #if defined(BZ_NEW_EXPRESSION_TEMPLATES) && ! defined(__MWERKS__)
- * line 134 added
- * #if !defined(__MWERKS__)
- * #endif
- * for Metrowerks code warrior compiler
- *
- * Revision 1.2  2001/01/24 20:22:50  tveldhui
- * Updated copyright date in headers.
- *
- * Revision 1.1.1.1  2000/06/19 12:26:13  tveldhui
- * Imported sources
- *
- * Revision 1.2  1998/03/14 00:04:47  tveldhui
- * 0.2-alpha-05
- *
- * Revision 1.1  1997/07/16 14:51:20  tveldhui
- * Update: Alpha release 0.2 (Arrays)
- *
- */
-
+ ****************************************************************************/
 #ifndef BZ_ARRAYEXPR_H
 #define BZ_ARRAYEXPR_H
 

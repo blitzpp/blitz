@@ -1,8 +1,6 @@
 /***************************************************************************
  * blitz/array/iter.h     Declaration of FastArrayIterator<P_numtype,N_rank>
  *
- * $Id$
- *
  * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
@@ -21,36 +19,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.5  2002/09/20 01:10:32  jcumming
- * Removed meaningless restrict qualifier inside const_cast that generates
- * compiler warnings under SGI and KCC compilers.
- *
- * Revision 1.4  2002/06/28 01:39:47  jcumming
- * Changed order of ctor initializers to match order of member data declarations,
- * eliminating warning from gcc compiler.
- *
- * Revision 1.3  2002/03/06 17:45:07  patricg
- *
- * for BZ_HAVE_STD only
- * #include <strstream> replaced by #include <sstream>
- * ostrstream ostr replaced by ostringstream ostr
- *
- * Revision 1.2  2001/01/24 20:22:50  tveldhui
- * Updated copyright date in headers.
- *
- * Revision 1.1.1.1  2000/06/19 12:26:15  tveldhui
- * Imported sources
- *
- * Revision 1.2  1998/03/14 00:04:47  tveldhui
- * 0.2-alpha-05
- *
- * Revision 1.1  1997/07/16 14:51:20  tveldhui
- * Update: Alpha release 0.2 (Arrays)
- *
- */
-
+ ****************************************************************************/
 #ifndef BZ_ARRAY_FASTITER_H
 #define BZ_ARRAY_FASTITER_H
 
