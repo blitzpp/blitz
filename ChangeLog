@@ -1,5 +1,12 @@
 
 
+Wed Apr 17 18:45:13 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* blitz/array/stencil-et.h: replaced T_numtype with P_numtype in
+	every macros definitions. Fixed a compilation problem with aCC/HP
+	in the stencils examples (stencils2.cpp, stencil3.cpp, stencilet.cpp)
+	in the directory examples. 
+	Suggested by Robert W. Techentin <techentin.robert@mayo.edu>
+
 Thu Mar 21 11:12:36 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* examples/io.cpp: added #ifdef BZ_HAVE_STD for #include <fstream>
 	* examples/polymorph.cpp: corrected polymorph container declaration 
