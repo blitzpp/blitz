@@ -95,8 +95,6 @@ class _bz_ArrayExpr;
 template<typename T_array, typename T_index>
 class IndirectArray;
 
-struct _bz_endTag {};
-
 
 
 /*
@@ -945,12 +943,12 @@ public:
 
     iterator                          end()
     {
-        return iterator(*this, _bz_endTag());
+        return iterator();
     }
 
     const_iterator                    end() const
     {
-        return const_iterator(*this, _bz_endTag());
+        return const_iterator();
     }
 
     int                               extent(int rank) const
