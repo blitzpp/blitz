@@ -8,13 +8,7 @@
 #ifndef BZ_MEMBLOCK_CC
 #define BZ_MEMBLOCK_CC
 
-#ifndef BZ_MEMBLOCK_H
- #include <blitz/memblock.h>
-#endif
-
-#ifndef BZ_NUMTRAIT_H
- #include <blitz/numtrait.h>
-#endif
+#include <blitz/numtrait.h>
 
 BZ_NAMESPACE(blitz)
 
@@ -40,7 +34,7 @@ void MemoryBlock<P_type>::deallocate()
 }
 
 template<typename P_type>
-inline void MemoryBlock<P_type>::allocate(int length)
+inline void MemoryBlock<P_type>::allocate(size_t length)
 {
     TAU_TYPE_STRING(p1, "MemoryBlock<T>::allocate() [T="
         + CT(P_type) + "]");
@@ -50,7 +44,7 @@ inline void MemoryBlock<P_type>::allocate(int length)
     dataBlockAddress_ = new T_type[length];
     data_ = dataBlockAddress_;
 #else
-    int numBytes = length * sizeof(T_type);
+    size_t numBytes = length * sizeof(T_type);
 
     if (numBytes < 1024)
     {
@@ -76,8 +70,9 @@ inline void MemoryBlock<P_type>::allocate(int length)
         // Shift to the next cache line boundary
 
         ptrdiff_t offset = ptrdiff_t(dataBlockAddress_) % cacheBlockSize;
-        int shift = (offset == 0) ? 0 : (cacheBlockSize - offset);
-        data_ = (T_type*)(((char *)dataBlockAddress_) + shift);
+        ptrdiff_t shift = (offset == 0) ? 0 : (cacheBlockSize - offset);
+        data_ = reinterpret_cast<T_type*>
+                (reinterpret_cast<char*>(dataBlockAddress_) + shift);
 
         // Use placement new to construct types with nontrival ctors
         if (!NumericTypeTraits<T_type>::hasTrivialCtor) {
