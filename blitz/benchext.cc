@@ -6,6 +6,11 @@
  * conditions of use.
  *
  * $Log$
+ * Revision 1.4  2002/12/11 15:52:16  patricg
+ *
+ * removed Blitz assert that could not be fullfiled in template
+ * BenchmarkExt<P_parameter>::setNumParameters(int numParameters)
+ *
  * Revision 1.3  2002/06/28 05:05:58  jcumming
  * Changed loop variable j to unsigned to eliminate signed/unsigned comparisons.
  *
@@ -78,7 +83,7 @@ BenchmarkExt<P_parameter>::~BenchmarkExt()
 template<class P_parameter>
 void BenchmarkExt<P_parameter>::setNumParameters(int numParameters)
 {
-    BZPRECONDITION(state_ == initializing);
+    //BZPRECONDITION(state_ == initializing);
 
     numParameters_ = numParameters;
 
