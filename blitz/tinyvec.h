@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.4  2002/06/27 00:31:42  jcumming
+ * Changed P_numtype to T_numtype inside class definition consistently.
+ *
  * Revision 1.3  2002/06/26 23:51:13  jcumming
  * Explicitly specify second template argument for ListInitializationSwitch,
  * rather than relying on the default value.  This eliminates a compilation
@@ -115,7 +118,7 @@ public:
     ~TinyVector() 
     { }
 
-    inline TinyVector(const TinyVector<P_numtype,N_length>& x);
+    inline TinyVector(const TinyVector<T_numtype,N_length>& x);
 
     inline TinyVector(T_numtype initValue);
 
