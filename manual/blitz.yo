@@ -1,0 +1,140 @@
+mailto(tveldhui@acm.org)
+includefile(blitzmacros)
+latexoptions(epsf,twoside)
+standardlayout()
+htmlbodyopt(fgcolor)(#27408B)
+htmlbodyopt(bgcolor)(#FFFAF0)
+COMMENT(abstract(Blitz++ is a C++ class library for scientific computing.))
+
+latexcommand(\makeindex)
+
+XXstartdocument(report)
+
+latexcommand(\pagestyle{headings})
+latexcommand(\oddsidemargin 0in)
+latexcommand(\evensidemargin 0in)
+latexcommand(\topmargin 0in)
+latexcommand(\textheight 8.5in)
+latexcommand(\textwidth 6in)
+
+XXsetdocumentheader(Blitz++ User's Guide)
+                   (Todd Veldhuizen nl() <tt(tveldhui@acm.org)>)
+                   (Version 0.5, June 1999)
+
+COMMENT(
+       ( PIPETHROUGH(date +"%B %d, %Y")(x)
+       ))
+
+chapter(Introduction)
+
+bzsect(About this document)
+
+To use the Blitz++ library,
+you will need a compiler with near-draft standard syntax support
+(see the following section for possible compilers).
+Information on what platforms are supported is
+available from
+url(http://oonumerics.org/blitz/platforms/)(http://oonumerics.org/blitz/platforms/).  To download Blitz++, please go to the
+download page at
+url(http://oonumerics.org/blitz/download/)(http://oonumerics.org/blitz/download/).
+
+If you need to do something that Blitz++ doesn't support, 
+see a possible improvement, or notice an error in the documentation,
+please send a note to one of the Blitz++ mailing lists (described
+later).
+
+bzsect(Platform notes)
+includefile(platforms)
+
+bzsect(How to download Blitz++)
+includefile(download)
+
+bzsect(Installation and porting)
+includefile(install)
+
+bzsect(Compiling with Blitz++)
+includefile(compiling)
+
+bzsect(Licensing terms)
+includefile(legal)
+
+bzsect(Mailing lists and support)
+includefile(help)
+
+
+chapter(Arrays)
+
+bzsect(Getting started)
+includefile(arrays-intro)
+
+bzsect(Public types)
+includefile(arrays-types)
+
+bzsect(Constructors)
+includefile(arrays-ctors)
+
+bzsect(Indexing, subarrays, and slicing)
+includefile(arrays-slicing)
+
+bzsect(Debug mode)
+includefile(arrays-debug)
+
+bzsect(Member functions)
+includefile(arrays-members)
+
+bzsect(Global functions)
+includefile(arrays-globals)
+
+bzsect(Inputting and Outputting Arrays)
+includefile(arrays-io)
+
+bzsect(Array storage orders)
+includefile(arrays-storage)
+
+
+chapter(Array Expressions)
+
+includefile(arrays-expr)
+
+
+chapter(Stencils)
+
+includefile(arrays-stencils)
+
+
+chapter(Multicomponent, complex, and user type arrays)
+
+bzsect(Multicomponent and complex arrays)
+includefile(arrays-multi)
+
+bzsect(Creating arrays of a user type)
+includefile(arrays-usertype)
+
+
+chapter(Indirection)
+
+bzsect(Indirection)
+includefile(arrays-indirect)
+
+
+
+chapter(TinyVector)
+includefile(tinyvector)
+
+
+
+chapter(Random Number Generators)
+includefile(random)
+
+
+
+chapter(Numeric properties)
+includefile(numinquire)
+
+
+chapter(Frequently Asked Questions)
+includefile(faq)
+
+
+latexcommand(\input{blitz.ind})
+
