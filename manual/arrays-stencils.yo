@@ -1,0 +1,633 @@
+
+bzindex(stencil objects)
+bzindex(Array!stencils)
+
+Blitz++ provides an implementation of stencil objects which
+is currently bf(experimental).  This means that the exact
+details of how they are declared and used may change in future
+releases.  Use at your own risk.
+
+bzsect(Motivation: a nicer notation for stencils)
+
+Suppose we wanted to implement the 3-D acoustic wave equation
+using finite differencing.  Here is how a single iteration would
+look using subarray syntax:
+
+bzverb(
+  Range I(1,N-2), J(1,N-2), K(1,N-2);
+
+  P3(I,J,K) = (2-6*c(I,J,K)) * P2(I,J,K)
+    + c(I,J,K)*(P2(I-1,J,K) + P2(I+1,J,K) + P2(I,J-1,K) + P2(I,J+1,K)
+    + P2(I,J,K-1) + P2(I,J,K+1)) - P1(I,J,K);
+)
+
+This syntax is a bit klunky.  With stencil objects, the
+implementation becomes:
+
+bzverb(
+BZ_DECLARE_STENCIL4(acoustic3D_stencil,P1,P2,P3,c)
+  P3 = 2 * P2 + c * Laplacian3D(P2) - P1;
+BZ_END_STENCIL
+
+  .
+  .
+
+  applyStencil(acoustic3D_stencil(), P1, P2, P3, c);
+)
+
+bzsect(Declaring stencil objects)
+
+bzindex(stencil objects!declaring)
+
+A stencil declaration may not be inside a function.
+It can appear inside a class declaration (in which
+case the stencil object is a nested type).
+
+Stencil objects are declared using the macros
+tt(BZ_DECLARE_STENCIL1), tt(BZ_DECLARE_STENCIL2), etc.
+The number suffix is how many arrays are involved
+in the stencil (in the above example, 4 arrays-- P1,P2,P3,c --
+are used, so the macro BZ_DECLARE_STENCIL4 is invoked).
+
+The first argument is a name for the stencil object.  
+Subsequent arguments are names for the arrays on
+which the stencil operates.
+
+After the stencil declaration, the macro tt(BZ_END_STENCIL)
+must appear (or the macro tt(BZ_END_STENCIL_WITH_SHAPE), described
+in the next section).
+
+In between the two macros, you can have multiple assignment
+statements, if/else/elseif constructs, function calls,
+loops, etc.
+
+Here are some simple examples:
+
+bzindex(BZ_DECLARE_STENCIL)
+
+bzverb(
+BZ_DECLARE_STENCIL2(smooth2D,A,B)
+  A = (B(0,0) + B(0,1) + B(0,-1) + B(1,0) + B(-1,0)) / 5.0;
+BZ_END_STENCIL
+
+BZ_DECLARE_STENCIL4(acoustic2D,P1,P2,P3,c)
+  A = 2 * P2 + c * (-4 * P2(0,0) + P2(0,1) + P2(0,-1) + P2(1,0) + P2(-1,0))
+      - P1;
+BZ_END_STENCIL
+
+BZ_DECLARE_STENCIL8(prop2D,E1,E2,E3,M1,M2,M3,cE,cM)
+  E3 = 2 * E2 + cE * Laplacian2D(E2) - E1;
+  M3 = 2 * M2 + cM * Laplacian2D(M2) - M1;
+BZ_END_STENCIL
+
+BZ_DECLARE_STENCIL3(smooth2Db,A,B,c)
+  if ((c > 0.0) && (c < 1.0))
+    A = c * (B(0,0) + B(0,1) + B(0,-1) + B(1,0) + B(-1,0)) / 5.0
+      + (1-c)*B;
+  else
+    A = 0;
+BZ_END_STENCIL
+)
+
+Currently, a stencil can take up to 11 array parameters.
+
+You can use the notation tt(A(i,j,k)) to read the element at
+an offset tt((i,j,k)) from the current element.  If you omit
+the parentheses (i.e. as in "A"), then the current element
+is read.
+
+You can invoke em(stencil operators) which calculate finite
+differences and laplacians.
+
+bzsect(Automatic determination of stencil extent)
+
+In stencil declarations such as
+bzverb(
+BZ_DECLARE_STENCIL2(smooth2D,A,B)
+  A = (B(0,0) + B(0,1) + B(0,-1) + B(1,0) + B(-1,0)) / 5.0;
+BZ_END_STENCIL
+)
+Blitz++ will try to automatically determine the spatial extent
+of the stencil.  This will usually work for stencils defined
+on integer or float arrays.  However, the mechanism does not work
+well for complex-valued arrays, or arrays of user-defined types.
+If you get a peculiar error when you try to use a stencil, you
+probably need to tell Blitz++ the special extent of the stencil
+manually.
+
+You do this by ending a stencil declaration with
+BZ_END_STENCIL_WITH_SHAPE:
+
+bzverb(
+BZ_DECLARE_STENCIL2(smooth2D,A,B)
+  A = (B(0,0) + B(0,1) + B(0,-1) + B(1,0) + B(-1,0)) / 5.0;
+BZ_END_STENCIL_WITH_SHAPE(shape(-1,-1),shape(+1,+1))
+)
+
+The parameters of this macro are: a TinyVector (constructed
+by the shape() function) containing the lower bounds of the
+stencil offsets, and a TinyVector containing the upper bounds.
+You can determine this by looking at the the terms in the
+stencil and finding the minimum and maximum value of each
+index:
+
+bzverb(
+        A = (B(0,  0) 
+           + B(0, +1)
+           + B(0, -1)
+           + B(+1, 0)
+           + B(-1, 0)) / 5.0;
+             --------
+  min indices  -1, -1
+  max indices  +1, +1
+)
+
+bzsect(Stencil operators)
+
+bzindex(stencil operators)
+
+This section lists all the stencil operators provided by Blitz++.
+They assume that an array represents evenly spaced data points
+separated by a distance of tt(h).  A 2nd-order accurate operator
+has error term O(h^2); a 4th-order accurate operator has
+error term O(h^4).
+
+All of the stencils have factors associated with them.  For
+example, the tt(central12) operator is a discrete first derivative
+which is 2nd-order accurate.  Its factor is 2h; this means that
+to get the first derivative of an array A, you need to use 
+tt(central12(A,firstDim)/(2*h)).  Typically when designing
+stencils, one factors out all of the tt(h) terms for efficiency.
+
+The factor terms always consist of an integer multiplier (often 1)
+and a power of tt(h).  For ease of use, all of the operators
+listed below are provided in a second ``normalized'' version in which
+the integer multiplier is 1.  The normalized versions have
+an tt(n) appended to the name, for example tt(central12n) is
+the normalized version of tt(central12), and has factor tt(h)
+instead of tt(2h).
+
+These operators are defined in tt(blitz/array/stencilops.h) if
+you wish to see the implementation.
+
+bzsubsect(Central differences)
+
+bzindex(central differences)
+
+startdit()
+
+dit(central12(A,dimension)): 1st derivative, 2nd order accurate.  Factor: 2h
+
+includefile(stencils/central12.yo)
+
+dit(central22(A,dimension)): 2nd derivative, 2nd order accurate.  Factor: h^2
+
+includefile(stencils/central22.yo)
+
+dit(central32(A,dimension)): 3rd derivative, 2nd order accurate.  Factor: 2h^3
+
+includefile(stencils/central32.yo)
+
+dit(central42(A,dimension)): 4th derivative, 2nd order accurate.  Factor: h^4
+
+includefile(stencils/central42.yo)
+
+dit(central14(A,dimension)): 1st derivative, 4th order accurate.  Factor: 12h
+
+includefile(stencils/central14.yo)
+
+dit(central24(A,dimension)): 2nd derivative, 4th order accurate.  Factor: 12h^2
+
+includefile(stencils/central24.yo)
+
+dit(central34(A,dimension)): 3rd derivative, 4th order accurate.  Factor: 8h^3
+
+includefile(stencils/central34.yo)
+
+dit(central44(A,dimension)): 4th derivative, 4th order accurate.  Factor: 6h^4
+
+includefile(stencils/central44.yo)
+
+enddit()
+
+Note that the above are available in normalized versions
+tt(central12n), tt(central22n), ..., tt(central44n) which
+have factors of tt(h), tt(h^2), tt(h^3), or tt(h^4) as
+appropriate.  
+
+These are available in multicomponent versions: for example,
+tt(central12(A,component,dimension)) gives the central12 operator for the 
+specified component (Components are numbered 0, 1, ... N-1).  
+
+bzsubsect(Forward differences)
+
+bzindex(forward differences)
+
+startdit()
+
+dit(forward11(A,dimension)): 1st derivative, 1st order accurate.  Factor: h
+
+includefile(stencils/forward11.yo)
+
+dit(forward21(A,dimension)): 2nd derivative, 1st order accurate.  Factor: h^2
+
+includefile(stencils/forward21.yo)
+
+dit(forward31(A,dimension)): 3rd derivative, 1st order accurate.  Factor: h^3
+
+includefile(stencils/forward31.yo)
+
+dit(forward41(A,dimension)): 4th derivative, 1st order accurate.  Factor: h^4
+
+includefile(stencils/forward41.yo)
+
+dit(forward12(A,dimension)): 1st derivative, 2nd order accurate.  Factor: 2h
+
+includefile(stencils/forward12.yo)
+
+dit(forward22(A,dimension)): 2nd derivative, 2nd order accurate.  Factor: h^2
+
+includefile(stencils/forward22.yo)
+
+dit(forward32(A,dimension)): 3rd derivative, 2nd order accurate.  Factor: 2h^3
+
+includefile(stencils/forward32.yo)
+
+dit(forward42(A,dimension)): 4th derivative, 2nd order accurate.  Factor: h^4
+
+includefile(stencils/forward42.yo)
+
+enddit()
+
+Note that the above are available in normalized versions
+tt(forward11n), tt(forward21n), ..., tt(forward42n) which
+have factors of tt(h), tt(h^2), tt(h^3), or tt(h^4) as
+appropriate.  
+
+These are available in multicomponent versions: for example,
+tt(forward11(A,component,dimension)) gives the forward11 operator for the 
+specified component (Components are numbered 0, 1, ... N-1).
+
+bzsubsect(Backward differences)
+
+bzindex(backward differences)
+
+startdit()
+
+dit(backward11(A,dimension)): 1st derivative, 1st order accurate.  Factor: h
+
+includefile(stencils/backward11.yo)
+
+dit(backward21(A,dimension)): 2nd derivative, 1st order accurate.  Factor: h^2
+
+includefile(stencils/backward21.yo)
+
+dit(backward31(A,dimension)): 3rd derivative, 1st order accurate.  Factor: h^3
+
+includefile(stencils/backward31.yo)
+
+dit(backward41(A,dimension)): 4th derivative, 1st order accurate.  Factor: h^4
+
+includefile(stencils/backward41.yo)
+
+dit(backward12(A,dimension)): 1st derivative, 2nd order accurate.  Factor: 2h
+
+includefile(stencils/backward12.yo)
+
+dit(backward22(A,dimension)): 2nd derivative, 2nd order accurate.  Factor: h^2
+
+includefile(stencils/backward22.yo)
+
+dit(backward32(A,dimension)): 3rd derivative, 2nd order accurate.  Factor: 2h^3
+
+includefile(stencils/backward32.yo)
+
+dit(backward42(A,dimension)): 4th derivative, 2nd order accurate.  Factor: h^4
+
+includefile(stencils/backward42.yo)
+
+enddit()
+
+Note that the above are available in normalized versions
+tt(backward11n), tt(backward21n), ..., tt(backward42n) which
+have factors of tt(h), tt(h^2), tt(h^3), or tt(h^4) as
+appropriate.  
+
+These are available in multicomponent versions: for example,
+tt(backward42(A,component,dimension)) gives the backward42 operator for the 
+specified component (Components are numbered 0, 1, ... N-1).
+
+bzsubsect(Laplacian operators)
+
+bzindex(Laplacian operators)
+IFDEF(latex)(bzindex(latexcommand($\nabla^2$) operator))()
+
+startdit()
+
+dit(Laplacian2D(A)): 2nd order accurate, 2-dimensional laplacian.  Factor: h^2
+
+includefile(stencils/Laplacian2D.yo)
+
+dit(Laplacian3D(A)): 2nd order accurate, 3-dimensional laplacian.  Factor: h^2
+
+dit(Laplacian2D4(A)): 4th order accurate, 2-dimensional laplacian.  Factor: 12h^2
+
+includefile(stencils/Laplacian2D4.yo)
+
+dit(Laplacian3D4(A)): 4th order accurate, 3-dimensional laplacian.  Factor: 12h^2
+enddit()
+
+Note that the above are available in normalized versions
+tt(Laplacian2D4n), tt(Laplacian3D4n) which have factors
+h^2.
+
+bzsubsect(Gradient operators)
+
+bzindex(gradient operators)
+
+These return tt(TinyVector)s of the appropriate numeric type and length:
+
+startdit()
+
+dit(grad2D(A)): 2nd order, 2-dimensional gradient (vector of first derivatives),
+generated using the central12 operator.  Factor: 2h
+
+dit(grad2D4(A)): 4th order, 2-dimensional gradient, using central14 operator.  Factor: 12h
+
+dit(grad3D(A)): 2nd order, 3-dimensional gradient, using central12 operator.  Factor: 2h
+
+dit(grad3D4(A)): 4th order, 3-dimensional gradient, using central14 operator.  Factor: 12h
+
+enddit()
+
+These are available in normalized versions
+tt(grad2Dn), tt(grad2D4n), tt(grad3Dn) and tt(grad3D4n) which
+have factors h.
+
+bzsubsect(Jacobian operators)
+bzindex(Jacobian operators)
+
+The Jacobian operators are defined over 3D vector fields only
+(e.g. tt(Array<TinyVector<double,3>,3>)).  They return a
+tt(TinyMatrix<T,3,3>) where T is the numeric type of the
+vector field.
+
+startdit()
+
+dit(Jacobian3D(A)): 2nd order, 3-dimensional Jacobian
+using the central12 operator.  Factor: 2h.
+
+dit(Jacobian3D4(A)): 4th order, 3-dimensional Jacobian 
+using the central14 operator.  Factor: 12h.
+
+enddit()
+
+These are also available in normalized
+versions tt(Jacobian3Dn) and tt(Jacobain3D4n) which
+have factors h.
+
+bzsubsect(Grad-squared operators)
+
+bzindex(Grad-squared operators)
+
+There are also grad-squared operators, which return tt(TinyVector)s of
+second derivatives:
+
+startdit()
+
+dit(gradSqr2D(A)): 2nd order, 2-dimensional grad-squared (vector
+of second derivatives), generated using the central22 operator.  Factor: h^2
+
+dit(gradSqr2D4(A)): 4th order, 2-dimensional grad-squared, using
+central24 operator.  Factor: 12h^2
+
+dit(gradSqr3D(A)): 2nd order, 3-dimensional grad-squared,
+using the central22 operator.  Factor: h^2
+
+dit(gradSqr3D4(A)): 4th order, 3-dimensional grad-squared, using
+central24 operator.  Factor: 12h^2
+
+enddit()
+
+Note that the above are available in normalized versions
+tt(gradSqr2Dn), tt(gradSqr2D4n), tt(gradSqr3Dn), tt(gradSqr3D4n)
+which have factors h^2.
+
+bzsubsect(Curl operators)
+
+bzindex(curl operator)
+IFDEF(latex)(bzindex(latexcommand($\nabla \times$) operator))()
+
+These curl operators return scalar values:
+
+startdit()
+
+dit(curl(Vx,Vy)): 2nd order curl operator using the central12 operator.
+Factor: 2h
+
+dit(curl4(Vx,Vy)): 4th order curl operator using the central14 operator.
+Factor: 12h
+
+dit(curl2D(V)): 2nd order curl operator on a 2D vector field
+(e.g. tt(Array<TinyVector<float,2>,2>)), using the central12 operator.
+Factor: 2h
+
+dit(curl2D4(V)): 4th order curl operator on a 2D vector field,
+using the central12 operator.  Factor: 12h
+
+enddit()
+
+Available in normalized forms tt(curln), tt(curl4n), tt(curl2Dn),
+tt(curl2D4n).
+
+These curl operators return three-dimensional tt(TinyVector)s of the 
+appropriate numeric type:
+
+startdit()
+
+dit(curl(Vx,Vy,Vz)): 2nd order curl operator using the central12 operator.  
+Factor: 2h
+
+dit(curl4(Vx,Vy,Vz)): 4th order curl operator using the central14 operator.  
+Factor: 12h
+
+dit(curl(V)): 2nd order curl operator on a 3D vector
+field (e.g. tt(Array<TinyVector<double,3>,3>), using the
+central12 operator.  Factor: 2h
+
+dit(curl4(V)): 4th order curl operator on a 3D vector
+field, using the central14 operator.  Factor: 12h
+
+enddit()
+
+Note that the above are available in normalized versions tt(curln) and
+tt(curl4n), which have factors of tt(h).
+
+bzsubsect(Divergence operators)
+
+The divergence operators return a scalar value.
+bzindex(divergence operator)
+IFDEF(latex)(bzindex(latexcommand($\nabla \cdot$) operator))()
+
+startdit()
+
+dit(div(Vx,Vy)): 2nd order div operator using the central12 operator.
+Factor: 2h
+
+dit(div4(Vx,Vy)): 4th order div operator using the central14 operator.
+Factor: 12h
+
+dit(div(Vx,Vy,Vz)): 2nd order div operator using the central12 operator.
+Factor: 2h
+
+dit(div4(Vx,Vy,Vz)): 4th order div operator using the central14 operator.
+Factor: 12h
+
+dit(div2D(V)): 2nd order div operator on a 2D vector field,
+using the central12 operator.  Factor: 2h
+
+dit(div2D4(V)): 2nd order div operator on a 2D vector
+field, using the central14 operator.  Factor: 12h
+
+dit(div3D(V)): 2nd order div operator on a 3D vector field,
+using the central12 operator.  Factor: 2h
+
+dit(div3D4(V)): 2nd order div operator on a 3D vector field
+using the central14 operator.  Factor: 12h
+
+enddit()
+
+These are available in normalized versions
+tt(divn), tt(div4n), tt(div2Dn), tt(div2D4n), tt(div3Dn), and
+tt(div3D4n) which have factors of tt(h).
+
+bzsubsect(Mixed partial derivatives)
+
+bzindex(mixed partial operators)
+startdit()
+
+dit(mixed22(A,dim1,dim2)): 2nd order accurate, 2nd mixed partial derivative.
+Factor: 4h^2
+
+dit(mixed24(A,dim1,dim2)): 4th order accurate, 2nd mixed partial derivative.
+Factor: 144h^2
+
+enddit()
+
+There are also normalized versions of the above, tt(mixed22n) and
+tt(mixed24n) which have factors tt(h^2).
+
+bzsect(Declaring your own stencil operators)
+
+bzindex(stencil operators!declaring your own)
+
+You can declare your own stencil operators using the macro
+tt(BZ_DECLARE_STENCIL_OPERATOR1).  For example, here is the
+declaration of tt(Laplacian2D):
+
+bzverb(
+BZ_DECLARE_STENCIL_OPERATOR1(Laplacian2D, A)
+    return -4*A(0,0) + A(-1,0) + A(1,0) + A(0,-1) + A(0,1);
+BZ_END_STENCIL_OPERATOR
+)
+
+To declare a stencil operator on 3 operands, use 
+the macro BZ_DECLARE_STENCIL_OPERATOR3.  Here is
+the declaration of tt(div):
+
+bzverb(
+BZ_DECLARE_STENCIL_OPERATOR3(div,vx,vy,vz)
+  return central12(vx,firstDim) + central12(vy,secondDim)
+    + central12(vz,thirdDim);
+BZ_END_STENCIL_OPERATOR
+)
+
+The macros aren't magical; they just declare an inline
+template function with the names and arguments you specify.
+For example, the declaration of tt(div) could also
+be written
+
+bzverb(
+template<class T>                              
+inline typename T::T_numtype div(T& vx, T& vy, T& vz)   
+{
+  return central12(vx,firstDim) + central12(vy,secondDim)
+    + central12(vz,thirdDim);
+}
+)
+
+The template parameter tt(T) is an iterator type for
+arrays.
+
+You are encouraged to use the macros when possible, because
+it is possible the implementation could be changed in the
+future.
+
+To declare a difference operator, use this syntax:
+
+bzverb(
+BZ_DECLARE_DIFF(central12,A) {
+  return A.shift(1,dim) - A.shift(-1,dim);
+}
+)
+
+The method tt(shift(offset,dim)) retrieves the element at
+tt(offset) in dimension tt(dim).
+
+Stencil operator declarations cannot occur inside a function.  If
+declared inside a class, they are scoped by the class.
+
+bzsect(Applying a stencil)
+
+bzindex(stencil objects!applying)
+
+The syntax for applying a stencil is:
+
+bzverb(
+  applyStencil(stencilname(),A,B,C...,F);
+)
+
+Where tt(stencilname) is the name of the stencil, and 
+tt(A,B,C,...,F) are the arrays on which the stencil
+operates.
+
+For examples, see tt(examples/stencil.cpp) and tt(examples/stencil2.cpp).
+
+Blitz++ interrogates the stencil object to find out how
+large its footprint is.  It only applies the stencil
+over the region of the arrays where it won't overrun
+the boundaries.
+
+COMMENT(
+bzsect(What still needs work)
+
+startit()
+
+it() Have to allow scalars to be passed to stencils (currently you
+can do this kludgily, by making scalars data members of the
+stencil).
+
+it() Implement unit stride optimizations and tiling.
+
+it() Allow more than 11 operands.
+
+it() Pass coordinate vector to stencil, so that where-like constructs
+can depend on location.
+
+it() Maybe allow expression templates to be passed as array parameters.
+
+it() Implement stencil objects for 1 and 4 dimensions (currently
+they only work in 2 and 3 dimensions)
+
+it() Implement some simple boundary conditions: zero padding,
+cyclic BC's.
+
+it() Provide a user-level function which returns the footprint
+of a stencil.
+
+it() Experiment with threaded versions of applyStencil.
+
+it() Implement applyStencilRed and applyStencilBlack
+
+endit()
+)

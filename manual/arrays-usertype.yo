@@ -1,0 +1,98 @@
+bzindex(Array!of your own types)
+
+You can use the tt(Array) class with types you have created yourself,
+or types from another library.  If you want to do arithmetic on the
+array, whatever operators you use on the arrays have to be defined
+on the underlying type.
+
+For example, here's a simple class for doing fixed point computations
+in the interval [0,1]:
+
+bzexample(
+#include <blitz/numinquire.h>     // for huge()
+
+class FixedPoint {
+
+public:
+    // The type to use for the mantissa
+    typedef unsigned int T_mantissa;
+
+    FixedPoint() { }
+
+    explicit FixedPoint(T_mantissa mantissa)
+    {  
+        mantissa_ = mantissa;
+    }
+
+    FixedPoint(double value)
+    {
+        assert((value >= 0.0) && (value <= 1.0));
+        mantissa_ = value * huge(T_mantissa());
+    }
+   
+    FixedPoint operator+(FixedPoint x)
+    { return FixedPoint(mantissa_ + x.mantissa_); }
+
+    double value() const
+    { return mantissa_ / double(huge(T_mantissa())); }
+
+private:
+    T_mantissa mantissa_;
+};
+
+ostream& operator<<(ostream& os, const FixedPoint& a)
+{
+    os << a.value();
+    return os;
+}
+)
+
+The function tt(huge(T)) returns the largest representable value
+for type T; in the example above, it's equal to tt(UINT_MAX).
+
+The tt(FixedPoint) class declares three useful operations: conversion
+from tt(double), addition, and outputing to an tt(ostream).  We can
+use all of these operations on an tt(Array<FixedPoint>) object:
+
+bzexample(
+#include <blitz/array.h>
+
+using namespace blitz;
+
+int main()
+{
+    // Create an array using the FixedPoint class:
+
+    Array<FixedPoint, 2> A(4,4), B(4,4);
+
+    A = 0.5, 0.3, 0.8, 0.2,
+        0.1, 0.3, 0.2, 0.9,
+        0.0, 1.0, 0.7, 0.4,
+        0.2, 0.3, 0.8, 0.4;
+
+    B = A + 0.05;
+
+    cout << "B = " << B << endl;
+
+    return 0;
+}
+)
+
+Note that the array tt(A) is initialized using a comma-delimited list
+of tt(double); this makes use of the constructor tt(FixedPoint(double)).
+The assignment tt(B = A + 0.05) uses 
+tt(FixedPoint::operator+(FixedPoint)), with an implicit conversion
+from tt(double) to tt(FixedPoint).  Formatting the array tt(B) onto
+the standard output stream is done using the output operator
+defined for tt(FixedPoint).
+
+Here's the program output:
+
+bzexample(\
+B = 4 x 4
+      0.55      0.35      0.85      0.25
+      0.15      0.35      0.25      0.95
+      0.05      0.05      0.75      0.45
+      0.25      0.35      0.85      0.45
+)
+
