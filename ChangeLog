@@ -1,3 +1,23 @@
+
+2003-09-26 Patrick Guio <patrick.guio@fys.uio.no>
+	* blitz/applics.h: Added TwoOperandApplicativeTemplatesBase's 
+	_bz_Min and _bz_Max.
+	* blitz/generate/genvecbfn.cpp: New file. Generate file blitz/vecbfn.cc
+	with support for C=min(A,B) and C=max(A,B) for TinyVectors. min(A,B) and 
+	max(A,B) return an elementwise min/max of two TinyVectors of same length.
+	Comparable to STL min() and max() but rquires Blitz to be STL-compliant.
+	* blitz/generate/genarrbops.cpp blitz/generate/genmatbops.cpp: Generate
+	support for min() and max() applics.
+	The min() and max() are elementwise as for TinyVectors. Now available for
+	Array, Matrix and Vector.
+	* blitz/generate/Makefile.am: Added necessary stuff for the generation of
+	blitz/vecbfn.cc from blitz/generate/genvecbfn.
+	* blitz/array/ops.h blitz/array/newbops.cc: Added elementwise min() and
+	max() functions for the new ET for Arrays.
+	* blitz/vecbfn.cc blitz/array/bops.cc blitz/matbops.h: 
+	Regenerated with support for elementwise min() and max().
+
+
 2003-09-17  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* compiler/Makefile.am: Separate targets for local config.h file
