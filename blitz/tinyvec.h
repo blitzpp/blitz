@@ -21,32 +21,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.5  2002/06/28 01:27:41  jcumming
- * Changed return type of lengthCheck() method from int to _bz_bool.
- *
- * Revision 1.4  2002/06/27 00:31:42  jcumming
- * Changed P_numtype to T_numtype inside class definition consistently.
- *
- * Revision 1.3  2002/06/26 23:51:13  jcumming
- * Explicitly specify second template argument for ListInitializationSwitch,
- * rather than relying on the default value.  This eliminates a compilation
- * problem using the xlC compiler.
- *
- * Revision 1.2  2001/01/24 20:22:50  tveldhui
- * Updated copyright date in headers.
- *
- * Revision 1.1.1.1  2000/06/19 12:26:11  tveldhui
- * Imported sources
- *
- * Revision 1.2  1998/03/14 00:04:47  tveldhui
- * 0.2-alpha-05
- *
- * Revision 1.1  1997/07/16 14:51:20  tveldhui
- * Update: Alpha release 0.2 (Arrays)
- *
- */
+ ***************************************************************************/
 
 #ifndef BZ_TINYVEC_H
 #define BZ_TINYVEC_H
@@ -122,6 +97,9 @@ public:
     { }
 
     inline TinyVector(const TinyVector<T_numtype,N_length>& x);
+
+    template <class T_numtype2>
+    inline TinyVector(const TinyVector<T_numtype2,N_length>& x);
 
     inline TinyVector(T_numtype initValue);
 

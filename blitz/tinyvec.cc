@@ -21,20 +21,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.4  2002/06/27 00:09:37  jcumming
- * Changed T_numtype to P_numtype when used outside the argument list or body
- * of a member function definition (i.e., outside the class scope).  Inside
- * the class scope, we can use the typedef T_numtype.  The IBM xlC compiler
- * gets confused if P_numtype is used as a template parameter name in a member
- * function declaration and then T_numtype is used as the parameter name in
- * the member function definition.  Fixed usage to be more consistent.
- *
- * Revision 1.3  2001/01/25 00:25:55  tveldhui
- * Ensured that source files have cvs logs.
- *
- */
+ ***************************************************************************/
 
 #ifndef BZ_TINYVEC_CC
 #define BZ_TINYVEC_CC
@@ -68,6 +55,14 @@ inline TinyVector<P_numtype, N_length>::TinyVector(const
 {
     for (int i=0; i < N_length; ++i)
         data_[i] = x.data_[i];
+}
+
+template<class P_numtype, int N_length> template<class P_numtype2>
+inline TinyVector<P_numtype, N_length>::TinyVector(const 
+    TinyVector<P_numtype2, N_length>& x)
+{
+    for (int i=0; i < N_length; ++i)
+        data_[i] = static_cast<P_numtype>(x[i]);
 }
 
 template<class P_numtype, int N_length> template<class P_expr, class P_updater>
