@@ -302,6 +302,10 @@ struct name ## _impl {                                                   \
                                                                          \
 BZ_DECLARE_ARRAY_ET_BINARY(name, name ## _impl)
 
+#define BZ_DECLARE_FUNCTION2_SCALAR(name, sca)                           \
+                                                                         \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(name, name ## _impl, sca)
+
 #define BZ_DECLARE_FUNCTION3(name)                                       \
 template <typename P_numtype1, typename P_numtype2, typename P_numtype3> \
 struct name ## _impl {                                                   \
