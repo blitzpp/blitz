@@ -23,6 +23,15 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.4  2002/03/07 08:38:20  patricg
+ *
+ * moved
+ * template<int N_dimensions>
+ * _bz_typename TraversalOrderCollection<N_dimensions>::T_set
+ *     TraversalOrderCollection<N_dimensions>::traversals_;
+ * after the declaration of
+ * template<int N_dimensions> class TraversalOrderCollection
+ *
  * Revision 1.3  2002/03/06 17:18:11  patricg
  *
  * template declaration
@@ -124,10 +133,6 @@ protected:
     T_coord     size_;
 };
 
-template<int N_dimensions>
-_bz_typename TraversalOrderCollection<N_dimensions>::T_set
-    TraversalOrderCollection<N_dimensions>::traversals_;
-
 /*
  * This specialization is provided to avoid problems with zero-length
  * vectors.
@@ -162,6 +167,10 @@ public:
 protected:
     static T_set traversals_;
 };
+
+template<int N_dimensions>
+_bz_typename TraversalOrderCollection<N_dimensions>::T_set
+    TraversalOrderCollection<N_dimensions>::traversals_;
 
 /*
  * This specialization is provided to avoid problems with zero-length
