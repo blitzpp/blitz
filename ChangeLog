@@ -21,6 +21,7 @@ Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* config.guess: updated from automake 1.4a
 	* config.sub: likewise
 	* GPL: renamed to COPYING according to GNU standard
+	* AUTHORS, COPYING, NEWS: new files to follow the GNU standard
 	* benchmarks/*f90.f: renamed to benchmarks/*f90.f90
 	* examples/complex.cpp: renamed to examples/complex-test.cpp
 	* testsuite/complex.cpp: renamed to testsuite/complex-test.cpp due to
