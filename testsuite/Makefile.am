@@ -1,6 +1,5 @@
 #
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
-# $Revision$
 #
 
 # Blitz++ test suite makefile

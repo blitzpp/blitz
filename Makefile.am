@@ -1,6 +1,5 @@
 #
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
-# $Revision$
 #
 
 EXTRA_DIST = CHANGELOG LEGAL LICENSE config.h.in GPL README.binutils
