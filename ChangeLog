@@ -1,3 +1,37 @@
+2003-01-21  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+	* blitz/generate/genmathfunc.cpp: Fixed categorization and scoping
+	problems with fmod, ilogb and isnan.
+	* blitz/generate/genvecuops.cpp: Renamed blitz_isnan to isnan.
+	* blitz/generate/genmatuops.cpp: Renamed blitz_isnan to isnan.
+	* Makefile.am: Commented out references to demos subdirectory.
+	* doc/stencils/Makefile.am: Prefix ./ to dump-stencils command.
+	* blitz/generate/genarrbops.cpp: Generate bops.cc header file in
+	blitz/array subdirectory.
+	* blitz/generate/genmatbops.cpp: Generate matbops.h header file in
+	parent directory.
+	* blitz/generate/genmathfunc.cpp: Generate mathfunc.h header file
+	in parent directory.
+	* blitz/generate/genvecbops.cpp: Generate vecbops.cc header file
+	in parent directory.
+	* blitz/generate/genvecwhere.cpp: Generate vecwhere.cc header file
+	in parent directory.
+	* blitz/generate/genarruops.cpp: Generate uops.cc in blitz/array
+	subdirectory.
+	* blitz/generate/genmatuops.cpp: Generate matuops.h in parent
+	directory.  Added missing implementation of function two().
+	* blitz/generate/genvecuops.cpp: Generate vecuops.cc in parent
+	directory.  Added missing implementation of function two().
+	* blitz/generate/genpromote.cpp: Generate promote-old.h header in
+	parent directory.  Fixed return code.
+	* blitz/generate/Makefile.am: Added generate-headers target to run
+	programs in blitz/generate subdirectory.
+	* blitz/array/Makefile.am: Added genheaders target to handle blitz
+	headers that are generated in blitz/generate subdirectory.
+	* blitz/Makefile.am: Added genheaders target to handle blitz
+	headers that are generated in blitz/generate subdirectory.
+	* blitz/Makefile.am: Reorder subdirectories so that necessary
+	header files are generated prior to building in array
+	subdirectory.
 
 2003-01-21 Patrick Guio <patrick.guio@fys.uio.no>
 	* doc/stencils/Makefile.am: Removed an important comment.
