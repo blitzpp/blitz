@@ -1,1 +1,16 @@
 Makefile
+*.aux
+*.cp
+*.cps
+*.dvi
+*.fn
+*.fns
+*.ky
+*.log
+*.pg
+*.tmp
+*.toc
+*.tp
+*.vr
+*.html
+
