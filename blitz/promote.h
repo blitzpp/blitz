@@ -24,6 +24,10 @@
  * $Id$
  *
  * $Log$
+ * Revision 1.5  2002/07/02 19:34:50  jcumming
+ * Added BZ_BLITZ_SCOPE to promote_trait in BZ_PROMOTE macro definition
+ * so that this macro works correctly outside the blitz namespace.
+ *
  * Revision 1.4  2002/03/06 16:58:19  patricg
  *
  * typename replaced by _bz_typename
@@ -41,7 +45,7 @@
 BZ_NAMESPACE(blitz)
 
 #ifdef BZ_TEMPLATE_QUALIFIED_RETURN_TYPE
-    #define BZ_PROMOTE(A,B) _bz_typename promote_trait<A,B>::T_promote
+    #define BZ_PROMOTE(A,B) _bz_typename BZ_BLITZ_SCOPE(promote_trait)<A,B>::T_promote
 #else
     #define BZ_PROMOTE(A,B) A
 #endif
