@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/memblock.h      MemoryBlock<T> and MemoryBlockReference<T>
  *
@@ -23,16 +24,10 @@
  *
  ***************************************************************************/
 
-#ifndef __BZ_MEMBLOCK_H__
-#define __BZ_MEMBLOCK_H__
+#ifndef BZ_MEMBLOCK_H
+#define BZ_MEMBLOCK_H
 
-#ifndef BZ_BLITZ_H
- #include <blitz/blitz.h>
-#endif
-
-#ifndef BZ_NUMTRAIT_H
- #include <blitz/numtrait.h>
-#endif
+#include <blitz/blitz.h>
 
 #include <stddef.h>     // ptrdiff_t
 
@@ -170,7 +165,7 @@ protected:
     }
 
 protected:
-    inline void allocate(int length);
+    inline void allocate(size_t length);
     void deallocate();
 
 private:   // Disabled member functions
@@ -181,7 +176,7 @@ private:   // Disabled member functions
     { }
 
 private:   // Data members
-    T_type * restrict data_;
+    T_type * restrict     data_;
     T_type *              dataBlockAddress_;
 
 #ifdef BZ_DEBUG_REFERENCE_ROLLOVER
@@ -360,4 +355,4 @@ BZ_NAMESPACE_END
 
 #include <blitz/memblock.cc>
 
-#endif // __BZ_MEMBLOCK_H__
+#endif // BZ_MEMBLOCK_H
