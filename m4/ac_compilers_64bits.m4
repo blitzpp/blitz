@@ -15,7 +15,7 @@ if test "$bz_64bit" = true; then
 	case "$target" in
 	*aix*)
 		case "$CXX" in
-		*xlC)
+		*xlC*)
 			CXXFLAGS="-q64 $CXXFLAGS"
 			AR_FLAGS="-cruX64"
 			LDFLAGS="-b64 $LDFLAGS"
@@ -33,13 +33,13 @@ if test "$bz_64bit" = true; then
 		esac
 
 		case "$F77" in
-		*xlf)
+		*xlf*)
 			FFLAGS="-q64 $FFLAGS"
 		;;
 		esac
 
 		case "$FC" in
-		*xlf90)
+		*xlf90*)
 			FCFLAGS="-q64 $FCFLAGS"
 		;;
 		esac
@@ -52,7 +52,7 @@ if test "$bz_64bit" = true; then
 			LDFLAGS="-64 $LDFLAGS"
 			AR_FLAGS="-64 $AR_FLAGS"
 		;;
-		*CC)
+		*CC*)
 			CXXFLAGS="-64 $CXXFLAGS"
 			LDFLAGS="-64 $LDFLAGS"
 			AR_FLAGS="-64 $AR_FLAGS"
@@ -64,13 +64,13 @@ if test "$bz_64bit" = true; then
 		esac
 
 		case "$F77" in
-		*f77)
+		*f77*)
 			FFLAGS="-64 $FFLAGS"
 		;;
 		esac
 
 		case "$FC" in
-		*f90)
+		*f90*)
 			FCFLAGS="-64 $FCFLAGS"
 		;;
 		esac 
