@@ -1,5 +1,14 @@
 
 
+2004-03-24  Patrick Guio <patrick.guio@fys.uio.no>
+
+	* doc/doxygen/Makefile.am doc/doxygen/Doxyfile.in: New files. Handles doxygen
+	documentation. Mostly "cut and paste" from tvmet project (tvmet.sourceforge.net).
+	* configure.in: Added generation of doc/doxygen/Doxyfile from
+	doc/doxygen/Doxyfile.in and doc/doxygen/Makefile.
+	* doc/doxygen/blitz.doxygen: Removed. Replaced by doc/doxygen/Doxyfile.
+
+
 2004-03-22  Patrick Guio <patrick.guio@fys.uio.no>
 
 	* m4: New directory containing m4 macros files that replace acinclude.m4.
