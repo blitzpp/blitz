@@ -2,7 +2,9 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-SUBDIRS = bin compiler blitz random src lib manual testsuite examples benchmarks demos
+SUBDIRS = bin compiler blitz random src lib testsuite \
+	examples benchmarks doc
+
 EXTRA_DIST = LEGAL LICENSE README.binutils config.h.in ChangeLog.1 
 
 demodir = $(prefix)/demos
