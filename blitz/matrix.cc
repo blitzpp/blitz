@@ -15,7 +15,7 @@
 BZ_NAMESPACE(blitz)
 
 // Matrix expression operand
-template<class P_numtype, class P_structure> template<class P_expr>
+template<typename P_numtype, typename P_structure> template<typename P_expr>
 Matrix<P_numtype, P_structure>& 
 Matrix<P_numtype, P_structure>::operator=(_bz_MatExpr<P_expr> expr)
 {
@@ -35,7 +35,7 @@ Matrix<P_numtype, P_structure>::operator=(_bz_MatExpr<P_expr> expr)
     return *this;
 }
 
-template<class P_numtype, class P_structure>
+template<typename P_numtype, typename P_structure>
 ostream& operator<<(ostream& os, const Matrix<P_numtype, P_structure>& matrix)
 {
     os << "[ ";

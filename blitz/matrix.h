@@ -41,14 +41,14 @@
 BZ_NAMESPACE(blitz)
 
 // Forward declarations
-template<class P_numtype, class P_structure>
+template<typename P_numtype, typename P_structure>
 class _bz_MatrixRef;
 
-template<class P_expr>
+template<typename P_expr>
 class _bz_MatExpr;
 
 // Declaration of class Matrix
-template<class P_numtype, class P_structure BZ_TEMPLATE_DEFAULT(RowMajor)>
+template<typename P_numtype, typename P_structure BZ_TEMPLATE_DEFAULT(RowMajor)>
 class Matrix : protected MemoryBlockReference<P_numtype> {
 
 private:
@@ -84,8 +84,8 @@ public:
     // Matrix(int rows, int cols, Random);
     // Matrix(int rows, int cols, matrix-expression);
     // Matrix(int rows, int cols, T_numtype* data, int rowStride, int colStride);
-    // _bz_explicit Matrix(Vector<T_numtype>& matrix);
-    // _bz_explicit Matrix(unsigned length);
+    // explicit Matrix(Vector<T_numtype>& matrix);
+    // explicit Matrix(unsigned length);
 
     // Create a vector view of an already allocated block of memory.
     // Note that the memory will not be freed when this vector is
@@ -138,7 +138,7 @@ public:
         return structure_.get(data_, i, j);
     }
 
-    T_numtype& _bz_restrict operator()(unsigned i, unsigned j)
+    T_numtype& restrict operator()(unsigned i, unsigned j)
     {
         return structure_.get(data_, i, j);
     }
@@ -162,19 +162,19 @@ public:
 
     // Matrix operand
 
-    template<class P_numtype2, class P_structure2> 
+    template<typename P_numtype2, typename P_structure2> 
     T_matrix& operator=(const Matrix<P_numtype2, P_structure2> &);
-    template<class P_numtype2, class P_structure2> 
+    template<typename P_numtype2, typename P_structure2> 
     T_matrix& operator+=(const Matrix<P_numtype2, P_structure2>&);
-    template<class P_numtype2, class P_structure2> 
+    template<typename P_numtype2, typename P_structure2> 
     T_matrix& operator-=(const Matrix<P_numtype2, P_structure2> &);
-    template<class P_numtype2, class P_structure2> 
+    template<typename P_numtype2, typename P_structure2> 
     T_matrix& operator*=(const Matrix<P_numtype2, P_structure2> &);
-    template<class P_numtype2, class P_structure2> 
+    template<typename P_numtype2, typename P_structure2> 
     T_matrix& operator/=(const Matrix<P_numtype2, P_structure2> &);
 
     // Matrix expression operand
-    template<class P_expr>
+    template<typename P_expr>
     T_matrix& operator=(_bz_MatExpr<P_expr>);
 
     // Integer placeholder expression operand
@@ -193,7 +193,7 @@ private:
     T_structure structure_;
 };
 
-template<class P_numtype, class P_structure>
+template<typename P_numtype, typename P_structure>
 ostream& operator<<(ostream& os, const Matrix<P_numtype, P_structure>& matrix);
 
 // Global operators
