@@ -1576,9 +1576,9 @@ case "$target" in
 	*hp-hpux*)
 		echo "HP-UX: assuming f70 and f90"
 		F77=f90
-		F77_OPTIMIZE_FLAGS="-O4"
+		F77_OPTIMIZE_FLAGS="-O3"
 		F90=f90
-		F90_OPTIMIZE_FLAGS="-O4"
+		F90_OPTIMIZE_FLAGS="-O3"
 		FORTLIBS="-lc -lF90"
 	;;
   *osf*)
