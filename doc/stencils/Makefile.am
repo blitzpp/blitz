@@ -4,14 +4,12 @@
 
 EXTRA_DIST = dump-stencil.cpp
 
-AM_CXXFLAGS = -I$(srcdir) -I$(top_srcdir)
+AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir)
 LDADD = -L$(top_builddir)/lib -lblitz -lm
-COMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+COMPILE = $(CXX) $(DEFS) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 
 LTCXXCOMPILE = $(LIBTOOL) --mode=link $(CXX) $(DEFS) \
-	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
-	$(AM_CXXFLAGS) $(CXXFLAGS)
+	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 
 %2D.texi :
 	$(LTCXXCOMPILE) "-Dstenciltoapply=$(patsubst %.texi,%,$@)(A)" \
