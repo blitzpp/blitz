@@ -18,7 +18,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_expr>
+template<typename P_expr>
 inline
 BZ_SUMTYPE(_bz_typename P_expr::T_numtype)
 _bz_vec_norm1(P_expr vector)
@@ -43,28 +43,28 @@ _bz_vec_norm1(P_expr vector)
 }
 
 // norm1(vector)
-template<class P_numtype>
+template<typename P_numtype>
 BZ_SUMTYPE(P_numtype) norm1(const Vector<P_numtype>& x)
 {
     return _bz_vec_norm1(x._bz_asVecExpr());
 }
 
 // norm1(expr)
-template<class P_expr>
+template<typename P_expr>
 BZ_SUMTYPE(_bz_typename P_expr::T_numtype) norm1(_bz_VecExpr<P_expr> expr)
 {
     return _bz_vec_norm1(expr);
 }
 
 // norm1(vecpick)
-template<class P_numtype>
+template<typename P_numtype>
 BZ_SUMTYPE(P_numtype) norm1(const VectorPick<P_numtype>& x)
 {
     return _bz_vec_norm1(x._bz_asVecExpr());
 }
 
 // norm1(TinyVector)
-template<class P_numtype, int N_dimensions>
+template<typename P_numtype, int N_dimensions>
 BZ_SUMTYPE(P_numtype) norm1(const TinyVector<P_numtype, N_dimensions>& x)
 {
     return _bz_vec_norm1(x._bz_asVecExpr());

@@ -16,7 +16,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_expr>
+template<typename P_expr>
 inline
 BZ_FLOATTYPE(BZ_SUMTYPE(_bz_typename P_expr::T_numtype))
 _bz_vec_norm(P_expr vector)
@@ -52,7 +52,7 @@ _bz_vec_norm(P_expr vector)
     return _bz_sqrt<T_floattype>::apply(sum);
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline
 BZ_FLOATTYPE(BZ_SUMTYPE(P_numtype)) norm(const Vector<P_numtype>& x)
 {
@@ -60,7 +60,7 @@ BZ_FLOATTYPE(BZ_SUMTYPE(P_numtype)) norm(const Vector<P_numtype>& x)
 }
 
 // norm(expr)
-template<class P_expr>
+template<typename P_expr>
 inline
 BZ_FLOATTYPE(BZ_SUMTYPE(_bz_typename P_expr::T_numtype))
 norm(_bz_VecExpr<P_expr> expr)
@@ -69,7 +69,7 @@ norm(_bz_VecExpr<P_expr> expr)
 }
 
 // norm(vecpick)
-template<class P_numtype>
+template<typename P_numtype>
 inline
 BZ_FLOATTYPE(BZ_SUMTYPE(P_numtype))
 norm(const VectorPick<P_numtype>& x)
@@ -78,7 +78,7 @@ norm(const VectorPick<P_numtype>& x)
 }
 
 // norm(TinyVector)
-template<class P_numtype, int N_dimensions>
+template<typename P_numtype, int N_dimensions>
 inline
 BZ_FLOATTYPE(BZ_SUMTYPE(P_numtype))
 norm(const TinyVector<P_numtype, N_dimensions>& x)
