@@ -46,4 +46,16 @@ Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	everywhere for ANSI C++ correctness (14.6.2(3) in the C++ Standard)
 	* random/discrete-uniform.h: likewise
 	* random/normal.h: getUniform() replaced by this->getUniform() 
+	* blitz/array-impl.h: 
+	data_ replaced by this->data_ everywhere,
+	changeToNullBlock() replaced by this->changeToNullBlock(),
+	class _bz_endTag replaced by struct _bz_endTag { } declaration
+	* blitz/array/resize.cc: for (d=0; d < N_rank; ++d) replaced by for (int
+	d=0; d < N_rank; ++d) (for scoping)
+	* blitz/array/iter.h: 
+	data_ replaced by this->data_ in 
+	template<class T, int N>
+	class ArrayIterator : public ConstArrayIterator<T,N> {},
+	removed struct _bz_endTag { }; declaration
+
 
