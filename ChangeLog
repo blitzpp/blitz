@@ -1,3 +1,7 @@
+2004-03-16  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/blitz.h: Added C++ tag for Emacs.  I am testing the cvs
+	commit notification system.
 
 2004-03-15  Patrick Guio <patrick.guio@fys.uio.no>
 	* configure.in: Replaced "echo" commands by autoconf AC_MSG_NOTICE calls.
