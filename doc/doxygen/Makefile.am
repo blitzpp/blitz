@@ -3,7 +3,7 @@
 # Support doxygen documentation ?
 
 #docdir = $(datadir)/doc/$(PACKAGE)-$(VERSION)
-docdir = $(prefix)/doc/blitz/doxygen
+docdir = $(prefix)/doc/$(PACKAGE)/doxygen
 
 if DOC
 
