@@ -33,13 +33,13 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_numtype>
+template<typename P_numtype>
 class VectorPickIter {
 
 public:
     typedef P_numtype  T_numtype;
 
-    _bz_explicit VectorPickIter(VectorPick<T_numtype>& x)
+    explicit VectorPickIter(VectorPick<T_numtype>& x)
         : data_(x.vector().data()), index_(x.indexSet().data())
     {
         dataStride_  = x.vector().stride();
@@ -76,10 +76,10 @@ public:
     int _bz_suggestLength() const
     { return length_; }
 
-    _bz_bool isUnitStride() const
+    bool isUnitStride() const
     { return (dataStride_  == 1) && (indexStride_ == 1); }
 
-    _bz_bool _bz_hasFastAccess() const
+    bool _bz_hasFastAccess() const
     { return isUnitStride(); }
 
     T_numtype _bz_fastAccess(int i) const
@@ -97,20 +97,20 @@ public:
            _bz_staticLength = 0 };
 
 private:
-    T_numtype * _bz_restrict data_;
+    T_numtype * restrict data_;
     int dataStride_;
-    const int * _bz_restrict index_;
+    const int * restrict index_;
     int indexStride_;
     int length_;
 };
 
-template<class P_numtype>
+template<typename P_numtype>
 class VectorPickIterConst {
 
 public:
     typedef P_numtype  T_numtype;
 
-    _bz_explicit VectorPickIterConst(const VectorPick<T_numtype>& x)
+    explicit VectorPickIterConst(const VectorPick<T_numtype>& x)
         : data_(x.vector().data()), index_(x.indexSet().data())
     {
         dataStride_  = x.vector().stride();
@@ -141,10 +141,10 @@ public:
     int _bz_suggestLength() const
     { return length_; }
 
-    _bz_bool isUnitStride() const
+    bool isUnitStride() const
     { return (dataStride_  == 1) && (indexStride_ == 1); }
 
-    _bz_bool _bz_hasFastAccess() const
+    bool _bz_hasFastAccess() const
     { return isUnitStride(); }
 
     T_numtype _bz_fastAccess(int i) const
@@ -157,9 +157,9 @@ public:
            _bz_staticLength = 0 };
 
 private:
-    const T_numtype * _bz_restrict data_;
+    const T_numtype * restrict data_;
     int dataStride_;
-    const int * _bz_restrict index_;
+    const int * restrict index_;
     int indexStride_;
     int length_;
 };
