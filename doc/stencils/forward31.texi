@@ -1,0 +1,22 @@
+@html
+<table cellpadding=2 rules=all>
+<tr align=right><td></td><td>0</td><td>1</td><td>2</td><td>3</td></tr><tr align=right><td></td><td bgcolor="#000060"><font color="#ffffff">-1</font></td><td bgcolor="#000000"><font color="#ffffff">3</font></td><td bgcolor="#000000"><font color="#ffffff">-3</font></td><td bgcolor="#000000"><font color="#ffffff">1</font></td></tr>
+</table>
+@end html
+@tex
+\def\tablevrule{\vrule height 10pt depth 3pt}
+\vskip0.5\baselineskip\hskip\itemindent
+\vbox{\halign{\hfill#\quad&\tablevrule#\quad
+&\hfill#\quad&\hfill#\quad&\hfill#\quad&\hfill#\quad\cr
+&& 0 & 1 & 2 & 3 \cr
+\noalign{\hrule}
+ && {\bf -1}  &  3  &  -3  &  1 \cr}}
+@end tex
+@ifnottex
+@ifnothtml
+@multitable {12345} {12345} {12345} {12345} {12345}
+@item @tab 0 @tab 1 @tab 2 @tab 3
+@item @tab @strong{-1} @tab  3 @tab  -3 @tab  1 
+@end multitable
+@end ifnothtml
+@end ifnottex
