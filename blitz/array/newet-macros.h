@@ -28,7 +28,7 @@
 
 BZ_NAMESPACE(blitz)
 
-#ifdef BZ_TEMPLATES_AS_TEMPLATE_ARGUMENTS
+#ifdef BZ_HAVE_TEMPLATES_AS_TEMPLATE_ARGUMENTS
 
 /*
  * Unary functions and operators
@@ -106,7 +106,7 @@ name(const ETBase<T1>& d1, const ETBase<T2>& d2, const ETBase<T3>& d3)        \
                   asExpr<T3>::getExpr(d3.unwrap()));                          \
 }
     
-#else
+#else /* !BZ_HAVE_TEMPLATES_AS_TEMPLATE_ARGUMENTS */
 
 /*
  * Unary functions and operators
@@ -220,7 +220,7 @@ name(const ETBase<T1>& d1, const ETBase<T2>& d2, const ETBase<T3>& d3)    \
          asExpr<T3>::getExpr(d3.unwrap()));                               \
 }
 
-#endif /* BZ_TEMPLATES_AS_TEMPLATE_ARGUMENTS */
+#endif /* BZ_HAVE_TEMPLATES_AS_TEMPLATE_ARGUMENTS */
 
 /*
  * User-defined expression template routines
