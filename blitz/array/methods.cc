@@ -2,6 +2,14 @@
  * $Id$
  *
  * $Log$
+ * Revision 1.6  2002/06/27 00:15:35  jcumming
+ * Changed T_numtype to P_numtype when used outside the argument list or body
+ * of a member function definition (i.e., outside the class scope).  Inside
+ * the class scope, we can use the typedef T_numtype.  The IBM xlC compiler
+ * gets confused if P_numtype is used as a template parameter name in a member
+ * function declaration and then T_numtype is used as the parameter name in
+ * the member function definition.  Fixed usage to be more consistent.
+ *
  * Revision 1.5  2002/05/27 19:47:22  jcumming
  * Removed use of this->.  Members of templated base class are now declared
  * in derived class Array.
@@ -77,14 +85,14 @@ Array<P_numtype,N_rank>::Array(_bz_ArrayExpr<T_expr> expr)
 #endif
     }
 
-    Array<P_numtype,N_rank> A(lbound,extent,
+    Array<T_numtype,N_rank> A(lbound,extent,
         GeneralArrayStorage<N_rank>(ordering,ascendingFlag));
     A = expr;
     reference(A);
 }
 
-template<class T_numtype, int N_rank>
-Array<T_numtype,N_rank>::Array(const TinyVector<int, N_rank>& lbounds,
+template<class P_numtype, int N_rank>
+Array<P_numtype,N_rank>::Array(const TinyVector<int, N_rank>& lbounds,
     const TinyVector<int, N_rank>& extent,
     const GeneralArrayStorage<N_rank>& storage)
     : storage_(storage)
@@ -147,8 +155,8 @@ _bz_inline2 void Array<P_numtype, N_rank>::computeStrides()
     calculateZeroOffset();
 }
 
-template<class T_numtype, int N_rank>
-void Array<T_numtype, N_rank>::calculateZeroOffset()
+template<class P_numtype, int N_rank>
+void Array<P_numtype, N_rank>::calculateZeroOffset()
 {
     // Calculate the offset of (0,0,...,0)
     zeroOffset_ = 0;
@@ -164,8 +172,8 @@ void Array<T_numtype, N_rank>::calculateZeroOffset()
     }
 }
 
-template<class T_numtype, int N_rank>
-_bz_bool Array<T_numtype, N_rank>::isStorageContiguous() const
+template<class P_numtype, int N_rank>
+_bz_bool Array<P_numtype, N_rank>::isStorageContiguous() const
 {
     // The storage is contiguous if for the set
     // { | stride[i] * extent[i] | }, i = 0..N_rank-1,
@@ -267,8 +275,8 @@ _bz_inline2 void Array<P_numtype, N_rank>::setupStorage(int lastRankInitialized)
     data_ += zeroOffset_;
 }
 
-template<class T_numtype, int N_rank>
-Array<T_numtype, N_rank> Array<T_numtype, N_rank>::copy() const
+template<class P_numtype, int N_rank>
+Array<P_numtype, N_rank> Array<P_numtype, N_rank>::copy() const
 {
     if (numElements())
     {
@@ -282,8 +290,8 @@ Array<T_numtype, N_rank> Array<T_numtype, N_rank>::copy() const
     }
 }
 
-template<class T_numtype, int N_rank>
-void Array<T_numtype, N_rank>::makeUnique()
+template<class P_numtype, int N_rank>
+void Array<P_numtype, N_rank>::makeUnique()
 {
     if (numReferences() > 1)
     {
@@ -292,8 +300,8 @@ void Array<T_numtype, N_rank>::makeUnique()
     }
 }
 
-template<class T_numtype, int N_rank>
-Array<T_numtype, N_rank> Array<T_numtype, N_rank>::transpose(int r0, int r1, 
+template<class P_numtype, int N_rank>
+Array<P_numtype, N_rank> Array<P_numtype, N_rank>::transpose(int r0, int r1, 
     int r2, int r3, int r4, int r5, int r6, int r7, int r8, int r9, int r10)
 {
     T_array B(*this);
@@ -301,8 +309,8 @@ Array<T_numtype, N_rank> Array<T_numtype, N_rank>::transpose(int r0, int r1,
     return B;
 }
 
-template<class T_numtype, int N_rank>
-void Array<T_numtype, N_rank>::transposeSelf(int r0, int r1, int r2, int r3,
+template<class P_numtype, int N_rank>
+void Array<P_numtype, N_rank>::transposeSelf(int r0, int r1, int r2, int r3,
     int r4, int r5, int r6, int r7, int r8, int r9, int r10)
 {
     BZPRECHECK(r0+r1+r2+r3+r4+r5+r6+r7+r8+r9+r10 == N_rank * (N_rank-1) / 2,
@@ -327,8 +335,8 @@ void Array<T_numtype, N_rank>::transposeSelf(int r0, int r1, int r2, int r3,
     doTranspose(10, r10, x);
 }
 
-template<class T_numtype, int N_rank>
-void Array<T_numtype, N_rank>::doTranspose(int destRank, int sourceRank,
+template<class P_numtype, int N_rank>
+void Array<P_numtype, N_rank>::doTranspose(int destRank, int sourceRank,
     Array<T_numtype, N_rank>& array)
 {
     // BZ_NEEDS_WORK: precondition check
@@ -355,8 +363,8 @@ void Array<T_numtype, N_rank>::doTranspose(int destRank, int sourceRank,
     storage_.setOrdering(i, destRank);
 }
 
-template<class T_numtype, int N_rank>
-void Array<T_numtype, N_rank>::reverseSelf(int rank)
+template<class P_numtype, int N_rank>
+void Array<P_numtype, N_rank>::reverseSelf(int rank)
 {
     BZPRECONDITION(rank < N_rank);
 
@@ -368,16 +376,16 @@ void Array<T_numtype, N_rank>::reverseSelf(int rank)
     stride_[rank] *= -1;
 }
 
-template<class T_numtype, int N_rank>
-Array<T_numtype, N_rank> Array<T_numtype,N_rank>::reverse(int rank)
+template<class P_numtype, int N_rank>
+Array<P_numtype, N_rank> Array<P_numtype,N_rank>::reverse(int rank)
 {
     T_array B(*this);
     B.reverseSelf(rank);
     return B;
 }
 
-template<class T_numtype, int N_rank> template<class T_numtype2>
-Array<T_numtype2,N_rank> Array<T_numtype,N_rank>::extractComponent(T_numtype2, 
+template<class P_numtype, int N_rank> template<class P_numtype2>
+Array<P_numtype2,N_rank> Array<P_numtype,N_rank>::extractComponent(P_numtype2, 
     int componentNumber, int numComponents) const
 {
     BZPRECONDITION((componentNumber >= 0) 
@@ -386,9 +394,9 @@ Array<T_numtype2,N_rank> Array<T_numtype,N_rank>::extractComponent(T_numtype2,
     TinyVector<int,N_rank> stride2;
     for (int i=0; i < N_rank; ++i)
       stride2(i) = stride_(i) * numComponents;
-    const T_numtype2* dataFirst2 = 
-        ((const T_numtype2*)dataFirst()) + componentNumber;
-    return Array<T_numtype2,N_rank>(const_cast<T_numtype2*>(dataFirst2), 
+    const P_numtype2* dataFirst2 = 
+        ((const P_numtype2*)dataFirst()) + componentNumber;
+    return Array<P_numtype2,N_rank>(const_cast<P_numtype2*>(dataFirst2), 
         length_, stride2, storage_);
 }
 
