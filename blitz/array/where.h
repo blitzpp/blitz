@@ -23,6 +23,12 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2002/03/06 17:12:26  patricg
+ *
+ * minmax::max(minmax::max(stride1,stride2),stride3)
+ * replaced by
+ * stride1>(stride2=(stride2>stride3?stride2:stride3))?stride1:stride2
+ *
  * Revision 1.2  2001/01/25 00:25:56  tveldhui
  * Ensured that source files have cvs logs.
  *
@@ -181,7 +187,8 @@ public:
         int stride1 = iter1_.suggestStride(rank);
         int stride2 = iter2_.suggestStride(rank);
         int stride3 = iter3_.suggestStride(rank);
-        return minmax::max(minmax::max(stride1,stride2),stride3);
+        return stride1>(stride2=(stride2>stride3?stride2:stride3))?stride1:stride2;
+        //return minmax::max(minmax::max(stride1,stride2),stride3);
     }
 
     _bz_bool isStride(int rank, int stride) const
