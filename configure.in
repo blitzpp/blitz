@@ -48,6 +48,10 @@ AC_CXX_FLAGS_PRESET
 dnl Doxygen documentation
 AC_PROG_DOXYGEN
 
+dnl Check if the script was called with --enable-64bit
+dnl and if so modify the compilation flags.
+AC_COMPILERS_ENABLE_64BITS
+
 dnl Disable shared library building by default (use --enable-shared to enable)
 AM_DISABLE_SHARED
 AC_PROG_LIBTOOL
@@ -60,10 +64,6 @@ dnl Check if the script was called with --enable-optimize or
 dnl --enable-debug, and if so modify the compilation flags.
 AC_CXX_ENABLE_OPTIMIZE
 AC_CXX_ENABLE_DEBUG
-
-dnl Check if the script was called with --enable-64bit
-dnl and if so modify the compilation flags.
-AC_COMPILERS_ENABLE_64BITS
 
 dnl autoconf replacement of bzconfig
 AC_CHECK_CXX_FEATURES
