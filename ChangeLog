@@ -1,3 +1,17 @@
+2005-02-07  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* m4/ac_compilers_64bits.m4: Generalized names of a few other
+	compilers, notably the SGI and IBM compilers.
+
+	* m4/ac_compiler_specific_header.m4: Generalized names of some C++
+	compilers.
+
+	* m4/ac_compilers_64bits.m4: Generalized name of g++ compiler in
+	case statements.
+
+	* m4/ac_cxx_flags_preset.m4: Generalized name of g++ compiler in
+	case statements.
+
 2005-01-28  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* doc/stencils/Makefile.am: Modified compilation rules to provide
