@@ -23,6 +23,12 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.5  2002/03/06 15:47:49  patricg
+ *
+ * data_ replaced by this->data_ everywhere
+ * changeToNullBlock() replaced by this->changeToNullBlock()
+ * class _bz_endTag replaced by struct _bz_endTag {}
+ *
  * Revision 1.4  2001/02/15 13:14:39  tveldhui
  * Fixed typo
  *
@@ -127,7 +133,7 @@ class _bz_ArrayExpr;
 template<class T_array, class T_index>
 class IndirectArray;
 
-class _bz_endTag;
+struct _bz_endTag {};
 
 
 
@@ -377,7 +383,7 @@ public:
 
         length_ = shape;
         computeStrides();
-        data_ += zeroOffset_;
+        this->data_ += zeroOffset_;
     }
 
     /*
@@ -397,7 +403,7 @@ public:
         length_ = shape;
         stride_ = stride;
         calculateZeroOffset();
-        data_ += zeroOffset_;
+        this->data_ += zeroOffset_;
     }
 
     /*
@@ -414,7 +420,7 @@ public:
 
         length_ = shape;
         computeStrides();
-        data_ += zeroOffset_;
+        this->data_ += zeroOffset_;
 
         if (deletionPolicy == duplicateData)
             reference(copy());
@@ -437,7 +443,7 @@ public:
         length_ = shape;
         stride_ = stride;
         calculateZeroOffset();
-        data_ += zeroOffset_;
+        this->data_ += zeroOffset_;
 
         if (deletionPolicy == duplicateData)
             reference(copy());
@@ -908,19 +914,19 @@ public:
     }
 
     const T_numtype* _bz_restrict     data() const
-    { return data_ + dataOffset(); }
+    { return this->data_ + dataOffset(); }
 
     T_numtype* _bz_restrict           data() 
-    { return data_ + dataOffset(); }
+    { return this->data_ + dataOffset(); }
 
     // These dataZero() routines refer to the point (0,0,...,0)
     // which may not be in the array if the bases are nonzero.
     
     const T_numtype* _bz_restrict     dataZero() const
-    { return data_; }
+    { return this->data_; }
 
     T_numtype* _bz_restrict           dataZero()
-    { return data_; }
+    { return this->data_; }
 
     // These dataFirst() routines refer to the element in the
     // array which falls first in memory.
@@ -942,12 +948,12 @@ public:
     
     const T_numtype* _bz_restrict     dataFirst() const
     {
-        return data_ + dataFirstOffset();
+        return this->data_ + dataFirstOffset();
     }
 
     T_numtype* _bz_restrict           dataFirst()
     {
-        return data_ + dataFirstOffset();
+        return this->data_ + dataFirstOffset();
     }
 
     int                               depth() const
@@ -985,7 +991,7 @@ public:
 
     void                              free() 
     {
-        changeToNullBlock();
+        this->changeToNullBlock();
         length_ = 0;
     }
  
@@ -1456,65 +1462,65 @@ public:
     T_numtype operator()(const TinyVector<int,N_rank2>& index) const
     {
         assertInRange(index);
-        return data_[dot(index, stride_)];
+        return this->data_[dot(index, stride_)];
     }
 
     template<int N_rank2>
     T_numtype& _bz_restrict operator()(const TinyVector<int,N_rank2>& index) 
     {
         assertInRange(index);
-        return data_[dot(index, stride_)];
+        return this->data_[dot(index, stride_)];
     }
 
     T_numtype operator()(TinyVector<int,1> index) const
     {
         assertInRange(index[0]);
-        return data_[index[0] * stride_[0]];
+        return this->data_[index[0] * stride_[0]];
     }
 
     T_numtype& operator()(TinyVector<int,1> index)
     {
         assertInRange(index[0]);
-        return data_[index[0] * stride_[0]];
+        return this->data_[index[0] * stride_[0]];
     }
 
     T_numtype operator()(TinyVector<int,2> index) const
     {
         assertInRange(index[0], index[1]);
-        return data_[index[0] * stride_[0] + index[1] * stride_[1]];
+        return this->data_[index[0] * stride_[0] + index[1] * stride_[1]];
     }
 
     T_numtype& operator()(TinyVector<int,2> index)
     {
         assertInRange(index[0], index[1]);
-        return data_[index[0] * stride_[0] + index[1] * stride_[1]];
+        return this->data_[index[0] * stride_[0] + index[1] * stride_[1]];
     }
 
     T_numtype operator()(TinyVector<int,3> index) const
     {
         assertInRange(index[0], index[1], index[2]);
-        return data_[index[0] * stride_[0] + index[1] * stride_[1]
+        return this->data_[index[0] * stride_[0] + index[1] * stride_[1]
             + index[2] * stride_[2]];
     }
 
     T_numtype& operator()(TinyVector<int,3> index)
     {
         assertInRange(index[0], index[1], index[2]);
-        return data_[index[0] * stride_[0] + index[1] * stride_[1]
+        return this->data_[index[0] * stride_[0] + index[1] * stride_[1]
             + index[2] * stride_[2]];
     }
 
     T_numtype operator()(const TinyVector<int,4>& index) const
     {
         assertInRange(index[0], index[1], index[2], index[3]);
-        return data_[index[0] * stride_[0] + index[1] * stride_[1]
+        return this->data_[index[0] * stride_[0] + index[1] * stride_[1]
             + index[2] * stride_[2] + index[3] * stride_[3]];
     }
 
     T_numtype& operator()(const TinyVector<int,4>& index)
     {
         assertInRange(index[0], index[1], index[2], index[3]);
-        return data_[index[0] * stride_[0] + index[1] * stride_[1]
+        return this->data_[index[0] * stride_[0] + index[1] * stride_[1]
             + index[2] * stride_[2] + index[3] * stride_[3]];
     }
 
@@ -1522,7 +1528,7 @@ public:
     {
         assertInRange(index[0], index[1], index[2], index[3],
             index[4]);
-        return data_[index[0] * stride_[0] + index[1] * stride_[1]
+        return this->data_[index[0] * stride_[0] + index[1] * stride_[1]
             + index[2] * stride_[2] + index[3] * stride_[3]
             + index[4] * stride_[4]];
     }
@@ -1531,7 +1537,7 @@ public:
     {
         assertInRange(index[0], index[1], index[2], index[3],
             index[4]);
-        return data_[index[0] * stride_[0] + index[1] * stride_[1]
+        return this->data_[index[0] * stride_[0] + index[1] * stride_[1]
             + index[2] * stride_[2] + index[3] * stride_[3]
             + index[4] * stride_[4]];
     }
@@ -1540,7 +1546,7 @@ public:
     {
         assertInRange(index[0], index[1], index[2], index[3],
             index[4], index[5]);
-        return data_[index[0] * stride_[0] + index[1] * stride_[1]
+        return this->data_[index[0] * stride_[0] + index[1] * stride_[1]
             + index[2] * stride_[2] + index[3] * stride_[3]
             + index[4] * stride_[4] + index[5] * stride_[5]];
     }
@@ -1549,7 +1555,7 @@ public:
     {
         assertInRange(index[0], index[1], index[2], index[3],
             index[4], index[5]);
-        return data_[index[0] * stride_[0] + index[1] * stride_[1]
+        return this->data_[index[0] * stride_[0] + index[1] * stride_[1]
             + index[2] * stride_[2] + index[3] * stride_[3]
             + index[4] * stride_[4] + index[5] * stride_[5]];
     }
@@ -1558,7 +1564,7 @@ public:
     {
         assertInRange(index[0], index[1], index[2], index[3],
             index[4], index[5], index[6]);
-        return data_[index[0] * stride_[0] + index[1] * stride_[1]
+        return this->data_[index[0] * stride_[0] + index[1] * stride_[1]
             + index[2] * stride_[2] + index[3] * stride_[3]
             + index[4] * stride_[4] + index[5] * stride_[5]
             + index[6] * stride_[6]];
@@ -1568,7 +1574,7 @@ public:
     {
         assertInRange(index[0], index[1], index[2], index[3],
             index[4], index[5], index[6]);
-        return data_[index[0] * stride_[0] + index[1] * stride_[1]
+        return this->data_[index[0] * stride_[0] + index[1] * stride_[1]
             + index[2] * stride_[2] + index[3] * stride_[3]
             + index[4] * stride_[4] + index[5] * stride_[5]
             + index[6] * stride_[6]];
@@ -1578,7 +1584,7 @@ public:
     {
         assertInRange(index[0], index[1], index[2], index[3],
             index[4], index[5], index[6], index[7]);
-        return data_[index[0] * stride_[0] + index[1] * stride_[1]
+        return this->data_[index[0] * stride_[0] + index[1] * stride_[1]
             + index[2] * stride_[2] + index[3] * stride_[3]
             + index[4] * stride_[4] + index[5] * stride_[5]
             + index[6] * stride_[6] + index[7] * stride_[7]];
@@ -1588,7 +1594,7 @@ public:
     {
         assertInRange(index[0], index[1], index[2], index[3],
             index[4], index[5], index[6], index[7]);
-        return data_[index[0] * stride_[0] + index[1] * stride_[1]
+        return this->data_[index[0] * stride_[0] + index[1] * stride_[1]
             + index[2] * stride_[2] + index[3] * stride_[3]
             + index[4] * stride_[4] + index[5] * stride_[5]
             + index[6] * stride_[6] + index[7] * stride_[7]];
@@ -1598,7 +1604,7 @@ public:
     {
         assertInRange(index[0], index[1], index[2], index[3],
             index[4], index[5], index[6], index[7], index[8]);
-        return data_[index[0] * stride_[0] + index[1] * stride_[1]
+        return this->data_[index[0] * stride_[0] + index[1] * stride_[1]
             + index[2] * stride_[2] + index[3] * stride_[3]
             + index[4] * stride_[4] + index[5] * stride_[5]
             + index[6] * stride_[6] + index[7] * stride_[7]
@@ -1609,7 +1615,7 @@ public:
     {
         assertInRange(index[0], index[1], index[2], index[3],
             index[4], index[5], index[6], index[7], index[8]);
-        return data_[index[0] * stride_[0] + index[1] * stride_[1]
+        return this->data_[index[0] * stride_[0] + index[1] * stride_[1]
             + index[2] * stride_[2] + index[3] * stride_[3]
             + index[4] * stride_[4] + index[5] * stride_[5]
             + index[6] * stride_[6] + index[7] * stride_[7]
@@ -1620,7 +1626,7 @@ public:
     {
         assertInRange(index[0], index[1], index[2], index[3],
             index[4], index[5], index[6], index[7], index[8], index[9]);
-        return data_[index[0] * stride_[0] + index[1] * stride_[1]
+        return this->data_[index[0] * stride_[0] + index[1] * stride_[1]
             + index[2] * stride_[2] + index[3] * stride_[3]
             + index[4] * stride_[4] + index[5] * stride_[5]
             + index[6] * stride_[6] + index[7] * stride_[7]
@@ -1631,7 +1637,7 @@ public:
     {
         assertInRange(index[0], index[1], index[2], index[3],
             index[4], index[5], index[6], index[7], index[8], index[9]);
-        return data_[index[0] * stride_[0] + index[1] * stride_[1]
+        return this->data_[index[0] * stride_[0] + index[1] * stride_[1]
             + index[2] * stride_[2] + index[3] * stride_[3]
             + index[4] * stride_[4] + index[5] * stride_[5]
             + index[6] * stride_[6] + index[7] * stride_[7]
@@ -1643,7 +1649,7 @@ public:
         assertInRange(index[0], index[1], index[2], index[3],
             index[4], index[5], index[6], index[7], index[8], index[9],
             index[10]);
-        return data_[index[0] * stride_[0] + index[1] * stride_[1]
+        return this->data_[index[0] * stride_[0] + index[1] * stride_[1]
             + index[2] * stride_[2] + index[3] * stride_[3]
             + index[4] * stride_[4] + index[5] * stride_[5]
             + index[6] * stride_[6] + index[7] * stride_[7]
@@ -1656,7 +1662,7 @@ public:
         assertInRange(index[0], index[1], index[2], index[3],
             index[4], index[5], index[6], index[7], index[8], index[9],
             index[10]);
-        return data_[index[0] * stride_[0] + index[1] * stride_[1]
+        return this->data_[index[0] * stride_[0] + index[1] * stride_[1]
             + index[2] * stride_[2] + index[3] * stride_[3]
             + index[4] * stride_[4] + index[5] * stride_[5]
             + index[6] * stride_[6] + index[7] * stride_[7]
@@ -1667,52 +1673,52 @@ public:
     T_numtype operator()(int i0) const
     { 
         assertInRange(i0);
-        return data_[i0 * stride_[0]]; 
+        return this->data_[i0 * stride_[0]]; 
     }
 
     T_numtype& _bz_restrict operator()(int i0) 
     {
         assertInRange(i0);
-        return data_[i0 * stride_[0]];
+        return this->data_[i0 * stride_[0]];
     }
 
     T_numtype operator()(int i0, int i1) const
     { 
         assertInRange(i0, i1);
-        return data_[i0 * stride_[0] + i1 * stride_[1]];
+        return this->data_[i0 * stride_[0] + i1 * stride_[1]];
     }
 
     T_numtype& _bz_restrict operator()(int i0, int i1)
     {
         assertInRange(i0, i1);
-        return data_[i0 * stride_[0] + i1 * stride_[1]];
+        return this->data_[i0 * stride_[0] + i1 * stride_[1]];
     }
 
     T_numtype operator()(int i0, int i1, int i2) const
     {
         assertInRange(i0, i1, i2);
-        return data_[i0 * stride_[0] + i1 * stride_[1]
+        return this->data_[i0 * stride_[0] + i1 * stride_[1]
             + i2 * stride_[2]];
     }
 
     T_numtype& _bz_restrict operator()(int i0, int i1, int i2) 
     {
         assertInRange(i0, i1, i2);
-        return data_[i0 * stride_[0] + i1 * stride_[1]
+        return this->data_[i0 * stride_[0] + i1 * stride_[1]
             + i2 * stride_[2]];
     }
 
     T_numtype operator()(int i0, int i1, int i2, int i3) const
     {
         assertInRange(i0, i1, i2, i3);
-        return data_[i0 * stride_[0] + i1 * stride_[1]
+        return this->data_[i0 * stride_[0] + i1 * stride_[1]
             + i2 * stride_[2] + i3 * stride_[3]];
     }
 
     T_numtype& _bz_restrict operator()(int i0, int i1, int i2, int i3)
     {
         assertInRange(i0, i1, i2, i3);
-        return data_[i0 * stride_[0] + i1 * stride_[1]
+        return this->data_[i0 * stride_[0] + i1 * stride_[1]
             + i2 * stride_[2] + i3 * stride_[3]];
     }
 
@@ -1720,7 +1726,7 @@ public:
         int i4) const
     {
         assertInRange(i0, i1, i2, i3, i4);
-        return data_[i0 * stride_[0] + i1 * stride_[1]
+        return this->data_[i0 * stride_[0] + i1 * stride_[1]
             + i2 * stride_[2] + i3 * stride_[3] + i4 * stride_[4]];
     }
 
@@ -1728,7 +1734,7 @@ public:
         int i4)
     {
         assertInRange(i0, i1, i2, i3, i4);
-        return data_[i0 * stride_[0] + i1 * stride_[1]
+        return this->data_[i0 * stride_[0] + i1 * stride_[1]
             + i2 * stride_[2] + i3 * stride_[3] + i4 * stride_[4]];
     }
 
@@ -1736,7 +1742,7 @@ public:
         int i4, int i5) const
     {
         assertInRange(i0, i1, i2, i3, i4, i5);
-        return data_[i0 * stride_[0] + i1 * stride_[1]
+        return this->data_[i0 * stride_[0] + i1 * stride_[1]
             + i2 * stride_[2] + i3 * stride_[3] + i4 * stride_[4]
             + i5 * stride_[5]];
     }
@@ -1745,7 +1751,7 @@ public:
         int i4, int i5)
     {
         assertInRange(i0, i1, i2, i3, i4, i5);
-        return data_[i0 * stride_[0] + i1 * stride_[1]
+        return this->data_[i0 * stride_[0] + i1 * stride_[1]
             + i2 * stride_[2] + i3 * stride_[3] + i4 * stride_[4]
             + i5 * stride_[5]];
     }
@@ -1754,7 +1760,7 @@ public:
         int i4, int i5, int i6) const
     {
         assertInRange(i0, i1, i2, i3, i4, i5, i6);
-        return data_[i0 * stride_[0] + i1 * stride_[1]
+        return this->data_[i0 * stride_[0] + i1 * stride_[1]
             + i2 * stride_[2] + i3 * stride_[3] + i4 * stride_[4]
             + i5 * stride_[5] + i6 * stride_[6]];
     }
@@ -1763,7 +1769,7 @@ public:
         int i4, int i5, int i6)
     {
         assertInRange(i0, i1, i2, i3, i4, i5, i6);
-        return data_[i0 * stride_[0] + i1 * stride_[1]
+        return this->data_[i0 * stride_[0] + i1 * stride_[1]
             + i2 * stride_[2] + i3 * stride_[3] + i4 * stride_[4]
             + i5 * stride_[5] + i6 * stride_[6]];
     }
@@ -1772,7 +1778,7 @@ public:
         int i4, int i5, int i6, int i7) const
     {
         assertInRange(i0, i1, i2, i3, i4, i5, i6, i7);
-        return data_[i0 * stride_[0] + i1 * stride_[1]
+        return this->data_[i0 * stride_[0] + i1 * stride_[1]
             + i2 * stride_[2] + i3 * stride_[3] + i4 * stride_[4]
             + i5 * stride_[5] + i6 * stride_[6] + i7 * stride_[7]];
     }
@@ -1781,7 +1787,7 @@ public:
         int i4, int i5, int i6, int i7)
     {
         assertInRange(i0, i1, i2, i3, i4, i5, i6, i7);
-        return data_[i0 * stride_[0] + i1 * stride_[1]
+        return this->data_[i0 * stride_[0] + i1 * stride_[1]
             + i2 * stride_[2] + i3 * stride_[3] + i4 * stride_[4]
             + i5 * stride_[5] + i6 * stride_[6] + i7 * stride_[7]];
     }
@@ -1790,7 +1796,7 @@ public:
         int i4, int i5, int i6, int i7, int i8) const
     {
         assertInRange(i0, i1, i2, i3, i4, i5, i6, i7, i8);
-        return data_[i0 * stride_[0] + i1 * stride_[1]
+        return this->data_[i0 * stride_[0] + i1 * stride_[1]
             + i2 * stride_[2] + i3 * stride_[3] + i4 * stride_[4]
             + i5 * stride_[5] + i6 * stride_[6] + i7 * stride_[7]
             + i8 * stride_[8]];
@@ -1800,7 +1806,7 @@ public:
         int i4, int i5, int i6, int i7, int i8)
     {
         assertInRange(i0, i1, i2, i3, i4, i5, i6, i7, i8);
-        return data_[i0 * stride_[0] + i1 * stride_[1]
+        return this->data_[i0 * stride_[0] + i1 * stride_[1]
             + i2 * stride_[2] + i3 * stride_[3] + i4 * stride_[4]
             + i5 * stride_[5] + i6 * stride_[6] + i7 * stride_[7]
             + i8 * stride_[8]];
@@ -1810,7 +1816,7 @@ public:
         int i4, int i5, int i6, int i7, int i8, int i9) const
     {
         assertInRange(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9);
-        return data_[i0 * stride_[0] + i1 * stride_[1]
+        return this->data_[i0 * stride_[0] + i1 * stride_[1]
             + i2 * stride_[2] + i3 * stride_[3] + i4 * stride_[4]
             + i5 * stride_[5] + i6 * stride_[6] + i7 * stride_[7]
             + i8 * stride_[8] + i9 * stride_[9]];
@@ -1820,7 +1826,7 @@ public:
         int i4, int i5, int i6, int i7, int i8, int i9)
     {
         assertInRange(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9);
-        return data_[i0 * stride_[0] + i1 * stride_[1]
+        return this->data_[i0 * stride_[0] + i1 * stride_[1]
             + i2 * stride_[2] + i3 * stride_[3] + i4 * stride_[4]
             + i5 * stride_[5] + i6 * stride_[6] + i7 * stride_[7]
             + i8 * stride_[8] + i9 * stride_[9]];
@@ -1831,7 +1837,7 @@ public:
     {
         assertInRange(i0, i1, i2, i3, i4, i5, i6, i7, i8, 
             i9, i10);
-        return data_[i0 * stride_[0] + i1 * stride_[1]
+        return this->data_[i0 * stride_[0] + i1 * stride_[1]
             + i2 * stride_[2] + i3 * stride_[3] + i4 * stride_[4]
             + i5 * stride_[5] + i6 * stride_[6] + i7 * stride_[7]
             + i8 * stride_[8] + i9 * stride_[9] + i10 * stride_[10]];
@@ -1842,7 +1848,7 @@ public:
     {
         assertInRange(i0, i1, i2, i3, i4, i5, i6, i7, i8, 
             i9, i10);
-        return data_[i0 * stride_[0] + i1 * stride_[1]
+        return this->data_[i0 * stride_[0] + i1 * stride_[1]
             + i2 * stride_[2] + i3 * stride_[3] + i4 * stride_[4]
             + i5 * stride_[5] + i6 * stride_[6] + i7 * stride_[7]
             + i8 * stride_[8] + i9 * stride_[9] + i10 * stride_[10]];
