@@ -5,7 +5,7 @@
 EXTRA_DIST = dump-stencil.cpp
 
 AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir) -I$(top_builddir)
-LDADD = -L$(top_builddir)/lib -lblitz -lm
+LDADD = -L$(top_builddir)/lib -lblitz
 COMPILE = $(CXX) $(DEFS) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 
 LTCXXCOMPILE = $(LIBTOOL) --mode=link $(CXX) $(DEFS) \
