@@ -2,8 +2,12 @@
  * $Id$
  *
  * $Log$
- * Revision 1.1  2000/06/19 12:26:13  tveldhui
- * Initial revision
+ * Revision 1.2  2001/01/24 22:51:51  tveldhui
+ * Reorganized #include orders to avoid including the huge Vector e.t.
+ * implementation when using Array.
+ *
+ * Revision 1.1.1.1  2000/06/19 12:26:13  tveldhui
+ * Imported sources
  *
  * Revision 1.2  1998/03/14 00:04:47  tveldhui
  * 0.2-alpha-05
@@ -724,7 +728,9 @@ cout.flush();
     TinyVector<int,N_rank> index, last;
 
     index = storage_.base();
-    last = storage_.base() + length_;
+
+    for (int i=0; i < N_rank; ++i)
+      last(i) = storage_.base(i) + length_(i);
 
     int lastLength = length(maxRank);
 

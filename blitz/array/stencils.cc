@@ -1,8 +1,8 @@
-#ifndef BZ_ARRAYSTENCIL_CC
-#define BZ_ARRAYSTENCIL_CC
+#ifndef BZ_ARRAYSTENCILS_CC
+#define BZ_ARRAYSTENCILS_CC
 
-#ifndef BZ_ARRAYSTENCIL_H
- #error <blitz/array/stencil.cc> must be included via <blitz/array/stencil.h>
+#ifndef BZ_ARRAYSTENCILS_H
+ #error <blitz/array/stencil.cc> must be included via <blitz/array/stencils.h>
 #endif
 
 BZ_NAMESPACE(blitz)

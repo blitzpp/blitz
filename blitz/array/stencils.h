@@ -1,8 +1,8 @@
-#ifndef BZ_ARRAYSTENCIL_H
-#define BZ_ARRAYSTENCIL_H
+#ifndef BZ_ARRAYSTENCILS_H
+#define BZ_ARRAYSTENCILS_H
 
 #ifndef BZ_ARRAY_H
- #error <blitz/array/stencil.h> must be included via <blitz/array.h>
+ #error <blitz/array/stencils.h> must be included after <blitz/array.h>
 #endif
 
 #include <blitz/array/stencilops.h>
@@ -312,7 +312,7 @@ inline _bz_bool areShapesConformable(const T_shape1&, const dummyArray&)
 
 BZ_NAMESPACE_END
 
-#include <blitz/array/stencil.cc>
+#include <blitz/array/stencils.cc>
 
-#endif // BZ_ARRAYSTENCIL_H
+#endif // BZ_ARRAYSTENCILS_H
 

@@ -34,7 +34,8 @@ public:
 
     GeneralArrayStorage()
     {
-        ordering_ = Range(N_rank - 1, 0, -1);
+        for (int i=0; i < N_rank; ++i)
+          ordering_(i) = N_rank - 1 - i;
         ascendingFlag_ = 1;
         base_ = 0;
     }
@@ -142,7 +143,8 @@ public:
     FortranArray()
         : GeneralArrayStorage<N_rank>(noInitializeFlag())
     {
-        ordering_ = Range(0, N_rank - 1);
+        for (int i=0; i < N_rank; ++i)
+          ordering_(i) = i;
         ascendingFlag_ = 1;
         base_ = 1;
     }

@@ -4,7 +4,7 @@
 #define BZ_MATHFUNC_H
 
 #ifndef BZ_APPLICS_H
- #error <blitz/mathfunc.h> should be included via <blitz/applics.h>
+ #include <blitz/applics.h>
 #endif
 
 

@@ -9,10 +9,6 @@
  #include <blitz/vector.h>
 #endif
 
-#ifndef BZ_VECPICK_H
- #include <blitz/vecpick.h>
-#endif
-
 #ifndef BZ_RANGE_H
  #include <blitz/range.h>
 #endif

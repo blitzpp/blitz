@@ -23,6 +23,10 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2001/01/24 22:51:50  tveldhui
+ * Reorganized #include orders to avoid including the huge Vector e.t.
+ * implementation when using Array.
+ *
  * Revision 1.2  2001/01/24 20:22:49  tveldhui
  * Updated copyright date in headers.
  *
@@ -50,19 +54,6 @@
 
 #ifndef BZ_ARRAY_H
 #define BZ_ARRAY_H
-
-/*
- * With BZ_GANG_INCLUDE, <blitz/array.h> includes every possible
- * array functionality.  This pulls in ~ 120000 lines of code,
- * making for extremely slow compiles.
- * With BZ_NO_GANG_INCLUDE, <blitz/array.h> includes a minimal
- * implementation of Array<T,N>.  Other functionalities must
- * be included separately.
- */
-
-#ifndef BZ_NO_GANG_INCLUDE
- #define BZ_GANG_INCLUDE
-#endif
 
 #ifndef BZ_BLITZ_H
  #include <blitz/blitz.h>
@@ -888,11 +879,16 @@ public:
     // element in the array (but note that it may not be
     // stored first in memory if some ranks are stored descending).
 
+    int                               dataOffset() const
+    {
+        return dot(storage_.base(), stride_);
+    }
+
     const T_numtype* _bz_restrict     data() const
-    { return data_ + dot(storage_.base(), stride_); }
+    { return data_ + dataOffset(); }
 
     T_numtype* _bz_restrict           data() 
-    { return data_ + dot(storage_.base(), stride_); }
+    { return data_ + dataOffset(); }
 
     // These dataZero() routines refer to the point (0,0,...,0)
     // which may not be in the array if the bases are nonzero.
@@ -905,17 +901,30 @@ public:
 
     // These dataFirst() routines refer to the element in the
     // array which falls first in memory.
+
+    int                               dataFirstOffset() const
+    {
+        int pos = 0;
+
+        // Used to use tinyvector expressions:
+        // return data_ + dot(storage_.base()
+        //     + (1 - storage_.ascendingFlag()) * (length_ - 1), stride_);
+
+        for (int i=0; i < N_rank; ++i)
+           pos += (storage_.base(i) + (1-storage_.isRankStoredAscending(i)) *
+              (length_(i)-1)) * stride_(i);
+
+        return pos;
+    }
     
     const T_numtype* _bz_restrict     dataFirst() const
     {
-        return data_ + dot(storage_.base() 
-            + (1 - storage_.ascendingFlag()) * (length_ - 1), stride_);
+        return data_ + dataFirstOffset();
     }
 
     T_numtype* _bz_restrict           dataFirst()
     {
-        return data_ + dot(storage_.base()
-            + (1 - storage_.ascendingFlag()) * (length_ - 1), stride_);
+        return data_ + dataFirstOffset();
     }
 
     int                               depth() const
@@ -1290,7 +1299,7 @@ public:
     {
         BZPRECHECK(isInRange(index), "Array index out of range: " << index
             << endl << "Lower bounds: " << storage_.base() << endl
-            << "Upper bounds: " << (storage_.base() + length_ - 1) << endl);
+            <<         "Length:       " << length_ << endl);
         return _bz_true;
     }
 
@@ -1298,7 +1307,7 @@ public:
     {
         BZPRECHECK(isInRange(i0), "Array index out of range: " << i0
             << endl << "Lower bounds: " << storage_.base() << endl
-            << "Upper bounds: " << (storage_.base() + length_ - 1) << endl);
+            <<         "Length:       " << length_ << endl);
         return _bz_true;
     }
 
@@ -1307,7 +1316,7 @@ public:
         BZPRECHECK(isInRange(i0,i1), "Array index out of range: (" 
             << i0 << ", " << i1 << ")"
             << endl << "Lower bounds: " << storage_.base() << endl
-            << "Upper bounds: " << (storage_.base() + length_ - 1) << endl);
+            <<         "Length:       " << length_ << endl);
         return _bz_true;
     }
 
@@ -1316,7 +1325,7 @@ public:
         BZPRECHECK(isInRange(i0,i1,i2), "Array index out of range: ("
             << i0 << ", " << i1 << ", " << i2 << ")"
             << endl << "Lower bounds: " << storage_.base() << endl
-            << "Upper bounds: " << (storage_.base() + length_ - 1) << endl);
+            <<         "Length:       " << length_ << endl);
         return _bz_true;
     }
 
@@ -1325,7 +1334,7 @@ public:
         BZPRECHECK(isInRange(i0,i1,i2,i3), "Array index out of range: ("
             << i0 << ", " << i1 << ", " << i2 << ", " << i3 << ")"
             << endl << "Lower bounds: " << storage_.base() << endl
-            << "Upper bounds: " << (storage_.base() + length_ - 1) << endl);
+            <<         "Length:       " << length_ << endl);
         return _bz_true;
     }
 
@@ -1335,7 +1344,7 @@ public:
             << i0 << ", " << i1 << ", " << i2 << ", " << i3 
             << ", " << i4 << ")"
             << endl << "Lower bounds: " << storage_.base() << endl
-            << "Upper bounds: " << (storage_.base() + length_ - 1) << endl);
+            <<         "Length:       " << length_ << endl);
         return _bz_true;
     }
 
@@ -1346,7 +1355,7 @@ public:
             << i0 << ", " << i1 << ", " << i2 << ", " << i3
             << ", " << i4 << ", " << i5 << ")"
             << endl << "Lower bounds: " << storage_.base() << endl
-            << "Upper bounds: " << (storage_.base() + length_ - 1) << endl);
+            <<         "Length:       " << length_ << endl);
         return _bz_true;
     }
 
@@ -1358,7 +1367,7 @@ public:
             << i0 << ", " << i1 << ", " << i2 << ", " << i3
             << ", " << i4 << ", " << i5 << ", " << i6 << ")"
             << endl << "Lower bounds: " << storage_.base() << endl
-            << "Upper bounds: " << (storage_.base() + length_ - 1) << endl);
+            <<         "Length:       " << length_ << endl);
         return _bz_true;
     }
 
@@ -1370,7 +1379,7 @@ public:
             << i0 << ", " << i1 << ", " << i2 << ", " << i3
             << ", " << i4 << ", " << i5 << ", " << i6 << ", " << i7 << ")"
             << endl << "Lower bounds: " << storage_.base() << endl
-            << "Upper bounds: " << (storage_.base() + length_ - 1) << endl);
+            <<         "Length:       " << length_ << endl);
         return _bz_true;
     }
 
@@ -1383,7 +1392,7 @@ public:
             << ", " << i4 << ", " << i5 << ", " << i6 << ", " << i7 
             << ", " << i8 << ")"
             << endl << "Lower bounds: " << storage_.base() << endl
-            << "Upper bounds: " << (storage_.base() + length_ - 1) << endl);
+            <<         "Length:       " << length_ << endl);
         return _bz_true;
     }
 
@@ -1396,7 +1405,7 @@ public:
             << ", " << i4 << ", " << i5 << ", " << i6 << ", " << i7
             << ", " << i8 << ", " << i9 << ")"
             << endl << "Lower bounds: " << storage_.base() << endl
-            << "Upper bounds: " << (storage_.base() + length_ - 1) << endl);
+            <<         "Length:       " << length_ << endl);
         return _bz_true;
     }
 
@@ -1409,7 +1418,7 @@ public:
             << ", " << i4 << ", " << i5 << ", " << i6 << ", " << i7
             << ", " << i8 << ", " << i9 << ", " << i10 << ")"
             << endl << "Lower bounds: " << storage_.base() << endl
-            << "Upper bounds: " << (storage_.base() + length_ - 1) << endl);
+            <<         "Length:       " << length_ << endl);
         return _bz_true;
     }
 
@@ -2482,11 +2491,8 @@ BZ_NAMESPACE_END
 #include <blitz/array/ops.cc>       // Assignment operators
 #include <blitz/array/io.cc>        // Output formatting
 
-#ifdef BZ_NEW_EXPRESSION_TEMPLATES
+#ifdef BZ_GANG_INCLUDE
  #include <blitz/array/et.h>        // Expression templates
-#else
- #include <blitz/array/bops.cc>     // Expression templates, two operands
- #include <blitz/array/uops.cc>     // Expression templates, math functions
 #endif
 
 #include <blitz/array/misc.cc>      // Expression templates, miscellaneous
@@ -2498,8 +2504,11 @@ BZ_NAMESPACE_END
 #include <blitz/array/complex.cc>   // Special support for complex arrays
 #include <blitz/array/zip.h>        // Zipping multicomponent types
 #include <blitz/array/where.h>      // where(X,Y,Z)
-#include <blitz/array/stencil.h>    // Stencil objects
 #include <blitz/array/indirect.h>   // Indirection
+
+#ifdef BZ_GANG_INCLUDE
+#include <blitz/array/stencils.h>   // Stencil objects
+#endif
 
 #endif // BZ_ARRAY_H
 

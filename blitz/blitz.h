@@ -23,6 +23,10 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2001/01/24 22:51:50  tveldhui
+ * Reorganized #include orders to avoid including the huge Vector e.t.
+ * implementation when using Array.
+ *
  * Revision 1.2  2001/01/24 20:22:49  tveldhui
  * Updated copyright date in headers.
  *
@@ -70,6 +74,19 @@
  #ifndef _XOPEN_SOURCE_EXTENDED
   #define _XOPEN_SOURCE_EXTENDED 1
  #endif
+#endif
+
+/*
+ * With BZ_GANG_INCLUDE, <blitz/array.h> includes every possible
+ * array functionality.  This pulls in ~ 120000 lines of code,
+ * making for extremely slow compiles.
+ * With BZ_NO_GANG_INCLUDE, <blitz/array.h> includes a minimal
+ * implementation of Array<T,N>.  Other functionalities must
+ * be included separately.
+ */
+
+#ifndef BZ_NO_GANG_INCLUDE
+ #define BZ_GANG_INCLUDE
 #endif
 
 #include <blitz/compiler.h>          // Compiler-specific directives

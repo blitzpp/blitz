@@ -23,6 +23,10 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2001/01/24 22:51:50  tveldhui
+ * Reorganized #include orders to avoid including the huge Vector e.t.
+ * implementation when using Array.
+ *
  * Revision 1.2  2001/01/24 20:22:50  tveldhui
  * Updated copyright date in headers.
  *
@@ -287,9 +291,5 @@ BZ_NAMESPACE_END
 #ifndef BZ_TINYVEC_H
  #include <blitz/tinyvec.h>
 #endif
-
-#include <blitz/vecbops.cc>       // Operators with two operands
-#include <blitz/vecuops.cc>       // Functions with one argument
-#include <blitz/vecbfn.cc>        // Functions with two arguments
 
 #endif // BZ_VECEXPR_H
