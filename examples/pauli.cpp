@@ -3,7 +3,7 @@
 
 using namespace blitz;
 
-template<class T> void sink(T&) { }
+template<typename T> void sink(T&) { }
 
 int main()
 {

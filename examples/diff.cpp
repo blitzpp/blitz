@@ -12,7 +12,7 @@ BZ_DECLARE_STENCIL3(deriv12,A,dA,h)
   dA = central12n(A) / h;
 BZ_END_STENCIL
 
-template<class T_stencil>
+template<typename T_stencil>
 double calculateError(double h, T_stencil stencil)
 {
     const int N = 1024;
@@ -37,7 +37,7 @@ double calculateError(double h, T_stencil stencil)
     return rms;
 }
 
-template<class T_stencil>
+template<typename T_stencil>
 double calculateAccuracyOrder(T_stencil stencil)
 {
     double h = 1/32.0;
