@@ -70,5 +70,5 @@ all-am:
 	$(MAKE) $(AM_MAKEFLAGS) stencils
 
 clean-local:
-	-rm -rf cxx_repository dump-stencil *.texi
+	-rm -rf *.ii *.ti cxx_repository Template.dir ii_files ti_files dump-stencil *.texi
 
