@@ -28,7 +28,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class T>
+template<typename T>
 class ETBase { 
 public:
     ETBase() 

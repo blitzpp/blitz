@@ -45,7 +45,7 @@ BZ_NAMESPACE(blitz)
 // the benchmark.  Typically T will be an unsigned, and will represent
 // the length of a vector, size of an array, etc.
 
-template<class P_parameter = unsigned>
+template<typename P_parameter = unsigned>
 class BenchmarkExt {
 
 public:
@@ -66,7 +66,7 @@ public:
 
     void beginImplementation(const char* description);
 
-    _bz_bool doneImplementationBenchmark() const;
+    bool doneImplementationBenchmark() const;
 
     T_parameter getParameter() const;
     long        getIterations() const;

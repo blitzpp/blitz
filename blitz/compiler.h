@@ -1,8 +1,6 @@
 /***************************************************************************
  * blitz/compiler.h      Compiler specific directives and kludges
  *
- * $Id$
- *
  * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
@@ -76,10 +74,8 @@
     #define BZ_TEMPLATE_DEFAULT
 #endif
 
-#ifdef BZ_EXPLICIT
-    #define _bz_explicit     explicit
-#else
-    #define _bz_explicit   
+#ifndef BZ_EXPLICIT
+    #define explicit   
 #endif
 
 #ifdef BZ_TYPENAME
@@ -88,32 +84,26 @@
     #define _bz_typename
 #endif
 
-#ifdef BZ_MUTABLE
-    #define _bz_mutable      mutable
-#else
-    #define _bz_mutable
+#ifndef BZ_MUTABLE
+    #define mutable
 #endif
 
 #ifdef BZ_DISABLE_RESTRICT
  #undef BZ_NCEG_RESTRICT
 #endif
 
-#ifdef BZ_NCEG_RESTRICT
-    #define _bz_restrict     restrict
-#elif defined(BZ_NCEG_RESTRICT_EGCS)
-    #define _bz_restrict     __restrict__
-#else
-    #define _bz_restrict
+#ifndef BZ_NCEG_RESTRICT
+    #if defined(BZ_NCEG_RESTRICT_EGCS)
+        #define restrict     __restrict__
+    #else
+        #define restrict
+    #endif
 #endif
 
-#ifdef BZ_BOOL
-    #define _bz_bool         bool
-    #define _bz_true         true
-    #define _bz_false        false
-#else
-    #define _bz_bool         int
-    #define _bz_true         1
-    #define _bz_false        0
+#if !defined(BZ_BOOL) && !defined(BZ_NO_BOOL_KLUDGE)
+    #define bool    int
+    #define true    1
+    #define false   0
 #endif
 
 #ifdef BZ_ENUM_COMPUTATIONS_WITH_CAST

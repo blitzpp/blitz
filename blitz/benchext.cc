@@ -22,7 +22,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_parameter>
+template<typename P_parameter>
 BenchmarkExt<P_parameter>::BenchmarkExt(const char* name, 
     int numImplementations)
 {
@@ -52,12 +52,12 @@ BenchmarkExt<P_parameter>::BenchmarkExt(const char* name,
     implementationNumber_ = 0;
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 BenchmarkExt<P_parameter>::~BenchmarkExt()
 {
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 void BenchmarkExt<P_parameter>::setNumParameters(int numParameters)
 {
     //BZPRECONDITION(state_ == initializing);
@@ -72,7 +72,7 @@ void BenchmarkExt<P_parameter>::setNumParameters(int numParameters)
     times_.resize(numImplementations_, numParameters_);
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 void BenchmarkExt<P_parameter>::setParameterVector(Vector<P_parameter> parms)
 {
     BZPRECONDITION(state_ == initializing);
@@ -85,13 +85,13 @@ void BenchmarkExt<P_parameter>::setParameterVector(Vector<P_parameter> parms)
         parameters_[i] = parms(i);
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 void BenchmarkExt<P_parameter>::setParameterDescription(const char* string)
 {
     parameterDescription_ = string;
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 void BenchmarkExt<P_parameter>::setIterations(Vector<long> iters)
 {
     BZPRECONDITION(state_ == initializing);
@@ -104,7 +104,7 @@ void BenchmarkExt<P_parameter>::setIterations(Vector<long> iters)
         iterations_[i] = iters(i);
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 void BenchmarkExt<P_parameter>::setFlopsPerIteration(Vector<double> 
     flopsPerIteration)
 {
@@ -118,20 +118,20 @@ void BenchmarkExt<P_parameter>::setFlopsPerIteration(Vector<double>
         flopsPerIteration_[i] = flopsPerIteration[i];
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 void BenchmarkExt<P_parameter>::setRateDescription(const char* string)
 {
     rateDescription_ = string;
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 void BenchmarkExt<P_parameter>::beginBenchmarking()
 {
     BZPRECONDITION(state_ == initializing);
     state_ = benchmarking;
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 void BenchmarkExt<P_parameter>::beginImplementation(const char* description)
 {
     BZPRECONDITION(implementationNumber_ < numImplementations_);
@@ -143,14 +143,14 @@ void BenchmarkExt<P_parameter>::beginImplementation(const char* description)
     parameterNumber_ = 0;
 }
 
-template<class P_parameter>
-_bz_bool BenchmarkExt<P_parameter>::doneImplementationBenchmark() const
+template<typename P_parameter>
+bool BenchmarkExt<P_parameter>::doneImplementationBenchmark() const
 {
     BZPRECONDITION(state_ == benchmarkingImplementation);
     return parameterNumber_ == numParameters_;
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 P_parameter BenchmarkExt<P_parameter>::getParameter() const
 {
     BZPRECONDITION(state_ == benchmarkingImplementation);
@@ -159,7 +159,7 @@ P_parameter BenchmarkExt<P_parameter>::getParameter() const
     return parameters_[parameterNumber_];
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 long BenchmarkExt<P_parameter>::getIterations() const
 {
     BZPRECONDITION(state_ == benchmarkingImplementation);
@@ -168,7 +168,7 @@ long BenchmarkExt<P_parameter>::getIterations() const
     return iterations_[parameterNumber_];
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 inline void BenchmarkExt<P_parameter>::start()
 {
     BZPRECONDITION(state_ == benchmarkingImplementation);
@@ -177,7 +177,7 @@ inline void BenchmarkExt<P_parameter>::start()
     timer_.start();
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 inline void BenchmarkExt<P_parameter>::stop()
 {
     timer_.stop();
@@ -189,7 +189,7 @@ inline void BenchmarkExt<P_parameter>::stop()
     ++parameterNumber_;
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 inline void BenchmarkExt<P_parameter>::startOverhead()
 {
     BZPRECONDITION(state_ == benchmarkingImplementation);
@@ -199,7 +199,7 @@ inline void BenchmarkExt<P_parameter>::startOverhead()
     overheadTimer_.start();
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 inline void BenchmarkExt<P_parameter>::stopOverhead()
 {
     BZPRECONDITION(state_ == runningOverhead);
@@ -210,7 +210,7 @@ inline void BenchmarkExt<P_parameter>::stopOverhead()
     state_ = benchmarkingImplementation;
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 void BenchmarkExt<P_parameter>::endImplementation()
 {
     BZPRECONDITION(state_ == benchmarkingImplementation);
@@ -221,7 +221,7 @@ void BenchmarkExt<P_parameter>::endImplementation()
     state_ = benchmarking;
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 void BenchmarkExt<P_parameter>::endBenchmarking()
 {
     BZPRECONDITION(state_ == benchmarking);
@@ -230,7 +230,7 @@ void BenchmarkExt<P_parameter>::endBenchmarking()
     state_ = done;
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 double BenchmarkExt<P_parameter>::getMflops(unsigned implementation,
     unsigned parameterNum) const
 {
@@ -241,7 +241,7 @@ double BenchmarkExt<P_parameter>::getMflops(unsigned implementation,
         / times_(implementation, parameterNum) / 1.0e+6;
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 void BenchmarkExt<P_parameter>::saveMatlabGraph(const char* filename) const
 {
     BZPRECONDITION(state_ == done);

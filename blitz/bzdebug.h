@@ -41,9 +41,9 @@ BZ_NAMESPACE(blitz)
  * "extern" elsewhere.
  */
 
-_bz_global _bz_bool assertFailMode     BZ_GLOBAL_INIT(_bz_false);
-_bz_global int      assertFailCount    BZ_GLOBAL_INIT(0);
-_bz_global int      assertSuccessCount BZ_GLOBAL_INIT(0);
+_bz_global bool assertFailMode     BZ_GLOBAL_INIT(false);
+_bz_global int  assertFailCount    BZ_GLOBAL_INIT(0);
+_bz_global int  assertSuccessCount BZ_GLOBAL_INIT(0);
 
 
 #if defined(BZ_TESTSUITE)
@@ -66,12 +66,12 @@ _bz_global int      assertSuccessCount BZ_GLOBAL_INIT(0);
    * to halt and issue an error code.   -- TV 980226
    */
 
-  inline void checkAssert(_bz_bool condition, const char* where=0, 
+  inline void checkAssert(bool condition, const char* where=0, 
     int line=0)
   {
-    if (assertFailMode == _bz_true)
+    if (assertFailMode == true)
     {
-      if (condition == _bz_true)
+      if (condition == true)
         ++assertSuccessCount;
       else
         ++assertFailCount;
@@ -90,15 +90,15 @@ _bz_global int      assertSuccessCount BZ_GLOBAL_INIT(0);
 
   inline void beginCheckAssert()
   {
-    assertFailMode = _bz_true;
+    assertFailMode = true;
     assertSuccessCount = 0;
     assertFailCount = 0;
   }
 
   inline void endCheckAssert()
   {
-    assert(assertFailMode == _bz_true);
-    assertFailMode = _bz_false;
+    assert(assertFailMode == true);
+    assertFailMode = false;
     if (assertFailCount == 0)
     {
       cerr << "Assert check failed!" << endl;
@@ -112,14 +112,14 @@ _bz_global int      assertSuccessCount BZ_GLOBAL_INIT(0);
     #define BZSTATECHECK(X,Y)  checkAssert(X == Y, __FILE__, __LINE__)
     #define BZPRECHECK(X,Y)                                    \
         {                                                      \
-            if ((assertFailMode == _bz_false) && (!(X)))       \
+            if ((assertFailMode == false) && (!(X)))       \
                 cerr << Y << endl;                             \
             checkAssert(X, __FILE__, __LINE__);                \
         }
 
     #define BZ_DEBUG_MESSAGE(X)                                          \
         {                                                                \
-            if (assertFailMode == _bz_false)                             \
+            if (assertFailMode == false)                             \
             {                                                            \
                 cout << __FILE__ << ":" << __LINE__ << " " << X << endl; \
             }                                                            \
@@ -178,7 +178,7 @@ _bz_global int      assertSuccessCount BZ_GLOBAL_INIT(0);
 #define BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(X)  typeid(X).name()
 #else
 
-template<class T>
+template<typename T>
 class _bz_stringLiteralForNumericType {
 public:
     static const char* string()

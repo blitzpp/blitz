@@ -37,7 +37,7 @@
 BZ_NAMESPACE(blitz)
 
 // Forward declaration
-template<class P_parameter = unsigned>
+template<typename P_parameter = unsigned>
 class BenchmarkImplementation;
 
 
@@ -46,7 +46,7 @@ class BenchmarkImplementation;
 // the benchmark.  Typically T will be an unsigned, and will represent
 // the length of a vector, size of an array, etc.
 
-template<class P_parameter = unsigned>
+template<typename P_parameter = unsigned>
 class Benchmark {
 
 public:
@@ -100,7 +100,7 @@ private:
     Matrix<double,RowMajor> Mflops_;
 };
 
-template<class P_parameter>
+template<typename P_parameter>
 class BenchmarkImplementation {
 
 public:
