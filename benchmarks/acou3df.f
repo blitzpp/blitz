@@ -1,3 +1,12 @@
+!      INTEGER N, iters
+!      REAL check
+
+!      N = 112
+!      iters = 210
+!      CALL acoustic3d_f77(N,iters,check)
+!      PRINT *, check
+!      END
+
       SUBROUTINE acoustic3d_f77(N, niters, check)
       INTEGER N, niters, iter
       REAL check
@@ -5,7 +14,7 @@
       INTEGER i, j, k
 
       CALL acoust3d_f77_setup(P1, P2, P3, C, N)
- 
+
       DO iter=1, niters
         DO k=2,N-1
           DO j=2,N-1
