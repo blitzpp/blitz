@@ -1,4 +1,7 @@
 
+2003-05-16 Patrick Guio <patrick.guio@fys.uio.no>
+  * configure.in: Fixed several bugs for CC/SGI setup. Library Cio should be
+	included as well as -ptused.
 
 2003-05-09 Patrick Guio <patrick.guio@fys.uio.no>
 	* doc/stencils/Makefile.am: Fixed lib path to be used with libtool stuff
