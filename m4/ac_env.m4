@@ -11,12 +11,13 @@ CXXFFLAGS          = $CXXFFLAGS
 F77                = $F77
 FFLAGS             = $FFLAGS
 F77_OPTIMIZE_FLAGS = $F77_OPTIMIZE_FLAGS
+FLIBS              = $FLIBS
 
 FC                 = $FC
 FCFLAGS            = $FCFLAGS
 FC_OPTIMIZE_FLAGS  = $FC_OPTIMIZE_FLAGS
+FCLIBS             = $FCLIBS
 
-FORTLIBS           = $FORTLIBS
 BLASLIB            = $BLASLIB
 
 ])])
