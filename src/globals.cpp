@@ -13,4 +13,4 @@
 #include <blitz/array.h>          // Dummy array object (_dummyArray)
 
 // NEEDS_WORK: after switch from RCS to CVS, get a version identifier.
-char* _blitz_id = "@(#) Blitz++ class library";
+char _blitz_id[] = "@(#) Blitz++ class library";
