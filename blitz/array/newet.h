@@ -23,6 +23,10 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2002/07/02 19:15:45  jcumming
+ * Added #include of blitz/array/functorExpr.h to support user-defined
+ * functors and class methods acting on Array types.
+ *
  * Revision 1.2  2001/01/25 00:25:55  tveldhui
  * Ensured that source files have cvs logs.
  *
@@ -35,5 +39,9 @@
 
 #include <blitz/array/ops.h>
 #include <blitz/array/funcs.h>
+
+// ET support for functors acting on Arrays
+
+#include <blitz/array/functorExpr.h>
 
 #endif
