@@ -4,17 +4,16 @@
 
 ACLOCAL_AMFLAGS  = -I m4
 
-SUBDIRS = bin compiler blitz random src lib testsuite \
+SUBDIRS = bin blitz random src lib testsuite \
 	examples benchmarks doc manual
 
 EXTRA_DIST = LEGAL LICENSE README.binutils README-VS.NET Blitz-VS.NET.zip \
 	ChangeLog.1 
 
-# demodir = $(prefix)/demos
-# demo_DATA = demos/Makefile
+lib: blitz-library
 
-check-compiler:
-	@(cd compiler && $(MAKE) $(AM_MAKEFLAGS) $@) || exit 1;
+blitz-library:
+	@(cd lib && $(MAKE) $(AM_MAKEFLAGS)) || exit 1;
 
 check-testsuite: lib
 	@(cd testsuite && $(MAKE) $(AM_MAKEFLAGS) $@) || exit 1;
@@ -24,9 +23,6 @@ check-examples: lib
 
 check-benchmarks: lib
 	@(cd benchmarks && $(MAKE) $(AM_MAKEFLAGS) $@) || exit 1;
-
-lib: check-compiler
-	@(cd lib && $(MAKE) $(AM_MAKEFLAGS)) || exit 1;
 
 clean-local:
 	-rm -rf .deps so_locations cxx_repository 
