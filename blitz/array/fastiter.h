@@ -23,6 +23,12 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2002/03/06 17:45:07  patricg
+ *
+ * for BZ_HAVE_STD only
+ * #include <strstream> replaced by #include <sstream>
+ * ostrstream ostr replaced by ostringstream ostr
+ *
  * Revision 1.2  2001/01/24 20:22:50  tveldhui
  * Updated copyright date in headers.
  *
@@ -41,7 +47,7 @@
 #define BZ_ARRAY_FASTITER_H
 
 #ifdef BZ_HAVE_STD
- #include <strstream>
+ #include <sstream>
 #else
  #include <strstream.h>
 #endif
@@ -191,7 +197,11 @@ public:
             str += format.nextArrayOperandSymbol();
         else if (format.dumpArrayShapesMode())
         {
+#ifdef BZ_HAVE_STD
+						ostringstream ostr;
+#else
             ostrstream ostr;
+#endif
             ostr << array_.shape();
             str += ostr.str();
         }
