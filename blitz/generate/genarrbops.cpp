@@ -12,15 +12,15 @@
 
 int main()
 {
-    std::cout << "Generating <arraybops.cc>" << std::endl;
+    std::cout << "Generating <array/bops.cc>" << std::endl;
 
     OperandTuple operands(2);
 
-    bzofstream ofs("arraybops.cc", "Array expression templates (2 operands)",
+    bzofstream ofs("../array/bops.cc", "Array expression templates (2 operands)",
         __FILE__, "BZ_ARRAYBOPS_CC");
 
     ofs << "#ifndef BZ_ARRAYEXPR_H" << std::endl
-        << " #error <blitz/arraybops.cc> must be included after <blitz/arrayexpr.h>" 
+        << " #error <blitz/array/bops.cc> must be included after <blitz/arrayexpr.h>" 
         << std::endl << "#endif" << std::endl << std::endl;
 
     ofs.beginNamespace();
