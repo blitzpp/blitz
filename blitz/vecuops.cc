@@ -21,6 +21,11 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2002/06/29 00:09:25  jcumming
+ * Freshly generated from genvecuops.cpp.  Changed BZ_HAVE_SYSV_MATH to
+ * BZ_HAVE_SYSTEM_V_MATH to match what is in config.h and elsewhere.
+ * Corrected categorization of a few math functions.  Otherwise, no changes.
+ *
  * Revision 1.2  2001/01/26 20:11:25  tveldhui
  * Changed isnan to blitz_isnan, to avoid conflicts with implementations
  * that define isnan as a preprocessor macro.
@@ -32,7 +37,7 @@
  */ 
 
 // Generated source file.  Do not edit. 
-// genvecuops.cpp Jan 26 2001 14:32:45
+// genvecuops.cpp Jun 28 2002 16:11:47
 
 #ifndef BZ_VECUOPS_CC
 #define BZ_VECUOPS_CC
@@ -508,7 +513,7 @@ atanh(const TinyVector<P_numtype1, N_length1>& d1)
  * _class
  ****************************************************************************/
 
-#ifdef BZ_HAVE_SYSV_MATH
+#ifdef BZ_HAVE_SYSTEM_V_MATH
 template<class P_numtype1>
 inline
 _bz_VecExpr<_bz_VecExprUnaryOp<VectorIterConst<P_numtype1>,
@@ -1233,7 +1238,7 @@ floor(const TinyVector<P_numtype1, N_length1>& d1)
  * ilogb
  ****************************************************************************/
 
-#ifdef BZ_HAVE_SYSV_MATH
+#ifdef BZ_HAVE_IEEE_MATH
 template<class P_numtype1>
 inline
 _bz_VecExpr<_bz_VecExprUnaryOp<VectorIterConst<P_numtype1>,
@@ -1367,7 +1372,7 @@ blitz_isnan(const TinyVector<P_numtype1, N_length1>& d1)
  * itrunc
  ****************************************************************************/
 
-#ifdef BZ_HAVE_SYSV_MATH
+#ifdef BZ_HAVE_SYSTEM_V_MATH
 template<class P_numtype1>
 inline
 _bz_VecExpr<_bz_VecExprUnaryOp<VectorIterConst<P_numtype1>,
@@ -1899,7 +1904,7 @@ log10(const TinyVector<P_numtype1, N_length1>& d1)
  * nearest
  ****************************************************************************/
 
-#ifdef BZ_HAVE_SYSV_MATH
+#ifdef BZ_HAVE_SYSTEM_V_MATH
 template<class P_numtype1>
 inline
 _bz_VecExpr<_bz_VecExprUnaryOp<VectorIterConst<P_numtype1>,
@@ -2033,7 +2038,7 @@ rint(const TinyVector<P_numtype1, N_length1>& d1)
  * rsqrt
  ****************************************************************************/
 
-#ifdef BZ_HAVE_SYSV_MATH
+#ifdef BZ_HAVE_SYSTEM_V_MATH
 template<class P_numtype1>
 inline
 _bz_VecExpr<_bz_VecExprUnaryOp<VectorIterConst<P_numtype1>,
@@ -2490,7 +2495,7 @@ tanh(const TinyVector<P_numtype1, N_length1>& d1)
  * uitrunc
  ****************************************************************************/
 
-#ifdef BZ_HAVE_SYSV_MATH
+#ifdef BZ_HAVE_SYSTEM_V_MATH
 template<class P_numtype1>
 inline
 _bz_VecExpr<_bz_VecExprUnaryOp<VectorIterConst<P_numtype1>,
