@@ -1,5 +1,16 @@
 2003-09-09  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
+	* configure.in: Activated automake macro that disables building of
+	shared libraries by default.  Shared libraries support can be
+	turned on with the --enable-shared option.  Changed SGI compiler
+	default optimization flag from -Ofast to -O3 to avoid issues with
+	the use of interprocedural analysis (-IPA) during compilation and
+	linking.  Removed some defunct compiler options such as KCCdev and
+	the old API-specific SGI32 and SGI64 options (use --enable-64bit
+	instead).  Removed linking with SGI libCio.a, which should now be
+	obsolete.  Deleted a few unused autoconf/automake macros.
+	Corrected instruction message at end of script.
+
 	* blitz/vecexpr.h: Corrected a dependency problem noted by
 	Matthias Schillinger that was causing some test codes to fail to
 	compile.  This is an example of the problem with having ET support
