@@ -1,8 +1,5 @@
 #include <blitz/Array.h>
 
-#include <iostream.h>
-#include <complex.h>
-
 BZ_USING_NAMESPACE(blitz)
 
 #if 0
