@@ -4,7 +4,7 @@ AC_PREREQ(2.53)
 AC_INIT
 AC_CANONICAL_TARGET([])
 AC_CONFIG_SRCDIR([blitz/blitz.h])
-AM_INIT_AUTOMAKE(Blitz++,0.5)
+AM_INIT_AUTOMAKE(Blitz++,0.6)
 
 # Avoid generating makefile rules to rebuild maintainer-only files by
 # default.  Maintainers may override this default and generate these
@@ -487,6 +487,9 @@ AC_CONFIG_FILES([
 	examples/Makefile
 	benchmarks/Makefile 
 	benchmarks/plot_benchmarks.m
+	doc/Makefile
+	doc/examples/Makefile
+	doc/stencils/Makefile
 	])
 #	demos/Makefile
 AC_OUTPUT
