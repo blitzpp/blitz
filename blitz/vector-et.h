@@ -21,15 +21,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.1  2002/07/02 19:25:39  jcumming
- * This is the new name for the Vector.h file, which includes the Vector class implementation and Vector ET support using old-style expression templates.
- *
- * Revision 1.1  2001/01/26 18:30:50  tveldhui
- * More source code reorganization to reduce compile times.
- *
- */
+ ***************************************************************************/
 
 #ifndef BZ_VECTOR_ET_H
 #define BZ_VECTOR_ET_H
