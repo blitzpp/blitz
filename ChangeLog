@@ -36,4 +36,5 @@ Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	running automake (GNU automake) 1.4a
 	* manual/examples/Makefile, manual/stencils/Makefile: removed, now generated
 	by configure
+	* CHANGELOG: renamed to ChangeLog.1
 
