@@ -4,17 +4,20 @@
 
 SUBDIRS = .
 
-INCLUDES = -I$(top_srcdir)
-lib_LIBRARIES = libblitz.a
-libblitz_a_SOURCES = globals.cpp
-libblitz_a_AR = $(AR) $(AR_FLAGS)
+#INCLUDES = -I$(top_srcdir)
+#lib_LIBRARIES = libblitz.a
+#libblitz_a_SOURCES = globals.cpp
+#libblitz_a_AR = $(AR) $(AR_FLAGS)
 
-all-am: lib
+#lib_LTLIBRARIES = libblitz.la
+#libblitz_la_SOURCES = globals.cpp
 
-lib: $(top_srcdir)/lib/$(lib_LIBRARIES)
+#all-am: lib
 
-$(top_srcdir)/lib/$(lib_LIBRARIES): $(lib_LIBRARIES)
-	cp $< $@
+#lib: $(top_srcdir)/lib/$(lib_LIBRARIES)
+
+#$(top_srcdir)/lib/$(lib_LIBRARIES): $(lib_LIBRARIES)
+#	cp $< $@
 
 clean-local:
 	-rm -rf cxx_repository ti_files
