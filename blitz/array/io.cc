@@ -29,7 +29,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class T_numtype>
+template<typename T_numtype>
 ostream& operator<<(ostream& os, const Array<T_numtype,1>& x)
 {
     os << x.extent(firstRank) << endl;
@@ -44,7 +44,7 @@ ostream& operator<<(ostream& os, const Array<T_numtype,1>& x)
     return os;
 }
 
-template<class T_numtype>
+template<typename T_numtype>
 ostream& operator<<(ostream& os, const Array<T_numtype,2>& x)
 {
     os << x.rows() << " x " << x.columns() << endl;
@@ -67,7 +67,7 @@ ostream& operator<<(ostream& os, const Array<T_numtype,2>& x)
     return os;
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 ostream& operator<<(ostream& os, const Array<T_numtype,N_rank>& x)
 {
     for (int i=0; i < N_rank; ++i)
@@ -101,7 +101,7 @@ ostream& operator<<(ostream& os, const Array<T_numtype,N_rank>& x)
  *  Input
  */
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 istream& operator>>(istream& is, Array<T_numtype,N_rank>& x)
 {
     TinyVector<int,N_rank> extent;

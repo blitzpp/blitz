@@ -30,7 +30,7 @@
 BZ_NAMESPACE(blitz)
 
 // helper class ConstPointerStack
-template<class P_numtype, int N_rank>
+template<typename P_numtype, int N_rank>
 class ConstPointerStack {
 public:
     typedef P_numtype                T_numtype;
@@ -50,7 +50,7 @@ private:
 };
 
 
-template<class T, int N>
+template<typename T, int N>
 class ConstArrayIterator {
 
 public:
@@ -96,7 +96,7 @@ public:
         return *data_;
     }
 
-    const T* _bz_restrict operator->() const
+    const T* restrict operator->() const
     {
         BZPRECHECK(data_ != 0, "Attempted to dereference invalid iterator "
              << "(empty array or past end of array)");
@@ -125,15 +125,8 @@ public:
         return pos_; 
     }
    
-    bool operator==(const ConstArrayIterator<T,N>& x) const
-    {
-        return data_ == x.data_;
-    }
-
-    bool operator!=(const ConstArrayIterator<T,N>& x) const
-    {
-        return data_ != x.data_;
-    }
+    bool operator==(const ConstArrayIterator<T,N>& x) const { return data_==x.data_; }
+    bool operator!=(const ConstArrayIterator<T,N>& x) const { return data_!=x.data_; }
  
 private:
     ConstArrayIterator() { }
@@ -147,12 +140,12 @@ private:
 
 protected:
     TinyVector<int,N> pos_;
-    T * _bz_restrict data_;
+    T * restrict data_;
 };
 
 
 
-template<class T, int N>
+template<typename T, int N>
 class ArrayIterator : public ConstArrayIterator<T,N> {
   private:
     typedef ConstArrayIterator<T,N> T_base;
@@ -177,7 +170,7 @@ class ArrayIterator : public ConstArrayIterator<T,N> {
         return *data_;
     }
 
-    T* _bz_restrict operator->() 
+    T* restrict operator->() 
     {
         return data_;
     }
@@ -185,7 +178,7 @@ class ArrayIterator : public ConstArrayIterator<T,N> {
 
 
 
-template<class T, int N>
+template<typename T, int N>
 ConstArrayIterator<T,N>& ConstArrayIterator<T,N>::operator++()
 {
     BZPRECHECK(data_ != 0, "Attempted to iterate past the end of an array.");

@@ -52,7 +52,7 @@ BZ_NAMESPACE(blitz)
 
 template<int N_rank>
 struct _bz_doArrayIndexMapping {
-    template<class T_numtype, int N_destRank>
+    template<typename T_numtype, int N_destRank>
     static T_numtype map(const Array<T_numtype, N_rank>&, 
         const TinyVector<int,N_destRank>&, int, int, int, int, int, int,
         int, int, int, int, int)
@@ -66,7 +66,7 @@ struct _bz_doArrayIndexMapping {
 
 template<>
 struct _bz_doArrayIndexMapping<1> {
-    template<class T_numtype, int N_destRank>
+    template<typename T_numtype, int N_destRank>
     static T_numtype map(const Array<T_numtype, 1>& array,
         const TinyVector<int,N_destRank>& index, int i0, int, int, int, int, 
         int, int, int, int, int, int)
@@ -78,7 +78,7 @@ struct _bz_doArrayIndexMapping<1> {
 
 template<>
 struct _bz_doArrayIndexMapping<2> {
-    template<class T_numtype, int N_destRank>
+    template<typename T_numtype, int N_destRank>
     static T_numtype map(const Array<T_numtype, 2>& array,
         const TinyVector<int,N_destRank>& index, int i0, int i1, int, 
         int, int, int, int, int, int, int, int)
@@ -89,7 +89,7 @@ struct _bz_doArrayIndexMapping<2> {
 
 template<>
 struct _bz_doArrayIndexMapping<3> {
-    template<class T_numtype, int N_destRank>
+    template<typename T_numtype, int N_destRank>
     static T_numtype map(const Array<T_numtype, 3>& array,
         const TinyVector<int,N_destRank>& index, int i0, int i1, int i2,
         int, int, int, int, int, int, int, int)
@@ -100,7 +100,7 @@ struct _bz_doArrayIndexMapping<3> {
 
 template<>
 struct _bz_doArrayIndexMapping<4> {
-    template<class T_numtype, int N_destRank>
+    template<typename T_numtype, int N_destRank>
     static T_numtype map(const Array<T_numtype, 4>& array,
         const TinyVector<int,N_destRank>& index, int i0, int i1, int i2,
         int i3, int, int, int, int, int, int, int)
@@ -111,7 +111,7 @@ struct _bz_doArrayIndexMapping<4> {
 
 template<>
 struct _bz_doArrayIndexMapping<5> {
-    template<class T_numtype, int N_destRank>
+    template<typename T_numtype, int N_destRank>
     static T_numtype map(const Array<T_numtype, 5>& array,
         const TinyVector<int,N_destRank>& index, int i0, int i1, int i2,
         int i3, int i4, int, int, int, int, int, int)
@@ -122,7 +122,7 @@ struct _bz_doArrayIndexMapping<5> {
 
 template<>
 struct _bz_doArrayIndexMapping<6> {
-    template<class T_numtype, int N_destRank>
+    template<typename T_numtype, int N_destRank>
     static T_numtype map(const Array<T_numtype, 6>& array,
         const TinyVector<int,N_destRank>& index, int i0, int i1, int i2,
         int i3, int i4, int i5, int, int, int, int, int)
@@ -134,7 +134,7 @@ struct _bz_doArrayIndexMapping<6> {
 
 template<>
 struct _bz_doArrayIndexMapping<7> {
-    template<class T_numtype, int N_destRank>
+    template<typename T_numtype, int N_destRank>
     static T_numtype map(const Array<T_numtype, 7>& array,
         const TinyVector<int,N_destRank>& index, int i0, int i1, int i2,
         int i3, int i4, int i5, int i6, int, int, int, int)
@@ -146,7 +146,7 @@ struct _bz_doArrayIndexMapping<7> {
 
 template<>
 struct _bz_doArrayIndexMapping<8> {
-    template<class T_numtype, int N_destRank>
+    template<typename T_numtype, int N_destRank>
     static T_numtype map(const Array<T_numtype, 8>& array,
         const TinyVector<int,N_destRank>& index, int i0, int i1, int i2,
         int i3, int i4, int i5, int i6, int i7, int, int, int)
@@ -158,7 +158,7 @@ struct _bz_doArrayIndexMapping<8> {
 
 template<>
 struct _bz_doArrayIndexMapping<9> {
-    template<class T_numtype, int N_destRank>
+    template<typename T_numtype, int N_destRank>
     static T_numtype map(const Array<T_numtype, 9>& array,
         const TinyVector<int,N_destRank>& index, int i0, int i1, int i2,
         int i3, int i4, int i5, int i6, int i7, int i8, int, int)
@@ -170,7 +170,7 @@ struct _bz_doArrayIndexMapping<9> {
 
 template<>
 struct _bz_doArrayIndexMapping<10> {
-    template<class T_numtype, int N_destRank>
+    template<typename T_numtype, int N_destRank>
     static T_numtype map(const Array<T_numtype, 10>& array,
         const TinyVector<int,N_destRank>& index, int i0, int i1, int i2,
         int i3, int i4, int i5, int i6, int i7, int i8, int i9, int)
@@ -182,7 +182,7 @@ struct _bz_doArrayIndexMapping<10> {
 
 template<>
 struct _bz_doArrayIndexMapping<11> {
-    template<class T_numtype, int N_destRank>
+    template<typename T_numtype, int N_destRank>
     static T_numtype map(const Array<T_numtype, 11>& array,
         const TinyVector<int,N_destRank>& index, int i0, int i1, int i2,
         int i3, int i4, int i5, int i6, int i7, int i8, int i9, int i10)
@@ -193,7 +193,7 @@ struct _bz_doArrayIndexMapping<11> {
     }
 };
 
-template<class P_numtype, int N_rank, int N_map0, int N_map1=0, int N_map2=0,
+template<typename P_numtype, int N_rank, int N_map0, int N_map1=0, int N_map2=0,
     int N_map3=0, int N_map4=0, int N_map5=0, int N_map6=0, int N_map7=0, 
     int N_map8=0, int N_map9=0, int N_map10=0>
 class ArrayIndexMapping {
@@ -406,7 +406,7 @@ public:
         BZPRECONDITION(0);
     }
 
-    _bz_bool isUnitStride(int) const
+    bool isUnitStride(int) const
     {
         BZPRECONDITION(0);
         return false;
@@ -417,8 +417,8 @@ public:
         BZPRECONDITION(0);
     }
 
-    _bz_bool canCollapse(int,int) const
-    {   BZPRECONDITION(0);  return _bz_false; }
+    bool canCollapse(int,int) const
+    {   BZPRECONDITION(0);  return false; }
 
     T_numtype operator[](int)
     {   
@@ -438,10 +438,10 @@ public:
         return 0;
     }
 
-    _bz_bool isStride(int,int) const
+    bool isStride(int,int) const
     {
         BZPRECONDITION(0);
-        return _bz_true;
+        return true;
     }
 
     template<int N_rank2>
@@ -457,11 +457,11 @@ public:
         str += "map[NEEDS_WORK]";
     }
 
-    template<class T_shape>
-    _bz_bool shapeCheck(const T_shape&) const
+    template<typename T_shape>
+    bool shapeCheck(const T_shape&) const
     { 
         // NEEDS_WORK-- do a real shape check (tricky)
-        return _bz_true; 
+        return true; 
     }
 
 private:
