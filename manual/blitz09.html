@@ -11,242 +11,241 @@
 </ul>
 <hr>
 
-<a name="l132"></a>
-<h1>Chapter 9: Numeric properties</h1>
-<a name="numinquire"></a>
-    
-<br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>9.1: Introduction</font></td></tr></table><br><a name="l133"></a>
+<a name="l118"></a>
+<h1>Chapter 9: Random Number Generators</h1>
+<a name="random"></a>
+    <br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>9.1: Overview</font></td></tr></table><br><a name="l119"></a>
 
-<p><!-- BZINDEX numeric limits --><a name="index00453">
-<p>Blitz++ provides a set of functions to
-access numeric properties of intrinsic types.
-They are provided as an alternative to the somewhat
-klunky <code>numeric_limits&lt;T&gt;::yadda_yadda</code> syntax
-provided by the ISO/ANSI C++ standard.  Where a
-similar Fortran 90 function exists, the same name
-has been used.
-<p>The argument in all cases is a dummy of the appropriate
-type.
-<p>All functions described in this section assume that
-<code>numeric_limits&lt;T&gt;</code> has been specialized for the
-appropriate case.  If not, the results are not useful.
-The standard requires that <code>numeric_limits&lt;T&gt;</code> be
-specialized for all the intrinsic numeric types
-(float, double, int, bool, unsigned int, etc.).
-<p><!-- BZINDEX numinquire.h --><a name="index00454">
-<p>To use these functions, you must first include the
-header <code>&lt;blitz/numinquire.h&gt;</code>.  Also, note that
-these functions may be unavailable if your compiler
-is non-ANSI compliant.  If the preprocessor symbol
-<code>BZ_HAVE_NUMERIC_LIMITS</code> is false, then these
-functions are unavailable.
-<p>
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>9.2: Function descriptions</font></td></tr></table><br><a name="l134"></a>
+<p>These are the basic
+random number generators (RNGs):
+<p><!-- BZINDEX RNGs --><a name="index00424">
+<!-- BZINDEX Random Number Generators --><a name="index00425">
+<!-- BZINDEX Random Number Generators!overview --><a name="index00426">
+<p><dl>
+<p></p><dt><strong>Uniform</strong><dd>  Uniform reals on [0,1)
+<p></p><dt><strong>Normal</strong><dd> Normal with specified mean and variance
+<p></p><dt><strong>Exponential</strong><dd> Exponential with specified mean
+<p></p><dt><strong>DiscreteUniform</strong><dd> Integers uniformly distributed over a specified range.
+<p></p><dt><strong>Beta</strong><dd> Beta distribution
+<p></p><dt><strong>Gamma</strong><dd> Gamma distribution
+<p></p><dt><strong>F</strong><dd> F distribution
+</dl>
+<p>To use these generators, you need to include
+some subset of these headers:
+<p><pre>#include &lt;random/uniform.h&gt;
+#include &lt;random/normal.h&gt;
+#include &lt;random/exponential.h&gt;
+#include &lt;random/discrete-uniform.h&gt;
+#include &lt;random/beta.h&gt;
+#include &lt;random/gamma.h&gt;
+#include &lt;random/chisquare.h&gt;
+#include &lt;random/F.h&gt;
 
-<p><!-- BZINDEX denorm_min() --><a name="index00455">
-<strong><pre>T     denorm_min(T) throw;
-</pre></strong>
-Minimum positive denormalized value.  Available for floating-point
-types only. 
-<p><!-- BZINDEX digits() --><a name="index00456">
-<strong><pre>int   digits(T);
-</pre></strong>
-The number of radix digits (read: bits) in the mantissa.  Also
-works for integer types.  The official definition is "number of
-radix digits that can be represented without change". 
-<p><!-- BZINDEX digits10() --><a name="index00457">
-<strong><pre>int   digits10(T);
-</pre></strong>
-The number of base-10 digits that can be represented without
-change. 
-<p><!-- BZINDEX epsilon() --><a name="index00458">
-<strong><pre>T     epsilon(T);
-</pre></strong>
-The smallest amount which can be added to 1 to produce
-a result which is not 1.  Floating-point types only.
-<p><!-- BZINDEX denormalized values --><a name="index00459">
-<!-- BZINDEX has_denorm() --><a name="index00460">
-<strong><pre>bool  has_denorm(T);
-</pre></strong>
-True if the representation allows denormalized values (floating-point
-only).
-<p><!-- BZINDEX denormalization loss --><a name="index00461">
-<!-- BZINDEX has_denorm_loss() --><a name="index00462">
-<strong><pre>bool  has_denorm_loss(T);
-</pre></strong>
-True if a loss of precision is detected as a denormalization loss, rather
-than as an inexact result (floating-point only). 
-<p><!-- BZINDEX infinity -- has_infinity() --><a name="index00463">
-<!-- BZINDEX has_infinity() --><a name="index00464">
-<strong><pre>bool  has_infinity(T);
-</pre></strong>
-True if there is a special representation for the value "infinity".
-If true, the representation can be obtained by calling <code>infinity(T)</code>.
-<p><!-- BZINDEX has_quiet_NaN() --><a name="index00465">
-<!-- BZINDEX NaN -- has_quiet_NaN() --><a name="index00466">
-<strong><pre>bool  has_quiet_NaN(T);
-</pre></strong>
-True if there is a special representation for a quiet (non-signalling)
-Not A Number (NaN).  If so, use the function <code>quiet_NaN(T)</code> to obtain
-it. 
-<p><!-- BZINDEX NaN -- has_signalling_NaN() --><a name="index00467">
-<!-- BZINDEX has_signalling_NaN() --><a name="index00468">
-<strong><pre>bool  has_signaling_NaN(T);
-bool  has_signalling_NaN(T);  
-</pre></strong>
-True if there is a special representation for a signalling
-Not A Number (NaN).  If so, use the function <code>signalling_NaN(T)</code>
-to obtain it. 
-<p><!-- BZINDEX huge() --><a name="index00469">
-<!-- BZINDEX maximum value of a type --><a name="index00470">
-<strong><pre>T     huge(T) throw;
-</pre></strong>
-Returns the maximum finite representable value.  Equivalent to
-<code>CHAR_MAX</code>, <code>SHRT_MAX</code>, <code>FLT_MAX</code>, etc.  For floating types
-with denormalization, the maximum positive <strong>normalized</strong> value is
-returned.  
-<p><!-- BZINDEX infinity() --><a name="index00471">
-<strong><pre>T     infinity(T) throw;
-</pre></strong>
-Returns the representation of positive infinity, if available.
-Note that you should check availability with <code>has_infinity(T)</code>
-before calling this function. 
-<p><!-- BZINDEX is_bounded() --><a name="index00472">
-<strong><pre>bool  is_bounded(T);
-</pre></strong>
-True if the set of values represented by the type is finite.
-All built-in types are bounded.  (This function was provided
-so that e.g. arbitrary precision types could be distinguished).
-<p><!-- BZINDEX is_exact() --><a name="index00473">
-<strong><pre>bool  is_exact(T);
-</pre></strong>
-True if the representation is exact.  All integer types are
-exact; floating-point types generally aren't.  A rational
-arithmetic type could be exact. 
-<p><!-- BZINDEX IEC 559 --><a name="index00474">
-<!-- BZINDEX is_iec559() --><a name="index00475">
-<strong><pre>bool  is_iec559(T);
-</pre></strong>
-True if the type conforms to the IEC 559 standard.  IEC is
-the International Electrotechnical Commission.  Note that
-IEC 559 is the same as IEEE 754.  Only relevant for floating types.
-<p><!-- BZINDEX is_integer() --><a name="index00476">
-<strong><pre>bool  is_integer(T);
-</pre></strong>
-True if the type is integer.  
-<p><!-- BZINDEX is_modulo() --><a name="index00477">
-<strong><pre>bool  is_modulo(T);
-</pre></strong>
-True if the type is modulo.  Integer types are usually
-modulo: if you add two integers, they might wrap around
-and give you a small result.  (Some special kinds of
-integers don't wrap around, but stop at an upper or
-lower bound; this is called saturating arithmetic).
-This is false for floating types.  
-<p><!-- BZINDEX is_signed() --><a name="index00478">
-<!-- BZINDEX signed -- is_signed() --><a name="index00479">
-<strong><pre>bool  is_signed(T);
-</pre></strong>
-True if the type is signed (i.e. can handle both positive
-and negative values).  
-<p><strong><pre>int   max_exponent(T);
-</pre></strong>
-The maximum exponent (Max_exp) is the maximum positive integer such that
-the radix (read: 2) raised to the power Max_exp-1 is a representable,
-finite floating point number.  Floating types only. <!-- BZINDEX max_exponent() --><a name="index00480">
-<p><!-- BZINDEX max_exponent10() --><a name="index00481">
-<strong><pre>int   max_exponent10(T);
-</pre></strong>
-The maximum base-10 exponent (Max_exp10) is the maximum positive integer
-such that 10 raised to the power Max_exp10 is a representable,
-finite floating point number.  Floating types only. 
-<p><!-- BZINDEX min_exponent() --><a name="index00482">
-<strong><pre>int   min_exponent(T);
-</pre></strong>
-The minimum exponent (Min_exp) is the minimum negative integer
-such that the radix (read: 2) raised to the power Min_exp-1 is
-a <strong>normalized</strong> floating point number.  Floating types only. 
-<p><!-- BZINDEX min_exponent10() --><a name="index00483">
-<strong><pre>int   min_exponent10(T);
-</pre></strong>
-The minimum base-10 exponent (Min_exp10) is the minimum negative
-integer such that 10 raised to the power Min_exp10 is in the
-range of <strong>normalized</strong> floating point numbers. 
-<p><!-- BZINDEX neghuge() --><a name="index00484">
-<!-- BZINDEX maximally negative value -- neghuge() --><a name="index00485">
-<strong><pre>T     neghuge(T);
-</pre></strong>
-This returns the maximally negative value for a type.
-For integers, this is the same as min().  For floating-point
-types, it is <code>- huge(T())</code>.
-<p><!-- BZINDEX one() --><a name="index00486">
-<strong><pre>T     one(T);
-</pre></strong>
-Returns a representation for "1".  
-<p><!-- BZINDEX precision() --><a name="index00487">
-<strong><pre>int   precision(T);
-</pre></strong>
-Same as <code>digits10()</code>. 
-<p><!-- BZINDEX quiet_NaN() --><a name="index00488">
-<!-- BZINDEX NaN -- quiet_NaN() --><a name="index00489">
-<strong><pre>T     quiet_NaN(T) throw;
-</pre></strong>
-Returns the representation for a quiet (non-signalling) Not A Number
-(NaN), if available.  You should check availability using the
-<code>has_quiet_NaN(T)</code> function first.  
-<p><!-- BZINDEX radix() --><a name="index00490">
-<strong><pre>int   radix(T);
-</pre></strong>
-For floating-point types, this returns the radix (base) of the
-exponent.  For integers, it specifies the base of the representation.
-<p><!-- BZINDEX range() --><a name="index00491">
-<strong><pre>Range range(T);
-</pre></strong>
-Returns <code>Range(min_exponent10(T()), max_exponent10(T()))</code>, i.e.
-the range of representable base-10 exponents.  
-<p><!-- BZINDEX round_error() --><a name="index00492">
-<strong><pre>T     round_error(T) throw;
-</pre></strong>
-Returns a measure of the maximum rounding error for floating-point types.  
-This will typically be <code>0.5</code>. 
-<p><!-- BZINDEX round_style() --><a name="index00493">
-<strong><pre>std::float_round_style round_style(T);
-</pre></strong>
-Returns the current rounding style for floating-point arithmetic.
-The possibilities are: <code>round_indeterminate</code> (i.e. don't have a clue),
-<code>round_toward_zero</code>, <code>round_to_nearest</code> (round to nearest
-representable value), <code>round_toward_infinity</code> (round toward
-positive infinity), and <code>round_neg_infinity</code> (round toward
-negative infinity).  
-<p><!-- BZINDEX signalling_NaN() --><a name="index00494">
-<strong><pre>T     signaling_NaN(T) throw;
-T     signalling_NaN(T) throw;    
-</pre></strong>
-Returns the representation for a signalling Not A Number (NaN),
-if available.  You should check availability by calling
-<pre>has_signalling_NaN(T)</pre> first.  
-<p><!-- BZINDEX tiny() --><a name="index00495">
-<!-- BZINDEX minimum finite value -- tiny() --><a name="index00496">
-<strong><pre>T     tiny(T);
-</pre></strong>
-For integer types, this returns the minimum finite value, which may be
-negative.  For floating types, it returns the minimum positive value.
-For floating types with denormalization, the function
-returns the minimum positive <strong>normalized</strong> value.  
-<p><!-- BZINDEX tinyness_before() --><a name="index00497">
-<strong><pre>T     tinyness_before(T);
-</pre></strong>
-True if tinyness is detected before rounding.  Other than this
-description, I don't have a clue what this means; anyone have
-a copy of IEC 559/IEEE 754 floating around? 
-<p><!-- BZINDEX traps() --><a name="index00498">
-<strong><pre>T     traps(T);
-</pre></strong>
-True if trapping is implemented for this type. 
-<p><!-- BZINDEX zero() --><a name="index00499">
-<strong><pre>T     zero(T);
-</pre></strong>
-Returns a representation for zero. 
+using namespace ranlib;
+</pre>
+<p>All the generators are inside the namespace <strong>ranlib</strong>, <!-- BZINDEX ranlib --><a name="index00427">
+so a <strong>using namespace ranlib</strong> directive is required (alternately,
+you can write e.g. <code>ranlib::Uniform&lt;&gt;</code>).
+<p>These generators are all class templates.  The first template
+parameter is the number type you want to generate:
+float, double or long double for continuous distributions,
+and integer for discrete distributions.  This parameter
+defaults to <strong><code>float</code></strong> for continuous distributions,
+and <strong><code>unsigned int</code></strong> for discrete distributions.
+<p>The constructors are:
+<pre>Uniform();
+Normal(T mean, T standardDeviation);
+Exponential(T mean);
+DiscreteUniform(T n);   // range is 0 .. n-1
+Beta(T a, T b);
+Gamma(T mean);
+ChiSquare(T df);
+F(T dfn, T dfd);
+</pre>
+<p>where T is the first template parameter (float, double, or long double).
+To obtain a random number, use the method <code>random()</code>.  Here is an
+example of constructing and using a <code>Normal</code> generator:
+<p><pre>#include &lt;random/normal.h&gt;
+
+using namespace ranlib;
+
+void foo()
+{
+    Normal&lt;double&gt; normalGen;
+    double x = normalGen.random();    // x is a normal random number
+}
+</pre>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>9.2: Note: Parallel random number generators</font></td></tr></table><br><a name="l120"></a>
+
+<p>The generators which Blitz++ provides are not suitable for
+parallel programs.  If you need parallel RNGs, you may find
+<a href="http://www.ncsa.uiuc.edu/Apps/SPRNG">SPRNG</a> useful.
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>9.3: Seeding a random number generator</font></td></tr></table><br><a name="l121"></a>
+
+<p><!-- BZINDEX Random Number Generators!seeding --><a name="index00428">
+<p>You may seed a random number generator using the member function
+<code>seed(unsigned int)</code>.  <!-- BZINDEX seeding a RNG --> By default, all <a name="index00429">
+random number generators
+share the same underlying integer random number generator.  So seeding
+one generator will seed them all.  (Note: you can create generators
+with their own internal state; see the sections below).
+You should generally only seed a random number generator once,
+at the beginning of a program run.  
+<p>Here is an example of seeding with the system clock:
+<p><pre>#include &lt;random/uniform.h&gt;
+#include &lt;time.h&gt;
+
+using namespace ranlib;
+
+int main()
+{
+    // At start of program, seed with the system time so we get
+    // a different stream of random numbers each run.
+    Uniform&lt;float&gt; x;
+    x.seed((unsigned int)time(0));
+
+    // Rest of program
+    ...
+}
+</pre>
+<p>Note: you may be tempted to seed the random number generator
+from a static initializer.  <strong>Don't do it!</strong>  
+Due to an oddity of C++, there is no guarantee
+on the order of static initialization when templates are involved.
+Hence, you may seed the RNG before its constructor is invoked,
+in which case your program will crash.  If you don't know what
+a static initializer is, don't worry -- you're safe!
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>9.4: Detailed description of RNGs</font></td></tr></table><br><a name="l122"></a>
+
+<p><!-- BZINDEX Random Number Generators!details --><a name="index00430">
+<p>There are really two types of RNGs:
+<p><dl>
+<p></p><dt><strong>Integer RNGs</strong><dd> provide uniformly distributed, unsigned
+32 bit integers. <!-- BZINDEX IRNGs --> <!-- BZINDEX Integer RNGs --><a name="index00431">
+<p></p><dt><strong>RNGs</strong><dd> use Integer RNGs to provide other kinds of random
+numbers. 
+</dl>
+<p>By default, the Integer RNG used is a faithful adaptation of
+the Mersenne Twister MT19937 <!-- BZINDEX MersenneTwister --> due to<a name="index00432">
+Matsumoto and Nishimura (see ACM Transactions on Modeling
+and Computer Simulation, Vol. 8, No. 1, January 1998, pp 3-30,
+<a href="http://www.math.keio.ac.jp/~matumoto/emt.html">web page</a>,
+<a href="http://www.acm.org/pubs/citations/journals/tomacs/1998-8-1/p3-matsumoto/">paper</a>).
+This generator has a period of 2<sup>19937</sup>-1
+, passed several stringent statistical
+tests (including the <a href="http://stat.fsu.edu/~geo/diehard.html">Diehard</a> tests), and 
+has speed comparable to other modern generators.
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>9.5: Template parameters</font></td></tr></table><br><a name="l123"></a>
+
+<p>RNGs take three template parameters, all of which have default
+values.  Using the <code>Uniform</code> RNG as an example, the template
+parameters of <code>Uniform&lt;T, IRNG, stateTag&gt;</code> are:
+<p><dl>
+<p></p><dt><strong>T</strong><dd> is the type of random number to generate (one of float, double,
+or long double for continuous distributions; an integer type for
+discrete distributions).  Note that generating double and
+long double RNGs takes longer, because filling the entire mantissa
+with random bits requires several random integers.
+The default parameter for most generators is <code>float</code>.
+<p><p></p><dt><strong>IRNG</strong><dd> is the underlying Integer RNG to use.  The default is
+MersenneTwister.
+<p><p></p><dt><strong>stateTag</strong><dd> is either <code>sharedState</code> or <code>independentState</code>.
+<!-- BZINDEX stateTag (RNGs) --><a name="index00433">
+If <code>sharedState</code>, the IRNG is shared with other generators.
+If <code>independentState</code>, the RNG contains its own IRNG.  The
+default is sharedState.
+<p></dl>
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>9.6: Member functions</font></td></tr></table><br><a name="l124"></a>
+
+<p><!-- BZINDEX Random Number Generators!member functions --><a name="index00434">
+<p>RNGs have these methods:
+<strong><pre>T random();</pre></strong>
+<!-- BZINDEX random() --><a name="index00435">
+Returns a random number.
+<strong><pre>void seed(unsigned int);</pre></strong>
+<!-- BZINDEX seed() --><a name="index00436">
+Seeds the underlying IRNG.  See above for an example of seeding
+with the system timer.
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>9.7: Detailed listing of RNGs</font></td></tr></table><br><a name="l125"></a>
+
+<p><!-- BZINDEX Random Number Generators!list of --><a name="index00437">
+<p>To save space in the below list, template parameters have
+been omitted and only constructors are listed.  The notation
+[a,b] means an interval which includes the endpoints a and b;
+(a,b) is an interval which does not include the endpoints.
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>9.7.1: <code>random/uniform.h</code></font></td></tr></table><a name="l126"></a>
+
+<!-- BZINDEX random/uniform.h --><a name="index00438">
+<p><strong><pre>
+Uniform&lt;&gt;()</pre></strong>
+Continuous uniform distribution on [0,1). <!-- BZINDEX Uniform RNG --><a name="index00439">
+<p><strong><pre>UniformClosedOpen&lt;&gt;()</pre></strong>
+Continuous uniform distribution on [0,1).  Same as <code>Uniform&lt;&gt;</code>.
+<!-- BZINDEX UniformClosedOpen RNG --><a name="index00440">
+<p><strong><pre>UniformClosed&lt;&gt;()</pre></strong>
+Continuous uniform distribution on [0,1].
+<!-- BZINDEX UniformClosed RNG --><a name="index00441">
+<p><strong><pre>UniformOpen&lt;&gt;()</pre></strong>
+Continuous uniform distribution on (0,1).
+<!-- BZINDEX UniformOpen RNG --><a name="index00442">
+<p><strong><pre>UniformOpenClosed&lt;&gt;()</pre></strong>
+Continuous uniform distribution on (0,1].
+<!-- BZINDEX UniformOpenClosed RNG --><a name="index00443">
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>9.7.2: <code>random/normal.h</code></font></td></tr></table><a name="l127"></a>
+
+<p><strong><pre>
+NormalUnit&lt;&gt;()</pre></strong>
+Continuous normal distribution with mean 0 and variance 1.
+<!-- BZINDEX NormalUnit RNG --><a name="index00444">
+<p><strong><pre>Normal&lt;&gt;(T mean, T standardDeviation)</pre></strong>
+Continuous normal distribution with specified mean and standard 
+deviation.  <!-- BZINDEX Normal RNG --><a name="index00445">
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>9.7.3: <code>random/exponential.h</code></font></td></tr></table><a name="l128"></a>
+
+<p><strong><pre>
+ExponentialUnit&lt;&gt;()</pre></strong>
+Continuous exponential distribution with mean 1.
+<!-- BZINDEX ExponentialUnit RNG --><a name="index00446">
+<p><strong><pre>Exponential&lt;&gt;(T mean)</pre></strong>
+Continuous exponential distribution with specified mean.
+<!-- BZINDEX Exponential RNG --><a name="index00447">
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>9.7.4: <code>random/beta.h</code></font></td></tr></table><a name="l129"></a>
+
+<p><strong><pre>Beta&lt;&gt;(T a, T b)</pre></strong>
+Beta distribution with parameters a and b.  The mean of the distribution
+is a/(a+b) and its variance
+is ab/((a+b)^2(a+b+1)).
+Use the method <code>setParameters(T a, T b)</code> to change the
+parameters.
+<!-- BZINDEX Beta RNG --><a name="index00448">
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>9.7.5: <code>random/chisquare.h</code></font></td></tr></table><a name="l130"></a>
+
+<strong><pre>ChiSquare&lt;&gt;(T df)</pre></strong>
+Chi Square distribution with
+df degrees of freedom.  The parameter df must be positive.  Use the
+method <code>setDF(T df)</code> to change the degrees of freedom.
+<!-- BZINDEX Chi-Square RNG --><a name="index00449">
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>9.7.6: <code>random/gamma.h</code></font></td></tr></table><a name="l131"></a>
+
+<p><strong><pre>Gamma&lt;&gt;(T mean)</pre></strong>
+Gamma distribution with specified mean.  The mean must
+be positive.  Use the method <code>setMean(T mean)</code> to
+change the mean.
+<!-- BZINDEX Gamma RNG --><a name="index00450">
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>9.7.7: <code>random/F.h</code></font></td></tr></table><a name="l132"></a>
+
+<strong><pre>F&lt;&gt;(T numeratorDF, T denominatorDF)</pre></strong>
+F distribution with numerator and denominator degrees
+of freedom specified.  Both these parameters must be
+positive.  Use <code>setDF(T dfn, T dfd)</code> to change the
+degrees of freedom. 
+<!-- BZINDEX F distribution RNG --><a name="index00451">
+<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>9.7.8: <code>random/discrete-uniform.h</code></font></td></tr></table><a name="l133"></a>
+
+<p><strong><pre>
+DiscreteUniform&lt;&gt;(T n)</pre></strong>
+Discrete uniform distribution over 0, 1, ..., n-1.
+<!-- BZINDEX DiscreteUniform RNG --><a name="index00452">
 <p>
 <p>
 

@@ -12,240 +12,30 @@
 <hr>
 
 <a name="l116"></a>
-<h1>Chapter 8: Random Number Generators</h1>
-<a name="random"></a>
-    <br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>8.1: Overview</font></td></tr></table><br><a name="l117"></a>
+<h1>Chapter 8: Parallel Computing</h1>
+<a name="parallel"></a>
+    While Blitz++ can be used for parallel computing, it was not designed
+primarily for this purpose.  For this reason, you may want to investigate
+some other available libraries, such as POOMA, before choosing to
+implement a parallel code using Blitz++.
+<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>8.1: Blitz++ and thread safety</font></td></tr></table><br><a name="l117"></a>
 
-<p>These are the basic
-random number generators (RNGs):
-<p><!-- BZINDEX RNGs --><a name="index00424">
-<!-- BZINDEX Random Number Generators --><a name="index00425">
-<!-- BZINDEX Random Number Generators!overview --><a name="index00426">
+<p>To enable thread-safety in Blitz++, you need to do one of these things:
 <p><dl>
-<p></p><dt><strong>Uniform</strong><dd>  Uniform reals on [0,1)
-<p></p><dt><strong>Normal</strong><dd> Normal with specified mean and variance
-<p></p><dt><strong>Exponential</strong><dd> Exponential with specified mean
-<p></p><dt><strong>DiscreteUniform</strong><dd> Integers uniformly distributed over a specified range.
-<p></p><dt><strong>Beta</strong><dd> Beta distribution
-<p></p><dt><strong>Gamma</strong><dd> Gamma distribution
-<p></p><dt><strong>F</strong><dd> F distribution
-</dl>
-<p>To use these generators, you need to include
-some subset of these headers:
-<p><pre>#include &lt;random/uniform.h&gt;
-#include &lt;random/normal.h&gt;
-#include &lt;random/exponential.h&gt;
-#include &lt;random/discrete-uniform.h&gt;
-#include &lt;random/beta.h&gt;
-#include &lt;random/gamma.h&gt;
-#include &lt;random/chisquare.h&gt;
-#include &lt;random/F.h&gt;
-
-using namespace ranlib;
-</pre>
-<p>All the generators are inside the namespace <strong>ranlib</strong>, <!-- BZINDEX ranlib --><a name="index00427">
-so a <strong>using namespace ranlib</strong> directive is required (alternately,
-you can write e.g. <code>ranlib::Uniform&lt;&gt;</code>).
-<p>These generators are all class templates.  The first template
-parameter is the number type you want to generate:
-float, double or long double for continuous distributions,
-and integer for discrete distributions.  This parameter
-defaults to <strong><code>float</code></strong> for continuous distributions,
-and <strong><code>unsigned int</code></strong> for discrete distributions.
-<p>The constructors are:
-<pre>Uniform();
-Normal(T mean, T standardDeviation);
-Exponential(T mean);
-DiscreteUniform(T n);   // range is 0 .. n-1
-Beta(T a, T b);
-Gamma(T mean);
-ChiSquare(T df);
-F(T dfn, T dfd);
-</pre>
-<p>where T is the first template parameter (float, double, or long double).
-To obtain a random number, use the method <code>random()</code>.  Here is an
-example of constructing and using a <code>Normal</code> generator:
-<p><pre>#include &lt;random/normal.h&gt;
-
-using namespace ranlib;
-
-void foo()
-{
-    Normal&lt;double&gt; normalGen;
-    double x = normalGen.random();    // x is a normal random number
-}
-</pre>
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>8.2: Note: Parallel random number generators</font></td></tr></table><br><a name="l118"></a>
-
-<p>The generators which Blitz++ provides are not suitable for
-parallel programs.  If you need parallel RNGs, you may find
-<a href="http://www.ncsa.uiuc.edu/Apps/SPRNG">SPRNG</a> useful.
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>8.3: Seeding a random number generator</font></td></tr></table><br><a name="l119"></a>
-
-<p><!-- BZINDEX Random Number Generators!seeding --><a name="index00428">
-<p>You may seed a random number generator using the member function
-<code>seed(unsigned int)</code>.  <!-- BZINDEX seeding a RNG --> By default, all <a name="index00429">
-random number generators
-share the same underlying integer random number generator.  So seeding
-one generator will seed them all.  (Note: you can create generators
-with their own internal state; see the sections below).
-You should generally only seed a random number generator once,
-at the beginning of a program run.  
-<p>Here is an example of seeding with the system clock:
-<p><pre>#include &lt;random/uniform.h&gt;
-#include &lt;time.h&gt;
-
-using namespace ranlib;
-
-int main()
-{
-    // At start of program, seed with the system time so we get
-    // a different stream of random numbers each run.
-    Uniform&lt;float&gt; x;
-    x.seed((unsigned int)time(0));
-
-    // Rest of program
-    ...
-}
-</pre>
-<p>Note: you may be tempted to seed the random number generator
-from a static initializer.  <strong>Don't do it!</strong>  
-Due to an oddity of C++, there is no guarantee
-on the order of static initialization when templates are involved.
-Hence, you may seed the RNG before its constructor is invoked,
-in which case your program will crash.  If you don't know what
-a static initializer is, don't worry -- you're safe!
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>8.4: Detailed description of RNGs</font></td></tr></table><br><a name="l120"></a>
-
-<p><!-- BZINDEX Random Number Generators!details --><a name="index00430">
-<p>There are really two types of RNGs:
-<p><dl>
-<p></p><dt><strong>Integer RNGs</strong><dd> provide uniformly distributed, unsigned
-32 bit integers. <!-- BZINDEX IRNGs --> <!-- BZINDEX Integer RNGs --><a name="index00431">
-<p></p><dt><strong>RNGs</strong><dd> use Integer RNGs to provide other kinds of random
-numbers. 
-</dl>
-<p>By default, the Integer RNG used is a faithful adaptation of
-the Mersenne Twister MT19937 <!-- BZINDEX MersenneTwister --> due to<a name="index00432">
-Matsumoto and Nishimura (see ACM Transactions on Modeling
-and Computer Simulation, Vol. 8, No. 1, January 1998, pp 3-30,
-<a href="http://www.math.keio.ac.jp/~matumoto/emt.html">web page</a>,
-<a href="http://www.acm.org/pubs/citations/journals/tomacs/1998-8-1/p3-matsumoto/">paper</a>).
-This generator has a period of 2<sup>19937</sup>-1
-, passed several stringent statistical
-tests (including the <a href="http://stat.fsu.edu/~geo/diehard.html">Diehard</a> tests), and 
-has speed comparable to other modern generators.
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>8.5: Template parameters</font></td></tr></table><br><a name="l121"></a>
-
-<p>RNGs take three template parameters, all of which have default
-values.  Using the <code>Uniform</code> RNG as an example, the template
-parameters of <code>Uniform&lt;T, IRNG, stateTag&gt;</code> are:
-<p><dl>
-<p></p><dt><strong>T</strong><dd> is the type of random number to generate (one of float, double,
-or long double for continuous distributions; an integer type for
-discrete distributions).  Note that generating double and
-long double RNGs takes longer, because filling the entire mantissa
-with random bits requires several random integers.
-The default parameter for most generators is <code>float</code>.
-<p><p></p><dt><strong>IRNG</strong><dd> is the underlying Integer RNG to use.  The default is
-MersenneTwister.
-<p><p></p><dt><strong>stateTag</strong><dd> is either <code>sharedState</code> or <code>independentState</code>.
-<!-- BZINDEX stateTag (RNGs) --><a name="index00433">
-If <code>sharedState</code>, the IRNG is shared with other generators.
-If <code>independentState</code>, the RNG contains its own IRNG.  The
-default is sharedState.
+<p><li > Compile with <code>gcc -pthread</code>, or <code>CC -mt</code> under Solaris.
+(These options define <code>_REENTRANT</code>, which tells Blitz++ to generate
+thread-safe code).
+<li > Compile with <code>-DBZ_THREADSAFE</code>, or <code>#define BZ_THREADSAFE</code>
+before including any Blitz++ headers.
 <p></dl>
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>8.6: Member functions</font></td></tr></table><br><a name="l122"></a>
-
-<p><!-- BZINDEX Random Number Generators!member functions --><a name="index00434">
-<p>RNGs have these methods:
-<strong><pre>T random();</pre></strong>
-<!-- BZINDEX random() --><a name="index00435">
-Returns a random number.
-<strong><pre>void seed(unsigned int);</pre></strong>
-<!-- BZINDEX seed() --><a name="index00436">
-Seeds the underlying IRNG.  See above for an example of seeding
-with the system timer.
-<p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>8.7: Detailed listing of RNGs</font></td></tr></table><br><a name="l123"></a>
-
-<p><!-- BZINDEX Random Number Generators!list of --><a name="index00437">
-<p>To save space in the below list, template parameters have
-been omitted and only constructors are listed.  The notation
-[a,b] means an interval which includes the endpoints a and b;
-(a,b) is an interval which does not include the endpoints.
-<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>8.7.1: <code>random/uniform.h</code></font></td></tr></table><a name="l124"></a>
-
-<!-- BZINDEX random/uniform.h --><a name="index00438">
-<p><strong><pre>
-Uniform&lt;&gt;()</pre></strong>
-Continuous uniform distribution on [0,1). <!-- BZINDEX Uniform RNG --><a name="index00439">
-<p><strong><pre>UniformClosedOpen&lt;&gt;()</pre></strong>
-Continuous uniform distribution on [0,1).  Same as <code>Uniform&lt;&gt;</code>.
-<!-- BZINDEX UniformClosedOpen RNG --><a name="index00440">
-<p><strong><pre>UniformClosed&lt;&gt;()</pre></strong>
-Continuous uniform distribution on [0,1].
-<!-- BZINDEX UniformClosed RNG --><a name="index00441">
-<p><strong><pre>UniformOpen&lt;&gt;()</pre></strong>
-Continuous uniform distribution on (0,1).
-<!-- BZINDEX UniformOpen RNG --><a name="index00442">
-<p><strong><pre>UniformOpenClosed&lt;&gt;()</pre></strong>
-Continuous uniform distribution on (0,1].
-<!-- BZINDEX UniformOpenClosed RNG --><a name="index00443">
-<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>8.7.2: <code>random/normal.h</code></font></td></tr></table><a name="l125"></a>
-
-<p><strong><pre>
-NormalUnit&lt;&gt;()</pre></strong>
-Continuous normal distribution with mean 0 and variance 1.
-<!-- BZINDEX NormalUnit RNG --><a name="index00444">
-<p><strong><pre>Normal&lt;&gt;(T mean, T standardDeviation)</pre></strong>
-Continuous normal distribution with specified mean and standard 
-deviation.  <!-- BZINDEX Normal RNG --><a name="index00445">
-<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>8.7.3: <code>random/exponential.h</code></font></td></tr></table><a name="l126"></a>
-
-<p><strong><pre>
-ExponentialUnit&lt;&gt;()</pre></strong>
-Continuous exponential distribution with mean 1.
-<!-- BZINDEX ExponentialUnit RNG --><a name="index00446">
-<p><strong><pre>Exponential&lt;&gt;(T mean)</pre></strong>
-Continuous exponential distribution with specified mean.
-<!-- BZINDEX Exponential RNG --><a name="index00447">
-<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>8.7.4: <code>random/beta.h</code></font></td></tr></table><a name="l127"></a>
-
-<p><strong><pre>Beta&lt;&gt;(T a, T b)</pre></strong>
-Beta distribution with parameters a and b.  The mean of the distribution
-is a/(a+b) and its variance
-is ab/((a+b)^2(a+b+1)).
-Use the method <code>setParameters(T a, T b)</code> to change the
-parameters.
-<!-- BZINDEX Beta RNG --><a name="index00448">
-<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>8.7.5: <code>random/chisquare.h</code></font></td></tr></table><a name="l128"></a>
-
-<strong><pre>ChiSquare&lt;&gt;(T df)</pre></strong>
-Chi Square distribution with
-df degrees of freedom.  The parameter df must be positive.  Use the
-method <code>setDF(T df)</code> to change the degrees of freedom.
-<!-- BZINDEX Chi-Square RNG --><a name="index00449">
-<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>8.7.6: <code>random/gamma.h</code></font></td></tr></table><a name="l129"></a>
-
-<p><strong><pre>Gamma&lt;&gt;(T mean)</pre></strong>
-Gamma distribution with specified mean.  The mean must
-be positive.  Use the method <code>setMean(T mean)</code> to
-change the mean.
-<!-- BZINDEX Gamma RNG --><a name="index00450">
-<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>8.7.7: <code>random/F.h</code></font></td></tr></table><a name="l130"></a>
-
-<strong><pre>F&lt;&gt;(T numeratorDF, T denominatorDF)</pre></strong>
-F distribution with numerator and denominator degrees
-of freedom specified.  Both these parameters must be
-positive.  Use <code>setDF(T dfn, T dfd)</code> to change the
-degrees of freedom. 
-<!-- BZINDEX F distribution RNG --><a name="index00451">
-<p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>8.7.8: <code>random/discrete-uniform.h</code></font></td></tr></table><a name="l131"></a>
-
-<p><strong><pre>
-DiscreteUniform&lt;&gt;(T n)</pre></strong>
-Discrete uniform distribution over 0, 1, ..., n-1.
-<!-- BZINDEX DiscreteUniform RNG --><a name="index00452">
+<p>In threadsafe mode, Blitz++ array reference counts are safeguarded
+by a mutex.  By default, pthread mutexes are used.
+If you would prefer a different mutex implementation, add the
+appropriate <code>BZ_MUTEX</code> macros to <code>&lt;blitz/blitz.h&gt;</code> and send them
+to <code>blitz-dev@oonumerics.org</code> for incorporation.
+<p>Blitz++ does not do locking for every array element access; this would
+result in terrible performance.  It is the job of the library
+user to ensure that appropriate synchronization is used.
 <p>
 <p>
 
