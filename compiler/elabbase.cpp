@@ -34,7 +34,7 @@ public:
     typedef typename base_trait<T>::base base;
 
     int zowee() const
-    { return bar(); }  
+    { return this->bar(); }  
 };
 
 int main()
