@@ -4,7 +4,7 @@
 
 BZ_USING_NAMESPACE(blitz)
 
-#ifndef BZ_PARTIAL_SPECIALIZATION
+#ifndef BZ_HAVE_PARTIAL_SPECIALIZATION
 int main() { return 0; }
 #else
 
