@@ -50,8 +50,14 @@ public:
     IndexPlaceholder()
     { }
 
+#ifdef BZ_NEW_EXPRESSION_TEMPLATES
+    IndexPlaceholder(const IndexPlaceholder<N>& x)
+        : ETBase< IndexPlaceholder<N> >(x)
+    { }
+#else
     IndexPlaceholder(const IndexPlaceholder<N>&)
     { }
+#endif
 
     ~IndexPlaceholder()
     { }
@@ -128,7 +134,7 @@ public:
         BZPRECONDITION(0); 
     }
 
-    _bz_bool isUnitStride(int rank) const
+    _bz_bool isUnitStride(int) const
     { 
         BZPRECONDITION(0);
         return false;
@@ -169,14 +175,14 @@ public:
         return _bz_true;
     }
 
-    void prettyPrint(string& str, prettyPrintFormat& format) const
+    void prettyPrint(string& str, prettyPrintFormat&) const
     {
         // NEEDS_WORK-- do real formatting for reductions
         str += "index-expr[NEEDS_WORK]";
     }
 
     template<class T_shape>
-    _bz_bool shapeCheck(const T_shape& shape) const
+    _bz_bool shapeCheck(const T_shape&) const
     {
         return _bz_true;
     }
