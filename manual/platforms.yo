@@ -47,14 +47,21 @@ url(http://developer.intel.com/design/perftool/icl24/icl24wht.htm)(http://develo
 bzsubsect(gcc)
 
 bzindex(gcc)
-gcc is a free GNU C++ compiler.  It is a fast-moving version of gcc.
-It compiles Blitz++ reliably.
+gcc (g++) is a free GNU C++ compiler.  It compiles Blitz++ reliably,
+in fact most Blitz++ development work is done with tt(g++).
 
 gcc may be downloaded from 
 url(http://gcc.cygnus.com/)(http://gcc.cygnus.com/).
 
 If you are using gcc under Solaris, SunOS, or OSF/1, please see the
 README.binutils file included in the distribution.
+
+bzsubsect(Metrowerks)
+
+bzindex(Metrowerks)
+
+Metroworks is sort-of supported; see the platforms web page
+and the mailing lists for more information.
 
 bzsubsect(DECcxx)
 
