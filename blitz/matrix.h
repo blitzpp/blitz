@@ -23,6 +23,10 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2002/03/06 16:30:24  patricg
+ *
+ * data_ replaced by this->data_ everywhere
+ *
  * Revision 1.2  2001/01/24 20:22:49  tveldhui
  * Updated copyright date in headers.
  *
@@ -162,12 +166,12 @@ public:
 
     T_numtype           operator()(unsigned i, unsigned j) const
     {
-        return structure_.get(data_, i, j);
+        return structure_.get(this->data_, i, j);
     }
 
     T_numtype& _bz_restrict operator()(unsigned i, unsigned j)
     {
-        return structure_.get(data_, i, j);
+        return structure_.get(this->data_, i, j);
     }
 
     // T_matrix      operator()(Range,Range);
