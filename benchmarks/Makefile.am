@@ -12,24 +12,35 @@ loop4.cpp loop4f.f loop4f90.f90 loopstruct.cpp looptest.cpp makelogo.cpp \
 makeloops.cpp qcd.txt quinlan.cpp stenciln.cpp tiny3.cpp
 
 
-AM_CXXFLAGS = -I$(top_srcdir) @CXXF90FLAG@ @CXXFLAGS@ @CXX_OPTIMIZE_FLAGS@ \
-	@CXXFFLAGS@ 
-
-F77FLAGS = @F77_OPTIMIZE_FLAGS@
-F77COMPILE = $(F77) $(AM_FFLAGS) $(FFLAGS) $(F77FLAGS)
+AM_CXXFLAGS = -I$(top_srcdir) @CXXFLAGS@ @CXX_OPTIMIZE_FLAGS@ @CXXFFLAGS@ @CXXFCFLAG@
+AM_FFLAGS = @F77_OPTIMIZE_FLAGS@
 LIBS = -L$(top_srcdir)/lib -lblitz -lm @BLASLIB@ @FORTLIBS@ @CXX_LIBS@
 
 if F90_COMPILER
 
-F90FLAGS = @F90_OPTIMIZE_FLAGS@
+F90COMPILE = $(FC) $(FCFLAGS) $(FCFLAGS_f90) @FC_OPTIMIZE_FLAGS@ 
+LTF90COMPILE = $(LIBTOOL) --tag=F77 --mode=compile $(FC) $(FCFLAGS) $(FCFLAGS_f90) \
+	@FC_OPTIMIZE_FLAGS@
 
-F90COMPILE = $(F90) $(AM_FFLAGS) $(FFLAGS) $(F90FLAGS)
+SUFFIXES = .f90.f .f90 .lo .obj
 
-%.o : %f90.f
+f90.f.o:
 	$(F90COMPILE) -c -o $@ $<
 
-%.o : %.f90
+.f90.o: 
 	$(F90COMPILE) -c -o $@ $<
+
+f90.f.obj:
+	$(F90COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+.f90.obj: 
+	$(F90COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+f90.f.lo:
+	$(LTF90COMPILE) -c -o $@ $<
+
+.f90.lo: 
+	$(LTF90COMPILE) -c -o $@ $<
 
 endif
 
@@ -189,6 +200,6 @@ endif
 ###########################################################################
 
 clean-local:
-	-rm -rf *.o *.ii *.int.c *.s work.pc* cxx_repository ti_files \
+	-rm -rf *.o *.ii *.int.c *.s work.pc* cxx_repository ti_files core* \
 		$(BENCHMARKS) $(COMPILE_TIME_BENCHMARKS) 
 
