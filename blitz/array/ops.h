@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/array/ops.h  Array operators
  *
@@ -23,13 +24,8 @@
 #ifndef BZ_ARRAY_OPS_H
 #define BZ_ARRAY_OPS_H
 
-#ifndef BZ_OPS_H
- #include <blitz/ops.h>
-#endif
-
-#ifndef BZ_NEWET_MACROS_H
- #include <blitz/array/newet-macros.h>
-#endif
+#include <blitz/ops.h>
+#include <blitz/array/newet-macros.h>
 
 BZ_NAMESPACE(blitz)
     
@@ -67,6 +63,38 @@ BZ_DECLARE_ARRAY_ET_BINARY(operator||, LogicalOr)
 
 BZ_DECLARE_ARRAY_ET_BINARY(min, _bz_Min)
 BZ_DECLARE_ARRAY_ET_BINARY(max, _bz_Max)
+
+
+#define BZ_DECLARE_ARRAY_ET_SCALAR_OPS(sca)                            \
+                                                                       \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator+,  Add, sca)                \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator-,  Subtract, sca)           \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator*,  Multiply, sca)           \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator/,  Divide, sca)             \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator%,  Modulo, sca)             \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator^,  BitwiseXor, sca)         \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator&,  BitwiseAnd, sca)         \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator|,  BitwiseOr, sca)          \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator>,  Greater, sca)            \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator<,  Less, sca)               \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator>=, GreaterOrEqual, sca)     \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator<=, LessOrEqual, sca)        \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator==, Equal, sca)              \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator!=, NotEqual, sca)           \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator&&, LogicalAnd, sca)         \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator||, LogicalOr, sca)          \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(min, _bz_Min, sca)                   \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(max, _bz_Max, sca)                   \
+
+    
+BZ_DECLARE_ARRAY_ET_SCALAR_OPS(int)
+BZ_DECLARE_ARRAY_ET_SCALAR_OPS(float)
+BZ_DECLARE_ARRAY_ET_SCALAR_OPS(double)
+BZ_DECLARE_ARRAY_ET_SCALAR_OPS(long double)
+#ifdef BZ_HAVE_COMPLEX
+BZ_DECLARE_ARRAY_ET_SCALAR_OPS(complex<float>)
+BZ_DECLARE_ARRAY_ET_SCALAR_OPS(complex<double>)
+#endif
 
 
 BZ_NAMESPACE_END
