@@ -1,0 +1,213 @@
+\input texinfo @c -*-texinfo-*-
+@c %**start of header
+@setfilename blitz.info
+@include version.texi
+@settitle Blitz++
+@setchapternewpage odd
+@setcontentsaftertitlepage
+@finalout
+@iftex
+@afourpaper
+@end iftex
+@c %**end of header
+
+@macro faq{question}
+@strong{@bullet{} \question\}
+@end macro
+
+@c kludge workaround from Karl Berry for math in @subsection
+@ifnottex
+@macro nabla
+\\nabla
+@end macro
+@macro times
+\\times
+@end macro
+@macro cdot
+\\cdot
+@end macro
+@end ifnottex
+
+@titlepage
+@title Blitz++ User's Guide
+@subtitle A C++ class library for scientific computing
+@subtitle for version @value{VERSION}, @value{UPDATED}
+@author Todd Veldhuizen
+@page
+@vskip 0pt plus 1filll
+@include copyright.texi
+@end titlepage
+
+@summarycontents
+@contents
+@page
+
+@ifnottex
+@node Top, , , (DIR)
+@top Top
+@end ifnottex
+
+@menu
+* Introduction::                  Introduction
+* Arrays::                        The Array class
+* Array Expressions::             Array Expressions
+* Stencils::                      Stencils
+* Customised Arrays::             Multicomponent, complex, and user type Arrays
+* Indirection::                   Indirect adressing
+* TinyVector::                    The TinyVector class
+* Parallel Computing::            Parallel Computing
+* Random Number Generators::      Random Number Generators
+* Numeric properties::            Numeric properties functions
+* FAQ::                           Frequently Asked Questions, with answers
+* Keyword Index::                 Keyword Index
+* Concept Index::                 Concept Index
+
+@detailmenu
+ --- The Detailed Node Listing ---
+
+General considerations
+
+* about::                         About this document
+* platforms::                     Supported platforms
+* download::                      Where to download Blitz++?
+* install::                       How to install Blitz++?
+* compiling::                     How to compile a program that uses Blitz++?
+* legal::                         License considerations
+* help::                          How to get help?
+
+The Blitz++ Array class
+
+* Array intro::                   Getting started
+* Array types::                   Public types declaration for Array
+* Array ctors::                   Array constructors
+* Array slicing::                 How to access the elements of an Array?
+* Slicing combo::                 The slicing machinery
+* Array debug::                   How to debug a program that uses Blitz++?
+* Array members::                 Array member functions
+* Array globals::                 Array global functions
+* Array I/O::                     Inputting and outputting Array's
+* Array storage::                 The storage of Array
+
+Writing code with the Blitz++ Array class
+
+* Array expressions::             Creating expressions with Array's
+* Index placeholders::            Array indices functionality
+* Math functions 1::              Single-argument math functions on Array's
+* Math functions 2::              Two-argument math functions on Array's
+* User et::                       Creating your math functions on Array's
+* Where expr::                    The where statement 
+
+More feaures of the Array class
+
+* Array multi::                   Multicomponent Array's
+* Array usertype::                Array's of your own type
+@end detailmenu
+@end menu
+
+@node Introduction
+@chapter Introduction
+@menu
+* about::                         About this document
+* platforms::                     Supported platforms
+* download::                      Where to download Blitz++?
+* install::                       How to install Blitz++?
+* compiling::                     How to compile a program that uses Blitz++
+* legal::                         License considerations
+* help::                          How to get help?
+@end menu
+@include about.texi
+@include platforms.texi
+@include download.texi
+@include install.texi
+@include compiling.texi
+@include legal.texi
+@include help.texi
+    
+@node Arrays
+@chapter Arrays
+@cindex Array
+@findex Array
+@menu
+* Array intro::                   Getting started
+* Array types::                   Public types declaration for Array
+* Array ctors::                   Array constructors
+* Array slicing::                 How to access the elements of an Array?
+* Slicing combo::                 The slicing machinery
+* Array debug::                   How to debug a program that uses Blitz++?
+* Array members::                 Array member functions
+* Array globals::                 Array global functions
+* Array I/O::                     Inputting and outputting Array's
+* Array storage::                 The storage of Array
+@end menu
+@include arrays-intro.texi
+@include arrays-types.texi
+@include arrays-ctors.texi
+@include arrays-slicing.texi
+@include arrays-debug.texi
+@include arrays-members.texi
+@include arrays-globals.texi
+@include arrays-io.texi
+@include arrays-storage.texi
+
+@node Array Expressions
+@chapter Array Expressions
+@menu
+* Array expressions::             Creating expressions with Array's
+* Index placeholders::            Array indices functionality
+* Math functions 1::              Single-argument math functions on Array's
+* Math functions 2::              Two-argument math functions on Array's
+* User et::                       Creating your math functions on Array's
+* Where expr::                    The where statement
+@end menu
+@include arrays-expr.texi
+
+@node Stencils
+@chapter Stencils
+@include arrays-stencils.texi
+
+@node Customised Arrays
+@chapter Multicomponent, complex, and user type arrays
+@menu
+* Array multi::                   Multicomponent Array's
+* Array usertype::                Array's of your own type
+@end menu
+@include arrays-multi.texi
+@include arrays-usertype.texi
+
+@node Indirection
+@chapter Indirection
+@include arrays-indirect.texi
+
+@node TinyVector
+@chapter TinyVector
+@include tinyvector.texi
+
+@node Parallel Computing
+@chapter Parallel Computing with Blitz++
+@include parallel.texi
+
+@node Random Number Generators
+@chapter Random Number Generators
+@include random.texi
+
+@node Numeric properties
+@chapter Numeric properties
+@include numinquire.texi
+
+@node FAQ
+@chapter Frequently Asked Questions
+@include faq.texi
+
+@node Keyword Index
+@unnumbered Blitz Keyword Index
+@printindex fn
+
+@node Concept Index
+@unnumbered Concept Index
+@printindex cp
+
+@c ---------------------------------------------------------------------
+@c Epilogue
+@c ---------------------------------------------------------------------
+
+@bye
