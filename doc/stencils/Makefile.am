@@ -15,23 +15,27 @@
 EXTRA_DIST = dump-stencil.cpp
 
 INCLUDES = -I$(top_srcdir) -I$(top_builddir)
-LDADD = -L$(top_builddir)/lib/.libs -lblitz -lm
+LDADD = -L$(top_builddir)/lib -lblitz -lm
 COMPILE = $(CXX) $(CXXFLAGS) $(INCLUDES) 
 
+LTCXXCOMPILE = $(LIBTOOL) --mode=link $(CXX) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CXXFLAGS) $(CXXFLAGS)
+
 %2D.texi :
-	$(COMPILE) "-Dstenciltoapply=$(patsubst %.texi,%,$@)(A)" \
+	$(LTCXXCOMPILE) "-Dstenciltoapply=$(patsubst %.texi,%,$@)(A)" \
 		-o $(patsubst %.cpp,%,$<) $< $(LDADD)
 	./$(patsubst %.cpp,%,$<) > $@  2>&1
 	-rm -f $(patsubst %.cpp,%,$<)
 
 %2D4.texi :
-	$(COMPILE) "-Dstenciltoapply=$(patsubst %.texi,%,$@)(A)" \
+	$(LTCXXCOMPILE) "-Dstenciltoapply=$(patsubst %.texi,%,$@)(A)" \
 		-o $(patsubst %.cpp,%,$<) $< $(LDADD)
 	./$(patsubst %.cpp,%,$<) > $@  2>&1
 	-rm -f $(patsubst %.cpp,%,$<)
 
 %.texi :
-	$(COMPILE) "-Dstenciltoapply=$(patsubst %.texi,%,$@)(A,1)" \
+	$(LTCXXCOMPILE) "-Dstenciltoapply=$(patsubst %.texi,%,$@)(A,1)" \
 		-o $(patsubst %.cpp,%,$<) $< $(LDADD)
 	./$(patsubst %.cpp,%,$<) > $@  2>&1
 	-rm -f $(patsubst %.cpp,%,$<)
