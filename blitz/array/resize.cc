@@ -23,6 +23,11 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2001/02/11 15:43:39  tveldhui
+ * Additions from Julian Cummings:
+ *  - StridedDomain class
+ *  - more versions of resizeAndPreserve
+ *
  * Revision 1.2  2001/01/25 00:25:55  tveldhui
  * Ensured that source files have cvs logs.
  *
@@ -467,18 +472,278 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
     }
 }
 
+/* Added by Julian Cummings */
+template<class T_numtype, int N_rank>
+void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
+    int length2, int length3, int length4, int length5, int length6)
+{
+    BZPRECONDITION((length0 > 0) && (length1 > 0) && (length2 > 0)
+        && (length3 > 0) && (length4 > 0) && (length5 > 0) && (length6 > 0));
+    BZPRECONDITION(N_rank == 7);
 
-// NEEDS_WORK: resizeAndPreserve for N_rank = 7..11
+    if ((length0 != length_[0]) || (length1 != length_[1])
+        || (length2 != length_[2]) || (length3 != length_[3])
+        || (length4 != length_[4]) || (length5 != length_[5])
+        || (length6 != length_[6]))
+    {
+        T_array B(base(), BZ_BLITZ_SCOPE(shape)(length0, length1, length2,
+            length3, length4, length5, length6), storage_);
+
+        if (numElements())
+        {
+            Range overlap0 = Range(fromStart, minmax::min(B.ubound(0), 
+               ubound(0)));
+            Range overlap1 = Range(fromStart, minmax::min(B.ubound(1), 
+               ubound(1)));
+            Range overlap2 = Range(fromStart, minmax::min(B.ubound(2), 
+               ubound(2)));
+            Range overlap3 = Range(fromStart, minmax::min(B.ubound(3), 
+               ubound(3)));
+            Range overlap4 = Range(fromStart, minmax::min(B.ubound(4), 
+               ubound(4)));
+            Range overlap5 = Range(fromStart, minmax::min(B.ubound(5), 
+               ubound(5)));
+            Range overlap6 = Range(fromStart, minmax::min(B.ubound(6), 
+               ubound(6)));
+            B(overlap0, overlap1, overlap2, overlap3, overlap4, overlap5,
+              overlap6)
+                = (*this)(overlap0, overlap1, overlap2, overlap3, overlap4,
+                overlap5, overlap6);
+        }
+        reference(B);
+    }
+}
+
+/* Added by Julian Cummings */
+template<class T_numtype, int N_rank>
+void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
+    int length2, int length3, int length4, int length5, int length6,
+    int length7)
+{
+    BZPRECONDITION((length0 > 0) && (length1 > 0) && (length2 > 0)
+        && (length3 > 0) && (length4 > 0) && (length5 > 0) && (length6 > 0)
+        && (length7 > 0));
+    BZPRECONDITION(N_rank == 8);
+
+    if ((length0 != length_[0]) || (length1 != length_[1])
+        || (length2 != length_[2]) || (length3 != length_[3])
+        || (length4 != length_[4]) || (length5 != length_[5])
+        || (length6 != length_[6]) || (length7 != length_[7]))
+    {
+        T_array B(base(), BZ_BLITZ_SCOPE(shape)(length0, length1, length2,
+            length3, length4, length5, length6, length7), storage_);
+
+        if (numElements())
+        {
+            Range overlap0 = Range(fromStart, minmax::min(B.ubound(0), 
+               ubound(0)));
+            Range overlap1 = Range(fromStart, minmax::min(B.ubound(1), 
+               ubound(1)));
+            Range overlap2 = Range(fromStart, minmax::min(B.ubound(2), 
+               ubound(2)));
+            Range overlap3 = Range(fromStart, minmax::min(B.ubound(3), 
+               ubound(3)));
+            Range overlap4 = Range(fromStart, minmax::min(B.ubound(4), 
+               ubound(4)));
+            Range overlap5 = Range(fromStart, minmax::min(B.ubound(5), 
+               ubound(5)));
+            Range overlap6 = Range(fromStart, minmax::min(B.ubound(6), 
+               ubound(6)));
+            Range overlap7 = Range(fromStart, minmax::min(B.ubound(7), 
+               ubound(7)));
+            B(overlap0, overlap1, overlap2, overlap3, overlap4, overlap5,
+              overlap6, overlap7)
+                = (*this)(overlap0, overlap1, overlap2, overlap3, overlap4,
+                overlap5, overlap6, overlap7);
+        }
+        reference(B);
+    }
+}
+
+/* Added by Julian Cummings */
+template<class T_numtype, int N_rank>
+void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
+    int length2, int length3, int length4, int length5, int length6,
+    int length7, int length8)
+{
+    BZPRECONDITION((length0 > 0) && (length1 > 0) && (length2 > 0)
+        && (length3 > 0) && (length4 > 0) && (length5 > 0) && (length6 > 0)
+        && (length7 > 0) && (length8 > 0));
+    BZPRECONDITION(N_rank == 9);
+
+    if ((length0 != length_[0]) || (length1 != length_[1])
+        || (length2 != length_[2]) || (length3 != length_[3])
+        || (length4 != length_[4]) || (length5 != length_[5])
+        || (length6 != length_[6]) || (length7 != length_[7])
+        || (length8 != length_[8]))
+    {
+        T_array B(base(), BZ_BLITZ_SCOPE(shape)(length0, length1, length2,
+            length3, length4, length5, length6, length7, length8), storage_);
+
+        if (numElements())
+        {
+            Range overlap0 = Range(fromStart, minmax::min(B.ubound(0), 
+               ubound(0)));
+            Range overlap1 = Range(fromStart, minmax::min(B.ubound(1), 
+               ubound(1)));
+            Range overlap2 = Range(fromStart, minmax::min(B.ubound(2), 
+               ubound(2)));
+            Range overlap3 = Range(fromStart, minmax::min(B.ubound(3), 
+               ubound(3)));
+            Range overlap4 = Range(fromStart, minmax::min(B.ubound(4), 
+               ubound(4)));
+            Range overlap5 = Range(fromStart, minmax::min(B.ubound(5), 
+               ubound(5)));
+            Range overlap6 = Range(fromStart, minmax::min(B.ubound(6), 
+               ubound(6)));
+            Range overlap7 = Range(fromStart, minmax::min(B.ubound(7), 
+               ubound(7)));
+            Range overlap8 = Range(fromStart, minmax::min(B.ubound(8), 
+               ubound(8)));
+            B(overlap0, overlap1, overlap2, overlap3, overlap4, overlap5,
+              overlap6, overlap7, overlap8)
+                = (*this)(overlap0, overlap1, overlap2, overlap3, overlap4,
+                overlap5, overlap6, overlap7, overlap8);
+        }
+        reference(B);
+    }
+}
+
+/* Added by Julian Cummings */
+template<class T_numtype, int N_rank>
+void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
+    int length2, int length3, int length4, int length5, int length6,
+    int length7, int length8, int length9)
+{
+    BZPRECONDITION((length0 > 0) && (length1 > 0) && (length2 > 0)
+        && (length3 > 0) && (length4 > 0) && (length5 > 0) && (length6 > 0)
+        && (length7 > 0) && (length8 > 0) && (length9 > 0));
+    BZPRECONDITION(N_rank == 10);
+
+    if ((length0 != length_[0]) || (length1 != length_[1])
+        || (length2 != length_[2]) || (length3 != length_[3])
+        || (length4 != length_[4]) || (length5 != length_[5])
+        || (length6 != length_[6]) || (length7 != length_[7])
+        || (length8 != length_[8]) || (length9 != length_[9]))
+    {
+        T_array B(base(), BZ_BLITZ_SCOPE(shape)(length0, length1, length2,
+            length3, length4, length5, length6, length7, length8, length9),
+            storage_);
+
+        if (numElements())
+        {
+            Range overlap0 = Range(fromStart, minmax::min(B.ubound(0), 
+               ubound(0)));
+            Range overlap1 = Range(fromStart, minmax::min(B.ubound(1), 
+               ubound(1)));
+            Range overlap2 = Range(fromStart, minmax::min(B.ubound(2), 
+               ubound(2)));
+            Range overlap3 = Range(fromStart, minmax::min(B.ubound(3), 
+               ubound(3)));
+            Range overlap4 = Range(fromStart, minmax::min(B.ubound(4), 
+               ubound(4)));
+            Range overlap5 = Range(fromStart, minmax::min(B.ubound(5), 
+               ubound(5)));
+            Range overlap6 = Range(fromStart, minmax::min(B.ubound(6), 
+               ubound(6)));
+            Range overlap7 = Range(fromStart, minmax::min(B.ubound(7), 
+               ubound(7)));
+            Range overlap8 = Range(fromStart, minmax::min(B.ubound(8), 
+               ubound(8)));
+            Range overlap9 = Range(fromStart, minmax::min(B.ubound(9), 
+               ubound(9)));
+            B(overlap0, overlap1, overlap2, overlap3, overlap4, overlap5,
+              overlap6, overlap7, overlap8, overlap9)
+                = (*this)(overlap0, overlap1, overlap2, overlap3, overlap4,
+                overlap5, overlap6, overlap7, overlap8, overlap9);
+        }
+        reference(B);
+    }
+}
+
+/* Added by Julian Cummings */
+template<class T_numtype, int N_rank>
+void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
+    int length2, int length3, int length4, int length5, int length6,
+    int length7, int length8, int length9, int length10)
+{
+    BZPRECONDITION((length0 > 0) && (length1 > 0) && (length2 > 0)
+        && (length3 > 0) && (length4 > 0) && (length5 > 0) && (length6 > 0)
+        && (length7 > 0) && (length8 > 0) && (length9 > 0) && (length10 > 0));
+    BZPRECONDITION(N_rank == 11);
+
+    if ((length0 != length_[0]) || (length1 != length_[1])
+        || (length2 != length_[2]) || (length3 != length_[3])
+        || (length4 != length_[4]) || (length5 != length_[5])
+        || (length6 != length_[6]) || (length7 != length_[7])
+        || (length8 != length_[8]) || (length9 != length_[9])
+        || (length10 != length_[10]))
+    {
+        T_array B(base(), BZ_BLITZ_SCOPE(shape)(length0, length1, length2,
+            length3, length4, length5, length6, length7, length8, length9,
+            length10), storage_);
+
+        if (numElements())
+        {
+            Range overlap0 = Range(fromStart, minmax::min(B.ubound(0), 
+               ubound(0)));
+            Range overlap1 = Range(fromStart, minmax::min(B.ubound(1), 
+               ubound(1)));
+            Range overlap2 = Range(fromStart, minmax::min(B.ubound(2), 
+               ubound(2)));
+            Range overlap3 = Range(fromStart, minmax::min(B.ubound(3), 
+               ubound(3)));
+            Range overlap4 = Range(fromStart, minmax::min(B.ubound(4), 
+               ubound(4)));
+            Range overlap5 = Range(fromStart, minmax::min(B.ubound(5), 
+               ubound(5)));
+            Range overlap6 = Range(fromStart, minmax::min(B.ubound(6), 
+               ubound(6)));
+            Range overlap7 = Range(fromStart, minmax::min(B.ubound(7), 
+               ubound(7)));
+            Range overlap8 = Range(fromStart, minmax::min(B.ubound(8), 
+               ubound(8)));
+            Range overlap9 = Range(fromStart, minmax::min(B.ubound(9), 
+               ubound(9)));
+            Range overlap10 = Range(fromStart, minmax::min(B.ubound(10), 
+               ubound(10)));
+        }
+        reference(B);
+    }
+}
 
 template<class T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(const TinyVector<int,N_rank>& extent)
 {
-// NEEDS_WORK
+// NEEDS_WORK -- don't resize if unnecessary
 //    BZPRECONDITION(all(extent > 0));
 //    if (any(extent != length_))
 //    {
         length_ = extent;
         setupStorage(N_rank);
+//    }
+}
+
+/* Added by Julian Cummings */
+template<class T_numtype, int N_rank>
+void Array<T_numtype, N_rank>::resizeAndPreserve(
+    const TinyVector<int,N_rank>& extent)
+{
+// NEEDS_WORK -- don't resize if unnecessary
+//    BZPRECONDITION(all(extent > 0));
+//    if (any(extent != length_))
+//    {
+        T_array B(base(), extent, storage_);
+
+        if (numElements())
+        {
+          TinyVector<int,N_rank> ub;
+          for (d=0; d < N_rank; ++d)
+            ub(d) = minmax::min(B.ubound(d),ubound(d));
+          RectDomain<N_rank> overlap(lbound(),ub);
+          B(overlap) = (*this)(overlap);
+        }
+        reference(B);
 //    }
 }
 

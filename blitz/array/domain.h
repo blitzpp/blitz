@@ -23,6 +23,11 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2001/02/11 15:43:39  tveldhui
+ * Additions from Julian Cummings:
+ *  - StridedDomain class
+ *  - more versions of resizeAndPreserve
+ *
  * Revision 1.2  2001/01/25 00:25:55  tveldhui
  * Ensured that source files have cvs logs.
  *
@@ -101,6 +106,73 @@ public:
 private:
     TinyVector<int,N_rank> lbound_, ubound_;
 };
+
+/*
+ * StridedDomain added by Julian Cummings
+ */
+template<int N_rank>
+class StridedDomain {
+
+public:
+    StridedDomain(const TinyVector<int,N_rank>& lbound,
+        const TinyVector<int,N_rank>& ubound,
+        const TinyVector<int,N_rank>& stride)
+      : lbound_(lbound), ubound_(ubound), stride_(stride)
+    { }
+
+    // NEEDS_WORK: better constructors
+    // StridedDomain(Range, Range, ...)
+    // StridedDomain with any combination of Range and int
+
+    const TinyVector<int,N_rank>& lbound() const
+    { return lbound_; }
+
+    int lbound(int i) const
+    { return lbound_(i); }
+
+    const TinyVector<int,N_rank>& ubound() const
+    { return ubound_; }
+
+    int ubound(int i) const
+    { return ubound_(i); }
+
+    const TinyVector<int,N_rank>& stride() const
+    { return stride_; }
+
+    int stride(int i) const
+    { return stride_(i); }
+
+    Range operator[](int rank) const
+    { return Range(lbound_(rank), ubound_(rank), stride_(rank)); }
+
+    void shrink(int amount)
+    {
+        lbound_ += amount * stride_;
+        ubound_ -= amount * stride_;
+    }
+
+    void shrink(int dim, int amount)
+    {
+        lbound_(dim) += amount * stride_(dim);
+        ubound_(dim) -= amount * stride_(dim);
+    }
+
+    void expand(int amount)
+    {
+        lbound_ -= amount * stride_;
+        ubound_ += amount * stride_;
+    }
+
+    void expand(int dim, int amount)
+    {
+        lbound_(dim) -= amount * stride_(dim);
+        ubound_(dim) += amount * stride_(dim);
+    }
+
+private:
+    TinyVector<int,N_rank> lbound_, ubound_, stride_;
+};
+
 
 template<int N_rank>
 inline RectDomain<N_rank> strip(const TinyVector<int,N_rank>& startPosition,

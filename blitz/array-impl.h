@@ -23,6 +23,11 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.2  2001/02/11 15:43:39  tveldhui
+ * Additions from Julian Cummings:
+ *  - StridedDomain class
+ *  - more versions of resizeAndPreserve
+ *
  * Revision 1.1  2001/01/26 18:30:50  tveldhui
  * More source code reorganization to reduce compile times.
  *
@@ -828,6 +833,13 @@ public:
 
     Array(Array<T_numtype, N_rank>& array, 
         const RectDomain<N_rank>& subdomain)
+    {
+        constructSubarray(array, subdomain);
+    }
+
+    /* Constructor added by Julian Cummings */
+    Array(Array<T_numtype, N_rank>& array, 
+        const StridedDomain<N_rank>& subdomain)
     {
         constructSubarray(array, subdomain);
     }
@@ -1838,6 +1850,12 @@ public:
     { return const_cast<T_array&>(*this); }
 
     T_array operator()(const RectDomain<N_rank>& subdomain) const
+    {
+        return T_array(noConst(), subdomain);
+    }
+
+    /* Operator added by Julian Cummings */
+    T_array operator()(const StridedDomain<N_rank>& subdomain) const
     {
         return T_array(noConst(), subdomain);
     }

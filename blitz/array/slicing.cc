@@ -23,6 +23,11 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2001/02/11 15:43:39  tveldhui
+ * Additions from Julian Cummings:
+ *  - StridedDomain class
+ *  - more versions of resizeAndPreserve
+ *
  * Revision 1.2  2001/01/25 00:25:55  tveldhui
  * Ensured that source files have cvs logs.
  *
@@ -45,6 +50,15 @@ BZ_NAMESPACE(blitz)
 template<class P_numtype, int N_rank>
 void Array<P_numtype, N_rank>::constructSubarray(
     Array<T_numtype, N_rank>& array, const RectDomain<N_rank>& subdomain)
+{
+    reference(array);
+    for (int i=0; i < N_rank; ++i)
+        slice(i, subdomain[i]);
+}
+
+template<class P_numtype, int N_rank>
+void Array<P_numtype, N_rank>::constructSubarray(
+    Array<T_numtype, N_rank>& array, const StridedDomain<N_rank>& subdomain)
 {
     reference(array);
     for (int i=0; i < N_rank; ++i)
