@@ -1,8 +1,6 @@
 /***************************************************************************
  * blitz/array/stencils.cc  Apply stencils to arrays
  *
- * $Id$
- *
  * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
@@ -21,16 +19,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.3  2001/01/26 19:37:38  tveldhui
- * Incorporated 1D stencil fix from Derrick Bass.
- *
- * Revision 1.2  2001/01/25 00:25:55  tveldhui
- * Ensured that source files have cvs logs.
- *
- */
-
+ ****************************************************************************/
 #ifndef BZ_ARRAYSTENCILS_CC
 #define BZ_ARRAYSTENCILS_CC
 

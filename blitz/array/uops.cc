@@ -1,8 +1,6 @@
 /***************************************************************************
  * blitz/arrayuops.cc	Expression templates for arrays, unary functions
  *
- * $Id$
- *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
@@ -19,16 +17,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.2  2001/01/26 20:11:25  tveldhui
- * Changed isnan to blitz_isnan, to avoid conflicts with implementations
- * that define isnan as a preprocessor macro.
- *
- * Revision 1.1.1.1  2000/06/19 12:26:14  tveldhui
- * Imported sources
- *
- */ 
+ ****************************************************************************/ 
 
 // Generated source file.  Do not edit. 
 // genarruops.cpp Dec  5 1998 17:08:40

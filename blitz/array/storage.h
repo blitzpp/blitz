@@ -1,8 +1,6 @@
 /***************************************************************************
  * blitz/array/storage.h  Memory layout of Arrays.
  *
- * $Id$
- *
  * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
@@ -21,35 +19,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.7  2002/08/30 22:10:04  jcumming
- * Added explicit assignment operator for GeneralArrayStorage class.
- *
- * Revision 1.6  2002/06/28 01:42:24  jcumming
- * Use _bz_bool and _bz_true where appropriate to avoid int/bool conversions.
- *
- * Revision 1.5  2002/05/27 19:45:43  jcumming
- * Removed use of this->.  Types and members from templated base class are now
- * declared in scope of derived classes.
- *
- * Revision 1.4  2002/03/06 17:08:36  patricg
- *
- * in
- * template<int N_rank>
- * class FortranArray : public GeneralArrayStorage<N_rank> {} and
- * template<int N_rank>
- * class ColumnMajorArray : public GeneralArrayStorage<N_rank> {}
- * ordering_, ascendingFlag_, base_ replaced by this->ordering_,
- * this->ascendingFlag_, this->base_
- * noInitializeFlag() replaced by
- * GeneralArrayStorage<N_rank>::noInitializeFlag()
- *
- * Revision 1.3  2001/01/25 00:25:56  tveldhui
- * Ensured that source files have cvs logs.
- *
- */
-
+ ****************************************************************************/
 #ifndef BZ_ARRAY_STORAGE_H
 #define BZ_ARRAY_STORAGE_H
 

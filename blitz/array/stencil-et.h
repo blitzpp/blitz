@@ -1,8 +1,6 @@
 /***************************************************************************
  * blitz/array/stencil-et.h  Expression-template-capabale stencils
  *
- * $Id$
- *
  * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
@@ -21,28 +19,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.5  2002/05/27 19:43:30  jcumming
- * Removed use of this->.  iter_ is now declared in scope of derived classes.
- *
- * Revision 1.4  2002/04/17 16:56:42  patricg
- *
- * replaced T_numtype with P_numtype in every macros definitions. Fixed a
- * compilation problem with aCC/HP in the stencils examples (stencils2.cpp,
- * stencil3.cpp, stencilet.cpp) in the directory examples.
- * Suggested by Robert W. Techentin <techentin.robert@mayo.edu>
- *
- * Revision 1.3  2002/03/21 15:03:01  patricg
- *
- * replaced iter_ by this->iter_ in derived template classes of StencilExpr
- * template class
- *
- * Revision 1.2  2001/01/25 00:25:55  tveldhui
- * Ensured that source files have cvs logs.
- *
- */
-
+ ****************************************************************************/
 #ifndef BZ_ARRAY_STENCIL_ET_H
 #define BZ_ARRAY_STENCIL_ET_H
 

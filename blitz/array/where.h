@@ -1,8 +1,6 @@
 /***************************************************************************
  * blitz/array/where.h  where(X,Y,Z) operator for array expressions
  *
- * $Id$
- *
  * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
@@ -21,19 +19,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.3  2002/03/06 17:12:26  patricg
- *
- * minmax::max(minmax::max(stride1,stride2),stride3)
- * replaced by
- * stride1>(stride2=(stride2>stride3?stride2:stride3))?stride1:stride2
- *
- * Revision 1.2  2001/01/25 00:25:56  tveldhui
- * Ensured that source files have cvs logs.
- *
- */
-
+ ****************************************************************************/
 #ifndef BZ_ARRAYWHERE_H
 #define BZ_ARRAYWHERE_H
 
