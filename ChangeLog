@@ -2,11 +2,11 @@
 
 2004-10-26  Patrick Guio  <patrick.guio@ii.uib.no>
 
-	* doc/Makefile.am: Assigned variable docdir the value $(prefix)/doc/blitz 
-	in order to gather blitz documentation in a subdirectory of the generic
-	doc directory.
+	* doc/Makefile.am: Assigned variable docdir the value
+	$(prefix)/doc/$(PACKAGE) in order to gather blitz documentation in a
+	subdirectory of the generic doc directory.
 	* doc/doxygen/Makefile.am: New variable docdir assigned the value
-	$(prefix)/doc/blitz/doxygen. Used when installing doxygen-generated 
+	$(prefix)/doc/$(PACKAGE)/doxygen. Used when installing doxygen-generated 
 	documentation in install-data-hook and make-install-dirs targets.
 
 2004-10-26  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
