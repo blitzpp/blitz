@@ -33,7 +33,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_numtype, class P_structure>
+template<typename P_numtype, typename P_structure>
 class _bz_MatrixRef {
 
 public:

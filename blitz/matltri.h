@@ -51,8 +51,7 @@ public:
         j_ = 0;
     }
    
-    operator _bz_bool() const
-    { return good_; }
+    operator bool() const { return good_; }
 
     void operator++()
     {
@@ -79,7 +78,7 @@ public:
 
 protected:
     unsigned size_;
-    _bz_bool good_;
+    bool good_;
     unsigned offset_;
     unsigned i_, j_;
 };
@@ -116,8 +115,8 @@ public:
     unsigned firstInRow(unsigned i) const
     { return 0; }
 
-    template<class T_numtype>
-    T_numtype get(const T_numtype * _bz_restrict data,
+    template<typename T_numtype>
+    T_numtype get(const T_numtype * restrict data,
         unsigned i, unsigned j) const
     {
         BZPRECONDITION(inRange(i,j));
@@ -127,8 +126,8 @@ public:
             return ZeroElement<T_numtype>::zero();
     }
 
-    template<class T_numtype>
-    T_numtype& get(T_numtype * _bz_restrict data, unsigned i, unsigned j)
+    template<typename T_numtype>
+    T_numtype& get(T_numtype * restrict data, unsigned i, unsigned j)
     {
         BZPRECONDITION(inRange(i,j));
         if (i >= j)
@@ -146,7 +145,7 @@ public:
     unsigned lastInCol(unsigned j) const
     { return size_ - 1; }
 
-    _bz_bool inRange(unsigned i, unsigned j) const
+    bool inRange(unsigned i, unsigned j) const
     {
         return (i < size_) && (j < size_);
     }
