@@ -23,6 +23,10 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.5  2002/05/27 19:49:27  jcumming
+ * Removed use of this->.  Member data_ of templated base class is now declared
+ * in derived class Array.
+ *
  * Revision 1.4  2002/03/06 16:12:06  patricg
  *
  * data_ replaced by this->data_ everywhere
@@ -232,7 +236,7 @@ void Array<P_numtype, N_rank>::constructSlice(Array<T_numtype, N_rank2>& array,
     R10 r10)
 {
     MemoryBlockReference<P_numtype>::changeBlock(array, array.zeroOffset());
-    this->data_ = array.dataZero();
+    data_ = array.dataZero();
 
     int setRank = 0;
 
@@ -314,9 +318,9 @@ void Array<T_numtype, N_rank>::slice(int& setRank, int i,
          << ", " << array.ubound(sourceRank) << "]");
 
     rankMap[sourceRank] = -1;
-    this->data_ += i * array.stride(sourceRank);
+    data_ += i * array.stride(sourceRank);
 #ifdef BZ_DEBUG_SLICE
-    cout << "this->data_ = " << this->data_ << endl;
+    cout << "data_ = " << data_ << endl;
 #endif
 }
 
@@ -362,7 +366,7 @@ cout << "slice(" << rank << ", Range):" << endl
     int offset = -base(rank) * stride_[rank] * stride
                  + first * stride_[rank];
     // (first - base(rank)) * stride_[rank] 
-    this->data_ += offset;
+    data_ += offset;
     zeroOffset_ -= offset;
 
     stride_[rank] *= stride;

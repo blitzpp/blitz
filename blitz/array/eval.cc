@@ -2,6 +2,10 @@
  * $Id$
  *
  * $Log$
+ * Revision 1.6  2002/05/27 19:48:57  jcumming
+ * Removed use of this->.  Member data_ of templated base class is now declared
+ * in derived class Array.
+ *
  * Revision 1.5  2002/05/23 00:15:43  jcumming
  * Fixed bug in Array::evaluateWithIndexTraversal1() by removing cast of
  * second argument to T_numtype in call to T_update::update().  This cast
@@ -697,7 +701,7 @@ Array<T_numtype, N_rank>::evaluateWithIndexTraversal1(
 
     if (stride(firstRank) == 1)
     {
-        T_numtype * _bz_restrict iter = this->data_;
+        T_numtype * _bz_restrict iter = data_;
         int last = ubound(firstRank);
 
         for (index[0] = lbound(firstRank); index[0] <= last;
