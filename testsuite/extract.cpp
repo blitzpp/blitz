@@ -83,9 +83,9 @@ int main()
     E[RGB24::green](Range(1,2),Range(1,2)) = 0;
 
     RGB24 z(30,50,15);
-//    BZTEST(count(E == z) == 21);
+    BZTEST(count(E == z) == 21);
     RGB24 y(30,0,15);
-//    BZTEST(count(E == y) == 4);
+    BZTEST(count(E == y) == 4);
 
     return 0;
 }
