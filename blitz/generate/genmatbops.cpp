@@ -9,7 +9,7 @@ int main()
 
     OperandTuple2 operands(2);
 
-    std::ofstream ofs("matbops.h");
+    std::ofstream ofs("../matbops.h");
     ofs << "// Generated source file.  Do not edit." << std::endl;
     ofs << "// Created by: " << __FILE__ << " " << __DATE__ 
         << " " << __TIME__ << std::endl << std::endl;
