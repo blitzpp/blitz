@@ -93,6 +93,7 @@ FFLAGS = @FFLAGS@
 FORTLIBS = @FORTLIBS@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LDFLAGS = @LDFLAGS@
+MAINT = @MAINT@
 PACKAGE = @PACKAGE@
 RANLIB = @RANLIB@
 STRIP = @STRIP@
@@ -542,10 +543,10 @@ all: all-recursive
 
 .SUFFIXES:
 .SUFFIXES: .cpp .f .f90 .o .obj
-$(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
+$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
 	  $(AUTOMAKE) --gnu  --ignore-deps benchmarks/Makefile
-Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
+Makefile: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 plot_benchmarks.m: $(top_builddir)/config.status plot_benchmarks.m.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
