@@ -24,8 +24,16 @@ else
   fi
   enable_doc=no
  else
-  enable_doc=yes
+  doxy_ver=`doxygen --version`
+  doxy_major=`expr "$doxy_ver" : '\(@<:@0-9@:>@\)\..*'`
+  doxy_minor=`expr "$doxy_ver" : '@<:@0-9@:>@\.\(@<:@0-9@:>@\).*'`
+  if test $doxy_major -eq "1" -a $doxy_minor -ge "3" ; then
+   enable_doc=yes
    AC_CHECK_PROG(DOT, dot, dot)
+  else
+   AC_MSG_WARN([doxygen version $doxy_ver too old, doxygen will not be used.])
+   enable_doc=no
+  fi
  fi
 fi
 
