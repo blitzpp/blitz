@@ -23,6 +23,16 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2002/03/07 14:36:47  patricg
+ *
+ * line 124
+ * #ifdef BZ_NEW_EXPRESSION_TEMPLATES replaced by
+ * #if defined(BZ_NEW_EXPRESSION_TEMPLATES) && ! defined(__MWERKS__)
+ * line 134 added
+ * #if !defined(__MWERKS__)
+ * #endif
+ * for Metrowerks code warrior compiler
+ *
  * Revision 1.2  2001/01/24 20:22:50  tveldhui
  * Updated copyright date in headers.
  *
@@ -121,7 +131,7 @@ public:
         : iter_(a.iter_)
     { }
 
-#ifdef BZ_NEW_EXPRESSION_TEMPLATES
+#if defined(BZ_NEW_EXPRESSION_TEMPLATES) && ! defined(__MWERKS__)
     template<class T>
     _bz_ArrayExpr(const T& a)
         : iter_(a)
@@ -131,10 +141,11 @@ public:
     _bz_ArrayExpr(BZ_ETPARM(T_expr) a)
         : iter_(a)
     { }
-
+#if !defined(__MWERKS__)
     _bz_ArrayExpr(BZ_ETPARM(_bz_typename T_expr::T_ctorArg1) a)
         : iter_(a)
     { }
+#endif
 #endif
 
     template<class T1, class T2>
