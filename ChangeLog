@@ -1,6 +1,13 @@
+2003-05-16  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/array/map.h: Fixed error in ascending() method reported by
+	Derrick Bass.  The name of the corresponding method in the Array
+	class is isRankStoredAscending().  This method returns a bool, but
+	it is treated here as an int for the purposes of doing a reduction
+	across operands.
 
 2003-05-16 Patrick Guio <patrick.guio@fys.uio.no>
-  * configure.in: Fixed several bugs for CC/SGI setup. Library Cio should be
+        * configure.in: Fixed several bugs for CC/SGI setup. Library Cio should be
 	included as well as -ptused.
 
 2003-05-09 Patrick Guio <patrick.guio@fys.uio.no>
