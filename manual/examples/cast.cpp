@@ -1,6 +1,8 @@
 #include <blitz/array.h>
 
+#ifdef BZ_NAMESPACES
 using namespace blitz;
+#endif
 
 int main()
 {
@@ -13,7 +15,11 @@ int main()
     C = A / B;
     cout << C << endl;
 
+#ifdef BZ_NEW_EXPRESSION_TEMPLATES
+    C = A / cast<float>(B);
+#else
     C = A / cast(B, float());
+#endif
     cout << C << endl;
 
     return 0;
