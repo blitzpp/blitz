@@ -3,10 +3,8 @@
 # Blitz++ demos makefile
 #
 
-srcdir = @srcdir@
 VPATH = @srcdir@
-
-BZDIR = $(srcdir)/..
+BZDIR = @top_srcdir@
 
 CXX = @CXX@
 CXXFLAGS = @CXXFLAGS@ @CXX_OPTIMIZE_FLAGS@ @CXXFFLAGS@ -I$(BZDIR)
@@ -27,9 +25,8 @@ LIBS = -L$(BZDIR)/lib -lblitz -lm @BLASLIB@ @FORTLIBS@
 
 ############################################################################
 
-DEMOS = acoustic
 
-all:	$(DEMOS) 
+DEMOS = acoustic
 
 run:	all
 	@for demo in $(DEMOS) ; do \
@@ -45,4 +42,14 @@ acoustic:	acoustic.o
 
 clean:
 	rm -f *.o *.ii *.int.c *.s ${DEMOS}
+
+all:
+
+install:
+
+distdir: Makefile.in
+	cp -pR Makefile.in ../@PACKAGE@-@VERSION@/demos
+
+distclean: 
+	-rm -f Makefile
 

@@ -1,103 +1,976 @@
-# Blitz++ test suite makefile
+# Makefile.in generated automatically by automake 1.4a from Makefile.am
+
+# Copyright 1994, 1995, 1996, 1997, 1998, 1999, 2000
+# Free Software Foundation, Inc.
+# This Makefile.in is free software; the Free Software Foundation
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+SHELL = @SHELL@
 
 srcdir = @srcdir@
+top_srcdir = @top_srcdir@
 VPATH = @srcdir@
-BZDIR = ..
+prefix = @prefix@
+exec_prefix = @exec_prefix@
 
+bindir = @bindir@
+sbindir = @sbindir@
+libexecdir = @libexecdir@
+datadir = @datadir@
+sysconfdir = @sysconfdir@
+sharedstatedir = @sharedstatedir@
+localstatedir = @localstatedir@
+libdir = @libdir@
+infodir = @infodir@
+mandir = @mandir@
+includedir = @includedir@
+oldincludedir = /usr/include
+
+pkgdatadir = $(datadir)/@PACKAGE@
+pkglibdir = $(libdir)/@PACKAGE@
+pkgincludedir = $(includedir)/@PACKAGE@
+
+top_builddir = ..
+
+ACLOCAL = @ACLOCAL@
+AUTOCONF = @AUTOCONF@
+AUTOMAKE = @AUTOMAKE@
+AUTOHEADER = @AUTOHEADER@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_SCRIPT = @INSTALL_SCRIPT@
+INSTALL_STRIP_FLAG =
+transform = @program_transform_name@
+
+NORMAL_INSTALL = :
+PRE_INSTALL = :
+POST_INSTALL = :
+NORMAL_UNINSTALL = :
+PRE_UNINSTALL = :
+POST_UNINSTALL = :
+
+@SET_MAKE@
+host_alias = @host_alias@
+host_triplet = @host@
+AMDEP = @AMDEP@
+AMTAR = @AMTAR@
+AR = @AR@
+AWK = @AWK@
+BLASLIB = @BLASLIB@
+CC = @CC@
+CPP = @CPP@
 CXX = @CXX@
-CXXFLAGS  = -I$(srcdir)/$(BZDIR) @CXXFLAGS@ @CXX_DEBUG_FLAGS@
+CXXCPP = @CXXCPP@
+CXXFFLAGS = @CXXFFLAGS@
+CXX_DEBUG_FLAGS = @CXX_DEBUG_FLAGS@
+CXX_LIBS = @CXX_LIBS@
+CXX_OPTIMIZE_FLAGS = @CXX_OPTIMIZE_FLAGS@
+DEPDIR = @DEPDIR@
+F77 = @F77@
+F77_OPTIMIZE_FLAGS = @F77_OPTIMIZE_FLAGS@
+F90 = @F90@
+F90_OPTIMIZE_FLAGS = @F90_OPTIMIZE_FLAGS@
+FORTLIBS = @FORTLIBS@
 LDFLAGS = @LDFLAGS@
+MAKEINFO = @MAKEINFO@
+PACKAGE = @PACKAGE@
+RANLIB = @RANLIB@
+SHELL = @SHELL@
+VERSION = @VERSION@
+install_sh = @install_sh@
 
-DEFS = 
+#
+# $Id$
+#
+# Patrick Guio <patrick.guio@fys.uio.no>
+#
 
-LIBS = -L$(BZDIR)/lib -lblitz -lm @CXX_LIBS@
+# Blitz++ test suite makefile
 
-SINGLE_TESTS = ctors initialize storage shapecheck reduce derrick-bass-1 \
-	qcd loop1 peter-nordlund-1 shape interlace promote arrayresize \
-	minmax transpose reverse extract free \
-	chris-jeffery-1 where minsumpow gary-huber-1 \
-	derrick-bass-3 constarray chris-jeffery-2 reindex Ulisses-Mello-1 \
-	peter-bienstman-1 complex peter-nordlund-3 \
-	newet peter-bienstman-3 troyer-genilloud peter-nordlund-2 \
-	peter-bienstman-2 iter contiguous exprctor Olaf-Ronneberger-1 \
-	peter-bienstman-4 tinymat wei-ku-1 \
-	theodore-papadopoulo-1 peter-bienstman-5 Adnene-Ben-Abdallah-2 \
-	Josef-Wagenhuber 
 
-MULTIPLE_TESTS = modules
+SUBDIRS = 
 
-TESTS = $(SINGLE_TESTS) $(MULTIPLE_TESTS)
+EXTRA_DIST = testsuite.h
 
-.SUFFIXES: .o .cpp 
+INCLUDES = -I$(top_srcdir)
+CXXFLAGS = @CXXFLAGS@ @CXX_DEBUG_FLAGS@
+LDADD = -L$(top_srcdir)/lib -lblitz
 
+# install this file
+testsuitedir = $(prefix)/testsuite
+testsuite_DATA = Adnene-Ben-Abdallah-1.cpp Adnene-Ben-Abdallah-2.cpp \
+Josef-Wagenhuber.cpp Olaf-Ronneberger-1.cpp Ulisses-Mello-1.cpp \
+arrayresize.cpp chris-jeffery-1.cpp chris-jeffery-2.cpp chris-jeffery-3.cpp \
+complex-test.cpp constarray.cpp contiguous.cpp copy.cpp ctors.cpp \
+derrick-bass-1.cpp derrick-bass-3.cpp exprctor.cpp extract.cpp free.cpp \
+gary-huber-1.cpp initialize.cpp interlace.cpp iter.cpp loop1.cpp \
+matthias-troyer-1.cpp matthias-troyer-2.cpp mattias-lindstroem-1.cpp \
+minmax.cpp minsumpow.cpp module1.cpp module2.cpp newet.cpp \
+peter-bienstman-1.cpp peter-bienstman-2.cpp peter-bienstman-3.cpp \
+peter-bienstman-4.cpp peter-bienstman-5.cpp peter-nordlund-1.cpp \
+peter-nordlund-2.cpp peter-nordlund-3.cpp promote.cpp qcd.cpp reduce.cpp \
+reindex.cpp reverse.cpp shape.cpp shapecheck.cpp storage.cpp stub.cpp \
+theodore-papadopoulo-1.cpp tinymat.cpp tinyvec.cpp transpose.cpp \
+troyer-genilloud.cpp wei-ku-1.cpp where.cpp Makefile
+
+
+EXTRA_PROGRAMS = Adnene-Ben-Abdallah-1 Adnene-Ben-Abdallah-2 arrayresize \
+chris-jeffery-1 chris-jeffery-2 chris-jeffery-3 complex-test constarray \
+contiguous copy ctors derrick-bass-1 derrick-bass-3 exprctor extract free \
+gary-huber-1 initialize interlace iter Josef-Wagenhuber loop1 \
+matthias-troyer-1 matthias-troyer-2 mattias-lindstroem-1 minmax minsumpow \
+module newet Olaf-Ronneberger-1 peter-bienstman-1 peter-bienstman-2 \
+peter-bienstman-3 peter-bienstman-4 peter-bienstman-5 peter-nordlund-1 \
+peter-nordlund-2 peter-nordlund-3 promote qcd reduce reindex reverse \
+shapecheck shape storage stub theodore-papadopoulo-1 tinymat tinyvec \
+transpose troyer-genilloud Ulisses-Mello-1 wei-ku-1 where
+
+
+Adnene_Ben_Abdallah_1_SOURCES = Adnene-Ben-Abdallah-1.cpp
+Adnene_Ben_Abdallah_2_SOURCES = Adnene-Ben-Abdallah-2.cpp
+arrayresize_SOURCES = arrayresize.cpp
+chris_jeffery_1_SOURCES = chris-jeffery-1.cpp
+chris_jeffery_2_SOURCES = chris-jeffery-2.cpp
+chris_jeffery_3_SOURCES = chris-jeffery-3.cpp
+complex_test_SOURCES = complex-test.cpp
+constarray_SOURCES = constarray.cpp
+contiguous_SOURCES = contiguous.cpp
+copy_SOURCES = copy.cpp
+ctors_SOURCES = ctors.cpp
+derrick_bass_1_SOURCES = derrick-bass-1.cpp
+derrick_bass_3_SOURCES = derrick-bass-3.cpp
+exprctor_SOURCES = exprctor.cpp
+extract_SOURCES = extract.cpp
+free_SOURCES = free.cpp
+gary_huber_1_SOURCES = gary-huber-1.cpp
+initialize_SOURCES = initialize.cpp
+interlace_SOURCES = interlace.cpp
+iter_SOURCES = iter.cpp
+Josef_Wagenhuber_SOURCES = Josef-Wagenhuber.cpp
+loop1_SOURCES = loop1.cpp
+matthias_troyer_1_SOURCES = matthias-troyer-1.cpp
+matthias_troyer_2_SOURCES = matthias-troyer-2.cpp
+mattias_lindstroem_1_SOURCES = mattias-lindstroem-1.cpp
+minmax_SOURCES = minmax.cpp
+minsumpow_SOURCES = minsumpow.cpp
+module_SOURCES = module1.cpp module2.cpp
+newet_SOURCES = newet.cpp
+Olaf_Ronneberger_1_SOURCES = Olaf-Ronneberger-1.cpp
+peter_bienstman_1_SOURCES = peter-bienstman-1.cpp
+peter_bienstman_2_SOURCES = peter-bienstman-2.cpp
+peter_bienstman_3_SOURCES = peter-bienstman-3.cpp
+peter_bienstman_4_SOURCES = peter-bienstman-4.cpp
+peter_bienstman_5_SOURCES = peter-bienstman-5.cpp
+peter_nordlund_1_SOURCES = peter-nordlund-1.cpp
+peter_nordlund_2_SOURCES = peter-nordlund-2.cpp
+peter_nordlund_3_SOURCES = peter-nordlund-3.cpp
+promote_SOURCES = promote.cpp
+qcd_SOURCES = qcd.cpp
+reduce_SOURCES = reduce.cpp
+reindex_SOURCES = reindex.cpp
+reverse_SOURCES = reverse.cpp
+shapecheck_SOURCES = shapecheck.cpp
+shape_SOURCES = shape.cpp
+storage_SOURCES = storage.cpp
+stub_SOURCES = stub.cpp
+theodore_papadopoulo_1_SOURCES = theodore-papadopoulo-1.cpp
+tinymat_SOURCES = tinymat.cpp
+tinyvec_SOURCES = tinyvec.cpp
+transpose_SOURCES = transpose.cpp
+troyer_genilloud_SOURCES = troyer-genilloud.cpp
+Ulisses_Mello_1_SOURCES = Ulisses-Mello-1.cpp
+wei_ku_1_SOURCES = wei-ku-1.cpp
+where_SOURCES = where.cpp
+subdir = testsuite
+mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+CONFIG_CLEAN_FILES = 
+
+DEFS = @DEFS@ -I. -I$(srcdir)
+CPPFLAGS = @CPPFLAGS@
+LIBS = @LIBS@
+am_Adnene_Ben_Abdallah_1_OBJECTS =  Adnene-Ben-Abdallah-1.o
+Adnene_Ben_Abdallah_1_OBJECTS =  $(am_Adnene_Ben_Abdallah_1_OBJECTS)
+Adnene_Ben_Abdallah_1_LDADD = $(LDADD)
+Adnene_Ben_Abdallah_1_DEPENDENCIES = 
+Adnene_Ben_Abdallah_1_LDFLAGS = 
+am_Adnene_Ben_Abdallah_2_OBJECTS =  Adnene-Ben-Abdallah-2.o
+Adnene_Ben_Abdallah_2_OBJECTS =  $(am_Adnene_Ben_Abdallah_2_OBJECTS)
+Adnene_Ben_Abdallah_2_LDADD = $(LDADD)
+Adnene_Ben_Abdallah_2_DEPENDENCIES = 
+Adnene_Ben_Abdallah_2_LDFLAGS = 
+am_Josef_Wagenhuber_OBJECTS =  Josef-Wagenhuber.o
+Josef_Wagenhuber_OBJECTS =  $(am_Josef_Wagenhuber_OBJECTS)
+Josef_Wagenhuber_LDADD = $(LDADD)
+Josef_Wagenhuber_DEPENDENCIES = 
+Josef_Wagenhuber_LDFLAGS = 
+am_Olaf_Ronneberger_1_OBJECTS =  Olaf-Ronneberger-1.o
+Olaf_Ronneberger_1_OBJECTS =  $(am_Olaf_Ronneberger_1_OBJECTS)
+Olaf_Ronneberger_1_LDADD = $(LDADD)
+Olaf_Ronneberger_1_DEPENDENCIES = 
+Olaf_Ronneberger_1_LDFLAGS = 
+am_Ulisses_Mello_1_OBJECTS =  Ulisses-Mello-1.o
+Ulisses_Mello_1_OBJECTS =  $(am_Ulisses_Mello_1_OBJECTS)
+Ulisses_Mello_1_LDADD = $(LDADD)
+Ulisses_Mello_1_DEPENDENCIES = 
+Ulisses_Mello_1_LDFLAGS = 
+am_arrayresize_OBJECTS =  arrayresize.o
+arrayresize_OBJECTS =  $(am_arrayresize_OBJECTS)
+arrayresize_LDADD = $(LDADD)
+arrayresize_DEPENDENCIES = 
+arrayresize_LDFLAGS = 
+am_chris_jeffery_1_OBJECTS =  chris-jeffery-1.o
+chris_jeffery_1_OBJECTS =  $(am_chris_jeffery_1_OBJECTS)
+chris_jeffery_1_LDADD = $(LDADD)
+chris_jeffery_1_DEPENDENCIES = 
+chris_jeffery_1_LDFLAGS = 
+am_chris_jeffery_2_OBJECTS =  chris-jeffery-2.o
+chris_jeffery_2_OBJECTS =  $(am_chris_jeffery_2_OBJECTS)
+chris_jeffery_2_LDADD = $(LDADD)
+chris_jeffery_2_DEPENDENCIES = 
+chris_jeffery_2_LDFLAGS = 
+am_chris_jeffery_3_OBJECTS =  chris-jeffery-3.o
+chris_jeffery_3_OBJECTS =  $(am_chris_jeffery_3_OBJECTS)
+chris_jeffery_3_LDADD = $(LDADD)
+chris_jeffery_3_DEPENDENCIES = 
+chris_jeffery_3_LDFLAGS = 
+am_complex_test_OBJECTS =  complex-test.o
+complex_test_OBJECTS =  $(am_complex_test_OBJECTS)
+complex_test_LDADD = $(LDADD)
+complex_test_DEPENDENCIES = 
+complex_test_LDFLAGS = 
+am_constarray_OBJECTS =  constarray.o
+constarray_OBJECTS =  $(am_constarray_OBJECTS)
+constarray_LDADD = $(LDADD)
+constarray_DEPENDENCIES = 
+constarray_LDFLAGS = 
+am_contiguous_OBJECTS =  contiguous.o
+contiguous_OBJECTS =  $(am_contiguous_OBJECTS)
+contiguous_LDADD = $(LDADD)
+contiguous_DEPENDENCIES = 
+contiguous_LDFLAGS = 
+am_copy_OBJECTS =  copy.o
+copy_OBJECTS =  $(am_copy_OBJECTS)
+copy_LDADD = $(LDADD)
+copy_DEPENDENCIES = 
+copy_LDFLAGS = 
+am_ctors_OBJECTS =  ctors.o
+ctors_OBJECTS =  $(am_ctors_OBJECTS)
+ctors_LDADD = $(LDADD)
+ctors_DEPENDENCIES = 
+ctors_LDFLAGS = 
+am_derrick_bass_1_OBJECTS =  derrick-bass-1.o
+derrick_bass_1_OBJECTS =  $(am_derrick_bass_1_OBJECTS)
+derrick_bass_1_LDADD = $(LDADD)
+derrick_bass_1_DEPENDENCIES = 
+derrick_bass_1_LDFLAGS = 
+am_derrick_bass_3_OBJECTS =  derrick-bass-3.o
+derrick_bass_3_OBJECTS =  $(am_derrick_bass_3_OBJECTS)
+derrick_bass_3_LDADD = $(LDADD)
+derrick_bass_3_DEPENDENCIES = 
+derrick_bass_3_LDFLAGS = 
+am_exprctor_OBJECTS =  exprctor.o
+exprctor_OBJECTS =  $(am_exprctor_OBJECTS)
+exprctor_LDADD = $(LDADD)
+exprctor_DEPENDENCIES = 
+exprctor_LDFLAGS = 
+am_extract_OBJECTS =  extract.o
+extract_OBJECTS =  $(am_extract_OBJECTS)
+extract_LDADD = $(LDADD)
+extract_DEPENDENCIES = 
+extract_LDFLAGS = 
+am_free_OBJECTS =  free.o
+free_OBJECTS =  $(am_free_OBJECTS)
+free_LDADD = $(LDADD)
+free_DEPENDENCIES = 
+free_LDFLAGS = 
+am_gary_huber_1_OBJECTS =  gary-huber-1.o
+gary_huber_1_OBJECTS =  $(am_gary_huber_1_OBJECTS)
+gary_huber_1_LDADD = $(LDADD)
+gary_huber_1_DEPENDENCIES = 
+gary_huber_1_LDFLAGS = 
+am_initialize_OBJECTS =  initialize.o
+initialize_OBJECTS =  $(am_initialize_OBJECTS)
+initialize_LDADD = $(LDADD)
+initialize_DEPENDENCIES = 
+initialize_LDFLAGS = 
+am_interlace_OBJECTS =  interlace.o
+interlace_OBJECTS =  $(am_interlace_OBJECTS)
+interlace_LDADD = $(LDADD)
+interlace_DEPENDENCIES = 
+interlace_LDFLAGS = 
+am_iter_OBJECTS =  iter.o
+iter_OBJECTS =  $(am_iter_OBJECTS)
+iter_LDADD = $(LDADD)
+iter_DEPENDENCIES = 
+iter_LDFLAGS = 
+am_loop1_OBJECTS =  loop1.o
+loop1_OBJECTS =  $(am_loop1_OBJECTS)
+loop1_LDADD = $(LDADD)
+loop1_DEPENDENCIES = 
+loop1_LDFLAGS = 
+am_matthias_troyer_1_OBJECTS =  matthias-troyer-1.o
+matthias_troyer_1_OBJECTS =  $(am_matthias_troyer_1_OBJECTS)
+matthias_troyer_1_LDADD = $(LDADD)
+matthias_troyer_1_DEPENDENCIES = 
+matthias_troyer_1_LDFLAGS = 
+am_matthias_troyer_2_OBJECTS =  matthias-troyer-2.o
+matthias_troyer_2_OBJECTS =  $(am_matthias_troyer_2_OBJECTS)
+matthias_troyer_2_LDADD = $(LDADD)
+matthias_troyer_2_DEPENDENCIES = 
+matthias_troyer_2_LDFLAGS = 
+am_mattias_lindstroem_1_OBJECTS =  mattias-lindstroem-1.o
+mattias_lindstroem_1_OBJECTS =  $(am_mattias_lindstroem_1_OBJECTS)
+mattias_lindstroem_1_LDADD = $(LDADD)
+mattias_lindstroem_1_DEPENDENCIES = 
+mattias_lindstroem_1_LDFLAGS = 
+am_minmax_OBJECTS =  minmax.o
+minmax_OBJECTS =  $(am_minmax_OBJECTS)
+minmax_LDADD = $(LDADD)
+minmax_DEPENDENCIES = 
+minmax_LDFLAGS = 
+am_minsumpow_OBJECTS =  minsumpow.o
+minsumpow_OBJECTS =  $(am_minsumpow_OBJECTS)
+minsumpow_LDADD = $(LDADD)
+minsumpow_DEPENDENCIES = 
+minsumpow_LDFLAGS = 
+am_module_OBJECTS =  module1.o module2.o
+module_OBJECTS =  $(am_module_OBJECTS)
+module_LDADD = $(LDADD)
+module_DEPENDENCIES = 
+module_LDFLAGS = 
+am_newet_OBJECTS =  newet.o
+newet_OBJECTS =  $(am_newet_OBJECTS)
+newet_LDADD = $(LDADD)
+newet_DEPENDENCIES = 
+newet_LDFLAGS = 
+am_peter_bienstman_1_OBJECTS =  peter-bienstman-1.o
+peter_bienstman_1_OBJECTS =  $(am_peter_bienstman_1_OBJECTS)
+peter_bienstman_1_LDADD = $(LDADD)
+peter_bienstman_1_DEPENDENCIES = 
+peter_bienstman_1_LDFLAGS = 
+am_peter_bienstman_2_OBJECTS =  peter-bienstman-2.o
+peter_bienstman_2_OBJECTS =  $(am_peter_bienstman_2_OBJECTS)
+peter_bienstman_2_LDADD = $(LDADD)
+peter_bienstman_2_DEPENDENCIES = 
+peter_bienstman_2_LDFLAGS = 
+am_peter_bienstman_3_OBJECTS =  peter-bienstman-3.o
+peter_bienstman_3_OBJECTS =  $(am_peter_bienstman_3_OBJECTS)
+peter_bienstman_3_LDADD = $(LDADD)
+peter_bienstman_3_DEPENDENCIES = 
+peter_bienstman_3_LDFLAGS = 
+am_peter_bienstman_4_OBJECTS =  peter-bienstman-4.o
+peter_bienstman_4_OBJECTS =  $(am_peter_bienstman_4_OBJECTS)
+peter_bienstman_4_LDADD = $(LDADD)
+peter_bienstman_4_DEPENDENCIES = 
+peter_bienstman_4_LDFLAGS = 
+am_peter_bienstman_5_OBJECTS =  peter-bienstman-5.o
+peter_bienstman_5_OBJECTS =  $(am_peter_bienstman_5_OBJECTS)
+peter_bienstman_5_LDADD = $(LDADD)
+peter_bienstman_5_DEPENDENCIES = 
+peter_bienstman_5_LDFLAGS = 
+am_peter_nordlund_1_OBJECTS =  peter-nordlund-1.o
+peter_nordlund_1_OBJECTS =  $(am_peter_nordlund_1_OBJECTS)
+peter_nordlund_1_LDADD = $(LDADD)
+peter_nordlund_1_DEPENDENCIES = 
+peter_nordlund_1_LDFLAGS = 
+am_peter_nordlund_2_OBJECTS =  peter-nordlund-2.o
+peter_nordlund_2_OBJECTS =  $(am_peter_nordlund_2_OBJECTS)
+peter_nordlund_2_LDADD = $(LDADD)
+peter_nordlund_2_DEPENDENCIES = 
+peter_nordlund_2_LDFLAGS = 
+am_peter_nordlund_3_OBJECTS =  peter-nordlund-3.o
+peter_nordlund_3_OBJECTS =  $(am_peter_nordlund_3_OBJECTS)
+peter_nordlund_3_LDADD = $(LDADD)
+peter_nordlund_3_DEPENDENCIES = 
+peter_nordlund_3_LDFLAGS = 
+am_promote_OBJECTS =  promote.o
+promote_OBJECTS =  $(am_promote_OBJECTS)
+promote_LDADD = $(LDADD)
+promote_DEPENDENCIES = 
+promote_LDFLAGS = 
+am_qcd_OBJECTS =  qcd.o
+qcd_OBJECTS =  $(am_qcd_OBJECTS)
+qcd_LDADD = $(LDADD)
+qcd_DEPENDENCIES = 
+qcd_LDFLAGS = 
+am_reduce_OBJECTS =  reduce.o
+reduce_OBJECTS =  $(am_reduce_OBJECTS)
+reduce_LDADD = $(LDADD)
+reduce_DEPENDENCIES = 
+reduce_LDFLAGS = 
+am_reindex_OBJECTS =  reindex.o
+reindex_OBJECTS =  $(am_reindex_OBJECTS)
+reindex_LDADD = $(LDADD)
+reindex_DEPENDENCIES = 
+reindex_LDFLAGS = 
+am_reverse_OBJECTS =  reverse.o
+reverse_OBJECTS =  $(am_reverse_OBJECTS)
+reverse_LDADD = $(LDADD)
+reverse_DEPENDENCIES = 
+reverse_LDFLAGS = 
+am_shape_OBJECTS =  shape.o
+shape_OBJECTS =  $(am_shape_OBJECTS)
+shape_LDADD = $(LDADD)
+shape_DEPENDENCIES = 
+shape_LDFLAGS = 
+am_shapecheck_OBJECTS =  shapecheck.o
+shapecheck_OBJECTS =  $(am_shapecheck_OBJECTS)
+shapecheck_LDADD = $(LDADD)
+shapecheck_DEPENDENCIES = 
+shapecheck_LDFLAGS = 
+am_storage_OBJECTS =  storage.o
+storage_OBJECTS =  $(am_storage_OBJECTS)
+storage_LDADD = $(LDADD)
+storage_DEPENDENCIES = 
+storage_LDFLAGS = 
+am_stub_OBJECTS =  stub.o
+stub_OBJECTS =  $(am_stub_OBJECTS)
+stub_LDADD = $(LDADD)
+stub_DEPENDENCIES = 
+stub_LDFLAGS = 
+am_theodore_papadopoulo_1_OBJECTS =  theodore-papadopoulo-1.o
+theodore_papadopoulo_1_OBJECTS =  $(am_theodore_papadopoulo_1_OBJECTS)
+theodore_papadopoulo_1_LDADD = $(LDADD)
+theodore_papadopoulo_1_DEPENDENCIES = 
+theodore_papadopoulo_1_LDFLAGS = 
+am_tinymat_OBJECTS =  tinymat.o
+tinymat_OBJECTS =  $(am_tinymat_OBJECTS)
+tinymat_LDADD = $(LDADD)
+tinymat_DEPENDENCIES = 
+tinymat_LDFLAGS = 
+am_tinyvec_OBJECTS =  tinyvec.o
+tinyvec_OBJECTS =  $(am_tinyvec_OBJECTS)
+tinyvec_LDADD = $(LDADD)
+tinyvec_DEPENDENCIES = 
+tinyvec_LDFLAGS = 
+am_transpose_OBJECTS =  transpose.o
+transpose_OBJECTS =  $(am_transpose_OBJECTS)
+transpose_LDADD = $(LDADD)
+transpose_DEPENDENCIES = 
+transpose_LDFLAGS = 
+am_troyer_genilloud_OBJECTS =  troyer-genilloud.o
+troyer_genilloud_OBJECTS =  $(am_troyer_genilloud_OBJECTS)
+troyer_genilloud_LDADD = $(LDADD)
+troyer_genilloud_DEPENDENCIES = 
+troyer_genilloud_LDFLAGS = 
+am_wei_ku_1_OBJECTS =  wei-ku-1.o
+wei_ku_1_OBJECTS =  $(am_wei_ku_1_OBJECTS)
+wei_ku_1_LDADD = $(LDADD)
+wei_ku_1_DEPENDENCIES = 
+wei_ku_1_LDFLAGS = 
+am_where_OBJECTS =  where.o
+where_OBJECTS =  $(am_where_OBJECTS)
+where_LDADD = $(LDADD)
+where_DEPENDENCIES = 
+where_LDFLAGS = 
+CXXCOMPILE = $(CXX) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+CXXLD = $(CXX)
+CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+DIST_SOURCES =  $(Adnene_Ben_Abdallah_1_SOURCES) \
+$(Adnene_Ben_Abdallah_2_SOURCES) $(Josef_Wagenhuber_SOURCES) \
+$(Olaf_Ronneberger_1_SOURCES) $(Ulisses_Mello_1_SOURCES) \
+$(arrayresize_SOURCES) $(chris_jeffery_1_SOURCES) \
+$(chris_jeffery_2_SOURCES) $(chris_jeffery_3_SOURCES) \
+$(complex_test_SOURCES) $(constarray_SOURCES) $(contiguous_SOURCES) \
+$(copy_SOURCES) $(ctors_SOURCES) $(derrick_bass_1_SOURCES) \
+$(derrick_bass_3_SOURCES) $(exprctor_SOURCES) $(extract_SOURCES) \
+$(free_SOURCES) $(gary_huber_1_SOURCES) $(initialize_SOURCES) \
+$(interlace_SOURCES) $(iter_SOURCES) $(loop1_SOURCES) \
+$(matthias_troyer_1_SOURCES) $(matthias_troyer_2_SOURCES) \
+$(mattias_lindstroem_1_SOURCES) $(minmax_SOURCES) $(minsumpow_SOURCES) \
+$(module_SOURCES) $(newet_SOURCES) $(peter_bienstman_1_SOURCES) \
+$(peter_bienstman_2_SOURCES) $(peter_bienstman_3_SOURCES) \
+$(peter_bienstman_4_SOURCES) $(peter_bienstman_5_SOURCES) \
+$(peter_nordlund_1_SOURCES) $(peter_nordlund_2_SOURCES) \
+$(peter_nordlund_3_SOURCES) $(promote_SOURCES) $(qcd_SOURCES) \
+$(reduce_SOURCES) $(reindex_SOURCES) $(reverse_SOURCES) \
+$(shape_SOURCES) $(shapecheck_SOURCES) $(storage_SOURCES) \
+$(stub_SOURCES) $(theodore_papadopoulo_1_SOURCES) $(tinymat_SOURCES) \
+$(tinyvec_SOURCES) $(transpose_SOURCES) $(troyer_genilloud_SOURCES) \
+$(wei_ku_1_SOURCES) $(where_SOURCES)
+DATA =  $(testsuite_DATA)
+
+depcomp = 
+DIST_COMMON =  Makefile.am Makefile.in
+
+
+DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+
+GZIP_ENV = --best
+SOURCES = $(Adnene_Ben_Abdallah_1_SOURCES) $(Adnene_Ben_Abdallah_2_SOURCES) $(Josef_Wagenhuber_SOURCES) $(Olaf_Ronneberger_1_SOURCES) $(Ulisses_Mello_1_SOURCES) $(arrayresize_SOURCES) $(chris_jeffery_1_SOURCES) $(chris_jeffery_2_SOURCES) $(chris_jeffery_3_SOURCES) $(complex_test_SOURCES) $(constarray_SOURCES) $(contiguous_SOURCES) $(copy_SOURCES) $(ctors_SOURCES) $(derrick_bass_1_SOURCES) $(derrick_bass_3_SOURCES) $(exprctor_SOURCES) $(extract_SOURCES) $(free_SOURCES) $(gary_huber_1_SOURCES) $(initialize_SOURCES) $(interlace_SOURCES) $(iter_SOURCES) $(loop1_SOURCES) $(matthias_troyer_1_SOURCES) $(matthias_troyer_2_SOURCES) $(mattias_lindstroem_1_SOURCES) $(minmax_SOURCES) $(minsumpow_SOURCES) $(module_SOURCES) $(newet_SOURCES) $(peter_bienstman_1_SOURCES) $(peter_bienstman_2_SOURCES) $(peter_bienstman_3_SOURCES) $(peter_bienstman_4_SOURCES) $(peter_bienstman_5_SOURCES) $(peter_nordlund_1_SOURCES) $(peter_nordlund_2_SOURCES) $(peter_nordlund_3_SOURCES) $(promote_SOURCES) $(qcd_SOURCES) $(reduce_SOURCES) $(reindex_SOURCES) $(reverse_SOURCES) $(shape_SOURCES) $(shapecheck_SOURCES) $(storage_SOURCES) $(stub_SOURCES) $(theodore_papadopoulo_1_SOURCES) $(tinymat_SOURCES) $(tinyvec_SOURCES) $(transpose_SOURCES) $(troyer_genilloud_SOURCES) $(wei_ku_1_SOURCES) $(where_SOURCES)
+OBJECTS = $(am_Adnene_Ben_Abdallah_1_OBJECTS) $(am_Adnene_Ben_Abdallah_2_OBJECTS) $(am_Josef_Wagenhuber_OBJECTS) $(am_Olaf_Ronneberger_1_OBJECTS) $(am_Ulisses_Mello_1_OBJECTS) $(am_arrayresize_OBJECTS) $(am_chris_jeffery_1_OBJECTS) $(am_chris_jeffery_2_OBJECTS) $(am_chris_jeffery_3_OBJECTS) $(am_complex_test_OBJECTS) $(am_constarray_OBJECTS) $(am_contiguous_OBJECTS) $(am_copy_OBJECTS) $(am_ctors_OBJECTS) $(am_derrick_bass_1_OBJECTS) $(am_derrick_bass_3_OBJECTS) $(am_exprctor_OBJECTS) $(am_extract_OBJECTS) $(am_free_OBJECTS) $(am_gary_huber_1_OBJECTS) $(am_initialize_OBJECTS) $(am_interlace_OBJECTS) $(am_iter_OBJECTS) $(am_loop1_OBJECTS) $(am_matthias_troyer_1_OBJECTS) $(am_matthias_troyer_2_OBJECTS) $(am_mattias_lindstroem_1_OBJECTS) $(am_minmax_OBJECTS) $(am_minsumpow_OBJECTS) $(am_module_OBJECTS) $(am_newet_OBJECTS) $(am_peter_bienstman_1_OBJECTS) $(am_peter_bienstman_2_OBJECTS) $(am_peter_bienstman_3_OBJECTS) $(am_peter_bienstman_4_OBJECTS) $(am_peter_bienstman_5_OBJECTS) $(am_peter_nordlund_1_OBJECTS) $(am_peter_nordlund_2_OBJECTS) $(am_peter_nordlund_3_OBJECTS) $(am_promote_OBJECTS) $(am_qcd_OBJECTS) $(am_reduce_OBJECTS) $(am_reindex_OBJECTS) $(am_reverse_OBJECTS) $(am_shape_OBJECTS) $(am_shapecheck_OBJECTS) $(am_storage_OBJECTS) $(am_stub_OBJECTS) $(am_theodore_papadopoulo_1_OBJECTS) $(am_tinymat_OBJECTS) $(am_tinyvec_OBJECTS) $(am_transpose_OBJECTS) $(am_troyer_genilloud_OBJECTS) $(am_wei_ku_1_OBJECTS) $(am_where_OBJECTS)
+
+all: all-redirect
+.SUFFIXES:
+.SUFFIXES: .c .cpp .o
+$(srcdir)/Makefile.in: Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu --ignore-deps testsuite/Makefile
+
+Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status
+	cd $(top_builddir) \
+	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
+
+
+mostlyclean-compile:
+	-rm -f *.o core *.core
+
+clean-compile:
+
+distclean-compile:
+	-rm -f *.tab.c
+
+maintainer-clean-compile:
+
+Adnene-Ben-Abdallah-1: $(Adnene_Ben_Abdallah_1_OBJECTS) $(Adnene_Ben_Abdallah_1_DEPENDENCIES)
+	@rm -f Adnene-Ben-Abdallah-1
+	$(CXXLINK) $(Adnene_Ben_Abdallah_1_LDFLAGS) $(Adnene_Ben_Abdallah_1_OBJECTS) $(Adnene_Ben_Abdallah_1_LDADD) $(LIBS)
+
+Adnene-Ben-Abdallah-2: $(Adnene_Ben_Abdallah_2_OBJECTS) $(Adnene_Ben_Abdallah_2_DEPENDENCIES)
+	@rm -f Adnene-Ben-Abdallah-2
+	$(CXXLINK) $(Adnene_Ben_Abdallah_2_LDFLAGS) $(Adnene_Ben_Abdallah_2_OBJECTS) $(Adnene_Ben_Abdallah_2_LDADD) $(LIBS)
+
+Josef-Wagenhuber: $(Josef_Wagenhuber_OBJECTS) $(Josef_Wagenhuber_DEPENDENCIES)
+	@rm -f Josef-Wagenhuber
+	$(CXXLINK) $(Josef_Wagenhuber_LDFLAGS) $(Josef_Wagenhuber_OBJECTS) $(Josef_Wagenhuber_LDADD) $(LIBS)
+
+Olaf-Ronneberger-1: $(Olaf_Ronneberger_1_OBJECTS) $(Olaf_Ronneberger_1_DEPENDENCIES)
+	@rm -f Olaf-Ronneberger-1
+	$(CXXLINK) $(Olaf_Ronneberger_1_LDFLAGS) $(Olaf_Ronneberger_1_OBJECTS) $(Olaf_Ronneberger_1_LDADD) $(LIBS)
+
+Ulisses-Mello-1: $(Ulisses_Mello_1_OBJECTS) $(Ulisses_Mello_1_DEPENDENCIES)
+	@rm -f Ulisses-Mello-1
+	$(CXXLINK) $(Ulisses_Mello_1_LDFLAGS) $(Ulisses_Mello_1_OBJECTS) $(Ulisses_Mello_1_LDADD) $(LIBS)
+
+arrayresize: $(arrayresize_OBJECTS) $(arrayresize_DEPENDENCIES)
+	@rm -f arrayresize
+	$(CXXLINK) $(arrayresize_LDFLAGS) $(arrayresize_OBJECTS) $(arrayresize_LDADD) $(LIBS)
+
+chris-jeffery-1: $(chris_jeffery_1_OBJECTS) $(chris_jeffery_1_DEPENDENCIES)
+	@rm -f chris-jeffery-1
+	$(CXXLINK) $(chris_jeffery_1_LDFLAGS) $(chris_jeffery_1_OBJECTS) $(chris_jeffery_1_LDADD) $(LIBS)
+
+chris-jeffery-2: $(chris_jeffery_2_OBJECTS) $(chris_jeffery_2_DEPENDENCIES)
+	@rm -f chris-jeffery-2
+	$(CXXLINK) $(chris_jeffery_2_LDFLAGS) $(chris_jeffery_2_OBJECTS) $(chris_jeffery_2_LDADD) $(LIBS)
+
+chris-jeffery-3: $(chris_jeffery_3_OBJECTS) $(chris_jeffery_3_DEPENDENCIES)
+	@rm -f chris-jeffery-3
+	$(CXXLINK) $(chris_jeffery_3_LDFLAGS) $(chris_jeffery_3_OBJECTS) $(chris_jeffery_3_LDADD) $(LIBS)
+
+complex-test: $(complex_test_OBJECTS) $(complex_test_DEPENDENCIES)
+	@rm -f complex-test
+	$(CXXLINK) $(complex_test_LDFLAGS) $(complex_test_OBJECTS) $(complex_test_LDADD) $(LIBS)
+
+constarray: $(constarray_OBJECTS) $(constarray_DEPENDENCIES)
+	@rm -f constarray
+	$(CXXLINK) $(constarray_LDFLAGS) $(constarray_OBJECTS) $(constarray_LDADD) $(LIBS)
+
+contiguous: $(contiguous_OBJECTS) $(contiguous_DEPENDENCIES)
+	@rm -f contiguous
+	$(CXXLINK) $(contiguous_LDFLAGS) $(contiguous_OBJECTS) $(contiguous_LDADD) $(LIBS)
+
+copy: $(copy_OBJECTS) $(copy_DEPENDENCIES)
+	@rm -f copy
+	$(CXXLINK) $(copy_LDFLAGS) $(copy_OBJECTS) $(copy_LDADD) $(LIBS)
+
+ctors: $(ctors_OBJECTS) $(ctors_DEPENDENCIES)
+	@rm -f ctors
+	$(CXXLINK) $(ctors_LDFLAGS) $(ctors_OBJECTS) $(ctors_LDADD) $(LIBS)
+
+derrick-bass-1: $(derrick_bass_1_OBJECTS) $(derrick_bass_1_DEPENDENCIES)
+	@rm -f derrick-bass-1
+	$(CXXLINK) $(derrick_bass_1_LDFLAGS) $(derrick_bass_1_OBJECTS) $(derrick_bass_1_LDADD) $(LIBS)
+
+derrick-bass-3: $(derrick_bass_3_OBJECTS) $(derrick_bass_3_DEPENDENCIES)
+	@rm -f derrick-bass-3
+	$(CXXLINK) $(derrick_bass_3_LDFLAGS) $(derrick_bass_3_OBJECTS) $(derrick_bass_3_LDADD) $(LIBS)
+
+exprctor: $(exprctor_OBJECTS) $(exprctor_DEPENDENCIES)
+	@rm -f exprctor
+	$(CXXLINK) $(exprctor_LDFLAGS) $(exprctor_OBJECTS) $(exprctor_LDADD) $(LIBS)
+
+extract: $(extract_OBJECTS) $(extract_DEPENDENCIES)
+	@rm -f extract
+	$(CXXLINK) $(extract_LDFLAGS) $(extract_OBJECTS) $(extract_LDADD) $(LIBS)
+
+free: $(free_OBJECTS) $(free_DEPENDENCIES)
+	@rm -f free
+	$(CXXLINK) $(free_LDFLAGS) $(free_OBJECTS) $(free_LDADD) $(LIBS)
+
+gary-huber-1: $(gary_huber_1_OBJECTS) $(gary_huber_1_DEPENDENCIES)
+	@rm -f gary-huber-1
+	$(CXXLINK) $(gary_huber_1_LDFLAGS) $(gary_huber_1_OBJECTS) $(gary_huber_1_LDADD) $(LIBS)
+
+initialize: $(initialize_OBJECTS) $(initialize_DEPENDENCIES)
+	@rm -f initialize
+	$(CXXLINK) $(initialize_LDFLAGS) $(initialize_OBJECTS) $(initialize_LDADD) $(LIBS)
+
+interlace: $(interlace_OBJECTS) $(interlace_DEPENDENCIES)
+	@rm -f interlace
+	$(CXXLINK) $(interlace_LDFLAGS) $(interlace_OBJECTS) $(interlace_LDADD) $(LIBS)
+
+iter: $(iter_OBJECTS) $(iter_DEPENDENCIES)
+	@rm -f iter
+	$(CXXLINK) $(iter_LDFLAGS) $(iter_OBJECTS) $(iter_LDADD) $(LIBS)
+
+loop1: $(loop1_OBJECTS) $(loop1_DEPENDENCIES)
+	@rm -f loop1
+	$(CXXLINK) $(loop1_LDFLAGS) $(loop1_OBJECTS) $(loop1_LDADD) $(LIBS)
+
+matthias-troyer-1: $(matthias_troyer_1_OBJECTS) $(matthias_troyer_1_DEPENDENCIES)
+	@rm -f matthias-troyer-1
+	$(CXXLINK) $(matthias_troyer_1_LDFLAGS) $(matthias_troyer_1_OBJECTS) $(matthias_troyer_1_LDADD) $(LIBS)
+
+matthias-troyer-2: $(matthias_troyer_2_OBJECTS) $(matthias_troyer_2_DEPENDENCIES)
+	@rm -f matthias-troyer-2
+	$(CXXLINK) $(matthias_troyer_2_LDFLAGS) $(matthias_troyer_2_OBJECTS) $(matthias_troyer_2_LDADD) $(LIBS)
+
+mattias-lindstroem-1: $(mattias_lindstroem_1_OBJECTS) $(mattias_lindstroem_1_DEPENDENCIES)
+	@rm -f mattias-lindstroem-1
+	$(CXXLINK) $(mattias_lindstroem_1_LDFLAGS) $(mattias_lindstroem_1_OBJECTS) $(mattias_lindstroem_1_LDADD) $(LIBS)
+
+minmax: $(minmax_OBJECTS) $(minmax_DEPENDENCIES)
+	@rm -f minmax
+	$(CXXLINK) $(minmax_LDFLAGS) $(minmax_OBJECTS) $(minmax_LDADD) $(LIBS)
+
+minsumpow: $(minsumpow_OBJECTS) $(minsumpow_DEPENDENCIES)
+	@rm -f minsumpow
+	$(CXXLINK) $(minsumpow_LDFLAGS) $(minsumpow_OBJECTS) $(minsumpow_LDADD) $(LIBS)
+
+module: $(module_OBJECTS) $(module_DEPENDENCIES)
+	@rm -f module
+	$(CXXLINK) $(module_LDFLAGS) $(module_OBJECTS) $(module_LDADD) $(LIBS)
+
+newet: $(newet_OBJECTS) $(newet_DEPENDENCIES)
+	@rm -f newet
+	$(CXXLINK) $(newet_LDFLAGS) $(newet_OBJECTS) $(newet_LDADD) $(LIBS)
+
+peter-bienstman-1: $(peter_bienstman_1_OBJECTS) $(peter_bienstman_1_DEPENDENCIES)
+	@rm -f peter-bienstman-1
+	$(CXXLINK) $(peter_bienstman_1_LDFLAGS) $(peter_bienstman_1_OBJECTS) $(peter_bienstman_1_LDADD) $(LIBS)
+
+peter-bienstman-2: $(peter_bienstman_2_OBJECTS) $(peter_bienstman_2_DEPENDENCIES)
+	@rm -f peter-bienstman-2
+	$(CXXLINK) $(peter_bienstman_2_LDFLAGS) $(peter_bienstman_2_OBJECTS) $(peter_bienstman_2_LDADD) $(LIBS)
+
+peter-bienstman-3: $(peter_bienstman_3_OBJECTS) $(peter_bienstman_3_DEPENDENCIES)
+	@rm -f peter-bienstman-3
+	$(CXXLINK) $(peter_bienstman_3_LDFLAGS) $(peter_bienstman_3_OBJECTS) $(peter_bienstman_3_LDADD) $(LIBS)
+
+peter-bienstman-4: $(peter_bienstman_4_OBJECTS) $(peter_bienstman_4_DEPENDENCIES)
+	@rm -f peter-bienstman-4
+	$(CXXLINK) $(peter_bienstman_4_LDFLAGS) $(peter_bienstman_4_OBJECTS) $(peter_bienstman_4_LDADD) $(LIBS)
+
+peter-bienstman-5: $(peter_bienstman_5_OBJECTS) $(peter_bienstman_5_DEPENDENCIES)
+	@rm -f peter-bienstman-5
+	$(CXXLINK) $(peter_bienstman_5_LDFLAGS) $(peter_bienstman_5_OBJECTS) $(peter_bienstman_5_LDADD) $(LIBS)
+
+peter-nordlund-1: $(peter_nordlund_1_OBJECTS) $(peter_nordlund_1_DEPENDENCIES)
+	@rm -f peter-nordlund-1
+	$(CXXLINK) $(peter_nordlund_1_LDFLAGS) $(peter_nordlund_1_OBJECTS) $(peter_nordlund_1_LDADD) $(LIBS)
+
+peter-nordlund-2: $(peter_nordlund_2_OBJECTS) $(peter_nordlund_2_DEPENDENCIES)
+	@rm -f peter-nordlund-2
+	$(CXXLINK) $(peter_nordlund_2_LDFLAGS) $(peter_nordlund_2_OBJECTS) $(peter_nordlund_2_LDADD) $(LIBS)
+
+peter-nordlund-3: $(peter_nordlund_3_OBJECTS) $(peter_nordlund_3_DEPENDENCIES)
+	@rm -f peter-nordlund-3
+	$(CXXLINK) $(peter_nordlund_3_LDFLAGS) $(peter_nordlund_3_OBJECTS) $(peter_nordlund_3_LDADD) $(LIBS)
+
+promote: $(promote_OBJECTS) $(promote_DEPENDENCIES)
+	@rm -f promote
+	$(CXXLINK) $(promote_LDFLAGS) $(promote_OBJECTS) $(promote_LDADD) $(LIBS)
+
+qcd: $(qcd_OBJECTS) $(qcd_DEPENDENCIES)
+	@rm -f qcd
+	$(CXXLINK) $(qcd_LDFLAGS) $(qcd_OBJECTS) $(qcd_LDADD) $(LIBS)
+
+reduce: $(reduce_OBJECTS) $(reduce_DEPENDENCIES)
+	@rm -f reduce
+	$(CXXLINK) $(reduce_LDFLAGS) $(reduce_OBJECTS) $(reduce_LDADD) $(LIBS)
+
+reindex: $(reindex_OBJECTS) $(reindex_DEPENDENCIES)
+	@rm -f reindex
+	$(CXXLINK) $(reindex_LDFLAGS) $(reindex_OBJECTS) $(reindex_LDADD) $(LIBS)
+
+reverse: $(reverse_OBJECTS) $(reverse_DEPENDENCIES)
+	@rm -f reverse
+	$(CXXLINK) $(reverse_LDFLAGS) $(reverse_OBJECTS) $(reverse_LDADD) $(LIBS)
+
+shape: $(shape_OBJECTS) $(shape_DEPENDENCIES)
+	@rm -f shape
+	$(CXXLINK) $(shape_LDFLAGS) $(shape_OBJECTS) $(shape_LDADD) $(LIBS)
+
+shapecheck: $(shapecheck_OBJECTS) $(shapecheck_DEPENDENCIES)
+	@rm -f shapecheck
+	$(CXXLINK) $(shapecheck_LDFLAGS) $(shapecheck_OBJECTS) $(shapecheck_LDADD) $(LIBS)
+
+storage: $(storage_OBJECTS) $(storage_DEPENDENCIES)
+	@rm -f storage
+	$(CXXLINK) $(storage_LDFLAGS) $(storage_OBJECTS) $(storage_LDADD) $(LIBS)
+
+stub: $(stub_OBJECTS) $(stub_DEPENDENCIES)
+	@rm -f stub
+	$(CXXLINK) $(stub_LDFLAGS) $(stub_OBJECTS) $(stub_LDADD) $(LIBS)
+
+theodore-papadopoulo-1: $(theodore_papadopoulo_1_OBJECTS) $(theodore_papadopoulo_1_DEPENDENCIES)
+	@rm -f theodore-papadopoulo-1
+	$(CXXLINK) $(theodore_papadopoulo_1_LDFLAGS) $(theodore_papadopoulo_1_OBJECTS) $(theodore_papadopoulo_1_LDADD) $(LIBS)
+
+tinymat: $(tinymat_OBJECTS) $(tinymat_DEPENDENCIES)
+	@rm -f tinymat
+	$(CXXLINK) $(tinymat_LDFLAGS) $(tinymat_OBJECTS) $(tinymat_LDADD) $(LIBS)
+
+tinyvec: $(tinyvec_OBJECTS) $(tinyvec_DEPENDENCIES)
+	@rm -f tinyvec
+	$(CXXLINK) $(tinyvec_LDFLAGS) $(tinyvec_OBJECTS) $(tinyvec_LDADD) $(LIBS)
+
+transpose: $(transpose_OBJECTS) $(transpose_DEPENDENCIES)
+	@rm -f transpose
+	$(CXXLINK) $(transpose_LDFLAGS) $(transpose_OBJECTS) $(transpose_LDADD) $(LIBS)
+
+troyer-genilloud: $(troyer_genilloud_OBJECTS) $(troyer_genilloud_DEPENDENCIES)
+	@rm -f troyer-genilloud
+	$(CXXLINK) $(troyer_genilloud_LDFLAGS) $(troyer_genilloud_OBJECTS) $(troyer_genilloud_LDADD) $(LIBS)
+
+wei-ku-1: $(wei_ku_1_OBJECTS) $(wei_ku_1_DEPENDENCIES)
+	@rm -f wei-ku-1
+	$(CXXLINK) $(wei_ku_1_LDFLAGS) $(wei_ku_1_OBJECTS) $(wei_ku_1_LDADD) $(LIBS)
+
+where: $(where_OBJECTS) $(where_DEPENDENCIES)
+	@rm -f where
+	$(CXXLINK) $(where_LDFLAGS) $(where_OBJECTS) $(where_LDADD) $(LIBS)
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $(DEFS) -c $(srcdir)/$*.cpp 
+	$(CXXCOMPILE) -c -o $@ $<
 
-###########################################################################
-
-all:	$(TESTS)
-	echo Running test suite...
-	@for prog in $(TESTS) ; do \
-	  echo $$prog && (./$$prog) || exit 1; \
+install-testsuiteDATA: $(testsuite_DATA)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(testsuitedir)
+	@list='$(testsuite_DATA)'; for p in $$list; do \
+	  if test -f "$$p"; then d= ; else d="$(srcdir)/"; fi; \
+	  f="`echo $$p | sed -e 's|^.*/||'`"; \
+	  echo " $(INSTALL_DATA) $$d$$p $(DESTDIR)$(testsuitedir)/$$f"; \
+	  $(INSTALL_DATA) $$d$$p $(DESTDIR)$(testsuitedir)/$$f; \
 	done
-	echo All tests passed.
 
-$(SINGLE_TESTS): 
-	$(CXX) $(LDFLAGS) $@.o -o $@ $(LIBS) 
+uninstall-testsuiteDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(testsuite_DATA)'; for p in $$list; do \
+	  f="`echo $$p | sed -e 's|^.*/||'`"; \
+	  echo " rm -f $(DESTDIR)$(testsuitedir)/$$f"; \
+	  rm -f $(DESTDIR)$(testsuitedir)/$$f; \
+	done
 
-initialize:	initialize.o
-shapecheck:	shapecheck.o
-reduce:	reduce.o
-storage:	storage.o
-ctors:	ctors.o
-derrick-bass-1:	derrick-bass-1.o
-qcd:	qcd.o
-loop1:	loop1.o
-peter-nordlund-1:	peter-nordlund-1.o
-peter-nordlund-2:	peter-nordlund-2.o
-shape:	shape.o
-interlace:	interlace.o
-promote:	promote.o
-arrayresize:	arrayresize.o
-minmax:	minmax.o
-modules:	module1.o module2.o
-	$(CXX) $(LDFLAGS) module1.o module2.o -o $@ $(LIBS)
-transpose: 	transpose.o
-reverse:	reverse.o
-extract:	extract.o
-free:	free.o
-chris-jeffery-1:	chris-jeffery-1.o
-where:	where.o
-minsumpow:	minsumpow.o
-gary-huber-1:	gary-huber-1.o
-derrick-bass-3:	derrick-bass-3.o
-constarray:	constarray.o
-chris-jeffery-2:	chris-jeffery-2.o
-reindex:	reindex.o
-Ulisses-Mello-1:	Ulisses-Mello-1.o
-peter-bienstman-1:	peter-bienstman-1.o
-complex:	complex.o
-peter-bienstman-2:	peter-bienstman-2.o
-peter-nordlund-3:	peter-nordlund-3.o
-newet:	newet.o
-peter-bienstman-3:	peter-bienstman-3.o
-troyer-genilloud:	troyer-genilloud.o
-iter:	iter.o
-contiguous:	contiguous.o
-exprctor:	exprctor.o
-matthias-troyer-2:	matthias-troyer-2.o
-Olaf-Ronneberger-1:	Olaf-Ronneberger-1.o
-peter-bienstman-4:	peter-bienstman-4.o
-tinymat:	tinymat.o
-wei-ku-1:	wei-ku-1.o
-theodore-papadopoulo-1:	theodore-papadopoulo-1.o
-peter-bienstman-5:	peter-bienstman-5.o
-Adnene-Ben-Abdallah-2:	Adnene-Ben-Abdallah-2.o
-Josef-Wagenhuber:	Josef-Wagenhuber.o
+# This directory's subdirectories are mostly independent; you can cd
+# into them and run `make' without going through this Makefile.
+# To change the values of `make' variables: instead of editing Makefiles,
+# (1) if the variable is set in `config.status', edit `config.status'
+#     (which will cause the Makefiles to be regenerated when you run `make');
+# (2) otherwise, pass the desired values on the `make' command line.
 
-##########################################################################
+all-recursive install-data-recursive install-exec-recursive \
+installdirs-recursive install-recursive uninstall-recursive  \
+check-recursive installcheck-recursive info-recursive dvi-recursive:
+	@set fnord $(MAKEFLAGS); amf=$$2; \
+	dot_seen=no; \
+	target=`echo $@ | sed s/-recursive//`; \
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  echo "Making $$target in $$subdir"; \
+	  if test "$$subdir" = "."; then \
+	    dot_seen=yes; \
+	    local_target="$$target-am"; \
+	  else \
+	    local_target="$$target"; \
+	  fi; \
+	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
+	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
+	done; \
+	if test "$$dot_seen" = "no"; then \
+	  $(MAKE) $(AM_MAKEFLAGS) "$$target-am" || exit 1; \
+	fi; test -z "$$fail"
 
-check:	all
+mostlyclean-recursive clean-recursive distclean-recursive \
+maintainer-clean-recursive:
+	@set fnord $(MAKEFLAGS); amf=$$2; \
+	dot_seen=no; \
+	rev=''; list='$(SUBDIRS)'; for subdir in $$list; do \
+	  if test "$$subdir" = "."; then :; else \
+	    rev="$$subdir $$rev"; \
+	  fi; \
+	done; \
+	rev="$$rev ."; \
+	target=`echo $@ | sed s/-recursive//`; \
+	for subdir in $$rev; do \
+	  echo "Making $$target in $$subdir"; \
+	  if test "$$subdir" = "."; then \
+	    local_target="$$target-am"; \
+	  else \
+	    local_target="$$target"; \
+	  fi; \
+	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
+	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
+	done && test -z "$$fail"
+tags-recursive:
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) tags); \
+	done
 
-clean:
-	rm -f *.o *.ii *.int.c *.s $(TESTS)
+tags: TAGS
+
+ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
+	list='$(SOURCES) $(HEADERS) $(TAGS_FILES)'; \
+	unique=`for i in $$list; do \
+	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+	  done | \
+	  $(AWK) '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	mkid -fID $$unique $(LISP)
+
+TAGS: tags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
+		$(TAGS_FILES) $(LISP)
+	tags=; \
+	here=`pwd`; \
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+   if test "$$subdir" = .; then :; else \
+	    test -f $$subdir/TAGS && tags="$$tags -i $$here/$$subdir/TAGS"; \
+   fi; \
+	done; \
+	list='$(SOURCES) $(HEADERS) $(TAGS_FILES)'; \
+	unique=`for i in $$list; do \
+	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+	  done | \
+	  $(AWK) '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	test -z "$(ETAGS_ARGS)$$unique$(LISP)$$tags" \
+	  || etags $(ETAGS_ARGS) $$tags  $$unique $(LISP)
+
+mostlyclean-tags:
+
+clean-tags:
+
+distclean-tags:
+	-rm -f TAGS ID
+
+maintainer-clean-tags:
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+
+distdir: $(DISTFILES)
+	@for file in $(DISTFILES); do \
+	  d=$(srcdir); \
+	  if test -d $$d/$$file; then \
+	    cp -pR $$d/$$file $(distdir) \
+	    || exit 1; \
+	  else \
+	    test -f $(distdir)/$$file \
+	    || cp -p $$d/$$file $(distdir)/$$file \
+	    || exit 1; \
+	  fi; \
+	done
+	for subdir in $(SUBDIRS); do \
+	  if test "$$subdir" = .; then :; else \
+	    test -d $(distdir)/$$subdir \
+	    || mkdir $(distdir)/$$subdir \
+	    || exit 1; \
+	    (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) top_distdir=../$(top_distdir) distdir=../$(distdir)/$$subdir distdir) \
+	      || exit 1; \
+	  fi; \
+	done
+info-am:
+info: info-recursive
+dvi-am:
+dvi: dvi-recursive
+check-am: all-am
+check: check-recursive
+installcheck-am:
+installcheck: installcheck-recursive
+install-exec-am:
+install-exec: install-exec-recursive
+
+install-data-am: install-testsuiteDATA
+install-data: install-data-recursive
+
+install-am: all-am
+	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
+install: install-recursive
+uninstall-am: uninstall-testsuiteDATA
+uninstall: uninstall-recursive
+all-am: Makefile $(DATA)
+all-redirect: all-recursive
+install-strip:
+	$(MAKE) $(AM_MAKEFLAGS) INSTALL_STRIP_FLAG=-s install
+installdirs: installdirs-recursive
+installdirs-am:
+	$(mkinstalldirs)  $(DESTDIR)$(testsuitedir)
+
+
+mostlyclean-generic:
+
+clean-generic:
+
+distclean-generic:
+	-rm -f Makefile $(CONFIG_CLEAN_FILES)
+	-rm -f config.cache config.log stamp-h stamp-h[0-9]*
+
+maintainer-clean-generic:
+	-rm -f Makefile.in
+mostlyclean-am:  mostlyclean-compile mostlyclean-tags \
+		mostlyclean-generic
+
+mostlyclean: mostlyclean-recursive
+
+clean-am:  clean-compile clean-tags clean-generic mostlyclean-am \
+		clean-local
+
+clean: clean-recursive
+
+distclean-am:  distclean-compile distclean-tags distclean-generic \
+		clean-am
+
+distclean: distclean-recursive
+
+maintainer-clean-am:  maintainer-clean-compile maintainer-clean-tags \
+		maintainer-clean-generic distclean-am
+	@echo "This command is intended for maintainers to use;"
+	@echo "it deletes files that may require special tools to rebuild."
+
+maintainer-clean: maintainer-clean-recursive
+
+.PHONY: mostlyclean-compile distclean-compile clean-compile \
+maintainer-clean-compile uninstall-testsuiteDATA install-testsuiteDATA \
+install-recursive uninstall-recursive install-data-recursive \
+uninstall-data-recursive install-exec-recursive \
+uninstall-exec-recursive installdirs-recursive uninstalldirs-recursive \
+all-recursive check-recursive installcheck-recursive info-recursive \
+dvi-recursive mostlyclean-recursive distclean-recursive clean-recursive \
+maintainer-clean-recursive tags tags-recursive mostlyclean-tags \
+distclean-tags clean-tags maintainer-clean-tags distdir info-am info \
+dvi-am dvi check check-am installcheck-am installcheck install-exec-am \
+install-exec install-data-am install-data install-am install \
+uninstall-am uninstall all-redirect all-am all install-strip \
+installdirs-am installdirs mostlyclean-generic distclean-generic \
+clean-generic maintainer-clean-generic clean mostlyclean distclean \
+maintainer-clean
+
+
+check-testsuite:  $(EXTRA_PROGRAMS)
+	@echo Running test suite...
+	@for prog in $(EXTRA_PROGRAMS) ; do \
+		echo $$prog && (./$$prog > /dev/null 2>&1) || exit 1; \
+		done
+	@echo All tests passed.
+
+clean-local:
+	-rm -rf cxx_repository $(EXTRA_PROGRAMS)
+
+# Tell versions [3.59,3.63) of GNU make to not export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:

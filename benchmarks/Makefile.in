@@ -1,46 +1,770 @@
-##############################################################################
-#
-# Blitz++ benchmarks makefile
-#
+# Makefile.in generated automatically by automake 1.4a from Makefile.am
+
+# Copyright 1994, 1995, 1996, 1997, 1998, 1999, 2000
+# Free Software Foundation, Inc.
+# This Makefile.in is free software; the Free Software Foundation
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+SHELL = @SHELL@
 
 srcdir = @srcdir@
+top_srcdir = @top_srcdir@
 VPATH = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
 
-BZDIR = $(srcdir)/..
+bindir = @bindir@
+sbindir = @sbindir@
+libexecdir = @libexecdir@
+datadir = @datadir@
+sysconfdir = @sysconfdir@
+sharedstatedir = @sharedstatedir@
+localstatedir = @localstatedir@
+libdir = @libdir@
+infodir = @infodir@
+mandir = @mandir@
+includedir = @includedir@
+oldincludedir = /usr/include
 
+pkgdatadir = $(datadir)/@PACKAGE@
+pkglibdir = $(libdir)/@PACKAGE@
+pkgincludedir = $(includedir)/@PACKAGE@
+
+top_builddir = ..
+
+ACLOCAL = @ACLOCAL@
+AUTOCONF = @AUTOCONF@
+AUTOMAKE = @AUTOMAKE@
+AUTOHEADER = @AUTOHEADER@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_SCRIPT = @INSTALL_SCRIPT@
+INSTALL_STRIP_FLAG =
+transform = @program_transform_name@
+
+NORMAL_INSTALL = :
+PRE_INSTALL = :
+POST_INSTALL = :
+NORMAL_UNINSTALL = :
+PRE_UNINSTALL = :
+POST_UNINSTALL = :
+
+@SET_MAKE@
+host_alias = @host_alias@
+host_triplet = @host@
+AMDEP = @AMDEP@
+AMTAR = @AMTAR@
+AR = @AR@
+AWK = @AWK@
+BLASLIB = @BLASLIB@
+CC = @CC@
+CPP = @CPP@
 CXX = @CXX@
-CXXFLAGS = @CXXFLAGS@ @CXX_OPTIMIZE_FLAGS@ @CXXFFLAGS@ -I$(BZDIR)
+CXXCPP = @CXXCPP@
+CXXFFLAGS = @CXXFFLAGS@
+CXX_DEBUG_FLAGS = @CXX_DEBUG_FLAGS@
+CXX_LIBS = @CXX_LIBS@
+CXX_OPTIMIZE_FLAGS = @CXX_OPTIMIZE_FLAGS@
+DEPDIR = @DEPDIR@
 F77 = @F77@
-F77FLAGS = @F77_OPTIMIZE_FLAGS@
+F77_OPTIMIZE_FLAGS = @F77_OPTIMIZE_FLAGS@
 F90 = @F90@
-F90FLAGS = @F90_OPTIMIZE_FLAGS@
+F90_OPTIMIZE_FLAGS = @F90_OPTIMIZE_FLAGS@
+FORTLIBS = @FORTLIBS@
 LDFLAGS = @LDFLAGS@
+MAKEINFO = @MAKEINFO@
+PACKAGE = @PACKAGE@
+RANLIB = @RANLIB@
+SHELL = @SHELL@
+VERSION = @VERSION@
+install_sh = @install_sh@
 
-LIBS = -L$(BZDIR)/lib -lblitz -lm @BLASLIB@ @FORTLIBS@ @CXX_LIBS@
+#
+# $Id$
+#
+# Patrick Guio <patrick.guio@fys.uio.no>
+#
 
-.SUFFIXES: .o .cpp .f
 
-.cpp.o:
-	$(CXX) $(CXXFLAGS) -c $*.cpp
+SUBDIRS = 
 
-.f.o:
-	$(F77) $(F77FLAGS) -c $*.f
+EXTRA_DIST = arrdaxpy.cpp arrdaxpy.m arrdaxpy2.m arrdaxpyf.f arrexpr1.cpp \
+arrexpr1.m cfd.cpp cfdf.f cfortran.h chunky.cpp compiletime.cpp \
+ctime-results ctime1.cpp ctime1v.cpp ctime2.cpp ctime2v.cpp ctime3.cpp \
+ctime3v.cpp ctime4.cpp ctime4v.cpp ctime5.cpp ctime5c.cpp ctime5v.cpp \
+daxpy2.cpp daxpyf90-2.f90 dot.cpp dot2.cpp echof2-back.f echotune.cpp \
+echotune.m echotunef.f frek.m hao-he-mark.cpp kepler.cpp loop1-bug.cpp \
+loop4.cpp loop4f.f loop4f90.f90 loopstruct.cpp looptest.cpp makelogo.cpp \
+makeloops.cpp qcd.txt quinlan.cpp stenciln.cpp tiny3.cpp
+
+
+CXXFLAGS = @CXXFLAGS@ @CXX_OPTIMIZE_FLAGS@ @CXXFFLAGS@ -I$(top_srcdir)
+F77FLAGS = @F77_OPTIMIZE_FLAGS@
+F90FLAGS = @F90_OPTIMIZE_FLAGS@
+
+LIBS = -L$(top_srcdir)/lib -lblitz -lm @BLASLIB@ @FORTLIBS@ @CXX_LIBS@
+
+F77COMPILE = $(F77) $(AM_FFLAGS) $(FFLAGS) $(F77FLAGS)
+F90COMPILE = $(F90) $(AM_FFLAGS) $(FFLAGS) $(F90FLAGS)
+
+# install these files
+benchmarkdir = $(prefix)/benchmarks
+benchmark_DATA = acou3d.cpp acou3db1.cpp acou3db2.cpp acou3db3.cpp \
+acou3db4.cpp acou3df.f acou3df2.f acou3df90.f90 acou3df902.f90 acoustic.cpp \
+acousticf.f acousticf2.f acousticf90.f90 acousticf902.f90 arrdaxpy.cpp \
+arrdaxpy.m arrdaxpy2.m arrdaxpyf.f arrexpr1.cpp arrexpr1.m cfd.cpp cfdf.f \
+chunky.cpp compiletime.cpp ctime1.cpp ctime1v.cpp ctime2.cpp \
+ctime2v.cpp ctime3.cpp ctime3v.cpp ctime4.cpp ctime4v.cpp ctime5.cpp \
+ctime5c.cpp ctime5v.cpp daxpy.cpp daxpy2.cpp daxpyf90-2.f90 daxpyf90.f90 \
+dot.cpp dot2.cpp echof2-back.f echotune.cpp echotune.m echotunef.f fdaxpy.f \
+fidaxpy.f frek.m haney.cpp haneyf.f hao-he-mark.cpp hao-he.cpp kepler.cpp \
+loop1-bug.cpp loop1.cpp loop10.cpp loop10f.f loop10f90.f90 loop11.cpp \
+loop11f.f loop11f90.f90 loop12.cpp loop12f.f loop12f90.f90 loop13.cpp \
+loop13f.f loop13f90.f90 loop14.cpp loop14f.f loop14f90.f90 loop15.cpp \
+loop15f.f loop15f90.f90 loop16.cpp loop16f.f loop16f90.f90 loop17.cpp \
+loop17f.f loop17f90.f90 loop18.cpp loop18f.f loop18f90.f90 loop19.cpp \
+loop19f.f loop19f90.f90 loop1f.f loop1f90.f90 loop2.cpp loop21.cpp loop21f.f \
+loop21f90.f90 loop22.cpp loop22f.f loop22f90.f90 loop23.cpp loop23f.f \
+loop23f90.f90 loop24.cpp loop24f.f loop24f90.f90 loop25.cpp loop25f.f \
+loop25f90.f90 loop2f.f loop2f90.f90 loop3.cpp loop36.cpp loop36f.f \
+loop36f90.f90 loop3f.f loop3f90.f90 loop4.cpp loop4f.f loop4f90.f90 \
+loop5.cpp loop5f.f loop5f90.f90 loop6.cpp loop6f.f loop6f90.f90 loop8.cpp \
+loop8f.f loop8f90.f90 loop9.cpp loop9f.f loop9f90.f90 loopstruct.cpp \
+looptest.cpp makelogo.cpp makeloops.cpp qcd.cpp qcdf.f quinlan.cpp \
+stencil.cpp stencilf.f stencilf2.f stencilf90.f90 stenciln.cpp tiny3.cpp \
+tinydaxpy.cpp
+
 
 ############################################################################
 
-LOOP_KERNELS = loop1 loop2 loop3 loop5 loop6 loop8 loop9 \
-        loop10 loop11 loop12 loop13 loop14 loop15 loop16 loop17 loop18 \
-	loop19 loop21 loop22 loop23 loop24 loop25 loop36
+LOOP_KERNELS = loop1 loop2 loop3 loop5 loop6 loop8 loop9 loop10 loop11 \
+loop12 loop13 loop14 loop15 loop16 loop17 loop18 loop19 loop21 loop22 \
+loop23 loop24 loop25 loop36
+
 
 BENCHMARKS = daxpy haney qcd stencil tinydaxpy acoustic acou3d hao-he \
-	$(LOOP_KERNELS)
+$(LOOP_KERNELS)
+
 
 COMPILE_TIME_BENCHMARKS = ctime1 ctime2 ctime3 ctime4 ctime5 ctime1v \
-	ctime2v ctime3v ctime4v ctime5v
+ctime2v ctime3v ctime4v ctime5v
 
-all:	$(BENCHMARKS) 
 
-run:	all
+EXTRA_PROGRAMS = $(BENCHMARKS)
+
+############################################################################
+
+haney_SOURCES = haney.cpp haneyf.f
+daxpy_SOURCES = daxpy.cpp fdaxpy.f fidaxpy.f daxpyf90.f90
+qcd_SOURCES = qcd.cpp qcdf.f
+stencil_SOURCES = stencil.cpp stencilf.f stencilf2.f stencilf90.f90
+acoustic_SOURCES = acoustic.cpp acousticf.f acousticf2.f acousticf90.f90 \
+acousticf902.f90
+
+acou3d_SOURCES = acou3db1.cpp acou3db2.cpp acou3db3.cpp acou3db4.cpp \
+acou3d.cpp acou3df90.f90 acou3df.f acou3df2.f acou3df902.f90
+
+tinydaxpy_SOURCES = tinydaxpy.cpp
+hao_he_SOURCES = hao-he.cpp
+
+# Loop kernel tests
+#
+# Note: The loop numbers skip around because they represent
+# selected loops from a suite used by IBM researchers to test
+# the RS/6000.  Missing loops are ones which were too complicated
+# to generate automatically.
+#
+# This section generated by makeloops.cpp
+
+loop1_SOURCES = loop1.cpp loop1f.f loop1f90.f90
+loop2_SOURCES = loop2.cpp loop2f.f loop2f90.f90
+loop3_SOURCES = loop3.cpp loop3f.f loop3f90.f90
+loop5_SOURCES = loop5.cpp loop5f.f loop5f90.f90
+loop6_SOURCES = loop6.cpp loop6f.f loop6f90.f90
+loop8_SOURCES = loop8.cpp loop8f.f loop8f90.f90
+loop9_SOURCES = loop9.cpp loop9f.f loop9f90.f90
+loop10_SOURCES = loop10.cpp loop10f.f loop10f90.f90
+loop11_SOURCES = loop11.cpp loop11f.f loop11f90.f90
+loop12_SOURCES = loop12.cpp loop12f.f loop12f90.f90
+loop13_SOURCES = loop13.cpp loop13f.f loop13f90.f90
+loop14_SOURCES = loop14.cpp loop14f.f loop14f90.f90
+loop15_SOURCES = loop15.cpp loop15f.f loop15f90.f90
+loop16_SOURCES = loop16.cpp loop16f.f loop16f90.f90
+loop17_SOURCES = loop17.cpp loop17f.f loop17f90.f90
+loop18_SOURCES = loop18.cpp loop18f.f loop18f90.f90
+loop19_SOURCES = loop19.cpp loop19f.f loop19f90.f90
+loop21_SOURCES = loop21.cpp loop21f.f loop21f90.f90
+loop22_SOURCES = loop22.cpp loop22f.f loop22f90.f90
+loop23_SOURCES = loop23.cpp loop23f.f loop23f90.f90
+loop24_SOURCES = loop24.cpp loop24f.f loop24f90.f90
+loop25_SOURCES = loop25.cpp loop25f.f loop25f90.f90
+loop36_SOURCES = loop36.cpp loop36f.f loop36f90.f90
+subdir = benchmarks
+mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+CONFIG_CLEAN_FILES = 
+
+DEFS = @DEFS@ -I. -I$(srcdir)
+CPPFLAGS = @CPPFLAGS@
+am_acou3d_OBJECTS =  acou3db1.o acou3db2.o acou3db3.o acou3db4.o \
+acou3d.o acou3df90.o acou3df.o acou3df2.o acou3df902.o
+acou3d_OBJECTS =  $(am_acou3d_OBJECTS)
+acou3d_LDADD = $(LDADD)
+acou3d_DEPENDENCIES = 
+acou3d_LDFLAGS = 
+am_acoustic_OBJECTS =  acoustic.o acousticf.o acousticf2.o acousticf90.o \
+acousticf902.o
+acoustic_OBJECTS =  $(am_acoustic_OBJECTS)
+acoustic_LDADD = $(LDADD)
+acoustic_DEPENDENCIES = 
+acoustic_LDFLAGS = 
+am_daxpy_OBJECTS =  daxpy.o fdaxpy.o fidaxpy.o daxpyf90.o
+daxpy_OBJECTS =  $(am_daxpy_OBJECTS)
+daxpy_LDADD = $(LDADD)
+daxpy_DEPENDENCIES = 
+daxpy_LDFLAGS = 
+am_haney_OBJECTS =  haney.o haneyf.o
+haney_OBJECTS =  $(am_haney_OBJECTS)
+haney_LDADD = $(LDADD)
+haney_DEPENDENCIES = 
+haney_LDFLAGS = 
+am_hao_he_OBJECTS =  hao-he.o
+hao_he_OBJECTS =  $(am_hao_he_OBJECTS)
+hao_he_LDADD = $(LDADD)
+hao_he_DEPENDENCIES = 
+hao_he_LDFLAGS = 
+am_loop1_OBJECTS =  loop1.o loop1f.o loop1f90.o
+loop1_OBJECTS =  $(am_loop1_OBJECTS)
+loop1_LDADD = $(LDADD)
+loop1_DEPENDENCIES = 
+loop1_LDFLAGS = 
+am_loop10_OBJECTS =  loop10.o loop10f.o loop10f90.o
+loop10_OBJECTS =  $(am_loop10_OBJECTS)
+loop10_LDADD = $(LDADD)
+loop10_DEPENDENCIES = 
+loop10_LDFLAGS = 
+am_loop11_OBJECTS =  loop11.o loop11f.o loop11f90.o
+loop11_OBJECTS =  $(am_loop11_OBJECTS)
+loop11_LDADD = $(LDADD)
+loop11_DEPENDENCIES = 
+loop11_LDFLAGS = 
+am_loop12_OBJECTS =  loop12.o loop12f.o loop12f90.o
+loop12_OBJECTS =  $(am_loop12_OBJECTS)
+loop12_LDADD = $(LDADD)
+loop12_DEPENDENCIES = 
+loop12_LDFLAGS = 
+am_loop13_OBJECTS =  loop13.o loop13f.o loop13f90.o
+loop13_OBJECTS =  $(am_loop13_OBJECTS)
+loop13_LDADD = $(LDADD)
+loop13_DEPENDENCIES = 
+loop13_LDFLAGS = 
+am_loop14_OBJECTS =  loop14.o loop14f.o loop14f90.o
+loop14_OBJECTS =  $(am_loop14_OBJECTS)
+loop14_LDADD = $(LDADD)
+loop14_DEPENDENCIES = 
+loop14_LDFLAGS = 
+am_loop15_OBJECTS =  loop15.o loop15f.o loop15f90.o
+loop15_OBJECTS =  $(am_loop15_OBJECTS)
+loop15_LDADD = $(LDADD)
+loop15_DEPENDENCIES = 
+loop15_LDFLAGS = 
+am_loop16_OBJECTS =  loop16.o loop16f.o loop16f90.o
+loop16_OBJECTS =  $(am_loop16_OBJECTS)
+loop16_LDADD = $(LDADD)
+loop16_DEPENDENCIES = 
+loop16_LDFLAGS = 
+am_loop17_OBJECTS =  loop17.o loop17f.o loop17f90.o
+loop17_OBJECTS =  $(am_loop17_OBJECTS)
+loop17_LDADD = $(LDADD)
+loop17_DEPENDENCIES = 
+loop17_LDFLAGS = 
+am_loop18_OBJECTS =  loop18.o loop18f.o loop18f90.o
+loop18_OBJECTS =  $(am_loop18_OBJECTS)
+loop18_LDADD = $(LDADD)
+loop18_DEPENDENCIES = 
+loop18_LDFLAGS = 
+am_loop19_OBJECTS =  loop19.o loop19f.o loop19f90.o
+loop19_OBJECTS =  $(am_loop19_OBJECTS)
+loop19_LDADD = $(LDADD)
+loop19_DEPENDENCIES = 
+loop19_LDFLAGS = 
+am_loop2_OBJECTS =  loop2.o loop2f.o loop2f90.o
+loop2_OBJECTS =  $(am_loop2_OBJECTS)
+loop2_LDADD = $(LDADD)
+loop2_DEPENDENCIES = 
+loop2_LDFLAGS = 
+am_loop21_OBJECTS =  loop21.o loop21f.o loop21f90.o
+loop21_OBJECTS =  $(am_loop21_OBJECTS)
+loop21_LDADD = $(LDADD)
+loop21_DEPENDENCIES = 
+loop21_LDFLAGS = 
+am_loop22_OBJECTS =  loop22.o loop22f.o loop22f90.o
+loop22_OBJECTS =  $(am_loop22_OBJECTS)
+loop22_LDADD = $(LDADD)
+loop22_DEPENDENCIES = 
+loop22_LDFLAGS = 
+am_loop23_OBJECTS =  loop23.o loop23f.o loop23f90.o
+loop23_OBJECTS =  $(am_loop23_OBJECTS)
+loop23_LDADD = $(LDADD)
+loop23_DEPENDENCIES = 
+loop23_LDFLAGS = 
+am_loop24_OBJECTS =  loop24.o loop24f.o loop24f90.o
+loop24_OBJECTS =  $(am_loop24_OBJECTS)
+loop24_LDADD = $(LDADD)
+loop24_DEPENDENCIES = 
+loop24_LDFLAGS = 
+am_loop25_OBJECTS =  loop25.o loop25f.o loop25f90.o
+loop25_OBJECTS =  $(am_loop25_OBJECTS)
+loop25_LDADD = $(LDADD)
+loop25_DEPENDENCIES = 
+loop25_LDFLAGS = 
+am_loop3_OBJECTS =  loop3.o loop3f.o loop3f90.o
+loop3_OBJECTS =  $(am_loop3_OBJECTS)
+loop3_LDADD = $(LDADD)
+loop3_DEPENDENCIES = 
+loop3_LDFLAGS = 
+am_loop36_OBJECTS =  loop36.o loop36f.o loop36f90.o
+loop36_OBJECTS =  $(am_loop36_OBJECTS)
+loop36_LDADD = $(LDADD)
+loop36_DEPENDENCIES = 
+loop36_LDFLAGS = 
+am_loop5_OBJECTS =  loop5.o loop5f.o loop5f90.o
+loop5_OBJECTS =  $(am_loop5_OBJECTS)
+loop5_LDADD = $(LDADD)
+loop5_DEPENDENCIES = 
+loop5_LDFLAGS = 
+am_loop6_OBJECTS =  loop6.o loop6f.o loop6f90.o
+loop6_OBJECTS =  $(am_loop6_OBJECTS)
+loop6_LDADD = $(LDADD)
+loop6_DEPENDENCIES = 
+loop6_LDFLAGS = 
+am_loop8_OBJECTS =  loop8.o loop8f.o loop8f90.o
+loop8_OBJECTS =  $(am_loop8_OBJECTS)
+loop8_LDADD = $(LDADD)
+loop8_DEPENDENCIES = 
+loop8_LDFLAGS = 
+am_loop9_OBJECTS =  loop9.o loop9f.o loop9f90.o
+loop9_OBJECTS =  $(am_loop9_OBJECTS)
+loop9_LDADD = $(LDADD)
+loop9_DEPENDENCIES = 
+loop9_LDFLAGS = 
+am_qcd_OBJECTS =  qcd.o qcdf.o
+qcd_OBJECTS =  $(am_qcd_OBJECTS)
+qcd_LDADD = $(LDADD)
+qcd_DEPENDENCIES = 
+qcd_LDFLAGS = 
+am_stencil_OBJECTS =  stencil.o stencilf.o stencilf2.o stencilf90.o
+stencil_OBJECTS =  $(am_stencil_OBJECTS)
+stencil_LDADD = $(LDADD)
+stencil_DEPENDENCIES = 
+stencil_LDFLAGS = 
+am_tinydaxpy_OBJECTS =  tinydaxpy.o
+tinydaxpy_OBJECTS =  $(am_tinydaxpy_OBJECTS)
+tinydaxpy_LDADD = $(LDADD)
+tinydaxpy_DEPENDENCIES = 
+tinydaxpy_LDFLAGS = 
+CXXCOMPILE = $(CXX) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+CXXLD = $(CXX)
+CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+FFLAGS = @FFLAGS@
+F77LD = $(F77)
+F77LINK = $(F77LD) $(AM_FFLAGS) $(FFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+DIST_SOURCES =  $(acou3d_SOURCES) $(acoustic_SOURCES) $(daxpy_SOURCES) \
+$(haney_SOURCES) $(hao_he_SOURCES) $(loop1_SOURCES) $(loop10_SOURCES) \
+$(loop11_SOURCES) $(loop12_SOURCES) $(loop13_SOURCES) $(loop14_SOURCES) \
+$(loop15_SOURCES) $(loop16_SOURCES) $(loop17_SOURCES) $(loop18_SOURCES) \
+$(loop19_SOURCES) $(loop2_SOURCES) $(loop21_SOURCES) $(loop22_SOURCES) \
+$(loop23_SOURCES) $(loop24_SOURCES) $(loop25_SOURCES) $(loop3_SOURCES) \
+$(loop36_SOURCES) $(loop5_SOURCES) $(loop6_SOURCES) $(loop8_SOURCES) \
+$(loop9_SOURCES) $(qcd_SOURCES) $(stencil_SOURCES) $(tinydaxpy_SOURCES)
+DATA =  $(benchmark_DATA)
+
+depcomp = 
+DIST_COMMON =  Makefile.am Makefile.in
+
+
+DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+
+GZIP_ENV = --best
+SOURCES = $(acou3d_SOURCES) $(acoustic_SOURCES) $(daxpy_SOURCES) $(haney_SOURCES) $(hao_he_SOURCES) $(loop1_SOURCES) $(loop10_SOURCES) $(loop11_SOURCES) $(loop12_SOURCES) $(loop13_SOURCES) $(loop14_SOURCES) $(loop15_SOURCES) $(loop16_SOURCES) $(loop17_SOURCES) $(loop18_SOURCES) $(loop19_SOURCES) $(loop2_SOURCES) $(loop21_SOURCES) $(loop22_SOURCES) $(loop23_SOURCES) $(loop24_SOURCES) $(loop25_SOURCES) $(loop3_SOURCES) $(loop36_SOURCES) $(loop5_SOURCES) $(loop6_SOURCES) $(loop8_SOURCES) $(loop9_SOURCES) $(qcd_SOURCES) $(stencil_SOURCES) $(tinydaxpy_SOURCES)
+OBJECTS = $(am_acou3d_OBJECTS) $(am_acoustic_OBJECTS) $(am_daxpy_OBJECTS) $(am_haney_OBJECTS) $(am_hao_he_OBJECTS) $(am_loop1_OBJECTS) $(am_loop10_OBJECTS) $(am_loop11_OBJECTS) $(am_loop12_OBJECTS) $(am_loop13_OBJECTS) $(am_loop14_OBJECTS) $(am_loop15_OBJECTS) $(am_loop16_OBJECTS) $(am_loop17_OBJECTS) $(am_loop18_OBJECTS) $(am_loop19_OBJECTS) $(am_loop2_OBJECTS) $(am_loop21_OBJECTS) $(am_loop22_OBJECTS) $(am_loop23_OBJECTS) $(am_loop24_OBJECTS) $(am_loop25_OBJECTS) $(am_loop3_OBJECTS) $(am_loop36_OBJECTS) $(am_loop5_OBJECTS) $(am_loop6_OBJECTS) $(am_loop8_OBJECTS) $(am_loop9_OBJECTS) $(am_qcd_OBJECTS) $(am_stencil_OBJECTS) $(am_tinydaxpy_OBJECTS)
+
+all: all-redirect
+.SUFFIXES:
+.SUFFIXES: .c .cpp .f .f90 .o
+$(srcdir)/Makefile.in: Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu --ignore-deps benchmarks/Makefile
+
+Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status
+	cd $(top_builddir) \
+	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
+
+
+mostlyclean-compile:
+	-rm -f *.o core *.core
+
+clean-compile:
+
+distclean-compile:
+	-rm -f *.tab.c
+
+maintainer-clean-compile:
+
+acou3d: $(acou3d_OBJECTS) $(acou3d_DEPENDENCIES)
+	@rm -f acou3d
+	$(CXXLINK) $(acou3d_LDFLAGS) $(acou3d_OBJECTS) $(acou3d_LDADD) $(LIBS)
+
+acoustic: $(acoustic_OBJECTS) $(acoustic_DEPENDENCIES)
+	@rm -f acoustic
+	$(CXXLINK) $(acoustic_LDFLAGS) $(acoustic_OBJECTS) $(acoustic_LDADD) $(LIBS)
+
+daxpy: $(daxpy_OBJECTS) $(daxpy_DEPENDENCIES)
+	@rm -f daxpy
+	$(CXXLINK) $(daxpy_LDFLAGS) $(daxpy_OBJECTS) $(daxpy_LDADD) $(LIBS)
+
+haney: $(haney_OBJECTS) $(haney_DEPENDENCIES)
+	@rm -f haney
+	$(CXXLINK) $(haney_LDFLAGS) $(haney_OBJECTS) $(haney_LDADD) $(LIBS)
+
+hao-he: $(hao_he_OBJECTS) $(hao_he_DEPENDENCIES)
+	@rm -f hao-he
+	$(CXXLINK) $(hao_he_LDFLAGS) $(hao_he_OBJECTS) $(hao_he_LDADD) $(LIBS)
+
+loop1: $(loop1_OBJECTS) $(loop1_DEPENDENCIES)
+	@rm -f loop1
+	$(CXXLINK) $(loop1_LDFLAGS) $(loop1_OBJECTS) $(loop1_LDADD) $(LIBS)
+
+loop10: $(loop10_OBJECTS) $(loop10_DEPENDENCIES)
+	@rm -f loop10
+	$(CXXLINK) $(loop10_LDFLAGS) $(loop10_OBJECTS) $(loop10_LDADD) $(LIBS)
+
+loop11: $(loop11_OBJECTS) $(loop11_DEPENDENCIES)
+	@rm -f loop11
+	$(CXXLINK) $(loop11_LDFLAGS) $(loop11_OBJECTS) $(loop11_LDADD) $(LIBS)
+
+loop12: $(loop12_OBJECTS) $(loop12_DEPENDENCIES)
+	@rm -f loop12
+	$(CXXLINK) $(loop12_LDFLAGS) $(loop12_OBJECTS) $(loop12_LDADD) $(LIBS)
+
+loop13: $(loop13_OBJECTS) $(loop13_DEPENDENCIES)
+	@rm -f loop13
+	$(CXXLINK) $(loop13_LDFLAGS) $(loop13_OBJECTS) $(loop13_LDADD) $(LIBS)
+
+loop14: $(loop14_OBJECTS) $(loop14_DEPENDENCIES)
+	@rm -f loop14
+	$(CXXLINK) $(loop14_LDFLAGS) $(loop14_OBJECTS) $(loop14_LDADD) $(LIBS)
+
+loop15: $(loop15_OBJECTS) $(loop15_DEPENDENCIES)
+	@rm -f loop15
+	$(CXXLINK) $(loop15_LDFLAGS) $(loop15_OBJECTS) $(loop15_LDADD) $(LIBS)
+
+loop16: $(loop16_OBJECTS) $(loop16_DEPENDENCIES)
+	@rm -f loop16
+	$(CXXLINK) $(loop16_LDFLAGS) $(loop16_OBJECTS) $(loop16_LDADD) $(LIBS)
+
+loop17: $(loop17_OBJECTS) $(loop17_DEPENDENCIES)
+	@rm -f loop17
+	$(CXXLINK) $(loop17_LDFLAGS) $(loop17_OBJECTS) $(loop17_LDADD) $(LIBS)
+
+loop18: $(loop18_OBJECTS) $(loop18_DEPENDENCIES)
+	@rm -f loop18
+	$(CXXLINK) $(loop18_LDFLAGS) $(loop18_OBJECTS) $(loop18_LDADD) $(LIBS)
+
+loop19: $(loop19_OBJECTS) $(loop19_DEPENDENCIES)
+	@rm -f loop19
+	$(CXXLINK) $(loop19_LDFLAGS) $(loop19_OBJECTS) $(loop19_LDADD) $(LIBS)
+
+loop2: $(loop2_OBJECTS) $(loop2_DEPENDENCIES)
+	@rm -f loop2
+	$(CXXLINK) $(loop2_LDFLAGS) $(loop2_OBJECTS) $(loop2_LDADD) $(LIBS)
+
+loop21: $(loop21_OBJECTS) $(loop21_DEPENDENCIES)
+	@rm -f loop21
+	$(CXXLINK) $(loop21_LDFLAGS) $(loop21_OBJECTS) $(loop21_LDADD) $(LIBS)
+
+loop22: $(loop22_OBJECTS) $(loop22_DEPENDENCIES)
+	@rm -f loop22
+	$(CXXLINK) $(loop22_LDFLAGS) $(loop22_OBJECTS) $(loop22_LDADD) $(LIBS)
+
+loop23: $(loop23_OBJECTS) $(loop23_DEPENDENCIES)
+	@rm -f loop23
+	$(CXXLINK) $(loop23_LDFLAGS) $(loop23_OBJECTS) $(loop23_LDADD) $(LIBS)
+
+loop24: $(loop24_OBJECTS) $(loop24_DEPENDENCIES)
+	@rm -f loop24
+	$(CXXLINK) $(loop24_LDFLAGS) $(loop24_OBJECTS) $(loop24_LDADD) $(LIBS)
+
+loop25: $(loop25_OBJECTS) $(loop25_DEPENDENCIES)
+	@rm -f loop25
+	$(CXXLINK) $(loop25_LDFLAGS) $(loop25_OBJECTS) $(loop25_LDADD) $(LIBS)
+
+loop3: $(loop3_OBJECTS) $(loop3_DEPENDENCIES)
+	@rm -f loop3
+	$(CXXLINK) $(loop3_LDFLAGS) $(loop3_OBJECTS) $(loop3_LDADD) $(LIBS)
+
+loop36: $(loop36_OBJECTS) $(loop36_DEPENDENCIES)
+	@rm -f loop36
+	$(CXXLINK) $(loop36_LDFLAGS) $(loop36_OBJECTS) $(loop36_LDADD) $(LIBS)
+
+loop5: $(loop5_OBJECTS) $(loop5_DEPENDENCIES)
+	@rm -f loop5
+	$(CXXLINK) $(loop5_LDFLAGS) $(loop5_OBJECTS) $(loop5_LDADD) $(LIBS)
+
+loop6: $(loop6_OBJECTS) $(loop6_DEPENDENCIES)
+	@rm -f loop6
+	$(CXXLINK) $(loop6_LDFLAGS) $(loop6_OBJECTS) $(loop6_LDADD) $(LIBS)
+
+loop8: $(loop8_OBJECTS) $(loop8_DEPENDENCIES)
+	@rm -f loop8
+	$(CXXLINK) $(loop8_LDFLAGS) $(loop8_OBJECTS) $(loop8_LDADD) $(LIBS)
+
+loop9: $(loop9_OBJECTS) $(loop9_DEPENDENCIES)
+	@rm -f loop9
+	$(CXXLINK) $(loop9_LDFLAGS) $(loop9_OBJECTS) $(loop9_LDADD) $(LIBS)
+
+qcd: $(qcd_OBJECTS) $(qcd_DEPENDENCIES)
+	@rm -f qcd
+	$(CXXLINK) $(qcd_LDFLAGS) $(qcd_OBJECTS) $(qcd_LDADD) $(LIBS)
+
+stencil: $(stencil_OBJECTS) $(stencil_DEPENDENCIES)
+	@rm -f stencil
+	$(CXXLINK) $(stencil_LDFLAGS) $(stencil_OBJECTS) $(stencil_LDADD) $(LIBS)
+
+tinydaxpy: $(tinydaxpy_OBJECTS) $(tinydaxpy_DEPENDENCIES)
+	@rm -f tinydaxpy
+	$(CXXLINK) $(tinydaxpy_LDFLAGS) $(tinydaxpy_OBJECTS) $(tinydaxpy_LDADD) $(LIBS)
+.cpp.o:
+	$(CXXCOMPILE) -c -o $@ $<
+.f.o:
+	$(F77COMPILE) -c -o $@ $<
+.f90.o:
+	$(F77COMPILE) -c -o $@ $<
+
+install-benchmarkDATA: $(benchmark_DATA)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(benchmarkdir)
+	@list='$(benchmark_DATA)'; for p in $$list; do \
+	  if test -f "$$p"; then d= ; else d="$(srcdir)/"; fi; \
+	  f="`echo $$p | sed -e 's|^.*/||'`"; \
+	  echo " $(INSTALL_DATA) $$d$$p $(DESTDIR)$(benchmarkdir)/$$f"; \
+	  $(INSTALL_DATA) $$d$$p $(DESTDIR)$(benchmarkdir)/$$f; \
+	done
+
+uninstall-benchmarkDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(benchmark_DATA)'; for p in $$list; do \
+	  f="`echo $$p | sed -e 's|^.*/||'`"; \
+	  echo " rm -f $(DESTDIR)$(benchmarkdir)/$$f"; \
+	  rm -f $(DESTDIR)$(benchmarkdir)/$$f; \
+	done
+
+# This directory's subdirectories are mostly independent; you can cd
+# into them and run `make' without going through this Makefile.
+# To change the values of `make' variables: instead of editing Makefiles,
+# (1) if the variable is set in `config.status', edit `config.status'
+#     (which will cause the Makefiles to be regenerated when you run `make');
+# (2) otherwise, pass the desired values on the `make' command line.
+
+all-recursive install-data-recursive install-exec-recursive \
+installdirs-recursive install-recursive uninstall-recursive  \
+check-recursive installcheck-recursive info-recursive dvi-recursive:
+	@set fnord $(MAKEFLAGS); amf=$$2; \
+	dot_seen=no; \
+	target=`echo $@ | sed s/-recursive//`; \
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  echo "Making $$target in $$subdir"; \
+	  if test "$$subdir" = "."; then \
+	    dot_seen=yes; \
+	    local_target="$$target-am"; \
+	  else \
+	    local_target="$$target"; \
+	  fi; \
+	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
+	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
+	done; \
+	if test "$$dot_seen" = "no"; then \
+	  $(MAKE) $(AM_MAKEFLAGS) "$$target-am" || exit 1; \
+	fi; test -z "$$fail"
+
+mostlyclean-recursive clean-recursive distclean-recursive \
+maintainer-clean-recursive:
+	@set fnord $(MAKEFLAGS); amf=$$2; \
+	dot_seen=no; \
+	rev=''; list='$(SUBDIRS)'; for subdir in $$list; do \
+	  if test "$$subdir" = "."; then :; else \
+	    rev="$$subdir $$rev"; \
+	  fi; \
+	done; \
+	rev="$$rev ."; \
+	target=`echo $@ | sed s/-recursive//`; \
+	for subdir in $$rev; do \
+	  echo "Making $$target in $$subdir"; \
+	  if test "$$subdir" = "."; then \
+	    local_target="$$target-am"; \
+	  else \
+	    local_target="$$target"; \
+	  fi; \
+	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
+	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
+	done && test -z "$$fail"
+tags-recursive:
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) tags); \
+	done
+
+tags: TAGS
+
+ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
+	list='$(SOURCES) $(HEADERS) $(TAGS_FILES)'; \
+	unique=`for i in $$list; do \
+	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+	  done | \
+	  $(AWK) '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	mkid -fID $$unique $(LISP)
+
+TAGS: tags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
+		$(TAGS_FILES) $(LISP)
+	tags=; \
+	here=`pwd`; \
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+   if test "$$subdir" = .; then :; else \
+	    test -f $$subdir/TAGS && tags="$$tags -i $$here/$$subdir/TAGS"; \
+   fi; \
+	done; \
+	list='$(SOURCES) $(HEADERS) $(TAGS_FILES)'; \
+	unique=`for i in $$list; do \
+	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+	  done | \
+	  $(AWK) '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	test -z "$(ETAGS_ARGS)$$unique$(LISP)$$tags" \
+	  || etags $(ETAGS_ARGS) $$tags  $$unique $(LISP)
+
+mostlyclean-tags:
+
+clean-tags:
+
+distclean-tags:
+	-rm -f TAGS ID
+
+maintainer-clean-tags:
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+
+distdir: $(DISTFILES)
+	@for file in $(DISTFILES); do \
+	  d=$(srcdir); \
+	  if test -d $$d/$$file; then \
+	    cp -pR $$d/$$file $(distdir) \
+	    || exit 1; \
+	  else \
+	    test -f $(distdir)/$$file \
+	    || cp -p $$d/$$file $(distdir)/$$file \
+	    || exit 1; \
+	  fi; \
+	done
+	for subdir in $(SUBDIRS); do \
+	  if test "$$subdir" = .; then :; else \
+	    test -d $(distdir)/$$subdir \
+	    || mkdir $(distdir)/$$subdir \
+	    || exit 1; \
+	    (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) top_distdir=../$(top_distdir) distdir=../$(distdir)/$$subdir distdir) \
+	      || exit 1; \
+	  fi; \
+	done
+info-am:
+info: info-recursive
+dvi-am:
+dvi: dvi-recursive
+check-am: all-am
+check: check-recursive
+installcheck-am:
+installcheck: installcheck-recursive
+install-exec-am:
+install-exec: install-exec-recursive
+
+install-data-am: install-benchmarkDATA
+install-data: install-data-recursive
+
+install-am: all-am
+	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
+install: install-recursive
+uninstall-am: uninstall-benchmarkDATA
+uninstall: uninstall-recursive
+all-am: Makefile $(DATA)
+all-redirect: all-recursive
+install-strip:
+	$(MAKE) $(AM_MAKEFLAGS) INSTALL_STRIP_FLAG=-s install
+installdirs: installdirs-recursive
+installdirs-am:
+	$(mkinstalldirs)  $(DESTDIR)$(benchmarkdir)
+
+
+mostlyclean-generic:
+
+clean-generic:
+
+distclean-generic:
+	-rm -f Makefile $(CONFIG_CLEAN_FILES)
+	-rm -f config.cache config.log stamp-h stamp-h[0-9]*
+
+maintainer-clean-generic:
+	-rm -f Makefile.in
+mostlyclean-am:  mostlyclean-compile mostlyclean-tags \
+		mostlyclean-generic
+
+mostlyclean: mostlyclean-recursive
+
+clean-am:  clean-compile clean-tags clean-generic mostlyclean-am
+
+clean: clean-recursive
+
+distclean-am:  distclean-compile distclean-tags distclean-generic \
+		clean-am
+
+distclean: distclean-recursive
+
+maintainer-clean-am:  maintainer-clean-compile maintainer-clean-tags \
+		maintainer-clean-generic distclean-am
+	@echo "This command is intended for maintainers to use;"
+	@echo "it deletes files that may require special tools to rebuild."
+
+maintainer-clean: maintainer-clean-recursive
+
+.PHONY: mostlyclean-compile distclean-compile clean-compile \
+maintainer-clean-compile uninstall-benchmarkDATA install-benchmarkDATA \
+install-recursive uninstall-recursive install-data-recursive \
+uninstall-data-recursive install-exec-recursive \
+uninstall-exec-recursive installdirs-recursive uninstalldirs-recursive \
+all-recursive check-recursive installcheck-recursive info-recursive \
+dvi-recursive mostlyclean-recursive distclean-recursive clean-recursive \
+maintainer-clean-recursive tags tags-recursive mostlyclean-tags \
+distclean-tags clean-tags maintainer-clean-tags distdir info-am info \
+dvi-am dvi check check-am installcheck-am installcheck install-exec-am \
+install-exec install-data-am install-data install-am install \
+uninstall-am uninstall all-redirect all-am all install-strip \
+installdirs-am installdirs mostlyclean-generic distclean-generic \
+clean-generic maintainer-clean-generic clean mostlyclean distclean \
+maintainer-clean
+
+
+%.o : %f90.f
+	$(F90COMPILE) -c -o $@ $<
+
+%.o : %.f90
+	$(F90COMPILE) -c -o $@ $<
+
+compile: $(EXTRA_PROGRAMS) $(LOOP_KERNELS)
+
+run:	$(EXTRA_PROGRAMS)
 	@for benchmark in $(BENCHMARKS) ; do \
 	  ./$$benchmark; \
 	done
@@ -58,217 +782,13 @@ ctime:
 	  time $(CXX) $(CXXFLAGS) -c $$benchmark.cpp; \
 	done
 
-############################################################################
-
-looptest:	looptest.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o looptest looptest.o $(LIBS)
-
-chunky:	chunky.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o chunky chunky.o $(LIBS)
-
-haney:  haney.o haneyf.o
-	${CXX} $(CXXFLAGS) $(LDFLAGS) -o haney haney.o haneyf.o $(LIBS)
-
-daxpyf90.o:	daxpyf90.f
-	$(F90) $(F90FLAGS) -c daxpyf90.f
-
-daxpy:	daxpy.o fdaxpy.o fidaxpy.o daxpyf90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o daxpy daxpy.o fdaxpy.o \
-           fidaxpy.o daxpyf90.o $(LIBS)
-
-qcd:	qcd.o qcdf.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o qcd qcd.o qcdf.o $(LIBS)
-
-STENCIL_OBJS = stencil.o stencilf.o stencilf2.o stencilf90.o
-
-stencilf90.o:	stencilf90.f
-	$(F90) $(F90FLAGS) -c stencilf90.f
-
-stencil:	$(STENCIL_OBJS)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o stencil $(STENCIL_OBJS) $(LIBS)
-
-ACOUSTIC_OBJS = acoustic.o acousticf.o acousticf2.o acousticf90.o acousticf902.o
-
-acousticf90.o:	acousticf90.f
-	$(F90) $(F90FLAGS) -c acousticf90.f
-
-acousticf902.o:	acousticf902.f
-	$(F90) $(F90FLAGS) -c acousticf902.f
-
-acoustic:	$(ACOUSTIC_OBJS)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o acoustic $(ACOUSTIC_OBJS) $(LIBS)
-
-ACOU3D_OBJS = acou3db1.o acou3db2.o acou3db3.o acou3db4.o acou3d.o acou3df90.o \
-	acou3df.o acou3df2.o acou3df902.o
-
-acou3df90.o:	acou3df90.f
-	$(F90) $(F90FLAGS) -c acou3df90.f
-
-acou3df902.o:	acou3df902.f
-	$(F90) $(F90FLAGS) -c acou3df902.f
-
-acou3d:	$(ACOU3D_OBJS)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o acou3d $(ACOU3D_OBJS) $(LIBS)
-
-tinydaxpy:	tinydaxpy.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o tinydaxpy tinydaxpy.o $(LIBS)
-
-hao-he:	hao-he.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o hao-he hao-he.o $(LIBS)
-
-stenciln:	stenciln.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o stenciln stenciln.o $(LIBS)
-
-############################################################################
-# Loop kernel tests
-#
-# Note: The loop numbers skip around because they represent
-# selected loops from a suite used by IBM researchers to test
-# the RS/6000.  Missing loops are ones which were too complicated
-# to generate automatically.
-#
-# This section generated by makeloops.cpp
-
-loop1f90.o:	loop1f90.f
-	$(F90) $(F90FLAGS) -c loop1f90.f
-
-loop1:	loop1.o loop1f.o loop1f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop1 loop1.o loop1f.o loop1f90.o $(LIBS)
-
-loop2f90.o:	loop2f90.f
-	$(F90) $(F90FLAGS) -c loop2f90.f
-
-loop2:	loop2.o loop2f.o loop2f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop2 loop2.o loop2f.o loop2f90.o $(LIBS)
-
-loop3f90.o:	loop3f90.f
-	$(F90) $(F90FLAGS) -c loop3f90.f
-
-loop3:	loop3.o loop3f.o loop3f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop3 loop3.o loop3f.o loop3f90.o $(LIBS)
-
-loop5f90.o:	loop5f90.f
-	$(F90) $(F90FLAGS) -c loop5f90.f
-
-loop5:	loop5.o loop5f.o loop5f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop5 loop5.o loop5f.o loop5f90.o $(LIBS)
-
-loop6f90.o:	loop6f90.f
-	$(F90) $(F90FLAGS) -c loop6f90.f
-
-loop6:	loop6.o loop6f.o loop6f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop6 loop6.o loop6f.o loop6f90.o $(LIBS)
-
-loop8f90.o:	loop8f90.f
-	$(F90) $(F90FLAGS) -c loop8f90.f
-
-loop8:	loop8.o loop8f.o loop8f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop8 loop8.o loop8f.o loop8f90.o $(LIBS)
-
-loop9f90.o:	loop9f90.f
-	$(F90) $(F90FLAGS) -c loop9f90.f
-
-loop9:	loop9.o loop9f.o loop9f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop9 loop9.o loop9f.o loop9f90.o $(LIBS)
-
-loop10f90.o:	loop10f90.f
-	$(F90) $(F90FLAGS) -c loop10f90.f
-
-loop10:	loop10.o loop10f.o loop10f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop10 loop10.o loop10f.o loop10f90.o $(LIBS)
-
-loop11f90.o:	loop11f90.f
-	$(F90) $(F90FLAGS) -c loop11f90.f
-
-loop11:	loop11.o loop11f.o loop11f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop11 loop11.o loop11f.o loop11f90.o $(LIBS)
-
-loop12f90.o:	loop12f90.f
-	$(F90) $(F90FLAGS) -c loop12f90.f
-
-loop12:	loop12.o loop12f.o loop12f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop12 loop12.o loop12f.o loop12f90.o $(LIBS)
-
-loop13f90.o:	loop13f90.f
-	$(F90) $(F90FLAGS) -c loop13f90.f
-
-loop13:	loop13.o loop13f.o loop13f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop13 loop13.o loop13f.o loop13f90.o $(LIBS)
-
-loop14f90.o:	loop14f90.f
-	$(F90) $(F90FLAGS) -c loop14f90.f
-
-loop14:	loop14.o loop14f.o loop14f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop14 loop14.o loop14f.o loop14f90.o $(LIBS)
-
-loop15f90.o:	loop15f90.f
-	$(F90) $(F90FLAGS) -c loop15f90.f
-
-loop15:	loop15.o loop15f.o loop15f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop15 loop15.o loop15f.o loop15f90.o $(LIBS)
-
-loop16f90.o:	loop16f90.f
-	$(F90) $(F90FLAGS) -c loop16f90.f
-
-loop16:	loop16.o loop16f.o loop16f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop16 loop16.o loop16f.o loop16f90.o $(LIBS)
-
-loop17f90.o:	loop17f90.f
-	$(F90) $(F90FLAGS) -c loop17f90.f
-
-loop17:	loop17.o loop17f.o loop17f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop17 loop17.o loop17f.o loop17f90.o $(LIBS)
-
-loop18f90.o:	loop18f90.f
-	$(F90) $(F90FLAGS) -c loop18f90.f
-
-loop18:	loop18.o loop18f.o loop18f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop18 loop18.o loop18f.o loop18f90.o $(LIBS)
-
-loop19f90.o:	loop19f90.f
-	$(F90) $(F90FLAGS) -c loop19f90.f
-
-loop19:	loop19.o loop19f.o loop19f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop19 loop19.o loop19f.o loop19f90.o $(LIBS)
-
-loop21f90.o:	loop21f90.f
-	$(F90) $(F90FLAGS) -c loop21f90.f
-
-loop21:	loop21.o loop21f.o loop21f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop21 loop21.o loop21f.o loop21f90.o $(LIBS)
-
-loop22f90.o:	loop22f90.f
-	$(F90) $(F90FLAGS) -c loop22f90.f
-
-loop22:	loop22.o loop22f.o loop22f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop22 loop22.o loop22f.o loop22f90.o $(LIBS)
-
-loop23f90.o:	loop23f90.f
-	$(F90) $(F90FLAGS) -c loop23f90.f
-
-loop23:	loop23.o loop23f.o loop23f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop23 loop23.o loop23f.o loop23f90.o $(LIBS)
-
-loop24f90.o:	loop24f90.f
-	$(F90) $(F90FLAGS) -c loop24f90.f
-
-loop24:	loop24.o loop24f.o loop24f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop24 loop24.o loop24f.o loop24f90.o $(LIBS)
-
-loop25f90.o:	loop25f90.f
-	$(F90) $(F90FLAGS) -c loop25f90.f
-
-loop25:	loop25.o loop25f.o loop25f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop25 loop25.o loop25f.o loop25f90.o $(LIBS)
-
-loop36f90.o:	loop36f90.f
-	$(F90) $(F90FLAGS) -c loop36f90.f
-
-loop36:	loop36.o loop36f.o loop36f90.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o loop36 loop36.o loop36f.o loop36f90.o $(LIBS)
+check-benchmarks: run run-loops ctime
 
 ###########################################################################
 
 clean:
-	rm -f *.o *.ii *.int.c *.s ${BENCHMARKS}
+	-rm -f *.o *.ii *.int.c *.s $(BENCHMARKS) $(COMPILE_TIME_BENCHMARKS)
 
+# Tell versions [3.59,3.63) of GNU make to not export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:

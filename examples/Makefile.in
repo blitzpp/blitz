@@ -1,70 +1,824 @@
+# Makefile.in generated automatically by automake 1.4a from Makefile.am
+
+# Copyright 1994, 1995, 1996, 1997, 1998, 1999, 2000
+# Free Software Foundation, Inc.
+# This Makefile.in is free software; the Free Software Foundation
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+SHELL = @SHELL@
+
 srcdir = @srcdir@
+top_srcdir = @top_srcdir@
 VPATH = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
 
-BZDIR = ..
+bindir = @bindir@
+sbindir = @sbindir@
+libexecdir = @libexecdir@
+datadir = @datadir@
+sysconfdir = @sysconfdir@
+sharedstatedir = @sharedstatedir@
+localstatedir = @localstatedir@
+libdir = @libdir@
+infodir = @infodir@
+mandir = @mandir@
+includedir = @includedir@
+oldincludedir = /usr/include
 
+pkgdatadir = $(datadir)/@PACKAGE@
+pkglibdir = $(libdir)/@PACKAGE@
+pkgincludedir = $(includedir)/@PACKAGE@
+
+top_builddir = ..
+
+ACLOCAL = @ACLOCAL@
+AUTOCONF = @AUTOCONF@
+AUTOMAKE = @AUTOMAKE@
+AUTOHEADER = @AUTOHEADER@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_SCRIPT = @INSTALL_SCRIPT@
+INSTALL_STRIP_FLAG =
+transform = @program_transform_name@
+
+NORMAL_INSTALL = :
+PRE_INSTALL = :
+POST_INSTALL = :
+NORMAL_UNINSTALL = :
+PRE_UNINSTALL = :
+POST_UNINSTALL = :
+
+@SET_MAKE@
+host_alias = @host_alias@
+host_triplet = @host@
+AMDEP = @AMDEP@
+AMTAR = @AMTAR@
+AR = @AR@
+AWK = @AWK@
+BLASLIB = @BLASLIB@
+CC = @CC@
+CPP = @CPP@
 CXX = @CXX@
-CXXFLAGS = @CXXFLAGS@ @CXX_DEBUG_FLAGS@ -I$(srcdir)/$(BZDIR)
+CXXCPP = @CXXCPP@
+CXXFFLAGS = @CXXFFLAGS@
+CXXFLAGS = @CXXFLAGS@
+CXX_DEBUG_FLAGS = @CXX_DEBUG_FLAGS@
+CXX_LIBS = @CXX_LIBS@
+CXX_OPTIMIZE_FLAGS = @CXX_OPTIMIZE_FLAGS@
+DEPDIR = @DEPDIR@
+F77 = @F77@
+F77_OPTIMIZE_FLAGS = @F77_OPTIMIZE_FLAGS@
+F90 = @F90@
+F90_OPTIMIZE_FLAGS = @F90_OPTIMIZE_FLAGS@
+FORTLIBS = @FORTLIBS@
 LDFLAGS = @LDFLAGS@
+MAKEINFO = @MAKEINFO@
+PACKAGE = @PACKAGE@
+RANLIB = @RANLIB@
+SHELL = @SHELL@
+VERSION = @VERSION@
+install_sh = @install_sh@
 
-LIBS = -L$(BZDIR)/lib -lblitz -lm @CXX_LIBS@
+#
+# $Id$
+#
+# Patrick Guio <patrick.guio@fys.uio.no>
+#
 
-############################################################################
 
-EXAMPLES =  array cast deriv matmult numinquire outer pick \
-	rangexpr reduce simple slicing storage tiny fixed where qcd erf \
-	transform nested complex stencil stencil2 diff curldiv cfd \
-	indirect useret iter stencil3 io convolve random
+SUBDIRS = 
 
-.SUFFIXES: .o .cpp 
+EXTRA_DIST = stencil4.f
 
+INCLUDES = -I$(top_srcdir)
+LDADD = -L$(top_srcdir)/lib -lblitz
+
+examplesdir = $(prefix)/examples
+examples_DATA = array.cpp cartesian.cpp cast.cpp cfd.cpp complex-test.cpp \
+convolve.cpp curldiv.cpp deriv.cpp diff.cpp erf.cpp fixed.cpp indirect.cpp \
+io.cpp iter.cpp matmult.cpp nested.cpp numinquire.cpp outer.cpp pauli.cpp \
+pick.cpp polymorph.cpp prettyprint.cpp profile.cpp qcd.cpp rand2.cpp \
+random.cpp rangexpr.cpp reduce.cpp simple.cpp slicing.cpp stencil.cpp \
+stencil2.cpp stencil3.cpp stencilet.cpp storage.cpp tiny.cpp tiny2.cpp \
+tiny3.cpp transform.cpp useret.cpp where.cpp whitt.cpp Makefile
+
+
+EXTRA_PROGRAMS = array cartesian cast cfd complex-test convolve curldiv \
+deriv diff erf fixed indirect io iter matmult nested numinquire outer pauli \
+pick polymorph prettyprint profile qcd rand2 random rangexpr reduce simple \
+slicing stencil2 stencil3 stencil stencilet storage tiny2 tiny3 tiny \
+transform useret where whitt
+
+
+array_SOURCES = array.cpp
+cartesian_SOURCES = cartesian.cpp
+cast_SOURCES = cast.cpp
+cfd_SOURCES = cfd.cpp
+complex_test_SOURCES = complex-test.cpp
+convolve_SOURCES = convolve.cpp
+curldiv_SOURCES = curldiv.cpp
+deriv_SOURCES = deriv.cpp
+diff_SOURCES = diff.cpp
+erf_SOURCES = erf.cpp
+fixed_SOURCES = fixed.cpp
+indirect_SOURCES = indirect.cpp
+io_SOURCES = io.cpp
+iter_SOURCES = iter.cpp
+matmult_SOURCES = matmult.cpp
+nested_SOURCES = nested.cpp
+numinquire_SOURCES = numinquire.cpp
+outer_SOURCES = outer.cpp
+pauli_SOURCES = pauli.cpp
+pick_SOURCES = pick.cpp
+polymorph_SOURCES = polymorph.cpp
+prettyprint_SOURCES = prettyprint.cpp
+profile_SOURCES = profile.cpp
+qcd_SOURCES = qcd.cpp
+rand2_SOURCES = rand2.cpp
+random_SOURCES = random.cpp
+rangexpr_SOURCES = rangexpr.cpp
+reduce_SOURCES = reduce.cpp
+simple_SOURCES = simple.cpp
+slicing_SOURCES = slicing.cpp
+stencil2_SOURCES = stencil2.cpp
+stencil3_SOURCES = stencil3.cpp
+stencil_SOURCES = stencil.cpp
+stencilet_SOURCES = stencilet.cpp
+storage_SOURCES = storage.cpp
+tiny2_SOURCES = tiny2.cpp
+tiny3_SOURCES = tiny3.cpp
+tiny_SOURCES = tiny.cpp
+transform_SOURCES = transform.cpp
+useret_SOURCES = useret.cpp
+where_SOURCES = where.cpp
+whitt_SOURCES = whitt.cpp
+subdir = examples
+mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+CONFIG_CLEAN_FILES = 
+
+DEFS = @DEFS@ -I. -I$(srcdir)
+CPPFLAGS = @CPPFLAGS@
+LIBS = @LIBS@
+am_array_OBJECTS =  array.o
+array_OBJECTS =  $(am_array_OBJECTS)
+array_LDADD = $(LDADD)
+array_DEPENDENCIES = 
+array_LDFLAGS = 
+am_cartesian_OBJECTS =  cartesian.o
+cartesian_OBJECTS =  $(am_cartesian_OBJECTS)
+cartesian_LDADD = $(LDADD)
+cartesian_DEPENDENCIES = 
+cartesian_LDFLAGS = 
+am_cast_OBJECTS =  cast.o
+cast_OBJECTS =  $(am_cast_OBJECTS)
+cast_LDADD = $(LDADD)
+cast_DEPENDENCIES = 
+cast_LDFLAGS = 
+am_cfd_OBJECTS =  cfd.o
+cfd_OBJECTS =  $(am_cfd_OBJECTS)
+cfd_LDADD = $(LDADD)
+cfd_DEPENDENCIES = 
+cfd_LDFLAGS = 
+am_complex_test_OBJECTS =  complex-test.o
+complex_test_OBJECTS =  $(am_complex_test_OBJECTS)
+complex_test_LDADD = $(LDADD)
+complex_test_DEPENDENCIES = 
+complex_test_LDFLAGS = 
+am_convolve_OBJECTS =  convolve.o
+convolve_OBJECTS =  $(am_convolve_OBJECTS)
+convolve_LDADD = $(LDADD)
+convolve_DEPENDENCIES = 
+convolve_LDFLAGS = 
+am_curldiv_OBJECTS =  curldiv.o
+curldiv_OBJECTS =  $(am_curldiv_OBJECTS)
+curldiv_LDADD = $(LDADD)
+curldiv_DEPENDENCIES = 
+curldiv_LDFLAGS = 
+am_deriv_OBJECTS =  deriv.o
+deriv_OBJECTS =  $(am_deriv_OBJECTS)
+deriv_LDADD = $(LDADD)
+deriv_DEPENDENCIES = 
+deriv_LDFLAGS = 
+am_diff_OBJECTS =  diff.o
+diff_OBJECTS =  $(am_diff_OBJECTS)
+diff_LDADD = $(LDADD)
+diff_DEPENDENCIES = 
+diff_LDFLAGS = 
+am_erf_OBJECTS =  erf.o
+erf_OBJECTS =  $(am_erf_OBJECTS)
+erf_LDADD = $(LDADD)
+erf_DEPENDENCIES = 
+erf_LDFLAGS = 
+am_fixed_OBJECTS =  fixed.o
+fixed_OBJECTS =  $(am_fixed_OBJECTS)
+fixed_LDADD = $(LDADD)
+fixed_DEPENDENCIES = 
+fixed_LDFLAGS = 
+am_indirect_OBJECTS =  indirect.o
+indirect_OBJECTS =  $(am_indirect_OBJECTS)
+indirect_LDADD = $(LDADD)
+indirect_DEPENDENCIES = 
+indirect_LDFLAGS = 
+am_io_OBJECTS =  io.o
+io_OBJECTS =  $(am_io_OBJECTS)
+io_LDADD = $(LDADD)
+io_DEPENDENCIES = 
+io_LDFLAGS = 
+am_iter_OBJECTS =  iter.o
+iter_OBJECTS =  $(am_iter_OBJECTS)
+iter_LDADD = $(LDADD)
+iter_DEPENDENCIES = 
+iter_LDFLAGS = 
+am_matmult_OBJECTS =  matmult.o
+matmult_OBJECTS =  $(am_matmult_OBJECTS)
+matmult_LDADD = $(LDADD)
+matmult_DEPENDENCIES = 
+matmult_LDFLAGS = 
+am_nested_OBJECTS =  nested.o
+nested_OBJECTS =  $(am_nested_OBJECTS)
+nested_LDADD = $(LDADD)
+nested_DEPENDENCIES = 
+nested_LDFLAGS = 
+am_numinquire_OBJECTS =  numinquire.o
+numinquire_OBJECTS =  $(am_numinquire_OBJECTS)
+numinquire_LDADD = $(LDADD)
+numinquire_DEPENDENCIES = 
+numinquire_LDFLAGS = 
+am_outer_OBJECTS =  outer.o
+outer_OBJECTS =  $(am_outer_OBJECTS)
+outer_LDADD = $(LDADD)
+outer_DEPENDENCIES = 
+outer_LDFLAGS = 
+am_pauli_OBJECTS =  pauli.o
+pauli_OBJECTS =  $(am_pauli_OBJECTS)
+pauli_LDADD = $(LDADD)
+pauli_DEPENDENCIES = 
+pauli_LDFLAGS = 
+am_pick_OBJECTS =  pick.o
+pick_OBJECTS =  $(am_pick_OBJECTS)
+pick_LDADD = $(LDADD)
+pick_DEPENDENCIES = 
+pick_LDFLAGS = 
+am_polymorph_OBJECTS =  polymorph.o
+polymorph_OBJECTS =  $(am_polymorph_OBJECTS)
+polymorph_LDADD = $(LDADD)
+polymorph_DEPENDENCIES = 
+polymorph_LDFLAGS = 
+am_prettyprint_OBJECTS =  prettyprint.o
+prettyprint_OBJECTS =  $(am_prettyprint_OBJECTS)
+prettyprint_LDADD = $(LDADD)
+prettyprint_DEPENDENCIES = 
+prettyprint_LDFLAGS = 
+am_profile_OBJECTS =  profile.o
+profile_OBJECTS =  $(am_profile_OBJECTS)
+profile_LDADD = $(LDADD)
+profile_DEPENDENCIES = 
+profile_LDFLAGS = 
+am_qcd_OBJECTS =  qcd.o
+qcd_OBJECTS =  $(am_qcd_OBJECTS)
+qcd_LDADD = $(LDADD)
+qcd_DEPENDENCIES = 
+qcd_LDFLAGS = 
+am_rand2_OBJECTS =  rand2.o
+rand2_OBJECTS =  $(am_rand2_OBJECTS)
+rand2_LDADD = $(LDADD)
+rand2_DEPENDENCIES = 
+rand2_LDFLAGS = 
+am_random_OBJECTS =  random.o
+random_OBJECTS =  $(am_random_OBJECTS)
+random_LDADD = $(LDADD)
+random_DEPENDENCIES = 
+random_LDFLAGS = 
+am_rangexpr_OBJECTS =  rangexpr.o
+rangexpr_OBJECTS =  $(am_rangexpr_OBJECTS)
+rangexpr_LDADD = $(LDADD)
+rangexpr_DEPENDENCIES = 
+rangexpr_LDFLAGS = 
+am_reduce_OBJECTS =  reduce.o
+reduce_OBJECTS =  $(am_reduce_OBJECTS)
+reduce_LDADD = $(LDADD)
+reduce_DEPENDENCIES = 
+reduce_LDFLAGS = 
+am_simple_OBJECTS =  simple.o
+simple_OBJECTS =  $(am_simple_OBJECTS)
+simple_LDADD = $(LDADD)
+simple_DEPENDENCIES = 
+simple_LDFLAGS = 
+am_slicing_OBJECTS =  slicing.o
+slicing_OBJECTS =  $(am_slicing_OBJECTS)
+slicing_LDADD = $(LDADD)
+slicing_DEPENDENCIES = 
+slicing_LDFLAGS = 
+am_stencil_OBJECTS =  stencil.o
+stencil_OBJECTS =  $(am_stencil_OBJECTS)
+stencil_LDADD = $(LDADD)
+stencil_DEPENDENCIES = 
+stencil_LDFLAGS = 
+am_stencil2_OBJECTS =  stencil2.o
+stencil2_OBJECTS =  $(am_stencil2_OBJECTS)
+stencil2_LDADD = $(LDADD)
+stencil2_DEPENDENCIES = 
+stencil2_LDFLAGS = 
+am_stencil3_OBJECTS =  stencil3.o
+stencil3_OBJECTS =  $(am_stencil3_OBJECTS)
+stencil3_LDADD = $(LDADD)
+stencil3_DEPENDENCIES = 
+stencil3_LDFLAGS = 
+am_stencilet_OBJECTS =  stencilet.o
+stencilet_OBJECTS =  $(am_stencilet_OBJECTS)
+stencilet_LDADD = $(LDADD)
+stencilet_DEPENDENCIES = 
+stencilet_LDFLAGS = 
+am_storage_OBJECTS =  storage.o
+storage_OBJECTS =  $(am_storage_OBJECTS)
+storage_LDADD = $(LDADD)
+storage_DEPENDENCIES = 
+storage_LDFLAGS = 
+am_tiny_OBJECTS =  tiny.o
+tiny_OBJECTS =  $(am_tiny_OBJECTS)
+tiny_LDADD = $(LDADD)
+tiny_DEPENDENCIES = 
+tiny_LDFLAGS = 
+am_tiny2_OBJECTS =  tiny2.o
+tiny2_OBJECTS =  $(am_tiny2_OBJECTS)
+tiny2_LDADD = $(LDADD)
+tiny2_DEPENDENCIES = 
+tiny2_LDFLAGS = 
+am_tiny3_OBJECTS =  tiny3.o
+tiny3_OBJECTS =  $(am_tiny3_OBJECTS)
+tiny3_LDADD = $(LDADD)
+tiny3_DEPENDENCIES = 
+tiny3_LDFLAGS = 
+am_transform_OBJECTS =  transform.o
+transform_OBJECTS =  $(am_transform_OBJECTS)
+transform_LDADD = $(LDADD)
+transform_DEPENDENCIES = 
+transform_LDFLAGS = 
+am_useret_OBJECTS =  useret.o
+useret_OBJECTS =  $(am_useret_OBJECTS)
+useret_LDADD = $(LDADD)
+useret_DEPENDENCIES = 
+useret_LDFLAGS = 
+am_where_OBJECTS =  where.o
+where_OBJECTS =  $(am_where_OBJECTS)
+where_LDADD = $(LDADD)
+where_DEPENDENCIES = 
+where_LDFLAGS = 
+am_whitt_OBJECTS =  whitt.o
+whitt_OBJECTS =  $(am_whitt_OBJECTS)
+whitt_LDADD = $(LDADD)
+whitt_DEPENDENCIES = 
+whitt_LDFLAGS = 
+CXXCOMPILE = $(CXX) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+CXXLD = $(CXX)
+CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+DIST_SOURCES =  $(array_SOURCES) $(cartesian_SOURCES) $(cast_SOURCES) \
+$(cfd_SOURCES) $(complex_test_SOURCES) $(convolve_SOURCES) \
+$(curldiv_SOURCES) $(deriv_SOURCES) $(diff_SOURCES) $(erf_SOURCES) \
+$(fixed_SOURCES) $(indirect_SOURCES) $(io_SOURCES) $(iter_SOURCES) \
+$(matmult_SOURCES) $(nested_SOURCES) $(numinquire_SOURCES) \
+$(outer_SOURCES) $(pauli_SOURCES) $(pick_SOURCES) $(polymorph_SOURCES) \
+$(prettyprint_SOURCES) $(profile_SOURCES) $(qcd_SOURCES) \
+$(rand2_SOURCES) $(random_SOURCES) $(rangexpr_SOURCES) \
+$(reduce_SOURCES) $(simple_SOURCES) $(slicing_SOURCES) \
+$(stencil_SOURCES) $(stencil2_SOURCES) $(stencil3_SOURCES) \
+$(stencilet_SOURCES) $(storage_SOURCES) $(tiny_SOURCES) \
+$(tiny2_SOURCES) $(tiny3_SOURCES) $(transform_SOURCES) \
+$(useret_SOURCES) $(where_SOURCES) $(whitt_SOURCES)
+DATA =  $(examples_DATA)
+
+depcomp = 
+DIST_COMMON =  Makefile.am Makefile.in
+
+
+DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+
+GZIP_ENV = --best
+SOURCES = $(array_SOURCES) $(cartesian_SOURCES) $(cast_SOURCES) $(cfd_SOURCES) $(complex_test_SOURCES) $(convolve_SOURCES) $(curldiv_SOURCES) $(deriv_SOURCES) $(diff_SOURCES) $(erf_SOURCES) $(fixed_SOURCES) $(indirect_SOURCES) $(io_SOURCES) $(iter_SOURCES) $(matmult_SOURCES) $(nested_SOURCES) $(numinquire_SOURCES) $(outer_SOURCES) $(pauli_SOURCES) $(pick_SOURCES) $(polymorph_SOURCES) $(prettyprint_SOURCES) $(profile_SOURCES) $(qcd_SOURCES) $(rand2_SOURCES) $(random_SOURCES) $(rangexpr_SOURCES) $(reduce_SOURCES) $(simple_SOURCES) $(slicing_SOURCES) $(stencil_SOURCES) $(stencil2_SOURCES) $(stencil3_SOURCES) $(stencilet_SOURCES) $(storage_SOURCES) $(tiny_SOURCES) $(tiny2_SOURCES) $(tiny3_SOURCES) $(transform_SOURCES) $(useret_SOURCES) $(where_SOURCES) $(whitt_SOURCES)
+OBJECTS = $(am_array_OBJECTS) $(am_cartesian_OBJECTS) $(am_cast_OBJECTS) $(am_cfd_OBJECTS) $(am_complex_test_OBJECTS) $(am_convolve_OBJECTS) $(am_curldiv_OBJECTS) $(am_deriv_OBJECTS) $(am_diff_OBJECTS) $(am_erf_OBJECTS) $(am_fixed_OBJECTS) $(am_indirect_OBJECTS) $(am_io_OBJECTS) $(am_iter_OBJECTS) $(am_matmult_OBJECTS) $(am_nested_OBJECTS) $(am_numinquire_OBJECTS) $(am_outer_OBJECTS) $(am_pauli_OBJECTS) $(am_pick_OBJECTS) $(am_polymorph_OBJECTS) $(am_prettyprint_OBJECTS) $(am_profile_OBJECTS) $(am_qcd_OBJECTS) $(am_rand2_OBJECTS) $(am_random_OBJECTS) $(am_rangexpr_OBJECTS) $(am_reduce_OBJECTS) $(am_simple_OBJECTS) $(am_slicing_OBJECTS) $(am_stencil_OBJECTS) $(am_stencil2_OBJECTS) $(am_stencil3_OBJECTS) $(am_stencilet_OBJECTS) $(am_storage_OBJECTS) $(am_tiny_OBJECTS) $(am_tiny2_OBJECTS) $(am_tiny3_OBJECTS) $(am_transform_OBJECTS) $(am_useret_OBJECTS) $(am_where_OBJECTS) $(am_whitt_OBJECTS)
+
+all: all-redirect
+.SUFFIXES:
+.SUFFIXES: .c .cpp .o
+$(srcdir)/Makefile.in: Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu --ignore-deps examples/Makefile
+
+Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status
+	cd $(top_builddir) \
+	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
+
+
+mostlyclean-compile:
+	-rm -f *.o core *.core
+
+clean-compile:
+
+distclean-compile:
+	-rm -f *.tab.c
+
+maintainer-clean-compile:
+
+array: $(array_OBJECTS) $(array_DEPENDENCIES)
+	@rm -f array
+	$(CXXLINK) $(array_LDFLAGS) $(array_OBJECTS) $(array_LDADD) $(LIBS)
+
+cartesian: $(cartesian_OBJECTS) $(cartesian_DEPENDENCIES)
+	@rm -f cartesian
+	$(CXXLINK) $(cartesian_LDFLAGS) $(cartesian_OBJECTS) $(cartesian_LDADD) $(LIBS)
+
+cast: $(cast_OBJECTS) $(cast_DEPENDENCIES)
+	@rm -f cast
+	$(CXXLINK) $(cast_LDFLAGS) $(cast_OBJECTS) $(cast_LDADD) $(LIBS)
+
+cfd: $(cfd_OBJECTS) $(cfd_DEPENDENCIES)
+	@rm -f cfd
+	$(CXXLINK) $(cfd_LDFLAGS) $(cfd_OBJECTS) $(cfd_LDADD) $(LIBS)
+
+complex-test: $(complex_test_OBJECTS) $(complex_test_DEPENDENCIES)
+	@rm -f complex-test
+	$(CXXLINK) $(complex_test_LDFLAGS) $(complex_test_OBJECTS) $(complex_test_LDADD) $(LIBS)
+
+convolve: $(convolve_OBJECTS) $(convolve_DEPENDENCIES)
+	@rm -f convolve
+	$(CXXLINK) $(convolve_LDFLAGS) $(convolve_OBJECTS) $(convolve_LDADD) $(LIBS)
+
+curldiv: $(curldiv_OBJECTS) $(curldiv_DEPENDENCIES)
+	@rm -f curldiv
+	$(CXXLINK) $(curldiv_LDFLAGS) $(curldiv_OBJECTS) $(curldiv_LDADD) $(LIBS)
+
+deriv: $(deriv_OBJECTS) $(deriv_DEPENDENCIES)
+	@rm -f deriv
+	$(CXXLINK) $(deriv_LDFLAGS) $(deriv_OBJECTS) $(deriv_LDADD) $(LIBS)
+
+diff: $(diff_OBJECTS) $(diff_DEPENDENCIES)
+	@rm -f diff
+	$(CXXLINK) $(diff_LDFLAGS) $(diff_OBJECTS) $(diff_LDADD) $(LIBS)
+
+erf: $(erf_OBJECTS) $(erf_DEPENDENCIES)
+	@rm -f erf
+	$(CXXLINK) $(erf_LDFLAGS) $(erf_OBJECTS) $(erf_LDADD) $(LIBS)
+
+fixed: $(fixed_OBJECTS) $(fixed_DEPENDENCIES)
+	@rm -f fixed
+	$(CXXLINK) $(fixed_LDFLAGS) $(fixed_OBJECTS) $(fixed_LDADD) $(LIBS)
+
+indirect: $(indirect_OBJECTS) $(indirect_DEPENDENCIES)
+	@rm -f indirect
+	$(CXXLINK) $(indirect_LDFLAGS) $(indirect_OBJECTS) $(indirect_LDADD) $(LIBS)
+
+io: $(io_OBJECTS) $(io_DEPENDENCIES)
+	@rm -f io
+	$(CXXLINK) $(io_LDFLAGS) $(io_OBJECTS) $(io_LDADD) $(LIBS)
+
+iter: $(iter_OBJECTS) $(iter_DEPENDENCIES)
+	@rm -f iter
+	$(CXXLINK) $(iter_LDFLAGS) $(iter_OBJECTS) $(iter_LDADD) $(LIBS)
+
+matmult: $(matmult_OBJECTS) $(matmult_DEPENDENCIES)
+	@rm -f matmult
+	$(CXXLINK) $(matmult_LDFLAGS) $(matmult_OBJECTS) $(matmult_LDADD) $(LIBS)
+
+nested: $(nested_OBJECTS) $(nested_DEPENDENCIES)
+	@rm -f nested
+	$(CXXLINK) $(nested_LDFLAGS) $(nested_OBJECTS) $(nested_LDADD) $(LIBS)
+
+numinquire: $(numinquire_OBJECTS) $(numinquire_DEPENDENCIES)
+	@rm -f numinquire
+	$(CXXLINK) $(numinquire_LDFLAGS) $(numinquire_OBJECTS) $(numinquire_LDADD) $(LIBS)
+
+outer: $(outer_OBJECTS) $(outer_DEPENDENCIES)
+	@rm -f outer
+	$(CXXLINK) $(outer_LDFLAGS) $(outer_OBJECTS) $(outer_LDADD) $(LIBS)
+
+pauli: $(pauli_OBJECTS) $(pauli_DEPENDENCIES)
+	@rm -f pauli
+	$(CXXLINK) $(pauli_LDFLAGS) $(pauli_OBJECTS) $(pauli_LDADD) $(LIBS)
+
+pick: $(pick_OBJECTS) $(pick_DEPENDENCIES)
+	@rm -f pick
+	$(CXXLINK) $(pick_LDFLAGS) $(pick_OBJECTS) $(pick_LDADD) $(LIBS)
+
+polymorph: $(polymorph_OBJECTS) $(polymorph_DEPENDENCIES)
+	@rm -f polymorph
+	$(CXXLINK) $(polymorph_LDFLAGS) $(polymorph_OBJECTS) $(polymorph_LDADD) $(LIBS)
+
+prettyprint: $(prettyprint_OBJECTS) $(prettyprint_DEPENDENCIES)
+	@rm -f prettyprint
+	$(CXXLINK) $(prettyprint_LDFLAGS) $(prettyprint_OBJECTS) $(prettyprint_LDADD) $(LIBS)
+
+profile: $(profile_OBJECTS) $(profile_DEPENDENCIES)
+	@rm -f profile
+	$(CXXLINK) $(profile_LDFLAGS) $(profile_OBJECTS) $(profile_LDADD) $(LIBS)
+
+qcd: $(qcd_OBJECTS) $(qcd_DEPENDENCIES)
+	@rm -f qcd
+	$(CXXLINK) $(qcd_LDFLAGS) $(qcd_OBJECTS) $(qcd_LDADD) $(LIBS)
+
+rand2: $(rand2_OBJECTS) $(rand2_DEPENDENCIES)
+	@rm -f rand2
+	$(CXXLINK) $(rand2_LDFLAGS) $(rand2_OBJECTS) $(rand2_LDADD) $(LIBS)
+
+random: $(random_OBJECTS) $(random_DEPENDENCIES)
+	@rm -f random
+	$(CXXLINK) $(random_LDFLAGS) $(random_OBJECTS) $(random_LDADD) $(LIBS)
+
+rangexpr: $(rangexpr_OBJECTS) $(rangexpr_DEPENDENCIES)
+	@rm -f rangexpr
+	$(CXXLINK) $(rangexpr_LDFLAGS) $(rangexpr_OBJECTS) $(rangexpr_LDADD) $(LIBS)
+
+reduce: $(reduce_OBJECTS) $(reduce_DEPENDENCIES)
+	@rm -f reduce
+	$(CXXLINK) $(reduce_LDFLAGS) $(reduce_OBJECTS) $(reduce_LDADD) $(LIBS)
+
+simple: $(simple_OBJECTS) $(simple_DEPENDENCIES)
+	@rm -f simple
+	$(CXXLINK) $(simple_LDFLAGS) $(simple_OBJECTS) $(simple_LDADD) $(LIBS)
+
+slicing: $(slicing_OBJECTS) $(slicing_DEPENDENCIES)
+	@rm -f slicing
+	$(CXXLINK) $(slicing_LDFLAGS) $(slicing_OBJECTS) $(slicing_LDADD) $(LIBS)
+
+stencil: $(stencil_OBJECTS) $(stencil_DEPENDENCIES)
+	@rm -f stencil
+	$(CXXLINK) $(stencil_LDFLAGS) $(stencil_OBJECTS) $(stencil_LDADD) $(LIBS)
+
+stencil2: $(stencil2_OBJECTS) $(stencil2_DEPENDENCIES)
+	@rm -f stencil2
+	$(CXXLINK) $(stencil2_LDFLAGS) $(stencil2_OBJECTS) $(stencil2_LDADD) $(LIBS)
+
+stencil3: $(stencil3_OBJECTS) $(stencil3_DEPENDENCIES)
+	@rm -f stencil3
+	$(CXXLINK) $(stencil3_LDFLAGS) $(stencil3_OBJECTS) $(stencil3_LDADD) $(LIBS)
+
+stencilet: $(stencilet_OBJECTS) $(stencilet_DEPENDENCIES)
+	@rm -f stencilet
+	$(CXXLINK) $(stencilet_LDFLAGS) $(stencilet_OBJECTS) $(stencilet_LDADD) $(LIBS)
+
+storage: $(storage_OBJECTS) $(storage_DEPENDENCIES)
+	@rm -f storage
+	$(CXXLINK) $(storage_LDFLAGS) $(storage_OBJECTS) $(storage_LDADD) $(LIBS)
+
+tiny: $(tiny_OBJECTS) $(tiny_DEPENDENCIES)
+	@rm -f tiny
+	$(CXXLINK) $(tiny_LDFLAGS) $(tiny_OBJECTS) $(tiny_LDADD) $(LIBS)
+
+tiny2: $(tiny2_OBJECTS) $(tiny2_DEPENDENCIES)
+	@rm -f tiny2
+	$(CXXLINK) $(tiny2_LDFLAGS) $(tiny2_OBJECTS) $(tiny2_LDADD) $(LIBS)
+
+tiny3: $(tiny3_OBJECTS) $(tiny3_DEPENDENCIES)
+	@rm -f tiny3
+	$(CXXLINK) $(tiny3_LDFLAGS) $(tiny3_OBJECTS) $(tiny3_LDADD) $(LIBS)
+
+transform: $(transform_OBJECTS) $(transform_DEPENDENCIES)
+	@rm -f transform
+	$(CXXLINK) $(transform_LDFLAGS) $(transform_OBJECTS) $(transform_LDADD) $(LIBS)
+
+useret: $(useret_OBJECTS) $(useret_DEPENDENCIES)
+	@rm -f useret
+	$(CXXLINK) $(useret_LDFLAGS) $(useret_OBJECTS) $(useret_LDADD) $(LIBS)
+
+where: $(where_OBJECTS) $(where_DEPENDENCIES)
+	@rm -f where
+	$(CXXLINK) $(where_LDFLAGS) $(where_OBJECTS) $(where_LDADD) $(LIBS)
+
+whitt: $(whitt_OBJECTS) $(whitt_DEPENDENCIES)
+	@rm -f whitt
+	$(CXXLINK) $(whitt_LDFLAGS) $(whitt_OBJECTS) $(whitt_LDADD) $(LIBS)
 .cpp.o:
-	$(CXX) $(CXXFLAGS) -c $(srcdir)/$*.cpp
+	$(CXXCOMPILE) -c -o $@ $<
 
-$(EXAMPLES):
-	$(CXX) $(LDFLAGS) $@.o -o $@ $(LIBS)
+install-examplesDATA: $(examples_DATA)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(examplesdir)
+	@list='$(examples_DATA)'; for p in $$list; do \
+	  if test -f "$$p"; then d= ; else d="$(srcdir)/"; fi; \
+	  f="`echo $$p | sed -e 's|^.*/||'`"; \
+	  echo " $(INSTALL_DATA) $$d$$p $(DESTDIR)$(examplesdir)/$$f"; \
+	  $(INSTALL_DATA) $$d$$p $(DESTDIR)$(examplesdir)/$$f; \
+	done
 
-###########################################################################
+uninstall-examplesDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(examples_DATA)'; for p in $$list; do \
+	  f="`echo $$p | sed -e 's|^.*/||'`"; \
+	  echo " rm -f $(DESTDIR)$(examplesdir)/$$f"; \
+	  rm -f $(DESTDIR)$(examplesdir)/$$f; \
+	done
 
-all:	$(EXAMPLES)
+# This directory's subdirectories are mostly independent; you can cd
+# into them and run `make' without going through this Makefile.
+# To change the values of `make' variables: instead of editing Makefiles,
+# (1) if the variable is set in `config.status', edit `config.status'
+#     (which will cause the Makefiles to be regenerated when you run `make');
+# (2) otherwise, pass the desired values on the `make' command line.
 
-examples:	$(EXAMPLES)
+all-recursive install-data-recursive install-exec-recursive \
+installdirs-recursive install-recursive uninstall-recursive  \
+check-recursive installcheck-recursive info-recursive dvi-recursive:
+	@set fnord $(MAKEFLAGS); amf=$$2; \
+	dot_seen=no; \
+	target=`echo $@ | sed s/-recursive//`; \
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  echo "Making $$target in $$subdir"; \
+	  if test "$$subdir" = "."; then \
+	    dot_seen=yes; \
+	    local_target="$$target-am"; \
+	  else \
+	    local_target="$$target"; \
+	  fi; \
+	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
+	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
+	done; \
+	if test "$$dot_seen" = "no"; then \
+	  $(MAKE) $(AM_MAKEFLAGS) "$$target-am" || exit 1; \
+	fi; test -z "$$fail"
 
-array:	array.o
-cast:	cast.o
-deriv:	deriv.o
-matmult:	matmult.o
-numinquire:	numinquire.o
-outer:	outer.o
-pick:	pick.o
-rangexpr:	rangexpr.o
-reduce:	reduce.o
-simple:	simple.o
-slicing:	slicing.o
-storage:	storage.o
-tiny:	tiny.o
-fixed:	fixed.o
-where:	where.o
-qcd:	qcd.o
-erf:	erf.o
-transform:	transform.o
-stencil:	stencil.o
-nested:	nested.o
-complex:	complex.o
-stencil2:	stencil2.o
-curldiv:	curldiv.o
-diff:	diff.o
-cfd:	cfd.o
-indirect:	indirect.o
-useret:	useret.o
-iter:	iter.o
-stencil3:	stencil3.o
-io:	io.o
-convolve:	convolve.o
-random:	random.o
+mostlyclean-recursive clean-recursive distclean-recursive \
+maintainer-clean-recursive:
+	@set fnord $(MAKEFLAGS); amf=$$2; \
+	dot_seen=no; \
+	rev=''; list='$(SUBDIRS)'; for subdir in $$list; do \
+	  if test "$$subdir" = "."; then :; else \
+	    rev="$$subdir $$rev"; \
+	  fi; \
+	done; \
+	rev="$$rev ."; \
+	target=`echo $@ | sed s/-recursive//`; \
+	for subdir in $$rev; do \
+	  echo "Making $$target in $$subdir"; \
+	  if test "$$subdir" = "."; then \
+	    local_target="$$target-am"; \
+	  else \
+	    local_target="$$target"; \
+	  fi; \
+	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
+	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
+	done && test -z "$$fail"
+tags-recursive:
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) tags); \
+	done
 
-###########################################################################
+tags: TAGS
+
+ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
+	list='$(SOURCES) $(HEADERS) $(TAGS_FILES)'; \
+	unique=`for i in $$list; do \
+	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+	  done | \
+	  $(AWK) '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	mkid -fID $$unique $(LISP)
+
+TAGS: tags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
+		$(TAGS_FILES) $(LISP)
+	tags=; \
+	here=`pwd`; \
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+   if test "$$subdir" = .; then :; else \
+	    test -f $$subdir/TAGS && tags="$$tags -i $$here/$$subdir/TAGS"; \
+   fi; \
+	done; \
+	list='$(SOURCES) $(HEADERS) $(TAGS_FILES)'; \
+	unique=`for i in $$list; do \
+	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+	  done | \
+	  $(AWK) '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	test -z "$(ETAGS_ARGS)$$unique$(LISP)$$tags" \
+	  || etags $(ETAGS_ARGS) $$tags  $$unique $(LISP)
+
+mostlyclean-tags:
+
+clean-tags:
+
+distclean-tags:
+	-rm -f TAGS ID
+
+maintainer-clean-tags:
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+
+distdir: $(DISTFILES)
+	@for file in $(DISTFILES); do \
+	  d=$(srcdir); \
+	  if test -d $$d/$$file; then \
+	    cp -pR $$d/$$file $(distdir) \
+	    || exit 1; \
+	  else \
+	    test -f $(distdir)/$$file \
+	    || cp -p $$d/$$file $(distdir)/$$file \
+	    || exit 1; \
+	  fi; \
+	done
+	for subdir in $(SUBDIRS); do \
+	  if test "$$subdir" = .; then :; else \
+	    test -d $(distdir)/$$subdir \
+	    || mkdir $(distdir)/$$subdir \
+	    || exit 1; \
+	    (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) top_distdir=../$(top_distdir) distdir=../$(distdir)/$$subdir distdir) \
+	      || exit 1; \
+	  fi; \
+	done
+info-am:
+info: info-recursive
+dvi-am:
+dvi: dvi-recursive
+check-am: all-am
+check: check-recursive
+installcheck-am:
+installcheck: installcheck-recursive
+install-exec-am:
+install-exec: install-exec-recursive
+
+install-data-am: install-examplesDATA
+install-data: install-data-recursive
+
+install-am: all-am
+	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
+install: install-recursive
+uninstall-am: uninstall-examplesDATA
+uninstall: uninstall-recursive
+all-am: Makefile $(DATA)
+all-redirect: all-recursive
+install-strip:
+	$(MAKE) $(AM_MAKEFLAGS) INSTALL_STRIP_FLAG=-s install
+installdirs: installdirs-recursive
+installdirs-am:
+	$(mkinstalldirs)  $(DESTDIR)$(examplesdir)
 
 
-clean:
-	rm -f *.o *.ii *.int.c *.s $(EXAMPLES)
+mostlyclean-generic:
+
+clean-generic:
+
+distclean-generic:
+	-rm -f Makefile $(CONFIG_CLEAN_FILES)
+	-rm -f config.cache config.log stamp-h stamp-h[0-9]*
+
+maintainer-clean-generic:
+	-rm -f Makefile.in
+mostlyclean-am:  mostlyclean-compile mostlyclean-tags \
+		mostlyclean-generic
+
+mostlyclean: mostlyclean-recursive
+
+clean-am:  clean-compile clean-tags clean-generic mostlyclean-am \
+		clean-local
+
+clean: clean-recursive
+
+distclean-am:  distclean-compile distclean-tags distclean-generic \
+		clean-am
+
+distclean: distclean-recursive
+
+maintainer-clean-am:  maintainer-clean-compile maintainer-clean-tags \
+		maintainer-clean-generic distclean-am
+	@echo "This command is intended for maintainers to use;"
+	@echo "it deletes files that may require special tools to rebuild."
+
+maintainer-clean: maintainer-clean-recursive
+
+.PHONY: mostlyclean-compile distclean-compile clean-compile \
+maintainer-clean-compile uninstall-examplesDATA install-examplesDATA \
+install-recursive uninstall-recursive install-data-recursive \
+uninstall-data-recursive install-exec-recursive \
+uninstall-exec-recursive installdirs-recursive uninstalldirs-recursive \
+all-recursive check-recursive installcheck-recursive info-recursive \
+dvi-recursive mostlyclean-recursive distclean-recursive clean-recursive \
+maintainer-clean-recursive tags tags-recursive mostlyclean-tags \
+distclean-tags clean-tags maintainer-clean-tags distdir info-am info \
+dvi-am dvi check check-am installcheck-am installcheck install-exec-am \
+install-exec install-data-am install-data install-am install \
+uninstall-am uninstall all-redirect all-am all install-strip \
+installdirs-am installdirs mostlyclean-generic distclean-generic \
+clean-generic maintainer-clean-generic clean mostlyclean distclean \
+maintainer-clean
+
+
+check-examples: $(EXTRA_PROGRAMS)
+	@echo Running examples...
+	@for prog in $(EXTRA_PROGRAMS) ; do \
+		echo $$prog && (./$$prog > /dev/null 2>&1) || exit 1; \
+	done
+	@echo All tests passed.
+
+all:
+
+clean-local:
+	-rm -rf cxx_repository $(EXTRA_PROGRAMS)
+
+# Tell versions [3.59,3.63) of GNU make to not export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:
