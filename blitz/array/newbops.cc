@@ -101,6 +101,9 @@ BZ_DECLARE_ARRAY_ET(operator!=, NotEqual)
 BZ_DECLARE_ARRAY_ET(operator&&, LogicalAnd)
 BZ_DECLARE_ARRAY_ET(operator||, LogicalOr)
 
+BZ_DECLARE_ARRAY_ET(min, _bz_Min)
+BZ_DECLARE_ARRAY_ET(max, _bz_Max)
+
 BZ_DECLARE_ARRAY_ET(atan2, _bz_atan2)
 
 BZ_NAMESPACE_END

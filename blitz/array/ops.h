@@ -65,6 +65,10 @@ BZ_DECLARE_ARRAY_ET_BINARY(operator!=, NotEqual)
 BZ_DECLARE_ARRAY_ET_BINARY(operator&&, LogicalAnd)
 BZ_DECLARE_ARRAY_ET_BINARY(operator||, LogicalOr)
 
+BZ_DECLARE_ARRAY_ET_BINARY(min, _bz_Min)
+BZ_DECLARE_ARRAY_ET_BINARY(max, _bz_Max)
+
+
 BZ_NAMESPACE_END
 
 #endif // BZ_ARRAY_OPS_H
