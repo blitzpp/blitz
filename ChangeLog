@@ -1,5 +1,8 @@
-
-
+2003-01-06 Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+    * blitz/generate/*.[h,cpp]: Update to ISO C++.
+    * blitz/compiler/tempkey.cpp: Update to ISO C++ (and g++-3.4).
+    * blitz/array-impl.h: Partial update to ISO C++ syntax (needed for g++-3.4).
+    
 Sat Dec 21 15:55:33 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* benchmarks/daxpy.cpp: prefer new C++ cast to old C style cast
 
