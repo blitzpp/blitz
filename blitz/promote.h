@@ -29,13 +29,13 @@
 
 BZ_NAMESPACE(blitz)
 
-#ifdef BZ_TEMPLATE_QUALIFIED_RETURN_TYPE
+#ifdef BZ_HAVE_TEMPLATE_QUALIFIED_RETURN_TYPE
     #define BZ_PROMOTE(A,B) _bz_typename BZ_BLITZ_SCOPE(promote_trait)<A,B>::T_promote
 #else
     #define BZ_PROMOTE(A,B) A
 #endif
 
-#if defined(BZ_PARTIAL_SPECIALIZATION) && !defined(BZ_DISABLE_NEW_PROMOTE)
+#if defined(BZ_HAVE_PARTIAL_SPECIALIZATION) && !defined(BZ_DISABLE_NEW_PROMOTE)
 
 /*
  * This compiler supports partial specialization, so type promotion
@@ -147,12 +147,12 @@ struct promote_trait {
     typedef _bz_typename _bz_promote2<T1,T2,promoteToT1>::T_promote T_promote;
 };
 
-#else  // !BZ_PARTIAL_SPECIALIZATION
+#else  // !BZ_HAVE_PARTIAL_SPECIALIZATION
 
   // No partial specialization -- have to do it the ugly way.
   #include <blitz/promote-old.h>
 
-#endif // !BZ_PARTIAL_SPECIALIZATION
+#endif // !BZ_HAVE_PARTIAL_SPECIALIZATION
 
 BZ_NAMESPACE_END
 
