@@ -1,3 +1,29 @@
+2004-04-09  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* benchmarks/Makefile.am: Added AM_CXXFLAGS to compile command for
+	compile-time benchmarks.
+
+	* configure.in: Reordered lists of C++ and Fortran compilers we
+	search for to avoid common conflicts on systems that might have
+	more than one compiler set installed.
+
+	* m4/ac_cxx_flags_preset.m4: Minor formatting change.
+	* m4/ac_cxx_flags_preset.m4: Changed use of "match" operator
+	within expr commands to more standard ":" operator, since "match"
+	is not recognized by the implementation of expr on Darwin systems.
+	* lib/Makefile.am: Removed CXXFLAGS from AM_CXXFLAGS, since this
+	gets added separately to the compile command already.
+	* testsuite/Makefile.am: Removed CXXFLAGS from AM_CXXFLAGS, since
+	this gets added separately to the compile command already.
+	* examples/Makefile.am: Removed CXXFLAGS from AM_CXXFLAGS, since
+	this gets added separately to the compile command already.
+	* benchmarks/Makefile.am: Removed CXXFLAGS from AM_CXXFLAGS, since
+	this gets added separately to the compile command already.
+	* doc/examples/Makefile.am: Removed CXXFLAGS from AM_CXXFLAGS,
+	since this gets added separately to the compile command already.
+	* doc/stencils/Makefile.am: Use AM_CXXFLAGS macro for -I flags
+	rather than deprecated INCLUDES macro.
+
 2004-04-07  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* blitz/Makefile.am: Removed new-config.h from list of
