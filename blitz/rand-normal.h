@@ -50,7 +50,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_uniform BZ_TEMPLATE_DEFAULT(Uniform)>
+template<typename P_uniform BZ_TEMPLATE_DEFAULT(Uniform)>
 class Normal {
 
 public:
