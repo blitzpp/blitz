@@ -1,5 +1,17 @@
 2005-02-08  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
+	* configure.ac: Added g95 to the list of FC compilers that are
+	tried and reordered the list to prefer g95 over gfortran.  Also,
+	reordered the compiler macros to do our compiler flag presets
+	first, before any other macros that may add more flags.
+	* m4/ac_fortran_flags_preset.m4: On many Linux systems, f77 points
+	to the g77 compiler.  So I've added a test for this possibility,
+	instead of just assuming that f77 on Linux systems is the Absoft
+	compiler.  If $G77 equals yes, use the g77 flag presets.  Added
+	flag presets for the PGI F77 and F90 compilers, and for the g95
+	compiler.  Reverted to the practice of overwriting the default
+	values of FFLAGS and FCFLAGS because the default values are not
+	appropriate for benchmark codes.
 	* doc/stencils/Makefile.am: Removed explicit -lm flag from LDADD.
 	This is now inserted into the LIBS variable automatically if
 	needed for standard math functions like sin().
