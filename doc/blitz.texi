@@ -11,6 +11,12 @@
 @end iftex
 @c %**end of header
 
+@dircategory Blitz++ library
+@direntry
+* Blitz++: (blitz++).           High-performance C++ numeric library
+@end direntry
+
+
 @macro faq{question}
 @strong{@bullet{} \question\}
 @end macro
