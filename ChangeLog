@@ -1,3 +1,7 @@
+
+2003-06-16  Patrick Guio <patrick.guio@fys.uio.no>
+	* configure.in: Fixed 2 flags setting for CC/SGI. 
+
 2003-05-16  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* blitz/array/map.h: Fixed error in ascending() method reported by
