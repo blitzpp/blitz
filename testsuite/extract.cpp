@@ -5,7 +5,7 @@ BZ_USING_NAMESPACE(blitz)
 
 class RGB24 {
 public:
-    enum {red=0, green=1, blue=2};
+    static const int red=0, green=1, blue=2;
 
     RGB24() { }
 
