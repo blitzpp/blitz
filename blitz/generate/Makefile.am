@@ -19,5 +19,12 @@ genmatbops_SOURCES = genmatbops.cpp
 genpromote_SOURCES = genpromote.cpp
 genvecwhere_SOURCES = genvecwhere.cpp
 
+generate-headers: $(noinst_PROGRAMS)
+	@echo Generating expression template headers ...
+	@for prog in $(noinst_PROGRAMS) ; do \
+		echo $$prog && ./$$prog || exit 1; \
+		done
+	@echo Header generation complete.
+
 clean-local:
-	-rm -rf cxx_repository ti_files
+	-rm -rf cxx_repository ti_files ii_files $(noinst_PROGRAMS)
