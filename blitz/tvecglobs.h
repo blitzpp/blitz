@@ -39,7 +39,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class T_numtype1, class T_numtype2, int N_length>
+template<typename T_numtype1, typename T_numtype2, int N_length>
 inline BZ_PROMOTE(T_numtype1, T_numtype2)
 dot(const TinyVector<T_numtype1, N_length>& a, 
     const TinyVector<T_numtype2, N_length>& b)
@@ -47,28 +47,28 @@ dot(const TinyVector<T_numtype1, N_length>& a,
     return _bz_meta_vectorDot<N_length, 0>::f(a,b);
 }
 
-template<class T_expr1, class T_numtype2, int N_length>
+template<typename T_expr1, typename T_numtype2, int N_length>
 inline BZ_PROMOTE(_bz_typename T_expr1::T_numtype, T_numtype2)
 dot(_bz_VecExpr<T_expr1> a, const TinyVector<T_numtype2, N_length>& b)
 {
     return _bz_meta_vectorDot<N_length, 0>::f_value_ref(a,b);
 }
 
-template<class T_numtype1, class T_expr2, int N_length>
+template<typename T_numtype1, typename T_expr2, int N_length>
 inline BZ_PROMOTE(T_numtype1, _bz_typename T_expr2::T_numtype)
 dot(const TinyVector<T_numtype1, N_length>& a, _bz_VecExpr<T_expr2> b)
 {
     return _bz_meta_vectorDot<N_length, 0>::f_ref_value(a,b);
 }
 
-template<class T_numtype1, int N_length>
+template<typename T_numtype1, int N_length>
 inline BZ_SUMTYPE(T_numtype1)
 product(const TinyVector<T_numtype1, N_length>& a)
 {
     return _bz_meta_vectorProduct<N_length, 0>::f(a);
 }
 
-template<class T_numtype, int N_length>
+template<typename T_numtype, int N_length>
 inline T_numtype
 sum(const TinyVector<T_numtype, N_length>& a)
 {
