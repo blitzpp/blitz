@@ -1,3 +1,15 @@
+
+2004-10-22  Patrick Guio  <patrick.guio@ii.uib.no>
+
+	* doc/Makefile.am: Added blitz.info and blitz.pdf in EXTRA_DIST.  
+	Those files ought to be in the dist tarball since they might not be able
+	to be regenerated due to not available 'tex' and 'makeinfo' commands.
+	Added blitz.ps and blitz.pdf in doc_DATA since they are now distributed.
+	* doc/doxygen/Makefile.am: Removed search option '-s' for doxytag and
+	replaced by tag option '-t' since '-s' is deprecated in recent doxygen
+	version.
+
+
 2004-10-16  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* .cvsignore: Removed _configs.sed.  This file is no longer
