@@ -5,10 +5,8 @@
 
 #include <blitz/array.h>
 
-#ifdef BZ_NAMESPACES
-using namespace blitz;
-using namespace blitz::tensor;   
-#endif
+BZ_USING_NAMESPACE(blitz)
+BZ_USING_NAMESPACE(blitz::tensor)
 
 typedef Array<double,1> Array1D;
 
