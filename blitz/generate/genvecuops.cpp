@@ -6,15 +6,10 @@
 
 const int ieeeflag = 1, bsdflag = 2;
 
-bzofstream ofs("vecuops.cc", 
+bzofstream ofs("../vecuops.cc", 
     "Expression templates for vectors, unary functions",
     __FILE__,
     "BZ_VECUOPS_CC");
-
-void two(const char* fname, int flag=0, const char* apname = 0)
-{
-    std::cout << "genvecuops.cpp: two() not implemented" << std::endl;
-}
 
 void one(const char* fname, int flag=0, const char* apname = 0)
 {
@@ -56,6 +51,55 @@ void one(const char* fname, int flag=0, const char* apname = 0)
 
     } while (++operands);
     
+    if (flag != 0)
+        ofs << "#endif" << std::endl;
+
+    ofs << std::endl;
+}
+
+void two(const char* fname, int flag=0, const char* apname = 0)
+{
+    if (apname == 0)
+        apname = fname;
+
+    ofs << "/****************************************************************************" << std::endl
+        << " * " << fname << std::endl
+        << " ****************************************************************************/" << std::endl << std::endl;
+
+    if (flag == ieeeflag)
+        ofs << "#ifdef BZ_HAVE_IEEE_MATH" << std::endl;
+    else if (flag == bsdflag)
+        ofs << "#ifdef BZ_HAVE_SYSTEM_V_MATH" << std::endl;
+
+    OperandTuple operands(2);
+
+    do {
+        operands.printTemplates(ofs);
+        ofs << std::endl << "inline" << std::endl
+            << "_bz_VecExpr<_bz_VecExprOp<";
+        operands.printIterators(ofs);
+        ofs << "," << std::endl << "    _bz_" << apname << "<";
+        operands[0].printNumtype(ofs);
+        ofs << ",";
+        operands[1].printNumtype(ofs);
+        ofs << "> > >" << std::endl
+            << fname << "(";
+        operands.printArgumentList(ofs);
+        ofs << ")" << std::endl
+            << "{" << std::endl
+            << "    typedef _bz_VecExprOp<";
+        operands.printIterators(ofs);
+        ofs << "," << std::endl << "        _bz_" << apname << "<";
+        operands[0].printNumtype(ofs);
+        ofs << ",";
+        operands[1].printNumtype(ofs);
+        ofs << "> > T_expr;" << std::endl << std::endl
+            << "    return _bz_VecExpr<T_expr>(T_expr(";
+        operands.printInitializationList(ofs);
+        ofs << "));" << std::endl
+            << "}" << std::endl << std::endl;
+    } while (++operands);
+
     if (flag != 0)
         ofs << "#endif" << std::endl;
 
