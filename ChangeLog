@@ -1,3 +1,8 @@
+2002-09-05  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+	* configure: Regenerated from configure.in using autoconf.
+	* configure.in: Added flag -qrtti=all when using IBM's xlC
+	compiler to enable RTTI support.
+
 2002-08-30  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 	* testsuite/storage.cpp: Modified construction of one Array to
 	test new setStorage() method.
