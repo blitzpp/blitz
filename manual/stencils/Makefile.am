@@ -26,7 +26,7 @@ EXTRA_PROGRAMS = $(SINGLE_TESTS)
 
 dump_stencil_SOURCES = dump-stencil.cpp
 
-check-examples: $(TESTS)
+check-examples: $(EXTRA_PROGRAMS)
 	@echo Running test suite...
 	@for prog in $(EXTRA_PROGRAMS) ; do \
 		echo $$prog && (./$$prog > /dev/null 2>&1) || exit 1; \
@@ -34,5 +34,5 @@ check-examples: $(TESTS)
 	@echo All tests passed.
 
 clean-local:
-	-rm -rf cxx_repository $(TESTS)
+	-rm -rf cxx_repository $(EXTRA_PROGRAMS)
 
