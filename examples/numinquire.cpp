@@ -2,17 +2,8 @@
  *
  * numinquire.cpp     Blitz++ <numinquire.h> example, illustrating how to
  *                    get at properties of numeric types.
- *
  * $Id$
- *
- * $Log$
- * Revision 1.1  2000/06/19 12:26:17  tveldhui
- * Initial revision
- *
- * Revision 1.1  1997/07/03 11:54:55  tveldhui
- * Initial revision
- *
- */
+ *****************************************************************************/
 
 #include <blitz/blitz.h>
 #include <blitz/numinquire.h>
