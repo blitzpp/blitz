@@ -29,6 +29,25 @@
 
 BZ_NAMESPACE(blitz)
 
+// helper class ConstPointerStack
+template<class P_numtype, int N_rank>
+class ConstPointerStack {
+public:
+    typedef P_numtype                T_numtype;
+
+    void operator=(const ConstPointerStack<P_numtype,N_rank>& rhs) 
+    {
+        stack_ = rhs.stack_;
+    }
+
+    const T_numtype*& operator[](int position)
+    {
+        return stack_[position];
+    }
+      
+private:
+    const T_numtype *                stack_[N_rank];
+};
 
 
 template<class T, int N>
@@ -43,8 +62,7 @@ public:
         lbound_ = array.lbound();
         extent_ = array.extent();
         order_ = array.ordering();
-        first_ = const_cast<T*>(array.dataFirst());
-        data_ = first_;
+        data_ = const_cast<T*>(array.dataFirst());
 
         maxRank_ = order_(0);
         stride_ = strides_(maxRank_);
@@ -122,15 +140,14 @@ private:
 
 private:
     TinyVector<int,N> strides_, lbound_, extent_, order_;
-    T * stack_[N];
-    T * last_[N];
+    ConstPointerStack<T,N> stack_;
+    ConstPointerStack<T,N> last_;
     int stride_;
     int maxRank_;
 
 protected:
     TinyVector<int,N> pos_;
     T * _bz_restrict data_;
-    T * _bz_restrict first_;
 };
 
 
@@ -189,7 +206,7 @@ ConstArrayIterator<T,N>& ConstArrayIterator<T,N>::operator++()
     for (; j < N; ++j)
     {
         int r = order_(j);
-        data_ = stack_[j];
+        data_ = const_cast<T*>(stack_[j]);
         data_ += strides_[r];
         ++pos_(r);
 
