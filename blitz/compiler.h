@@ -28,7 +28,7 @@
 // The file <blitz/config.h> is generated automatically by the
 // script 'bzconfig', located in the 'compiler' directory.
 
-#include <blitz/config.h>
+#include <blitz/new-config.h>
 
 /*
  * Define some kludges.
