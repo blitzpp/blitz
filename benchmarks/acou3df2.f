@@ -3,6 +3,12 @@
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
 ! $Log$
+! Revision 1.3  2002/12/17 15:55:04  patricg
+!
+! added support for test prog
+! added explicit INTEGER declaration for i,j,k in subroutine
+! acoustic3d_f77Tuned_stencil
+!
 ! Revision 1.2  2002/10/08 20:10:52  julianc
 ! Removed some extraneous semicolons that were inhibiting compilation of these Fortran sources with some compilers.
 !
@@ -19,6 +25,15 @@
 !   locality
 ! - The stencil is tiled to improve cache usage
 ! - Instead of copying, the indices into the 4D array are shuffled.
+
+!      INTEGER N, iters
+!      REAL check
+
+!      N = 112
+!      iters = 210
+!      CALL acoustic3d_f77Tuned(N,iters,check)
+!      PRINT *, check
+!      END
 
       SUBROUTINE acoustic3d_f77Tuned(N, niters, check)
       INTEGER N, niters, iter
@@ -43,6 +58,7 @@
       SUBROUTINE acoustic3d_f77Tuned_stencil(P1,P2,P3,C,N)
       INTEGER N
       REAL P1(N,N,N), P2(N,N,N), P3(N,N,N), C(N,N,N)
+      INTEGER i,j,k
       INTEGER bi,bj,bk,ni,nj,nk,blockSize
 
       blockSize = 8
