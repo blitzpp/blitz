@@ -73,8 +73,9 @@ const int ldflag = 1;
 const int cflag = 2;
 const int ieeeflag = 3;
 const int bsdflag = 4;
-const int cflag2 = 5;
-const int nofuncflag = 6;
+const int cflag1 = 5;
+const int cflag2 = 6;
+const int nofuncflag = 7;
 
 void one(const char* applicName, const char* specialization, const char* funcName,
     const char* returnType, const char* comment, int flag=0, int noCastFlag=0)
@@ -97,7 +98,9 @@ void one(const char* applicName, const char* specialization, const char* funcNam
     ofs << std::endl;
 
     if (flag == cflag)
-        ofs << "#ifdef BZ_HAVE_COMPLEX_MATH" << std::endl;
+        ofs << "#ifdef BZ_HAVE_COMPLEX_FCNS" << std::endl;
+    else if (flag == cflag1)
+        ofs << "#ifdef BZ_HAVE_COMPLEX_MATH1" << std::endl;
     else if (flag == cflag2)
         ofs << "#ifdef BZ_HAVE_COMPLEX_MATH2" << std::endl;
     else if (flag == ieeeflag)
@@ -161,7 +164,7 @@ void one(const char* applicName, const char* specialization, const char* funcNam
             ofs << funcName;
         }
         else {
-        if ((flag == cflag) || (flag == cflag2))
+        if ((flag == cflag) || (flag == cflag1) || (flag == cflag2))
             ofs << "BZ_CMATHFN_SCOPE(";
         else if ((flag == ieeeflag) || (flag == bsdflag))
             ofs << "BZ_IEEEMATHFN_SCOPE(";
@@ -218,7 +221,9 @@ void two(const char* applicName, const char* specialization, const char* funcNam
     ofs << std::endl;
 
     if (flag == cflag)
-        ofs << "#ifdef BZ_HAVE_COMPLEX_MATH" << std::endl;
+        ofs << "#ifdef BZ_HAVE_COMPLEX_FCNS" << std::endl;
+    else if (flag == cflag1)
+        ofs << "#ifdef BZ_HAVE_COMPLEX_MATH1" << std::endl;
     else if (flag == cflag2)
         ofs << "#ifdef BZ_HAVE_COMPLEX_MATH2" << std::endl;
     else if (flag == ieeeflag)
@@ -267,7 +272,7 @@ void two(const char* applicName, const char* specialization, const char* funcNam
     ofs << std::endl << "    static inline T_numtype apply(T_numtype1 x, T_numtype2 y)"
         << std::endl << "    { return ";
 
-    if ((flag == cflag) || (flag == cflag2))
+    if ((flag == cflag) || (flag == cflag1) || (flag == cflag2))
         ofs << "BZ_CMATHFN_SCOPE(";
     else if ((flag == ieeeflag) || (flag == bsdflag))
         ofs << "BZ_IEEEMATHFN_SCOPE(";
@@ -342,16 +347,16 @@ one("abs"    ,"complex<long double> ", "abs", "long double", "", cflag);
 one("acos"   ,""            ,"acos"    ,"double"       ,"Inverse cosine");
 one("acos"   ,"float"       ,"acos"  ,"float"         ,"");
 one("acos"   ,"long double" ,"acos"   ,"long double"  ,"", ldflag);
-// one("acos"   ,"complex<float> ", "acos", "complex<float>", "", cflag2);
-// one("acos"   ,"complex<double> ", "acos", "complex<double>", "", cflag2);
-// one("acos", "complex<long double> ", "acos", "complex<long double>", "", cflag2);
+one("acos"   ,"complex<float> ", "acos", "complex<float>", "", cflag2);
+one("acos"   ,"complex<double> ", "acos", "complex<double>", "", cflag2);
+one("acos", "complex<long double> ", "acos", "complex<long double>", "", cflag2);
 one("acosh"  ,""            ,"acosh"   ,"double"       ,"Inverse hyperbolic cosine", ieeeflag);
 one("asin"   ,""            ,"asin"    ,"double"       ,"Inverse sine");
 one("asin",   "float",       "asin",    "float", "");
 one("asin"   ,"long double" ,"asin"   ,"long double"  ,"", ldflag);
-// one("asin"   ,"complex<float> ", "asin", "complex<float>", "", cflag2);
-// one("asin"   ,"complex<double> ", "asin", "complex<double>", "", cflag2);
-// one("asin", "complex<long double> ", "asin", "complex<long double>", "", cflag2);
+one("asin"   ,"complex<float> ", "asin", "complex<float>", "", cflag2);
+one("asin"   ,"complex<double> ", "asin", "complex<double>", "", cflag2);
+one("asin", "complex<long double> ", "asin", "complex<long double>", "", cflag2);
 one("asinh"  ,""            ,"asinh"   ,"double"       ,"Inverse hyperbolic sine", ieeeflag);
 one("arg",   ""            ,"0"    ,0             ,"", cflag, nofuncflag);
 one("arg",   "complex<float> ", "arg", "float", "", cflag, 0);
@@ -360,9 +365,9 @@ one("arg",   "complex<long double> ", "arg", "long double", "", cflag, 0);
 one("atan"   ,""            ,"atan"    ,"double"       ,"Inverse tangent");
 one("atan",   "float",       "atan",    "float",        "");
 one("atan"   ,"long double" ,"atan"   ,"long double"  ,"", ldflag);
-// one("atan"   ,"complex<float> ", "atan", "complex<float>", "", cflag2);
-// one("atan"   ,"complex<double> ", "atan", "complex<double>", "", cflag2);
-// one("atan", "complex<long double> ", "atan", "complex<long double>", "", cflag2);
+one("atan"   ,"complex<float> ", "atan", "complex<float>", "", cflag2);
+one("atan"   ,"complex<double> ", "atan", "complex<double>", "", cflag2);
+one("atan", "complex<long double> ", "atan", "complex<long double>", "", cflag2);
 one("atanh"  ,""            ,"atanh"   ,"double"       ,"Inverse hyperbolic tangent", ieeeflag);
 two("atan2"  ,""            ,"atan2"   ,"double"       ,"Inverse tangent");
 two("atan2"  ,"float"       ,"atan2"   ,"float"        ,"");
@@ -376,23 +381,23 @@ one("conj",   ""            ,"conj"    ,0             ,"", cflag);
 one("cos"    ,""            ,"cos"     ,"double"       ,"Cosine");
 one("cos",    "float",       "cos",     "float",       "");
 one("cos"    ,"long double" ,"cos"    ,"long double"  ,"", ldflag);
-one("cos"   ,"complex<float> ", "cos", "complex<float>", "", cflag);
-one("cos"   ,"complex<double> ", "cos", "complex<double>", "", cflag);
-one("cos", "complex<long double> ", "cos", "complex<long double>", "", cflag);
+one("cos"   ,"complex<float> ", "cos", "complex<float>", "", cflag1);
+one("cos"   ,"complex<double> ", "cos", "complex<double>", "", cflag1);
+one("cos", "complex<long double> ", "cos", "complex<long double>", "", cflag1);
 two("copysign", ""          ,"copysign","double"       ,"", bsdflag);
 one("cosh"   ,""            ,"cosh"    ,"double"       ,"Hyperbolic cosine");
 one("cosh",   "float",       "cosh",    "float", "");
 one("cosh"   ,"long double" ,"cosh"   ,"long double"  ,"", ldflag);
-one("cosh"   ,"complex<float> ", "cosh", "complex<float>", "", cflag);
-one("cosh"   ,"complex<double> ", "cosh", "complex<double>", "", cflag);
-one("cosh", "complex<long double> ", "cosh", "complex<long double>", "", cflag);
+one("cosh"   ,"complex<float> ", "cosh", "complex<float>", "", cflag1);
+one("cosh"   ,"complex<double> ", "cosh", "complex<double>", "", cflag1);
+one("cosh", "complex<long double> ", "cosh", "complex<long double>", "", cflag1);
 two("drem"   ,""            ,"drem"    ,"double"       ,"Remainder", bsdflag);
 one("exp"    ,""            ,"exp"     ,"double"       ,"Exponential");
 one("exp",    "float",       "exp",     "float",       "");
 one("exp"    ,"long double" ,"exp"    ,"long double"  ,"", ldflag      );
-one("exp"   ,"complex<float> ", "exp", "complex<float>", "", cflag);
-one("exp"   ,"complex<double> ", "exp", "complex<double>", "", cflag);
-one("exp", "complex<long double> ", "exp", "complex<long double>", "", cflag);
+one("exp"   ,"complex<float> ", "exp", "complex<float>", "", cflag1);
+one("exp"   ,"complex<double> ", "exp", "complex<double>", "", cflag1);
+one("exp", "complex<long double> ", "exp", "complex<long double>", "", cflag1);
 one("expm1"  ,""            ,"expm1"   ,"double"       ,"Exp(x)-1", ieeeflag);
 one("erf"    ,""            ,"erf"     ,"double"       ,"Error function", ieeeflag);
 one("erfc"   ,""            ,"erfc"    ,"double"       ,"Complementary error function", ieeeflag);
@@ -414,17 +419,17 @@ one("lgamma" ,""            ,"lgamma"  ,"double"       ,"Log absolute gamma", ie
 one("log"    ,""            ,"log"     ,"double"       ,"Natural logarithm");
 one("log",    "float",       "log",     "float",        "");
 one("log"    ,"long double" ,"log"     ,"long double"  ,"", ldflag);
-one("log"   ,"complex<float> ", "log", "complex<float>", "", cflag);
-one("log"   ,"complex<double> ", "log", "complex<double>", "", cflag);
-one("log", "complex<long double> ", "log", "complex<long double>", "", cflag);
+one("log"   ,"complex<float> ", "log", "complex<float>", "", cflag1);
+one("log"   ,"complex<double> ", "log", "complex<double>", "", cflag1);
+one("log", "complex<long double> ", "log", "complex<long double>", "", cflag1);
 one("logb"   ,""            ,"logb"    ,"double"       ,"Unbiased exponent (IEEE)", ieeeflag);
 one("log1p"  ,""            ,"log1p"   ,"double"       ,"Compute log(1 + x)", ieeeflag);
 one("log10"  ,""            ,"log10"   ,"double"       ,"Logarithm base 10");
 one("log10",  "float",       "log10",   "float",        "");
 one("log10"  ,"long double" ,"log10"  ,"long double"  ,"", ldflag);
-// one("log10"   ,"complex<float> ", "log10", "complex<float>", "", cflag2);
-// one("log10"   ,"complex<double> ", "log10", "complex<double>", "", cflag2);
-// one("log10", "complex<long double> ", "log10", "complex<long double>", "", cflag2);
+one("log10"   ,"complex<float> ", "log10", "complex<float>", "", cflag2);
+one("log10"   ,"complex<double> ", "log10", "complex<double>", "", cflag2);
+one("log10", "complex<long double> ", "log10", "complex<long double>", "", cflag2);
 one("nearest", ""           ,"nearest" ,"double"       ,"Nearest floating point integer", bsdflag);
 two("nextafter", "",         "nextafter", "double",     "Next representable number after x towards y", bsdflag);
 
@@ -452,9 +457,9 @@ two("polar"  ,""            ,"polar"   ,"complex<T_numtype1>", "", cflag, 1);
 two("pow"    ,""            ,"pow"     ,"double"       ,"Power");
 two("pow"    ,"float"       ,"pow"     ,"float"        ,"");
 two("pow"    ,"long double" ,"pow"     ,"long double"  ,"");
-two("pow"    ,"complex<float>","pow"   ,"complex<float>" ,"",cflag);
-two("pow"    ,"complex<double>","pow"  ,"complex<double>","",cflag);
-two("pow"    ,"complex<long double>","pow","complex<long double>","",cflag);
+two("pow"    ,"complex<float>","pow"   ,"complex<float>" ,"",cflag1);
+two("pow"    ,"complex<double>","pow"  ,"complex<double>","",cflag1);
+two("pow"    ,"complex<long double>","pow","complex<long double>","",cflag1);
 two("remainder", "",         "remainder", "double",     "Remainder", bsdflag);
 
 one("rint"   ,""            ,"rint"    ,"double"       ,"Round to floating point integer", ieeeflag);
@@ -463,15 +468,15 @@ two("scalb"  ,""            ,"scalb"   ,"double"       ,"x * (2**y)", bsdflag);
 one("sin"    ,""            ,"sin"     ,"double"       ,"Sine");
 one("sin",    "float",       "sin",     "float",       "");
 one("sin"    ,"long double" ,"sin"    ,"long double"  ,"", ldflag);
-one("sin"   ,"complex<float> ", "sin", "complex<float>", "", cflag);
-one("sin"   ,"complex<double> ", "sin", "complex<double>", "", cflag);
-one("sin", "complex<long double> ", "sin", "complex<long double>", "", cflag);
+one("sin"   ,"complex<float> ", "sin", "complex<float>", "", cflag1);
+one("sin"   ,"complex<double> ", "sin", "complex<double>", "", cflag1);
+one("sin", "complex<long double> ", "sin", "complex<long double>", "", cflag1);
 one("sinh"   ,""            ,"sinh"    ,"double"       ,"Hyperbolic sine");
 one("sinh",   "float",       "sinh",    "float",        "");
 one("sinh"   ,"long double" ,"sinh"   ,"long double"  ,"", ldflag);
-one("sinh"   ,"complex<float> ", "sinh", "complex<float>", "", cflag);
-one("sinh"   ,"complex<double> ", "sinh", "complex<double>", "", cflag);
-one("sinh", "complex<long double> ", "sinh", "complex<long double>", "", cflag);
+one("sinh"   ,"complex<float> ", "sinh", "complex<float>", "", cflag1);
+one("sinh"   ,"complex<double> ", "sinh", "complex<double>", "", cflag1);
+one("sinh", "complex<long double> ", "sinh", "complex<long double>", "", cflag1);
 
 ofs << 
 "template<typename P_numtype>\n"
@@ -515,21 +520,21 @@ ofs <<
 one("sqrt"   ,""            ,"sqrt"    ,"double"       ,"Square root");
 one("sqrt",   "float",       "sqrt",    "float",        "");
 one("sqrt"   ,"long double" ,"sqrt"   ,"long double"  ,"", ldflag);
-one("sqrt"   ,"complex<float> ", "sqrt", "complex<float>", "", cflag);
-one("sqrt"   ,"complex<double> ", "sqrt", "complex<double>", "", cflag);
-one("sqrt", "complex<long double> ", "sqrt", "complex<long double>", "", cflag);
+one("sqrt"   ,"complex<float> ", "sqrt", "complex<float>", "", cflag1);
+one("sqrt"   ,"complex<double> ", "sqrt", "complex<double>", "", cflag1);
+one("sqrt", "complex<long double> ", "sqrt", "complex<long double>", "", cflag1);
 one("tan"    ,""            ,"tan"     ,"double"       ,"Tangent");
 one("tan",    "float",       "tan",    "float",         "");
 one("tan"    ,"long double" ,"tan"    ,"long double"  ,"");
-one("tan"   ,"complex<float> ", "tan", "complex<float>", "", cflag);
-one("tan"   ,"complex<double> ", "tan", "complex<double>", "", cflag);
-one("tan", "complex<long double> ", "tan", "complex<long double>", "", cflag);
+one("tan"   ,"complex<float> ", "tan", "complex<float>", "", cflag1);
+one("tan"   ,"complex<double> ", "tan", "complex<double>", "", cflag1);
+one("tan", "complex<long double> ", "tan", "complex<long double>", "", cflag1);
 one("tanh"   ,""            ,"tanh"    ,"double"       ,"Hyperbolic tangent");
 one("tanh",   "float",       "tanh",    "float",        "");
 one("tanh"   ,"long double" ,"tanh"   ,"long double"  ,"", ldflag);
-one("tanh"   ,"complex<float> ", "tanh", "complex<float>", "", cflag);
-one("tanh"   ,"complex<double> ", "tanh", "complex<double>", "", cflag);
-one("tanh", "complex<long double> ", "tanh", "complex<long double>", "", cflag);
+one("tanh"   ,"complex<float> ", "tanh", "complex<float>", "", cflag1);
+one("tanh"   ,"complex<double> ", "tanh", "complex<double>", "", cflag1);
+one("tanh", "complex<long double> ", "tanh", "complex<long double>", "", cflag1);
 
 // blitz-bugs/archive/0189.html
 // one("trunc"  ,""            ,"trunc"   ,"double"       ,"Nearest floating integer in the direction of zero", ieeeflag);
