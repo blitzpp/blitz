@@ -23,6 +23,12 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.4  2002/07/23 23:14:09  jcumming
+ * Added a four-argument templated constructor for _bz_ArrayExpr, which is
+ * needed when building an Array expression containing a functor that takes
+ * three arguments.  This is needed to support functorExpr.h, which allows
+ * functors with up to three arguments.
+ *
  * Revision 1.3  2002/03/07 14:36:47  patricg
  *
  * line 124
@@ -156,6 +162,11 @@ public:
     template<class T1, class T2, class T3>
     _bz_ArrayExpr(BZ_ETPARM(T1) a, BZ_ETPARM(T2) b, BZ_ETPARM(T3) c)
         : iter_(a, b, c)
+    { }
+
+    template<class T1, class T2, class T3, class T4>
+    _bz_ArrayExpr(BZ_ETPARM(T1) a, BZ_ETPARM(T2) b, BZ_ETPARM(T3) c,
+        BZ_ETPARM(T4) d) : iter_(a, b, c, d)
     { }
 
     template<class T1, class T2>
