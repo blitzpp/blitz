@@ -12,7 +12,8 @@ need to refer to it as @code{blitz::TinyVector}, or use the directive
 
 The Blitz++ @code{Array} object uses @code{TinyVector} internally, so if you
 include @code{<blitz/array.h>}, the @code{TinyVector} header is automatically
-included.
+included.  However, to use @code{TinyVector} expressions, you will
+need to include @code{<blitz/tinyvec-et.h>}.
 
 @section Template parameters and types
 
