@@ -10,6 +10,9 @@ SUBDIRS = bin blitz random src lib testsuite \
 EXTRA_DIST = LEGAL LICENSE README.binutils README-VS.NET Blitz-VS.NET.zip \
 	ChangeLog.1 
 
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = blitz.pc blitz-uninstalled.pc
+
 lib: blitz-library
 
 blitz-library:

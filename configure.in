@@ -102,6 +102,8 @@ dnl	demos/Makefile
 
 AC_CONFIG_FILES([doc/doxygen/Doxyfile])
 
+AX_CREATE_PKGCONFIG_INFO
+
 AC_OUTPUT
 
 dnl At some point in the future it would be nice to collect
