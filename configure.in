@@ -412,6 +412,16 @@ dnl AC_MSG_CHECKING([C++ compiler ($CXX $CXXFLAGS $LDFLAGS) characteristics])
 dnl AC_MSG_RESULT([])
 dnl AC_CONFIG_HEADER(config.h)
 
+dnl Checking the compiler option which is used to set the
+dnl runtime library path.
+
+AC_CHECK_RPATH_OPTION
+
+dnl Checking whether the compiler needs the -rdynamic flag
+dnl when linking a program using the libdl.
+
+AC_CHECK_RDYNAMICFLAG
+
 # Create the lib subdirectory by hand, since it has no Makefile.in
 if test ! -d lib ; then
   mkdir lib
