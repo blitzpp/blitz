@@ -33,6 +33,7 @@ loop5
 loop6
 loop8
 loop9
+makeloops
 qcd
 stencil
 tinydaxpy
@@ -61,6 +62,7 @@ loop5.m
 loop6.m
 loop8.m
 loop9.m
+qcd.m
 stencil.m
 plot_benchmarks.m
 benchmarks.ps
