@@ -579,7 +579,7 @@ template<typename T1, typename T2, typename T3, typename T4, typename T5,
 CartesianProduct<TinyVector<int,11>, _bz_typename
     cp_findContainerType<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_container, 11>
 indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4, const T5& c5,
-    const T6& c6, const T7& c7, const T8& c8, const T9& c9, const T10& c10.
+    const T6& c6, const T7& c7, const T8& c8, const T9& c9, const T10& c10,
     const T11& c11)
 {
     typedef _bz_typename
