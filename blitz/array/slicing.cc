@@ -23,6 +23,10 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.4  2002/03/06 16:12:06  patricg
+ *
+ * data_ replaced by this->data_ everywhere
+ *
  * Revision 1.3  2001/02/11 15:43:39  tveldhui
  * Additions from Julian Cummings:
  *  - StridedDomain class
@@ -228,7 +232,7 @@ void Array<P_numtype, N_rank>::constructSlice(Array<T_numtype, N_rank2>& array,
     R10 r10)
 {
     MemoryBlockReference<P_numtype>::changeBlock(array, array.zeroOffset());
-    data_ = array.dataZero();
+    this->data_ = array.dataZero();
 
     int setRank = 0;
 
@@ -310,9 +314,9 @@ void Array<T_numtype, N_rank>::slice(int& setRank, int i,
          << ", " << array.ubound(sourceRank) << "]");
 
     rankMap[sourceRank] = -1;
-    data_ += i * array.stride(sourceRank);
+    this->data_ += i * array.stride(sourceRank);
 #ifdef BZ_DEBUG_SLICE
-    cout << "data_ = " << data_ << endl;
+    cout << "this->data_ = " << this->data_ << endl;
 #endif
 }
 
@@ -358,7 +362,7 @@ cout << "slice(" << rank << ", Range):" << endl
     int offset = -base(rank) * stride_[rank] * stride
                  + first * stride_[rank];
     // (first - base(rank)) * stride_[rank] 
-    data_ += offset;
+    this->data_ += offset;
     zeroOffset_ -= offset;
 
     stride_[rank] *= stride;
