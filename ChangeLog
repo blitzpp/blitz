@@ -1,4 +1,8 @@
 
+
+2003-05-09 Patrick Guio <patrick.guio@fys.uio.no>
+	* doc/stencils/Makefile.am: Fixed lib path to be used with libtool stuff
+
 2003-04-02 Patrick Guio <patrick.guio@fys.uio.no>
 	* blitz/array/resize.cc: Added the definition of the Array class member 
 	function resize(...) with Range argument as it was declared already
