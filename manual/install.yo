@@ -1,0 +1,134 @@
+bzsubsect(Installation)
+
+bzindex(installation)
+bzindex(autoconf)
+bzindex(makefiles)
+
+Blitz++ uses GNU Autoconf, which handles rewriting Makefiles
+for various platforms and compilers.  It has greatly simplified
+installation and porting.  Many thanks for John W. Eaton
+and Brendan Kehoe for their help with this.
+
+To install blitz, unpack the blitz-VERSION.tar.gz
+file (it will install into a subdirectory blitz-VERSION).
+For example:
+
+bzverb(\
+[tveldhui@n2001:~] 32: ls -l blitz*.gz
+-rw-r--r--   1 tveldhui users      480953 Jun 23 15:20 blitz-0.5.tar.gz
+[tveldhui@n2001:~] 33: gunzip blitz-0.5.tar.gz 
+[tveldhui@n2001:~] 34: tar xvf blitz-0.5.tar
+blitz-0.5/CHANGELOG
+blitz-0.5/COPYING
+blitz-0.5/INSTALL
+blitz-0.5/Makefile.in
+blitz-0.5/README
+blitz-0.5/THANKS
+  .
+  .
+)
+
+Then go into the main blitz directory, and type:
+
+bzindex(configure script)
+bf(bzverb(\
+./configure --with-cxx=[compiler]
+))
+
+where [compiler] is one of tt(gcc), tt(KCC), tt(cray), tt(aCC), 
+tt(DECcxx), tt(pgCC), tt(SGI32), or tt(SGI64).
+
+If your compiler has been renamed (e.g. tt(eg++) for gcc instead of the usual
+tt(g++)), you can use this syntax to specify the command name for the compiler:
+
+bf(bzverb(\
+./configure --with-cxx=gcc:eg++
+))
+
+You can also specify special command-line options for your compiler, using
+this syntax:
+
+bf(bzverb(\
+./configure --with-cxx="gcc:eg++ -ftemplate-depth-50"
+))
+
+If you are interested in benchmarking, you may want to use
+the option tt(--with-blas=...) to specify the path where the
+blas library is found.
+
+Once the configure script is done, you can do any of these
+things:
+
+startdit()
+
+dit(tt(make lib    ))     Check the compiler and create libblitz.a
+
+dit(tt(make check  ))     Do the above plus build and check the testsuite
+
+dit(tt(make all    ))     Do the above plus build the examples and benchmarks.
+This may take a bf(long) time.
+
+enddit()
+
+Building the benchmark programs requires both a Fortran 77 and
+Fortran 90 compiler.
+
+bzsubsect(The Blitz++ directory tree)
+
+The main Blitz++ directory contains these subdirectories:
+
+startdit()
+
+dit(tt(blitz/       )) Blitz++ headers and source files
+
+dit(tt(random/      )) Random number generators
+
+dit(tt(compiler/    )) Blitz++ compiler tests.  The tt(bzconfig) script is used
+   to test a compiler for ISO/ANSI C++ compatability.  This script creates
+   the tt(blitz/config.h) header file, which may enable various kludges
+   to compensate for deficiencies of your compiler.
+
+dit(tt(examples/    )) Example programs
+
+dit(tt(manual/      )) Documentation in HTML and PostScript.
+
+dit(tt(benchmarks/  )) Benchmark programs
+
+dit(tt(testsuite/   )) Testsuite programs
+ 
+dit(tt(src/         )) Source code for tt(libblitz.a)
+
+dit(tt(lib/         )) Where tt(libblitz.a) lives.
+ 
+enddit()
+
+
+bzsubsect(Porting Blitz++)
+
+bzindex(porting Blitz++)
+
+If you want to try porting Blitz++ to a new compiler or platform,
+I suggest the following approach:
+
+startit()
+
+it() First check the Blitz++ web page to make sure you have
+the latest snapshot, and that someone hasn't already ported
+blitz to your platform.
+
+it() Go into the compiler subdirectory and run the bzconfig
+     script.  This will exercise your compiler to see what
+     language features it supports.  If it doesn't have
+     member templates and enum computations, just give up.
+
+it() Install autoconf (from e.g. ftp://prep.ai.mit.edu/pub/gnu)
+     if you don't have it already.
+
+it() Make a backup of configure.in, and edit configure.in
+     to add appropriate cases for your compiler.  Then invoke
+     autoconf to generate the configure script.  Then try
+     configure with your new --with-cxx= option.  Repeat
+     until it works..
+
+endit()
+
