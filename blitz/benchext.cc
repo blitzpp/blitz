@@ -41,7 +41,7 @@ BenchmarkExt<P_parameter>::BenchmarkExt(const char* name,
     // NEEDS_WORK: once pow(X,Y) is supported, can just say
     // parameters_ = pow(10.0, Range(1,20)/4.0);
 
-    for (int i=0; i < numParameters_; ++i)
+    for (unsigned i=0; i < numParameters_; ++i)
         parameters_[i] = (P_parameter)::pow(10.0, (i+1)/4.0);
 
     iterations_ = 5.0e+5 / parameters_;
@@ -154,7 +154,6 @@ template<class P_parameter>
 P_parameter BenchmarkExt<P_parameter>::getParameter() const
 {
     BZPRECONDITION(state_ == benchmarkingImplementation);
-    BZPRECONDITION(parameterNumber_ >= 0);
     BZPRECONDITION(parameterNumber_ < numParameters_);
 
     return parameters_[parameterNumber_];
@@ -164,7 +163,6 @@ template<class P_parameter>
 long BenchmarkExt<P_parameter>::getIterations() const
 {
     BZPRECONDITION(state_ == benchmarkingImplementation);
-    BZPRECONDITION(parameterNumber_ >= 0);
     BZPRECONDITION(parameterNumber_ < numParameters_);
 
     return iterations_[parameterNumber_];
@@ -263,7 +261,7 @@ void BenchmarkExt<P_parameter>::saveMatlabGraph(const char* filename) const
     // ofs << "parm = " << parameters_ << ";" << endl << endl;
 
     ofs << "parm = [ ";
-    int i;
+    unsigned i;
     for (i=0; i < numParameters_; ++i)
         ofs << setprecision(12) << double(parameters_[i]) << " ";
     ofs << "]; " << endl << endl;
