@@ -1,0 +1,10 @@
+htmlcommand(
+<table cellpadding=2 rules=all>
+<tr align=right><td></td><td>0</td><td>1</td><td>2</td><td>3</td></tr><tr align=right><td></td><td bgcolor="#000060"><font color="#ffffff">2</font></td><td bgcolor="#000000"><font color="#ffffff">-5</font></td><td bgcolor="#000000"><font color="#ffffff">4</font></td><td bgcolor="#000000"><font color="#ffffff">-1</font></td></tr>
+</table>)
+latexcommand(
+\begin{tabular}{r|rrrr}
+ & 0 & 1 & 2 & 3 \\ \hline
+ & {\bf 2}  &  -5  &  4  &  -1 
+\end{tabular}
+)

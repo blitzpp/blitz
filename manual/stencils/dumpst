@@ -1,0 +1,3 @@
+g++ -g -I./../.. -ftemplate-depth-30 -DBZ_DEBUG -Dstenciltoapply=$1 -o dump-stencil dump-stencil.cpp -L../../lib -lblitz -lm
+./dump-stencil >$2.yo
+

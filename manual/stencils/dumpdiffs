@@ -1,0 +1,25 @@
+dump1D central12
+dump1D central22
+dump1D central32
+dump1D central42
+dump1D central14
+dump1D central24
+dump1D central34
+dump1D central44
+dump1D forward11
+dump1D forward21
+dump1D forward31
+dump1D forward41
+dump1D forward12
+dump1D forward22
+dump1D forward32
+dump1D forward42
+dump1D backward11
+dump1D backward21
+dump1D backward31
+dump1D backward41
+dump1D backward12
+dump1D backward22
+dump1D backward32
+dump1D backward42
+
