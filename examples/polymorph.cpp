@@ -1,6 +1,6 @@
 // Polymorphic arrays example
 
-#include <blitz/Array.h>
+#include <blitz/array.h>
 
 using namespace blitz;
 
