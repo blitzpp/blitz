@@ -34,9 +34,11 @@ AC_PROG_F77([xlf ifort ifc f77 g77 pgf77 fort77])
 AC_LANG(Fortran)
 AC_PROG_FC([xlf90 ifort ifc f90 pgf90])
 
-if test "x$FC" != "x"; then
-    AC_FC_FREEFORM
-    AC_FC_SRCEXT(f90)
+if test x"$FC" != x; then
+    AC_FC_FREEFORM(,FC=)
+fi
+if test x"$FC" != x; then
+    AC_FC_SRCEXT(f90,,FC=)
 fi
 AC_FORTRAN_FLAGS_PRESET
 
