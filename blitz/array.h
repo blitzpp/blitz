@@ -21,21 +21,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.5  2002/07/02 19:22:00  jcumming
- * This file used to be called Array.h but has been renamed to avoid name
- * clashes on Windows-based systems.  This file includes only the Array
- * class implementation files.
- *
- * Revision 1.1  2001/01/26 18:30:49  tveldhui
- * More source code reorganization to reduce compile times.
- *
- * Revision 1.1  2001/01/24 22:51:50  tveldhui
- * Reorganized #include orders to avoid including the huge Vector e.t.
- * implementation when using Array.
- *
- */
+ ***************************************************************************/
 
 #ifndef BZ_ARRAY_ONLY_H
 #define BZ_ARRAY_ONLY_H

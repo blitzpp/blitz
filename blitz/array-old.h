@@ -22,15 +22,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.1  2002/07/02 19:23:59  jcumming
- * This is the new name for the old array.h header file that included all of the Array, TinyVector and Vector stuff along with Vector ET support.  It is now deprecated.
- *
- * Revision 1.4  2001/01/26 18:30:50  tveldhui
- * More source code reorganization to reduce compile times.
- *
- */
+ ***************************************************************************/
 
 #ifndef BZ_ARRAY_OLD_H
 #define BZ_ARRAY_OLD_H
