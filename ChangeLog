@@ -151,5 +151,11 @@ Thu Mar  7 09:06:58 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	target is *linux* and CXX is Intel icc
 	* benchmarks/Makefile: added work.pc* in clean target, these files are
 	generated when running Intel Fortran 90 compiler ifc
+	* benchmarks/plot_benchmarks.m.in: new file to generate m-file
+	benchmarks/plot_benchmarks.m to plot benchmarks results
+	* configure.in: added benchmarks/plot_benchmarks.m to be generated from
+	benchmarks/plot_benchmarks.m.in
+
 	
+
 	
