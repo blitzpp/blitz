@@ -1,5 +1,31 @@
 2004-05-05  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
+	* lib/Makefile.am: Restored -I$(top_builddir) flag needed to find
+	generated config.h file when building in a separate directory.
+	* testsuite/Makefile.am: Restored -I$(top_builddir) flag needed to
+	find generated config.h file when building in a separate
+	directory.
+	* examples/Makefile.am: Restored -I$(top_builddir) flag needed to
+	find generated config.h file when building in a separate
+	directory.
+	* benchmarks/Makefile.am: Restored -I$(top_builddir) flag needed
+	to find generated config.h file when building in a separate
+	directory.
+	* doc/examples/Makefile.am: Restored -I$(top_builddir) flag needed
+	to find generated config.h file when building in a separate
+	directory.
+	* doc/stencils/Makefile.am: Restored -I$(top_builddir) flag needed
+	to find generated config.h file when building in a separate
+	directory.  Also fixed problem with building dump-stencil
+	executable in wrong directory.  I did this by explicitly creating
+	dump-stencil in the current (build) directory.
+	* manual/examples/Makefile.am: Restored -I$(top_builddir) flag
+	needed to find generated config.h file when building in a separate
+	directory.
+	* manual/stencils/Makefile.am: Restored -I$(top_builddir) flag
+	needed to find generated config.h file when building in a separate
+	directory.
+
 	* benchmarks/Makefile.am: Moved -I flags from AM_CXXFLAGS to
 	AM_CPPFLAGS.  Cleaned up LIBS list.
 	* examples/Makefile.am: Moved -I flags from AM_CXXFLAGS to
