@@ -7,9 +7,7 @@
 
 #include <blitz/array.h>
 
-#ifdef BZ_NAMESPACES
-using namespace blitz;
-#endif
+BZ_USING_NAMESPACE(blitz)
 
 // A simple fixed point arithmetic class which represents a point
 // in the interval [0,1].
