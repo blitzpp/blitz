@@ -274,24 +274,24 @@ Array<T_numtype, N_rank>::evaluateWithStackTraversal1(
         {
  #ifndef BZ_ARRAY_STACK_TRAVERSAL_UNROLL
             for (int i=0; i < ubound; ++i)
-                T_update::update(data[i], expr.fastRead(i));
+                T_update::update(*data++, expr.fastRead(i));
  #else
             int n1 = ubound & 3;
             int i = 0;
             for (; i < n1; ++i)
-                T_update::update(data[i], expr.fastRead(i));
+                T_update::update(*data++, expr.fastRead(i));
            
             for (; i < ubound; i += 4)
             {
 #ifndef BZ_ARRAY_STACK_TRAVERSAL_CSE_AND_ANTIALIAS
-                T_update::update(data[i], expr.fastRead(i));
-                T_update::update(data[i+1], expr.fastRead(i+1));
-                T_update::update(data[i+2], expr.fastRead(i+2));
-                T_update::update(data[i+3], expr.fastRead(i+3));
+                T_update::update(*data++, expr.fastRead(i));
+                T_update::update(*data++, expr.fastRead(i+1));
+                T_update::update(*data++, expr.fastRead(i+2));
+                T_update::update(*data++, expr.fastRead(i+3));
 #else
-                int t1 = i+1;
-                int t2 = i+2;
-                int t3 = i+3;
+                const int t1 = i+1;
+                const int t2 = i+2;
+                const int t3 = i+3;
 
                 _bz_typename T_expr::T_numtype tmp1, tmp2, tmp3, tmp4;
 
@@ -300,10 +300,10 @@ Array<T_numtype, N_rank>::evaluateWithStackTraversal1(
                 tmp3 = expr.fastRead(BZ_NO_PROPAGATE(t2));
                 tmp4 = expr.fastRead(BZ_NO_PROPAGATE(t3));
 
-                T_update::update(data[i], BZ_NO_PROPAGATE(tmp1));
-                T_update::update(data[BZ_NO_PROPAGATE(t1)], tmp2);
-                T_update::update(data[BZ_NO_PROPAGATE(t2)], tmp3);
-                T_update::update(data[BZ_NO_PROPAGATE(t3)], tmp4);
+                T_update::update(*data++, tmp1);
+                T_update::update(*data++, tmp2);
+                T_update::update(*data++, tmp3);
+                T_update::update(*data++, tmp4);
 #endif
             }
  #endif // BZ_ARRAY_STACK_TRAVERSAL_UNROLL
@@ -555,7 +555,7 @@ Array<T_numtype, N_rank>::evaluateWithStackTraversalN(
             if (commonStride == 1)
             {
                 for (int i=0; i < ubound; ++i)
-                    T_update::update(data[i], expr.fastRead(i));
+                    T_update::update(*data++, expr.fastRead(i));
             }
 #ifdef BZ_ARRAY_EXPR_USE_COMMON_STRIDE
             else {
@@ -661,13 +661,13 @@ Array<T_numtype, N_rank>::evaluateWithIndexTraversal1(
 
     if (stride(firstRank) == 1)
     {
-        T_numtype * restrict iter = data_;
+        T_numtype * restrict iter = data_ + lbound(firstRank);
         int last = ubound(firstRank);
 
         for (index[0] = lbound(firstRank); index[0] <= last;
             ++index[0])
         {
-            T_update::update(iter[index[0]], expr(index));
+            T_update::update(*iter++, expr(index));
         }
     }
     else {
@@ -837,19 +837,19 @@ Array<T_numtype, N_rank>::evaluateWithFastTraversal(
             {            
  #ifndef BZ_ARRAY_FAST_TRAVERSAL_UNROLL
                 for (int i=0; i < ubound; ++i)
-                    T_update::update(data[i], expr.fastRead(i));
+                    T_update::update(*data++, expr.fastRead(i));
  #else
                 int n1 = ubound & 3;
                 int i=0;
                 for (; i < n1; ++i)
-                    T_update::update(data[i], expr.fastRead(i));
+                    T_update::update(*data++, expr.fastRead(i));
 
                 for (; i < ubound; i += 4)
                 {
-                    T_update::update(data[i], expr.fastRead(i));
-                    T_update::update(data[i+1], expr.fastRead(i+1));
-                    T_update::update(data[i+2], expr.fastRead(i+2));
-                    T_update::update(data[i+3], expr.fastRead(i+3));
+                    T_update::update(*data++, expr.fastRead(i));
+                    T_update::update(*data++, expr.fastRead(i+1));
+                    T_update::update(*data++, expr.fastRead(i+2));
+                    T_update::update(*data++, expr.fastRead(i+3));
                 }
  #endif  // BZ_ARRAY_FAST_TRAVERSAL_UNROLL
             }
@@ -1176,7 +1176,7 @@ Array<T_numtype, N_rank>::evaluateWithTiled2DTraversal(
 
                     int ubound = (nj-bj);
                     for (int j=0; j < ubound; ++j)
-                        T_update::update(data[j], expr.fastRead(j));
+                        T_update::update(*data++, expr.fastRead(j));
                 }
 #ifdef BZ_ARRAY_EXPR_USE_COMMON_STRIDE
                 else if (useCommonStride)
