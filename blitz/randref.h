@@ -24,6 +24,13 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2002/05/10 14:31:20  patricg
+ *
+ * private constructor for template class _bz_VecExprRandom did not had an
+ * explicit initialiser for the private member random_, added one
+ * Compaq C++ V6.5-014 for Compaq Tru64 UNIX V5.1A (Rev. 1885) complained about
+ * this.
+ *
  * Revision 1.2  2001/01/24 20:22:50  tveldhui
  * Updated copyright date in headers.
  *
@@ -82,7 +89,7 @@ public:
     { return random_.random(); }
 
 private:
-    _bz_VecExprRandom() { }
+    _bz_VecExprRandom() : random_( Random<P_distribution>() ) { }
 
     Random<P_distribution>& random_;
 };
