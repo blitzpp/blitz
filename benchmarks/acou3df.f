@@ -2,10 +2,10 @@
       INTEGER N, niters, iter
       REAL check
       REAL P1(N,N,N), P2(N,N,N), P3(N,N,N), C(N,N,N)
-      INTEGER i, j
+      INTEGER i, j, k
 
       CALL acoust3d_f77_setup(P1, P2, P3, C, N)
-
+ 
       DO iter=1, niters
         DO k=2,N-1
           DO j=2,N-1
