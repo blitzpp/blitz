@@ -1,3 +1,7 @@
+2002-07-17  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+	* blitz/memblock.h: Added missing semicolon after use of
+	BZ_MUTEX_DECLARE macro.
+
 2002-07-16  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 	* Makefile.am: Added line to specify subdirectories and insure
 	that compiler subdirectory is visited before blitz subdirectory.
