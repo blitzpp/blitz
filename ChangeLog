@@ -1,3 +1,33 @@
+2004-10-16  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* .cvsignore: Removed _configs.sed.  This file is no longer
+	created.
+	* m4/ax_prefix_config_h.m4: Removed line that copied sed script to
+	_configs.sed.  The sed script is not needed after the
+	AX_PREFIX_CONFIG_H macro has executed.
+
+2004-10-15  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* doc/Makefile.am: Added doxygen to SUBDIRS list.  Added build
+	rules for blitz_TEXINFOS files in stencils and examples
+	subdirectories.  This is needed so that the top-level dist-gzip
+	build target can work properly.
+	* doc/platforms.texi: Updated information on various
+	platforms/compilers.  Current info on Intel and GNU compilers.
+	Added section on Microsoft VS.NET 2003.  Noted that support for
+	Metrowerks and Cray C++ compiler is no longer being maintained.
+	* doc/install.texi: Updated installation and porting instructions
+	to refer to current approach using autoconf and configure script.
+	* doc/version.texi: Updated version info.
+	* blitz/README: Added note and caveat about the new
+	compiler-specific header file.
+	* blitz/Makefile.am: Removed the EXTRA_DIST list, since it
+	referred to files that are no longer in the distribution.
+	* configure.ac: Bumped version number to 0.8.  Added icc to list
+	of program names for C++ compiler that we try.  This name of the
+	Intel C++ compiler is now deprecated in favor of the name icpc,
+	which we try first.
+
 2004-10-14  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* configure.ac: Modification suggested by Derrick Bass
