@@ -1,5 +1,6 @@
+// -*- C++ -*-
 /***************************************************************************
- * blitz/arrayexpr.h     Array<T,N> expression templates
+ * blitz/array/expr.h     Array<T,N> expression templates
  *
  * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
@@ -27,21 +28,10 @@
  #error <blitz/array/expr.h> must be included via <blitz/array.h>
 #endif
 
-#ifndef BZ_OPS_H
- #include <blitz/ops.h>
-#endif
-
-#ifndef BZ_PRETTYPRINT_H
- #include <blitz/prettyprint.h>
-#endif
-
-#ifndef BZ_SHAPECHECK_H
- #include <blitz/shapecheck.h>
-#endif
-
-#ifndef BZ_NUMINQUIRE_H
- #include <blitz/numinquire.h>
-#endif
+#include <blitz/ops.h>
+#include <blitz/prettyprint.h>
+#include <blitz/shapecheck.h>
+#include <blitz/numinquire.h>
 
 /*
  * The array expression templates iterator interface is followed by
@@ -49,8 +39,8 @@
  *
  * FastArrayIterator          <blitz/array/fastiter.h>
  * _bz_ArrayExpr              <blitz/array/expr.h>
- * _bz_ArrayExprOp                    "
  * _bz_ArrayExprUnaryOp               "
+ * _bz_ArrayExprBinaryOp              "
  * _bz_ArrayExprTernaryOp             "
  * _bz_ArrayExprConstant              "
  * _bz_ArrayMap               <blitz/array/map.h>
@@ -326,166 +316,13 @@ struct bounds {
     }
 };
 
-template<typename P_expr1, typename P_expr2, typename P_op>
-class _bz_ArrayExprOp {
-public:
-    typedef P_expr1 T_expr1;
-    typedef P_expr2 T_expr2;
-    typedef _bz_typename T_expr1::T_numtype T_numtype1;
-    typedef _bz_typename T_expr2::T_numtype T_numtype2;
-    typedef _bz_typename P_op::T_numtype T_numtype;
-    typedef P_op T_op;
-    typedef T_expr1 T_ctorArg1;
-    typedef T_expr2 T_ctorArg2;
-
-    enum { numArrayOperands = BZ_ENUM_CAST(P_expr1::numArrayOperands)
-                            + BZ_ENUM_CAST(P_expr2::numArrayOperands),
-           numIndexPlaceholders = BZ_ENUM_CAST(P_expr1::numIndexPlaceholders)
-                            + BZ_ENUM_CAST(P_expr2::numIndexPlaceholders),
-           rank = (BZ_ENUM_CAST(P_expr1::rank) > BZ_ENUM_CAST(P_expr2::rank)) 
-                ? BZ_ENUM_CAST(P_expr1::rank) : BZ_ENUM_CAST(P_expr2::rank)
-    };
-
-    _bz_ArrayExprOp(const _bz_ArrayExprOp<P_expr1, P_expr2, P_op>& a)
-        : iter1_(a.iter1_), iter2_(a.iter2_)
-    { }
-
-    template<typename T1, typename T2>
-    _bz_ArrayExprOp(BZ_ETPARM(T1) a, BZ_ETPARM(T2) b)
-        : iter1_(a), iter2_(b)
-    { }
-
-    T_numtype operator*()
-    { return T_op::apply(*iter1_, *iter2_); }
-
-#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
-    template<int N_rank>
-    T_numtype operator()(TinyVector<int, N_rank> i)
-    { return T_op::apply(iter1_(i), iter2_(i)); }
-#else
-    template<int N_rank>
-    T_numtype operator()(const TinyVector<int, N_rank>& i)
-    { return T_op::apply(iter1_(i), iter2_(i)); }
-#endif
-
-    int ascending(int rank)
-    {
-        return bounds::compute_ascending(rank, iter1_.ascending(rank),
-            iter2_.ascending(rank));
-    }
-
-    int ordering(int rank)
-    {
-        return bounds::compute_ordering(rank, iter1_.ordering(rank),
-            iter2_.ordering(rank));
-    }
-
-    int lbound(int rank)
-    { 
-        return bounds::compute_lbound(rank, iter1_.lbound(rank),
-            iter2_.lbound(rank));
-    }
-
-    int ubound(int rank)
-    {
-        return bounds::compute_ubound(rank, iter1_.ubound(rank),
-            iter2_.ubound(rank));
-    }
-
-    void push(int position)
-    { 
-        iter1_.push(position); 
-        iter2_.push(position);
-    }
-
-    void pop(int position)
-    { 
-        iter1_.pop(position); 
-        iter2_.pop(position);
-    }
-
-    void advance()
-    { 
-        iter1_.advance(); 
-        iter2_.advance();
-    }
-
-    void advance(int n)
-    {
-        iter1_.advance(n);
-        iter2_.advance(n);
-    }
-
-    void loadStride(int rank)
-    { 
-        iter1_.loadStride(rank); 
-        iter2_.loadStride(rank);
-    }
-    
-    bool isUnitStride(int rank) const
-    { return iter1_.isUnitStride(rank) && iter2_.isUnitStride(rank); }
-
-    void advanceUnitStride()
-    { 
-        iter1_.advanceUnitStride(); 
-        iter2_.advanceUnitStride();
-    }
-
-    bool canCollapse(int outerLoopRank, int innerLoopRank) const
-    { 
-        // BZ_DEBUG_MESSAGE("_bz_ArrayExprOp<>::canCollapse");
-        return iter1_.canCollapse(outerLoopRank, innerLoopRank)
-            && iter2_.canCollapse(outerLoopRank, innerLoopRank);
-    } 
-
-    T_numtype operator[](int i)
-    { return T_op::apply(iter1_[i], iter2_[i]); }
-
-    T_numtype fastRead(int i)
-    { return T_op::apply(iter1_.fastRead(i), iter2_.fastRead(i)); }
-
-    int suggestStride(int rank) const
-    {
-        int stride1 = iter1_.suggestStride(rank);
-        int stride2 = iter2_.suggestStride(rank);
-        return (stride1 > stride2) ? stride1 : stride2;
-    }
-
-    bool isStride(int rank, int stride) const
-    {
-        return iter1_.isStride(rank,stride) && iter2_.isStride(rank,stride);
-    }
-
-    template<int N_rank>
-    void moveTo(const TinyVector<int,N_rank>& i)
-    {
-        iter1_.moveTo(i);
-        iter2_.moveTo(i);
-    }
-
-    void prettyPrint(string& str, prettyPrintFormat& format) const
-    {
-        T_op::prettyPrint(str, format, iter1_, iter2_);
-    }
-
-    template<typename T_shape>
-    bool shapeCheck(const T_shape& shape)
-    { return iter1_.shapeCheck(shape) && iter2_.shapeCheck(shape); }
-
-protected:
-    _bz_ArrayExprOp() { }
-
-    T_expr1 iter1_;
-    T_expr2 iter2_; 
-};
-
 template<typename P_expr, typename P_op>
 class _bz_ArrayExprUnaryOp {
 public:
     typedef P_expr T_expr;
-    typedef _bz_typename P_expr::T_numtype T_numtype1;
-    typedef _bz_typename P_op::T_numtype T_numtype;
     typedef P_op T_op;
+    typedef _bz_typename T_expr::T_numtype T_numtype1;
+    typedef _bz_typename T_op::T_numtype T_numtype;
     typedef T_expr T_ctorArg1;
     typedef int    T_ctorArg2;    // dummy
 
@@ -493,7 +330,7 @@ public:
         numIndexPlaceholders = BZ_ENUM_CAST(T_expr::numIndexPlaceholders),
         rank = BZ_ENUM_CAST(T_expr::rank) };
 
-    _bz_ArrayExprUnaryOp(const _bz_ArrayExprUnaryOp<T_expr, P_op>& a)
+    _bz_ArrayExprUnaryOp(const _bz_ArrayExprUnaryOp<T_expr, T_op>& a)
         : iter_(a.iter_)
     { }
 
@@ -608,36 +445,190 @@ protected:
 };
 
 
+template<typename P_expr1, typename P_expr2, typename P_op>
+class _bz_ArrayExprBinaryOp {
+public:
+    typedef P_expr1 T_expr1;
+    typedef P_expr2 T_expr2;
+    typedef P_op T_op;
+    typedef _bz_typename T_expr1::T_numtype T_numtype1;
+    typedef _bz_typename T_expr2::T_numtype T_numtype2;
+    typedef _bz_typename T_op::T_numtype T_numtype;
+    typedef T_expr1 T_ctorArg1;
+    typedef T_expr2 T_ctorArg2;
+
+    enum { numArrayOperands = BZ_ENUM_CAST(T_expr1::numArrayOperands)
+                            + BZ_ENUM_CAST(T_expr2::numArrayOperands),
+           numIndexPlaceholders = BZ_ENUM_CAST(T_expr1::numIndexPlaceholders)
+                                + BZ_ENUM_CAST(T_expr2::numIndexPlaceholders),
+           rank = (BZ_ENUM_CAST(T_expr1::rank) > BZ_ENUM_CAST(T_expr2::rank)) 
+                ? BZ_ENUM_CAST(T_expr1::rank) : BZ_ENUM_CAST(T_expr2::rank)
+    };
+
+    _bz_ArrayExprBinaryOp(
+        const _bz_ArrayExprBinaryOp<T_expr1, T_expr2, T_op>& a)
+        : iter1_(a.iter1_), iter2_(a.iter2_)
+    { }
+
+    template<typename T1, typename T2>
+    _bz_ArrayExprBinaryOp(BZ_ETPARM(T1) a, BZ_ETPARM(T2) b)
+        : iter1_(a), iter2_(b)
+    { }
+
+    T_numtype operator*()
+    { return T_op::apply(*iter1_, *iter2_); }
+
+#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
+    template<int N_rank>
+    T_numtype operator()(TinyVector<int, N_rank> i)
+    { return T_op::apply(iter1_(i), iter2_(i)); }
+#else
+    template<int N_rank>
+    T_numtype operator()(const TinyVector<int, N_rank>& i)
+    { return T_op::apply(iter1_(i), iter2_(i)); }
+#endif
+
+    int ascending(int rank)
+    {
+        return bounds::compute_ascending(rank, iter1_.ascending(rank),
+            iter2_.ascending(rank));
+    }
+
+    int ordering(int rank)
+    {
+        return bounds::compute_ordering(rank, iter1_.ordering(rank),
+            iter2_.ordering(rank));
+    }
+
+    int lbound(int rank)
+    { 
+        return bounds::compute_lbound(rank, iter1_.lbound(rank),
+            iter2_.lbound(rank));
+    }
+
+    int ubound(int rank)
+    {
+        return bounds::compute_ubound(rank, iter1_.ubound(rank),
+            iter2_.ubound(rank));
+    }
+
+    void push(int position)
+    { 
+        iter1_.push(position); 
+        iter2_.push(position);
+    }
+
+    void pop(int position)
+    { 
+        iter1_.pop(position); 
+        iter2_.pop(position);
+    }
+
+    void advance()
+    { 
+        iter1_.advance(); 
+        iter2_.advance();
+    }
+
+    void advance(int n)
+    {
+        iter1_.advance(n);
+        iter2_.advance(n);
+    }
+
+    void loadStride(int rank)
+    { 
+        iter1_.loadStride(rank); 
+        iter2_.loadStride(rank);
+    }
+    
+    bool isUnitStride(int rank) const
+    { return iter1_.isUnitStride(rank) && iter2_.isUnitStride(rank); }
+
+    void advanceUnitStride()
+    { 
+        iter1_.advanceUnitStride(); 
+        iter2_.advanceUnitStride();
+    }
+
+    bool canCollapse(int outerLoopRank, int innerLoopRank) const
+    { 
+        // BZ_DEBUG_MESSAGE("_bz_ArrayExprBinaryOp<>::canCollapse");
+        return iter1_.canCollapse(outerLoopRank, innerLoopRank)
+            && iter2_.canCollapse(outerLoopRank, innerLoopRank);
+    } 
+
+    T_numtype operator[](int i)
+    { return T_op::apply(iter1_[i], iter2_[i]); }
+
+    T_numtype fastRead(int i)
+    { return T_op::apply(iter1_.fastRead(i), iter2_.fastRead(i)); }
+
+    int suggestStride(int rank) const
+    {
+        int stride1 = iter1_.suggestStride(rank);
+        int stride2 = iter2_.suggestStride(rank);
+        return (stride1 > stride2) ? stride1 : stride2;
+    }
+
+    bool isStride(int rank, int stride) const
+    {
+        return iter1_.isStride(rank,stride) && iter2_.isStride(rank,stride);
+    }
+
+    template<int N_rank>
+    void moveTo(const TinyVector<int,N_rank>& i)
+    {
+        iter1_.moveTo(i);
+        iter2_.moveTo(i);
+    }
+
+    void prettyPrint(string& str, prettyPrintFormat& format) const
+    {
+        T_op::prettyPrint(str, format, iter1_, iter2_);
+    }
+
+    template<typename T_shape>
+    bool shapeCheck(const T_shape& shape)
+    { return iter1_.shapeCheck(shape) && iter2_.shapeCheck(shape); }
+
+protected:
+    _bz_ArrayExprBinaryOp() { }
+
+    T_expr1 iter1_;
+    T_expr2 iter2_; 
+};
+
 template<typename P_expr1, typename P_expr2, typename P_expr3, typename P_op>
 class _bz_ArrayExprTernaryOp {
 public:
     typedef P_expr1 T_expr1;
     typedef P_expr2 T_expr2;
     typedef P_expr3 T_expr3;
+    typedef P_op T_op;
     typedef _bz_typename T_expr1::T_numtype T_numtype1;
     typedef _bz_typename T_expr2::T_numtype T_numtype2;
     typedef _bz_typename T_expr3::T_numtype T_numtype3;
-    typedef _bz_typename P_op::T_numtype T_numtype;
-    typedef P_op T_op;
+    typedef _bz_typename T_op::T_numtype T_numtype;
     typedef T_expr1 T_ctorArg1;
     typedef T_expr2 T_ctorArg2;
     typedef T_expr3 T_ctorArg3;
 
-    enum { numArrayOperands = BZ_ENUM_CAST(P_expr1::numArrayOperands)
-                            + BZ_ENUM_CAST(P_expr2::numArrayOperands)
-                            + BZ_ENUM_CAST(P_expr3::numArrayOperands),
-           numIndexPlaceholders = BZ_ENUM_CAST(P_expr1::numIndexPlaceholders)
-                                + BZ_ENUM_CAST(P_expr2::numIndexPlaceholders)
-                                + BZ_ENUM_CAST(P_expr3::numIndexPlaceholders),
-           rank = (BZ_ENUM_CAST(P_expr1::rank) > BZ_ENUM_CAST(P_expr2::rank)) 
-                ? ((BZ_ENUM_CAST(P_expr1::rank) > BZ_ENUM_CAST(P_expr3::rank))
-                   ? BZ_ENUM_CAST(P_expr1::rank) : BZ_ENUM_CAST(P_expr3::rank))
-                : ((BZ_ENUM_CAST(P_expr2::rank) > BZ_ENUM_CAST(P_expr3::rank)) 
-                   ? BZ_ENUM_CAST(P_expr2::rank) : BZ_ENUM_CAST(P_expr3::rank))
+    enum { numArrayOperands = BZ_ENUM_CAST(T_expr1::numArrayOperands)
+                            + BZ_ENUM_CAST(T_expr2::numArrayOperands)
+                            + BZ_ENUM_CAST(T_expr3::numArrayOperands),
+           numIndexPlaceholders = BZ_ENUM_CAST(T_expr1::numIndexPlaceholders)
+                                + BZ_ENUM_CAST(T_expr2::numIndexPlaceholders)
+                                + BZ_ENUM_CAST(T_expr3::numIndexPlaceholders),
+           rank = (BZ_ENUM_CAST(T_expr1::rank) > BZ_ENUM_CAST(T_expr2::rank)) 
+                ? ((BZ_ENUM_CAST(T_expr1::rank) > BZ_ENUM_CAST(T_expr3::rank))
+                   ? BZ_ENUM_CAST(T_expr1::rank) : BZ_ENUM_CAST(T_expr3::rank))
+                : ((BZ_ENUM_CAST(T_expr2::rank) > BZ_ENUM_CAST(T_expr3::rank)) 
+                   ? BZ_ENUM_CAST(T_expr2::rank) : BZ_ENUM_CAST(T_expr3::rank))
     };
 
     _bz_ArrayExprTernaryOp(
-        const _bz_ArrayExprTernaryOp<P_expr1, P_expr2, P_expr3, P_op>& a)
+        const _bz_ArrayExprTernaryOp<T_expr1, T_expr2, T_expr3, T_op>& a)
         : iter1_(a.iter1_), iter2_(a.iter2_), iter3_(a.iter3_)
     { }
 
