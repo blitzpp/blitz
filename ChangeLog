@@ -1,3 +1,36 @@
+2005-01-28  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* doc/stencils/Makefile.am: Modified compilation rules to provide
+	separate -D flag for defining stencilargs symbol.  Breaking this
+	into two separate preprocessor symbols eliminates confusion that
+	some compilers were having with parentheses embedded in a -D flag.
+	Should fix problems with pgCC and xlC.
+	* doc/stencils/dump-stencil.cpp: Introduce stencilargs symbol to
+	represent argument(s) of stenciltoapply.
+
+	* blitz/mathfunc.h: Regenerated using genmathfunc.cpp program to
+	include PGI compiler hacks.
+
+	* blitz/generate/genmathfunc.cpp: Added some lines to skip
+	pow(float,float) and all transcendental functions acting on
+	complex<long double> if we are using PGI compiler.  PGI does not
+	support complex<long double> math functions because of issues with
+	how some Linux systems define the long double type.  The
+	pow(float,float) function fails because of the presence of
+	overloaded versions of pow() taking the combination of a float and
+	a complex<float>.  PGI does not provide an explicit
+	pow(float,float) overload to call powf().
+2005-01-06  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* benchmarks/stencilf2.f: Added explicit declaration for local
+	loop counter variable.
+
+	* benchmarks/stencilf.f: Added explicit declaration for local loop
+	counter variables.
+
+	* Makefile.am: Removed unneeded compile rules for suffix ".f90.f"
+	which is not used.
+
 
 2005-01-07  Patrick Guio  <patrick.guio@bccs.uib.no>
 
@@ -13,7 +46,6 @@
 2004-11-04  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
         Tagging repository contents with Blitz_0_8 tag.
-	
 2004-11-04  Patrick Guio  <patrick.guio@bccs.uib.no>
 
 	* m4/ac_prog_doxygen.m4: Added test on doxygen version. In order 
