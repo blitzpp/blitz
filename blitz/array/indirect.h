@@ -164,7 +164,7 @@ inline void applyOverSubdomain(const T_array& BZ_DEBUG_PARAM(array), T_arrayiter
 
         int length = ubound - lbound + 1;
         for (int i=0; i < length; ++i)
-            data[i] = expr.fastRead(i);
+            *data++ = expr.fastRead(i);
     }
     else {
 #endif
@@ -206,6 +206,146 @@ indexSet(const T_container& container0, const T_container& container1,
         const_cast<T_container&>(container2));
 }
 
+template<typename T_container>
+CartesianProduct<TinyVector<int,4>,T_container,4>
+indexSet(const T_container& container0, const T_container& container1,
+    const T_container& container2, const T_container& container3)
+{
+    return CartesianProduct<TinyVector<int,4>,T_container,4>(
+        const_cast<T_container&>(container0), 
+        const_cast<T_container&>(container1), 
+        const_cast<T_container&>(container2),
+        const_cast<T_container&>(container3));
+}
+
+template<typename T_container>
+CartesianProduct<TinyVector<int,5>,T_container,5>
+indexSet(const T_container& container0, const T_container& container1,
+    const T_container& container2, const T_container& container3,
+    const T_container& container4)
+{
+    return CartesianProduct<TinyVector<int,5>,T_container,5>(
+        const_cast<T_container&>(container0), 
+        const_cast<T_container&>(container1), 
+        const_cast<T_container&>(container2),
+        const_cast<T_container&>(container3),
+        const_cast<T_container&>(container4));
+}
+
+template<typename T_container>
+CartesianProduct<TinyVector<int,6>,T_container,6>
+indexSet(const T_container& container0, const T_container& container1,
+    const T_container& container2, const T_container& container3,
+    const T_container& container4, const T_container& container5)
+{
+    return CartesianProduct<TinyVector<int,6>,T_container,6>(
+        const_cast<T_container&>(container0), 
+        const_cast<T_container&>(container1), 
+        const_cast<T_container&>(container2),
+        const_cast<T_container&>(container3),
+        const_cast<T_container&>(container4),
+        const_cast<T_container&>(container5));
+}
+
+template<typename T_container>
+CartesianProduct<TinyVector<int,7>,T_container,7>
+indexSet(const T_container& container0, const T_container& container1,
+    const T_container& container2, const T_container& container3,
+    const T_container& container4, const T_container& container5,
+    const T_container& container6)
+{
+    return CartesianProduct<TinyVector<int,7>,T_container,7>(
+        const_cast<T_container&>(container0), 
+        const_cast<T_container&>(container1), 
+        const_cast<T_container&>(container2),
+        const_cast<T_container&>(container3),
+        const_cast<T_container&>(container4),
+        const_cast<T_container&>(container5),
+        const_cast<T_container&>(container6));
+}
+
+template<typename T_container>
+CartesianProduct<TinyVector<int,8>,T_container,8>
+indexSet(const T_container& container0, const T_container& container1,
+    const T_container& container2, const T_container& container3,
+    const T_container& container4, const T_container& container5,
+    const T_container& container6, const T_container& container7)
+{
+    return CartesianProduct<TinyVector<int,8>,T_container,8>(
+        const_cast<T_container&>(container0), 
+        const_cast<T_container&>(container1), 
+        const_cast<T_container&>(container2),
+        const_cast<T_container&>(container3),
+        const_cast<T_container&>(container4),
+        const_cast<T_container&>(container5),
+        const_cast<T_container&>(container6),
+        const_cast<T_container&>(container7));
+}
+
+template<typename T_container>
+CartesianProduct<TinyVector<int,9>,T_container,9>
+indexSet(const T_container& container0, const T_container& container1,
+    const T_container& container2, const T_container& container3,
+    const T_container& container4, const T_container& container5,
+    const T_container& container6, const T_container& container7,
+    const T_container& container8)
+{
+    return CartesianProduct<TinyVector<int,9>,T_container,9>(
+        const_cast<T_container&>(container0), 
+        const_cast<T_container&>(container1), 
+        const_cast<T_container&>(container2),
+        const_cast<T_container&>(container3),
+        const_cast<T_container&>(container4),
+        const_cast<T_container&>(container5),
+        const_cast<T_container&>(container6),
+        const_cast<T_container&>(container7),
+        const_cast<T_container&>(container8));
+}
+
+template<typename T_container>
+CartesianProduct<TinyVector<int,10>,T_container,10>
+indexSet(const T_container& container0, const T_container& container1,
+    const T_container& container2, const T_container& container3,
+    const T_container& container4, const T_container& container5,
+    const T_container& container6, const T_container& container7,
+    const T_container& container8, const T_container& container9)
+{
+    return CartesianProduct<TinyVector<int,10>,T_container,10>(
+        const_cast<T_container&>(container0), 
+        const_cast<T_container&>(container1), 
+        const_cast<T_container&>(container2),
+        const_cast<T_container&>(container3),
+        const_cast<T_container&>(container4),
+        const_cast<T_container&>(container5),
+        const_cast<T_container&>(container6),
+        const_cast<T_container&>(container7),
+        const_cast<T_container&>(container8),
+        const_cast<T_container&>(container9));
+}
+
+template<typename T_container>
+CartesianProduct<TinyVector<int,11>,T_container,11>
+indexSet(const T_container& container0, const T_container& container1,
+    const T_container& container2, const T_container& container3,
+    const T_container& container4, const T_container& container5,
+    const T_container& container6, const T_container& container7,
+    const T_container& container8, const T_container& container9,
+    const T_container& container10)
+{
+    return CartesianProduct<TinyVector<int,11>,T_container,11>(
+        const_cast<T_container&>(container0), 
+        const_cast<T_container&>(container1), 
+        const_cast<T_container&>(container2),
+        const_cast<T_container&>(container3),
+        const_cast<T_container&>(container4),
+        const_cast<T_container&>(container5),
+        const_cast<T_container&>(container6),
+        const_cast<T_container&>(container7),
+        const_cast<T_container&>(container8),
+        const_cast<T_container&>(container9),
+        const_cast<T_container&>(container10));
+}
+
 // Mixture of singletons and containers, e.g. A[indexSet(I,3,K)]
 
 // cp_findContainerType<T1,T2,T3,...,Tn>::T_container
@@ -217,14 +357,19 @@ indexSet(const T_container& container0, const T_container& container1,
 //      cp_findContainerType<int,deque<int>,deque<int>>::T_container 
 //        is deque<int>
 
-template<typename T1, typename T2, typename T3=int, typename T4=int>
+template<typename T1, typename T2, typename T3=int, typename T4=int,
+         typename T5=int, typename T6=int, typename T7=int, typename T8=int,
+         typename T9=int, typename T10=int, typename T11=int>
 struct cp_findContainerType {
     typedef T1 T_container;
 };
 
-template<typename T2, typename T3, typename T4>
-struct cp_findContainerType<int,T2,T3,T4> {
-    typedef _bz_typename cp_findContainerType<T2,T3,T4>::T_container T_container;
+template<typename T2, typename T3, typename T4, typename T5, typename T6,
+         typename T7, typename T8, typename T9, typename T10, typename T11>
+struct cp_findContainerType<int,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11> {
+    typedef _bz_typename
+        cp_findContainerType<T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_container
+        T_container;
 };
 
 
@@ -286,6 +431,173 @@ indexSet(const T1& c1, const T2& c2, const T3& c3)
           cp_traits<T1,T_container>::make(c1),
           cp_traits<T2,T_container>::make(c2),
           cp_traits<T3,T_container>::make(c3));
+}
+
+template<typename T1, typename T2, typename T3, typename T4>
+CartesianProduct<TinyVector<int,4>, _bz_typename
+    cp_findContainerType<T1,T2,T3,T4>::T_container, 4>
+indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4)
+{
+    typedef _bz_typename cp_findContainerType<T1,T2,T3,T4>::T_container
+        T_container;
+
+    return CartesianProduct<TinyVector<int,4>, T_container, 4>(
+          cp_traits<T1,T_container>::make(c1),
+          cp_traits<T2,T_container>::make(c2),
+          cp_traits<T3,T_container>::make(c3),
+          cp_traits<T4,T_container>::make(c4));
+}
+
+template<typename T1, typename T2, typename T3, typename T4, typename T5>
+CartesianProduct<TinyVector<int,5>, _bz_typename
+    cp_findContainerType<T1,T2,T3,T4,T5>::T_container, 5>
+indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4, const T5& c5)
+{
+    typedef _bz_typename cp_findContainerType<T1,T2,T3,T4,T5>::T_container
+        T_container;
+
+    return CartesianProduct<TinyVector<int,5>, T_container, 5>(
+          cp_traits<T1,T_container>::make(c1),
+          cp_traits<T2,T_container>::make(c2),
+          cp_traits<T3,T_container>::make(c3),
+          cp_traits<T4,T_container>::make(c4),
+          cp_traits<T5,T_container>::make(c5));
+}
+
+template<typename T1, typename T2, typename T3, typename T4, typename T5,
+         typename T6>
+CartesianProduct<TinyVector<int,6>, _bz_typename
+    cp_findContainerType<T1,T2,T3,T4,T5,T6>::T_container, 6>
+indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4, const T5& c5,
+    const T6& c6)
+{
+    typedef _bz_typename cp_findContainerType<T1,T2,T3,T4,T5,T6>::T_container
+        T_container;
+
+    return CartesianProduct<TinyVector<int,6>, T_container, 6>(
+          cp_traits<T1,T_container>::make(c1),
+          cp_traits<T2,T_container>::make(c2),
+          cp_traits<T3,T_container>::make(c3),
+          cp_traits<T4,T_container>::make(c4),
+          cp_traits<T5,T_container>::make(c5),
+          cp_traits<T6,T_container>::make(c6));
+}
+
+template<typename T1, typename T2, typename T3, typename T4, typename T5,
+         typename T6, typename T7>
+CartesianProduct<TinyVector<int,7>, _bz_typename
+    cp_findContainerType<T1,T2,T3,T4,T5,T6,T7>::T_container, 7>
+indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4, const T5& c5,
+    const T6& c6, const T7& c7)
+{
+    typedef _bz_typename
+        cp_findContainerType<T1,T2,T3,T4,T5,T6,T7>::T_container
+        T_container;
+
+    return CartesianProduct<TinyVector<int,7>, T_container, 7>(
+          cp_traits<T1,T_container>::make(c1),
+          cp_traits<T2,T_container>::make(c2),
+          cp_traits<T3,T_container>::make(c3),
+          cp_traits<T4,T_container>::make(c4),
+          cp_traits<T5,T_container>::make(c5),
+          cp_traits<T6,T_container>::make(c6),
+          cp_traits<T7,T_container>::make(c7));
+}
+
+template<typename T1, typename T2, typename T3, typename T4, typename T5,
+         typename T6, typename T7, typename T8>
+CartesianProduct<TinyVector<int,8>, _bz_typename
+    cp_findContainerType<T1,T2,T3,T4,T5,T6,T7,T8>::T_container, 8>
+indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4, const T5& c5,
+    const T6& c6, const T7& c7, const T8& c8)
+{
+    typedef _bz_typename
+        cp_findContainerType<T1,T2,T3,T4,T5,T6,T7,T8>::T_container
+        T_container;
+
+    return CartesianProduct<TinyVector<int,8>, T_container, 8>(
+          cp_traits<T1,T_container>::make(c1),
+          cp_traits<T2,T_container>::make(c2),
+          cp_traits<T3,T_container>::make(c3),
+          cp_traits<T4,T_container>::make(c4),
+          cp_traits<T5,T_container>::make(c5),
+          cp_traits<T6,T_container>::make(c6),
+          cp_traits<T7,T_container>::make(c7),
+          cp_traits<T8,T_container>::make(c8));
+}
+
+template<typename T1, typename T2, typename T3, typename T4, typename T5,
+         typename T6, typename T7, typename T8, typename T9>
+CartesianProduct<TinyVector<int,9>, _bz_typename
+    cp_findContainerType<T1,T2,T3,T4,T5,T6,T7,T8,T9>::T_container, 9>
+indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4, const T5& c5,
+    const T6& c6, const T7& c7, const T8& c8, const T9& c9)
+{
+    typedef _bz_typename
+        cp_findContainerType<T1,T2,T3,T4,T5,T6,T7,T8,T9>::T_container
+        T_container;
+
+    return CartesianProduct<TinyVector<int,9>, T_container, 9>(
+          cp_traits<T1,T_container>::make(c1),
+          cp_traits<T2,T_container>::make(c2),
+          cp_traits<T3,T_container>::make(c3),
+          cp_traits<T4,T_container>::make(c4),
+          cp_traits<T5,T_container>::make(c5),
+          cp_traits<T6,T_container>::make(c6),
+          cp_traits<T7,T_container>::make(c7),
+          cp_traits<T8,T_container>::make(c8),
+          cp_traits<T9,T_container>::make(c9));
+}
+
+template<typename T1, typename T2, typename T3, typename T4, typename T5,
+         typename T6, typename T7, typename T8, typename T9, typename T10>
+CartesianProduct<TinyVector<int,10>, _bz_typename
+    cp_findContainerType<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>::T_container, 10>
+indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4, const T5& c5,
+    const T6& c6, const T7& c7, const T8& c8, const T9& c9, const T10& c10)
+{
+    typedef _bz_typename
+        cp_findContainerType<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>::T_container
+        T_container;
+
+    return CartesianProduct<TinyVector<int,10>, T_container, 10>(
+          cp_traits<T1,T_container>::make(c1),
+          cp_traits<T2,T_container>::make(c2),
+          cp_traits<T3,T_container>::make(c3),
+          cp_traits<T4,T_container>::make(c4),
+          cp_traits<T5,T_container>::make(c5),
+          cp_traits<T6,T_container>::make(c6),
+          cp_traits<T7,T_container>::make(c7),
+          cp_traits<T8,T_container>::make(c8),
+          cp_traits<T9,T_container>::make(c9),
+          cp_traits<T10,T_container>::make(c10));
+}
+
+template<typename T1, typename T2, typename T3, typename T4, typename T5,
+         typename T6, typename T7, typename T8, typename T9, typename T10,
+         typename T11>
+CartesianProduct<TinyVector<int,11>, _bz_typename
+    cp_findContainerType<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_container, 11>
+indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4, const T5& c5,
+    const T6& c6, const T7& c7, const T8& c8, const T9& c9, const T10& c10.
+    const T11& c11)
+{
+    typedef _bz_typename
+        cp_findContainerType<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_container
+        T_container;
+
+    return CartesianProduct<TinyVector<int,11>, T_container, 11>(
+          cp_traits<T1,T_container>::make(c1),
+          cp_traits<T2,T_container>::make(c2),
+          cp_traits<T3,T_container>::make(c3),
+          cp_traits<T4,T_container>::make(c4),
+          cp_traits<T5,T_container>::make(c5),
+          cp_traits<T6,T_container>::make(c6),
+          cp_traits<T7,T_container>::make(c7),
+          cp_traits<T8,T_container>::make(c8),
+          cp_traits<T9,T_container>::make(c9),
+          cp_traits<T10,T_container>::make(c10),
+          cp_traits<T11,T_container>::make(c11));
 }
 
 BZ_NAMESPACE_END
