@@ -23,6 +23,11 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.4  2002/03/06 17:53:57  patricg
+ *
+ * (re)inserted includes for vecbops, vecuops and vecbfn
+ * in order to compile testsuite/tinyvec.cpp
+ *
  * Revision 1.3  2001/01/24 22:51:50  tveldhui
  * Reorganized #include orders to avoid including the huge Vector e.t.
  * implementation when using Array.
@@ -291,5 +296,9 @@ BZ_NAMESPACE_END
 #ifndef BZ_TINYVEC_H
  #include <blitz/tinyvec.h>
 #endif
+
+#include <blitz/vecbops.cc>       // Operators with two operands
+#include <blitz/vecuops.cc>       // Functions with one argument
+#include <blitz/vecbfn.cc>        // Functions with two arguments
 
 #endif // BZ_VECEXPR_H
