@@ -38,7 +38,7 @@
  */
 
 #define BZ_DECLARE_ARRAY_ET_UNARY(name, functor)                          \
-template<class T1>                                                        \
+template<typename T1>                                                        \
 _bz_inline_et                                                             \
 _bz_ArrayExpr<_bz_ArrayExprUnaryOp<_bz_typename asExpr<T1>::T_expr,       \
     functor<_bz_typename asExpr<T1>::T_expr::T_numtype> > >               \
@@ -58,7 +58,7 @@ name(const ETBase<T1>& d1)                                                \
  */
 
 #define BZ_DECLARE_ARRAY_ET_BINARY(name, applic)                          \
-template<class T_numtype1, int N_rank1, class T_other>                    \
+template<typename T_numtype1, int N_rank1, typename T_other>              \
 _bz_inline_et                                                             \
 _bz_ArrayExpr<_bz_ArrayExprOp<FastArrayIterator<T_numtype1, N_rank1>,     \
     _bz_typename asExpr<T_other>::T_expr, applic<T_numtype1,              \
@@ -72,7 +72,7 @@ name(const Array<T_numtype1,N_rank1>& d1, const T_other& d2)              \
         (d1.beginFast(),d2);                                              \
 }                                                                         \
                                                                           \
-template<class T_expr1, class T_other>                                    \
+template<typename T_expr1, typename T_other>                              \
 _bz_inline_et                                                             \
 _bz_ArrayExpr<_bz_ArrayExprOp<_bz_ArrayExpr<T_expr1>,                     \
     _bz_typename asExpr<T_other>::T_expr,                                 \
@@ -86,7 +86,7 @@ name(const _bz_ArrayExpr<T_expr1>& d1, const T_other& d2)                 \
         _bz_typename asExpr<T_other>::T_expr::T_numtype> > >(d1,d2);      \
 }                                                                         \
                                                                           \
-template<int N1, class T_other>                                           \
+template<int N1, typename T_other>                                        \
 _bz_inline_et                                                             \
 _bz_ArrayExpr<_bz_ArrayExprOp<IndexPlaceholder<N1>,                       \
     _bz_typename asExpr<T_other>::T_expr,                                 \
@@ -99,7 +99,7 @@ name(IndexPlaceholder<N1> d1, const T_other& d2)                          \
         (d1,d2);                                                          \
 }                                                                         \
                                                                           \
-template<class T1, class T2>                                              \
+template<typename T1, typename T2>                                        \
 _bz_inline_et                                                             \
 _bz_ArrayExpr<_bz_ArrayExprOp<_bz_typename asExpr<T1>::T_expr,            \
     _bz_typename asExpr<T2>::T_expr,                                      \
@@ -119,14 +119,14 @@ name(const T1& d1, const ETBase<T2>& d2)                                  \
  */
 
 #define BZ_DECLARE_FUNCTION(name)                                         \
-  template<class T_numtype1>                                              \
+  template<typename T_numtype1>                                           \
   struct name ## _impl {                                                  \
     typedef T_numtype1 T_numtype;                                         \
                                                                           \
     static inline T_numtype apply(T_numtype1 x)                           \
     { return name(x); }                                                   \
                                                                           \
-    template<class T1>                                                    \
+    template<typename T1>                                                 \
     static void prettyPrint(string& str,                                  \
         prettyPrintFormat& format, const T1& a)                           \
     {                                                                     \
@@ -140,14 +140,14 @@ name(const T1& d1, const ETBase<T2>& d2)                                  \
   BZ_DECLARE_ARRAY_ET_UNARY(name, name ## _impl)
 
 #define BZ_DECLARE_FUNCTION_RET(name, return_type)                        \
-  template<class T_numtype1>                                              \
+  template<typename T_numtype1>                                           \
   struct name ## _impl {                                                  \
     typedef return_type T_numtype;                                        \
                                                                           \
     static inline T_numtype apply(T_numtype1 x)                           \
     { return name(x); }                                                   \
                                                                           \
-    template<class T1>                                                    \
+    template<typename T1>                                                 \
     static void prettyPrint(string& str,                                  \
         prettyPrintFormat& format, const T1& a)                           \
     {                                                                     \
@@ -162,14 +162,14 @@ name(const T1& d1, const ETBase<T2>& d2)                                  \
 
 
 #define BZ_DECLARE_FUNCTION2(name)                                        \
-  template<class T_numtype1, class T_numtype2>                            \
+  template<typename T_numtype1, typename T_numtype2>                      \
   struct name ## _impl {                                                  \
     typedef BZ_PROMOTE(T_numtype1, T_numtype2) T_numtype;                 \
                                                                           \
     static inline T_numtype apply(T_numtype1 x, T_numtype2 y)             \
     { return name(x,y); }                                                 \
                                                                           \
-    template<class T1, class T2>                                          \
+    template<typename T1, typename T2>                                    \
     static void prettyPrint(string& str,                                  \
         prettyPrintFormat& format, const T1& a, const T2& b)              \
     {                                                                     \
@@ -185,14 +185,14 @@ name(const T1& d1, const ETBase<T2>& d2)                                  \
   BZ_DECLARE_ARRAY_ET_BINARY(name, name ## _impl)
 
 #define BZ_DECLARE_FUNCTION2_RET(name, return_type)                       \
-  template<class T_numtype1, class T_numtype2>                            \
+  template<typename T_numtype1, typename T_numtype2>                      \
   struct name ## _impl {                                                  \
     typedef return_type T_numtype;                                        \
                                                                           \
     static inline T_numtype apply(T_numtype1 x, T_numtype2 y)             \
     { return name(x,y); }                                                 \
                                                                           \
-    template<class T1, class T2>                                          \
+    template<typename T1, typename T2>                                    \
     static void prettyPrint(string& str,                                  \
         prettyPrintFormat& format, const T1& a, const T2& b)              \
     {                                                                     \

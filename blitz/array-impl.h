@@ -156,7 +156,7 @@ public:
      */
 
     template<typename T_expr>
-    _bz_explicit Array(_bz_ArrayExpr<T_expr> expr);
+    explicit Array(_bz_ArrayExpr<T_expr> expr);
 
     /*
      * Any missing length arguments will have their value taken from the
@@ -173,7 +173,7 @@ public:
         zeroOffset_ = 0;
     }
 
-    _bz_explicit Array(int length0, 
+    explicit Array(int length0, 
         GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
         : storage_(storage)
     {
@@ -341,7 +341,7 @@ public:
      * Construct an array from an existing block of memory.  Ownership
      * is not acquired (this is provided for backwards compatibility).
      */
-    Array(T_numtype* _bz_restrict dataFirst, TinyVector<int, N_rank> shape,
+    Array(T_numtype* restrict dataFirst, TinyVector<int, N_rank> shape,
         GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
       : MemoryBlockReference<T_numtype>(product(shape), dataFirst, 
           neverDeleteData),
@@ -359,7 +359,7 @@ public:
      * given set of strides.  Ownership is not acquired (i.e. the memory
      * block will not be freed by Blitz++).
      */
-    Array(T_numtype* _bz_restrict dataFirst, TinyVector<int, N_rank> shape,
+    Array(T_numtype* restrict dataFirst, TinyVector<int, N_rank> shape,
         TinyVector<int, N_rank> stride, 
         GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
       : MemoryBlockReference<T_numtype>(product(shape), dataFirst, 
@@ -377,7 +377,7 @@ public:
     /*
      * Construct an array from an existing block of memory.
      */
-    Array(T_numtype* _bz_restrict dataFirst, TinyVector<int, N_rank> shape,
+    Array(T_numtype* restrict dataFirst, TinyVector<int, N_rank> shape,
         preexistingMemoryPolicy deletionPolicy,
         GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
       : MemoryBlockReference<T_numtype>(product(shape), dataFirst, 
@@ -398,7 +398,7 @@ public:
      * Construct an array from an existing block of memory, with a
      * given set of strides.  
      */
-    Array(T_numtype* _bz_restrict dataFirst, TinyVector<int, N_rank> shape,
+    Array(T_numtype* restrict dataFirst, TinyVector<int, N_rank> shape,
         TinyVector<int, N_rank> stride,
         preexistingMemoryPolicy deletionPolicy,
         GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
@@ -887,19 +887,19 @@ public:
         return dot(storage_.base(), stride_);
     }
 
-    const T_numtype* _bz_restrict     data() const
+    const T_numtype* restrict     data() const
     { return data_ + dataOffset(); }
 
-    T_numtype* _bz_restrict           data() 
+    T_numtype* restrict           data() 
     { return data_ + dataOffset(); }
 
     // These dataZero() routines refer to the point (0,0,...,0)
     // which may not be in the array if the bases are nonzero.
     
-    const T_numtype* _bz_restrict     dataZero() const
+    const T_numtype* restrict     dataZero() const
     { return data_; }
 
-    T_numtype* _bz_restrict           dataZero()
+    T_numtype* restrict           dataZero()
     { return data_; }
 
     // These dataFirst() routines refer to the element in the
@@ -920,12 +920,12 @@ public:
         return pos;
     }
     
-    const T_numtype* _bz_restrict     dataFirst() const
+    const T_numtype* restrict     dataFirst() const
     {
         return data_ + dataFirstOffset();
     }
 
-    T_numtype* _bz_restrict           dataFirst()
+    T_numtype* restrict           dataFirst()
     {
         return data_ + dataFirstOffset();
     }
@@ -969,35 +969,23 @@ public:
         length_ = 0;
     }
  
-    _bz_bool                          isMajorRank(int rank) const
-    { return storage_.ordering(rank) == 0; }
-
-    _bz_bool                          isMinorRank(int rank) const
-    { return storage_.ordering(rank) != 0; }
-
-    _bz_bool                          isRankStoredAscending(int rank) const
-    { return storage_.isRankStoredAscending(rank); }
-
-    _bz_bool                          isStorageContiguous() const;
-
-    int                               lbound(int rank) const
-    { return base(rank); }
-
-    TinyVector<int,N_rank>            lbound() const
-    {
-        return base();
+    bool isMajorRank(int rank) const { return storage_.ordering(rank) == 0; }
+    bool isMinorRank(int rank) const { return storage_.ordering(rank) != 0; }
+    bool isRankStoredAscending(int rank) const {
+        return storage_.isRankStoredAscending(rank);
     }
 
-    int                               length(int rank) const
-    { return length_[rank]; }
+    bool isStorageContiguous() const;
 
-    const TinyVector<int, N_rank>&    length() const
-    { return length_; }
+    int                    lbound(int rank) const { return base(rank); }
+    TinyVector<int,N_rank> lbound()         const { return base(); }
 
-    void                              makeUnique();
+    int                            length(int rank) const { return length_[rank]; }
+    const TinyVector<int, N_rank>& length()         const { return length_; }
 
-    int                               numElements() const
-    { return product(length_); }
+    void makeUnique();
+
+    int numElements() const { return product(length_); }
 
     // NEEDS_WORK -- Expose the numReferences() method
     // MemoryBlockReference<T_numtype>::numReferences;
@@ -1173,39 +1161,33 @@ public:
     // Debugging routines
     //////////////////////////////////////////////
 
-    _bz_bool isInRangeForDim(int i, int d) const
-    {
+    bool isInRangeForDim(int i, int d) const {
         return i >= base(d) && (i - base(d)) < length_[d];
     }
 
-    _bz_bool isInRange(int i0) const
-    {
+    bool isInRange(int i0) const {
         return i0 >= base(0) && (i0 - base(0)) < length_[0];
     }
 
-    _bz_bool isInRange(int i0, int i1) const
-    {
+    bool isInRange(int i0, int i1) const {
         return i0 >= base(0) && (i0 - base(0)) < length_[0]
             && i1 >= base(1) && (i1 - base(1)) < length_[1];
     }
 
-    _bz_bool isInRange(int i0, int i1, int i2) const
-    {
+    bool isInRange(int i0, int i1, int i2) const {
         return i0 >= base(0) && (i0 - base(0)) < length_[0]
             && i1 >= base(1) && (i1 - base(1)) < length_[1]
             && i2 >= base(2) && (i2 - base(2)) < length_[2];
     }
 
-    _bz_bool isInRange(int i0, int i1, int i2, int i3) const
-    {
+    bool isInRange(int i0, int i1, int i2, int i3) const {
         return i0 >= base(0) && (i0 - base(0)) < length_[0]
             && i1 >= base(1) && (i1 - base(1)) < length_[1]
             && i2 >= base(2) && (i2 - base(2)) < length_[2]
             && i3 >= base(3) && (i3 - base(3)) < length_[3];
     }
 
-    _bz_bool isInRange(int i0, int i1, int i2, int i3, int i4) const
-    {
+    bool isInRange(int i0, int i1, int i2, int i3, int i4) const {
         return i0 >= base(0) && (i0 - base(0)) < length_[0]
             && i1 >= base(1) && (i1 - base(1)) < length_[1]
             && i2 >= base(2) && (i2 - base(2)) < length_[2]
@@ -1213,9 +1195,7 @@ public:
             && i4 >= base(4) && (i4 - base(4)) < length_[4];
     }
 
-    _bz_bool isInRange(int i0, int i1, int i2, int i3, int i4,
-        int i5) const
-    {
+    bool isInRange(int i0, int i1, int i2, int i3, int i4, int i5) const {
         return i0 >= base(0) && (i0 - base(0)) < length_[0]
             && i1 >= base(1) && (i1 - base(1)) < length_[1]
             && i2 >= base(2) && (i2 - base(2)) < length_[2]
@@ -1224,9 +1204,7 @@ public:
             && i5 >= base(5) && (i5 - base(5)) < length_[5];
     }
 
-    _bz_bool isInRange(int i0, int i1, int i2, int i3, int i4,
-        int i5, int i6) const
-    {
+    bool isInRange(int i0, int i1, int i2, int i3, int i4, int i5, int i6) const {
         return i0 >= base(0) && (i0 - base(0)) < length_[0]
             && i1 >= base(1) && (i1 - base(1)) < length_[1]
             && i2 >= base(2) && (i2 - base(2)) < length_[2]
@@ -1236,9 +1214,8 @@ public:
             && i6 >= base(6) && (i6 - base(6)) < length_[6];
     }
 
-    _bz_bool isInRange(int i0, int i1, int i2, int i3, int i4,
-        int i5, int i6, int i7) const
-    {
+    bool isInRange(int i0, int i1, int i2, int i3, int i4,
+        int i5, int i6, int i7) const {
         return i0 >= base(0) && (i0 - base(0)) < length_[0]
             && i1 >= base(1) && (i1 - base(1)) < length_[1]
             && i2 >= base(2) && (i2 - base(2)) < length_[2]
@@ -1249,9 +1226,8 @@ public:
             && i7 >= base(7) && (i7 - base(7)) < length_[7];
     }
 
-    _bz_bool isInRange(int i0, int i1, int i2, int i3, int i4,
-        int i5, int i6, int i7, int i8) const
-    {
+    bool isInRange(int i0, int i1, int i2, int i3, int i4,
+        int i5, int i6, int i7, int i8) const {
         return i0 >= base(0) && (i0 - base(0)) < length_[0]
             && i1 >= base(1) && (i1 - base(1)) < length_[1]
             && i2 >= base(2) && (i2 - base(2)) < length_[2]
@@ -1263,9 +1239,8 @@ public:
             && i8 >= base(8) && (i8 - base(8)) < length_[8];
     }
 
-    _bz_bool isInRange(int i0, int i1, int i2, int i3, int i4,
-        int i5, int i6, int i7, int i8, int i9) const
-    {
+    bool isInRange(int i0, int i1, int i2, int i3, int i4,
+        int i5, int i6, int i7, int i8, int i9) const {
         return i0 >= base(0) && (i0 - base(0)) < length_[0]
             && i1 >= base(1) && (i1 - base(1)) < length_[1]
             && i2 >= base(2) && (i2 - base(2)) < length_[2]
@@ -1278,9 +1253,8 @@ public:
             && i9 >= base(9) && (i9 - base(9)) < length_[9];
     }
 
-    _bz_bool isInRange(int i0, int i1, int i2, int i3, int i4,
-        int i5, int i6, int i7, int i8, int i9, int i10) const
-    {
+    bool isInRange(int i0, int i1, int i2, int i3, int i4,
+        int i5, int i6, int i7, int i8, int i9, int i10) const {
         return i0 >= base(0) && (i0 - base(0)) < length_[0]
             && i1 >= base(1) && (i1 - base(1)) < length_[1]
             && i2 >= base(2) && (i2 - base(2)) < length_[2]
@@ -1294,62 +1268,57 @@ public:
             && i10 >= base(10) && (i10 - base(10)) < length_[10];
     }
 
-    _bz_bool isInRange(const T_index& index) const
-    {
+    bool isInRange(const T_index& index) const {
         for (int i=0; i < N_rank; ++i)
             if (index[i] < base(i) || (index[i] - base(i)) >= length_[i])
-                return _bz_false;
+                return false;
 
-        return _bz_true;
+        return true;
     }
 
-    _bz_bool assertInRange(const T_index& BZ_DEBUG_PARAM(index)) const
-    {
+    bool assertInRange(const T_index& BZ_DEBUG_PARAM(index)) const {
         BZPRECHECK(isInRange(index), "Array index out of range: " << index
             << endl << "Lower bounds: " << storage_.base() << endl
             <<         "Length:       " << length_ << endl);
-        return _bz_true;
+        return true;
     }
 
-    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0)) const
-    {
+    bool assertInRange(int BZ_DEBUG_PARAM(i0)) const {
         BZPRECHECK(isInRange(i0), "Array index out of range: " << i0
             << endl << "Lower bounds: " << storage_.base() << endl
             <<         "Length:       " << length_ << endl);
-        return _bz_true;
+        return true;
     }
 
-    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0),
-        int BZ_DEBUG_PARAM(i1)) const
-    {
+    bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1)) const {
         BZPRECHECK(isInRange(i0,i1), "Array index out of range: (" 
             << i0 << ", " << i1 << ")"
             << endl << "Lower bounds: " << storage_.base() << endl
             <<         "Length:       " << length_ << endl);
-        return _bz_true;
+        return true;
     }
 
-    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
+    bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
         int BZ_DEBUG_PARAM(i2)) const
     {
         BZPRECHECK(isInRange(i0,i1,i2), "Array index out of range: ("
             << i0 << ", " << i1 << ", " << i2 << ")"
             << endl << "Lower bounds: " << storage_.base() << endl
             <<         "Length:       " << length_ << endl);
-        return _bz_true;
+        return true;
     }
 
-    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
+    bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
         int BZ_DEBUG_PARAM(i2), int BZ_DEBUG_PARAM(i3)) const
     {
         BZPRECHECK(isInRange(i0,i1,i2,i3), "Array index out of range: ("
             << i0 << ", " << i1 << ", " << i2 << ", " << i3 << ")"
             << endl << "Lower bounds: " << storage_.base() << endl
             <<         "Length:       " << length_ << endl);
-        return _bz_true;
+        return true;
     }
 
-    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
+    bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
         int BZ_DEBUG_PARAM(i2), int BZ_DEBUG_PARAM(i3),
         int BZ_DEBUG_PARAM(i4)) const
     {
@@ -1358,10 +1327,10 @@ public:
             << ", " << i4 << ")"
             << endl << "Lower bounds: " << storage_.base() << endl
             <<         "Length:       " << length_ << endl);
-        return _bz_true;
+        return true;
     }
 
-    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
+    bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
         int BZ_DEBUG_PARAM(i2), int BZ_DEBUG_PARAM(i3), int BZ_DEBUG_PARAM(i4),
         int BZ_DEBUG_PARAM(i5)) const
     {
@@ -1370,10 +1339,10 @@ public:
             << ", " << i4 << ", " << i5 << ")"
             << endl << "Lower bounds: " << storage_.base() << endl
             <<         "Length:       " << length_ << endl);
-        return _bz_true;
+        return true;
     }
 
-    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
+    bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
         int BZ_DEBUG_PARAM(i2), int BZ_DEBUG_PARAM(i3), int BZ_DEBUG_PARAM(i4),
         int BZ_DEBUG_PARAM(i5), int BZ_DEBUG_PARAM(i6)) const
     {
@@ -1383,10 +1352,10 @@ public:
             << ", " << i4 << ", " << i5 << ", " << i6 << ")"
             << endl << "Lower bounds: " << storage_.base() << endl
             <<         "Length:       " << length_ << endl);
-        return _bz_true;
+        return true;
     }
 
-    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
+    bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
         int BZ_DEBUG_PARAM(i2), int BZ_DEBUG_PARAM(i3), int BZ_DEBUG_PARAM(i4),
         int BZ_DEBUG_PARAM(i5), int BZ_DEBUG_PARAM(i6),
         int BZ_DEBUG_PARAM(i7)) const
@@ -1397,10 +1366,10 @@ public:
             << ", " << i4 << ", " << i5 << ", " << i6 << ", " << i7 << ")"
             << endl << "Lower bounds: " << storage_.base() << endl
             <<         "Length:       " << length_ << endl);
-        return _bz_true;
+        return true;
     }
 
-    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
+    bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
         int BZ_DEBUG_PARAM(i2), int BZ_DEBUG_PARAM(i3), int BZ_DEBUG_PARAM(i4),
         int BZ_DEBUG_PARAM(i5), int BZ_DEBUG_PARAM(i6), int BZ_DEBUG_PARAM(i7),
         int BZ_DEBUG_PARAM(i8)) const
@@ -1412,10 +1381,10 @@ public:
             << ", " << i8 << ")"
             << endl << "Lower bounds: " << storage_.base() << endl
             <<         "Length:       " << length_ << endl);
-        return _bz_true;
+        return true;
     }
 
-    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
+    bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
         int BZ_DEBUG_PARAM(i2), int BZ_DEBUG_PARAM(i3), int BZ_DEBUG_PARAM(i4),
         int BZ_DEBUG_PARAM(i5), int BZ_DEBUG_PARAM(i6), int BZ_DEBUG_PARAM(i7),
         int BZ_DEBUG_PARAM(i8), int BZ_DEBUG_PARAM(i9)) const
@@ -1427,10 +1396,10 @@ public:
             << ", " << i8 << ", " << i9 << ")"
             << endl << "Lower bounds: " << storage_.base() << endl
             <<         "Length:       " << length_ << endl);
-        return _bz_true;
+        return true;
     }
 
-    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
+    bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
         int BZ_DEBUG_PARAM(i2), int BZ_DEBUG_PARAM(i3), int BZ_DEBUG_PARAM(i4),
         int BZ_DEBUG_PARAM(i5), int BZ_DEBUG_PARAM(i6), int BZ_DEBUG_PARAM(i7),
         int BZ_DEBUG_PARAM(i8), int BZ_DEBUG_PARAM(i9),
@@ -1443,7 +1412,7 @@ public:
             << ", " << i8 << ", " << i9 << ", " << i10 << ")"
             << endl << "Lower bounds: " << storage_.base() << endl
             <<         "Length:       " << length_ << endl);
-        return _bz_true;
+        return true;
     }
 
     //////////////////////////////////////////////
@@ -1458,7 +1427,7 @@ public:
     }
 
     template<int N_rank2>
-    T_numtype& _bz_restrict operator()(const TinyVector<int,N_rank2>& index) 
+    T_numtype& restrict operator()(const TinyVector<int,N_rank2>& index) 
     {
         assertInRange(index);
         return data_[dot(index, stride_)];
@@ -1668,7 +1637,7 @@ public:
         return data_[i0 * stride_[0]]; 
     }
 
-    T_numtype& _bz_restrict operator()(int i0) 
+    T_numtype& restrict operator()(int i0) 
     {
         assertInRange(i0);
         return data_[i0 * stride_[0]];
@@ -1680,7 +1649,7 @@ public:
         return data_[i0 * stride_[0] + i1 * stride_[1]];
     }
 
-    T_numtype& _bz_restrict operator()(int i0, int i1)
+    T_numtype& restrict operator()(int i0, int i1)
     {
         assertInRange(i0, i1);
         return data_[i0 * stride_[0] + i1 * stride_[1]];
@@ -1693,7 +1662,7 @@ public:
             + i2 * stride_[2]];
     }
 
-    T_numtype& _bz_restrict operator()(int i0, int i1, int i2) 
+    T_numtype& restrict operator()(int i0, int i1, int i2) 
     {
         assertInRange(i0, i1, i2);
         return data_[i0 * stride_[0] + i1 * stride_[1]
@@ -1707,7 +1676,7 @@ public:
             + i2 * stride_[2] + i3 * stride_[3]];
     }
 
-    T_numtype& _bz_restrict operator()(int i0, int i1, int i2, int i3)
+    T_numtype& restrict operator()(int i0, int i1, int i2, int i3)
     {
         assertInRange(i0, i1, i2, i3);
         return data_[i0 * stride_[0] + i1 * stride_[1]
@@ -1722,7 +1691,7 @@ public:
             + i2 * stride_[2] + i3 * stride_[3] + i4 * stride_[4]];
     }
 
-    T_numtype& _bz_restrict operator()(int i0, int i1, int i2, int i3,
+    T_numtype& restrict operator()(int i0, int i1, int i2, int i3,
         int i4)
     {
         assertInRange(i0, i1, i2, i3, i4);
@@ -1739,7 +1708,7 @@ public:
             + i5 * stride_[5]];
     }
 
-    T_numtype& _bz_restrict operator()(int i0, int i1, int i2, int i3,
+    T_numtype& restrict operator()(int i0, int i1, int i2, int i3,
         int i4, int i5)
     {
         assertInRange(i0, i1, i2, i3, i4, i5);
@@ -1757,7 +1726,7 @@ public:
             + i5 * stride_[5] + i6 * stride_[6]];
     }
 
-    T_numtype& _bz_restrict operator()(int i0, int i1, int i2, int i3,
+    T_numtype& restrict operator()(int i0, int i1, int i2, int i3,
         int i4, int i5, int i6)
     {
         assertInRange(i0, i1, i2, i3, i4, i5, i6);
@@ -1775,7 +1744,7 @@ public:
             + i5 * stride_[5] + i6 * stride_[6] + i7 * stride_[7]];
     }
 
-    T_numtype& _bz_restrict operator()(int i0, int i1, int i2, int i3,
+    T_numtype& restrict operator()(int i0, int i1, int i2, int i3,
         int i4, int i5, int i6, int i7)
     {
         assertInRange(i0, i1, i2, i3, i4, i5, i6, i7);
@@ -1794,7 +1763,7 @@ public:
             + i8 * stride_[8]];
     }
 
-    T_numtype& _bz_restrict operator()(int i0, int i1, int i2, int i3,
+    T_numtype& restrict operator()(int i0, int i1, int i2, int i3,
         int i4, int i5, int i6, int i7, int i8)
     {
         assertInRange(i0, i1, i2, i3, i4, i5, i6, i7, i8);
@@ -1814,7 +1783,7 @@ public:
             + i8 * stride_[8] + i9 * stride_[9]];
     }
 
-    T_numtype& _bz_restrict operator()(int i0, int i1, int i2, int i3,
+    T_numtype& restrict operator()(int i0, int i1, int i2, int i3,
         int i4, int i5, int i6, int i7, int i8, int i9)
     {
         assertInRange(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9);
@@ -1835,7 +1804,7 @@ public:
             + i8 * stride_[8] + i9 * stride_[9] + i10 * stride_[10]];
     }
 
-    T_numtype& _bz_restrict operator()(int i0, int i1, int i2, int i3,
+    T_numtype& restrict operator()(int i0, int i1, int i2, int i3,
         int i4, int i5, int i6, int i7, int i8, int i9, int i10)
     {
         assertInRange(i0, i1, i2, i3, i4, i5, i6, i7, i8, 
@@ -2349,11 +2318,9 @@ public:
         T_expr expr, T_update);
 
 
-    T_numtype* _bz_restrict getInitializationIterator()
-    { return dataFirst(); }
+    T_numtype* restrict getInitializationIterator() { return dataFirst(); }
 
-    _bz_bool canCollapse(int outerRank, int innerRank) const
-    { 
+    bool canCollapse(int outerRank, int innerRank) const { 
 #ifdef BZ_DEBUG_TRAVERSE
         BZ_DEBUG_MESSAGE("stride(" << innerRank << ")=" << stride(innerRank)
           << ", extent()=" << extent(innerRank) << ", stride(outerRank)="

@@ -1,5 +1,5 @@
 // Generated source file.  Do not edit.
-// Created by: genmatbops.cpp Sep 25 2003 13:27:26
+// Created by: genmatbops.cpp Dec 10 2003 17:58:20
 
 #ifndef BZ_MATBOPS_H
 #define BZ_MATBOPS_H

@@ -25,7 +25,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class T_numtype>
+template<typename T_numtype>
 void dump(const char* name, Array<T_numtype,3>& A)
 {
     T_numtype normA = 0;
@@ -46,7 +46,7 @@ void dump(const char* name, Array<T_numtype,3>& A)
     cout << "Average magnitude of " << name << " is " << normA << endl;
 }
 
-template<class T_stencil, class T_numtype, int N_rank, class T_BCs>
+template<typename T_stencil, typename T_numtype, int N_rank, typename T_BCs>
 int conjugateGradientSolver(T_stencil stencil,
     Array<T_numtype,N_rank>& x,
     Array<T_numtype,N_rank>& rhs, double haltrho, 

@@ -22,7 +22,7 @@
  */ 
 
 // Generated source file.  Do not edit. 
-// genvecbops.cpp Jun 25 2003 19:45:46
+// genvecbops.cpp Dec 10 2003 17:57:48
 
 #ifndef BZ_VECBOPS_CC
 #define BZ_VECBOPS_CC

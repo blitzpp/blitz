@@ -22,7 +22,7 @@
  */ 
 
 // Generated source file.  Do not edit. 
-// genvecbfn.cpp Sep 25 2003 13:27:29
+// genvecbfn.cpp Dec 10 2003 17:58:43
 
 #ifndef BZ_VECBFN_CC
 #define BZ_VECBFN_CC

@@ -31,12 +31,12 @@ BZ_NAMESPACE(blitz)
  */
 
 // forward declaration of iterator
-template<class T_tuple, class T_container, int N_containers>
+template<typename T_tuple, typename T_container, int N_containers>
 class CartesianProductIterator;
 
 struct _cp_end_tag { };
 
-template<class T_tuple, class T_container, int N_containers>
+template<typename T_tuple, typename T_container, int N_containers>
 class CartesianProduct {
 public:
     typedef T_tuple value_type;
@@ -79,7 +79,7 @@ protected:
     const T_container* containers_[N_containers]; 
 };
 
-template<class T_tuple, class T_container, int N_containers>
+template<typename T_tuple, typename T_container, int N_containers>
 void CartesianProduct<T_tuple,T_container,N_containers>::debugDump()
 {
     cout << "Dump of CartesianProduct<..,..," << N_containers << ">" << endl;
@@ -93,7 +93,7 @@ void CartesianProduct<T_tuple,T_container,N_containers>::debugDump()
     }
 }
 
-template<class T_tuple, class T_container, int N_containers>
+template<typename T_tuple, typename T_container, int N_containers>
 class CartesianProductIterator {
 public:
     typedef _bz_typename T_container::const_iterator citerator;
@@ -110,22 +110,22 @@ public:
             tuple_[i] = *iters_[i];
         }
 
-        endflag_ = _bz_false;
+        endflag_ = false;
     }
 
     void operator++();
 
     CartesianProductIterator(_cp_end_tag)
     {
-        endflag_ = _bz_true;
+        endflag_ = true;
     }
 
-    _bz_bool operator==(const iterator& x) const
+    bool operator==(const iterator& x) const
     {
         return (endflag_ == x.endflag_);
     }
 
-    _bz_bool operator!=(const iterator& x) const
+    bool operator!=(const iterator& x) const
     {   
         return endflag_ != x.endflag_;
     }
@@ -137,11 +137,11 @@ protected:
     citerator iters_[N_containers];
     citerator firstiters_[N_containers];
     citerator enditers_[N_containers];
-    T_tuple tuple_;
-    _bz_bool endflag_;
+    T_tuple   tuple_;
+    bool      endflag_;
 };
 
-template<class T_tuple, class T_container, int N_containers>
+template<typename T_tuple, typename T_container, int N_containers>
 void CartesianProductIterator<T_tuple, T_container, 
     N_containers>::operator++()
 {
@@ -162,7 +162,7 @@ void CartesianProductIterator<T_tuple, T_container,
 
     if (i == -1)
     {
-        endflag_ = _bz_true;
+        endflag_ = true;
         return;
     }
 

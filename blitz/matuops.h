@@ -1,5 +1,5 @@
 // Generated source file.  Do not edit.
-// Created by: genmatuops.cpp Jun 25 2003 19:46:07
+// Created by: genmatuops.cpp Dec 10 2003 17:58:05
 
 #ifndef BZ_MATUOPS_H
 #define BZ_MATUOPS_H
