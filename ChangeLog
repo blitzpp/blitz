@@ -1,4 +1,42 @@
+2004-05-05  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
+	* benchmarks/Makefile.am: Moved -I flags from AM_CXXFLAGS to
+	AM_CPPFLAGS.  Cleaned up LIBS list.
+	* examples/Makefile.am: Moved -I flags from AM_CXXFLAGS to
+	AM_CPPFLAGS.
+	* testsuite/Makefile.am: Moved -I flags from AM_CXXFLAGS to
+	AM_CPPFLAGS.
+	* doc/stencils/Makefile.am: Moved -I flags from AM_CXXFLAGS to
+	AM_CPPFLAGS. Removed use of deprecated INCLUDES variable.
+	* doc/examples/Makefile.am: Moved -I flags from AM_CXXFLAGS to
+	AM_CPPFLAGS.
+	* manual/examples/debug.cpp: Restored indexing bug, which is
+	apparently there for illustrative purposes.
+	* doc/examples/debug.cpp: Restored indexing bug, which is
+	apparently there for illustrative purposes.
+	* doc/examples/debug.cpp: Fixed indexing bug.
+	* doc/examples/cast.cpp: Cosmetic change.
+	* manual/stencils/Makefile.am: Moved -I flags from AM_CXXFLAGS to
+	AM_CPPFLAGS.
+	* manual/examples/Makefile.am: Activated several example codes
+	that had been commented out.  Cleaned up list of extra files.
+	Moved -I flags from AM_CXXFLAGS to AM_CPPFLAGS.
+	* manual/examples/debug.cpp: Fixed indexing bug in this example,
+	just so it will run without crashing.  Not sure what this code is
+	supposed to illustrate.
+	* manual/examples/cast.cpp: Corrected this example code to use
+	new-style blitz cast syntax.
+	* lib/Makefile.am: Moved -I flags from AM_CXXFLAGS to AM_CPPFLAGS.
+	* Makefile.am: Removed src from list of SUBDIRS because there is
+	nothing to do there.
+	* configure.in: Replaced deprecated AC_LANG_CXX and AC_LANG_F77
+	with calls to AC_LANG.  Reordered AC_LANG calls so we don't need
+	to call AC_LANG_CXX twice.  Removed some superfluous m4 macro
+	argument quoting.  Removed compiler and src subdirectories from
+	list of directories to configure.  The compiler area is obsolete
+	now that autoconf does this work for us.  We don't need to visit
+	the src directory, since the blitz library is built from the lib
+	directory.
 
 2004-04-25  Patrick Guio <patrick.guio@fys.uio.no>
 
