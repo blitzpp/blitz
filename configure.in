@@ -487,8 +487,8 @@ AC_CONFIG_FILES([
 	examples/Makefile
 	benchmarks/Makefile 
 	benchmarks/plot_benchmarks.m
-	demos/Makefile
 	])
+#	demos/Makefile
 AC_OUTPUT
 
 # At some point in the future it would be nice to collect

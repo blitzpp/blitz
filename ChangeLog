@@ -1,4 +1,10 @@
-
+2003-01-08 Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+    * configure.in: Removed demos/Makefile from the generated files since this
+    directory is empty for now.
+    * blitz/array/asexpr.h: Introduce BzUnaryExprResult and BzBinaryExprResult
+    to describe the type of an expression.
+    * blitz/array/newet-macros.h: Use it here. Add a cast in BZ_DECLARE_FUNCTION2
+    to avoid a warning.
 
 Tue Jan  7 16:30:17 CET 2003 Patrick Guio <patrick.guio@fys.uio.no>
 	* Makefile.in benchmarks/Makefile.in bin/Makefile.in

@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.4  2003/01/08 18:47:16  papadop
+ * Added facilities for having the type of an expression template. Removed demos/Makefile from the generated files since the directory is empty for now.
+ *
  * Revision 1.3  2002/07/02 19:17:17  jcumming
  * Renamed and reorganized new style macros for declaring unary and binary
  * functions/operators that act on Array types.
@@ -43,17 +46,14 @@ BZ_NAMESPACE(blitz)
  * Unary functions and operators
  */
 
-#define BZ_DECLARE_ARRAY_ET_UNARY(name, functor)                          \
-template<class T1>                                                        \
+#define BZ_DECLARE_ARRAY_ET_UNARY(name,functor)                           \
+template <typename T1>                                                    \
 _bz_inline_et                                                             \
-_bz_ArrayExpr<_bz_ArrayExprUnaryOp<_bz_typename asExpr<T1>::T_expr,       \
-    functor<_bz_typename asExpr<T1>::T_expr::T_numtype> > >               \
+typename BzUnaryExprResult<functor,T1>::T_result                          \
 name(const ETBase<T1>& d1)                                                \
 {                                                                         \
-    return _bz_ArrayExpr<_bz_ArrayExprUnaryOp<                            \
-        _bz_typename asExpr<T1>::T_expr,                                  \
-        functor<_bz_typename asExpr<T1>::T_expr::T_numtype> > >           \
-        (static_cast<const T1&>(d1));                                     \
+    typedef typename BzUnaryExprResult<functor,T1>::T_result result;      \
+    return result(static_cast<const T1&>(d1));                            \
 }
 
 /*
@@ -63,170 +63,142 @@ name(const ETBase<T1>& d1)                                                \
  * which implements the operation.
  */
 
-#define BZ_DECLARE_ARRAY_ET_BINARY(name, applic)                          \
-                                                                          \
-template<class T_numtype1, int N_rank1, class T_other>                    \
-_bz_inline_et                                                             \
-_bz_ArrayExpr<_bz_ArrayExprOp<FastArrayIterator<T_numtype1, N_rank1>,     \
-    _bz_typename asExpr<T_other>::T_expr, applic<T_numtype1,              \
-    _bz_typename asExpr<T_other>::T_expr::T_numtype> > >                  \
-name(const Array<T_numtype1,N_rank1>& d1, const T_other& d2)              \
-{                                                                         \
-    return _bz_ArrayExpr<_bz_ArrayExprOp<FastArrayIterator<T_numtype1,    \
-        N_rank1>, _bz_typename asExpr<T_other>::T_expr,                   \
-        applic<T_numtype1,                                                \
-        _bz_typename asExpr<T_other>::T_expr::T_numtype> > >              \
-        (d1.beginFast(),d2);                                              \
-}                                                                         \
-                                                                          \
-template<class T_expr1, class T_other>                                    \
-_bz_inline_et                                                             \
-_bz_ArrayExpr<_bz_ArrayExprOp<_bz_ArrayExpr<T_expr1>,                     \
-    _bz_typename asExpr<T_other>::T_expr,                                 \
-    applic<_bz_typename T_expr1::T_numtype,                               \
-    _bz_typename asExpr<T_other>::T_expr::T_numtype> > >                  \
-name(const _bz_ArrayExpr<T_expr1>& d1, const T_other& d2)                 \
-{                                                                         \
-    return _bz_ArrayExpr<_bz_ArrayExprOp<_bz_ArrayExpr<T_expr1>,          \
-        _bz_typename asExpr<T_other>::T_expr,                             \
-        applic<_bz_typename T_expr1::T_numtype,                           \
-        _bz_typename asExpr<T_other>::T_expr::T_numtype> > >(d1,d2);      \
-}                                                                         \
-                                                                          \
-template<class T1, class T2>                                              \
-_bz_inline_et                                                             \
-_bz_ArrayExpr<_bz_ArrayExprOp<_bz_typename asExpr<T1>::T_expr,            \
-    _bz_typename asExpr<T2>::T_expr,                                      \
-    applic<_bz_typename asExpr<T1>::T_expr::T_numtype,                    \
-    _bz_typename asExpr<T2>::T_expr::T_numtype> > >                       \
-name(const ETBase<T1>& d1, const T2& d2)                                  \
-{                                                                         \
-    return _bz_ArrayExpr<_bz_ArrayExprOp<_bz_typename asExpr<T1>::T_expr, \
-        _bz_typename asExpr<T2>::T_expr,                                  \
-        applic<_bz_typename asExpr<T1>::T_expr::T_numtype,                \
-        _bz_typename asExpr<T2>::T_expr::T_numtype> > >                   \
-        (static_cast<const T1&>(d1), d2);                                 \
-}                                                                         \
-                                                                          \
-template<class T1, class T2>                                              \
-_bz_inline_et                                                             \
-_bz_ArrayExpr<_bz_ArrayExprOp<_bz_typename asExpr<T1>::T_expr,            \
-    _bz_typename asExpr<T2>::T_expr,                                      \
-    applic<_bz_typename asExpr<T1>::T_expr::T_numtype,                    \
-    _bz_typename asExpr<T2>::T_expr::T_numtype> > >                       \
-name(const T1& d1, const ETBase<T2>& d2)                                  \
-{                                                                         \
-    return _bz_ArrayExpr<_bz_ArrayExprOp<_bz_typename asExpr<T1>::T_expr, \
-        _bz_typename asExpr<T2>::T_expr,                                  \
-        applic<_bz_typename asExpr<T1>::T_expr::T_numtype,                \
-        _bz_typename asExpr<T2>::T_expr::T_numtype> > >                   \
-        (d1, static_cast<const T2&>(d2));                                 \
-}                                                                         \
-                                                                          \
-template<int N1, class T_other>                                           \
-_bz_inline_et                                                             \
-_bz_ArrayExpr<_bz_ArrayExprOp<IndexPlaceholder<N1>,                       \
-    _bz_typename asExpr<T_other>::T_expr,                                 \
-    applic<int, _bz_typename asExpr<T_other>::T_expr::T_numtype> > >      \
-name(IndexPlaceholder<N1> d1, const T_other& d2)                          \
-{                                                                         \
-    return _bz_ArrayExpr<_bz_ArrayExprOp<IndexPlaceholder<N1>,            \
-        _bz_typename asExpr<T_other>::T_expr,                             \
-        applic<int, _bz_typename asExpr<T_other>::T_expr::T_numtype> > >  \
-        (d1,d2);                                                          \
+#define BZ_DECLARE_ARRAY_ET_BINARY(name, applic)                                 \
+                                                                                 \
+template <typename T_numtype1,int N_rank1,typename T_other>                      \
+_bz_inline_et                                                                    \
+typename BzBinaryExprResult<applic,Array<T_numtype1,N_rank1>,T_other>::T_result  \
+name (const Array<T_numtype1,N_rank1>& d1, const T_other& d2)                    \
+{                                                                                \
+    typedef typename BzBinaryExprResult<applic,                                  \
+                                  Array<T_numtype1,N_rank1>,                     \
+                                  T_other>::T_result         result;             \
+    return result(d1.beginFast(),d2);                                            \
+}                                                                                \
+                                                                                 \
+template <typename T_expr1,typename T_other>                                     \
+_bz_inline_et                                                                    \
+typename BzBinaryExprResult<applic,_bz_ArrayExpr<T_expr1>,T_other>::T_result     \
+name(const _bz_ArrayExpr<T_expr1>& d1, const T_other& d2)                        \
+{                                                                                \
+    typedef typename BzBinaryExprResult<applic,                                  \
+                                  _bz_ArrayExpr<T_expr1>,                        \
+                                  T_other>::T_result         result;             \
+    return result(d1,d2);                                                        \
+}                                                                                \
+                                                                                 \
+template <typename T1,typename T2>                                               \
+_bz_inline_et                                                                    \
+typename BzBinaryExprResult<applic,ETBase<T1>,T2>::T_result                      \
+name(const ETBase<T1>& d1, const T2& d2)                                         \
+{                                                                                \
+    typedef typename BzBinaryExprResult<applic,ETBase<T1>,T2>::T_result result;  \
+    return result(static_cast<const T1&>(d1),d2);                                \
+}                                                                                \
+                                                                                 \
+template <typename T1,typename T2>                                               \
+_bz_inline_et                                                                    \
+typename BzBinaryExprResult<applic,T1,T2>::T_result                              \
+name(const T1& d1,const ETBase<T2>& d2)                                          \
+{                                                                                \
+    typedef typename BzBinaryExprResult<applic,T1,T2>::T_result result;          \
+    return result(d1,static_cast<const T2&>(d2));                                \
+}                                                                                \
+                                                                                 \
+template <int N1,typename T_other>                                               \
+_bz_inline_et                                                                    \
+typename BzBinaryExprResult<applic,IndexPlaceholder<N1>,T_other>::T_result       \
+name(IndexPlaceholder<N1> d1, const T_other& d2)                                 \
+{                                                                                \
+    typedef typename BzBinaryExprResult<applic,                                  \
+                                  IndexPlaceholder<N1>,                          \
+                                  T_other>::T_result    result;                  \
+    return result(d1,d2);                                                        \
 }
 
 /*
  * User-defined expression template routines
  */
 
-#define BZ_DECLARE_FUNCTION(name)                                         \
-  template<class T_numtype1>                                              \
-  struct name ## _impl {                                                  \
-    typedef T_numtype1 T_numtype;                                         \
-                                                                          \
-    static inline T_numtype apply(T_numtype1 x)                           \
-    { return name(x); }                                                   \
-                                                                          \
-    template<class T1>                                                    \
-    static void prettyPrint(string& str,                                  \
-        prettyPrintFormat& format, const T1& a)                           \
-    {                                                                     \
-        str += #name;                                                     \
-        str += "(";                                                       \
-        a.prettyPrint(str,format);                                        \
-        str += ")";                                                       \
-    }                                                                     \
-  };                                                                      \
-                                                                          \
-  BZ_DECLARE_ARRAY_ET_UNARY(name, name ## _impl)
+#define BZ_DECLARE_FUNCTION(name)                                                    \
+    template <typename P_numtype>                                                    \
+    struct name ## _impl {                                                           \
+        typedef P_numtype T_numtype;                                                 \
+                                                                                     \
+        static inline T_numtype apply(P_numtype x) { return name(x); }               \
+                                                                                     \
+        template <typename T>                                                        \
+        static void prettyPrint(string& str,prettyPrintFormat& format,const T& a) {  \
+            str += #name;                                                            \
+            str += "(";                                                              \
+            a.prettyPrint(str,format);                                               \
+            str += ")";                                                              \
+        }                                                                            \
+    };                                                                               \
+                                                                                     \
+    BZ_DECLARE_ARRAY_ET_UNARY(name,name ## _impl)
 
-#define BZ_DECLARE_FUNCTION_RET(name, return_type)                        \
-  template<class T_numtype1>                                              \
-  struct name ## _impl {                                                  \
-    typedef return_type T_numtype;                                        \
-                                                                          \
-    static inline T_numtype apply(T_numtype1 x)                           \
-    { return name(x); }                                                   \
-                                                                          \
-    template<class T1>                                                    \
-    static void prettyPrint(string& str,                                  \
-        prettyPrintFormat& format, const T1& a)                           \
-    {                                                                     \
-        str += #name;                                                     \
-        str += "(";                                                       \
-        a.prettyPrint(str,format);                                        \
-        str += ")";                                                       \
-    }                                                                     \
-  };                                                                      \
-                                                                          \
-  BZ_DECLARE_ARRAY_ET_UNARY(name, name ## _impl)
+#define BZ_DECLARE_FUNCTION_RET(name,return_type)                                    \
+    template <typename P_numtype>                                                    \
+    struct name ## _impl {                                                           \
+        typedef return_type T_numtype;                                               \
+                                                                                     \
+        static inline T_numtype apply(P_numtype x) { return name(x); }               \
+                                                                                     \
+        template <typename T1>                                                       \
+        static void prettyPrint(string& str,prettyPrintFormat& format,const T1& a) { \
+            str += #name;                                                            \
+            str += "(";                                                              \
+            a.prettyPrint(str,format);                                               \
+            str += ")";                                                              \
+        }                                                                            \
+    };                                                                               \
+                                                                                     \
+  BZ_DECLARE_ARRAY_ET_UNARY(name,name ## _impl)
 
+#define BZ_DECLARE_FUNCTION2(name)                                                               \
+    template <typename P_numtype1,typename P_numtype2>                                           \
+    struct name ## _impl {                                                                       \
+        typedef BZ_PROMOTE(P_numtype1,P_numtype2) T_numtype;                                     \
+                                                                                                 \
+        static inline T_numtype                                                                  \
+        apply(P_numtype1 x,P_numtype2 y) {                                                       \
+            return static_cast<T_numtype>(name(x,y));                                            \
+        }                                                                                        \
+                                                                                                 \
+        template <typename T1,typename T2>                                                       \
+        static void prettyPrint(string& str,prettyPrintFormat& format,const T1& a,const T2& b) { \
+            str += #name;                                                                        \
+            str += "(";                                                                          \
+            a.prettyPrint(str,format);                                                           \
+            str += ",";                                                                          \
+            b.prettyPrint(str,format);                                                           \
+            str += ")";                                                                          \
+        }                                                                                        \
+    };                                                                                           \
+                                                                                                 \
+    BZ_DECLARE_ARRAY_ET_BINARY(name, name ## _impl)
 
-#define BZ_DECLARE_FUNCTION2(name)                                        \
-  template<class T_numtype1, class T_numtype2>                            \
-  struct name ## _impl {                                                  \
-    typedef BZ_PROMOTE(T_numtype1, T_numtype2) T_numtype;                 \
-                                                                          \
-    static inline T_numtype apply(T_numtype1 x, T_numtype2 y)             \
-    { return name(x,y); }                                                 \
-                                                                          \
-    template<class T1, class T2>                                          \
-    static void prettyPrint(string& str,                                  \
-        prettyPrintFormat& format, const T1& a, const T2& b)              \
-    {                                                                     \
-        str += #name;                                                     \
-        str += "(";                                                       \
-        a.prettyPrint(str,format);                                        \
-        str += ",";                                                       \
-        b.prettyPrint(str,format);                                        \
-        str += ")";                                                       \
-    }                                                                     \
-  };                                                                      \
-                                                                          \
-  BZ_DECLARE_ARRAY_ET_BINARY(name, name ## _impl)
-
-#define BZ_DECLARE_FUNCTION2_RET(name, return_type)                       \
-  template<class T_numtype1, class T_numtype2>                            \
-  struct name ## _impl {                                                  \
-    typedef return_type T_numtype;                                        \
-                                                                          \
-    static inline T_numtype apply(T_numtype1 x, T_numtype2 y)             \
-    { return name(x,y); }                                                 \
-                                                                          \
-    template<class T1, class T2>                                          \
-    static void prettyPrint(string& str,                                  \
-        prettyPrintFormat& format, const T1& a, const T2& b)              \
-    {                                                                     \
-        str += #name;                                                     \
-        str += "(";                                                       \
-        a.prettyPrint(str,format);                                        \
-        str += ",";                                                       \
-        b.prettyPrint(str,format);                                        \
-        str += ")";                                                       \
-    }                                                                     \
-  };                                                                      \
-                                                                          \
+#define BZ_DECLARE_FUNCTION2_RET(name, return_type)                                              \
+    template <typename P_numtype1,typename P_numtype2>                                           \
+    struct name ## _impl {                                                                       \
+        typedef return_type T_numtype;                                                           \
+                                                                                                 \
+        static inline T_numtype apply(P_numtype1 x,P_numtype2 y) {                               \
+            return name(x,y);                                                                    \
+        }                                                                                        \
+                                                                                                 \
+        template <typename T1,typename T2>                                                       \
+        static void prettyPrint(string& str,prettyPrintFormat& format,const T1& a,const T2& b) { \
+            str += #name;                                                                        \
+            str += "(";                                                                          \
+            a.prettyPrint(str,format);                                                           \
+            str += ",";                                                                          \
+            b.prettyPrint(str,format);                                                           \
+            str += ")";                                                                          \
+        }                                                                                        \
+    };                                                                                           \
+                                                                                                 \
   BZ_DECLARE_ARRAY_ET_BINARY(name, name ## _impl)
 
 BZ_NAMESPACE_END

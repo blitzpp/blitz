@@ -21,12 +21,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.2  2001/01/25 00:25:55  tveldhui
- * Ensured that source files have cvs logs.
- *
- */
+ ***************************************************************************/
 
 #ifndef BZ_ARRAYASEXPR_H
 #define BZ_ARRAYASEXPR_H
@@ -40,28 +35,50 @@ BZ_NAMESPACE(blitz)
 // The traits class asExpr converts arbitrary things to
 // expression templatable operands.
 
-// Default to scalar.
-template<class T>
+//  Default to scalar.
+
+template <typename T>
 struct asExpr {
     typedef _bz_ArrayExprConstant<T> T_expr;
 };
 
-// Already an expression template term
-template<class T>
+//  Already an expression template term
+
+template <typename T>
 struct asExpr<_bz_ArrayExpr<T> > {
     typedef _bz_ArrayExpr<T> T_expr;
 };
 
-// An array operand
-template<class T, int N>
+//  An array operand
+
+template <typename T,int N>
 struct asExpr<Array<T,N> > {
     typedef FastArrayIterator<T,N> T_expr;
 };
 
-// Index placeholder
-template<int N>
+//  Index placeholder
+
+template <int N>
 struct asExpr<IndexPlaceholder<N> > {
     typedef IndexPlaceholder<N> T_expr;
+};
+
+//  A traits class that provides the return type of a binary operation.
+
+template <template <typename T1> class OP,typename O1>
+struct BzUnaryExprResult {
+    typedef _bz_ArrayExpr<
+                _bz_ArrayExprUnaryOp<typename asExpr<O1>::T_expr,
+                                     OP<typename asExpr<O1>::T_expr::T_numtype> > > T_result;
+};
+
+template <template <typename T1,typename T2> class OP,typename O1,typename O2>
+struct BzBinaryExprResult {
+    typedef _bz_ArrayExpr<
+                _bz_ArrayExprOp<typename asExpr<O1>::T_expr,
+                                typename asExpr<O2>::T_expr,
+                                OP<typename asExpr<O1>::T_expr::T_numtype,
+                                   typename asExpr<O2>::T_expr::T_numtype> > > T_result;
 };
 
 BZ_NAMESPACE_END
