@@ -72,5 +72,15 @@ Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* blitz/promote.h: typename replaced by _bz_typename
 	* blitz/array/reduce.cc: TinyVector<int,rank> replaced by
 	TinyVector<int,T_expr::rank>
+	* blitz/array/storage.h: in 
+	template<int N_rank>
+	class FortranArray : public GeneralArrayStorage<N_rank> {} and
+	template<int N_rank>
+	class ColumnMajorArray : public GeneralArrayStorage<N_rank> {}
+	ordering_, ascendingFlag_, base_ replaced by this->ordering_,
+	this->ascendingFlag_, this->base_
+	noInitializeFlag() replaced by
+	GeneralArrayStorage<N_rank>::noInitializeFlag()
+
 
 
