@@ -96,8 +96,11 @@ AC_CONFIG_FILES([
 	doc/Makefile
 	doc/examples/Makefile
 	doc/stencils/Makefile
+	doc/doxygen/Makefile
 	])
 dnl	demos/Makefile
+
+AC_CONFIG_FILES([doc/doxygen/Doxyfile])
 
 AC_OUTPUT
 
