@@ -23,6 +23,12 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.9  2002/07/19 20:42:53  jcumming
+ * Removed ending semicolon after invocations of BZ_MUTEX_* macros.  This
+ * is now handled within the definition of these macros.  This should get
+ * rid of compiler warnings from SGI CC and others about extra semicolons
+ * being ignored, which happened when these macros were defined as blank.
+ *
  * Revision 1.8  2002/07/17 22:10:09  jcumming
  * Added missing semicolon after use of BZ_MUTEX_DECLARE macro.
  *
@@ -128,7 +134,7 @@ protected:
         dataBlockAddress_ = 0;
         references_ = 0;
 
-        BZ_MUTEX_INIT(mutex);
+        BZ_MUTEX_INIT(mutex)
     }
 
     _bz_explicit MemoryBlock(size_t items)
@@ -145,7 +151,7 @@ protected:
 
         references_ = 0;
 
-        BZ_MUTEX_INIT(mutex);
+        BZ_MUTEX_INIT(mutex)
     }
 
     MemoryBlock(size_t length, T_type* _bz_restrict data)
@@ -154,7 +160,7 @@ protected:
         data_ = data;
         dataBlockAddress_ = 0;
         references_ = 0;
-        BZ_MUTEX_INIT(mutex);
+        BZ_MUTEX_INIT(mutex)
     }
 
     virtual ~MemoryBlock()
@@ -170,12 +176,12 @@ protected:
             deallocate();
         }
 
-        BZ_MUTEX_DESTROY(mutex);
+        BZ_MUTEX_DESTROY(mutex)
     }
 
     void          addReference()
     { 
-        BZ_MUTEX_LOCK(mutex);
+        BZ_MUTEX_LOCK(mutex)
         ++references_; 
 
 #ifdef BZ_DEBUG_LOG_REFERENCES
@@ -183,7 +189,7 @@ protected:
          << " at " << ((void *)dataBlockAddress_) << " (r=" 
          << (int)references_ << ")" << endl;
 #endif
-        BZ_MUTEX_UNLOCK(mutex);
+        BZ_MUTEX_UNLOCK(mutex)
 
     }
 
@@ -205,7 +211,7 @@ protected:
     int           removeReference()
     {
 
-        BZ_MUTEX_LOCK(mutex);
+        BZ_MUTEX_LOCK(mutex)
         int refcount = --references_;
 
 #ifdef BZ_DEBUG_LOG_REFERENCES
@@ -213,15 +219,15 @@ protected:
          << " at " << ((void *)dataBlockAddress_) << " (r=" << (int)references_ 
          << ")" << endl;
 #endif
-        BZ_MUTEX_UNLOCK(mutex);
+        BZ_MUTEX_UNLOCK(mutex)
         return refcount;
     }
 
     int references() const
     {
-        BZ_MUTEX_LOCK(mutex);
+        BZ_MUTEX_LOCK(mutex)
         int refcount = references_;
-        BZ_MUTEX_UNLOCK(mutex);
+        BZ_MUTEX_UNLOCK(mutex)
 
         return refcount;
     }
@@ -247,7 +253,7 @@ private:   // Data members
     volatile int references_;
 #endif
 
-    BZ_MUTEX_DECLARE(mutex);
+    BZ_MUTEX_DECLARE(mutex)
     size_t  length_;
 };
 
