@@ -1,10 +1,25 @@
+
+#if defined(__GNUC__) && (__GNUC__ < 3)
+#ifdef BZ_HAVE_STD
+#include <cmath>
+#else
+#include <math.h>
+#endif
+inline float cos(float x) { return static_cast<float>(cos(x)); }
+inline float sin(float x) { return static_cast<float>(sin(x)); }
+inline float tan(float x) { return static_cast<float>(tan(x)); }
+inline float log(float x) { return static_cast<float>(log(x)); }
+inline float exp(float x) { return static_cast<float>(exp(x)); }
+#endif
 #include <valarray>
+
 
 using namespace std;
 
 int main()
 {
 }
+
 
 void foo()
 {
