@@ -27,9 +27,7 @@
  #error <blitz/array/ops.cc> must be included via <blitz/array.h>
 #endif
 
-#ifndef BZ_UPDATE_H
- #include <blitz/update.h>
-#endif
+#include <blitz/update.h>
 
 BZ_NAMESPACE(blitz)
 
@@ -51,7 +49,7 @@ template<typename P_numtype, int N_rank> template<typename T_expr>
 inline Array<P_numtype,N_rank>&
 Array<P_numtype,N_rank>::operator=(const ETBase<T_expr>& expr)
 {
-    evaluate(static_cast<const T_expr&>(expr), 
+    evaluate(expr.unwrap(), 
         _bz_update<T_numtype, _bz_typename T_expr::T_numtype>());
     return *this;
 }
