@@ -1,3 +1,22 @@
+2003-11-11  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/array/newet-macros-old.h: Removed the superfluous
+	combination of ETBase<T1> and T2.  If the first operand in a
+	binary function or operator is not an Array, ArrayExpr or
+	IndexPlaceholder, it is assumed to be a POD type.  The combination
+	of T1 and ETBase<T2> handles all combinations of a POD type with a
+	Blitz Array or Array-like type.
+	* blitz/array/newet-macros.h: Removed the superfluous combination
+	of ETBase<T1> and T2.  If the first operand in a binary function
+	or operator is not an Array, ArrayExpr or IndexPlaceholder, it is
+	assumed to be a POD type.  The combination of T1 and ETBase<T2>
+	handles all combinations of a POD type with a Blitz Array or
+	Array-like type.  Also cleaned up the file formatting.
+	* blitz/array/Makefile.am: Removed newbops.cc from list of array
+	header files for distribution.
+
+	* blitz/Makefile.am: Added config-g++3.h to list of extra files to
+	include in distribution.
 
 2003-09-26 Patrick Guio <patrick.guio@fys.uio.no>
 	* blitz/applics.h: Added TwoOperandApplicativeTemplatesBase's 
