@@ -29,7 +29,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class T_array, class T_index>
+template<typename T_array, typename T_index>
 class IndirectArray {
 
 public:
@@ -37,7 +37,7 @@ public:
         : array_(array), index_(index)
     { }
 
-    template<class T_expr>
+    template<typename T_expr>
     void operator=(T_expr expr);
 
 protected:
@@ -46,15 +46,15 @@ protected:
 };
 
 // Forward declarations
-template<class T_array, class T_arrayiter, class T_subdomain, class T_expr>
+template<typename T_array, typename T_arrayiter, typename T_subdomain, typename T_expr>
 inline void applyOverSubdomain(const T_array& array, T_arrayiter& arrayIter,
     T_subdomain subdomain, T_expr expr);
-template<class T_array, class T_arrayiter, int N_rank, class T_expr>
+template<typename T_array, typename T_arrayiter, int N_rank, typename T_expr>
 inline void applyOverSubdomain(const T_array& array, T_arrayiter& arrayIter,
     RectDomain<N_rank> subdomain,
     T_expr expr);
 
-template<class T_array, class T_index> template<class T_rhs>
+template<typename T_array, typename T_index> template<typename T_rhs>
 void IndirectArray<T_array, T_index>::operator=(T_rhs rhs)
 {
     typedef _bz_typename asExpr<T_rhs>::T_expr T_expr;
@@ -72,7 +72,7 @@ void IndirectArray<T_array, T_index>::operator=(T_rhs rhs)
     }
 }
 
-template<class T_array, class T_arrayiter, class T_subdomain, class T_expr>
+template<typename T_array, typename T_arrayiter, typename T_subdomain, typename T_expr>
 inline void applyOverSubdomain(const T_array& BZ_DEBUG_PARAM(array), T_arrayiter& arrayIter, 
     T_subdomain subdomain, T_expr expr)
 {
@@ -90,7 +90,7 @@ inline void applyOverSubdomain(const T_array& BZ_DEBUG_PARAM(array), T_arrayiter
 }
 
 // Specialization for RectDomain<N>
-template<class T_array, class T_arrayiter, int N_rank, class T_expr>
+template<typename T_array, typename T_arrayiter, int N_rank, typename T_expr>
 inline void applyOverSubdomain(const T_array& BZ_DEBUG_PARAM(array), T_arrayiter& arrayIter, 
     RectDomain<N_rank> subdomain,
     T_expr expr)
@@ -152,7 +152,7 @@ inline void applyOverSubdomain(const T_array& BZ_DEBUG_PARAM(array), T_arrayiter
 
 #ifdef BZ_USE_FAST_READ_ARRAY_EXPR
 
-    _bz_bool useUnitStride = arrayIter.isUnitStride(stripDim)
+    bool useUnitStride = arrayIter.isUnitStride(stripDim)
           && expr.isUnitStride(stripDim);
 
     int lbound = subdomain.lbound(stripDim); 
@@ -160,7 +160,7 @@ inline void applyOverSubdomain(const T_array& BZ_DEBUG_PARAM(array), T_arrayiter
 
     if (useUnitStride)
     {
-        T_numtype* _bz_restrict data = const_cast<T_numtype*>(arrayIter.data());
+        T_numtype* restrict data = const_cast<T_numtype*>(arrayIter.data());
 
         int length = ubound - lbound + 1;
         for (int i=0; i < length; ++i)
@@ -186,7 +186,7 @@ inline void applyOverSubdomain(const T_array& BZ_DEBUG_PARAM(array), T_arrayiter
 }
 
 // Global functions for cartesian product of index sets
-template<class T_container>
+template<typename T_container>
 CartesianProduct<TinyVector<int,2>,T_container,2>
 indexSet(const T_container& container0, const T_container& container1)
 {
@@ -195,7 +195,7 @@ indexSet(const T_container& container0, const T_container& container1)
         const_cast<T_container&>(container1));
 }
 
-template<class T_container>
+template<typename T_container>
 CartesianProduct<TinyVector<int,3>,T_container,3>
 indexSet(const T_container& container0, const T_container& container1,
     const T_container& container2)
@@ -217,12 +217,12 @@ indexSet(const T_container& container0, const T_container& container1,
 //      cp_findContainerType<int,deque<int>,deque<int>>::T_container 
 //        is deque<int>
 
-template<class T1, class T2, class T3=int, class T4=int>
+template<typename T1, typename T2, typename T3=int, typename T4=int>
 struct cp_findContainerType {
     typedef T1 T_container;
 };
 
-template<class T2, class T3, class T4>
+template<typename T2, typename T3, typename T4>
 struct cp_findContainerType<int,T2,T3,T4> {
     typedef _bz_typename cp_findContainerType<T2,T3,T4>::T_container T_container;
 };
@@ -237,7 +237,7 @@ struct cp_findContainerType<int,T2,T3,T4> {
 // Otherwise, T is assumed to be the same type as T2, and the original
 // container is returned.
 
-template<class T, class T2>
+template<typename T, typename T2>
 struct cp_traits {
     typedef T T_container;
 
@@ -245,7 +245,7 @@ struct cp_traits {
     { return x; }
 };
 
-template<class T2>
+template<typename T2>
 struct cp_traits<int,T2> {
     typedef T2 T_container;
 
@@ -261,7 +261,7 @@ struct cp_traits<int,T2> {
 // and container arguments.  At least one integer must be
 // specified.
 
-template<class T1, class T2>
+template<typename T1, typename T2>
 CartesianProduct<TinyVector<int,2>, _bz_typename 
     cp_findContainerType<T1,T2>::T_container,2> 
 indexSet(const T1& c1, const T2& c2)
@@ -274,7 +274,7 @@ indexSet(const T1& c1, const T2& c2)
           cp_traits<T2,T_container>::make(c2));
 }
 
-template<class T1, class T2, class T3>
+template<typename T1, typename T2, typename T3>
 CartesianProduct<TinyVector<int,3>, _bz_typename
     cp_findContainerType<T1,T2,T3>::T_container, 3>
 indexSet(const T1& c1, const T2& c2, const T3& c3)
