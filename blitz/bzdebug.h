@@ -46,7 +46,7 @@ _bz_global int      assertFailCount    BZ_GLOBAL_INIT(0);
 _bz_global int      assertSuccessCount BZ_GLOBAL_INIT(0);
 
 
-#ifdef BZ_TESTSUITE
+#if defined(BZ_TESTSUITE)
   /*
    * In testsuite mode, these routines allow a test suite to check
    * that precondition checking is being done properly.  A typical
@@ -117,18 +117,26 @@ _bz_global int      assertSuccessCount BZ_GLOBAL_INIT(0);
             checkAssert(X, __FILE__, __LINE__);                \
         }
 
-    #define BZ_DEBUG_MESSAGE(X) \
-        { if (assertFailMode == _bz_false) { cout << __FILE__ << ":" << __LINE__ << " " << X << endl; } }
+    #define BZ_DEBUG_MESSAGE(X)                                          \
+        {                                                                \
+            if (assertFailMode == _bz_false)                             \
+            {                                                            \
+                cout << __FILE__ << ":" << __LINE__ << " " << X << endl; \
+            }                                                            \
+        }
 
+    #define BZ_DEBUG_PARAM(X) X
     #define BZ_PRE_FAIL        checkAssert(0)
-#else 
-#ifdef BZ_DEBUG
+    #define BZ_ASM_DEBUG_MARKER
+
+#elif defined(BZ_DEBUG)
+
     #define BZASSERT(X)        assert(X)
     #define BZPRECONDITION(X)  assert(X)
     #define BZPOSTCONDITION(X) assert(X)
     #define BZSTATECHECK(X,Y)  assert(X == Y)
-    #define BZPRECHECK(X,Y)        \
-        { if (!(X))                                                           \
+    #define BZPRECHECK(X,Y)                                                 \
+        { if (!(X))                                                         \
           { cerr << "[Blitz++] Precondition failure: Module " << __FILE__   \
                << " line " << __LINE__ << endl                              \
                << Y << endl;                                                \
@@ -137,27 +145,30 @@ _bz_global int      assertSuccessCount BZ_GLOBAL_INIT(0);
           }                                                                 \
         }
 
-    #define BZ_PRE_FAIL      assert(0)
-
     #define BZ_DEBUG_MESSAGE(X) \
         { cout << __FILE__ << ":" << __LINE__ << " " << X << endl; }
 
+    #define BZ_DEBUG_PARAM(X) X
+    #define BZ_PRE_FAIL      assert(0)
+
+// This routine doesn't exist anywhere; it's used to mark a
+// position of interest in assembler (.s) files
     void _bz_debug_marker();
     #define BZ_ASM_DEBUG_MARKER   _bz_debug_marker();
-#else   // !BZ_DEBUG
+
+#else   // !BZ_TESTSUITE && !BZ_DEBUG
+
     #define BZASSERT(X)
     #define BZPRECONDITION(X)
     #define BZPOSTCONDITION(X)
     #define BZSTATECHECK(X,Y)
     #define BZPRECHECK(X,Y)
-    #define BZ_PRE_FAIL
     #define BZ_DEBUG_MESSAGE(X)
-#endif  // !BZ_DEBUG
-#endif  // !BZ_TESTSUITE
+    #define BZ_DEBUG_PARAM(X)
+    #define BZ_PRE_FAIL
+    #define BZ_ASM_DEBUG_MARKER
 
-// This routine doesn't exist anywhere; it's used to mark a
-// position of interest in assembler (.s) files
-void _bz_debug_marker();
+#endif  // !BZ_TESTSUITE && !BZ_DEBUG
 
 #define BZ_NOT_IMPLEMENTED()   { cerr << "[Blitz++] Not implemented: module " \
     << __FILE__ << " line " << __LINE__ << endl;                \
