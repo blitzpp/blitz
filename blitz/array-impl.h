@@ -1418,7 +1418,7 @@ public:
     //////////////////////////////////////////////
 
     template<int N_rank2>
-    T_numtype operator()(const TinyVector<int,N_rank2>& index) const
+    const T_numtype& restrict operator()(const TinyVector<int,N_rank2>& index) const
     {
         assertInRange(index);
         return data_[dot(index, stride_)];
@@ -1431,7 +1431,7 @@ public:
         return data_[dot(index, stride_)];
     }
 
-    T_numtype operator()(TinyVector<int,1> index) const
+    const T_numtype& restrict operator()(TinyVector<int,1> index) const
     {
         assertInRange(index[0]);
         return data_[index[0] * stride_[0]];
@@ -1443,7 +1443,7 @@ public:
         return data_[index[0] * stride_[0]];
     }
 
-    T_numtype operator()(TinyVector<int,2> index) const
+    const T_numtype& restrict operator()(TinyVector<int,2> index) const
     {
         assertInRange(index[0], index[1]);
         return data_[index[0] * stride_[0] + index[1] * stride_[1]];
@@ -1455,7 +1455,7 @@ public:
         return data_[index[0] * stride_[0] + index[1] * stride_[1]];
     }
 
-    T_numtype operator()(TinyVector<int,3> index) const
+    const T_numtype& restrict operator()(TinyVector<int,3> index) const
     {
         assertInRange(index[0], index[1], index[2]);
         return data_[index[0] * stride_[0] + index[1] * stride_[1]
@@ -1469,7 +1469,7 @@ public:
             + index[2] * stride_[2]];
     }
 
-    T_numtype operator()(const TinyVector<int,4>& index) const
+    const T_numtype& restrict operator()(const TinyVector<int,4>& index) const
     {
         assertInRange(index[0], index[1], index[2], index[3]);
         return data_[index[0] * stride_[0] + index[1] * stride_[1]
@@ -1483,7 +1483,7 @@ public:
             + index[2] * stride_[2] + index[3] * stride_[3]];
     }
 
-    T_numtype operator()(const TinyVector<int,5>& index) const
+    const T_numtype& restrict operator()(const TinyVector<int,5>& index) const
     {
         assertInRange(index[0], index[1], index[2], index[3],
             index[4]);
@@ -1501,7 +1501,7 @@ public:
             + index[4] * stride_[4]];
     }
 
-    T_numtype operator()(const TinyVector<int,6>& index) const
+    const T_numtype& restrict operator()(const TinyVector<int,6>& index) const
     {
         assertInRange(index[0], index[1], index[2], index[3],
             index[4], index[5]);
@@ -1519,7 +1519,7 @@ public:
             + index[4] * stride_[4] + index[5] * stride_[5]];
     }
 
-    T_numtype operator()(const TinyVector<int,7>& index) const
+    const T_numtype& restrict operator()(const TinyVector<int,7>& index) const
     {
         assertInRange(index[0], index[1], index[2], index[3],
             index[4], index[5], index[6]);
@@ -1539,7 +1539,7 @@ public:
             + index[6] * stride_[6]];
     }
 
-    T_numtype operator()(const TinyVector<int,8>& index) const
+    const T_numtype& restrict operator()(const TinyVector<int,8>& index) const
     {
         assertInRange(index[0], index[1], index[2], index[3],
             index[4], index[5], index[6], index[7]);
@@ -1559,7 +1559,7 @@ public:
             + index[6] * stride_[6] + index[7] * stride_[7]];
     }
 
-    T_numtype operator()(const TinyVector<int,9>& index) const
+    const T_numtype& restrict operator()(const TinyVector<int,9>& index) const
     {
         assertInRange(index[0], index[1], index[2], index[3],
             index[4], index[5], index[6], index[7], index[8]);
@@ -1581,7 +1581,7 @@ public:
             + index[8] * stride_[8]];
     }
 
-    T_numtype operator()(const TinyVector<int,10>& index) const
+    const T_numtype& restrict operator()(const TinyVector<int,10>& index) const
     {
         assertInRange(index[0], index[1], index[2], index[3],
             index[4], index[5], index[6], index[7], index[8], index[9]);
@@ -1603,7 +1603,7 @@ public:
             + index[8] * stride_[8] + index[9] * stride_[9]];
     }
 
-    T_numtype operator()(const TinyVector<int,11>& index) const
+    const T_numtype& restrict operator()(const TinyVector<int,11>& index) const
     {
         assertInRange(index[0], index[1], index[2], index[3],
             index[4], index[5], index[6], index[7], index[8], index[9],
@@ -1629,7 +1629,7 @@ public:
             + index[10] * stride_[10]];
     }
 
-    T_numtype operator()(int i0) const
+    const T_numtype& restrict operator()(int i0) const
     { 
         assertInRange(i0);
         return data_[i0 * stride_[0]]; 
@@ -1641,7 +1641,7 @@ public:
         return data_[i0 * stride_[0]];
     }
 
-    T_numtype operator()(int i0, int i1) const
+    const T_numtype& restrict operator()(int i0, int i1) const
     { 
         assertInRange(i0, i1);
         return data_[i0 * stride_[0] + i1 * stride_[1]];
@@ -1653,7 +1653,7 @@ public:
         return data_[i0 * stride_[0] + i1 * stride_[1]];
     }
 
-    T_numtype operator()(int i0, int i1, int i2) const
+    const T_numtype& restrict operator()(int i0, int i1, int i2) const
     {
         assertInRange(i0, i1, i2);
         return data_[i0 * stride_[0] + i1 * stride_[1]
@@ -1667,7 +1667,7 @@ public:
             + i2 * stride_[2]];
     }
 
-    T_numtype operator()(int i0, int i1, int i2, int i3) const
+    const T_numtype& restrict operator()(int i0, int i1, int i2, int i3) const
     {
         assertInRange(i0, i1, i2, i3);
         return data_[i0 * stride_[0] + i1 * stride_[1]
@@ -1681,7 +1681,7 @@ public:
             + i2 * stride_[2] + i3 * stride_[3]];
     }
 
-    T_numtype operator()(int i0, int i1, int i2, int i3,
+    const T_numtype& restrict operator()(int i0, int i1, int i2, int i3,
         int i4) const
     {
         assertInRange(i0, i1, i2, i3, i4);
@@ -1697,7 +1697,7 @@ public:
             + i2 * stride_[2] + i3 * stride_[3] + i4 * stride_[4]];
     }
 
-    T_numtype operator()(int i0, int i1, int i2, int i3,
+    const T_numtype& restrict operator()(int i0, int i1, int i2, int i3,
         int i4, int i5) const
     {
         assertInRange(i0, i1, i2, i3, i4, i5);
@@ -1715,7 +1715,7 @@ public:
             + i5 * stride_[5]];
     }
 
-    T_numtype operator()(int i0, int i1, int i2, int i3,
+    const T_numtype& restrict operator()(int i0, int i1, int i2, int i3,
         int i4, int i5, int i6) const
     {
         assertInRange(i0, i1, i2, i3, i4, i5, i6);
@@ -1733,7 +1733,7 @@ public:
             + i5 * stride_[5] + i6 * stride_[6]];
     }
 
-    T_numtype operator()(int i0, int i1, int i2, int i3,
+    const T_numtype& restrict operator()(int i0, int i1, int i2, int i3,
         int i4, int i5, int i6, int i7) const
     {
         assertInRange(i0, i1, i2, i3, i4, i5, i6, i7);
@@ -1751,7 +1751,7 @@ public:
             + i5 * stride_[5] + i6 * stride_[6] + i7 * stride_[7]];
     }
 
-    T_numtype operator()(int i0, int i1, int i2, int i3,
+    const T_numtype& restrict operator()(int i0, int i1, int i2, int i3,
         int i4, int i5, int i6, int i7, int i8) const
     {
         assertInRange(i0, i1, i2, i3, i4, i5, i6, i7, i8);
@@ -1771,7 +1771,7 @@ public:
             + i8 * stride_[8]];
     }
 
-    T_numtype operator()(int i0, int i1, int i2, int i3,
+    const T_numtype& restrict operator()(int i0, int i1, int i2, int i3,
         int i4, int i5, int i6, int i7, int i8, int i9) const
     {
         assertInRange(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9);
@@ -1791,7 +1791,7 @@ public:
             + i8 * stride_[8] + i9 * stride_[9]];
     }
 
-    T_numtype operator()(int i0, int i1, int i2, int i3,
+    const T_numtype& restrict operator()(int i0, int i1, int i2, int i3,
         int i4, int i5, int i6, int i7, int i8, int i9, int i10) const
     {
         assertInRange(i0, i1, i2, i3, i4, i5, i6, i7, i8, 
@@ -2155,15 +2155,20 @@ public:
      * multicomponent_traits.
      */
 
-    // NEEDS_WORK: const version
     Array<typename multicomponent_traits<T_numtype>::T_element,N_rank>
-    operator[](int component)
-    {
-        typedef typename multicomponent_traits<T_numtype>::T_element 
-            T_compType;
+    operator[](const unsigned component) {
+        typedef typename multicomponent_traits<T_numtype>::T_element T_compType;
 
-        return extractComponent(T_compType(), 
-            component, multicomponent_traits<T_numtype>::numComponents);
+        return extractComponent(T_compType(),component,
+                                multicomponent_traits<T_numtype>::numComponents);
+    }
+
+    const Array<typename multicomponent_traits<T_numtype>::T_element,N_rank>
+    operator[](const unsigned component) const {
+        typedef typename multicomponent_traits<T_numtype>::T_element T_compType;
+
+        return extractComponent(T_compType(),component,
+                                multicomponent_traits<T_numtype>::numComponents);
     }
 
     //////////////////////////////////////////////

@@ -1,3 +1,9 @@
+2004-07-28  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+
+    * blitz/array-impl.h: Made the return type of operator()(XXX) const
+    be const references instead of values. Added constant case for
+    multicomponent_traits.
+
 2004-06-23  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* m4/ac_fortran_flags_preset.m4: Tuned up some of the optimization
@@ -18,6 +24,7 @@
 	* configure.in: Moved test for 64-bit option ahead of libtool
 	configuration, so that libtool will pick up the proper 64-bit
 	flags for the archiver tool, if requested.
+
 2004-06-18  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* testsuite/iter.cpp: Added testing of standard iterator interface
@@ -54,6 +61,7 @@
 	I have also eliminated the use of "rank" as a local variable name
 	to avoid possible confusion with the _bz_ArrayExprReduce enum of
 	the same name.
+
 2004-06-04  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* blitz/array/stencilops.h: Added missing typename keyword.
@@ -348,6 +356,7 @@
 	qualifier in front of string type where needed.
 	* blitz/array/reduce.cc: Use BZ_STD_SCOPE macro to insert std::
 	qualifier in front of string type where needed.
+
 2004-03-01  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* doc/examples/Makefile.am: Added $(EXEEXT) to program names when
@@ -366,12 +375,14 @@
 	function applicable to a pair of Array types.  The arguments for
 	BZ_DECLARE_FUNCTION2_SCALAR are the function name and the scalar
 	argument type.
+
 2004-02-05  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* blitz/array/newet-macros.h: Added space between macro argument
 	"sca" and closing angled bracket ">" to accommodate the use of a
 	scalar type that is a template, such as complex<double>.  This
 	eliminates errors reported by the Intel icc compiler.
+
 2004-01-20  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* blitz/array/ops.cc: Removed inline keyword from
@@ -529,6 +540,7 @@
 	_bz_ArrayExprTernaryOp to handle ternary operators and functions
 	acting on blitz Arrays.  It is modeled after the where operator,
 	which is a very special kind of ternary operator.
+
 2003-12-15  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* blitz/array/functorExpr.h: Added missing typename keyword (using
