@@ -1,2 +1,17 @@
 Makefile
 .deps
+cast
+debug
+dump
+fixed
+io
+outer
+output
+range
+simple
+slicing
+storage
+strideslice
+xor
+core
+core.*
