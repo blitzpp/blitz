@@ -108,7 +108,7 @@ BZ_NAMESPACE_END
 #ifdef BZ_THREADSAFE_USE_PTHREADS
  #include <pthread.h>
 
- #define BZ_MUTEX_DECLARE(name)   pthread_mutex_t name;
+ #define BZ_MUTEX_DECLARE(name)   _bz_mutable pthread_mutex_t name;
  #define BZ_MUTEX_INIT(name)      pthread_mutex_init(&name,NULL);
  #define BZ_MUTEX_LOCK(name)      pthread_mutex_lock(&name);
  #define BZ_MUTEX_UNLOCK(name)    pthread_mutex_unlock(&name);
