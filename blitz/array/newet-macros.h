@@ -72,18 +72,18 @@ typename BzBinaryExprResult<applic,sca,T>::T_result                       \
 name(const sca d1, const ETBase<T>& d2)                                   \
 {                                                                         \
     typedef typename BzBinaryExprResult<applic,sca,T>::T_result result;   \
-    return result(asExpr<sca>::getExpr(d1),                               \
+    return result(asExpr<sca >::getExpr(d1),                              \
                   asExpr<T>::getExpr(d2.unwrap()));                       \
 }                                                                         \
                                                                           \
 template<typename T>                                                      \
 _bz_inline_et                                                             \
-typename BzBinaryExprResult<applic,T,sca>::T_result                       \
+typename BzBinaryExprResult<applic,T,sca >::T_result                      \
 name(const ETBase<T>& d1, const sca d2)                                   \
 {                                                                         \
-    typedef typename BzBinaryExprResult<applic,T,sca>::T_result result;   \
+    typedef typename BzBinaryExprResult<applic,T,sca >::T_result result;  \
     return result(asExpr<T>::getExpr(d1.unwrap()),                        \
-                  asExpr<sca>::getExpr(d2));                              \
+                  asExpr<sca >::getExpr(d2));                             \
 }
 
 /*
@@ -159,16 +159,16 @@ name(const ETBase<T1>& d1, const ETBase<T2>& d2)                          \
 template<typename T>                                                      \
 _bz_inline_et                                                             \
 _bz_ArrayExprBinaryOp<                                                    \
-    asExpr<sca>::T_expr,                                                  \
+    asExpr<sca >::T_expr,                                                 \
     _bz_typename asExpr<T>::T_expr,                                       \
     applic<sca,_bz_typename asExpr<T>::T_expr::T_numtype> >               \
 name(const sca d1, const ETBase<T>& d2)                                   \
 {                                                                         \
     return _bz_ArrayExprBinaryOp<                                         \
-        asExpr<sca>::T_expr,                                              \
+        asExpr<sca >::T_expr,                                             \
         _bz_typename asExpr<T>::T_expr,                                   \
         applic<sca,_bz_typename asExpr<T>::T_expr::T_numtype> >           \
-        (asExpr<sca>::getExpr(d1),                                        \
+        (asExpr<sca >::getExpr(d1),                                       \
          asExpr<T>::getExpr(d2.unwrap()));                                \
 }                                                                         \
                                                                           \
@@ -176,16 +176,16 @@ template<typename T>                                                      \
 _bz_inline_et                                                             \
 _bz_ArrayExprBinaryOp<                                                    \
     _bz_typename asExpr<T>::T_expr,                                       \
-    asExpr<sca>::T_expr,                                                  \
-    applic<_bz_typename asExpr<T>::T_expr::T_numtype,sca> >               \
+    asExpr<sca >::T_expr,                                                 \
+    applic<_bz_typename asExpr<T>::T_expr::T_numtype,sca > >              \
 name(const ETBase<T>& d1, const sca d2)                                   \
 {                                                                         \
     return _bz_ArrayExprBinaryOp<                                         \
         _bz_typename asExpr<T>::T_expr,                                   \
-        asExpr<sca>::T_expr,                                              \
-        applic<_bz_typename asExpr<T>::T_expr::T_numtype,sca> >           \
+        asExpr<sca >::T_expr,                                             \
+        applic<_bz_typename asExpr<T>::T_expr::T_numtype,sca > >          \
         (asExpr<T>::getExpr(d1.unwrap()),                                 \
-         asExpr<sca>::getExpr(d2));                                       \
+         asExpr<sca >::getExpr(d2));                                      \
 }
 
 /*
