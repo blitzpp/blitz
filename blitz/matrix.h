@@ -23,6 +23,11 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.4  2002/05/27 19:31:43  jcumming
+ * Removed use of this-> as means of accessing members of templated base class.
+ * Instead provided using declarations for these members within the derived
+ * class definitions to bring them into the scope of the derived class.
+ *
  * Revision 1.3  2002/03/06 16:30:24  patricg
  *
  * data_ replaced by this->data_ everywhere
@@ -85,6 +90,10 @@ class _bz_MatExpr;
 // Declaration of class Matrix
 template<class P_numtype, class P_structure BZ_TEMPLATE_DEFAULT(RowMajor)>
 class Matrix : protected MemoryBlockReference<P_numtype> {
+
+private:
+    typedef MemoryBlockReference<P_numtype> T_base;
+    using T_base::data_;
 
 public:
 
@@ -166,12 +175,12 @@ public:
 
     T_numtype           operator()(unsigned i, unsigned j) const
     {
-        return structure_.get(this->data_, i, j);
+        return structure_.get(data_, i, j);
     }
 
     T_numtype& _bz_restrict operator()(unsigned i, unsigned j)
     {
-        return structure_.get(this->data_, i, j);
+        return structure_.get(data_, i, j);
     }
 
     // T_matrix      operator()(Range,Range);
