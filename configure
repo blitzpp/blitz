@@ -2126,9 +2126,9 @@ case "$target" in
     fi
   ;;
   *linux*)
-    echo "Linux: assuming g++/g77 or icc/icf"
     case "$CXX" in
       g++)
+    		echo "Linux: assuming g++/g77"
         F77=g77
         F77_OPTIMIZE_FLAGS="-O2 -funroll-loops"
         F90=g77
@@ -2137,6 +2137,7 @@ case "$target" in
         FORTLIBS="-lg2c"
       ;;
       icc)
+    		echo "Linux: assuming icc/icf"
         F77=ifc
         F77_OPTIMIZE_FLAGS="-w90 -O2"
         F90=ifc
