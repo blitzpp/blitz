@@ -19,21 +19,23 @@ genvecwhere_SOURCES = genvecwhere.cpp
 genvecbfn_SOURCES = genvecbfn.cpp
 
 %.h: 
-	./$< 
+	$(MAKE) $(AM_MAKEFLAGS) $(patsubst %.cpp,%$(EXEEXT),$<)
+	./$(patsubst %.cpp,%$(EXEEXT),$<)
 
 %.cc: 
-	./$< 
+	$(MAKE) $(AM_MAKEFLAGS) $(patsubst %.cpp,%$(EXEEXT),$<)
+	./$(patsubst %.cpp,%$(EXEEXT),$<)
 
-$(top_srcdir)/blitz/array/bops.cc: genarrbops
-$(top_srcdir)/blitz/array/uops.cc: genarruops
-$(top_srcdir)/blitz/matbops.h: genmatbops
-$(top_srcdir)/blitz/mathfunc.h: genmathfunc
-$(top_srcdir)/blitz/matuops.h: genmatuops
-$(top_srcdir)/blitz/promote-old.h: genpromote
-$(top_srcdir)/blitz/vecbops.cc: genvecbops
-$(top_srcdir)/blitz/vecuops.cc: genvecuops
-$(top_srcdir)/blitz/vecwhere.cc: genvecwhere
-$(top_srcdir)/blitz/vecbfn.cc: genvecbfn
+$(top_srcdir)/blitz/array/bops.cc: genarrbops.cpp
+$(top_srcdir)/blitz/array/uops.cc: genarruops.cpp
+$(top_srcdir)/blitz/matbops.h: genmatbops.cpp
+$(top_srcdir)/blitz/mathfunc.h: genmathfunc.cpp
+$(top_srcdir)/blitz/matuops.h: genmatuops.cpp
+$(top_srcdir)/blitz/promote-old.h: genpromote.cpp
+$(top_srcdir)/blitz/vecbops.cc: genvecbops.cpp
+$(top_srcdir)/blitz/vecuops.cc: genvecuops.cpp
+$(top_srcdir)/blitz/vecwhere.cc: genvecwhere.cpp
+$(top_srcdir)/blitz/vecbfn.cc: genvecbfn.cpp
 
 generate-headers: $(top_srcdir)/blitz/array/bops.cc \
 $(top_srcdir)/blitz/array/uops.cc $(top_srcdir)/blitz/matbops.h \
