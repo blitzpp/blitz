@@ -6,8 +6,9 @@ Find Blitz on the web at http://oonumerics.org/blitz/
 
 Licensing information is at http://oonumerics.org/legal/
 Summary: you can do anything except sell this library in source
-form.  Blitz is licensed under both the GPL and a less
-restrictive (non-viral) "artistic license".
+form.  Blitz is licensed under both the GPL (see COPYING)
+and a less restrictive (non-viral) "artistic license"
+(see LICENSE).
 
 1.  Directories
 
@@ -22,8 +23,7 @@ testsuite     Test suite
 
 2.  Compiling programs
 
-The Blitz++ library uses the X windows convention for header files.
-All headers are referred to with a prefix of "blitz/".
+All Blitz++ header files are referred to with a prefix of "blitz/".
 For example, to use the Array<T,N> class, one needs to include
 <blitz/array.h> instead of just <array.h>.
 To make this work, the main Blitz++ directory must be in
