@@ -136,8 +136,7 @@ alpha-cray-unicos)
   case "$CXX" in
 	KCC)
 dnl When using KAI C++ on the T3E, need to enable a bunch of backend optimizations
-		CXX_OPTIMIZE_FLAGS="+K3 -O3 --backend -hpipeline3 --backend -hunroll" \
-				"--backend -haggress --backend -hscalar2"
+		CXX_OPTIMIZE_FLAGS="+K3 -O3 --backend -hpipeline3 --backend -hunroll --backend -haggress --backend -hscalar2"
 	;;
 	esac
 ;;
