@@ -22,7 +22,7 @@ stencils/forward12.texi stencils/forward21.texi stencils/forward22.texi \
 stencils/forward31.texi stencils/forward32.texi stencils/forward41.texi \
 stencils/forward42.texi stencils/Laplacian2D4.texi stencils/Laplacian2D.texi
 
-CODES = examples/cast.texi examples/debug.texi examples/dump.texi \
+EXAMPLES = examples/cast.texi examples/debug.texi examples/dump.texi \
 examples/fixed-point.texi examples/fixed.texi examples/io.texi \
 examples/outer.texi examples/output.texi examples/range.texi \
 examples/simple.texi examples/slicing.texi examples/storage.texi \
@@ -41,7 +41,14 @@ arrays-stencils.texi arrays-storage.texi arrays-types.texi \
 arrays-usertype.texi blitz.texi compiling.texi constants.texi download.texi \
 faq.texi help.texi install.texi legal.texi numinquire.texi parallel.texi \
 platforms.texi random.texi tau.texi tinymatrix.texi tinyvector.texi \
-tuning.texi copyright.texi $(STENCILS) $(CODES) $(OUTPUT)
+tuning.texi copyright.texi $(STENCILS) $(EXAMPLES) $(OUTPUT)
+
+EXTRA_DIST = blitz.gif blitztiny.jpg \
+	indirect.eps indirect.fig indirect.gif indirect.txt \
+	sinsoid.eps sinsoid.gif sinsoid.txt \
+	slice.eps slice.fig slice.gif slice.txt \
+	strideslice.eps strideslice.fig strideslice.gif strideslice.txt \
+	tensor1.eps tensor1.fig tensor1.gif tensor1.txt
 
 # Files from texi2dvi that should be removed, but which Automake does
 # not know.
