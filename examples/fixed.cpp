@@ -1,34 +1,9 @@
 /*****************************************************************************
  * fixed.cpp        Blitz++ array using a custom type
- *
  * $Id$
- *
- * $Log$
- * Revision 1.4  2002/07/02 19:49:02  jcumming
- * Updated to use new header file names that avoid capitalization.
- *
- * Revision 1.3  2001/01/26 18:30:51  tveldhui
- * More source code reorganization to reduce compile times.
- *
- * Revision 1.2  2001/01/24 23:41:54  tveldhui
- * Widespread changes to reduce compile time.  For backwards
- * compatibility, #include <blitz/array.h> enables BZ_GANG_INCLUDE
- * mode which includes all array and vector functionality (about
- * 120000 lines of code).  #include <blitz/Array.h> includes
- * a minimal subset of Array funcitonality; other features must
- * be included explicitly.
- *
- * Revision 1.1.1.1  2000/06/19 12:26:17  tveldhui
- * Imported sources
- *
- * Revision 1.1  1997/07/19 14:19:35  tveldhui
- * Initial revision
- *
- *
- *****************************************************************************
  * This example illustrates how simple it is to create Blitz++ arrays
  * using a custom type.  
- */
+ *****************************************************************************/
 
 #include <blitz/array.h>
 
