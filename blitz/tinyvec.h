@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.5  2002/06/28 01:27:41  jcumming
+ * Changed return type of lengthCheck() method from int to _bz_bool.
+ *
  * Revision 1.4  2002/06/27 00:31:42  jcumming
  * Changed P_numtype to T_numtype inside class definition consistently.
  *
@@ -295,12 +298,12 @@ public:
     // Subscripting operators
     //////////////////////////////////////////////
 
-    int lengthCheck(unsigned i) const
+    _bz_bool lengthCheck(unsigned i) const
     {
         BZPRECHECK(i < N_length, 
             "TinyVector<" << BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_numtype) 
             << "," << N_length << "> index out of bounds: " << i);
-        return 1;
+        return _bz_true;
     }
 
     T_numtype operator()(unsigned i) const
