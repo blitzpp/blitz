@@ -3,7 +3,7 @@
 #   Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
 #   2000, 2001, 2002 Free Software Foundation, Inc.
 
-timestamp='2002-06-26'
+timestamp='2002-06-28'
 
 # This file is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
@@ -516,11 +516,11 @@ EOF
 	else
 		IBM_ARCH=powerpc
 	fi
-	# if [ -x /usr/bin/oslevel ] ; then
-		# IBM_REV=`/usr/bin/oslevel`
-	# else
-	IBM_REV=${UNAME_VERSION}.${UNAME_RELEASE}
-	# fi
+	if [ -x /usr/bin/oslevel ] ; then
+		IBM_REV=`/usr/bin/oslevel`
+	else
+		IBM_REV=${UNAME_VERSION}.${UNAME_RELEASE}
+	fi
 	echo ${IBM_ARCH}-ibm-aix${IBM_REV}
 	exit 0 ;;
     *:AIX:*:*)
