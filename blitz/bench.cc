@@ -20,7 +20,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_parameter>
+template<typename P_parameter>
 Benchmark<P_parameter>::Benchmark(unsigned numImplementations)
 {
     state_ = uninitialized;
@@ -31,13 +31,13 @@ Benchmark<P_parameter>::Benchmark(unsigned numImplementations)
     Mflops_.resize(numImplementations, numParameterSettings());
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 Benchmark<P_parameter>::~Benchmark()
 {
     delete [] implementations_;
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 void Benchmark<P_parameter>::addImplementation(
     BenchmarkImplementation<P_parameter> * implementation)
 {
@@ -50,7 +50,7 @@ void Benchmark<P_parameter>::addImplementation(
         state_ = initialized;
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 void Benchmark<P_parameter>::run(ostream& log)
 {
     BZPRECONDITION(state_ == initialized);
@@ -102,7 +102,7 @@ void Benchmark<P_parameter>::run(ostream& log)
     state_ = done;
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 double Benchmark<P_parameter>::getMflops(unsigned implementation, 
     unsigned setting) const
 {
@@ -113,7 +113,7 @@ double Benchmark<P_parameter>::getMflops(unsigned implementation,
     return Mflops_(implementation, setting);
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 double Benchmark<P_parameter>::getRate(unsigned implementation,  
     unsigned setting) const
 {
@@ -124,7 +124,7 @@ double Benchmark<P_parameter>::getRate(unsigned implementation,
     return rates_(implementation, setting);
 }
 
-template<class P_parameter>
+template<typename P_parameter>
 void Benchmark<P_parameter>::saveMatlabGraph(const char* filename) const
 {
     BZPRECONDITION(state_ == done);
