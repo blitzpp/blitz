@@ -1,25 +1,5 @@
 /***************************************************************************
  * tiny.cpp    Blitz++ TinyVector<T,N> ray reflection example
- * 
- * $Id$
- *
- * $Log$
- * Revision 1.3  2002/07/02 19:49:02  jcumming
- * Updated to use new header file names that avoid capitalization.
- *
- * Revision 1.2  2001/01/26 18:30:51  tveldhui
- * More source code reorganization to reduce compile times.
- *
- * Revision 1.1.1.1  2000/06/19 12:26:17  tveldhui
- * Imported sources
- *
- * Revision 1.2  1997/07/16 19:38:23  tveldhui
- * Update: Alpha release 0.2 (Arrays)
- *
- * Revision 1.1  1997/02/02 21:14:42  tveldhui
- * Initial revision
- *
- ****************************************************************************
  *
  * This example illustrates the TinyVector<T,N> class.  TinyVectors can be
  * used for small vectors whose sizes are known at compile time.  Most
@@ -28,7 +8,7 @@
  *
  * The routine reflect(..) calculates the reflection of a monochrome ray 
  * of light bouncing off a perfectly reflective, smooth surface.  
- */
+ ****************************************************************************/
 
 #include <blitz/tinyvec-et.h>
 
