@@ -724,6 +724,12 @@ public:
      * Create a reference of another array
      */
     Array(const Array<T_numtype, N_rank>& array)
+#ifdef BZ_NEW_EXPRESSION_TEMPLATES
+        : MemoryBlockReference<T_numtype>(),
+          ETBase< Array<T_numtype, N_rank> >(array)
+#else
+        : MemoryBlockReference<T_numtype>()
+#endif
     {
         // NEEDS_WORK: this const_cast is a tad ugly.
         reference(const_cast<T_array&>(array));
@@ -2392,8 +2398,8 @@ protected:
         TinyVector<int,N_rank2>& rankMap, int sourceRank);
 
     template<int N_rank2>
-    void slice(int& setRank, nilArraySection, Array<T_numtype,N_rank2>& array,
-        TinyVector<int,N_rank2>& rankMap, int sourceRank)
+    void slice(int&, nilArraySection, Array<T_numtype,N_rank2>&,
+        TinyVector<int,N_rank2>&, int)
     { }
 
     void doTranspose(int destRank, int sourceRank, T_array& array);
