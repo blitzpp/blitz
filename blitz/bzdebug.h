@@ -26,10 +26,12 @@
 #ifndef BZ_DEBUG_H
 #define BZ_DEBUG_H
 
-#include <stdlib.h>
+#ifdef BZ_HAVE_STDLIB_H
+ #include <stdlib.h>
+#endif
 #include <assert.h>
 
-#ifdef BZ_RTTI
+#ifdef BZ_HAVE_RTTI
  #include <typeinfo>
 #endif
 
@@ -174,7 +176,7 @@ _bz_global int  assertSuccessCount BZ_GLOBAL_INIT(0);
     << __FILE__ << " line " << __LINE__ << endl;                \
     exit(1); }
 
-#ifdef BZ_RTTI
+#ifdef BZ_HAVE_RTTI
 #define BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(X)  typeid(X).name()
 #else
 
@@ -193,7 +195,7 @@ public:
      { return Y; }                             \
  }
 
-#ifdef BZ_BOOL
+#ifdef BZ_HAVE_BOOL
 BZ_DECL_SLFNT(bool, "bool");
 #endif
 
@@ -218,7 +220,7 @@ BZ_DECL_SLFNT(complex<long double>, "complex<long double>");
 #define BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(X) \
     _bz_stringLiteralForNumericType<X>::string()
 
-#endif // !BZ_RTTI
+#endif // !BZ_HAVE_RTTI
 
 BZ_NAMESPACE_END
 
