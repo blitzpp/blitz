@@ -3,6 +3,8 @@ Installation procedure for Blitz++
 
 1.  Installation
 
+1.1 From tarfile
+
 You should unpack blitz-VERSION.tar.gz in the directory
 where you would like the blitz headers, examples, etc. to reside.
 (Hint: don't do this in /usr/include; try ~/software or /software/Blitz++).
@@ -34,6 +36,32 @@ This is a minimal build.  You can also do one of these:
         make check-examples   Build and check the examples
         make check-benchmarks Build and check the benchmarks (takes a long time)
 				make install          Install Blitz++
+
+1.2 From cvs repository 
+
+After you have checked out the latest version of Blitz from the cvs
+repository, the procedure is identical as with a tarfile. 
+
+Note however that you might get into trouble when running the command
+"make". If the command abort with the following type of messages:
+
+WARNING: `aclocal-1.6' is missing on your system.  You should only need it if
+          you modified `acinclude.m4' or `configure.in'.  You might want
+				  to install the `Automake' and `Perl' packages.  Grab them from
+				  any GNU archive site.
+
+WARNING: `automake-1.6' is missing on your system.  You should only need it if
+          you modified `Makefile.am', `acinclude.m4' or `configure.in'.
+				  You might want to install the `Automake' and `Perl' packages.
+					Grab them from any GNU archive site.
+
+You should just need to update the date of the file "configure". You can do
+that by running the following command:
+
+touch configure
+
+You can then proceed with make.
+
 
 2.  Setting up symbolic links
 
