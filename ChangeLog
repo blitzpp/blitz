@@ -1,3 +1,10 @@
+
+
+Fri Jul 19 10:50:11 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* blitz/mathfunc.h: Added missing template member function prettyPrint
+	in template class _bz_negate (HP aCC complained during library
+	compilation).
+
 2002-07-17  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 	* blitz/memblock.h: Added missing semicolon after use of
 	BZ_MUTEX_DECLARE macro.
