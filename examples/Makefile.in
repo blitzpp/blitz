@@ -380,8 +380,28 @@ DEFS = @DEFS@
 DEFAULT_INCLUDES =  -I. -I$(srcdir)
 CPPFLAGS = @CPPFLAGS@
 LIBS = @LIBS@
-depcomp =
-am__depfiles_maybe =
+depcomp = $(SHELL) $(top_srcdir)/depcomp
+am__depfiles_maybe = depfiles
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/array.Po ./$(DEPDIR)/cartesian.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/cast.Po ./$(DEPDIR)/cfd.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/complex-test.Po ./$(DEPDIR)/convolve.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/curldiv.Po ./$(DEPDIR)/deriv.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/diff.Po ./$(DEPDIR)/erf.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/fixed.Po ./$(DEPDIR)/indirect.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/io.Po ./$(DEPDIR)/iter.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/matmult.Po ./$(DEPDIR)/nested.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/numinquire.Po ./$(DEPDIR)/outer.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/pauli.Po ./$(DEPDIR)/pick.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/polymorph.Po ./$(DEPDIR)/prettyprint.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/qcd.Po ./$(DEPDIR)/rand2.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/random.Po ./$(DEPDIR)/rangexpr.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/reduce.Po ./$(DEPDIR)/simple.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/slicing.Po ./$(DEPDIR)/stencil.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/stencil2.Po ./$(DEPDIR)/stencil3.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/stencilet.Po ./$(DEPDIR)/storage.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/tiny.Po ./$(DEPDIR)/transform.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/useret.Po ./$(DEPDIR)/where.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/whitt.Po
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
@@ -417,7 +437,7 @@ all: all-recursive
 .SUFFIXES: .cpp .o .obj
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  --ignore-deps examples/Makefile
+	  $(AUTOMAKE) --gnu  examples/Makefile
 Makefile: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 array$(EXEEXT): $(array_OBJECTS) $(array_DEPENDENCIES) 
@@ -544,11 +564,61 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/array.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cartesian.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cast.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cfd.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/complex-test.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/convolve.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/curldiv.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/deriv.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/diff.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/erf.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fixed.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/indirect.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/io.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iter.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matmult.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/nested.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/numinquire.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/outer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pauli.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pick.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/polymorph.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prettyprint.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/qcd.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rand2.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/random.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rangexpr.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reduce.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/simple.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/slicing.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stencil.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stencil2.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stencil3.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stencilet.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/storage.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tiny.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/transform.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/useret.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/where.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/whitt.Po@am__quote@
+
+distclean-depend:
+	-rm -rf ./$(DEPDIR)
+
 .cpp.o:
+@AMDEP_TRUE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(CXXCOMPILE) -c -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
 
 .cpp.obj:
+@AMDEP_TRUE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(CXXCOMPILE) -c -o $@ `cygpath -w $<`
+CXXDEPMODE = @CXXDEPMODE@
 uninstall-info-am:
 examplesDATA_INSTALL = $(INSTALL_DATA)
 install-examplesDATA: $(examples_DATA)
@@ -740,8 +810,8 @@ clean-am: clean-generic clean-local mostlyclean-am
 
 distclean: distclean-recursive
 
-distclean-am: clean-am distclean-compile distclean-generic \
-	distclean-tags
+distclean-am: clean-am distclean-compile distclean-depend \
+	distclean-generic distclean-tags
 
 dvi: dvi-recursive
 
@@ -775,18 +845,19 @@ uninstall-info: uninstall-info-recursive
 
 .PHONY: $(RECURSIVE_TARGETS) GTAGS all all-am check check-am clean \
 	clean-generic clean-local clean-recursive distclean \
-	distclean-compile distclean-generic distclean-recursive \
-	distclean-tags distdir dvi dvi-am dvi-recursive info info-am \
-	info-recursive install install-am install-data install-data-am \
-	install-data-recursive install-examplesDATA install-exec \
-	install-exec-am install-exec-recursive install-info \
-	install-info-am install-info-recursive install-man \
-	install-recursive install-strip installcheck installcheck-am \
-	installdirs installdirs-am installdirs-recursive \
-	maintainer-clean maintainer-clean-generic \
-	maintainer-clean-recursive mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-recursive tags tags-recursive \
-	uninstall uninstall-am uninstall-examplesDATA uninstall-info-am \
+	distclean-compile distclean-depend distclean-generic \
+	distclean-recursive distclean-tags distdir dvi dvi-am \
+	dvi-recursive info info-am info-recursive install install-am \
+	install-data install-data-am install-data-recursive \
+	install-examplesDATA install-exec install-exec-am \
+	install-exec-recursive install-info install-info-am \
+	install-info-recursive install-man install-recursive \
+	install-strip installcheck installcheck-am installdirs \
+	installdirs-am installdirs-recursive maintainer-clean \
+	maintainer-clean-generic maintainer-clean-recursive mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-recursive \
+	tags tags-recursive uninstall uninstall-am \
+	uninstall-examplesDATA uninstall-info-am \
 	uninstall-info-recursive uninstall-recursive
 
 

@@ -121,8 +121,9 @@ DEFS = @DEFS@
 DEFAULT_INCLUDES =  -I. -I$(srcdir)
 CPPFLAGS = @CPPFLAGS@
 LIBS = @LIBS@
-depcomp =
-am__depfiles_maybe =
+depcomp = $(SHELL) $(top_srcdir)/depcomp
+am__depfiles_maybe = depfiles
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/globals.Po
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
@@ -144,7 +145,7 @@ all: all-recursive
 .SUFFIXES: .cpp .o .obj
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  --ignore-deps lib/Makefile
+	  $(AUTOMAKE) --gnu  lib/Makefile
 Makefile: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 libLIBRARIES_INSTALL = $(INSTALL_DATA)
@@ -189,17 +190,35 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/globals.Po@am__quote@
+
+distclean-depend:
+	-rm -rf ./$(DEPDIR)
+
 .cpp.o:
+@AMDEP_TRUE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(CXXCOMPILE) -c -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
 
 .cpp.obj:
+@AMDEP_TRUE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(CXXCOMPILE) -c -o $@ `cygpath -w $<`
 
 globals.o: $(top_srcdir)/src/globals.cpp
+@AMDEP_TRUE@	source='$(top_srcdir)/src/globals.cpp' object='globals.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/globals.Po' tmpdepfile='$(DEPDIR)/globals.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o globals.o `test -f '$(top_srcdir)/src/globals.cpp' || echo '$(srcdir)/'`$(top_srcdir)/src/globals.cpp
 
 globals.obj: $(top_srcdir)/src/globals.cpp
+@AMDEP_TRUE@	source='$(top_srcdir)/src/globals.cpp' object='globals.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/globals.Po' tmpdepfile='$(DEPDIR)/globals.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o globals.obj `cygpath -w $(top_srcdir)/src/globals.cpp`
+CXXDEPMODE = @CXXDEPMODE@
 uninstall-info-am:
 
 # This directory's subdirectories are mostly independent; you can cd
@@ -373,8 +392,8 @@ clean-am: clean-generic clean-libLIBRARIES clean-local mostlyclean-am
 
 distclean: distclean-recursive
 
-distclean-am: clean-am distclean-compile distclean-generic \
-	distclean-tags
+distclean-am: clean-am distclean-compile distclean-depend \
+	distclean-generic distclean-tags
 
 dvi: dvi-recursive
 
@@ -408,7 +427,7 @@ uninstall-info: uninstall-info-recursive
 
 .PHONY: $(RECURSIVE_TARGETS) GTAGS all all-am check check-am clean \
 	clean-generic clean-libLIBRARIES clean-local clean-recursive \
-	distclean distclean-compile distclean-generic \
+	distclean distclean-compile distclean-depend distclean-generic \
 	distclean-recursive distclean-tags distdir dvi dvi-am \
 	dvi-recursive info info-am info-recursive install install-am \
 	install-data install-data-am install-data-recursive \

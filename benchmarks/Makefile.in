@@ -503,8 +503,26 @@ tinydaxpy_LDFLAGS =
 DEFS = @DEFS@
 DEFAULT_INCLUDES =  -I. -I$(srcdir)
 CPPFLAGS = @CPPFLAGS@
-depcomp =
-am__depfiles_maybe =
+depcomp = $(SHELL) $(top_srcdir)/depcomp
+am__depfiles_maybe = depfiles
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/acou3d.Po ./$(DEPDIR)/acou3db1.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/acou3db2.Po ./$(DEPDIR)/acou3db3.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/acou3db4.Po ./$(DEPDIR)/acoustic.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/daxpy.Po ./$(DEPDIR)/haney.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/hao-he.Po ./$(DEPDIR)/loop1.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/loop10.Po ./$(DEPDIR)/loop11.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/loop12.Po ./$(DEPDIR)/loop13.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/loop14.Po ./$(DEPDIR)/loop15.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/loop16.Po ./$(DEPDIR)/loop17.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/loop18.Po ./$(DEPDIR)/loop19.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/loop2.Po ./$(DEPDIR)/loop21.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/loop22.Po ./$(DEPDIR)/loop23.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/loop24.Po ./$(DEPDIR)/loop25.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/loop3.Po ./$(DEPDIR)/loop36.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/loop5.Po ./$(DEPDIR)/loop6.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/loop8.Po ./$(DEPDIR)/loop9.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/qcd.Po ./$(DEPDIR)/stencil.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/tinydaxpy.Po
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
@@ -545,7 +563,7 @@ all: all-recursive
 .SUFFIXES: .cpp .f .f90 .o .obj
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  --ignore-deps benchmarks/Makefile
+	  $(AUTOMAKE) --gnu  benchmarks/Makefile
 Makefile: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 plot_benchmarks.m: $(top_builddir)/config.status plot_benchmarks.m.in
@@ -650,11 +668,57 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/acou3d.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/acou3db1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/acou3db2.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/acou3db3.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/acou3db4.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/acoustic.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/daxpy.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/haney.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hao-he.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop10.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop11.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop12.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop13.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop14.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop15.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop16.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop17.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop18.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop19.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop2.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop21.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop22.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop23.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop24.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop25.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop3.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop36.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop5.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop6.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop8.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop9.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/qcd.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stencil.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tinydaxpy.Po@am__quote@
+
+distclean-depend:
+	-rm -rf ./$(DEPDIR)
+
 .cpp.o:
+@AMDEP_TRUE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(CXXCOMPILE) -c -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
 
 .cpp.obj:
+@AMDEP_TRUE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(CXXCOMPILE) -c -o $@ `cygpath -w $<`
+CXXDEPMODE = @CXXDEPMODE@
 
 .f.o:
 	$(F77COMPILE) -c -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
@@ -858,8 +922,8 @@ clean-am: clean-generic mostlyclean-am
 
 distclean: distclean-recursive
 
-distclean-am: clean-am distclean-compile distclean-generic \
-	distclean-tags
+distclean-am: clean-am distclean-compile distclean-depend \
+	distclean-generic distclean-tags
 
 dvi: dvi-recursive
 
@@ -893,19 +957,19 @@ uninstall-info: uninstall-info-recursive
 
 .PHONY: $(RECURSIVE_TARGETS) GTAGS all all-am check check-am clean \
 	clean-generic clean-recursive distclean distclean-compile \
-	distclean-generic distclean-recursive distclean-tags distdir \
-	dvi dvi-am dvi-recursive info info-am info-recursive install \
-	install-am install-benchmarkDATA install-data install-data-am \
-	install-data-recursive install-exec install-exec-am \
-	install-exec-recursive install-info install-info-am \
-	install-info-recursive install-man install-recursive \
-	install-strip installcheck installcheck-am installdirs \
-	installdirs-am installdirs-recursive maintainer-clean \
-	maintainer-clean-generic maintainer-clean-recursive mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-recursive \
-	tags tags-recursive uninstall uninstall-am \
-	uninstall-benchmarkDATA uninstall-info-am \
-	uninstall-info-recursive uninstall-recursive
+	distclean-depend distclean-generic distclean-recursive \
+	distclean-tags distdir dvi dvi-am dvi-recursive info info-am \
+	info-recursive install install-am install-benchmarkDATA \
+	install-data install-data-am install-data-recursive \
+	install-exec install-exec-am install-exec-recursive \
+	install-info install-info-am install-info-recursive install-man \
+	install-recursive install-strip installcheck installcheck-am \
+	installdirs installdirs-am installdirs-recursive \
+	maintainer-clean maintainer-clean-generic \
+	maintainer-clean-recursive mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-recursive tags tags-recursive \
+	uninstall uninstall-am uninstall-benchmarkDATA \
+	uninstall-info-am uninstall-info-recursive uninstall-recursive
 
 
 @F90_COMPILER_TRUE@%.o : %f90.f

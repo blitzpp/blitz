@@ -146,8 +146,9 @@ DEFS = @DEFS@
 DEFAULT_INCLUDES =  -I. -I$(srcdir)
 CPPFLAGS = @CPPFLAGS@
 LIBS = @LIBS@
-depcomp =
-am__depfiles_maybe =
+depcomp = $(SHELL) $(top_srcdir)/depcomp
+am__depfiles_maybe = depfiles
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/simple.Po
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
@@ -171,7 +172,7 @@ all: all-recursive
 .SUFFIXES: .cpp .o .obj
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  --ignore-deps manual/examples/Makefile
+	  $(AUTOMAKE) --gnu  manual/examples/Makefile
 Makefile: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 simple$(EXEEXT): $(simple_OBJECTS) $(simple_DEPENDENCIES) 
@@ -184,11 +185,23 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/simple.Po@am__quote@
+
+distclean-depend:
+	-rm -rf ./$(DEPDIR)
+
 .cpp.o:
+@AMDEP_TRUE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(CXXCOMPILE) -c -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
 
 .cpp.obj:
+@AMDEP_TRUE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(CXXCOMPILE) -c -o $@ `cygpath -w $<`
+CXXDEPMODE = @CXXDEPMODE@
 uninstall-info-am:
 docDATA_INSTALL = $(INSTALL_DATA)
 install-docDATA: $(doc_DATA)
@@ -380,8 +393,8 @@ clean-am: clean-generic clean-local mostlyclean-am
 
 distclean: distclean-recursive
 
-distclean-am: clean-am distclean-compile distclean-generic \
-	distclean-tags
+distclean-am: clean-am distclean-compile distclean-depend \
+	distclean-generic distclean-tags
 
 dvi: dvi-recursive
 
@@ -415,19 +428,19 @@ uninstall-info: uninstall-info-recursive
 
 .PHONY: $(RECURSIVE_TARGETS) GTAGS all all-am check check-am clean \
 	clean-generic clean-local clean-recursive distclean \
-	distclean-compile distclean-generic distclean-recursive \
-	distclean-tags distdir dvi dvi-am dvi-recursive info info-am \
-	info-recursive install install-am install-data install-data-am \
-	install-data-recursive install-docDATA install-exec \
-	install-exec-am install-exec-recursive install-info \
-	install-info-am install-info-recursive install-man \
-	install-recursive install-strip installcheck installcheck-am \
-	installdirs installdirs-am installdirs-recursive \
-	maintainer-clean maintainer-clean-generic \
-	maintainer-clean-recursive mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-recursive tags tags-recursive \
-	uninstall uninstall-am uninstall-docDATA uninstall-info-am \
-	uninstall-info-recursive uninstall-recursive
+	distclean-compile distclean-depend distclean-generic \
+	distclean-recursive distclean-tags distdir dvi dvi-am \
+	dvi-recursive info info-am info-recursive install install-am \
+	install-data install-data-am install-data-recursive \
+	install-docDATA install-exec install-exec-am \
+	install-exec-recursive install-info install-info-am \
+	install-info-recursive install-man install-recursive \
+	install-strip installcheck installcheck-am installdirs \
+	installdirs-am installdirs-recursive maintainer-clean \
+	maintainer-clean-generic maintainer-clean-recursive mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-recursive \
+	tags tags-recursive uninstall uninstall-am uninstall-docDATA \
+	uninstall-info-am uninstall-info-recursive uninstall-recursive
 
 #slicing_SOURCES = slicing.cpp
 #debug_SOURCES = debug.cpp

@@ -109,8 +109,6 @@ discrete-uniform.h exponential.h gamma.h mt.h normal.h uniform.h
 subdir = random
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES =
-depcomp =
-am__depfiles_maybe =
 DIST_SOURCES =
 HEADERS = $(random_HEADERS)
 
@@ -126,7 +124,7 @@ all: all-recursive
 .SUFFIXES:
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  --ignore-deps random/Makefile
+	  $(AUTOMAKE) --gnu  random/Makefile
 Makefile: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 uninstall-info-am:

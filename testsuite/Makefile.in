@@ -498,8 +498,50 @@ DEFS = @DEFS@
 DEFAULT_INCLUDES =  -I. -I$(srcdir)
 CPPFLAGS = @CPPFLAGS@
 LIBS = @LIBS@
-depcomp =
-am__depfiles_maybe =
+depcomp = $(SHELL) $(top_srcdir)/depcomp
+am__depfiles_maybe = depfiles
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/Adnene-Ben-Abdallah-1.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/Adnene-Ben-Abdallah-2.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/Josef-Wagenhuber.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/Olaf-Ronneberger-1.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/Ulisses-Mello-1.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/arrayresize.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/chris-jeffery-1.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/chris-jeffery-2.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/chris-jeffery-3.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/complex-test.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/constarray.Po ./$(DEPDIR)/contiguous.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/copy.Po ./$(DEPDIR)/ctors.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/derrick-bass-1.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/derrick-bass-3.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/exprctor.Po ./$(DEPDIR)/extract.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/free.Po ./$(DEPDIR)/gary-huber-1.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/initialize.Po ./$(DEPDIR)/interlace.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/iter.Po ./$(DEPDIR)/loop1.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/matthias-troyer-1.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/matthias-troyer-2.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/mattias-lindstroem-1.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/minmax.Po ./$(DEPDIR)/minsumpow.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/module1.Po ./$(DEPDIR)/module2.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/newet.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/peter-bienstman-1.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/peter-bienstman-2.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/peter-bienstman-3.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/peter-bienstman-4.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/peter-bienstman-5.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/peter-nordlund-1.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/peter-nordlund-2.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/peter-nordlund-3.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/promote.Po ./$(DEPDIR)/qcd.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/reduce.Po ./$(DEPDIR)/reindex.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/reverse.Po ./$(DEPDIR)/shape.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/shapecheck.Po ./$(DEPDIR)/storage.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/stub.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/theodore-papadopoulo-1.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/tinymat.Po ./$(DEPDIR)/tinyvec.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/transpose.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/troyer-genilloud.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/wei-ku-1.Po ./$(DEPDIR)/where.Po
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
@@ -547,7 +589,7 @@ all: all-recursive
 .SUFFIXES: .cpp .o .obj
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  --ignore-deps testsuite/Makefile
+	  $(AUTOMAKE) --gnu  testsuite/Makefile
 Makefile: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 Adnene-Ben-Abdallah-1$(EXEEXT): $(Adnene_Ben_Abdallah_1_OBJECTS) $(Adnene_Ben_Abdallah_1_DEPENDENCIES) 
@@ -722,11 +764,78 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Adnene-Ben-Abdallah-1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Adnene-Ben-Abdallah-2.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Josef-Wagenhuber.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Olaf-Ronneberger-1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Ulisses-Mello-1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/arrayresize.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chris-jeffery-1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chris-jeffery-2.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chris-jeffery-3.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/complex-test.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/constarray.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/contiguous.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/copy.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ctors.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/derrick-bass-1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/derrick-bass-3.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exprctor.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/extract.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/free.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gary-huber-1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/initialize.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/interlace.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/iter.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loop1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matthias-troyer-1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/matthias-troyer-2.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mattias-lindstroem-1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/minmax.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/minsumpow.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/module1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/module2.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/newet.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/peter-bienstman-1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/peter-bienstman-2.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/peter-bienstman-3.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/peter-bienstman-4.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/peter-bienstman-5.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/peter-nordlund-1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/peter-nordlund-2.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/peter-nordlund-3.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/promote.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/qcd.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reduce.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reindex.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/shape.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/shapecheck.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/storage.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stub.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/theodore-papadopoulo-1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tinymat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tinyvec.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/transpose.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/troyer-genilloud.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wei-ku-1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/where.Po@am__quote@
+
+distclean-depend:
+	-rm -rf ./$(DEPDIR)
+
 .cpp.o:
+@AMDEP_TRUE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(CXXCOMPILE) -c -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
 
 .cpp.obj:
+@AMDEP_TRUE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(CXXCOMPILE) -c -o $@ `cygpath -w $<`
+CXXDEPMODE = @CXXDEPMODE@
 uninstall-info-am:
 testsuiteDATA_INSTALL = $(INSTALL_DATA)
 install-testsuiteDATA: $(testsuite_DATA)
@@ -918,8 +1027,8 @@ clean-am: clean-generic clean-local mostlyclean-am
 
 distclean: distclean-recursive
 
-distclean-am: clean-am distclean-compile distclean-generic \
-	distclean-tags
+distclean-am: clean-am distclean-compile distclean-depend \
+	distclean-generic distclean-tags
 
 dvi: dvi-recursive
 
@@ -953,14 +1062,14 @@ uninstall-info: uninstall-info-recursive
 
 .PHONY: $(RECURSIVE_TARGETS) GTAGS all all-am check check-am clean \
 	clean-generic clean-local clean-recursive distclean \
-	distclean-compile distclean-generic distclean-recursive \
-	distclean-tags distdir dvi dvi-am dvi-recursive info info-am \
-	info-recursive install install-am install-data install-data-am \
-	install-data-recursive install-exec install-exec-am \
-	install-exec-recursive install-info install-info-am \
-	install-info-recursive install-man install-recursive \
-	install-strip install-testsuiteDATA installcheck \
-	installcheck-am installdirs installdirs-am \
+	distclean-compile distclean-depend distclean-generic \
+	distclean-recursive distclean-tags distdir dvi dvi-am \
+	dvi-recursive info info-am info-recursive install install-am \
+	install-data install-data-am install-data-recursive \
+	install-exec install-exec-am install-exec-recursive \
+	install-info install-info-am install-info-recursive install-man \
+	install-recursive install-strip install-testsuiteDATA \
+	installcheck installcheck-am installdirs installdirs-am \
 	installdirs-recursive maintainer-clean maintainer-clean-generic \
 	maintainer-clean-recursive mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-recursive tags tags-recursive \
