@@ -10,6 +10,10 @@
 /* Intel icc compiler */
 #include "intel/bzconfig.h"
 
+#elif defined(_MSC_VER)
+/* Microsoft VS.NET compiler */
+#include "ms/bzconfig.h"
+
 #elif defined(__IBM)
 /* IBM xlC compiler */
 #include "ibm/bzconfig.h"
