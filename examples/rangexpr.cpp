@@ -4,9 +4,7 @@
 
 #include <blitz/vector-et.h>
 
-#ifdef BZ_NAMESPACES
-using namespace blitz;
-#endif
+BZ_USING_NAMESPACE(blitz)
 
 #ifndef M_PI
  #define M_PI   3.14159265358979323846
