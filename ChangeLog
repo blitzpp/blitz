@@ -1,4 +1,20 @@
+2002-05-27  Julian Cummings  <cummings@tis-sa-ack.cacr.caltech.edu>
 
+	* blitz/array-impl.h: Removed use of this-> as means of accessing
+	members of templated base class.  Instead provided using
+	declarations for these members within the derived class
+	definitions to bring them into the scope of the derived class.
+	* blitz/array/slicing.cc: Likewise.
+	* blitz/array/eval.cc: Likewise.
+	* blitz/array/methods.cc: Likewise.
+	* blitz/array/storage.h: Likewise.
+	* blitz/array/stencil-et.h: Likewise.
+	* blitz/array/iter.h: Likewise.
+	* blitz/matrix.cc: Likewise.
+	* blitz/vector.cc: Likewise.
+	* blitz/memblock.h: Likewise.
+	* blitz/matrix.h: Likewise.
+	* blitz/vector.h: Likewise.
 
 Fri May 24 10:25:23 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* INSTALL: added instruction for cvs repository installation in case a
