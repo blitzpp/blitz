@@ -11,21 +11,21 @@ AM_CXXFLAGS = @CXXFLAGS@ @CXX_DEBUG_FLAGS@
 LDADD = -L$(top_builddir)/lib -lblitz
 
 # install this file
-testsuitedir = $(prefix)/testsuite
-testsuite_DATA = Adnene-Ben-Abdallah-1.cpp Adnene-Ben-Abdallah-2.cpp \
-Josef-Wagenhuber.cpp Olaf-Ronneberger-1.cpp Ulisses-Mello-1.cpp \
-arrayresize.cpp chris-jeffery-1.cpp chris-jeffery-2.cpp chris-jeffery-3.cpp \
-complex-test.cpp constarray.cpp contiguous.cpp copy.cpp ctors.cpp \
-derrick-bass-1.cpp derrick-bass-3.cpp exprctor.cpp extract.cpp free.cpp \
-gary-huber-1.cpp initialize.cpp interlace.cpp iter.cpp loop1.cpp \
-matthias-troyer-1.cpp matthias-troyer-2.cpp mattias-lindstroem-1.cpp \
-minmax.cpp minsumpow.cpp module1.cpp module2.cpp newet.cpp \
-peter-bienstman-1.cpp peter-bienstman-2.cpp peter-bienstman-3.cpp \
-peter-bienstman-4.cpp peter-bienstman-5.cpp peter-nordlund-1.cpp \
-peter-nordlund-2.cpp peter-nordlund-3.cpp promote.cpp qcd.cpp reduce.cpp \
-reindex.cpp reverse.cpp shape.cpp shapecheck.cpp storage.cpp stub.cpp \
-theodore-papadopoulo-1.cpp tinymat.cpp tinyvec.cpp transpose.cpp \
-troyer-genilloud.cpp wei-ku-1.cpp where.cpp Makefile
+#testsuitedir = $(prefix)/testsuite
+#testsuite_DATA = Adnene-Ben-Abdallah-1.cpp Adnene-Ben-Abdallah-2.cpp \
+#Josef-Wagenhuber.cpp Olaf-Ronneberger-1.cpp Ulisses-Mello-1.cpp \
+#arrayresize.cpp chris-jeffery-1.cpp chris-jeffery-2.cpp chris-jeffery-3.cpp \
+#complex-test.cpp constarray.cpp contiguous.cpp copy.cpp ctors.cpp \
+#derrick-bass-1.cpp derrick-bass-3.cpp exprctor.cpp extract.cpp free.cpp \
+#gary-huber-1.cpp initialize.cpp interlace.cpp iter.cpp loop1.cpp \
+#matthias-troyer-1.cpp matthias-troyer-2.cpp mattias-lindstroem-1.cpp \
+#minmax.cpp minsumpow.cpp module1.cpp module2.cpp newet.cpp \
+#peter-bienstman-1.cpp peter-bienstman-2.cpp peter-bienstman-3.cpp \
+#peter-bienstman-4.cpp peter-bienstman-5.cpp peter-nordlund-1.cpp \
+#peter-nordlund-2.cpp peter-nordlund-3.cpp promote.cpp qcd.cpp reduce.cpp \
+#reindex.cpp reverse.cpp shape.cpp shapecheck.cpp storage.cpp stub.cpp \
+#theodore-papadopoulo-1.cpp tinymat.cpp tinyvec.cpp transpose.cpp \
+#troyer-genilloud.cpp wei-ku-1.cpp where.cpp Makefile
 
 EXTRA_PROGRAMS = Adnene-Ben-Abdallah-1 Adnene-Ben-Abdallah-2 arrayresize \
 chris-jeffery-1 chris-jeffery-2 chris-jeffery-3 complex-test constarray \

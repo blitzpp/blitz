@@ -4,7 +4,9 @@
 
 SUBDIRS = examples stencils
 
-docdir = $(prefix)/doc/blitz
+# install these files
+docdir = $(prefix)/doc
+doc_DATA = blitz.ps 
 
 AM_MAKEINFOFLAGS = --no-split
 TEXI2HTML = texi2html

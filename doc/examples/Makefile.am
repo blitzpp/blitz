@@ -2,13 +2,15 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-docdir = $(prefix)/doc/blitz/examples
+# install these files
+#docdir = $(prefix)/doc/blitz/examples
+#doc_DATA = cast.cpp debug.cpp dump.cpp fixed.cpp fixed-point.h outer.cpp \
+#output.cpp range.cpp simple.cpp slicing.cpp storage.cpp strideslice.cpp \
+#xor.cpp
 
-doc_DATA = cast.cpp debug.cpp dump.cpp fixed.cpp fixed-point.h outer.cpp \
+EXTRA_DIST = cast.cpp debug.cpp dump.cpp fixed.cpp fixed-point.h outer.cpp \
 output.cpp range.cpp simple.cpp slicing.cpp storage.cpp strideslice.cpp \
 xor.cpp
-
-EXTRA_DIST = $(doc_DATA)
 
 INCLUDES = -I$(top_srcdir)
 AM_CXXFLAGS = @CXXFLAGS@ @CXX_DEBUG_FLAGS@
