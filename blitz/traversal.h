@@ -21,41 +21,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.4  2002/03/07 08:38:20  patricg
- *
- * moved
- * template<int N_dimensions>
- * _bz_typename TraversalOrderCollection<N_dimensions>::T_set
- *     TraversalOrderCollection<N_dimensions>::traversals_;
- * after the declaration of
- * template<int N_dimensions> class TraversalOrderCollection
- *
- * Revision 1.3  2002/03/06 17:18:11  patricg
- *
- * template declaration
- * template<int N_dimensions>
- * _bz_typename TraversalOrderCollection<N_dimensions>::T_set
- * 	TraversalOrderCollection<N_dimensions>::traversals_;
- * in blitz/transversal.cc moved before template specialisation
- * template<>
- * class TraversalOrderCollection<0> {}
- * in blitz/transversal.h
- *
- * Revision 1.2  2001/01/24 20:22:50  tveldhui
- * Updated copyright date in headers.
- *
- * Revision 1.1.1.1  2000/06/19 12:26:12  tveldhui
- * Imported sources
- *
- * Revision 1.2  1998/03/14 00:04:47  tveldhui
- * 0.2-alpha-05
- *
- * Revision 1.1  1997/07/16 14:51:20  tveldhui
- * Update: Alpha release 0.2 (Arrays)
- *
- */
+ ***************************************************************************/
 
 // Fast traversal orders require the ISO/ANSI C++ standard library
 // (particularly set).
