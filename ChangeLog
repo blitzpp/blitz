@@ -1,4 +1,9 @@
+2003-03-13  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
+	* blitz/range.h: Corrected my silly typo.
+	* blitz/range.h: Modified Range::isAscendingContiguous() to return
+	true for the case of a Range that contains just a single element,
+	since this is a valid Range for constructing an Array.
 2003-02-27  Patrick Guio <patrick.guio@fys.uio.no>
 	* blitz/array/Makefile.am: Added newet-macros-old.h in the headers
 	list to install.
