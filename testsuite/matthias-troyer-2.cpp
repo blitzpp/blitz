@@ -20,10 +20,12 @@ secondIndex j;
 thirdIndex k;
 float midpoint = 3.;
 float c = - 1.;
-A = exp(c * (sqr(i-midpoint) + sqr(j-midpoint)
-    + sqr(k-midpoint)));
+//A = exp(c * (sqr(i-midpoint) + sqr(j-midpoint)
+//    + sqr(k-midpoint)));
+A = zip( exp(c * (sqr(i-midpoint) + sqr(j-midpoint)
+    + sqr(k-midpoint))), 0.0, complex<double>());
 
-applyStencil(kinEnergy(),A,B);
+//applyStencil(kinEnergy(),A,B);
 
 Array<complex<double>,1> a_view(A.data(),shape(N*N*N));
 cout << a_view;
