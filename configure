@@ -3240,7 +3240,6 @@ echo "FORTLIBS           = $FORTLIBS"
 echo "BLASLIB            = $BLASLIB"
 echo ""
 
-
 # Process the Makefile.in's
 ac_config_files="$ac_config_files Makefile bin/Makefile blitz/Makefile blitz/array/Makefile blitz/generate/Makefile blitz/meta/Makefile random/Makefile compiler/Makefile src/Makefile lib/Makefile manual/Makefile manual/examples/Makefile manual/stencils/Makefile testsuite/Makefile examples/Makefile benchmarks/Makefile benchmarks/plot_benchmarks.m demos/Makefile"
 
@@ -4331,7 +4330,6 @@ esac
 rm -f __target_id
 
 fi
-
 
 
 cat << 'EOH'

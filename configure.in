@@ -361,7 +361,6 @@ echo "FORTLIBS           = $FORTLIBS"
 echo "BLASLIB            = $BLASLIB"
 echo ""
 
-
 # Process the Makefile.in's
 AC_CONFIG_FILES([
 	Makefile 
@@ -433,7 +432,6 @@ esac
 rm -f __target_id
 
 fi
-
 
 
 cat << 'EOH'
