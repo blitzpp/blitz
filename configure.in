@@ -94,14 +94,14 @@ AC_ARG_WITH(cxx,
        CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
      ;;
      DECcxx6.2)          # DEC C++  http://www.digital.com/
-       echo "Configuring for DEC cxx"
+       echo "Configuring for DEC cxx 6.2"
        bz_compiler=cxx
        AC_BZ_SET_COMPILER($withval,"cxx","-DBZ_DISABLE_XOPEN_SOURCE -std strict_ansi")
        CXX_OPTIMIZE_FLAGS="-O4 -tune host"
        CXX_DEBUG_FLAGS="-g -msg_display_tag -DBZ_DEBUG"
      ;;
      DECcxx6.3)          # DEC C++  http://www.digital.com/
-       echo "Configuring for DEC cxx"
+       echo "Configuring for DEC cxx 6.3"
        bz_compiler=cxx
        AC_BZ_SET_COMPILER($withval,"cxx","-DBZ_DISABLE_XOPEN_SOURCE -std strict_ansi -nopure_cname")
        CXX_OPTIMIZE_FLAGS="-O4 -tune host"
@@ -156,14 +156,15 @@ cat << 'EOH'
 
 This script only recognizes a small set of compilers and platforms so far.
 You will have to rerun this script with one of these options:
-  --with-cxx=KCC    KAI C++ (http://www.kai.com/)
-  --with-cxx=gcc    gcc (http://gcc.gnu.org/)
-  --with-cxx=cray   Cray C++ 3.0 or better (http://www.cray.com/)
-  --with-cxx=cxx    DEC cxx 6.10 or better (http://www.dec.com/)
-  --with-cxx=SGI64  SGI C++ 7.3 or better (http://www.sgi.com/)
-  --with-cxx=SGI32          ... with 32-bit ABI
-  --with-cxx=aCC    HP-UX aCC (http://www.hp.com/go/c++)
-  --with-cxx=icc    Intel icc (http://www.intel.com/)
+  --with-cxx=KCC          KAI C++ (http://www.kai.com/)
+  --with-cxx=gcc          gcc (http://gcc.gnu.org/)
+  --with-cxx=cray         Cray C++ 3.0 or better (http://www.cray.com/)
+  --with-cxx=DECcxx6.2    DEC cxx 6.2 (http://www.dec.com/)
+  --with-cxx=DECcxx6.3    DEC cxx 6.3 or better (http://www.dec.com/)
+  --with-cxx=SGI64        SGI C++ 7.3 or better (http://www.sgi.com/)
+  --with-cxx=SGI32                ... with 32-bit ABI
+  --with-cxx=aCC          HP-UX aCC 3.33 or better (http://www.hp.com/go/c++)
+  --with-cxx=icc          Intel icc 5.0 or better (http://www.intel.com/)
 
 EOH
 exit 1

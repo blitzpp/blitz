@@ -15,14 +15,15 @@ Now cd into blitz-VERSION, and run
 ./configure --with-cxx=[compiler]
 
 The [compiler] options are:
-  --with-cxx=gcc    gcc (http://gcc.cygnus.com/)
-  --with-cxx=KCC    KAI C++ (http://www.kai.com/)
-  --with-cxx=cray   Cray C++ 3.0 or better (http://www.cray.com/)
-  --with-cxx=DECcxx DEC cxx 6.10 or better (http://www.dec.com/)
-  --with-cxx=SGI64  SGI C++ 7.3 or better (http://www.sgi.com/)
+  --with-cxx=gcc       gcc (http://gcc.cygnus.com/)
+  --with-cxx=KCC       KAI C++ (http://www.kai.com/)
+  --with-cxx=cray      Cray C++ 3.0 or better (http://www.cray.com/)
+  --with-cxx=DECcxx6.2 DEC cxx 6.2 (http://www.dec.com/)
+  --with-cxx=DECcxx6.3 DEC cxx 6.3 or better (http://www.dec.com/)
+  --with-cxx=SGI64     SGI C++ 7.3 or better (http://www.sgi.com/)
   --with-cxx=SGI32          ... with 32-bit ABI (n32)
-	--with-cxx=aCC    HP-UX aCC (http://www.hp.com/go/c++)
-	--with-cxx=icc    Intel icc (http://www.intel.com/)
+	--with-cxx=aCC       HP-UX aCC (http://www.hp.com/go/c++)
+	--with-cxx=icc       Intel icc (http://www.intel.com/)
 
 Then do:
         make
