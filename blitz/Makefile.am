@@ -16,13 +16,13 @@ matutri.h memblock.cc memblock.h minmax.h mstruct.h numinquire.h numtrait.h \
 ops.h prettyprint.h promote-old.h promote.h rand-dunif.h rand-mt.h \
 rand-normal.h rand-tt800.h rand-uniform.h random.h randref.h range.h \
 reduce.h shapecheck.h tau.h timer.h tiny.h tinymat.h tinymatexpr.h \
-tinyvec.cc tinyvec.h tinyvecio.cc tinyveciter.h traversal.cc traversal.h \
-tuning.h tvcross.h tvecglobs.h update.h vecaccum.cc vecall.cc vecany.cc \
-vecbfn.cc vecbops.cc veccount.cc vecdelta.cc vecdot.cc vecexpr.h \
-vecexprwrap.h vecglobs.cc vecglobs.h vecio.cc veciter.h vecmax.cc vecmin.cc \
-vecnorm.cc vecnorm1.cc vecpick.cc vecpick.h vecpickio.cc vecpickiter.h \
-vecsum.cc vector.cc vector.h vecuops.cc vecwhere.cc vecwhere.h \
-wrap-climits.h zero.cc zero.h
+tinymatio.cc tinyvec.cc tinyvec.h tinyvecio.cc tinyveciter.h traversal.cc \
+traversal.h tuning.h tvcross.h tvecglobs.h update.h vecaccum.cc vecall.cc \
+vecany.cc vecbfn.cc vecbops.cc veccount.cc vecdelta.cc vecdot.cc vecexpr.h \
+vecexprwrap.h vecglobs.cc vecglobs.h vecio.cc veciter.h vecmax.cc \
+vecmin.cc vecnorm.cc vecnorm1.cc vecpick.cc vecpick.h vecpickio.cc \
+vecpickiter.h vecsum.cc vector.cc vector.h vecuops.cc vecwhere.cc \
+vecwhere.h wrap-climits.h zero.cc zero.h
 
 EXTRA_DIST = MAT-NOTE.gz
 
