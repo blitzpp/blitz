@@ -1,8 +1,6 @@
 /***************************************************************************
  * blitz/arraybops.cc	Array expression templates (2 operands)
  *
- * $Id$
- *
  * Copyright (C) 1997 Todd Veldhuizen <tveldhui@oonumerics.org>
  * All rights reserved.   Please see <blitz/blitz.h> for terms and
  * conditions of use.
@@ -13,15 +11,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.1  2000/06/19 12:26:14  tveldhui
- * Initial revision
- *
- * Revision 1.2  1998/03/14 00:04:47  tveldhui
- * 0.2-alpha-05
- *
- */ 
+ ****************************************************************************/ 
 
 // Generated source file.  Do not edit. 
 // genarrbops.cpp Aug  7 1997 15:04:14

@@ -1,3 +1,6 @@
+2003-01-10 Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+    * blitz/array/*.h: Removed the cvs log and added them to the ChangeLog.
+
 2003-01-08 Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
     * configure.in: Removed demos/Makefile from the generated files since this
     directory is empty for now.
@@ -694,5 +697,48 @@ Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	Still a problem with the complex stencil, right now the statement
 	applyStencil(kinEnergy(),A,B); is commented
 
+2001-02-11 Julian Cummings
+    * blitz/array/domain.h, blitz/array/slicing.cc: Added StridedDomain class and more versions
+      of resizeAndPreserve.
 
-	
+2001-01-26 tveldhui
+    * blitz/array/eval.cc, blitz/array/methods.cc: More source code reorganization to reduce
+      compile times.
+    * blitz/array/stencils.cc: Incorporated 1D stencil fix from Derrick Bass.
+    * blitz/array/funcs.h, blitz/arrayuops.cc: Changed isnan to blitz_isnan, to avoid conflicts
+      with implementations that define isnan as a preprocessor macro.
+
+2001-01-25 tveldhui
+    * blitz/array/asexpr.h, blitz/array/cartesian.h, blitz/array/cgsolve.h, blitz/array/convolve.h,
+      blitz/array/domain.h, blitz/array/et.h, blitz/array/funcs.h, blitz/array/geometry.h,
+      blitz/array/indirect.h, blitz/array/multi.h, blitz/array/newet-macros.h, blitz/array/newet.h,
+      blitz/array/ops.h, blitz/array/stencil-et.h, blitz/array/stencilops.h, blitz/array/stencils.h,
+      blitz/array/storage.h, blitz/array/where.h, blitz/array/zip.h, blitz/array/complex.cc,
+      blitz/array/convolve.cc, blitz/array/cycle.cc, blitz/array/io.cc, blitz/array/misc.cc,
+      blitz/array/newbops.cc, blitz/array/ops.cc, blitz/array/reduce.cc, blitz/array/resize.cc,
+      blitz/array/slicing.cc, blitz/array/stencils.cc:  Ensured that source files have cvs logs.
+ 
+2001-01-24 tveldhui
+    * Updated copyright date in headers.
+    * blitz/array/methods.cc: Widespread changes to reduce compile time.  For backwards
+      compatibility, #include <blitz/array.h> enables BZ_GANG_INCLUDE mode which includes
+      all array and vector functionality (about 120000 lines of code).
+      #include <blitz/Array.h> includes a minimal subset of Array funcitonality; other
+      features must be included explicitly.
+    * blitz/array/eval.cc: Reorganized #include orders to avoid including the huge Vector e.t.
+      implementation when using Array.
+
+1998-03-14 tveldhui
+    * 0.2-alpha-05
+
+1998-02-25 tveldhui
+    * blitz/array/eval.cc: Initial revision.
+
+1997-08-18 tveldhui
+    * Just prior to implementing fastRead() optimization for array expression evaluation.
+
+1997-08-15 tveldhui
+    * Just prior to loop-collapse change
+
+1997-07-16 tveldhui
+    * Alpha release 0.2 (Arrays)

@@ -1,8 +1,6 @@
 /***************************************************************************
  * blitz/array/complex.cc  Special functions for complex arrays
  *
- * $Id$
- *
  * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
@@ -21,17 +19,11 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.2  2001/01/25 00:25:55  tveldhui
- * Ensured that source files have cvs logs.
- *
- */
-
-// Special functions for complex arrays
-
+ ****************************************************************************/
 #ifndef BZ_ARRAYCOMPLEX_CC
 #define BZ_ARRAYCOMPLEX_CC
+
+// Special functions for complex arrays
 
 #ifndef BZ_ARRAY_H
  #error <blitz/array/complex.cc> must be included via <blitz/array/array.h>

@@ -1,8 +1,6 @@
 /***************************************************************************
  * blitz/array/asexpr.h  Declaration of the asExpr helper functions
  *
- * $Id$
- *
  * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
@@ -22,7 +20,6 @@
  *    http://oonumerics.org/blitz/
  *
  ***************************************************************************/
-
 #ifndef BZ_ARRAYASEXPR_H
 #define BZ_ARRAYASEXPR_H
 
