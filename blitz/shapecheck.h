@@ -21,21 +21,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.3  2002/06/28 01:35:59  jcumming
- * Changed loop variable i to unsigned to avoid unsigned/signed comparisons.
- *
- * Revision 1.2  2001/01/24 20:22:50  tveldhui
- * Updated copyright date in headers.
- *
- * Revision 1.1.1.1  2000/06/19 12:26:12  tveldhui
- * Imported sources
- *
- * Revision 1.1  1998/03/14 00:04:47  tveldhui
- * 0.2-alpha-05
- *
- */
+ ***************************************************************************/
 
 #ifndef BZ_SHAPECHECK_H
 #define BZ_SHAPECHECK_H
