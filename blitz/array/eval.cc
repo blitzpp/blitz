@@ -2,6 +2,10 @@
  * $Id$
  *
  * $Log$
+ * Revision 1.4  2002/03/06 16:18:34  patricg
+ *
+ * data_ replaced by this->data_
+ *
  * Revision 1.3  2001/01/26 18:30:50  tveldhui
  * More source code reorganization to reduce compile times.
  *
@@ -682,7 +686,7 @@ Array<T_numtype, N_rank>::evaluateWithIndexTraversal1(
 
     if (stride(firstRank) == 1)
     {
-        T_numtype * _bz_restrict iter = data_;
+        T_numtype * _bz_restrict iter = this->data_;
         int last = ubound(firstRank);
 
         for (index[0] = lbound(firstRank); index[0] <= last;
