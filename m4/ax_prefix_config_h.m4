@@ -70,7 +70,6 @@ else
       rm -f "$_OUT"
       mv $tmp/pconfig.h "$_OUT"
     fi
-    cp _script _configs.sed
   else
     AC_MSG_ERROR([input file $_INP does not exist - skip generating $_OUT])
   fi
