@@ -2,6 +2,10 @@
  * $Id$
  *
  * $Log$
+ * Revision 1.5  2002/05/27 19:47:22  jcumming
+ * Removed use of this->.  Members of templated base class are now declared
+ * in derived class Array.
+ *
  * Revision 1.4  2002/03/06 16:16:18  patricg
  *
  * data_ replaced by this->data_ everywhere
@@ -227,7 +231,7 @@ void Array<P_numtype, N_rank>::reference(const Array<P_numtype, N_rank>& array)
     MemoryBlockReference<P_numtype>::changeBlock(array.noConst(),
         array.zeroOffset_);
 
-    this->data_ = const_cast<P_numtype*>(array.data_);
+    data_ = const_cast<P_numtype*>(array.data_);
 }
 
 /*
@@ -260,7 +264,7 @@ _bz_inline2 void Array<P_numtype, N_rank>::setupStorage(int lastRankInitialized)
 
     // Adjust the base of the array to account for non-zero base
     // indices and reversals
-    this->data_ += zeroOffset_;
+    data_ += zeroOffset_;
 }
 
 template<class T_numtype, int N_rank>
@@ -281,7 +285,7 @@ Array<T_numtype, N_rank> Array<T_numtype, N_rank>::copy() const
 template<class T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::makeUnique()
 {
-    if (this->numReferences() > 1)
+    if (numReferences() > 1)
     {
         T_array tmp = copy();
         reference(tmp);
@@ -360,7 +364,7 @@ void Array<T_numtype, N_rank>::reverseSelf(int rank)
 
     int adjustment = stride_[rank] * (lbound(rank) + ubound(rank));
     zeroOffset_ += adjustment;
-    this->data_ += adjustment;
+    data_ += adjustment;
     stride_[rank] *= -1;
 }
 
@@ -402,7 +406,7 @@ _bz_inline2 void Array<P_numtype, N_rank>::reindexSelf(const
     for (int i=0; i < N_rank; ++i)
       delta += (base(i) - newBase(i)) * stride_(i);
 
-    this->data_ += delta;
+    data_ += delta;
 
     // WAS: dot(base() - newBase, stride_);
 
