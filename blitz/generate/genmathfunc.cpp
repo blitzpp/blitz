@@ -386,10 +386,10 @@ one("erfc"   ,""            ,"erfc"    ,"double"       ,"Complementary error fun
 one("floor"  ,""            ,"floor"   ,"double"       ,"Floor function");
 one("floor",  "float",       "floor",   "float",        "");
 one("floor"  ,"long double" ,"floor"   ,"long double"  ,"");
-two("fmod"   ,""            ,"fmod"    ,"double"       ,"Modulo remainder",bsdflag);
+two("fmod"   ,""            ,"fmod"    ,"double"       ,"Modulo remainder");
 two("hypot"  ,""            ,"hypot"   ,"double"       ,"sqrt(x*x+y*y)",bsdflag);
-one("ilogb"  ,""            ,"ilogb"   ,"int"          ,"Integer unbiased exponent", bsdflag,1);
-one("isnan"  ,""            ,"isnan"   ,"int"          ,"Nonzero if NaNS or NaNQ", ieeeflag,1);
+one("ilogb"  ,""            ,"ilogb"   ,"int"          ,"Integer unbiased exponent", ieeeflag,1);
+one("isnan"  ,""            ,"isnan"   ,"int"          ,"Nonzero if NaNS or NaNQ", ieeeflag,nofuncflag);
 one("itrunc" ,""            ,"itrunc"  ,"int"          ,"Truncate and convert to integer", bsdflag,1);
 one("j0"     ,""            ,"j0"      ,"double"       ,"Bessel function first kind, order 0", ieeeflag);
 one("j1"     ,""            ,"j1"      ,"double"       ,"Bessel function first kind, order 1", ieeeflag);
