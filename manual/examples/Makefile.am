@@ -2,8 +2,6 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-SUBDIRS = .
-
 docdir = $(prefix)/doc/blitz/examples
 doc_DATA = cast.cpp debug.cpp dump.cpp fixed.cpp outer.cpp outer.log output.cpp \
 output.log range.cpp simple.cpp simple.log slicing.cpp storage.cpp storage.log \
@@ -12,7 +10,7 @@ strideslice.cpp xor.cpp
 EXTRA_DIST = $(doc_DATA)
 
 INCLUDES = -I$(top_srcdir)
-CXXFLAGS = @CXXFLAGS@ @CXX_DEBUG_FLAGS@
+AM_CXXFLAGS = @CXXFLAGS@ @CXX_DEBUG_FLAGS@
 LDADD = -L$(top_srcdir)/lib -lblitz
 
 # Uncomment for debug version

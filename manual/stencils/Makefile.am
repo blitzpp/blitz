@@ -2,8 +2,6 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-SUBDIRS = .
-
 docdir = $(prefix)/doc/blitz/stencils
 doc_DATA = Laplacian2D.yo Laplacian2D4.yo backward11.yo backward12.yo \
 backward21.yo backward22.yo backward31.yo backward32.yo backward41.yo \
@@ -15,7 +13,7 @@ forward41.yo forward42.yo
 EXTRA_DIST = $(doc_DATA)
 
 INCLUDES = -I$(top_srcdir)
-CXXFLAGS = @CXXFLAGS@ @CXX_DEBUG_FLAGS@ -Dstenciltodump=Laplacian2D4
+AM_CXXFLAGS = @CXXFLAGS@ @CXX_DEBUG_FLAGS@ -Dstenciltodump=Laplacian2D4
 LDADD = -L$(top_srcdir)/lib -lblitz
 
 SINGLE_TESTS = dump-stencil
