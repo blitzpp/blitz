@@ -15,4 +15,5 @@ vecwhere.cc
 new-config.h
 new-config.h.in
 stamp-h1
+config.h.in
 

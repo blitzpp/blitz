@@ -1,3 +1,15 @@
+
+2004-04-17  Patrick Guio <patrick.guio@fys.uio.no>
+
+	* m4/ax_dirname.m4 m4/ax_create_pkgconfig_info.m4: New files. Macros to generate
+	necessary files to use in conjunction with pkg-config tool (see
+	http://www.freedesktop.org/Software/pkgconfig).  Files copied from 
+	http://ac-archive.sourceforge.net.
+	* m4/ac_cxx_lib_blitz.m4: New file. Macro to check whether Blitz is installed on the
+	system. Useful when writing configure file for package using Blitz.
+	* configure.in Makefile.am: Added support for generating .pc files to use in conjunction 
+	with pkg-config. 
+
 2004-04-09  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* benchmarks/Makefile.am: Added AM_CXXFLAGS to compile command for

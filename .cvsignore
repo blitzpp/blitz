@@ -18,3 +18,7 @@ mkinstalldirs
 missing
 config
 .deps
+blitz-uninstalled.pc
+blitz.pc
+blitz.pc.in
+
