@@ -19,9 +19,9 @@ AM_MAINTAINER_MODE
 SHELL=${CONFIG_SHELL-/bin/sh}
 AC_SUBST(SHELL)dnl
 
-echo ""
-echo "Configuring Blitz++ for $target"
-echo ""
+AC_MSG_NOTICE()
+AC_MSG_NOTICE([Configuring Blitz++ for $target])
+AC_MSG_NOTICE()
 
 # Declare variables which we want substituted in the Makefile.in's
 
@@ -55,7 +55,7 @@ AC_ARG_WITH(cxx,
   [  --with-cxx=COMPILER[:name-flags]     set options for COMPILER (KCC, SGI, FCC, cray, gcc, old-gcc, DECcxx, aCC, icc, pgCC, xlC)],
   [case "$withval" in
      KCC*)               # KAI C++  http://www.kai.com/
-       echo "Configuring for KAI C++"
+       AC_MSG_NOTICE([Configuring for KAI C++])
        bz_compiler=kcc
        case "$target" in
          *aix*)
@@ -72,7 +72,7 @@ AC_ARG_WITH(cxx,
        AR_FLAGS="-o"
      ;;
      SGI*)               # SGI C++  http://www.sgi.com
-       echo "Configuring for SGI C++"
+       AC_MSG_NOTICE([Configuring for SGI C++])
        bz_compiler=sgiCC
        AC_BZ_SET_COMPILER($withval,"CC","-LANG:std -LANG:restrict")
        CXX_OPTIMIZE_FLAGS="-Ofast"
@@ -82,14 +82,14 @@ AC_ARG_WITH(cxx,
        RANLIB="ar ts"
      ;;
      FCC*)
-       echo "Configuring for Fujitsu C++"
+       AC_MSG_NOTICE([Configuring for Fujitsu C++])
        bz_compiler=FCC
        AC_BZ_SET_COMPILER($withval,"FCC","")
        CXX_OPTIMIZE_FLAGS="-K fast"
        CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
      ;;
      DECcxx6.2)          # DEC C++  http://www.digital.com/
-       echo "Configuring for DEC cxx 6.2"
+       AC_MSG_NOTICE([Configuring for DEC cxx 6.2])
        bz_compiler=cxx
        AC_BZ_SET_COMPILER($withval,"cxx","-DBZ_ENABLE_XOPEN_SOURCE -std strict_ansi")
        CXX_OPTIMIZE_FLAGS="-O4 -tune host"
@@ -98,7 +98,7 @@ AC_ARG_WITH(cxx,
        RANLIB="ar ts"
      ;;
      DECcxx6.3)          # DEC C++  http://www.digital.com/
-       echo "Configuring for DEC cxx 6.3"
+       AC_MSG_NOTICE([Configuring for DEC cxx 6.3])
        bz_compiler=cxx
        AC_BZ_SET_COMPILER($withval,"cxx","-DBZ_ENABLE_XOPEN_SOURCE -std strict_ansi -nopure_cname")
        CXX_OPTIMIZE_FLAGS="-O4 -tune host"
@@ -107,49 +107,49 @@ AC_ARG_WITH(cxx,
        RANLIB="ar ts"
      ;;
      cray*)              # Cray C++
-       echo "Configuring for Cray C++."
+       AC_MSG_NOTICE([Configuring for Cray C++])
        bz_compiler=cray
        AC_BZ_SET_COMPILER($withval,"CC","-h instantiate=used")
        CXX_OPTIMIZE_FLAGS="-O3 -hpipeline3 -hunroll -haggress -hscalar2"
        CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
      ;;
      old-gcc*)               # gcc  http://gcc.gnu.org/
-       echo "Configuring for gcc (wahoo!)"
+       AC_MSG_NOTICE([Configuring for gcc (wahoo!)])
        bz_compiler=gcc
        AC_BZ_SET_COMPILER($withval,"g++","-ftemplate-depth-30")
        CXX_OPTIMIZE_FLAGS="-O2 -funroll-loops -fstrict-aliasing -fno-gcse"
        CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
      ;;
      gcc*)               # gcc  http://gcc.gnu.org/
-       echo "Configuring for gcc (wahoo!)"
+       AC_MSG_NOTICE([Configuring for gcc (wahoo!)])
        bz_compiler=gcc
        AC_BZ_SET_COMPILER($withval,"g++","")
        CXX_OPTIMIZE_FLAGS="-O2 -funroll-loops"
        CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
      ;;
      aCC)                # HP-UX compiler http://www.hp.com/go/c++
-       echo "Configuring for aCC (HP-UX)"
+       AC_MSG_NOTICE([Configuring for aCC (HP-UX)])
        bz_compiler=aCC
        AC_BZ_SET_COMPILER($withval,"aCC","-AA")
        CXX_OPTIMIZE_FLAGS="-O"
        CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
      ;;
      icc)                # Intel C++ compiler   http://www.intel.com/
-       echo "Configuring for Intel C++"
+       AC_MSG_NOTICE([Configuring for Intel C++])
        bz_compiler=icc
        AC_BZ_SET_COMPILER($withval,"icc","")
        CXX_OPTIMIZE_FLAGS="-O2"
        CXX_DEBUG_FLAGS="-g -O0 -DBZ_DEBUG"
      ;;
      pgCC*)              # Portland group   http://www.pgroup.com/
-       echo "Configuring for Portland Group C++"
+       AC_MSG_NOTICE([Configuring for Portland Group C++])
        bz_compiler=pgCC
        AC_BZ_SET_COMPILER($withval,"pgCC","")
        CXX_OPTIMIZE_FLAGS="-O4 -Mnoframe -Mnodepchk -Minline=levels:25"
        CXX_DEBUG_FLAGS="-g -O0 -DBZ_DEBUG"
      ;;
      xlC*)              # IBM Visual Age C++   http://www.ibm.com/
-       echo "Configuring for IBM Visual Age C++"
+       AC_MSG_NOTICE([Configuring for IBM Visual Age C++])
        bz_compiler=xlC
        AC_BZ_SET_COMPILER($withval,"xlC","-qrtti=all")
        CXX_OPTIMIZE_FLAGS="-O3 -qstrict -Q -qansialias -qhot"
@@ -191,7 +191,7 @@ bz_64bit=false
 AC_ARG_ENABLE(64bit,
   [  --enable-64bit          enable 64-bit compilation flags],
   [if test "$enableval" = yes; then
-     echo "64-bit compilation flags enabled"
+     AC_MSG_NOTICE([64-bit compilation flags enabled])
      bz_64bit=true
    fi], [])
 
@@ -199,7 +199,7 @@ AC_ARG_ENABLE(64bit,
 
 case "$target" in
   *aix*)
-    echo "AIX: assuming xlf and xlf90"
+    AC_MSG_NOTICE([AIX: assuming xlf and xlf90])
     F77="xlf"
     F77_OPTIMIZE_FLAGS="-O3 -qstrict -qhot"
     F90="xlf90 -qsuffix=f=f90"
@@ -224,7 +224,7 @@ case "$target" in
     fi
   ;;
   *irix*)
-    echo "IRIX: assuming f77 and f90"
+    AC_MSG_NOTICE([IRIX: assuming f77 and f90])
     F77=f77
     F77_OPTIMIZE_FLAGS="-Ofast"
     F90=f90
@@ -259,7 +259,7 @@ case "$target" in
   *linux*)
     case "$CXX" in
       g++)
-    		echo "Linux: assuming g++/g77"
+    		AC_MSG_NOTICE([Linux: assuming g++/g77])
         F77="g77 -fno-second-underscore"
         F77_OPTIMIZE_FLAGS="-O2 -funroll-loops"
         F90=""
@@ -268,7 +268,7 @@ case "$target" in
         FORTLIBS="-lg2c"
       ;;
       icc)
-    		echo "Linux: assuming icc/icf"
+    		AC_MSG_NOTICE([Linux: assuming icc/icf])
         F77=ifc
         F77_OPTIMIZE_FLAGS="-w90 -O2"
         F90=ifc
@@ -281,14 +281,14 @@ case "$target" in
     esac
   ;;
   *solaris*)
-    echo "Solaris: assuming f77 and f90"
+    AC_MSG_NOTICE([Solaris: assuming f77 and f90])
     F77=f77
     F77_OPTIMIZE_FLAGS="-O3"
     F90=f90
     F90_OPTIMIZE_FLAGS="-O3"
   ;;
   *hp-hpux*)
-    echo "HP-UX: assuming f70 and f90"
+    AC_MSG_NOTICE([HP-UX: assuming f70 and f90]
     F77=f90
     F77_OPTIMIZE_FLAGS="-O3"
     F90=f90
@@ -296,7 +296,7 @@ case "$target" in
     FORTLIBS="-lc -lF90"
   ;;
   *osf*)
-    echo "OSF: assuming f77 and f90"
+    AC_MSG_NOTICE([OSF: assuming f77 and f90])
     F77=f77
     F77_OPTIMIZE_FLAGS="-O4 -tune host"
     F90=f90
@@ -305,7 +305,7 @@ case "$target" in
     CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
   ;;
   alpha-cray-unicos)
-    echo "Cray T3D/E: Setting special optimization flags"
+    AC_MSG_NOTICE([Cray T3D/E: Setting special optimization flags])
     F77=fort77
     F77_OPTIMIZE_FLAGS="-O aggress -O 3 -O unroll2 -O pipeline3"
     F90=f90
@@ -321,12 +321,12 @@ case "$target" in
     esac
   ;;
   *)
-    echo << EOF
+    AC_MSG_NOTICE([ 
 
 Blitz++ has not been tuned for this platform.  You may have trouble
 building fortran benchmarks, and performance may be unexciting.
 
-EOF
+])
   ;;
 esac
 
@@ -343,7 +343,7 @@ bz_optimize=false
 AC_ARG_ENABLE(optimize,
   [  --enable-optimize       enable compiler optimization flags],
   [if test "$enableval" = yes; then
-     echo "Optimization flags enabled"
+     AC_MSG_NOTICE([Optimization flags enabled])
      CXXFLAGS="$CXXFLAGS $CXX_OPTIMIZE_FLAGS"
    fi], [])
 
@@ -351,11 +351,11 @@ bz_debug=false
 AC_ARG_ENABLE(debug,
   [  --enable-debug          enable compiler debug flags],
   [if test "$enableval" = yes; then
-     echo "Debugging flags enabled"
+     AC_MSG_NOTICE([Debugging flags enabled])
      CXXFLAGS="$CXXFLAGS $CXX_DEBUG_FLAGS"
    fi], [])
 
-echo ""
+AC_MSG_NOTICE()
 
 # Disable shared library building by default (use --enable-shared to enable)
 AM_DISABLE_SHARED
@@ -377,10 +377,20 @@ AC_ARG_WITH(blas,
   BLASPATH=-L"$withval",
   BLASPATH="")
 
-echo "Checking to see if there is a usable BLAS library kicking around.."
-echo "  (If so, Blitz++ will use BLAS library to run benchmarks against "
-echo "   if you build the benchmarks.  Blitz++ itself does NOT use BLAS.)"
+AC_MSG_NOTICE(
+[Checking to see if there is a usable BLAS library kicking around..])
+AC_MSG_NOTICE(
+[  (If so, Blitz++ will use BLAS library to run benchmarks against]) 
+AC_MSG_NOTICE(
+[   if you build the benchmarks.  Blitz++ itself does NOT use BLAS).])
 
+AC_MSG_NOTICE([
+
+Checking to see if there is a usable BLAS library kicking around...
+(If so, Blitz++ will use BLAS library to run benchmarks against 
+if you build the benchmarks.  Blitz++ itself does NOT use BLAS).
+
+])
 LDFLAGSsave=$LDFLAGS
 LDFLAGS="$BLASPATH $LDFLAGS"
 
@@ -429,19 +439,19 @@ else
   true
 fi
 
-echo ""
-echo "CXX                = $CXX"
-echo "CXXFLAGS           = $CXXFLAGS"
-echo "CXX_OPTIMIZE_FLAGS = $CXX_OPTIMIZE_FLAGS"
-echo "CXX_DEBUG_FLAGS    = $CXX_DEBUG_FLAGS"
-echo "CXXFFLAGS          = $CXXFFLAGS"
-echo "F77                = $F77"
-echo "F77_OPTIMIZE_FLAGS = $F77_OPTIMIZE_FLAGS"
-echo "F90                = $F90"
-echo "F90_OPTIMIZE_FLAGS = $F90_OPTIMIZE_FLAGS"
-echo "FORTLIBS           = $FORTLIBS"
-echo "BLASLIB            = $BLASLIB"
-echo ""
+AC_MSG_NOTICE()
+AC_MSG_NOTICE([CXX                = $CXX])
+AC_MSG_NOTICE([CXXFLAGS           = $CXXFLAGS])
+AC_MSG_NOTICE([CXX_OPTIMIZE_FLAGS = $CXX_OPTIMIZE_FLAGS])
+AC_MSG_NOTICE([CXX_DEBUG_FLAGS    = $CXX_DEBUG_FLAGS])
+AC_MSG_NOTICE([CXXFFLAGS          = $CXXFFLAGS])
+AC_MSG_NOTICE([F77                = $F77])
+AC_MSG_NOTICE([F77_OPTIMIZE_FLAGS = $F77_OPTIMIZE_FLAGS])
+AC_MSG_NOTICE([F90                = $F90])
+AC_MSG_NOTICE([F90_OPTIMIZE_FLAGS = $F90_OPTIMIZE_FLAGS])
+AC_MSG_NOTICE([FORTLIBS           = $FORTLIBS])
+AC_MSG_NOTICE([BLASLIB            = $BLASLIB])
+AC_MSG_NOTICE()
 
 # Process the Makefile.in's
 AC_CONFIG_FILES([
