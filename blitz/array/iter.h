@@ -23,6 +23,13 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2002/03/06 15:56:43  patricg
+ *
+ * data_ replaced by this->data_ in
+ * template<class T, int N>
+ * class ArrayIterator : public ConstArrayIterator<T,N> {},
+ * removed struct _bz_endTag { }; declaration
+ *
  * Revision 1.2  2001/01/25 00:25:55  tveldhui
  * Ensured that source files have cvs logs.
  *
@@ -37,7 +44,6 @@
 
 BZ_NAMESPACE(blitz)
 
-struct _bz_endTag { };
 
 
 template<class T, int N>
@@ -163,12 +169,12 @@ class ArrayIterator : public ConstArrayIterator<T,N> {
 
     T& operator*()
     {
-        return *data_;
+        return *this->data_;
     }
 
     T* _bz_restrict operator->() 
     {
-        return data_;
+        return this->data_;
     }
 };
 
