@@ -57,5 +57,7 @@ Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	template<class T, int N>
 	class ArrayIterator : public ConstArrayIterator<T,N> {},
 	removed struct _bz_endTag { }; declaration
+	* blitz/array/io.cc: added typename (_bz_typename) qualifier to the
+	iterator and const_iterator of Array<T_numtype,N_rank>
 
 
