@@ -2,7 +2,7 @@
 
 #define BZ_DISABLE_KCC_COPY_PROPAGATION_KLUDGE
 
-#include <blitz/tinyvec.h>
+#include <blitz/tinyvec-et.h>
 #include <blitz/timer.h>
 #include <blitz/rand-uniform.h>
 
