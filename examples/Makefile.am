@@ -12,7 +12,7 @@ INCLUDES = -I$(top_srcdir)
 LDADD = -L$(top_srcdir)/lib -lblitz
 
 examplesdir = $(prefix)/examples
-examples_DATA = array.cpp cartesian.cpp cast.cpp cfd.cpp complex_test.cpp \
+examples_DATA = array.cpp cartesian.cpp cast.cpp cfd.cpp complex-test.cpp \
 convolve.cpp curldiv.cpp deriv.cpp diff.cpp erf.cpp fixed.cpp indirect.cpp \
 io.cpp iter.cpp matmult.cpp nested.cpp numinquire.cpp outer.cpp pauli.cpp \
 pick.cpp polymorph.cpp prettyprint.cpp profile.cpp qcd.cpp rand2.cpp \
@@ -20,7 +20,7 @@ random.cpp rangexpr.cpp reduce.cpp simple.cpp slicing.cpp stencil.cpp \
 stencil2.cpp stencil3.cpp stencilet.cpp storage.cpp tiny.cpp tiny2.cpp \
 tiny3.cpp transform.cpp useret.cpp where.cpp whitt.cpp Makefile
 
-EXTRA_PROGRAMS = array cartesian cast cfd complex_test convolve curldiv \
+EXTRA_PROGRAMS = array cartesian cast cfd complex-test convolve curldiv \
 deriv diff erf fixed indirect io iter matmult nested numinquire outer pauli \
 pick polymorph prettyprint profile qcd rand2 random rangexpr reduce simple \
 slicing stencil2 stencil3 stencil stencilet storage tiny2 tiny3 tiny \
@@ -30,7 +30,7 @@ array_SOURCES = array.cpp
 cartesian_SOURCES = cartesian.cpp
 cast_SOURCES = cast.cpp
 cfd_SOURCES = cfd.cpp
-complex_test_SOURCES = complex_test.cpp
+complex_test_SOURCES = complex-test.cpp
 convolve_SOURCES = convolve.cpp
 curldiv_SOURCES = curldiv.cpp
 deriv_SOURCES = deriv.cpp
