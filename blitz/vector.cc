@@ -6,6 +6,9 @@
  * conditions of use.
  *
  * $Log$
+ * Revision 1.3  2002/05/27 19:37:12  jcumming
+ * Removed use of this->.  These names are now declared in class definition.
+ *
  * Revision 1.2  2002/03/06 16:27:40  patricg
  *
  * data_ replaced by this->data_ everywhere
@@ -119,14 +122,14 @@ void Vector<P_numtype>::_bz_assign(P_expr expr, P_updater)
     {
 #ifndef BZ_PARTIAL_LOOP_UNROLL
         for (int i=0; i < length_; ++i)
-            P_updater::update(this->data_[i], expr._bz_fastAccess(i));
+            P_updater::update(data_[i], expr._bz_fastAccess(i));
 #else
         // Unwind the inner loop, four elements at a time.
         int leftover = length_ & 0x03;
 
         int i=0;
         for (; i < leftover; ++i)
-            P_updater::update(this->data_[i], expr._bz_fastAccess(i));
+            P_updater::update(data_[i], expr._bz_fastAccess(i));
 
         for (; i < length_; i += 4)
         {
@@ -146,10 +149,10 @@ void Vector<P_numtype>::_bz_assign(P_expr expr, P_updater)
             tmp3 = expr._bz_fastAccess(BZ_NO_PROPAGATE(t2));
             tmp4 = expr._bz_fastAccess(BZ_NO_PROPAGATE(t3));
 
-            P_updater::update(this->data_[i], BZ_NO_PROPAGATE(tmp1));
-            P_updater::update(this->data_[t1], tmp2);
-            P_updater::update(this->data_[t2], tmp3);
-            P_updater::update(this->data_[t3], tmp4);
+            P_updater::update(data_[i], BZ_NO_PROPAGATE(tmp1));
+            P_updater::update(data_[t1], tmp2);
+            P_updater::update(data_[t2], tmp3);
+            P_updater::update(data_[t3], tmp4);
         }
 #endif
     }
@@ -173,14 +176,14 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator=(_bz_VecExpr<P_expr> expr)
     {
 #ifndef BZ_PARTIAL_LOOP_UNROLL
         for (int i=0; i < length_; ++i)
-            this->data_[i] = (P_numtype)expr._bz_fastAccess(i);
+            data_[i] = (P_numtype)expr._bz_fastAccess(i);
 #else
         // Unwind the inner loop, four elements at a time.
         int leftover = length_ & 3;
 
         int i=0;
         for (; i < leftover; ++i)
-            this->data_[i] = (P_numtype)expr._bz_fastAccess(i);
+            data_[i] = (P_numtype)expr._bz_fastAccess(i);
 
         for (; i < length_; i += 4)
         {
@@ -200,10 +203,10 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator=(_bz_VecExpr<P_expr> expr)
             tmp3 = expr._bz_fastAccess(BZ_NO_PROPAGATE(t2));
             tmp4 = expr._bz_fastAccess(BZ_NO_PROPAGATE(t3));
 
-            this->data_[i] = (P_numtype)BZ_NO_PROPAGATE(tmp1);
-            this->data_[t1] = (P_numtype)tmp2;
-            this->data_[t2] = (P_numtype)tmp3;
-            this->data_[t3] = (P_numtype)tmp4;
+            data_[i] = (P_numtype)BZ_NO_PROPAGATE(tmp1);
+            data_[t1] = (P_numtype)tmp2;
+            data_[t2] = (P_numtype)tmp3;
+            data_[t3] = (P_numtype)tmp4;
         }
 #endif
     }
@@ -230,7 +233,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::                           \
                                                                         \
         int i=0;                                                        \
         for (; i < leftover; ++i)                                       \
-            this->data_[i] op expr._bz_fastAccess(i);                   \
+            data_[i] op expr._bz_fastAccess(i);                         \
                                                                         \
         for (; i < length_; i += 4)                                     \
         {                                                               \
@@ -245,10 +248,10 @@ inline Vector<P_numtype>& Vector<P_numtype>::                           \
             tmp3 = expr._bz_fastAccess(t2);                             \
             tmp4 = expr._bz_fastAccess(t3);                             \
                                                                         \
-            this->data_[i] op tmp1;                                     \
-            this->data_[t1] op tmp2;                                    \
-            this->data_[t2] op tmp3;                                    \
-            this->data_[t3] op tmp4;                                    \
+            data_[i] op tmp1;                                           \
+            data_[t1] op tmp2;                                          \
+            data_[t2] op tmp3;                                          \
+            data_[t3] op tmp4;                                          \
         }                                                               \
     }                                                                   \
     else {                                                              \
@@ -279,10 +282,10 @@ inline Vector<P_numtype>& Vector<P_numtype>::                           \
     {                                                                   \
         if (traversalOrder & 0x01)                                      \
             for (int i=length_-1; i >= 0; --i)                          \
-                this->data_[i] op expr._bz_fastAccess(i);               \
+                data_[i] op expr._bz_fastAccess(i);                     \
         else                                                            \
             for (int i=0; i < length_; ++i)                             \
-                this->data_[i] op expr._bz_fastAccess(i);               \
+                data_[i] op expr._bz_fastAccess(i);                     \
     }                                                                   \
     else {                                                              \
         for (int i=0; i < length_; ++i)                                 \
@@ -303,7 +306,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::                           \
     if ((stride_ == 1) && (expr._bz_hasFastAccess()))                   \
     {                                                                   \
         for (int i=0; i < length_; ++i)                                 \
-            this->data_[i] op expr._bz_fastAccess(i);                   \
+            data_[i] op expr._bz_fastAccess(i);                         \
     }                                                                   \
     else {                                                              \
         for (int i=0; i < length_; ++i)                                 \
