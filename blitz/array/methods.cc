@@ -2,6 +2,10 @@
  * $Id$
  *
  * $Log$
+ * Revision 1.7  2002/08/30 22:14:23  jcumming
+ * Added definition of setStorage() method, which lets user set Array storage
+ * format after construction.  We check that Array is not allocated first.
+ *
  * Revision 1.6  2002/06/27 00:15:35  jcumming
  * Changed T_numtype to P_numtype when used outside the argument list or body
  * of a member function definition (i.e., outside the class scope).  Inside
@@ -240,6 +244,22 @@ void Array<P_numtype, N_rank>::reference(const Array<P_numtype, N_rank>& array)
         array.zeroOffset_);
 
     data_ = const_cast<P_numtype*>(array.data_);
+}
+
+/*
+ * Modify the Array storage.  Array must be unallocated.
+ */
+template<class P_numtype, int N_rank>
+void Array<P_numtype, N_rank>::setStorage(GeneralArrayStorage<N_rank> x)
+{
+#ifdef BZ_DEBUG
+    if (size() != 0) {
+        BZPRECHECK(0,"Cannot modify storage format of an Array that has already been allocated!" << endl);
+        return;
+    }
+#endif
+    storage_ = x;
+    return;
 }
 
 /*
