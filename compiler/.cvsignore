@@ -1,0 +1,11 @@
+Makefile
+*.lo
+*.la
+.deps
+.libs
+config.h
+bztest
+bztemp
+logfile
+bzjunk.cpp
+bzjunk
