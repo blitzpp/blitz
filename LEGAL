@@ -1,6 +1,5 @@
-The Blitz++ library is currently in transition from the GPL to the
-more permissive "Blitz++ Artistic License".  Blitz++ is currently
-distributed with both licenses, and you may pick either.  They
-are detailed in GPL and LICENSE, respectively.  The artistic
-license is appropriate for commercial use.
+The Blitz++ library is licensed under both the GPL and the more permissive
+"Blitz++ Artistic License".  Take your pick.  They are detailed in GPL
+and LICENSE, respectively.  The artistic license is more appropriate for
+commercial use, since it lacks the "viral" properties of the GPL.
 
