@@ -101,3 +101,4 @@ Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* examples/haney.cpp: likewise for #include<valarray>
 	* blitz/vecexpr.h: (re)inserted includes for vecbops, vecuops and vecbfn
 	in order to compile testsuite/tinyvec.cpp
+	* benchmarks/ct.cpp: removed (output of g++ -E)
