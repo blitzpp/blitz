@@ -37,7 +37,7 @@ fixed_SOURCES = fixed.cpp
 	sed -e 's/{/@{/' -e 's/}/@}/' $< | fold -s -w 80 > $@
 
 %.out : %
-	$< 2>&1 | fold -s -w 80 > $@
+	./$< 2>&1 | fold -s -w 80 > $@
 
 simple.texi: simple.cpp
 storage.texi: storage.cpp
@@ -80,6 +80,6 @@ all-am:
 	$(MAKE) $(AM_MAKEFLAGS) -i out
 
 clean-local:
-	-rm -rf cxx_repository $(EXTRA_PROGRAMS) core.[0-9]*
+	-rm -rf cxx_repository $(EXTRA_PROGRAMS) *.texi *.out core.[0-9]*
 
 
