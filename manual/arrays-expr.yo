@@ -1030,8 +1030,7 @@ bzsect(Array reductions)
 bzindex(Array!reductions)
 bzindex(reductions)
 
-Currently, Blitz++ arrays support two forms of reduction:+footnote(A
-future version will likely support block reductions.)
+Currently, Blitz++ arrays support two forms of reduction:
 
 startit()
 
