@@ -1,7 +1,7 @@
 #include "bzfstream.h"
 #include "arroptuple.h"
 
-bzofstream ofs("arrayuops.cc", 
+bzofstream ofs("../array/uops.cc", 
     "Expression templates for arrays, unary functions", __FILE__,
     "BZ_ARRAYUOPS_CC");
 
@@ -126,11 +126,11 @@ void two(const char* fname, int flag=0, const char* apname = 0)
 
 int main()
 {
-    std::cout << "Generating <arrayuops.cc>" << std::endl;
+    std::cout << "Generating <array/uops.cc>" << std::endl;
 
 ofs << 
 "#ifndef BZ_ARRAYEXPR_H\n"
-" #error <blitz/arrayuops.cc> must be included after <blitz/arrayexpr.h>\n"
+" #error <blitz/array/uops.cc> must be included after <blitz/arrayexpr.h>\n"
 "#endif // BZ_ARRAYEXPR_H\n\n";
 
     ofs.beginNamespace();
