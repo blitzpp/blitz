@@ -1,3 +1,99 @@
+2004-03-09  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/prettyprint.h: Eliminated compiler warnings by adding
+	explicit casts in nextArrayOperandSymbol and
+	nextScalarOperandSymbol methods.
+	* blitz/mathfunc.h: Use BZ_STD_SCOPE macro to insert std::
+	qualifier in front of string type where needed.  Regenerated from
+	genmathfunc.cpp code.
+	* blitz/generate/genmathfunc.cpp: Use BZ_STD_SCOPE macro to insert
+	std:: qualifier in front of string type where needed.
+	* blitz/funcs.h: Use BZ_STD_SCOPE macro to insert std:: qualifier
+	in front of string type where needed.
+	* blitz/indexexpr.h: Use BZ_STD_SCOPE macro to insert std::
+	qualifier in front of string type where needed.
+	* blitz/mathf2.h: Use BZ_STD_SCOPE macro to insert std:: qualifier
+	in front of string type where needed.
+	* blitz/ops.h: Use BZ_STD_SCOPE macro to insert std:: qualifier in
+	front of string type where needed.
+	* blitz/update.h: Use BZ_STD_SCOPE macro to insert std:: qualifier
+	in front of string type where needed.
+	* blitz/array/expr.h: Use BZ_STD_SCOPE macro to insert std::
+	qualifier in front of string type where needed.
+	* blitz/array/fastiter.h: Use BZ_STD_SCOPE macro to insert std::
+	qualifier in front of string type where needed.
+	* blitz/array/functorExpr.h: Use BZ_STD_SCOPE macro to insert
+	std:: qualifier in front of string type where needed.
+	* blitz/array/map.h: Use BZ_STD_SCOPE macro to insert std::
+	qualifier in front of string type where needed.
+	* blitz/array/newet-macros.h: Use BZ_STD_SCOPE macro to insert
+	std:: qualifier in front of string type where needed.
+	* blitz/array/reduce.h: Use BZ_STD_SCOPE macro to insert std::
+	qualifier in front of string type where needed.
+	* blitz/array/stencil-et.h: Use BZ_STD_SCOPE macro to insert std::
+	qualifier in front of string type where needed.
+	* blitz/array/where.h: Use BZ_STD_SCOPE macro to insert std::
+	qualifier in front of string type where needed.
+	* blitz/array/zip.h: Use BZ_STD_SCOPE macro to insert std::
+	qualifier in front of string type where needed.
+	* blitz/array/eval.cc: Use BZ_STD_SCOPE macro to insert std::
+	qualifier in front of string type where needed.
+	* blitz/array/reduce.cc: Use BZ_STD_SCOPE macro to insert std::
+	qualifier in front of string type where needed.
+2004-03-01  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* doc/examples/Makefile.am: Added $(EXEEXT) to program names when
+	listed as prerequisites for .out files, so these executables get
+	built properly on platforms where executables do have a filename
+	extension.
+
+2004-02-09  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/array/newet-macros.h: Added new macro
+	BZ_DECLARE_FUNCTION2_SCALAR, which allows the user to declare that
+	a user-defined binary function may be applied to a combination of
+	an Array type and the given scalar type.  This macro is intended
+	to be used in conjunction with either BZ_DECLARE_FUNCTION2 or
+	BZ_DECLARE_FUNCTION2_RET, which declare a user-defined binary
+	function applicable to a pair of Array types.  The arguments for
+	BZ_DECLARE_FUNCTION2_SCALAR are the function name and the scalar
+	argument type.
+2004-02-05  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/array/newet-macros.h: Added space between macro argument
+	"sca" and closing angled bracket ">" to accommodate the use of a
+	scalar type that is a template, such as complex<double>.  This
+	eliminates errors reported by the Intel icc compiler.
+2004-01-20  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/array/ops.cc: Removed inline keyword from
+	Array::initialize() member function, since this triggers a bug in
+	the gcc optimizer when repeatedly assigning a scalar to an Array
+	slice.
+	* blitz/memblock.cc: Changed argument type for member function
+	allocate() from int to size_t and made type usage consistent
+	throughout this function.
+
+	* blitz/memblock.h: Changed argument type for member function
+	allocate() from int to size_t to eliminate unintended type
+	conversion.  Also fixed internal include guard, removed external
+	include guards and added Emacs C++ tag.
+
+	* blitz/vector.h: Consolidated multiple versions of copy
+	constructor with const and non-const reference argument into a
+	single version to eliminate compiler warning.  Also eliminated
+	external include guards and added Emacs C++ tag.
+
+2004-01-08  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* examples/prettyprint.cpp: Replaced use of obsolete macro kludge
+	_bz_true with ANSI C++ boolean value true.
+
+2004-01-06  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/array/iter.h: Fixed bug in ConstPointerStack assignment
+	operator.
+
 2003-12-30  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* testsuite/extract.cpp: Use new BZ_DECLARE_ARRAY_ET_SCALAR_OPS
