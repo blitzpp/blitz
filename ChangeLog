@@ -1,3 +1,12 @@
+
+
+Wed Jul 24 11:06:41 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure.in: Removed occurences of -DBZ_DISABLE_XOPEN_SOURCE, this is
+	the default and changed to -DBZ_ENABLE_XOPEN_SOURCE for DECcxx6.2 and 
+	DECcxx6.3 required for scoping of ilogb. 
+	* configure: Rebuilt from configure.in using autoconf 2.53
+	* all Makefile.in: Rebuilt from Makefile.am using automake 1.6.2
+
 2002-07-23  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 	* blitz/array/functorExpr.h: Changed _bz_FunctorExpr classes to
 	store user-defined functor by value rather than by const
