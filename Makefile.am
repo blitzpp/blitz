@@ -7,8 +7,8 @@ SUBDIRS = bin compiler blitz random src lib testsuite \
 
 EXTRA_DIST = LEGAL LICENSE README.binutils config.h.in ChangeLog.1 
 
-demodir = $(prefix)/demos
-demo_DATA = demos/Makefile
+# demodir = $(prefix)/demos
+# demo_DATA = demos/Makefile
 
 check-compiler:
 	@(cd compiler && $(MAKE) $(AM_MAKEFLAGS) $@) || exit 1;
