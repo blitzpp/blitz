@@ -15,26 +15,8 @@ makeloops.cpp qcd.txt quinlan.cpp stenciln.cpp tiny3.cpp
 AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir) -I$(top_builddir)
 AM_CXXFLAGS = @CXX_OPTIMIZE_FLAGS@ @CXXFFLAGS@ @CXXFCFLAG@
 AM_FFLAGS = @F77_OPTIMIZE_FLAGS@
-LIBS = -L$(top_builddir)/lib -lblitz @BLASLIB@ @FORTLIBS@ -lm
-
-if F90_COMPILER
-
-F90COMPILE = $(FC) $(FCFLAGS) $(FCFLAGS_f90) @FC_OPTIMIZE_FLAGS@ 
-LTF90COMPILE = $(LIBTOOL) --tag=F77 --mode=compile $(FC) $(FCFLAGS) $(FCFLAGS_f90) \
-	@FC_OPTIMIZE_FLAGS@
-
-SUFFIXES = .f90 .o .lo .obj
-
-.f90.o: 
-	$(F90COMPILE) -c -o $@ $<
-
-.f90.obj: 
-	$(F90COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
-
-.f90.lo: 
-	$(LTF90COMPILE) -c -o $@ $<
-
-endif
+AM_FCFLAGS = $(FCFLAGS_f90) @FC_OPTIMIZE_FLAGS@
+LDADD = -L$(top_builddir)/lib -lblitz @BLASLIB@ @FCLIBS@ @FLIBS@
 
 
 ############################################################################
