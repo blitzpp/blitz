@@ -1,14 +1,7 @@
 /*
- * $Id$
- *
  * Copyright (C) 1997 Todd Veldhuizen <tveldhui@oonumerics.org>
  * All rights reserved.  Please see <blitz/blitz.h> for terms and
  * conditions of use.
- *
- * $Log$
- * Revision 1.1  2002/05/22 22:38:54  jcumming
- * I/O operations for blitz TinyMatrix.
- *
  *
  */
 

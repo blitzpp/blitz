@@ -21,29 +21,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.4  2002/06/26 23:52:04  jcumming
- * Explicitly specify second template argument for ListInitializationSwitch,
- * rather than relying on the default value.  This eliminates a compilation
- * problem using the xlC compiler.
- *
- * Revision 1.3  2002/05/22 22:39:41  jcumming
- * Added #include of <blitz/tinymatio.cc>.
- *
- * Revision 1.2  2001/01/24 20:22:50  tveldhui
- * Updated copyright date in headers.
- *
- * Revision 1.1.1.1  2000/06/19 12:26:12  tveldhui
- * Imported sources
- *
- * Revision 1.2  1998/03/14 00:04:47  tveldhui
- * 0.2-alpha-05
- *
- * Revision 1.1  1997/07/16 14:51:20  tveldhui
- * Update: Alpha release 0.2 (Arrays)
- *
- */
+ ***************************************************************************/
 
 #ifndef BZ_TINYMAT_H
 #define BZ_TINYMAT_H
