@@ -1,4 +1,13 @@
-
+2002-12-19  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+	* blitz/meta/vecassign.h: Removed names of function arguments in
+	the static methods of the _bz_meta_vecAssign<0,0> specialization
+	to eliminate compiler warnings about unused variables.
+	* blitz/array/eval.cc: Several changes to eliminate compiler
+	warnings about unused variables.
+	* testsuite/extract.cpp: Uncommented a couple of additional tests.
+	* testsuite/free.cpp: Removed an unused variable.
+	* blitz/range.h: Removed name of an unused function argument.
+	* testsuite/module1.cpp: Removed an unused variable.
 
 Tue Dec 17 16:23:11 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* benchmarks/acousticf2.f: fixed in commented test prog call to 
