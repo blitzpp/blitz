@@ -73,13 +73,13 @@ public:
     void loadStride(int rank)
     { iter_.loadStride(rank); }
 
-    _bz_bool isUnitStride(int rank) const
+    bool isUnitStride(int rank) const
     { return iter_.isUnitStride(rank); }
 
     void advanceUnitStride()
     { iter_.advanceUnitStride(); }
 
-    _bz_bool canCollapse(int outerLoopRank, int innerLoopRank) const
+    bool canCollapse(int outerLoopRank, int innerLoopRank) const
     {
         // BZ_DEBUG_MESSAGE("_bz_ArrayExpr<>::canCollapse()");
         return iter_.canCollapse(outerLoopRank, innerLoopRank);
@@ -92,7 +92,7 @@ public:
     int suggestStride(int rank) const
     { return iter_.suggestStride(rank); }
 
-    _bz_bool isStride(int rank, int stride) const
+    bool isStride(int rank, int stride) const
     { return iter_.isStride(rank,stride); }
 
     void prettyPrint(string& str) const
@@ -103,8 +103,8 @@ public:
     void prettyPrint(string& str, prettyPrintFormat&) const
     {   str += "(stencil)"; }
 
-    template<class T_shape>
-    _bz_bool shapeCheck(const T_shape& shape)
+    template<typename T_shape>
+    bool shapeCheck(const T_shape& shape)
     { return iter_.shapeCheck(shape); }
 
     void moveTo(const TinyVector<int,N_rank>& i)
@@ -117,7 +117,7 @@ protected:
 };
 
 #define BZ_ET_STENCIL(name,result) \
-template<class P_numtype, int N_rank> \
+template<typename P_numtype, int N_rank> \
 class name ## _et : public StencilExpr<P_numtype,N_rank,result>, \
   public ETBase<name ## _et<P_numtype,N_rank> > \
  { \
@@ -141,7 +141,7 @@ public: \
       return r; \
     } \
 }; \
-template<class P_numtype, int N_rank> \
+template<typename P_numtype, int N_rank> \
 inline _bz_ArrayExpr<name ## _et<P_numtype, N_rank> > \
 name(Array<P_numtype,N_rank>& A) \
 { \
@@ -149,7 +149,7 @@ name(Array<P_numtype,N_rank>& A) \
 }
 
 #define BZ_ET_STENCILV(name,rank) \
-template<class P_numtype, int N_rank> \
+template<typename P_numtype, int N_rank> \
 class name ## _et : public StencilExpr<P_numtype,N_rank, \
     TinyVector<P_numtype,rank> >, \
   public ETBase<name ## _et<P_numtype,N_rank> > \
@@ -175,7 +175,7 @@ public: \
       return r; \
     } \
 }; \
-template<class P_numtype, int N_rank> \
+template<typename P_numtype, int N_rank> \
 inline _bz_ArrayExpr<name ## _et<P_numtype, N_rank> > \
 name(Array<P_numtype,N_rank>& A) \
 { \
@@ -183,7 +183,7 @@ name(Array<P_numtype,N_rank>& A) \
 }
 
 #define BZ_ET_STENCIL_DIFF(name) \
-template<class P_numtype, int N_rank> \
+template<typename P_numtype, int N_rank> \
 class name ## _et : public StencilExpr<P_numtype,N_rank,P_numtype>, \
   public ETBase<name ## _et<P_numtype,N_rank> > \
  { \
@@ -209,7 +209,7 @@ public: \
 private: \
     int dim_; \
 }; \
-template<class P_numtype, int N_rank> \
+template<typename P_numtype, int N_rank> \
 inline _bz_ArrayExpr<name ## _et<P_numtype, N_rank> > \
 name(Array<P_numtype,N_rank>& A, int dim) \
 { \

@@ -41,14 +41,14 @@ BZ_NAMESPACE(blitz)
  */
 
 // By default, produce a harmless component type, and zero components.
-template<class T_component>
+template<typename T_component>
 struct multicomponent_traits {
     typedef T_component T_element;
     enum { numComponents = 0 };
 };
 
 // TinyVector
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 struct multicomponent_traits<TinyVector<T_numtype,N_rank> > {
     typedef T_numtype T_element;
     enum { numComponents = N_rank };
@@ -56,7 +56,7 @@ struct multicomponent_traits<TinyVector<T_numtype,N_rank> > {
 
 #ifdef BZ_HAVE_COMPLEX_MATH
 // complex<T>
-template<class T>
+template<typename T>
 struct multicomponent_traits<complex<T> > {
     typedef T T_element;
     enum { numComponents = 2 };

@@ -58,7 +58,7 @@ public:
     {
         for (int i=0; i < N_rank; ++i)
           ordering_(i) = N_rank - 1 - i;
-        ascendingFlag_ = _bz_true;
+        ascendingFlag_ = true;
         base_ = 0;
     }
 
@@ -69,7 +69,7 @@ public:
     }
 
     GeneralArrayStorage(TinyVector<int,N_rank> ordering,
-        TinyVector<_bz_bool,N_rank> ascendingFlag)
+        TinyVector<bool,N_rank> ascendingFlag)
       : ordering_(ordering), ascendingFlag_(ascendingFlag)
     {
         base_ = 0;
@@ -99,24 +99,24 @@ public:
     void setOrdering(int i, int order) 
     { ordering_[i] = order; }
 
-    _bz_bool allRanksStoredAscending() const
+    bool allRanksStoredAscending() const
     {
-        _bz_bool result = _bz_true;
+        bool result = true;
         for (int i=0; i < N_rank; ++i)
             result &= ascendingFlag_[i];
         return result;
     }
 
-    _bz_bool isRankStoredAscending(int i) const
+    bool isRankStoredAscending(int i) const
     { return ascendingFlag_[i]; }
 
-    TinyVector<_bz_bool, N_rank>& ascendingFlag() 
+    TinyVector<bool, N_rank>& ascendingFlag() 
     { return ascendingFlag_; }
 
-    const TinyVector<_bz_bool, N_rank>& ascendingFlag() const
+    const TinyVector<bool, N_rank>& ascendingFlag() const
     { return ascendingFlag_; }
 
-    void setAscendingFlag(int i, _bz_bool ascendingFlag) 
+    void setAscendingFlag(int i, bool ascendingFlag) 
     { ascendingFlag_[i] = ascendingFlag; }
 
     TinyVector<int, N_rank>& base()
@@ -157,7 +157,7 @@ protected:
      * will create an array with base_[] = { 30, 23 }.
      */
     TinyVector<int,  N_rank> ordering_;
-    TinyVector<_bz_bool, N_rank> ascendingFlag_;
+    TinyVector<bool, N_rank> ascendingFlag_;
     TinyVector<int,  N_rank> base_;
 };
 
@@ -182,7 +182,7 @@ public:
     {
         for (int i=0; i < N_rank; ++i)
           ordering_(i) = i;
-        ascendingFlag_ = _bz_true;
+        ascendingFlag_ = true;
         base_ = 1;
     }
 };
@@ -255,7 +255,7 @@ public:
         : GeneralArrayStorage<N_rank>(noInitializeFlag())
     {
         ordering_ = Range(0, N_rank - 1);
-        ascendingFlag_ = _bz_true;
+        ascendingFlag_ = true;
         base_ = 0;
     }
 };

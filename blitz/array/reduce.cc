@@ -26,15 +26,15 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class T_expr, class T_reduction>
+template<typename T_expr, typename T_reduction>
 _bz_typename T_reduction::T_resulttype
 _bz_reduceWithIndexTraversal(T_expr expr, T_reduction reduction);
 
-template<class T_expr, class T_reduction>
+template<typename T_expr, typename T_reduction>
 _bz_typename T_reduction::T_resulttype
 _bz_reduceWithStackTraversal(T_expr expr, T_reduction reduction);
 
-template<class T_expr, class T_reduction>
+template<typename T_expr, typename T_reduction>
 _bz_typename T_reduction::T_resulttype
 _bz_ArrayExprFullReduce(T_expr expr, T_reduction reduction)
 {
@@ -46,7 +46,7 @@ _bz_ArrayExprFullReduce(T_expr expr, T_reduction reduction)
     {
         exprDescription = T_reduction::name();
         exprDescription += "(";
-        prettyPrintFormat format(_bz_true);   // Terse mode on
+        prettyPrintFormat format(true);   // Terse mode on
         expr.prettyPrint(exprDescription, format);
         exprDescription += ")";
     }
@@ -69,7 +69,7 @@ _bz_ArrayExprFullReduce(T_expr expr, T_reduction reduction)
 #endif
 }
 
-template<class T_expr, class T_reduction>
+template<typename T_expr, typename T_reduction>
 _bz_typename T_reduction::T_resulttype
 _bz_reduceWithIndexTraversal(T_expr expr, T_reduction reduction)
 {
@@ -97,22 +97,17 @@ _bz_reduceWithIndexTraversal(T_expr expr, T_reduction reduction)
 
     int lastIndex = lastubound + 1;
 
-    _bz_bool loopFlag = _bz_true;
+    bool loopFlag = true;
 
     while(loopFlag) {
-        for (index[maxRank] = lastlbound; index[maxRank] < lastIndex;
-            ++index[maxRank])
-        {
-            if (!reduction(expr(index), index[maxRank]))
-            {
-                loopFlag = _bz_false;
+        for (index[maxRank]=lastlbound;index[maxRank]<lastIndex;++index[maxRank])
+            if (!reduction(expr(index), index[maxRank])) {
+                loopFlag = false;
                 break;
             }
-        }
 
         int j = rank-2;
-        for (; j >= 0; --j)
-        {
+        for (; j >= 0; --j) {
             index(j+1) = first(j+1);
             ++index(j);
             if (index(j) != last(j))
@@ -127,7 +122,7 @@ _bz_reduceWithIndexTraversal(T_expr expr, T_reduction reduction)
 }
 
 
-template<class T_expr, class T_reduction>
+template<typename T_expr, typename T_reduction>
 _bz_typename T_reduction::T_resulttype
 _bz_reduceWithIndexVectorTraversal(T_expr expr, T_reduction reduction)
 {
@@ -156,22 +151,17 @@ _bz_reduceWithIndexVectorTraversal(T_expr expr, T_reduction reduction)
 
     int lastIndex = lastubound + 1;
 
-    _bz_bool loopFlag = _bz_true;
+    bool loopFlag = true;
 
     while(loopFlag) {
-        for (index[maxRank] = lastlbound; index[maxRank] < lastIndex;
-            ++index[maxRank])
-        {
-            if (!reduction(expr(index), index))
-            {
-                loopFlag = _bz_false;
+        for (index[maxRank]=lastlbound;index[maxRank]<lastIndex;++index[maxRank])
+            if (!reduction(expr(index),index)) {
+                loopFlag = false;
                 break;
             }
-        }
 
         int j = rank-2;
-        for (; j >= 0; --j)
-        {
+        for (; j >= 0; --j) {
             index(j+1) = first(j+1);
             ++index(j);
             if (index(j) != last(j))

@@ -1,6 +1,6 @@
 /***************************************************************************
  * blitz/array/reduce.h   Reductions of an array (or array expression) in a 
- *                        single rank: sum, mean, min, minIndex, max, maxIndex, 
+ *                        single rank: sum, mean, min, minIndex, max, maxIndex,
  *                        product, count, any, all
  *
  * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
@@ -35,7 +35,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class T_expr, int N_index, class T_reduction>
+template<typename T_expr, int N_index, typename T_reduction>
 class _bz_ArrayExprReduce {
 
 public:   
@@ -150,7 +150,7 @@ public:
         BZPRECONDITION(0);
     }
 
-    _bz_bool isUnitStride(int) const
+    bool isUnitStride(int) const
     {
         BZPRECONDITION(0);
         return false;
@@ -161,8 +161,8 @@ public:
         BZPRECONDITION(0);
     }
 
-    _bz_bool canCollapse(int,int) const
-    {   BZPRECONDITION(0); return _bz_false; }
+    bool canCollapse(int,int) const
+    {   BZPRECONDITION(0); return false; }
 
     T_numtype operator[](int)
     {
@@ -182,10 +182,10 @@ public:
         return 0;
     }
 
-    _bz_bool isStride(int,int) const
+    bool isStride(int,int) const
     {
         BZPRECONDITION(0);
-        return _bz_true;
+        return true;
     }
 
     template<int N_rank>
@@ -203,11 +203,11 @@ public:
         str += ")";
     }
 
-    template<class T_shape>
-    _bz_bool shapeCheck(const T_shape&) const
+    template<typename T_shape>
+    bool shapeCheck(const T_shape&) const
     { 
         // NEEDS_WORK-- do a real shape check (tricky)
-        return _bz_true; 
+        return true; 
     }
 
 private: 
@@ -218,7 +218,7 @@ private:
 };
 
 #define BZ_DECL_ARRAY_PARTIAL_REDUCE(fn,reduction)                      \
-template<class T_expr, int N_index>                                     \
+template<typename T_expr, int N_index>                                  \
 inline                                                                  \
 _bz_ArrayExpr<_bz_ArrayExprReduce<_bz_ArrayExpr<T_expr>, N_index,       \
     reduction<_bz_typename T_expr::T_numtype> > >                       \
@@ -228,7 +228,7 @@ fn(_bz_ArrayExpr<T_expr> expr, const IndexPlaceholder<N_index>&)        \
         reduction<_bz_typename T_expr::T_numtype> >(expr);              \
 }                                                                       \
                                                                         \
-template<class T_numtype, int N_rank, int N_index>                      \
+template<typename T_numtype, int N_rank, int N_index>                   \
 inline                                                                  \
 _bz_ArrayExpr<_bz_ArrayExprReduce<FastArrayIterator<T_numtype,N_rank>,  \
     N_index, reduction<T_numtype> > >                                   \
@@ -257,12 +257,12 @@ BZ_DECL_ARRAY_PARTIAL_REDUCE(last,     ReduceLast)
  */
 
 // Prototype of reduction function
-template<class T_expr, class T_reduction>
+template<typename T_expr, typename T_reduction>
 _bz_typename T_reduction::T_resulttype
 _bz_ArrayExprFullReduce(T_expr expr, T_reduction reduction);
 
 #define BZ_DECL_ARRAY_FULL_REDUCE(fn,reduction)                         \
-template<class T_expr>                                                  \
+template<typename T_expr>                                               \
 inline                                                                  \
 _bz_typename reduction<_bz_typename T_expr::T_numtype>::T_resulttype    \
 fn(_bz_ArrayExpr<T_expr> expr)                                          \
@@ -271,7 +271,7 @@ fn(_bz_ArrayExpr<T_expr> expr)                                          \
         reduction<_bz_typename T_expr::T_numtype>());                   \
 }                                                                       \
                                                                         \
-template<class T_numtype, int N_rank>                                   \
+template<typename T_numtype, int N_rank>                                \
 inline                                                                  \
 _bz_typename reduction<T_numtype>::T_resulttype                         \
 fn(const Array<T_numtype, N_rank>& array)                               \
@@ -295,7 +295,7 @@ BZ_DECL_ARRAY_FULL_REDUCE(last,     ReduceLast)
 // maxIndex
 
 #define BZ_DECL_ARRAY_FULL_REDUCE_INDEXVECTOR(fn,reduction)             \
-template<class T_expr>                                                  \
+template<typename T_expr>                                               \
 inline                                                                  \
 _bz_typename reduction<_bz_typename T_expr::T_numtype,                  \
     T_expr::rank>::T_resulttype                                         \
@@ -305,7 +305,7 @@ fn(_bz_ArrayExpr<T_expr> expr)                                          \
         reduction<_bz_typename T_expr::T_numtype, T_expr::rank>());     \
 }                                                                       \
                                                                         \
-template<class T_numtype, int N_rank>                                   \
+template<typename T_numtype, int N_rank>                                \
 inline                                                                  \
 _bz_typename reduction<T_numtype,N_rank>::T_resulttype                  \
 fn(const Array<T_numtype, N_rank>& array)                               \

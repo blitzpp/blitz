@@ -30,14 +30,14 @@
 BZ_NAMESPACE(blitz)
 
 // Forward declaration
-template<class T, int N>
+template<typename T, int N>
 class Array;
 
 
 
 class nilArraySection { };
 
-template<class T>
+template<typename T>
 class ArraySectionInfo {
 public:
     enum { isValidType = 0, rank = 0, isPick = 0 };
@@ -61,11 +61,11 @@ public:
     enum { isValidType = 1, rank = 0, isPick = 0 };
 };
 
-template<class T_numtype, class T1, class T2 = nilArraySection, 
-    class T3 = nilArraySection, class T4 = nilArraySection, 
-    class T5 = nilArraySection, class T6 = nilArraySection, 
-    class T7 = nilArraySection, class T8 = nilArraySection, 
-    class T9 = nilArraySection, class T10 = nilArraySection, 
+template<typename T_numtype, typename T1, typename T2 = nilArraySection, 
+    class T3 = nilArraySection, typename T4 = nilArraySection, 
+    class T5 = nilArraySection, typename T6 = nilArraySection, 
+    class T7 = nilArraySection, typename T8 = nilArraySection, 
+    class T9 = nilArraySection, typename T10 = nilArraySection, 
     class T11 = nilArraySection>
 class SliceInfo {
 public:

@@ -41,19 +41,19 @@
 BZ_NAMESPACE(blitz)
 
 #define BZ_DECLARE_STENCIL_OPERATOR1(name,A)     \
-  template<class T>                              \
+  template<typename T>                              \
   inline _bz_typename T::T_numtype name(T& A)    \
   {
 
 #define BZ_END_STENCIL_OPERATOR   }
 
 #define BZ_DECLARE_STENCIL_OPERATOR2(name,A,B)       \
-  template<class T>                                  \
+  template<typename T>                                  \
   inline _bz_typename T::T_numtype name(T& A, T& B)  \
   {
 
 #define BZ_DECLARE_STENCIL_OPERATOR3(name,A,B,C) \
-  template<class T>                              \
+  template<typename T>                              \
   inline _bz_typename T::T_numtype name(T& A, T& B, T& C)    \
   {
 
@@ -109,11 +109,11 @@ BZ_END_STENCIL_OPERATOR
  ****************************************************************************/
 
 #define BZ_DECLARE_DIFF(name)  \
-  template<class T> \
+  template<typename T> \
   inline _bz_typename T::T_numtype name(T& A, int dim = firstDim)
 
 #define BZ_DECLARE_MULTIDIFF(name) \
-  template<class T> \
+  template<typename T> \
   inline _bz_typename multicomponent_traits<_bz_typename     \
      T::T_numtype>::T_element name(T& A, int comp, int dim)
 
@@ -561,21 +561,21 @@ BZ_DECLARE_MULTIDIFF(forward42n) { return forward42(A,comp,dim); }
  * Gradient operators
  ****************************************************************************/
 
-template<class T>
+template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,2> grad2D(T& A) {
   return TinyVector<_bz_typename T::T_numtype,2>(
     central12(A,firstDim),
     central12(A,secondDim));
 }
 
-template<class T>
+template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,2> grad2D4(T& A) {
   return TinyVector<_bz_typename T::T_numtype,2>(
     central14(A,firstDim),
     central14(A,secondDim));
 }
 
-template<class T>
+template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,3> grad3D(T& A) {
   return TinyVector<_bz_typename T::T_numtype,3>(
     central12(A,firstDim),
@@ -583,7 +583,7 @@ inline TinyVector<_bz_typename T::T_numtype,3> grad3D(T& A) {
     central12(A,thirdDim));
 }
 
-template<class T>
+template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,3> grad3D4(T& A) {
   return TinyVector<_bz_typename T::T_numtype,3>(
     central14(A,firstDim),
@@ -591,21 +591,21 @@ inline TinyVector<_bz_typename T::T_numtype,3> grad3D4(T& A) {
     central14(A,thirdDim));
 }
 
-template<class T>
+template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,2> grad2Dn(T& A) {
   return TinyVector<_bz_typename T::T_numtype,2>(
     central12n(A,firstDim),
     central12n(A,secondDim));
 }
 
-template<class T>
+template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,2> grad2D4n(T& A) {
   return TinyVector<_bz_typename T::T_numtype,2>(
     central14n(A,firstDim),
     central14n(A,secondDim));
 }
 
-template<class T>
+template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,3> grad3Dn(T& A) {
   return TinyVector<_bz_typename T::T_numtype,3>(
     central12n(A,firstDim),
@@ -613,7 +613,7 @@ inline TinyVector<_bz_typename T::T_numtype,3> grad3Dn(T& A) {
     central12n(A,thirdDim));
 }
 
-template<class T>
+template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,3> grad3D4n(T& A) {
   return TinyVector<_bz_typename T::T_numtype,3>(
     central14n(A,firstDim),
@@ -625,21 +625,21 @@ inline TinyVector<_bz_typename T::T_numtype,3> grad3D4n(T& A) {
  * Grad-squared operators
  ****************************************************************************/
 
-template<class T>
+template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,2> gradSqr2D(T& A) {
   return TinyVector<_bz_typename T::T_numtype,2>(
     central22(A,firstDim),
     central22(A,secondDim));
 }
 
-template<class T>
+template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,2> gradSqr2D4(T& A) {
   return TinyVector<_bz_typename T::T_numtype,2>(
     central24(A,firstDim),
     central24(A,secondDim));
 }
 
-template<class T>
+template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,3> gradSqr3D(T& A) {
   return TinyVector<_bz_typename T::T_numtype,3>(
     central22(A,firstDim),
@@ -647,7 +647,7 @@ inline TinyVector<_bz_typename T::T_numtype,3> gradSqr3D(T& A) {
     central22(A,thirdDim));
 }
 
-template<class T>
+template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,3> gradSqr3D4(T& A) {
   return TinyVector<_bz_typename T::T_numtype,3>(
     central24(A,firstDim),
@@ -659,24 +659,24 @@ inline TinyVector<_bz_typename T::T_numtype,3> gradSqr3D4(T& A) {
  * Grad-squared operators (normalized)
  ****************************************************************************/
 
-template<class T>
+template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,2> gradSqr2Dn(T& A) {
   return gradSqr2D(A);
 }
 
-template<class T>
+template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,2> gradSqr2D4n(T& A) {
   return TinyVector<_bz_typename T::T_numtype,2>(
     central24(A,firstDim) * recip_12,
     central24(A,secondDim) * recip_12);
 }
 
-template<class T>
+template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,3> gradSqr3Dn(T& A) {
   return gradSqr3D(A);
 }
 
-template<class T>
+template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,3> gradSqr3D4n(T& A) {
   return TinyVector<_bz_typename T::T_numtype,3>(
     central24(A,firstDim) * recip_12,
@@ -688,7 +688,7 @@ inline TinyVector<_bz_typename T::T_numtype,3> gradSqr3D4n(T& A) {
  * Gradient operators on a vector field
  ****************************************************************************/
 
-template<class T>
+template<typename T>
 inline TinyMatrix<_bz_typename multicomponent_traits<_bz_typename 
     T::T_numtype>::T_element, 3, 3>
 Jacobian3D(T& A)
@@ -712,7 +712,7 @@ Jacobian3D(T& A)
     return grad;
 }
 
-template<class T>
+template<typename T>
 inline TinyMatrix<_bz_typename multicomponent_traits<_bz_typename 
     T::T_numtype>::T_element, 3, 3>
 Jacobian3Dn(T& A)
@@ -736,7 +736,7 @@ Jacobian3Dn(T& A)
     return grad;
 }
 
-template<class T>
+template<typename T>
 inline TinyMatrix<_bz_typename multicomponent_traits<_bz_typename
     T::T_numtype>::T_element, 3, 3>
 Jacobian3D4(T& A)
@@ -760,7 +760,7 @@ Jacobian3D4(T& A)
     return grad;
 }
 
-template<class T>
+template<typename T>
 inline TinyMatrix<_bz_typename multicomponent_traits<_bz_typename
     T::T_numtype>::T_element, 3, 3>
 Jacobian3D4n(T& A)
@@ -790,7 +790,7 @@ Jacobian3D4n(T& A)
 
 // O(h^2) curl, using central difference
 
-template<class T>
+template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,3> 
 curl(T& vx, T& vy, T& vz) {
   const int x = firstDim, y = secondDim, z = thirdDim;
@@ -802,7 +802,7 @@ curl(T& vx, T& vy, T& vz) {
 }
 
 // Normalized O(h^2) curl, using central difference
-template<class T>
+template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,3>
 curln(T& vx, T& vy, T& vz) {
   const int x = firstDim, y = secondDim, z = thirdDim;
@@ -814,7 +814,7 @@ curln(T& vx, T& vy, T& vz) {
 }
 
 // Multicomponent curl
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype curl(T& A) {
   const int x = firstDim, y = secondDim, z = thirdDim;
 
@@ -825,7 +825,7 @@ inline _bz_typename T::T_numtype curl(T& A) {
 }
 
 // Normalized multicomponent curl
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype curln(T& A) {
   const int x = firstDim, y = secondDim, z = thirdDim;
 
@@ -836,7 +836,7 @@ inline _bz_typename T::T_numtype curln(T& A) {
 }
 
 // O(h^4) curl, using 4th order central difference
-template<class T>
+template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,3>
 curl4(T& vx, T& vy, T& vz) {
   const int x = firstDim, y = secondDim, z = thirdDim;
@@ -848,7 +848,7 @@ curl4(T& vx, T& vy, T& vz) {
 }
 
 // O(h^4) curl, using 4th order central difference (multicomponent version)
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype
 curl4(T& A) {
   const int x = firstDim, y = secondDim, z = thirdDim;
@@ -860,7 +860,7 @@ curl4(T& A) {
 }
 
 // Normalized O(h^4) curl, using 4th order central difference
-template<class T>
+template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,3>
 curl4n(T& vx, T& vy, T& vz) {
   const int x = firstDim, y = secondDim, z = thirdDim;
@@ -872,7 +872,7 @@ curl4n(T& vx, T& vy, T& vz) {
 }
 
 // O(h^4) curl, using 4th order central difference (normalized multicomponent)
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype
 curl4n(T& A) {
   const int x = firstDim, y = secondDim, z = thirdDim;
@@ -887,7 +887,7 @@ curl4n(T& A) {
 
 // Two-dimensional curl
 
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype
 curl(T& vx, T& vy) {
   const int x = firstDim, y = secondDim;
@@ -895,7 +895,7 @@ curl(T& vx, T& vy) {
   return central12(vy,x)-central12(vx,y);
 }
 
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype
 curln(T& vx, T& vy) {
   const int x = firstDim, y = secondDim;
@@ -904,13 +904,13 @@ curln(T& vx, T& vy) {
 }
 
 // Multicomponent curl
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype::T_numtype curl2D(T& A) {
   const int x = firstDim, y = secondDim;
   return central12(A,y,x)-central12(A,x,y);
 }
 
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype::T_numtype curl2Dn(T& A) {
   const int x = firstDim, y = secondDim;
   return (central12(A,y,x)-central12(A,x,y)) * recip_2;
@@ -919,7 +919,7 @@ inline _bz_typename T::T_numtype::T_numtype curl2Dn(T& A) {
 
 // 4th order versions
 
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype
 curl4(T& vx, T& vy) {
   const int x = firstDim, y = secondDim;
@@ -927,7 +927,7 @@ curl4(T& vx, T& vy) {
   return central14(vy,x)-central14(vx,y);
 }
 
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype
 curl4n(T& vx, T& vy) {
   const int x = firstDim, y = secondDim;
@@ -936,13 +936,13 @@ curl4n(T& vx, T& vy) {
 }
 
 // Multicomponent curl
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype::T_numtype curl2D4(T& A) {
   const int x = firstDim, y = secondDim;
   return central14(A,y,x)-central14(A,x,y);
 }
 
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype::T_numtype curl2D4n(T& A) {
   const int x = firstDim, y = secondDim;
   return (central14(A,y,x)-central14(A,x,y)) * recip_12;
@@ -991,7 +991,7 @@ BZ_DECLARE_STENCIL_OPERATOR3(div4n,vx,vy,vz)
     + central14(vz,thirdDim)) * recip_12;
 BZ_END_STENCIL_OPERATOR
 
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype::T_numtype
 div2D(T& A)
 {
@@ -999,7 +999,7 @@ div2D(T& A)
     return central12(A,x,x) + central12(A,y,y);
 }
 
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype::T_numtype
 div2D4(T& A)
 {
@@ -1007,7 +1007,7 @@ div2D4(T& A)
     return central14(A,x,x) + central14(A,y,y);
 }
 
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype::T_numtype
 div2Dn(T& A)
 {
@@ -1015,7 +1015,7 @@ div2Dn(T& A)
     return (central12(A,x,x) + central12(A,y,y)) * recip_2;
 }
 
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype::T_numtype
 div2D4n(T& A)
 {
@@ -1023,7 +1023,7 @@ div2D4n(T& A)
     return (central14(A,x,x) + central14(A,y,y)) * recip_12;
 }
 
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype::T_numtype
 div3D(T& A)
 {
@@ -1031,7 +1031,7 @@ div3D(T& A)
     return central12(A,x,x) + central12(A,y,y) + central12(A,z,z);
 }
 
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype::T_numtype
 div3D4(T& A)
 {
@@ -1039,7 +1039,7 @@ div3D4(T& A)
     return central14(A,x,x) + central14(A,y,y) + central14(A,z,z);
 }
 
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype::T_numtype
 div3Dn(T& A)
 {
@@ -1047,7 +1047,7 @@ div3Dn(T& A)
     return (central12(A,x,x) + central12(A,y,y) + central12(A,z,z)) * recip_2;
 }
 
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype::T_numtype
 div3D4n(T& A)
 {
@@ -1059,7 +1059,7 @@ div3D4n(T& A)
  * Mixed Partial derivatives
  ****************************************************************************/
 
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype
 mixed22(T& A, int x, int y)
 {
@@ -1067,14 +1067,14 @@ mixed22(T& A, int x, int y)
         -  A.shift(1,x,-1,y) + A.shift(1,x,1,y);
 }
 
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype
 mixed22n(T& A, int x, int y)
 {
     return mixed22(A,x,y) * recip_4;
 }
 
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype
 mixed24(T& A, int x, int y)
 {
@@ -1088,7 +1088,7 @@ mixed24(T& A, int x, int y)
                    A.shift(2,x,-2,y) + A.shift(2,x,2,y));
 }
 
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype
 mixed24n(T& A, int x, int y)
 {
@@ -1108,7 +1108,7 @@ mixed24n(T& A, int x, int y)
  * Stencil operators with geometry (experimental)
  ****************************************************************************/
 
-template<class T>
+template<typename T>
 inline _bz_typename multicomponent_traits<_bz_typename
     T::T_numtype>::T_element div3DVec4(T& A, 
     const UniformCubicGeometry<3>& geom)
@@ -1119,14 +1119,14 @@ inline _bz_typename multicomponent_traits<_bz_typename
         + central14(A, z, thirdDim)) * recip_12 * geom.recipSpatialStep();
 }
 
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype Laplacian3D4(T& A, 
     const UniformCubicGeometry<3>& geom)
 {
     return Laplacian3D4n(A) * geom.recipSpatialStepPow2();
 }
 
-template<class T>
+template<typename T>
 inline _bz_typename T::T_numtype Laplacian3DVec4(T& A,
     const UniformCubicGeometry<3>& geom)
 {
@@ -1151,7 +1151,7 @@ inline _bz_typename T::T_numtype Laplacian3DVec4(T& A,
     return vector3d(t1,t2,t3);
 }
 
-template<class T>
+template<typename T>
 inline TinyMatrix<_bz_typename multicomponent_traits<_bz_typename
     T::T_numtype>::T_element, 3, 3>
 grad3DVec4(T& A, const UniformCubicGeometry<3>& geom)
@@ -1176,7 +1176,7 @@ grad3DVec4(T& A, const UniformCubicGeometry<3>& geom)
     return grad;
 }
 
-template<class T>
+template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,3> grad3D4(T& A,
     const UniformCubicGeometry<3>& geom) {
   return TinyVector<_bz_typename T::T_numtype,3>(

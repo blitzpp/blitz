@@ -29,7 +29,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_expr1, class P_expr2, class P_expr3>
+template<typename P_expr1, typename P_expr2, typename P_expr3>
 class _bz_ArrayWhere {
 
 public:
@@ -57,7 +57,7 @@ public:
       : iter1_(a.iter1_), iter2_(a.iter2_), iter3_(a.iter3_)
     { }
 
-    template<class T1, class T2, class T3>
+    template<typename T1, typename T2, typename T3>
     _bz_ArrayWhere(BZ_ETPARM(T1) a, BZ_ETPARM(T2) b, BZ_ETPARM(T3) c)
       : iter1_(a), iter2_(b), iter3_(c)
     { }
@@ -132,7 +132,7 @@ public:
         iter3_.loadStride(rank);
     }
 
-    _bz_bool isUnitStride(int rank) const
+    bool isUnitStride(int rank) const
     { 
         return iter1_.isUnitStride(rank) 
             && iter2_.isUnitStride(rank) 
@@ -146,7 +146,7 @@ public:
         iter3_.advanceUnitStride();
     }
 
-    _bz_bool canCollapse(int outerLoopRank, int innerLoopRank) const
+    bool canCollapse(int outerLoopRank, int innerLoopRank) const
     {
         // BZ_DEBUG_MESSAGE("_bz_ArrayExprOp<>::canCollapse");
         return iter1_.canCollapse(outerLoopRank, innerLoopRank)
@@ -177,7 +177,7 @@ public:
         //return minmax::max(minmax::max(stride1,stride2),stride3);
     }
 
-    _bz_bool isStride(int rank, int stride) const
+    bool isStride(int rank, int stride) const
     {
         return iter1_.isStride(rank,stride) 
             && iter2_.isStride(rank,stride)
@@ -195,8 +195,8 @@ public:
         str += ")";
     }
 
-    template<class T_shape>
-    _bz_bool shapeCheck(const T_shape& shape)
+    template<typename T_shape>
+    bool shapeCheck(const T_shape& shape)
     { 
         int t1 = iter1_.shapeCheck(shape);
         int t2 = iter2_.shapeCheck(shape);
@@ -213,7 +213,7 @@ private:
     T_expr3 iter3_;
 };
 
-template<class T1, class T2, class T3>
+template<typename T1, typename T2, typename T3>
 inline
 _bz_ArrayExpr<_bz_ArrayWhere<_bz_typename asExpr<T1>::T_expr,
     _bz_typename asExpr<T2>::T_expr, _bz_typename asExpr<T3>::T_expr> >

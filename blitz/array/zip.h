@@ -29,14 +29,14 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_component, class T1, class T2>
+template<typename P_component, typename T1, typename T2>
 struct Zip2 {
     typedef P_component T_numtype;
 
     static inline T_numtype apply(T1 a, T2 b)
     { return T_numtype(a,b); }
 
-    template<class T_left, class T_right>
+    template<typename T_left, typename T_right>
     static inline void prettyPrint(string& str,
         prettyPrintFormat& format, const T_left& t1,
         const T_right& t2)
@@ -49,7 +49,7 @@ struct Zip2 {
     }
 };
 
-template<class T_component, class T1, class T2>
+template<typename T_component, typename T1, typename T2>
 inline _bz_ArrayExpr<_bz_ArrayExprOp<_bz_typename asExpr<T1>::T_expr, 
     _bz_typename asExpr<T2>::T_expr, Zip2<T_component, 
     _bz_typename asExpr<T1>::T_expr::T_numtype,

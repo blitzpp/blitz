@@ -31,7 +31,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int length0)
 {
     BZPRECONDITION(length0 > 0);
@@ -44,7 +44,7 @@ void Array<T_numtype, N_rank>::resize(int length0)
     }
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1)
 {
     BZPRECONDITION((extent0 > 0) && (extent1 > 0));
@@ -58,7 +58,7 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1)
     }
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2)
 {
@@ -76,7 +76,7 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
 }
 
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2, int extent3)
 {
@@ -95,7 +95,7 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     }
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2, int extent3, int extent4)
 {
@@ -116,7 +116,7 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     }
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2, int extent3, int extent4, int extent5)
 {
@@ -138,7 +138,7 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     }
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2, int extent3, int extent4, int extent5,
     int extent6)
@@ -164,7 +164,7 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     }
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2, int extent3, int extent4, int extent5,
     int extent6, int extent7)
@@ -191,7 +191,7 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     }
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2, int extent3, int extent4, int extent5,
     int extent6, int extent7, int extent8)
@@ -221,7 +221,7 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
 }
 
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2, int extent3, int extent4, int extent5,
     int extent6, int extent7, int extent8, int extent9)
@@ -252,7 +252,7 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     }
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2, int extent3, int extent4, int extent5,
     int extent6, int extent7, int extent8, int extent9,
@@ -287,7 +287,7 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
 }
 
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(Range r0)
 {
 	BZPRECONDITION(r0.isAscendingContiguous());
@@ -298,7 +298,7 @@ void Array<T_numtype, N_rank>::resize(Range r0)
 	setupStorage(0);
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(Range r0, Range r1)
 {
 	BZPRECONDITION(r0.isAscendingContiguous() &&
@@ -312,7 +312,7 @@ void Array<T_numtype, N_rank>::resize(Range r0, Range r1)
 	setupStorage(1);
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2)
 { 
 	BZPRECONDITION(r0.isAscendingContiguous() &&
@@ -328,7 +328,7 @@ void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2)
 	setupStorage(2);
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 		Range r3)
 {
@@ -348,7 +348,7 @@ void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 	setupStorage(3);
 } 
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 		Range r3, Range r4)
 {
@@ -370,7 +370,7 @@ void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 	setupStorage(4);
 } 
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 		Range r3, Range r4, Range r5)
 {
@@ -395,7 +395,7 @@ void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 	setupStorage(5);
 } 
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 		Range r3, Range r4, Range r5, Range r6)
 {
@@ -422,7 +422,7 @@ void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 	setupStorage(6);
 } 
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 		Range r3, Range r4, Range r5, Range r6, Range r7)
 {
@@ -452,7 +452,7 @@ void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 	setupStorage(7);
 } 
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 		Range r3, Range r4, Range r5, Range r6, Range r7, Range r8)
 {
@@ -484,7 +484,7 @@ void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 	setupStorage(8);
 } 
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 		Range r3, Range r4, Range r5, Range r6, Range r7, Range r8,
 		Range r9)
@@ -520,7 +520,7 @@ void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 	setupStorage(9);
 } 
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 		Range r3, Range r4, Range r5, Range r6, Range r7, Range r8,
 		Range r9, Range r10)
@@ -559,7 +559,7 @@ void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 } 
 
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(int length0)
 {
     BZPRECONDITION(length0 > 0);
@@ -596,7 +596,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0)
     }
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1)
 {
     BZPRECONDITION((length0 > 0) && (length1 > 0));
@@ -618,7 +618,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1)
     }
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
     int length2)
 {
@@ -645,7 +645,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
     }
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
     int length2, int length3)
 {
@@ -672,7 +672,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
     }
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
     int length2, int length3, int length4)
 {
@@ -701,7 +701,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
     }
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
     int length2, int length3, int length4, int length5)
 {
@@ -733,7 +733,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 }
 
 /* Added by Julian Cummings */
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
     int length2, int length3, int length4, int length5, int length6)
 {
@@ -775,7 +775,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 }
 
 /* Added by Julian Cummings */
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
     int length2, int length3, int length4, int length5, int length6,
     int length7)
@@ -821,7 +821,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 }
 
 /* Added by Julian Cummings */
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
     int length2, int length3, int length4, int length5, int length6,
     int length7, int length8)
@@ -870,7 +870,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 }
 
 /* Added by Julian Cummings */
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
     int length2, int length3, int length4, int length5, int length6,
     int length7, int length8, int length9)
@@ -922,7 +922,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 }
 
 /* Added by Julian Cummings */
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
     int length2, int length3, int length4, int length5, int length6,
     int length7, int length8, int length9, int length10)
@@ -972,7 +972,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
     }
 }
 
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(const TinyVector<int,N_rank>& extent)
 {
 // NEEDS_WORK -- don't resize if unnecessary
@@ -985,7 +985,7 @@ void Array<T_numtype, N_rank>::resize(const TinyVector<int,N_rank>& extent)
 }
 
 /* Added by Julian Cummings */
-template<class T_numtype, int N_rank>
+template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(
     const TinyVector<int,N_rank>& extent)
 {

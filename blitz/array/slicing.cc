@@ -34,7 +34,7 @@ BZ_NAMESPACE(blitz)
  * They all work by first referencing the other array, and then slicing.
  */
 
-template<class P_numtype, int N_rank>
+template<typename P_numtype, int N_rank>
 void Array<P_numtype, N_rank>::constructSubarray(
     Array<T_numtype, N_rank>& array, const RectDomain<N_rank>& subdomain)
 {
@@ -43,7 +43,7 @@ void Array<P_numtype, N_rank>::constructSubarray(
         slice(i, subdomain[i]);
 }
 
-template<class P_numtype, int N_rank>
+template<typename P_numtype, int N_rank>
 void Array<P_numtype, N_rank>::constructSubarray(
     Array<T_numtype, N_rank>& array, const StridedDomain<N_rank>& subdomain)
 {
@@ -52,7 +52,7 @@ void Array<P_numtype, N_rank>::constructSubarray(
         slice(i, subdomain[i]);
 }
 
-template<class P_numtype, int N_rank>
+template<typename P_numtype, int N_rank>
 void Array<P_numtype, N_rank>::constructSubarray(
     Array<T_numtype, N_rank>& array, Range r0)
 {
@@ -60,7 +60,7 @@ void Array<P_numtype, N_rank>::constructSubarray(
     slice(0, r0);
 }
 
-template<class P_numtype, int N_rank>
+template<typename P_numtype, int N_rank>
 void Array<P_numtype, N_rank>::constructSubarray(
     Array<T_numtype, N_rank>& array, Range r0, Range r1)
 {
@@ -69,7 +69,7 @@ void Array<P_numtype, N_rank>::constructSubarray(
     slice(1, r1);
 }
 
-template<class P_numtype, int N_rank>
+template<typename P_numtype, int N_rank>
 void Array<P_numtype, N_rank>::constructSubarray(
     Array<T_numtype, N_rank>& array, Range r0, Range r1, Range r2)
 {
@@ -79,7 +79,7 @@ void Array<P_numtype, N_rank>::constructSubarray(
     slice(2, r2);
 }
 
-template<class P_numtype, int N_rank>
+template<typename P_numtype, int N_rank>
 void Array<P_numtype, N_rank>::constructSubarray(
     Array<T_numtype, N_rank>& array, Range r0, Range r1, Range r2, Range r3)
 {
@@ -90,7 +90,7 @@ void Array<P_numtype, N_rank>::constructSubarray(
     slice(3, r3);
 }
 
-template<class P_numtype, int N_rank>
+template<typename P_numtype, int N_rank>
 void Array<P_numtype, N_rank>::constructSubarray(
     Array<T_numtype, N_rank>& array, Range r0, Range r1, Range r2, Range r3,
     Range r4)
@@ -103,7 +103,7 @@ void Array<P_numtype, N_rank>::constructSubarray(
     slice(4, r4);
 }
 
-template<class P_numtype, int N_rank>
+template<typename P_numtype, int N_rank>
 void Array<P_numtype, N_rank>::constructSubarray(
     Array<T_numtype, N_rank>& array, Range r0, Range r1, Range r2, Range r3,
     Range r4, Range r5)
@@ -117,7 +117,7 @@ void Array<P_numtype, N_rank>::constructSubarray(
     slice(5, r5);
 }
 
-template<class P_numtype, int N_rank>
+template<typename P_numtype, int N_rank>
 void Array<P_numtype, N_rank>::constructSubarray(
     Array<T_numtype, N_rank>& array, Range r0, Range r1, Range r2, Range r3,
     Range r4, Range r5, Range r6)
@@ -132,7 +132,7 @@ void Array<P_numtype, N_rank>::constructSubarray(
     slice(6, r6);
 }
 
-template<class P_numtype, int N_rank>
+template<typename P_numtype, int N_rank>
 void Array<P_numtype, N_rank>::constructSubarray(
     Array<T_numtype, N_rank>& array, Range r0, Range r1, Range r2, Range r3,
     Range r4, Range r5, Range r6, Range r7)
@@ -148,7 +148,7 @@ void Array<P_numtype, N_rank>::constructSubarray(
     slice(7, r7);
 }
 
-template<class P_numtype, int N_rank>
+template<typename P_numtype, int N_rank>
 void Array<P_numtype, N_rank>::constructSubarray(
     Array<T_numtype, N_rank>& array, Range r0, Range r1, Range r2, Range r3,
     Range r4, Range r5, Range r6, Range r7, Range r8)
@@ -165,7 +165,7 @@ void Array<P_numtype, N_rank>::constructSubarray(
     slice(8, r8);
 }
 
-template<class P_numtype, int N_rank>
+template<typename P_numtype, int N_rank>
 void Array<P_numtype, N_rank>::constructSubarray(
     Array<T_numtype, N_rank>& array, Range r0, Range r1, Range r2, Range r3,
     Range r4, Range r5, Range r6, Range r7, Range r8, Range r9)
@@ -183,7 +183,7 @@ void Array<P_numtype, N_rank>::constructSubarray(
     slice(9, r9);
 }
 
-template<class P_numtype, int N_rank>
+template<typename P_numtype, int N_rank>
 void Array<P_numtype, N_rank>::constructSubarray(
     Array<T_numtype, N_rank>& array, Range r0, Range r1, Range r2, Range r3,
     Range r4, Range r5, Range r6, Range r7, Range r8, Range r9, Range r10)
@@ -207,9 +207,9 @@ void Array<P_numtype, N_rank>::constructSubarray(
  * combination of int and Range parameters.  There's room for up
  * to 11 parameters, but any unused parameters have no effect.
  */
-template<class P_numtype, int N_rank> template<int N_rank2, class R0,
-    class R1, class R2, class R3, class R4, class R5, class R6, class R7,
-    class R8, class R9, class R10>
+template<typename P_numtype, int N_rank> template<int N_rank2, typename R0,
+    class R1, typename R2, typename R3, typename R4, typename R5, typename R6, typename R7,
+    class R8, typename R9, typename R10>
 void Array<P_numtype, N_rank>::constructSlice(Array<T_numtype, N_rank2>& array,
     R0 r0, R1 r1, R2 r2, R3 r3, R4 r4, R5 r5, R6 r6, R7 r7, R8 r8, R9 r9,
     R10 r10)
@@ -251,7 +251,7 @@ void Array<P_numtype, N_rank>::constructSlice(Array<T_numtype, N_rank2>& array,
  * It's called by constructSlice(), above.  This version handles
  * Range parameters.
  */
-template<class P_numtype, int N_rank> template<int N_rank2>
+template<typename P_numtype, int N_rank> template<int N_rank2>
 void Array<P_numtype, N_rank>::slice(int& setRank, Range r,
     Array<T_numtype,N_rank2>& array, TinyVector<int,N_rank2>& rankMap,
     int sourceRank)
@@ -280,7 +280,7 @@ cout << "slice(" << setRank << ", [" << r.first(array.lbound(sourceRank))
  * It's called by constructSlice(), above.  This version handles
  * int parameters, which reduce the dimensionality by one.
  */
-template<class P_numtype, int N_rank> template<int N_rank2>
+template<typename P_numtype, int N_rank> template<int N_rank2>
 void Array<P_numtype, N_rank>::slice(int&, int i,
     Array<T_numtype,N_rank2>& array, TinyVector<int,N_rank2>& rankMap,
     int sourceRank)
@@ -310,7 +310,7 @@ void Array<P_numtype, N_rank>::slice(int&, int i,
  *      x.slice(firstRank, Range(25,50));
  *      x = 0;       // Sets elements 25..50 of the original array to 0
  */
-template<class P_numtype, int N_rank>
+template<typename P_numtype, int N_rank>
 void Array<P_numtype, N_rank>::slice(int rank, Range r)
 {
     BZPRECONDITION((rank >= 0) && (rank < N_rank));
