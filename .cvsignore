@@ -16,4 +16,5 @@ libtool
 ltmain.sh
 mkinstalldirs
 missing
+config
 .deps

@@ -12,4 +12,7 @@ matuops.h
 vecbops.cc
 vecuops.cc
 vecwhere.cc
+new-config.h
+new-config.h.in
+stamp-h1
 
