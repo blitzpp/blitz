@@ -35,7 +35,7 @@ BZ_NAMESPACE(blitz)
  #error <blitz/array/iter.h> must be included via <blitz/array.h>
 #endif
 
-template<class P_numtype, int N_rank>
+template<typename P_numtype, int N_rank>
 class FastArrayIterator {
 public:
     typedef P_numtype                T_numtype;
@@ -122,7 +122,7 @@ public:
     int suggestStride(int rank) const
     { return array_.stride(rank); }
 
-    _bz_bool isStride(int rank, int stride) const
+    bool isStride(int rank, int stride) const
     { return array_.stride(rank) == stride; }
 
     void push(int position)
@@ -150,7 +150,7 @@ public:
         stride_ = array_.stride(rank);
     }
 
-    const T_numtype * _bz_restrict data() const
+    const T_numtype * restrict data() const
     { return data_; }
 
     void _bz_setData(const T_numtype* ptr)
@@ -159,13 +159,13 @@ public:
     int stride() const
     { return stride_; }
 
-    _bz_bool isUnitStride(int rank) const
+    bool isUnitStride(int rank) const
     { return array_.stride(rank) == 1; }
 
     void advanceUnitStride()
     { ++data_; }
 
-    _bz_bool canCollapse(int outerLoopRank, int innerLoopRank) const
+    bool canCollapse(int outerLoopRank, int innerLoopRank) const
     { return array_.canCollapse(outerLoopRank, innerLoopRank); }
 
     void prettyPrint(string& str, prettyPrintFormat& format) const
@@ -195,8 +195,8 @@ public:
         }
     }
 
-    template<class T_shape>
-    _bz_bool shapeCheck(const T_shape& shape)
+    template<typename T_shape>
+    bool shapeCheck(const T_shape& shape)
     { return areShapesConformable(shape, array_.length()); }
 
 
@@ -241,12 +241,12 @@ public:
     {   *const_cast<T_numtype*>(data_) = x; }
 
     // Experimental
-    template<class T_value>
+    template<typename T_value>
     void operator=(T_value x)
     {   *const_cast<T_numtype*>(data_) = x; }
 
     // Experimental
-    template<class T_value>
+    template<typename T_value>
     void operator+=(T_value x)
     { *const_cast<T_numtype*>(data_) += x; }
 
@@ -270,7 +270,7 @@ public:
     }
 
 private:
-    const T_numtype * _bz_restrict          data_;
+    const T_numtype * restrict          data_;
     const T_array&                          array_;
     ConstPointerStack<T_numtype,N_rank>     stack_;
     int                                     stride_;

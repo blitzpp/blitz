@@ -107,7 +107,7 @@ BZ_DECLARE_ARRAY_ET_UNARY(uitrunc, Fn_uitrunc)
     
 // cast() function
     
-template<class T_cast, class T1>
+template<typename T_cast, typename T1>
 _bz_inline_et
 _bz_ArrayExpr<_bz_ArrayExprUnaryOp<_bz_typename asExpr<T1>::T_expr,
     Cast<_bz_typename asExpr<T1>::T_expr::T_numtype, T_cast> > >

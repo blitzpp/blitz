@@ -59,7 +59,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class T1, class T2>
+template<typename T1, typename T2>
 class _bz_ExprPair {
 public:
     _bz_ExprPair(const T1& a, const T2& b)
@@ -77,13 +77,13 @@ protected:
     T2 second_;
 };
 
-template<class T1, class T2>
+template<typename T1, typename T2>
 inline _bz_ExprPair<T1,T2> makeExprPair(const T1& a, const T2& b)
 {
     return _bz_ExprPair<T1,T2>(a,b);
 }
 
-template<class P_expr>
+template<typename P_expr>
 class _bz_ArrayExpr 
 #ifdef BZ_NEW_EXPRESSION_TEMPLATES
     : public ETBase<_bz_ArrayExpr<P_expr> >
@@ -109,7 +109,7 @@ public:
     { }
 
 #if defined(BZ_NEW_EXPRESSION_TEMPLATES) && ! defined(__MWERKS__)
-    template<class T>
+    template<typename T>
     _bz_ArrayExpr(const T& a)
         : iter_(a)
     { }
@@ -125,22 +125,22 @@ public:
 #endif
 #endif
 
-    template<class T1, class T2>
+    template<typename T1, typename T2>
     _bz_ArrayExpr(BZ_ETPARM(T1) a, BZ_ETPARM(T2) b)
         : iter_(a, b)
     { }
 
-    template<class T1, class T2, class T3>
+    template<typename T1, typename T2, typename T3>
     _bz_ArrayExpr(BZ_ETPARM(T1) a, BZ_ETPARM(T2) b, BZ_ETPARM(T3) c)
         : iter_(a, b, c)
     { }
 
-    template<class T1, class T2, class T3, class T4>
+    template<typename T1, typename T2, typename T3, typename T4>
     _bz_ArrayExpr(BZ_ETPARM(T1) a, BZ_ETPARM(T2) b, BZ_ETPARM(T3) c,
         BZ_ETPARM(T4) d) : iter_(a, b, c, d)
     { }
 
-    template<class T1, class T2>
+    template<typename T1, typename T2>
     _bz_ArrayExpr(const _bz_ExprPair<T1,T2>& pair)
         : iter_(pair.first(), pair.second())
     { }
@@ -185,13 +185,13 @@ public:
     void loadStride(int rank)
     { iter_.loadStride(rank); }
 
-    _bz_bool isUnitStride(int rank) const
+    bool isUnitStride(int rank) const
     { return iter_.isUnitStride(rank); }
 
     void advanceUnitStride()
     { iter_.advanceUnitStride(); }
 
-    _bz_bool canCollapse(int outerLoopRank, int innerLoopRank) const
+    bool canCollapse(int outerLoopRank, int innerLoopRank) const
     { 
         // BZ_DEBUG_MESSAGE("_bz_ArrayExpr<>::canCollapse()");
         return iter_.canCollapse(outerLoopRank, innerLoopRank); 
@@ -206,20 +206,20 @@ public:
     int suggestStride(int rank) const
     { return iter_.suggestStride(rank); }
 
-    _bz_bool isStride(int rank, int stride) const
+    bool isStride(int rank, int stride) const
     { return iter_.isStride(rank,stride); }
 
     void prettyPrint(string& str) const
     {
-        prettyPrintFormat format(_bz_true);  // Terse formatting by default
+        prettyPrintFormat format(true);  // Terse formatting by default
         iter_.prettyPrint(str, format);
     }
 
     void prettyPrint(string& str, prettyPrintFormat& format) const
     { iter_.prettyPrint(str, format); }
 
-    template<class T_shape>
-    _bz_bool shapeCheck(const T_shape& shape)
+    template<typename T_shape>
+    bool shapeCheck(const T_shape& shape)
     { return iter_.shapeCheck(shape); }
 
     template<int N_rank>
@@ -326,7 +326,7 @@ struct bounds {
 
 };
 
-template<class P_expr1, class P_expr2, class P_op>
+template<typename P_expr1, typename P_expr2, typename P_op>
 class _bz_ArrayExprOp {
 public:
     typedef P_expr1 T_expr1;
@@ -350,7 +350,7 @@ public:
         : iter1_(a.iter1_), iter2_(a.iter2_)
     { }
 
-    template<class T1, class T2>
+    template<typename T1, typename T2>
     _bz_ArrayExprOp(BZ_ETPARM(T1) a, BZ_ETPARM(T2) b)
         : iter1_(a), iter2_(b)
     { }
@@ -426,7 +426,7 @@ public:
         iter2_.loadStride(rank);
     }
     
-    _bz_bool isUnitStride(int rank) const
+    bool isUnitStride(int rank) const
     { return iter1_.isUnitStride(rank) && iter2_.isUnitStride(rank); }
 
     void advanceUnitStride()
@@ -435,7 +435,7 @@ public:
         iter2_.advanceUnitStride();
     }
 
-    _bz_bool canCollapse(int outerLoopRank, int innerLoopRank) const
+    bool canCollapse(int outerLoopRank, int innerLoopRank) const
     { 
         // BZ_DEBUG_MESSAGE("_bz_ArrayExprOp<>::canCollapse");
         return iter1_.canCollapse(outerLoopRank, innerLoopRank)
@@ -455,7 +455,7 @@ public:
         return (stride1 > stride2) ? stride1 : stride2;
     }
 
-    _bz_bool isStride(int rank, int stride) const
+    bool isStride(int rank, int stride) const
     {
         return iter1_.isStride(rank,stride) && iter2_.isStride(rank,stride);
     }
@@ -472,8 +472,8 @@ public:
         T_op::prettyPrint(str, format, iter1_, iter2_);
     }
 
-    template<class T_shape>
-    _bz_bool shapeCheck(const T_shape& shape)
+    template<typename T_shape>
+    bool shapeCheck(const T_shape& shape)
     { return iter1_.shapeCheck(shape) && iter2_.shapeCheck(shape); }
 
 protected:
@@ -483,7 +483,7 @@ protected:
     T_expr2 iter2_; 
 };
 
-template<class P_expr, class P_op>
+template<typename P_expr, typename P_op>
 class _bz_ArrayExprUnaryOp {
 public:
     typedef P_expr T_expr;
@@ -510,8 +510,8 @@ public:
     { }
 
 #if BZ_TEMPLATE_CTOR_DOESNT_CAUSE_HAVOC
-    template<class T1>
-    _bz_explicit _bz_ArrayExprUnaryOp(BZ_ETPARM(T1) a)
+    template<typename T1>
+    explicit _bz_ArrayExprUnaryOp(BZ_ETPARM(T1) a)
         : iter_(a)
     { }
 #endif
@@ -566,7 +566,7 @@ public:
         iter_.loadStride(rank);
     }
 
-    _bz_bool isUnitStride(int rank) const
+    bool isUnitStride(int rank) const
     { return iter_.isUnitStride(rank); }
 
     void advanceUnitStride()
@@ -580,7 +580,7 @@ public:
         iter_.moveTo(i);
     }
 
-    _bz_bool canCollapse(int outerLoopRank, int innerLoopRank) const
+    bool canCollapse(int outerLoopRank, int innerLoopRank) const
     { 
         // BZ_DEBUG_MESSAGE("_bz_ArrayExprUnaryOp<>::canCollapse");
         return iter_.canCollapse(outerLoopRank, innerLoopRank); 
@@ -595,14 +595,14 @@ public:
     int suggestStride(int rank) const
     { return iter_.suggestStride(rank); }
 
-    _bz_bool isStride(int rank, int stride) const
+    bool isStride(int rank, int stride) const
     { return iter_.isStride(rank,stride); }
 
     void prettyPrint(string& str, prettyPrintFormat& format) const
     { T_op::prettyPrint(str, format, iter_); }
 
-    template<class T_shape>
-    _bz_bool shapeCheck(const T_shape& shape)
+    template<typename T_shape>
+    bool shapeCheck(const T_shape& shape)
     { return iter_.shapeCheck(shape); }
 
 protected:
@@ -611,7 +611,7 @@ protected:
     T_expr iter_;
 };
 
-template<class P_numtype>
+template<typename P_numtype>
 class _bz_ArrayExprConstant {
 public:
     typedef P_numtype T_numtype;
@@ -667,14 +667,14 @@ public:
     void advance(int) { }
     void loadStride(int) { }
 
-    _bz_bool isUnitStride(int) const
-    { return _bz_true; }
+    bool isUnitStride(int) const
+    { return true; }
 
     void advanceUnitStride()
     { }
 
-    _bz_bool canCollapse(int,int) const 
-    { return _bz_true; }
+    bool canCollapse(int,int) const 
+    { return true; }
 
     T_numtype operator[](int)
     { return value_; }
@@ -685,8 +685,8 @@ public:
     int suggestStride(int) const
     { return 1; }
 
-    _bz_bool isStride(int,int) const
-    { return _bz_true; }
+    bool isStride(int,int) const
+    { return true; }
 
     template<int N_rank>
     void moveTo(const TinyVector<int,N_rank>&)
@@ -701,9 +701,9 @@ public:
             str += BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_numtype);
     }
 
-    template<class T_shape>
-    _bz_bool shapeCheck(const T_shape&)
-    { return _bz_true; }
+    template<typename T_shape>
+    bool shapeCheck(const T_shape&)
+    { return true; }
 
 protected:
     _bz_ArrayExprConstant() { }
