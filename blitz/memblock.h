@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.8  2002/07/17 22:10:09  jcumming
+ * Added missing semicolon after use of BZ_MUTEX_DECLARE macro.
+ *
  * Revision 1.7  2002/05/27 19:35:37  jcumming
  * Changed this->addReference() to MemoryBlock<P_type>::addReference().
  * Use base class name as scoping qualifier rather than "this" pointer.
@@ -244,7 +247,7 @@ private:   // Data members
     volatile int references_;
 #endif
 
-    BZ_MUTEX_DECLARE(mutex)
+    BZ_MUTEX_DECLARE(mutex);
     size_t  length_;
 };
 
