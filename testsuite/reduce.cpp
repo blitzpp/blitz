@@ -38,7 +38,7 @@ int main()
     C = 0, 1, 2, 3, 4, 5, 6, 7;
 
     BZTEST(sum(C) == 7*8/2);
-    BZTEST(all(C) <= 7);
+    BZTEST(all(C <= 7));
     BZTEST(any(C == 5));
     BZTEST(!any(C == 8));
     BZTEST(sum(C(k,j,i)) == 7*8/2);
