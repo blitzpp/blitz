@@ -1,3 +1,15 @@
+
+
+Wed Oct  9 10:17:27 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* src/Makefile.am: moved library target libblitz.a into lib directory 
+	to avoid unecessary and not so clean target like making a copy into lib
+	directory
+	* src/Makefile.in: rebuilt with automake 1.6.2
+	* lib/Makefile.am: added library target libblitz.a
+	* lib/Makefile.in: rebuilt with automake 1.6.2
+	* Makefile.am: modified src targets into lib where necessary
+	* Makefile.in: rebuilt with automake 1.6.2
+
 2002-09-19  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 	* testsuite/Adnene-Ben-Abdallah-2.cpp: Skip part of this test when
 	using IBM xlC compiler, since it can't handle it.
