@@ -1,0 +1,176 @@
+bzindex(Array)
+bzindex(Array!overview)
+Currently, Blitz++ provides a single array class, called 
+tt(Array<T_numtype,N_rank>).COMMENT(+footnote(In the future, a 
+tt(TinyArray<T_numtype,...>) class may be implemented for 
+small arrays whose dimensions are known at compile time.
+Other possible additions: sparse arrays and arrays with
+symmetries.))
+This array class provides a
+dynamically allocated N-dimensional array, with reference
+counting, arbitrary storage ordering, subarrays and slicing, 
+flexible expression handling, and many other useful
+features.
+
+bzsubsect(Template parameters)
+
+bzindex(Array!template parameters)
+
+The tt(Array) class takes two template parameters:
+
+startit()
+
+it()   tt(T_numtype) is the numeric type to be stored in the array.
+       tt(T_numtype) can be an integral type (bool, char, unsigned char,
+       short int, short unsigned int, int, unsigned int, long,
+       unsigned long), floating point type (float, double, long double)
+       complex type (complex<float>, complex<double>, complex<long double>)
+       or any user-defined type with appropriate numeric semantics.
+
+it()   tt(N_rank) is the bf(rank) (or dimensionality) of the array.  
+       This should be a positive integer. bzindex(Array!rank parameter)
+       bzindex(rank parameter of arrays)
+
+endit()
+
+To use the tt(Array) class, include the header
+tt(<blitz/array.h>) and use the namespace tt(blitz):
+bzindex(using namespace blitz)
+bzindex(namespace blitz)
+bzindex(blitz namespace)
+bzverb(\
+#include <blitz/array.h>
+
+using namespace blitz;
+
+Array<int,1>    x;    // A one-dimensional array of int
+Array<double,2> y;    // A two-dimensional array of double
+.
+.
+Array<complex<float>, 12> z; // A twelve-dimensional array of complex<float>)
+When no constructor arguments are provided, the array is empty, and
+no memory is allocated.  To create an array which contains some data,
+provide the size of the array as constructor arguments:
+
+bzverb(\
+Array<double,2> y(4,4);   // A 4x4 array of double)
+The contents of a newly-created array are garbage.  To initialize
+the array, you can write:
+bzverb(\
+y = 0;)
+and all the elements of the array will be set to zero.  If the
+contents of the array are known, you can initialize it using
+a comma-delimited list of values.  For example, this code
+excerpt sets tt(y) equal to a 4x4 identity matrix:
+bzverb(\
+y = 1, 0, 0, 0
+    0, 1, 0, 0
+    0, 0, 1, 0
+    0, 0, 0, 1;)
+bzsubsect(Array types)
+
+bzindex(Array!types)
+
+The tt(Array<T,N>) class supports a variety of arrays:
+
+startit()
+
+it() Arrays of scalar types, such as tt(Array<int,1>) and tt(Array<float,3>)
+bzindex(Array!scalar arrays)
+
+it() Complex arrays, such as tt(Array<complex<float>,2>)
+bzindex(Array!complex arrays)
+bzindex(complex arrays)
+
+it() Arrays of user-defined types.  If you have a class called
+tt(Polynomial), then tt(Array<Polynomial,2>) is an array of
+tt(Polynomial) objects.
+bzindex(Array!of user-defined types)
+
+bzindex(Array!of TinyVector)
+bzindex(vector field)
+bzindex(Array!of TinyMatrix)
+bzindex(Array!nested)
+bzindex(Array!nested!homogeneous)
+bzindex(nested arrays)
+bzindex(nested arrays!homogeneous)
+
+it() Nested homogeneous arrays using tt(TinyVector) and tt(TinyMatrix),
+in which each element is a fixed-size vector or array.
+For example, tt(Array<TinyVector<float,3>,3>) is a three-dimensional
+vector field.
+
+bzindex(Array!of Array)
+bzindex(Array!nested!heterogeneous)
+bzindex(nested arrays!heterogeneous)
+
+it() Nested heterogeneous arrays, such as tt(Array<Array<int,1>,1>), in
+which each element is a variable-length array.
+
+COMMENT(
+it() Arrays of polymorphic types.  For example, in a solid modelling
+package, it may be useful to have a voxel array of polymorphic
+tt(Material) objects: tt(Array<Material&,3>) accomplishes this.
+)
+
+endit()
+
+bzsubsect(A simple example)
+
+Here's an example program which creates two 3x3 arrays, initializes
+them, and adds them:
+
+COMMENT(examples/simple.cpp)
+bzexamplefile(examples/simple.cpp)
+and the output:
+bzexample(
+A = 3 x 3
+         1         0         0
+         2         2         2
+         1         0         0
+
+B = 3 x 3
+         0         0         7
+         0         8         0
+         9         9         9
+
+C = 3 x 3
+         1         0         7
+         2        10         2
+        10         9         9
+)
+bzsubsect(Storage orders)
+
+bzindex(Array!storage order)
+bzindex(storage orders for arrays)
+bzindex(row major)
+bzindex(column major)
+bzindex(fortranArray)
+bzindex(Array!row major)
+bzindex(Array!column major)
+bzindex(Array!fortran-style)
+Blitz++ is very flexible about the way arrays are stored in memory.
+
+The default storage format is row-major, C-style arrays whose indices
+start at zero.
+
+Fortran-style arrays can also be created.  Fortran arrays are
+stored in column-major order, and have indices which start at one.
+To create a Fortran-style array, use this syntax:
+bzverb(\
+Array<int,2> A(3, 3, fortranArray);)
+The last parameter, tt(fortranArray), tells the tt(Array) constructor
+to use a fortran-style array format.  
+
+tt(fortranArray) is a global object which has an automatic
+conversion to type tt(GeneralArrayStorage<N>).
+tt(GeneralArrayStorage<N>) encapsulates information about how an 
+array is laid out in memory.
+By altering the contents of a tt(GeneralArrayStorage<N>) object, you
+can lay out your arrays any way you want: the dimensions can
+be ordered arbitrarily and stored in ascending or descending order,
+and the starting indices can be arbitrary.
+
+Creating custom array storage formats is described in a later section 
+(ref(arrays-storage-detailed)).
+
