@@ -55,15 +55,15 @@
 BZ_NAMESPACE(blitz)
 
 // Forward declarations
-template<class P_numtype> class VectorIter;
-template<class P_numtype> class VectorIterConst;
-template<class P_expr>    class _bz_VecExpr;       
-template<class P_numtype> class VectorPick;
-template<class P_numtype> class Random;
+template<typename P_numtype> class VectorIter;
+template<typename P_numtype> class VectorIterConst;
+template<typename P_expr>    class _bz_VecExpr;       
+template<typename P_numtype> class VectorPick;
+template<typename P_numtype> class Random;
 
 // Declaration of class Vector<P_numtype>
 
-template<class P_numtype>
+template<typename P_numtype>
 class Vector : protected MemoryBlockReference<P_numtype> {
   
 private:
@@ -113,7 +113,7 @@ public:
         stride_ = vec.stride_;
     }
 
-    _bz_explicit Vector(int length)
+    explicit Vector(int length)
         : MemoryBlockReference<T_numtype>(length)
     {
         length_ = length;
@@ -148,7 +148,7 @@ public:
             data_[i] = firstValue + i * delta;
     }
 
-    template<class P_distribution>
+    template<typename P_distribution>
     Vector(int length, Random<P_distribution>& random)
         : MemoryBlockReference<T_numtype>(length)
     {
@@ -157,7 +157,7 @@ public:
         (*this) = random;
     }
 
-    template<class P_expr>
+    template<typename P_expr>
     Vector(_bz_VecExpr<P_expr> expr)
         : MemoryBlockReference<T_numtype>(expr._bz_suggestLength())
     {
@@ -169,7 +169,7 @@ public:
     // Create a vector view of an already allocated block of memory.
     // Note that the memory will not be freed when this vector is
     // destroyed.
-    Vector(int length, T_numtype* _bz_restrict data, int stride = 1)
+    Vector(int length, T_numtype* restrict data, int stride = 1)
         : MemoryBlockReference<T_numtype>(length, data, neverDeleteData)
     {
         length_ = length;
@@ -213,13 +213,13 @@ public:
     // T_iterator      end();
     // T_constIterator end()    const;
 
-    T_numtype * _bz_restrict data()  
+    T_numtype * restrict data()  
     { return data_; }
 
-    const T_numtype * _bz_restrict data() const
+    const T_numtype * restrict data() const
     { return data_; }
 
-    _bz_bool        isUnitStride() const
+    bool        isUnitStride() const
     { return stride_ == 1; }
 
     int        length() const
@@ -257,7 +257,7 @@ public:
     int        _bz_suggestLength() const
     { return length_; }
 
-    _bz_bool        _bz_hasFastAccess() const
+    bool        _bz_hasFastAccess() const
     { return stride_ == 1; }
 
     T_numtype&      _bz_fastAccess(int i)
@@ -266,7 +266,7 @@ public:
     T_numtype       _bz_fastAccess(int i) const
     { return data_[i]; }
 
-    template<class P_expr, class P_updater>
+    template<typename P_expr, typename P_updater>
     void            _bz_assign(P_expr, P_updater);
 
     _bz_VecExpr<T_constIterator> _bz_asVecExpr() const
@@ -287,7 +287,7 @@ public:
 
     // operator()(int) may be used only when the vector has unit
     // stride.  Otherwise, use operator[].
-    T_numtype& _bz_restrict operator()(int i) 
+    T_numtype& restrict operator()(int i) 
     {
         BZPRECONDITION(i < length_);
         BZPRECONDITION(stride_ == 1);
@@ -300,7 +300,7 @@ public:
         return data_[i * stride_];
     }
 
-    T_numtype& _bz_restrict operator[](int i)
+    T_numtype& restrict operator[](int i)
     {
         BZPRECONDITION(i < length_);
         return data_[i * stride_];
@@ -355,59 +355,59 @@ public:
 
     // Vector operand
    
-    template<class P_numtype2> T_vector& operator=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator=(const Vector<P_numtype2> &);
 
     // Specialization uses memcpy instead of element-by-element cast and
     // copy
     // NEEDS_WORK -- KCC won't accept this syntax; standard??
     // template<> T_vector& operator=(const T_vector&);
 
-    template<class P_numtype2> T_vector& operator+=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_vector& operator-=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_vector& operator*=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_vector& operator/=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_vector& operator%=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_vector& operator^=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_vector& operator&=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_vector& operator|=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_vector& operator>>=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_vector& operator<<=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator+=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator-=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator*=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator/=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator%=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator^=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator&=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator|=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator>>=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_vector& operator<<=(const Vector<P_numtype2> &);
 
     // Vector expression operand
-    template<class P_expr> T_vector& operator=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_vector& operator+=(_bz_VecExpr<P_expr>); 
-    template<class P_expr> T_vector& operator-=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_vector& operator*=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_vector& operator/=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_vector& operator%=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_vector& operator^=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_vector& operator&=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_vector& operator|=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_vector& operator>>=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_vector& operator<<=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_vector& operator=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_vector& operator+=(_bz_VecExpr<P_expr>); 
+    template<typename P_expr> T_vector& operator-=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_vector& operator*=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_vector& operator/=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_vector& operator%=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_vector& operator^=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_vector& operator&=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_vector& operator|=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_vector& operator>>=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_vector& operator<<=(_bz_VecExpr<P_expr>);
     
     // VectorPick operand
-    template<class P_numtype2> 
+    template<typename P_numtype2> 
     T_vector& operator=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2> 
+    template<typename P_numtype2> 
     T_vector& operator+=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2> 
+    template<typename P_numtype2> 
     T_vector& operator-=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2> 
+    template<typename P_numtype2> 
     T_vector& operator*=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2> 
+    template<typename P_numtype2> 
     T_vector& operator/=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator%=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator^=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator&=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator|=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator>>=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2>
+    template<typename P_numtype2>
     T_vector& operator<<=(const VectorPick<P_numtype2> &);
 
     // Range operand
@@ -424,23 +424,23 @@ public:
     T_vector& operator<<=(Range);
 
     // Random operand
-    template<class P_distribution>
+    template<typename P_distribution>
     T_vector& operator=(Random<P_distribution>& random);
-    template<class P_distribution>
+    template<typename P_distribution>
     T_vector& operator+=(Random<P_distribution>& random);
-    template<class P_distribution>
+    template<typename P_distribution>
     T_vector& operator-=(Random<P_distribution>& random);
-    template<class P_distribution>
+    template<typename P_distribution>
     T_vector& operator*=(Random<P_distribution>& random);
-    template<class P_distribution>
+    template<typename P_distribution>
     T_vector& operator/=(Random<P_distribution>& random);
-    template<class P_distribution>
+    template<typename P_distribution>
     T_vector& operator%=(Random<P_distribution>& random);
-    template<class P_distribution>
+    template<typename P_distribution>
     T_vector& operator^=(Random<P_distribution>& random);
-    template<class P_distribution>
+    template<typename P_distribution>
     T_vector& operator&=(Random<P_distribution>& random);
-    template<class P_distribution>
+    template<typename P_distribution>
     T_vector& operator|=(Random<P_distribution>& random);
 
     //////////////////////////////////////////////
@@ -459,10 +459,10 @@ private:
 
 // Global I/O functions
 
-template<class P_numtype>
+template<typename P_numtype>
 ostream& operator<<(ostream& os, const Vector<P_numtype>& x);
 
-template<class P_expr>
+template<typename P_expr>
 ostream& operator<<(ostream& os, _bz_VecExpr<P_expr> expr);
 
 BZ_NAMESPACE_END

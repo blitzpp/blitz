@@ -20,7 +20,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_numtype>
+template<typename P_numtype>
 Vector<P_numtype> Vector<P_numtype>::copy() const
 {
     Vector<P_numtype> newCopy(length_);
@@ -42,7 +42,7 @@ Vector<P_numtype> Vector<P_numtype>::copy() const
     return newCopy;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 void Vector<P_numtype>::makeUnique()
 {
     if ((stride_ != 1) || (this->numReferences() > 1))
@@ -52,7 +52,7 @@ void Vector<P_numtype>::makeUnique()
     }
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 void Vector<P_numtype>::reference(Vector<P_numtype>& x)
 {
     MemoryBlockReference<P_numtype>::changeBlock(x, 0);
@@ -60,7 +60,7 @@ void Vector<P_numtype>::reference(Vector<P_numtype>& x)
     stride_ = x.stride_;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 void Vector<P_numtype>::resize(int length)
 {
     if (length != length_)
@@ -71,7 +71,7 @@ void Vector<P_numtype>::resize(int length)
     }
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 void Vector<P_numtype>::resizeAndPreserve(int newLength)
 {
     Vector<P_numtype> newVector(newLength);
@@ -88,7 +88,7 @@ void Vector<P_numtype>::resizeAndPreserve(int newLength)
  * Assignment operators with vector expression operand
  */
 
-template<class P_numtype> template<class P_expr, class P_updater>
+template<typename P_numtype> template<typename P_expr, typename P_updater>
 inline
 void Vector<P_numtype>::_bz_assign(P_expr expr, P_updater)
 {
@@ -143,7 +143,7 @@ void Vector<P_numtype>::_bz_assign(P_expr expr, P_updater)
     }
 }
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline Vector<P_numtype>& Vector<P_numtype>::operator=(_bz_VecExpr<P_expr> expr)
 {
     BZPRECONDITION(expr.length(length_) == length_);
@@ -201,7 +201,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator=(_bz_VecExpr<P_expr> expr)
 #ifdef BZ_PARTIAL_LOOP_UNROLL
  
 #define BZ_VECTOR_ASSIGN(op)                                            \
-template<class P_numtype> template<class P_expr>                        \
+template<typename P_numtype> template<typename P_expr>                        \
 inline Vector<P_numtype>& Vector<P_numtype>::                           \
     operator op (_bz_VecExpr<P_expr> expr)                              \
 {                                                                       \
@@ -251,7 +251,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::                           \
  */
 
 #define BZ_VECTOR_ASSIGN(op)                                            \
-template<class P_numtype> template<class P_expr>                        \
+template<typename P_numtype> template<typename P_expr>                        \
 inline Vector<P_numtype>& Vector<P_numtype>::                           \
     operator op (_bz_VecExpr<P_expr> expr)                              \
 {                                                                       \
@@ -277,7 +277,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::                           \
 #else   // not BZ_ALTERNATE_FORWARD_BACKWARD_TRAVERSALS
 
 #define BZ_VECTOR_ASSIGN(op)                                            \
-template<class P_numtype> template<class P_expr>                        \
+template<typename P_numtype> template<typename P_expr>                        \
 inline Vector<P_numtype>& Vector<P_numtype>::                           \
     operator op (_bz_VecExpr<P_expr> expr)                              \
 {                                                                       \
@@ -309,7 +309,7 @@ BZ_VECTOR_ASSIGN(<<=)
 
 #if NOT_DEFINED
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline Vector<P_numtype>& Vector<P_numtype>::operator+=(_bz_VecExpr<P_expr> expr)
 {
     _bz_assign(expr, _bz_plus_update<P_numtype,
@@ -317,7 +317,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator+=(_bz_VecExpr<P_expr> expr
     return *this;
 }
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline Vector<P_numtype>& Vector<P_numtype>::operator-=(_bz_VecExpr<P_expr> expr)
 {
     _bz_assign(expr, _bz_minus_update<P_numtype,
@@ -325,7 +325,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator-=(_bz_VecExpr<P_expr> expr
     return *this;
 }
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline Vector<P_numtype>& Vector<P_numtype>::operator*=(_bz_VecExpr<P_expr> expr)
 {
     _bz_assign(expr, _bz_multiply_update<P_numtype,
@@ -333,7 +333,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator*=(_bz_VecExpr<P_expr> expr
     return *this;
 }
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline Vector<P_numtype>& Vector<P_numtype>::operator/=(_bz_VecExpr<P_expr> expr)
 {
     _bz_assign(expr, _bz_divide_update<P_numtype,
@@ -341,7 +341,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator/=(_bz_VecExpr<P_expr> expr
     return *this;
 }
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline Vector<P_numtype>& Vector<P_numtype>::operator%=(_bz_VecExpr<P_expr> expr)
 {
     _bz_assign(expr, _bz_mod_update<P_numtype,
@@ -349,7 +349,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator%=(_bz_VecExpr<P_expr> expr
     return *this;
 }
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline Vector<P_numtype>& Vector<P_numtype>::operator^=(_bz_VecExpr<P_expr> expr)
 {
     _bz_assign(expr, _bz_xor_update<P_numtype,
@@ -357,7 +357,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator^=(_bz_VecExpr<P_expr> expr
     return *this;
 }
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline Vector<P_numtype>& Vector<P_numtype>::operator&=(_bz_VecExpr<P_expr> expr)
 {
     _bz_assign(expr, _bz_bitand_update<P_numtype,
@@ -365,7 +365,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator&=(_bz_VecExpr<P_expr> expr
     return *this;
 }
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline Vector<P_numtype>& Vector<P_numtype>::operator|=(_bz_VecExpr<P_expr> expr)
 {
     _bz_assign(expr, _bz_bitor_update<P_numtype,
@@ -373,7 +373,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator|=(_bz_VecExpr<P_expr> expr
     return *this;
 }
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline Vector<P_numtype>& Vector<P_numtype>::operator>>=(_bz_VecExpr<P_expr> expr)
 {
     _bz_assign(expr, _bz_shiftr_update<P_numtype,
@@ -381,7 +381,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator>>=(_bz_VecExpr<P_expr> exp
     return *this;
 }
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline Vector<P_numtype>& Vector<P_numtype>::operator<<=(_bz_VecExpr<P_expr> expr)
 {
     _bz_assign(expr, _bz_shiftl_update<P_numtype,
@@ -394,7 +394,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator<<=(_bz_VecExpr<P_expr> exp
  * Assignment operators with scalar operand
  */
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::initialize(P_numtype x)
 {
     typedef _bz_VecExprConstant<P_numtype> T_expr;
@@ -402,7 +402,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::initialize(P_numtype x)
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::operator+=(P_numtype x)
 {
     typedef _bz_VecExprConstant<P_numtype> T_expr;
@@ -410,7 +410,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator+=(P_numtype x)
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::operator-=(P_numtype x)
 {
     typedef _bz_VecExprConstant<P_numtype> T_expr;
@@ -418,7 +418,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator-=(P_numtype x)
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::operator*=(P_numtype x)
 {
     typedef _bz_VecExprConstant<P_numtype> T_expr;
@@ -426,7 +426,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator*=(P_numtype x)
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::operator/=(P_numtype x)
 {
     typedef _bz_VecExprConstant<P_numtype> T_expr;
@@ -434,7 +434,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator/=(P_numtype x)
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::operator%=(P_numtype x)
 {
     typedef _bz_VecExprConstant<P_numtype> T_expr;
@@ -442,7 +442,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator%=(P_numtype x)
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::operator^=(P_numtype x)
 {
     typedef _bz_VecExprConstant<P_numtype> T_expr;
@@ -450,7 +450,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator^=(P_numtype x)
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::operator&=(P_numtype x)
 {
     typedef _bz_VecExprConstant<P_numtype> T_expr;
@@ -458,7 +458,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator&=(P_numtype x)
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::operator|=(P_numtype x)
 {
     typedef _bz_VecExprConstant<P_numtype> T_expr;
@@ -466,7 +466,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator|=(P_numtype x)
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::operator>>=(int x)
 {
     typedef _bz_VecExprConstant<int> T_expr;
@@ -474,7 +474,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator>>=(int x)
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::operator<<=(int x)
 {
     typedef _bz_VecExprConstant<P_numtype> T_expr;
@@ -490,7 +490,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator<<=(int x)
 // Does not appear to be supported by the current C++ standard; or
 // is it?
 #if 0
-template<class P_numtype> template<>
+template<typename P_numtype> template<>
 inline Vector<P_numtype>&
 Vector<P_numtype>::operator=(const Vector<P_numtype>& x)
 {
@@ -504,7 +504,7 @@ Vector<P_numtype>::operator=(const Vector<P_numtype>& x)
 
 // This version is for two vectors with *different* template
 // parameters.
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline Vector<P_numtype>& 
 Vector<P_numtype>::operator=(const Vector<P_numtype2>& x)
 {
@@ -512,7 +512,7 @@ Vector<P_numtype>::operator=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline Vector<P_numtype>&
 Vector<P_numtype>::operator+=(const Vector<P_numtype2>& x)
 {
@@ -520,7 +520,7 @@ Vector<P_numtype>::operator+=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline Vector<P_numtype>&
 Vector<P_numtype>::operator-=(const Vector<P_numtype2>& x)
 {
@@ -528,7 +528,7 @@ Vector<P_numtype>::operator-=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline Vector<P_numtype>&
 Vector<P_numtype>::operator*=(const Vector<P_numtype2>& x)
 {
@@ -536,7 +536,7 @@ Vector<P_numtype>::operator*=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline Vector<P_numtype>&
 Vector<P_numtype>::operator/=(const Vector<P_numtype2>& x)
 {
@@ -544,7 +544,7 @@ Vector<P_numtype>::operator/=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline Vector<P_numtype>&
 Vector<P_numtype>::operator%=(const Vector<P_numtype2>& x)
 {
@@ -552,7 +552,7 @@ Vector<P_numtype>::operator%=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline Vector<P_numtype>&
 Vector<P_numtype>::operator^=(const Vector<P_numtype2>& x)
 {
@@ -560,7 +560,7 @@ Vector<P_numtype>::operator^=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline Vector<P_numtype>&
 Vector<P_numtype>::operator&=(const Vector<P_numtype2>& x)
 {
@@ -568,7 +568,7 @@ Vector<P_numtype>::operator&=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline Vector<P_numtype>&
 Vector<P_numtype>::operator|=(const Vector<P_numtype2>& x)
 {
@@ -576,7 +576,7 @@ Vector<P_numtype>::operator|=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline Vector<P_numtype>&
 Vector<P_numtype>::operator<<=(const Vector<P_numtype2>& x)
 {
@@ -584,7 +584,7 @@ Vector<P_numtype>::operator<<=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline Vector<P_numtype>&
 Vector<P_numtype>::operator>>=(const Vector<P_numtype2>& x)
 {
@@ -596,77 +596,77 @@ Vector<P_numtype>::operator>>=(const Vector<P_numtype2>& x)
  * Assignment operators with Range operand
  */
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::operator=(Range r)
 {
     (*this) = _bz_VecExpr<Range>(r);
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::operator+=(Range r)
 {
     (*this) += _bz_VecExpr<Range>(r);
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::operator-=(Range r)
 {
     (*this) -= _bz_VecExpr<Range>(r);
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::operator*=(Range r)
 {
     (*this) *= _bz_VecExpr<Range>(r);
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::operator/=(Range r)
 {
     (*this) /= _bz_VecExpr<Range>(r);
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::operator%=(Range r)
 {
     (*this) %= _bz_VecExpr<Range>(r);
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::operator^=(Range r)
 {
     (*this) ^= _bz_VecExpr<Range>(r);
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::operator&=(Range r)
 {
     (*this) &= _bz_VecExpr<Range>(r);
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::operator|=(Range r)
 {
     (*this) |= _bz_VecExpr<Range>(r);
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::operator>>=(Range r)
 {
     (*this) >>= _bz_VecExpr<Range>(r);
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline Vector<P_numtype>& Vector<P_numtype>::operator<<=(Range r)
 {
     (*this) <<= _bz_VecExpr<Range>(r);
@@ -677,7 +677,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator<<=(Range r)
  * Assignment operators with VectorPick operand
  */
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline Vector<P_numtype>& Vector<P_numtype>::operator=(const 
     VectorPick<P_numtype2>& x)
 {
@@ -686,7 +686,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator=(const
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline Vector<P_numtype>& Vector<P_numtype>::operator+=(const
     VectorPick<P_numtype2>& x)
 {
@@ -696,7 +696,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator+=(const
 }
 
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline Vector<P_numtype>& Vector<P_numtype>::operator-=(const
     VectorPick<P_numtype2>& x)
 {
@@ -705,7 +705,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator-=(const
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline Vector<P_numtype>& Vector<P_numtype>::operator*=(const
     VectorPick<P_numtype2>& x)
 {
@@ -714,7 +714,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator*=(const
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline Vector<P_numtype>& Vector<P_numtype>::operator/=(const
     VectorPick<P_numtype2>& x)
 {
@@ -723,7 +723,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator/=(const
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline Vector<P_numtype>& Vector<P_numtype>::operator%=(const
     VectorPick<P_numtype2>& x)
 {
@@ -732,7 +732,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator%=(const
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline Vector<P_numtype>& Vector<P_numtype>::operator^=(const
     VectorPick<P_numtype2>& x)
 {
@@ -741,7 +741,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator^=(const
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline Vector<P_numtype>& Vector<P_numtype>::operator&=(const
     VectorPick<P_numtype2>& x)
 {
@@ -750,7 +750,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator&=(const
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline Vector<P_numtype>& Vector<P_numtype>::operator|=(const
     VectorPick<P_numtype2>& x)
 {
@@ -763,7 +763,7 @@ inline Vector<P_numtype>& Vector<P_numtype>::operator|=(const
  * Assignment operators with Random operand
  */
 
-template<class P_numtype> template<class P_distribution>
+template<typename P_numtype> template<typename P_distribution>
 Vector<P_numtype>& Vector<P_numtype>::operator=(Random<P_distribution>& rand)
 {
     for (int i=0; i < length_; ++i) 
@@ -773,7 +773,7 @@ Vector<P_numtype>& Vector<P_numtype>::operator=(Random<P_distribution>& rand)
 
 #ifdef BZ_PECULIAR_RANDOM_VECTOR_ASSIGN_BUG
 
-template<class P_numtype> template<class P_distribution>
+template<typename P_numtype> template<typename P_distribution>
 Vector<P_numtype>& Vector<P_numtype>::operator=(Random<P_distribution>& rand)
 {
     (*this) = _bz_VecExpr<_bz_VecExprRandom<P_distribution> > 
@@ -781,7 +781,7 @@ Vector<P_numtype>& Vector<P_numtype>::operator=(Random<P_distribution>& rand)
     return *this;
 }
 
-template<class P_numtype> template<class P_distribution>
+template<typename P_numtype> template<typename P_distribution>
 Vector<P_numtype>& Vector<P_numtype>::operator+=(Random<P_distribution>& rand)
 {
     (*this) += _bz_VecExpr<_bz_VecExprRandom<P_distribution> >
@@ -789,7 +789,7 @@ Vector<P_numtype>& Vector<P_numtype>::operator+=(Random<P_distribution>& rand)
     return *this;
 }
 
-template<class P_numtype> template<class P_distribution>
+template<typename P_numtype> template<typename P_distribution>
 Vector<P_numtype>& Vector<P_numtype>::operator-=(Random<P_distribution>& rand)
 {
     (*this) -= _bz_VecExpr<_bz_VecExprRandom<P_distribution> >
@@ -797,7 +797,7 @@ Vector<P_numtype>& Vector<P_numtype>::operator-=(Random<P_distribution>& rand)
     return *this;
 }
 
-template<class P_numtype> template<class P_distribution>
+template<typename P_numtype> template<typename P_distribution>
 Vector<P_numtype>& Vector<P_numtype>::operator*=(Random<P_distribution>& rand)
 {
     (*this) *= _bz_VecExpr<_bz_VecExprRandom<P_distribution> >
@@ -805,7 +805,7 @@ Vector<P_numtype>& Vector<P_numtype>::operator*=(Random<P_distribution>& rand)
     return *this;
 }
 
-template<class P_numtype> template<class P_distribution>
+template<typename P_numtype> template<typename P_distribution>
 Vector<P_numtype>& Vector<P_numtype>::operator/=(Random<P_distribution>& rand)
 {
     (*this) /= _bz_VecExpr<_bz_VecExprRandom<P_distribution> >
@@ -813,7 +813,7 @@ Vector<P_numtype>& Vector<P_numtype>::operator/=(Random<P_distribution>& rand)
     return *this;
 }
 
-template<class P_numtype> template<class P_distribution>
+template<typename P_numtype> template<typename P_distribution>
 Vector<P_numtype>& Vector<P_numtype>::operator%=(Random<P_distribution>& rand)
 {
     (*this) %= _bz_VecExpr<_bz_VecExprRandom<P_distribution> >
@@ -821,7 +821,7 @@ Vector<P_numtype>& Vector<P_numtype>::operator%=(Random<P_distribution>& rand)
     return *this;
 }
 
-template<class P_numtype> template<class P_distribution>
+template<typename P_numtype> template<typename P_distribution>
 Vector<P_numtype>& Vector<P_numtype>::operator^=(Random<P_distribution>& rand)
 {
     (*this) ^= _bz_VecExpr<_bz_VecExprRandom<P_distribution> >
@@ -829,7 +829,7 @@ Vector<P_numtype>& Vector<P_numtype>::operator^=(Random<P_distribution>& rand)
     return *this;
 }
 
-template<class P_numtype> template<class P_distribution>
+template<typename P_numtype> template<typename P_distribution>
 Vector<P_numtype>& Vector<P_numtype>::operator&=(Random<P_distribution>& rand)
 {
     (*this) &= _bz_VecExpr<_bz_VecExprRandom<P_distribution> >
@@ -837,7 +837,7 @@ Vector<P_numtype>& Vector<P_numtype>::operator&=(Random<P_distribution>& rand)
     return *this;
 }
 
-template<class P_numtype> template<class P_distribution>
+template<typename P_numtype> template<typename P_distribution>
 Vector<P_numtype>& Vector<P_numtype>::operator|=(Random<P_distribution>& rand)
 {
     (*this) |= _bz_VecExpr<_bz_VecExprRandom<P_distribution> >

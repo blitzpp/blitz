@@ -32,7 +32,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_expr1, class P_expr2, class P_expr3>
+template<typename P_expr1, typename P_expr2, typename P_expr3>
 class _bz_VecWhere {
 
 public:
@@ -85,7 +85,7 @@ public:
             : iter3_._bz_fastAccess(i); 
     }
 
-    _bz_bool _bz_hasFastAccess() const
+    bool _bz_hasFastAccess() const
     {
         return iter1_._bz_hasFastAccess() &&
             iter2_._bz_hasFastAccess() &&
