@@ -39,6 +39,10 @@
 #ifndef BZ_NUMINQUIRE_H
 #define BZ_NUMINQUIRE_H
 
+#ifndef BZ_BLITZ_H
+  #include <blitz/blitz.h>
+#endif
+
 #ifndef BZ_HAVE_NUMERIC_LIMITS
   #include <blitz/limits-hack.h>
 #else
