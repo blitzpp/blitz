@@ -21,62 +21,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.9  2002/07/19 20:40:32  jcumming
- * Put ending semicolon into definition of BZ_MUTEX_* macros so that you
- * don't need to add a semicolon after invoking the macro.
- *
- * Revision 1.8  2001/02/15 13:13:30  tveldhui
- * Fixed problem with BZ_THREADSAFE macros
- *
- * Revision 1.7  2001/02/11 22:03:44  tveldhui
- * Fixed minor typo in blitz.h
- *
- * Revision 1.6  2001/02/04 22:36:41  tveldhui
- * Oops, was including <pthread.h> inside the blitz namespace.
- *
- * Revision 1.5  2001/02/04 16:32:28  tveldhui
- * Made memory block reference counting (optionally) threadsafe when
- * BZ_THREADSAFE is defined.  Currently uses pthread mutex.
- * When compiling with gcc -pthread, _REENTRANT automatically causes
- * BZ_THREADSAFE to be enabled.
- *
- * Revision 1.4  2001/01/26 18:30:50  tveldhui
- * More source code reorganization to reduce compile times.
- *
- * Revision 1.3  2001/01/24 22:51:50  tveldhui
- * Reorganized #include orders to avoid including the huge Vector e.t.
- * implementation when using Array.
- *
- * Revision 1.2  2001/01/24 20:22:49  tveldhui
- * Updated copyright date in headers.
- *
- * Revision 1.1.1.1  2000/06/19 12:26:08  tveldhui
- * Imported sources
- *
- * Revision 1.7  1998/03/14 00:04:47  tveldhui
- * 0.2-alpha-05
- *
- * Revision 1.6  1997/07/16 14:51:20  tveldhui
- * Update: Alpha release 0.2 (Arrays)
- *
- * Revision 1.5  1997/01/24 14:42:00  tveldhui
- * Periodic RCS update
- *
- * Revision 1.4  1997/01/23 03:28:28  tveldhui
- * Periodic RCS update
- *
- * Revision 1.3  1997/01/13 22:19:58  tveldhui
- * Periodic RCS update
- *
- * Revision 1.2  1996/11/11 17:29:13  tveldhui
- * Periodic RCS update
- *
- * Revision 1.1  1996/04/14  21:13:00  todd
- * Initial revision
- *
- */
+ ***************************************************************************/
 
 #ifndef BZ_BLITZ_H
 #define BZ_BLITZ_H

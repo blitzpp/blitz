@@ -21,30 +21,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- *************************************************************************
- * $Log$
- * Revision 1.4  2002/07/02 19:11:06  jcumming
- * Rewrote and reorganized this file to make better use of macros to
- * generate all the functor classes needed to provide unary and binary
- * operators for the "new" style of expression templates.
- *
- * Revision 1.3  2002/03/06 16:06:19  patricg
- *
- * os replaced by str in the BitwiseNot template
- *
- * Revision 1.2  2001/01/24 20:22:50  tveldhui
- * Updated copyright date in headers.
- *
- * Revision 1.1.1.1  2000/06/19 12:26:12  tveldhui
- * Imported sources
- *
- * Revision 1.2  1998/03/14 00:04:47  tveldhui
- * 0.2-alpha-05
- *
- * Revision 1.1  1997/07/16 14:51:20  tveldhui
- * Update: Alpha release 0.2 (Arrays)
- *
- */
+ *************************************************************************/
 
 #ifndef BZ_OPS_H
 #define BZ_OPS_H

@@ -21,13 +21,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- *************************************************************************
- * $Log$
- * Revision 1.1  2002/07/02 19:01:07  jcumming
- * New version of classes to provide ET support for unary and binary math functions.
- *
- *
- */
+ *************************************************************************/
 
 #ifndef BZ_FUNCS_H
 #define BZ_FUNCS_H

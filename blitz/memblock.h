@@ -21,70 +21,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.9  2002/07/19 20:42:53  jcumming
- * Removed ending semicolon after invocations of BZ_MUTEX_* macros.  This
- * is now handled within the definition of these macros.  This should get
- * rid of compiler warnings from SGI CC and others about extra semicolons
- * being ignored, which happened when these macros were defined as blank.
- *
- * Revision 1.8  2002/07/17 22:10:09  jcumming
- * Added missing semicolon after use of BZ_MUTEX_DECLARE macro.
- *
- * Revision 1.7  2002/05/27 19:35:37  jcumming
- * Changed this->addReference() to MemoryBlock<P_type>::addReference().
- * Use base class name as scoping qualifier rather than "this" pointer.
- *
- * Revision 1.6  2002/03/06 18:07:42  patricg
- *
- * in the constructor
- * MemoryBlock(size_t length, T_type* _bz_restrict data)
- * dataBlockAddress_ = data replaced by dataBlockAddress_ = 0
- * as it was before. (testsuite/extract does not crash then)
- *
- * Revision 1.5  2002/02/28 23:38:20  tveldhui
- * Fixed extra semicolon problem with KCC
- *
- * Revision 1.4  2001/02/04 16:32:28  tveldhui
- * Made memory block reference counting (optionally) threadsafe when
- * BZ_THREADSAFE is defined.  Currently uses pthread mutex.
- * When compiling with gcc -pthread, _REENTRANT automatically causes
- * BZ_THREADSAFE to be enabled.
- *
- * Revision 1.1.1.1  2000/06/19 12:26:09  tveldhui
- * Imported sources
- *
- * Revision 1.8  1998/12/06 00:00:35  tveldhui
- * Prior to adding UnownedMemoryBlock
- *
- * Revision 1.7  1998/06/15 16:07:01  tveldhui
- * When a memory block is created from an existing block of data,
- * add an additional reference count so that makeUnique() will
- * create a copy of the data.
- *
- * Revision 1.6  1998/03/14 00:04:47  tveldhui
- * 0.2-alpha-05
- *
- * Revision 1.5  1997/07/16 14:51:20  tveldhui
- * Update: Alpha release 0.2 (Arrays)
- *
- * Revision 1.4  1997/01/24 14:42:00  tveldhui
- * Periodic RCS update
- *
- * Revision 1.3  1997/01/23 03:28:28  tveldhui
- * Periodic RCS update
- *
- * Revision 1.2  1997/01/13 22:19:58  tveldhui
- * Periodic RCS update
- *
- * Revision 1.1  1996/11/11 17:29:13  tveldhui
- * Initial revision
- *
- *
- ***************************************************************************
- *
- */
+ ***************************************************************************/
 
 #ifndef __BZ_MEMBLOCK_H__
 #define __BZ_MEMBLOCK_H__

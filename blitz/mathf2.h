@@ -21,12 +21,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.2  2001/01/25 00:25:54  tveldhui
- * Ensured that source files have cvs logs.
- *
- */
+ ***************************************************************************/
 
 #ifndef BZ_MATHF2_H
 #define BZ_MATHF2_H

@@ -20,26 +20,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Id$ 
- *
- * $Log$
- * Revision 1.3  2001/01/25 00:25:54  tveldhui
- * Ensured that source files have cvs logs.
- *
- * Revision 1.2  2001/01/24 20:22:49  tveldhui
- * Updated copyright date in headers.
- *
- * Revision 1.1.1.1  2000/06/19 12:26:11  tveldhui
- * Imported sources
- *
- * Revision 1.2  1998/03/14 00:04:47  tveldhui
- * 0.2-alpha-05
- *
- * Revision 1.1  1997/07/16 14:51:20  tveldhui
- * Update: Alpha release 0.2 (Arrays)
- *
- */
+ ***************************************************************************/
 
 #ifndef BZ_BENCHEXT_H
 #define BZ_BENCHEXT_H

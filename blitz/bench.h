@@ -19,30 +19,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Id$
- *
- * $Log$
- * Revision 1.3  2001/01/25 00:25:54  tveldhui
- * Ensured that source files have cvs logs.
- *
- * Revision 1.2  2001/01/24 20:22:49  tveldhui
- * Updated copyright date in headers.
- *
- * Revision 1.1.1.1  2000/06/19 12:26:08  tveldhui
- * Imported sources
- *
- * Revision 1.4  1998/03/14 00:04:47  tveldhui
- * 0.2-alpha-05
- *
- * Revision 1.3  1997/07/16 14:51:20  tveldhui
- * Update: Alpha release 0.2 (Arrays)
- *
- * Revision 1.2  1997/01/24 14:30:34  tveldhui
- * Prior to rewrite of Bench class; in this version, Bench contains
- * each benchmark implementation.
- *
- */
+ ***************************************************************************/
 
 #ifndef BZ_BENCH_H
 #define BZ_BENCH_H

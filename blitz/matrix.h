@@ -21,47 +21,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.4  2002/05/27 19:31:43  jcumming
- * Removed use of this-> as means of accessing members of templated base class.
- * Instead provided using declarations for these members within the derived
- * class definitions to bring them into the scope of the derived class.
- *
- * Revision 1.3  2002/03/06 16:30:24  patricg
- *
- * data_ replaced by this->data_ everywhere
- *
- * Revision 1.2  2001/01/24 20:22:49  tveldhui
- * Updated copyright date in headers.
- *
- * Revision 1.1.1.1  2000/06/19 12:26:11  tveldhui
- * Imported sources
- *
- * Revision 1.6  1998/03/14 00:04:47  tveldhui
- * 0.2-alpha-05
- *
- * Revision 1.5  1997/07/16 14:51:20  tveldhui
- * Update: Alpha release 0.2 (Arrays)
- *
- * Revision 1.4  1997/01/24 14:42:00  tveldhui
- * Periodic RCS update
- *
- * Revision 1.3  1997/01/23 03:28:28  tveldhui
- * Periodic RCS update
- *
- * Revision 1.2  1997/01/13 22:19:58  tveldhui
- * Periodic RCS update
- *
- * Revision 1.1  1996/11/11 17:29:13  tveldhui
- * Initial revision
- *
- * Revision 1.2  1996/10/31 21:06:54  tveldhui
- * Did away with multiple template parameters.  Only numeric type
- * and structure parameters now.
- *
- *
- */
+ ***************************************************************************/
 
 #ifndef BZ_MATRIX_H
 #define BZ_MATRIX_H

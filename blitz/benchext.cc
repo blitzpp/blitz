@@ -1,30 +1,7 @@
 /*
- * $Id$
- *
  * Copyright (C) 1997 Todd Veldhuizen <tveldhui@oonumerics.org>
  * All rights reserved.  Please see <blitz/blitz.h> for terms and
  * conditions of use.
- *
- * $Log$
- * Revision 1.4  2002/12/11 15:52:16  patricg
- *
- * removed Blitz assert that could not be fullfiled in template
- * BenchmarkExt<P_parameter>::setNumParameters(int numParameters)
- *
- * Revision 1.3  2002/06/28 05:05:58  jcumming
- * Changed loop variable j to unsigned to eliminate signed/unsigned comparisons.
- *
- * Revision 1.2  2001/01/26 18:30:50  tveldhui
- * More source code reorganization to reduce compile times.
- *
- * Revision 1.1.1.1  2000/06/19 12:26:11  tveldhui
- * Imported sources
- *
- * Revision 1.2  1998/03/14 00:04:47  tveldhui
- * 0.2-alpha-05
- *
- * Revision 1.1  1997/07/16 14:51:20  tveldhui
- * Update: Alpha release 0.2 (Arrays)
  *
  */
 
