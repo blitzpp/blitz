@@ -64,20 +64,33 @@ struct asExpr<IndexPlaceholder<N> > {
 
 //  A traits class that provides the return type of a binary operation.
 
-template <template <typename T1> class OP,typename O1>
+template <template <typename T1> class OP, typename O1>
 struct BzUnaryExprResult {
-    typedef _bz_ArrayExpr<
-                _bz_ArrayExprUnaryOp<typename asExpr<O1>::T_expr,
-                                     OP<typename asExpr<O1>::T_expr::T_numtype> > > T_result;
+    typedef _bz_ArrayExpr<_bz_ArrayExprUnaryOp<
+        typename asExpr<O1>::T_expr,
+        OP<typename asExpr<O1>::T_expr::T_numtype> > > T_result;
 };
 
-template <template <typename T1,typename T2> class OP,typename O1,typename O2>
+template <template <typename T1, typename T2> class OP,
+          typename O1, typename O2>
 struct BzBinaryExprResult {
-    typedef _bz_ArrayExpr<
-                _bz_ArrayExprOp<typename asExpr<O1>::T_expr,
-                                typename asExpr<O2>::T_expr,
-                                OP<typename asExpr<O1>::T_expr::T_numtype,
-                                   typename asExpr<O2>::T_expr::T_numtype> > > T_result;
+    typedef _bz_ArrayExpr<_bz_ArrayExprOp<
+        typename asExpr<O1>::T_expr,
+        typename asExpr<O2>::T_expr,
+        OP<typename asExpr<O1>::T_expr::T_numtype,
+           typename asExpr<O2>::T_expr::T_numtype> > > T_result;
+};
+
+template <template <typename T1, typename T2, typename T3> class OP,
+          typename O1, typename O2, typename O3>
+struct BzTernaryExprResult {
+    typedef _bz_ArrayExpr<_bz_ArrayExprTernaryOp<
+        typename asExpr<O1>::T_expr,
+        typename asExpr<O2>::T_expr,
+        typename asExpr<O3>::T_expr,
+        OP<typename asExpr<O1>::T_expr::T_numtype,
+           typename asExpr<O2>::T_expr::T_numtype,
+           typename asExpr<O3>::T_expr::T_numtype> > > T_result;
 };
 
 #endif /* BZ_TEMPLATES_AS_TEMPLATE_ARGUMENTS */
