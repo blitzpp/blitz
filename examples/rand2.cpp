@@ -24,7 +24,7 @@ int main3()
     MersenneTwister x;
 
     for (int j=0; j<1000; j++) {
-        printf("%10lu ", x.random());
+        printf("%10u ", x.random());
         if (j%8==7) printf("\n");
     }
 
