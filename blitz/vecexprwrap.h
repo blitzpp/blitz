@@ -32,7 +32,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_expr>
+template<typename P_expr>
 class _bz_VecExpr {
 
 public:
@@ -71,7 +71,7 @@ public:
     int _bz_suggestLength() const
     { return iter_._bz_suggestLength(); }
 
-    _bz_bool _bz_hasFastAccess() const
+    bool _bz_hasFastAccess() const
     { return iter_._bz_hasFastAccess(); }
 
     T_numtype _bz_fastAccess(int i) const

@@ -16,7 +16,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_expr>
+template<typename P_expr>
 inline
 Extremum<_bz_typename P_expr::T_numtype, int> _bz_vec_max(P_expr vector)
 {
@@ -54,7 +54,7 @@ Extremum<_bz_typename P_expr::T_numtype, int> _bz_vec_max(P_expr vector)
 }
 
 // max(vector)
-template<class P_numtype>
+template<typename P_numtype>
 inline
 Extremum<P_numtype, int> max(const Vector<P_numtype>& x)
 {
@@ -62,7 +62,7 @@ Extremum<P_numtype, int> max(const Vector<P_numtype>& x)
 }
 
 // max(expr)
-template<class P_expr>
+template<typename P_expr>
 inline
 Extremum<_bz_typename P_expr::T_numtype,int> max(_bz_VecExpr<P_expr> x)
 {
@@ -70,7 +70,7 @@ Extremum<_bz_typename P_expr::T_numtype,int> max(_bz_VecExpr<P_expr> x)
 }
 
 // max(vecpick)
-template<class P_numtype>
+template<typename P_numtype>
 inline
 Extremum<P_numtype, int> max(const VectorPick<P_numtype>& x)
 {
@@ -78,7 +78,7 @@ Extremum<P_numtype, int> max(const VectorPick<P_numtype>& x)
 }
 
 // max(TinyVector)
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline
 Extremum<P_numtype, int>
 max(const TinyVector<P_numtype, N_length>& x)
@@ -88,7 +88,7 @@ max(const TinyVector<P_numtype, N_length>& x)
 
 
 // maxIndex(vector)
-template<class P_numtype>
+template<typename P_numtype>
 inline
 int  maxIndex(const Vector<P_numtype>& x)
 {
@@ -96,7 +96,7 @@ int  maxIndex(const Vector<P_numtype>& x)
 }
 
 // maxIndex(expr)
-template<class P_expr>
+template<typename P_expr>
 inline
 int maxIndex(_bz_VecExpr<P_expr> x)
 {
@@ -104,21 +104,21 @@ int maxIndex(_bz_VecExpr<P_expr> x)
 }
 
 // maxIndex(vecpick)
-template<class P_numtype>
+template<typename P_numtype>
 int  maxIndex(const VectorPick<P_numtype>& x)
 {
     return _bz_vec_max(x._bz_asVecExpr()).index();
 }
 
 // maxIndex(TinyVector)
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 int  maxIndex(const TinyVector<P_numtype, N_length>& x)
 {
     return _bz_vec_max(x._bz_asVecExpr()).index();
 }
 
 // maxValue(vector)
-template<class P_numtype>
+template<typename P_numtype>
 inline
 int  maxValue(const Vector<P_numtype>& x)
 {
@@ -126,7 +126,7 @@ int  maxValue(const Vector<P_numtype>& x)
 }
 
 // maxValue(expr)
-template<class P_expr>
+template<typename P_expr>
 inline
 int  maxValue(_bz_VecExpr<P_expr> x)
 {
@@ -134,14 +134,14 @@ int  maxValue(_bz_VecExpr<P_expr> x)
 }
 
 // maxValue(vecpick)
-template<class P_numtype>
+template<typename P_numtype>
 int  maxValue(const VectorPick<P_numtype>& x)
 {
     return _bz_vec_max(x._bz_asVecExpr()).value();
 }
 
 // maxValue(TinyVector)
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 int  maxValue(const TinyVector<P_numtype, N_length>& x)
 {
     return _bz_vec_max(x._bz_asVecExpr()).value();

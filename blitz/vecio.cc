@@ -20,7 +20,7 @@ BZ_NAMESPACE(blitz)
 // only.  It will be revised in a future release.
 // NEEDS_WORK
 
-template<class P_numtype>
+template<typename P_numtype>
 ostream& operator<<(ostream& os, const Vector<P_numtype>& x)
 {
     os << "[ ";
@@ -34,7 +34,7 @@ ostream& operator<<(ostream& os, const Vector<P_numtype>& x)
     return os;
 }
 
-template<class P_expr>
+template<typename P_expr>
 ostream& operator<<(ostream& os, _bz_VecExpr<P_expr> expr)
 {
     Vector<_bz_typename P_expr::T_numtype> result(expr);

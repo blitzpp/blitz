@@ -45,7 +45,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_expr1, class P_expr2, class P_op>
+template<typename P_expr1, typename P_expr2, typename P_op>
 class _bz_VecExprOp {
 
 public:
@@ -107,7 +107,7 @@ public:
         return iter2_._bz_suggestLength();
     }
 
-    _bz_bool  _bz_hasFastAccess() const
+    bool _bz_hasFastAccess() const
     { return iter1_._bz_hasFastAccess() && iter2_._bz_hasFastAccess(); }
 
     T_numtype _bz_fastAccess(int i) const
@@ -123,7 +123,7 @@ private:
     T_expr2 iter2_;
 };
 
-template<class P_expr, class P_unaryOp>
+template<typename P_expr, typename P_unaryOp>
 class _bz_VecExprUnaryOp {
 
 public:
@@ -163,7 +163,7 @@ public:
     int _bz_suggestLength() const
     { return iter_._bz_suggestLength(); }
 
-    _bz_bool _bz_hasFastAccess() const
+    bool _bz_hasFastAccess() const
     { return iter_._bz_hasFastAccess(); }
 
     T_numtype _bz_fastAccess(int i) const
@@ -175,7 +175,7 @@ private:
     T_expr iter_;    
 };
 
-template<class P_numtype>
+template<typename P_numtype>
 class _bz_VecExprConstant {
 public:
     typedef P_numtype T_numtype;
@@ -208,7 +208,7 @@ public:
     int _bz_suggestLength() const
     { return 0; }
 
-    _bz_bool _bz_hasFastAccess() const
+    bool _bz_hasFastAccess() const
     { return 1; }
 
     T_numtype _bz_fastAccess(int) const
@@ -233,7 +233,7 @@ BZ_NAMESPACE(blitz)
 
 // Some miscellaneous operators that don't seem to belong anywhere else.
 
-template<class P_expr>
+template<typename P_expr>
 inline
 _bz_VecExpr<_bz_VecExprUnaryOp<_bz_VecExpr<P_expr>, 
     _bz_negate<_bz_typename P_expr::T_numtype> > >
@@ -244,7 +244,7 @@ operator-(_bz_VecExpr<P_expr> a)
     return _bz_VecExpr<T_expr>(T_expr(a));
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline
 _bz_VecExpr<_bz_VecExprUnaryOp<VectorIterConst<P_numtype>,
     _bz_negate<P_numtype> > >
@@ -265,7 +265,7 @@ operator-(Range r)
     return _bz_VecExpr<T_expr>(T_expr(r));
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline
 _bz_VecExpr<_bz_VecExprUnaryOp<VectorPickIterConst<P_numtype>,
     _bz_negate<P_numtype> > >
@@ -277,7 +277,7 @@ operator-(const VectorPick<P_numtype>& a)
     return _bz_VecExpr<T_expr>(T_expr(a.begin()));
 }
 
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline
 _bz_VecExpr<_bz_VecExprUnaryOp<TinyVectorIterConst<P_numtype,N_length>,
     _bz_negate<P_numtype> > >

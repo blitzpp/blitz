@@ -16,7 +16,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_expr>
+template<typename P_expr>
 inline
 Extremum<_bz_typename P_expr::T_numtype, int> _bz_vec_min(P_expr vector)
 {
@@ -54,7 +54,7 @@ Extremum<_bz_typename P_expr::T_numtype, int> _bz_vec_min(P_expr vector)
 }
 
 // min(vector)
-template<class P_numtype>
+template<typename P_numtype>
 inline
 Extremum<P_numtype,int> min(const Vector<P_numtype>& x)
 {
@@ -62,7 +62,7 @@ Extremum<P_numtype,int> min(const Vector<P_numtype>& x)
 }
 
 // min(expr)
-template<class P_expr>
+template<typename P_expr>
 inline
 Extremum<_bz_typename P_expr::T_numtype,int> min(_bz_VecExpr<P_expr> x)
 {
@@ -70,7 +70,7 @@ Extremum<_bz_typename P_expr::T_numtype,int> min(_bz_VecExpr<P_expr> x)
 }
 
 // min(vecpick)
-template<class P_numtype>
+template<typename P_numtype>
 inline
 Extremum<P_numtype, int> min(const VectorPick<P_numtype>& x)
 {
@@ -78,7 +78,7 @@ Extremum<P_numtype, int> min(const VectorPick<P_numtype>& x)
 }
 
 // min(TinyVector)
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 inline
 Extremum<P_numtype, int> min(const TinyVector<P_numtype, N_length>& x)
 {
@@ -86,7 +86,7 @@ Extremum<P_numtype, int> min(const TinyVector<P_numtype, N_length>& x)
 }
 
 // minIndex(vector)
-template<class P_numtype>
+template<typename P_numtype>
 inline
 int  minIndex(const Vector<P_numtype>& x)
 {
@@ -94,7 +94,7 @@ int  minIndex(const Vector<P_numtype>& x)
 }
 
 // maxIndex(expr)
-template<class P_expr>
+template<typename P_expr>
 inline
 int  minIndex(_bz_VecExpr<P_expr> x)
 {
@@ -102,21 +102,21 @@ int  minIndex(_bz_VecExpr<P_expr> x)
 }
 
 // minIndex(vecpick)
-template<class P_numtype>
+template<typename P_numtype>
 int  minIndex(const VectorPick<P_numtype>& x)
 {
     return _bz_vec_min(x._bz_asVecExpr()).index();
 }
 
 // minIndex(TinyVector)
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 int minIndex(const TinyVector<P_numtype, N_length>& x)
 {
     return _bz_vec_min(x._bz_asVecExpr()).index();
 }
 
 // minValue(vector)
-template<class P_numtype>
+template<typename P_numtype>
 inline
 int  minValue(const Vector<P_numtype>& x)
 {
@@ -124,7 +124,7 @@ int  minValue(const Vector<P_numtype>& x)
 }
 
 // minValue(expr)
-template<class P_expr>
+template<typename P_expr>
 inline
 int  minValue(_bz_VecExpr<P_expr> x)
 {
@@ -132,14 +132,14 @@ int  minValue(_bz_VecExpr<P_expr> x)
 }
 
 // minValue(vecpick)
-template<class P_numtype>
+template<typename P_numtype>
 int  minValue(const VectorPick<P_numtype>& x)
 {
     return _bz_vec_min(x._bz_asVecExpr()).value();
 }
 
 // minValue(TinyVector)
-template<class P_numtype, int N_length>
+template<typename P_numtype, int N_length>
 int  minValue(const TinyVector<P_numtype, N_length>& x)
 {
     return _bz_vec_min(x._bz_asVecExpr()).value();

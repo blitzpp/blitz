@@ -34,19 +34,19 @@
 BZ_NAMESPACE(blitz)
 
 // Declaration of class VectorIter
-template<class P_numtype>
+template<typename P_numtype>
 class VectorIter {
 public:
     typedef P_numtype T_numtype;
 
-    _bz_explicit VectorIter(Vector<P_numtype>& x)
+    explicit VectorIter(Vector<P_numtype>& x)
         : data_(x.data())
     {
         stride_ = x.stride();
         length_ = x.length();
     }
 
-    VectorIter(P_numtype* _bz_restrict data, int stride, int length)
+    VectorIter(P_numtype* restrict data, int stride, int length)
         : data_(data), stride_(stride), length_(length)
     { }
 
@@ -65,7 +65,7 @@ public:
         return data_[i*stride_]; 
     }
 
-    P_numtype& _bz_restrict operator[](int i)
+    P_numtype& restrict operator[](int i)
     { 
         BZPRECONDITION(i < length_);
         return data_[i*stride_]; 
@@ -77,7 +77,7 @@ public:
         return data_[i*stride_];
     }
 
-    P_numtype& _bz_restrict operator()(int i) 
+    P_numtype& restrict operator()(int i) 
     {
         BZPRECONDITION(i < length_);
         return data_[i*stride_];
@@ -98,7 +98,7 @@ public:
     int length(int) const
     { return length_; }
 
-    _bz_bool isUnitStride() const
+    bool isUnitStride() const
     { return (stride_ == 1); }
 
     /////////////////////////////////////////////
@@ -111,13 +111,13 @@ public:
            _bz_dynamicLengthCount = 1,
            _bz_staticLength = 0 };
 
-    _bz_bool _bz_hasFastAccess() const
+    bool _bz_hasFastAccess() const
     { return isUnitStride(); }
 
     P_numtype _bz_fastAccess(int i) const
     { return data_[i]; }
 
-    P_numtype& _bz_restrict _bz_fastAccess(int i)
+    P_numtype& restrict _bz_fastAccess(int i)
     { return data_[i]; }
 
     int _bz_suggestLength() const
@@ -125,18 +125,18 @@ public:
 
 private:
     VectorIter() { }
-    P_numtype * _bz_restrict data_;
+    P_numtype * restrict data_;
     int stride_;
     int length_;
 };
 
 
-template<class P_numtype>
+template<typename P_numtype>
 class VectorIterConst {
 public:
     typedef P_numtype T_numtype;
 
-    _bz_explicit VectorIterConst(const Vector<P_numtype>& x)
+    explicit VectorIterConst(const Vector<P_numtype>& x)
         : data_(x.data())
     {
         stride_ = x.stride();
@@ -167,7 +167,7 @@ public:
     int length(int) const
     { return length_; }
 
-    _bz_bool isUnitStride() const
+    bool isUnitStride() const
     { return (stride_ == 1); }
 
     /////////////////////////////////////////////
@@ -180,7 +180,7 @@ public:
            _bz_dynamicLengthCount = 1,
            _bz_staticLength = 0 };
 
-    _bz_bool  _bz_hasFastAccess() const
+    bool  _bz_hasFastAccess() const
     { return isUnitStride(); }
 
     P_numtype _bz_fastAccess(int i) const
@@ -192,7 +192,7 @@ public:
     { return length_; }
 
 private:
-    const P_numtype * _bz_restrict data_;
+    const P_numtype * restrict data_;
     int stride_;
     int length_;
 };
