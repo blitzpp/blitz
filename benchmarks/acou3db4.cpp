@@ -1,5 +1,5 @@
 #include <blitz/array.h>
-#include <blitz/array/stencil.h>
+#include <blitz/array/stencils.h>
 
 BZ_USING_NAMESPACE(blitz)
 
