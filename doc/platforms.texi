@@ -13,7 +13,7 @@ The information in this document may be out of date.
 @cindex KAI C++
 
 Blitz++ was developed and tested using KAI C++ under AIX.  It should (in
-theory) port to other KAI C++ platforms (Cray, SGI, HP, Sun, Linux, DEC)
+theory) port to other KAI C++ platforms (Cray, SGI, HP, Sun, Linux, Compaq)
 without difficulty.  Since KAI C++ uses an EDG front end, other EDG
 front-ended compilers (e.g. Comeau) should be able to compile Blitz++.
 
@@ -33,24 +33,34 @@ Under Linux, you may need the flag @code{-D__signed__=}.  You should omit
 @subsection Intel C++
 @cindex Intel C++
 
-Intel has a drop-in compiler based on the EDG front end.  It used to compile
-Blitz++, but since that time I've made use of some language features it
-doesn't support.  However, there is a new beta version out (3.0) which may
-be able to compile Blitz++.  Allan Stokes is working on this.
+Blitz++ compiles under fairly recent versions of the Intel C++ compiler
+(version 7.1 or 8.x) for Linux platforms, as well as the comparable plug-in
+compiler for Windows that can be used within the Microsoft Visual Studio IDE.
 
 More information:
 
-@uref{http://developer.intel.com/design/perftool/icl24/}
+@uref{http://www.intel.com/software/products/compilers/clin}
 
-@uref{http://developer.intel.com/design/perftool/icl24/icl24wht.htm}
+@uref{http://www.intel.com/software/products/compilers/cwin}
+
+@subsection Microsoft VS.NET 2003
+@cindex Microsoft VS.NET 2003
+
+Blitz++ has been ported to the C++ compiler within the Microsoft VS.NET 2003
+compiler and IDE package.  A zip archive containing an appropriate 
+configuration header file and project files for building the Blitz library
+and all of the testsuite codes.  Previous versions of the Microsoft C++
+compiler within Visual Studio do not have the required C++ features needed
+by Blitz++ and are not supported.  Blitz can be compiled under Visual Studio
+by using the Intel plug-in C++ compiler for Windows.
 
 @subsection gcc
 @cindex gcc
 
 GCC (@code{g++}) is a free @acronym{GNU} C++ compiler.  It compiles Blitz++
-reliably, in fact most Blitz++ development work is done with @code{g++}.
+reliably; in fact, most Blitz++ development work is done with @code{g++}.
 
-gcc may be downloaded from @uref{http://gcc.cygnus.com/}.
+gcc may be downloaded from @uref{http://www.gnu.org/software/gcc/gcc.html}.
 
 If you are using gcc under Solaris, SunOS, or OSF/1, please see the
 @file{README.binutils} file included in the distribution.
@@ -58,13 +68,14 @@ If you are using gcc under Solaris, SunOS, or OSF/1, please see the
 @subsection Metrowerks
 @cindex Metrowerks
 
-Metroworks is sort-of supported; see the platforms web page and the mailing
-lists for more information.
+Metrowerks is sort-of supported; see the platforms web page and the mailing
+lists for more information.  Support for Metrowerks is no longer being 
+actively maintained.
 
-@subsection DEC cxx
-@cindex DEC cxx
+@subsection Compaq cxx
+@cindex Compaq cxx
 
-The Digital C++ compiler is supported.
+The Compaq C++ compiler version 6.x is supported.
 
 @subsection Cray T3E/Cray T90/Cray C90/Cray J90
 @cindex Cray compiler
@@ -93,5 +104,7 @@ For optimization, you'll want:
 
 The ability of the Cray C++ compiler to optimize away temporary objects is
 disappointing.  It's not able to optimize away expression templates overhead
-or comma-delimited array initializers.
+or comma-delimited array initializers.  Please note that support for compiling
+Blitz++ under the Cray C++ compiler is no longer being actively maintained.
+
 
