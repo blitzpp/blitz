@@ -122,7 +122,7 @@ public:
 
     _bz_bool isAscendingContiguous() const
     {
-        return (first_ < last_) && (stride_ == 1);
+        return ((first_ < last_) && (stride_ == 1) || (first == last));
     }
 
     void setRange(int first, int last, int stride=1)
