@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.6  2002/06/28 01:42:24  jcumming
+ * Use _bz_bool and _bz_true where appropriate to avoid int/bool conversions.
+ *
  * Revision 1.5  2002/05/27 19:45:43  jcumming
  * Removed use of this->.  Types and members from templated base class are now
  * declared in scope of derived classes.
@@ -82,7 +85,7 @@ public:
     {
         for (int i=0; i < N_rank; ++i)
           ordering_(i) = N_rank - 1 - i;
-        ascendingFlag_ = 1;
+        ascendingFlag_ = _bz_true;
         base_ = 0;
     }
 
@@ -93,7 +96,7 @@ public:
     }
 
     GeneralArrayStorage(TinyVector<int,N_rank> ordering,
-        TinyVector<bool,N_rank> ascendingFlag)
+        TinyVector<_bz_bool,N_rank> ascendingFlag)
       : ordering_(ordering), ascendingFlag_(ascendingFlag)
     {
         base_ = 0;
@@ -125,13 +128,13 @@ public:
     _bz_bool isRankStoredAscending(int i) const
     { return ascendingFlag_[i]; }
 
-    TinyVector<bool, N_rank>& ascendingFlag() 
+    TinyVector<_bz_bool, N_rank>& ascendingFlag() 
     { return ascendingFlag_; }
 
-    const TinyVector<bool, N_rank>& ascendingFlag() const
+    const TinyVector<_bz_bool, N_rank>& ascendingFlag() const
     { return ascendingFlag_; }
 
-    void setAscendingFlag(int i, int ascendingFlag) 
+    void setAscendingFlag(int i, _bz_bool ascendingFlag) 
     { ascendingFlag_[i] = ascendingFlag; }
 
     TinyVector<int, N_rank>& base()
@@ -172,7 +175,7 @@ protected:
      * will create an array with base_[] = { 30, 23 }.
      */
     TinyVector<int,  N_rank> ordering_;
-    TinyVector<bool, N_rank> ascendingFlag_;
+    TinyVector<_bz_bool, N_rank> ascendingFlag_;
     TinyVector<int,  N_rank> base_;
 };
 
@@ -197,7 +200,7 @@ public:
     {
         for (int i=0; i < N_rank; ++i)
           ordering_(i) = i;
-        ascendingFlag_ = 1;
+        ascendingFlag_ = _bz_true;
         base_ = 1;
     }
 };
@@ -270,7 +273,7 @@ public:
         : GeneralArrayStorage<N_rank>(noInitializeFlag())
     {
         ordering_ = Range(0, N_rank - 1);
-        ascendingFlag_ = 1;
+        ascendingFlag_ = _bz_true;
         base_ = 0;
     }
 };
