@@ -1,10 +1,9 @@
 /***************************************************************************
- * blitz/array.h      Maximal include version of Array<P_numtype, N_rank>
- *                    Note: see <blitz/array-impl.h> for the class def.
+ * blitz/array.h    Minimal include version of Array<T,N>
  *
  * $Id$
  *
- * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
+ * Copyright (C) 1997-2000 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,38 +23,27 @@
  *
  ***************************************************************************
  * $Log$
- * Revision 1.4  2001/01/26 18:30:50  tveldhui
+ * Revision 1.5  2002/07/02 19:22:00  jcumming
+ * This file used to be called Array.h but has been renamed to avoid name
+ * clashes on Windows-based systems.  This file includes only the Array
+ * class implementation files.
+ *
+ * Revision 1.1  2001/01/26 18:30:49  tveldhui
  * More source code reorganization to reduce compile times.
  *
+ * Revision 1.1  2001/01/24 22:51:50  tveldhui
+ * Reorganized #include orders to avoid including the huge Vector e.t.
+ * implementation when using Array.
+ *
  */
 
-#ifndef BZ_ARRAY_OLD_H
-#define BZ_ARRAY_OLD_H
+#ifndef BZ_ARRAY_ONLY_H
+#define BZ_ARRAY_ONLY_H
 
-/*
- * <blitz/array.h> used to include most of the Blitz++ library
- * functionality, totally ~ 120000 lines of source code.  This
- * made for extremely slow compile times; processing #include <blitz/array.h>
- * took gcc about 25 seconds on a 500 MHz pentium box.
- *
- * Much of this compile time was due to the old vector expression templates
- * implementation.  Since this is not really needed for the Array<T,N>
- * class, the headers were redesigned so that:
- *
- * #include <blitz/array.h>   is the old-style include, pulls in most
- *                            of Blitz++ including vector e.t. 
- * #include <blitz/Array.h>   pulls in much less of the library, and
- *                            in particular excludes the vector e.t. code
- *
- * With <blitz/array.h>, one got TinyVector expressions automatically.
- * With <blitz/Array.h>, one must also include <blitz/TinyVec.h> (note caps)
- * to get TinyVector expressions.
- *
- * The implementation of Array<T,N> has been moved to <blitz/array-impl.h>.
- */
+// See comments in <blitz/array-old.h> for an explanation of the new
+// headers arrangement.
 
-#include <blitz/TinyVec.h>
 #include <blitz/array-impl.h>
 
-#endif // BZ_ARRAY_OLD_H
+#endif  // BZ_ARRAY_ONLY_H
 
