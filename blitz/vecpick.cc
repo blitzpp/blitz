@@ -35,7 +35,7 @@ BZ_NAMESPACE(blitz)
  * Assignment operators with vector expression operand
  */
 
-template<class P_numtype> template<class P_expr, class P_updater>
+template<typename P_numtype> template<typename P_expr, typename P_updater>
 inline
 void VectorPick<P_numtype>::_bz_assign(P_expr expr, P_updater)
 {
@@ -75,7 +75,7 @@ void VectorPick<P_numtype>::_bz_assign(P_expr expr, P_updater)
     }
 }
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator=(_bz_VecExpr<P_expr> expr)
 {
@@ -117,7 +117,7 @@ VectorPick<P_numtype>::operator=(_bz_VecExpr<P_expr> expr)
 }
 
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator+=(_bz_VecExpr<P_expr> expr)
 {
@@ -126,7 +126,7 @@ VectorPick<P_numtype>::operator+=(_bz_VecExpr<P_expr> expr)
     return *this;
 }
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator-=(_bz_VecExpr<P_expr> expr)
 {
@@ -135,7 +135,7 @@ VectorPick<P_numtype>::operator-=(_bz_VecExpr<P_expr> expr)
     return *this;
 }
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator*=(_bz_VecExpr<P_expr> expr)
 {
@@ -144,7 +144,7 @@ VectorPick<P_numtype>::operator*=(_bz_VecExpr<P_expr> expr)
     return *this;
 }
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator/=(_bz_VecExpr<P_expr> expr)
 {
@@ -153,7 +153,7 @@ VectorPick<P_numtype>::operator/=(_bz_VecExpr<P_expr> expr)
     return *this;
 }
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator%=(_bz_VecExpr<P_expr> expr)
 {
@@ -162,7 +162,7 @@ VectorPick<P_numtype>::operator%=(_bz_VecExpr<P_expr> expr)
     return *this;
 }
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator^=(_bz_VecExpr<P_expr> expr)
 {
@@ -171,7 +171,7 @@ VectorPick<P_numtype>::operator^=(_bz_VecExpr<P_expr> expr)
     return *this;
 }
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator&=(_bz_VecExpr<P_expr> expr)
 {
@@ -180,7 +180,7 @@ VectorPick<P_numtype>::operator&=(_bz_VecExpr<P_expr> expr)
     return *this;
 }
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator|=(_bz_VecExpr<P_expr> expr)
 {
@@ -189,7 +189,7 @@ VectorPick<P_numtype>::operator|=(_bz_VecExpr<P_expr> expr)
     return *this;
 }
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator>>=(_bz_VecExpr<P_expr> expr)
 {
@@ -198,7 +198,7 @@ VectorPick<P_numtype>::operator>>=(_bz_VecExpr<P_expr> expr)
     return *this;
 }
 
-template<class P_numtype> template<class P_expr>
+template<typename P_numtype> template<typename P_expr>
 inline VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator<<=(_bz_VecExpr<P_expr> expr)
 {
@@ -211,7 +211,7 @@ VectorPick<P_numtype>::operator<<=(_bz_VecExpr<P_expr> expr)
  * Assignment operators with scalar operand
  */
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator=(P_numtype x)
 {
     typedef _bz_VecExprConstant<P_numtype> T_expr;
@@ -219,7 +219,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator=(P_numtype x)
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator+=(P_numtype x)
 {
     typedef _bz_VecExprConstant<P_numtype> T_expr;
@@ -227,7 +227,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator+=(P_numtype x)
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator-=(P_numtype x)
 {
     typedef _bz_VecExprConstant<P_numtype> T_expr;
@@ -235,7 +235,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator-=(P_numtype x)
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator*=(P_numtype x)
 {
     typedef _bz_VecExprConstant<P_numtype> T_expr;
@@ -243,7 +243,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator*=(P_numtype x)
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator/=(P_numtype x)
 {
     typedef _bz_VecExprConstant<P_numtype> T_expr;
@@ -251,7 +251,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator/=(P_numtype x)
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator%=(P_numtype x)
 {
     typedef _bz_VecExprConstant<P_numtype> T_expr;
@@ -259,7 +259,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator%=(P_numtype x)
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator^=(P_numtype x)
 {
     typedef _bz_VecExprConstant<P_numtype> T_expr;
@@ -267,7 +267,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator^=(P_numtype x)
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator&=(P_numtype x)
 {
     typedef _bz_VecExprConstant<P_numtype> T_expr;
@@ -275,7 +275,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator&=(P_numtype x)
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator|=(P_numtype x)
 {
     typedef _bz_VecExprConstant<P_numtype> T_expr;
@@ -283,7 +283,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator|=(P_numtype x)
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator>>=(int x)
 {
     typedef _bz_VecExprConstant<int> T_expr;
@@ -291,7 +291,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator>>=(int x)
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator<<=(int x)
 {
     typedef _bz_VecExprConstant<P_numtype> T_expr;
@@ -303,7 +303,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator<<=(int x)
  * Assignment operators with vector operand
  */
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator=(const Vector<P_numtype2>& x)
 {
@@ -311,7 +311,7 @@ VectorPick<P_numtype>::operator=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>&
 VectorPick<P_numtype>::operator+=(const Vector<P_numtype2>& x)
 {
@@ -319,7 +319,7 @@ VectorPick<P_numtype>::operator+=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>&
 VectorPick<P_numtype>::operator-=(const Vector<P_numtype2>& x)
 {
@@ -327,7 +327,7 @@ VectorPick<P_numtype>::operator-=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>&
 VectorPick<P_numtype>::operator*=(const Vector<P_numtype2>& x)
 {
@@ -335,7 +335,7 @@ VectorPick<P_numtype>::operator*=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>&
 VectorPick<P_numtype>::operator/=(const Vector<P_numtype2>& x)
 {
@@ -343,7 +343,7 @@ VectorPick<P_numtype>::operator/=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>&
 VectorPick<P_numtype>::operator%=(const Vector<P_numtype2>& x)
 {
@@ -351,7 +351,7 @@ VectorPick<P_numtype>::operator%=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>&
 VectorPick<P_numtype>::operator^=(const Vector<P_numtype2>& x)
 {
@@ -359,7 +359,7 @@ VectorPick<P_numtype>::operator^=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>&
 VectorPick<P_numtype>::operator&=(const Vector<P_numtype2>& x)
 {
@@ -367,7 +367,7 @@ VectorPick<P_numtype>::operator&=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>&
 VectorPick<P_numtype>::operator|=(const Vector<P_numtype2>& x)
 {
@@ -375,7 +375,7 @@ VectorPick<P_numtype>::operator|=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>&
 VectorPick<P_numtype>::operator<<=(const Vector<P_numtype2>& x)
 {
@@ -383,7 +383,7 @@ VectorPick<P_numtype>::operator<<=(const Vector<P_numtype2>& x)
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>&
 VectorPick<P_numtype>::operator>>=(const Vector<P_numtype2>& x)
 {
@@ -395,77 +395,77 @@ VectorPick<P_numtype>::operator>>=(const Vector<P_numtype2>& x)
  * Assignment operators with Range operand
  */
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator=(Range r)
 {
     (*this) = _bz_VecExpr<Range>(r);
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator+=(Range r)
 {
     (*this) += _bz_VecExpr<Range>(r);
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator-=(Range r)
 {
     (*this) -= _bz_VecExpr<Range>(r);
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator*=(Range r)
 {
     (*this) *= _bz_VecExpr<Range>(r);
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator/=(Range r)
 {
     (*this) /= _bz_VecExpr<Range>(r);
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator%=(Range r)
 {
     (*this) %= _bz_VecExpr<Range>(r);
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator^=(Range r)
 {
     (*this) ^= _bz_VecExpr<Range>(r);
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator&=(Range r)
 {
     (*this) &= _bz_VecExpr<Range>(r);
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator|=(Range r)
 {
     (*this) |= _bz_VecExpr<Range>(r);
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator>>=(Range r)
 {
     (*this) >>= _bz_VecExpr<Range>(r);
     return *this;
 }
 
-template<class P_numtype>
+template<typename P_numtype>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator<<=(Range r)
 {
     (*this) <<= _bz_VecExpr<Range>(r);
@@ -476,7 +476,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator<<=(Range r)
  * Assignment operators with VectorPick operand
  */
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator=(const 
     VectorPick<P_numtype2>& x)
 {
@@ -485,7 +485,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator=(const
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator+=(const
     VectorPick<P_numtype2>& x)
 {
@@ -495,7 +495,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator+=(const
 }
 
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator-=(const
     VectorPick<P_numtype2>& x)
 {
@@ -504,7 +504,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator-=(const
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator*=(const
     VectorPick<P_numtype2>& x)
 {
@@ -513,7 +513,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator*=(const
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator/=(const
     VectorPick<P_numtype2>& x)
 {
@@ -522,7 +522,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator/=(const
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator%=(const
     VectorPick<P_numtype2>& x)
 {
@@ -531,7 +531,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator%=(const
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator^=(const
     VectorPick<P_numtype2>& x)
 {
@@ -540,7 +540,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator^=(const
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator&=(const
     VectorPick<P_numtype2>& x)
 {
@@ -549,7 +549,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator&=(const
     return *this;
 }
 
-template<class P_numtype> template<class P_numtype2>
+template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator|=(const
     VectorPick<P_numtype2>& x)
 {
@@ -562,7 +562,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator|=(const
  * Assignment operators with Random operand
  */
 
-template<class P_numtype> template<class P_distribution>
+template<typename P_numtype> template<typename P_distribution>
 VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator=(Random<P_distribution>& rand)
 {
@@ -571,7 +571,7 @@ VectorPick<P_numtype>::operator=(Random<P_distribution>& rand)
     return *this;
 }
 
-template<class P_numtype> template<class P_distribution>
+template<typename P_numtype> template<typename P_distribution>
 VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator+=(Random<P_distribution>& rand)
 {
@@ -580,7 +580,7 @@ VectorPick<P_numtype>::operator+=(Random<P_distribution>& rand)
     return *this;
 }
 
-template<class P_numtype> template<class P_distribution>
+template<typename P_numtype> template<typename P_distribution>
 VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator-=(Random<P_distribution>& rand)
 {
@@ -589,7 +589,7 @@ VectorPick<P_numtype>::operator-=(Random<P_distribution>& rand)
     return *this;
 }
 
-template<class P_numtype> template<class P_distribution>
+template<typename P_numtype> template<typename P_distribution>
 VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator*=(Random<P_distribution>& rand)
 {
@@ -598,7 +598,7 @@ VectorPick<P_numtype>::operator*=(Random<P_distribution>& rand)
     return *this;
 }
 
-template<class P_numtype> template<class P_distribution>
+template<typename P_numtype> template<typename P_distribution>
 VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator/=(Random<P_distribution>& rand)
 {
@@ -607,7 +607,7 @@ VectorPick<P_numtype>::operator/=(Random<P_distribution>& rand)
     return *this;
 }
 
-template<class P_numtype> template<class P_distribution>
+template<typename P_numtype> template<typename P_distribution>
 VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator%=(Random<P_distribution>& rand)
 {
@@ -616,7 +616,7 @@ VectorPick<P_numtype>::operator%=(Random<P_distribution>& rand)
     return *this;
 }
 
-template<class P_numtype> template<class P_distribution>
+template<typename P_numtype> template<typename P_distribution>
 VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator^=(Random<P_distribution>& rand)
 {
@@ -625,7 +625,7 @@ VectorPick<P_numtype>::operator^=(Random<P_distribution>& rand)
     return *this;
 }
 
-template<class P_numtype> template<class P_distribution>
+template<typename P_numtype> template<typename P_distribution>
 VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator&=(Random<P_distribution>& rand)
 {
@@ -634,7 +634,7 @@ VectorPick<P_numtype>::operator&=(Random<P_distribution>& rand)
     return *this;
 }
 
-template<class P_numtype> template<class P_distribution>
+template<typename P_numtype> template<typename P_distribution>
 VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator|=(Random<P_distribution>& rand)
 {

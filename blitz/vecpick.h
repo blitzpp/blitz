@@ -34,12 +34,12 @@ BZ_NAMESPACE(blitz)
 
 // Forward declarations
 
-template<class P_numtype> class VectorPickIter;
-template<class P_numtype> class VectorPickIterConst;
+template<typename P_numtype> class VectorPickIter;
+template<typename P_numtype> class VectorPickIterConst;
 
 // Declaration of class VectorPick<P_numtype>
 
-template<class P_numtype>
+template<typename P_numtype>
 class VectorPick {
 
 public:
@@ -117,7 +117,7 @@ public:
     int        _bz_suggestLength() const
     { return index_.length(); }
 
-    _bz_bool        _bz_hasFastAccess() const
+    bool        _bz_hasFastAccess() const
     { return vector_._bz_hasFastAccess() && index_._bz_hasFastAccess(); }
 
     T_numtype&      _bz_fastAccess(int i)
@@ -197,30 +197,30 @@ public:
     T_pick& operator<<=(int);
 
     // Vector operand
-    template<class P_numtype2> T_pick& operator=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_pick& operator+=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_pick& operator-=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_pick& operator*=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_pick& operator/=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_pick& operator%=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_pick& operator^=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_pick& operator&=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_pick& operator|=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_pick& operator>>=(const Vector<P_numtype2> &);
-    template<class P_numtype2> T_pick& operator<<=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_pick& operator=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_pick& operator+=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_pick& operator-=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_pick& operator*=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_pick& operator/=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_pick& operator%=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_pick& operator^=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_pick& operator&=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_pick& operator|=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_pick& operator>>=(const Vector<P_numtype2> &);
+    template<typename P_numtype2> T_pick& operator<<=(const Vector<P_numtype2> &);
 
     // Vector expression operand
-    template<class P_expr> T_pick& operator=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_pick& operator+=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_pick& operator-=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_pick& operator*=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_pick& operator/=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_pick& operator%=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_pick& operator^=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_pick& operator&=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_pick& operator|=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_pick& operator>>=(_bz_VecExpr<P_expr>);
-    template<class P_expr> T_pick& operator<<=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_pick& operator=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_pick& operator+=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_pick& operator-=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_pick& operator*=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_pick& operator/=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_pick& operator%=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_pick& operator^=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_pick& operator&=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_pick& operator|=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_pick& operator>>=(_bz_VecExpr<P_expr>);
+    template<typename P_expr> T_pick& operator<<=(_bz_VecExpr<P_expr>);
 
     // Range operand
     T_pick& operator=(Range);
@@ -236,53 +236,53 @@ public:
     T_pick& operator<<=(Range);
 
     // Vector pick operand
-    template<class P_numtype2> 
+    template<typename P_numtype2> 
     T_pick& operator=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2> 
+    template<typename P_numtype2> 
     T_pick& operator+=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2> 
+    template<typename P_numtype2> 
     T_pick& operator-=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2> 
+    template<typename P_numtype2> 
     T_pick& operator*=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2> 
+    template<typename P_numtype2> 
     T_pick& operator/=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2> 
+    template<typename P_numtype2> 
     T_pick& operator%=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2> 
+    template<typename P_numtype2> 
     T_pick& operator^=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2> 
+    template<typename P_numtype2> 
     T_pick& operator&=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2> 
+    template<typename P_numtype2> 
     T_pick& operator|=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2> 
+    template<typename P_numtype2> 
     T_pick& operator>>=(const VectorPick<P_numtype2> &);
-    template<class P_numtype2> 
+    template<typename P_numtype2> 
     T_pick& operator<<=(const VectorPick<P_numtype2> &);
 
     // Random operand
-    template<class P_distribution>
+    template<typename P_distribution>
     T_pick& operator=(Random<P_distribution>& random);
-    template<class P_distribution>
+    template<typename P_distribution>
     T_pick& operator+=(Random<P_distribution>& random);
-    template<class P_distribution>
+    template<typename P_distribution>
     T_pick& operator-=(Random<P_distribution>& random);
-    template<class P_distribution>
+    template<typename P_distribution>
     T_pick& operator*=(Random<P_distribution>& random);
-    template<class P_distribution>
+    template<typename P_distribution>
     T_pick& operator/=(Random<P_distribution>& random);
-    template<class P_distribution>
+    template<typename P_distribution>
     T_pick& operator%=(Random<P_distribution>& random);
-    template<class P_distribution>
+    template<typename P_distribution>
     T_pick& operator^=(Random<P_distribution>& random);
-    template<class P_distribution>
+    template<typename P_distribution>
     T_pick& operator&=(Random<P_distribution>& random);
-    template<class P_distribution>
+    template<typename P_distribution>
     T_pick& operator|=(Random<P_distribution>& random);
 
 private:
     VectorPick() { }
 
-    template<class P_expr, class P_updater>
+    template<typename P_expr, typename P_updater>
     inline void _bz_assign(P_expr, P_updater);
 
 private:
