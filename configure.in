@@ -44,6 +44,7 @@ AC_SUBST(BLASLIB)
 AC_SUBST(AR)
 AC_SUBST(AR_FLAGS)
 AC_SUBST(RANLIB)
+AC_SUBST(CXXF90FLAG)
 
 # Set default values
 AR_FLAGS="-cru"
@@ -283,11 +284,11 @@ case "$target" in
     case "$CXX" in
       g++)
     		echo "Linux: assuming g++/g77"
-        F77=g77
+        F77="g77 -fno-second-underscore"
         F77_OPTIMIZE_FLAGS="-O2 -funroll-loops"
-        F90=g77
-        F90_OPTIMIZE_FLAGS="-O2 -funroll-loops"
-        CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_DOUBLE_TRAILING_UNDERSCORES"
+        F90=""
+        F90_OPTIMIZE_FLAGS=""
+        CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
         FORTLIBS="-lg2c"
       ;;
       icc)
@@ -297,7 +298,9 @@ case "$target" in
         F90=ifc
         F90_OPTIMIZE_FLAGS="-O2"
         CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
-        FORTLIBS="-lF90 -lCEPCF90 -lIEPCF90 -lintrins"
+# To fix to find automatically the correct -L for fortran 90 libs and libg2c
+#        FORTLIBS="-L/opt/intel/compiler60/ia32/lib -lF90 -lCEPCF90 -lIEPCF90 -lintrins -L/usr/lib/gcc-lib/i386-redhat-linux/2.96 -lg2c"
+        FORTLIBS="-lF90 -lCEPCF90 -lIEPCF90 -lintrins -lg2c"
       ;;
     esac
   ;;
@@ -350,6 +353,12 @@ building fortran benchmarks, and performance may be unexciting.
 EOF
   ;;
 esac
+
+if [test ! x"$F90" = x]; then
+	CXXF90FLAG="-DFORTRAN_90"
+fi
+AM_CONDITIONAL(F90_COMPILER, [test ! x"$F90" = x])
+
 
 # Check if the script was called with --enable-optimize or
 # --enable-debug, and if so modify the compilation flags.
@@ -406,22 +415,22 @@ LDFLAGS="$BLASPATH $LDFLAGS"
 AC_CHECK_LIB(blas, daxpy_,
    [ CXX_OPTIMIZE_FLAGS="$CXX_OPTIMIZE_FLAGS -DUSE_LIBBLAS"
      CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
-     BLASLIB="$BLASPATH -lblas" ])
+     BLASLIB="$BLASPATH -lblas" ],[],[$FORTLIBS])
 
 AC_CHECK_LIB(blas, daxpy,
    [ CXX_OPTIMIZE_FLAGS="$CXX_OPTIMIZE_FLAGS -DUSE_LIBBLAS"
      CXXFFLAGS=""
-     BLASLIB="$BLASPATH -lblas" ])
+     BLASLIB="$BLASPATH -lblas" ],[],[$FORTLIBS])
 
 AC_CHECK_LIB(blas, DAXPY, 
    [ CXX_OPTIMIZE_FLAGS="$CXX_OPTIMIZE_FLAGS -DUSE_LIBBLAS"
      CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_CAPS"
-     BLASLIB="$BLASPATH -lblas" ])
+     BLASLIB="$BLASPATH -lblas" ],[],[$FORTLIBS])
 
 AC_CHECK_LIB(blas, daxpy__,
    [ CXX_OPTIMIZE_FLAGS="$CXX_OPTIMIZE_FLAGS -DUSE_LIBBLAS"
      CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_DOUBLE_TRAILING_UNDERSCORES"
-     BLASLIB="$BLASPATH -lblas" ])
+     BLASLIB="$FORTLIBS $BLASPATH -lblas" ],[],[$FORTLIBS])
 
 LDFLAGS=$LDFLAGSsave
 
@@ -443,6 +452,7 @@ echo "CXX                = $CXX"
 echo "CXXFLAGS           = $CXXFLAGS"
 echo "CXX_OPTIMIZE_FLAGS = $CXX_OPTIMIZE_FLAGS"
 echo "CXX_DEBUG_FLAGS    = $CXX_DEBUG_FLAGS"
+echo "CXXFFLAGS          = $CXXFFLAGS"
 echo "F77                = $F77"
 echo "F77_OPTIMIZE_FLAGS = $F77_OPTIMIZE_FLAGS"
 echo "F90                = $F90"
