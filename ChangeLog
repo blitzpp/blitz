@@ -1,4 +1,44 @@
+2004-04-07  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
+	* blitz/Makefile.am: Removed new-config.h from list of
+	blitz_HEADERS.
+
+	* blitz/compiler.h: Changed <blitz/new-config.h> back to
+	<blitz/config.h>.
+
+	* Makefile.am: Removed compiler from list of SUBDIRS and deleted
+	the check-compiler target.  This work is now done by autoconf and
+	the configure script, so we don't need to do it again.
+
+	* configure.in: Bumped AC_PREREQ value to 2.59.  Changed
+	blitz/new-config.h back to standard name blitz/config.h.  This
+	will now replace the old file that was generate with the bzconfig
+	script.  Added nostdinc to list of automake options to prevent
+	automake from adding -I../blitz to set of default include flags.
+	This causes problems with Compaq cxx and is unnecessary because
+	blitz header files are always included as <blitz/foo.h> anyway.
+	* examples/random.cpp: Added workaround for problem with streams
+	when using Compaq cxx compiler.  Sending a long double to an
+	ostream causes a core dump, so cast to double before sending
+	value.
+
+	* examples/rand2.cpp: Added workaround for problem with streams
+	when using Compaq cxx compiler.  Sending a long double to an
+	ostream causes a core dump, so cast to double before sending
+	value.
+
+	* lib/Makefile.am: Corrected setting of include flags.
+	* testsuite/Makefile.am: Corrected setting of include flags.
+	* examples/Makefile.am: Corrected setting of include flags.
+	* benchmarks/Makefile.am: Corrected setting of include flags.
+	* doc/examples/Makefile.am: Corrected setting of include flags.
+	* doc/stencils/Makefile.am: Corrected setting of include flags.
+	* blitz/generate/Makefile.am: Removed incorrect and unneeded
+	definition of generatedir.
+
+	* m4/ac_cxx_flags_preset.m4: Modified default flags for Compaq cxx
+	compiler to allow use of restrict keyword and simplified the set
+	of optimization flags.
 
 2004-03-24  Patrick Guio <patrick.guio@fys.uio.no>
 
