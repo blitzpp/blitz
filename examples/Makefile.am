@@ -67,7 +67,7 @@ useret_SOURCES = useret.cpp
 where_SOURCES = where.cpp
 whitt_SOURCES = whitt.cpp
 
-compile: $(EXTRA_PROGRAMS)
+#compile: $(EXTRA_PROGRAMS)
 
 check-examples: $(EXTRA_PROGRAMS)
 	@echo Running examples...
@@ -76,7 +76,7 @@ check-examples: $(EXTRA_PROGRAMS)
 	done
 	@echo All tests passed.
 
-all:
+#all:
 
 clean-local:
 	-rm -rf cxx_repository $(EXTRA_PROGRAMS)
