@@ -1,5 +1,16 @@
+2002-05-22  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
-
+	* blitz/array/eval.cc: Fixed bug in
+	Array::evaluateWithIndexTraversal1() by removing cast of second
+	argument to T_numtype in call to T_update::update().  This cast
+	will occur automatically when the update operation is performed.
+	This fixes a problem reported by Masahiro Tatsumi
+	<tatsumi@nfi.co.jp> in which one could not assign a double to an
+	Array of TinyVectors of double without explicitly constructing a
+	TinyVector of doubles on the right-hand side.  Also fixed an
+	unused variable warning emanating from the function
+	Array::evaluateWithFastTraversal() by moving the definition of
+	local variable "last" so that it is only seen if it is used.
 Fri May 10 16:25:14 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* blitz/randref.h: private constructor for template class _bz_VecExprRandom
 	did not had an explicit initialiser for the private member random_, added
