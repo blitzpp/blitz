@@ -27,10 +27,12 @@ int main()
     acosh(x);
     asinh(x);
     atanh(x);
-    expm1(x);
+    cbrt(x);
     erf(x);
     erfc(x);
+    expm1(x);
     // finite(x);
+    ilogb(x);
     isnan(x);
     j0(x);
     j1(x);
