@@ -8,7 +8,9 @@ SUBDIRS = examples stencils
 docdir = $(prefix)/doc
 doc_DATA = blitz.ps 
 
-AM_MAKEINFOFLAGS = --no-split
+HERE=$(CURDIR)
+DVIPS=export TEXPICTS=$(srcdir); dvips
+AM_MAKEINFOFLAGS = --no-split -I$(HERE)
 TEXI2HTML = texi2html
 TEXI2HTML_FLAGS = -split_chapter
 
