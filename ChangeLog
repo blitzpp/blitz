@@ -1,3 +1,11 @@
+2003-11-25  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/array/eval.cc: Fixed stack traversal evaluation routines
+	to properly handle the case of negative strides.  Simply change
+	comparison "i < ubound" to "i != ubound".  This fixes a bug
+	reported quite a while ago regarding the failure of the copy()
+	method when applied to a reversed Array.
+
 2003-11-11  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* blitz/array/newet-macros-old.h: Removed the superfluous
