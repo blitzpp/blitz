@@ -114,6 +114,7 @@ EXTRA_DIST = $(doc_DATA)
 
 INCLUDES = -I$(top_srcdir)
 LDADD = -L$(top_srcdir)/lib -lblitz -lm
+COMPILE = $(CXX) $(CXXFLAGS) $(INCLUDES) 
 subdir = doc/stencils
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES =
@@ -253,7 +254,6 @@ uninstall-am: uninstall-docDATA uninstall-info-am
 	mostlyclean mostlyclean-generic uninstall uninstall-am \
 	uninstall-docDATA uninstall-info-am
 
-#COMPILE = $(CXX) $(CXXFLAGS) $(INCLUDES) 
 
 %2D.texi :
 	$(COMPILE) "-Dstenciltoapply=$(patsubst %.texi,%,$@)(A)" \
