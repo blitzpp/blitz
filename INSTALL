@@ -1,72 +1,84 @@
-Installation procedure
+Installation procedure for Blitz++
 
 
-1.  Quick install with g++:
+1.  Installation
 
-./configure --with-cxx=gcc
-make lib
+You should unpack blitz-VERSION.tar.gz in the directory
+where you would like the blitz headers, examples, etc. to reside.
+(Hint: don't do this in /usr/include; try ~/software or /software/Blitz++).
 
-If you have root privileges, you can install some symbolic links
-to the headers and library.  Suppose you unpacked blitz in
-/software/Blitz++; then do these commands:
+The file blitz-VERSION.tar.gz file will unpack into a subdirectory
+blitz-VERSION.  
 
-# ln -s /software/Blitz++/blitz /usr/include/blitz
-# ln -s /software/Blitz++/lib/libblitz.a 
-
-As of the 980404 snapshot, Blitz++ uses GNU autoconf.
-This utility handles rewriting Makefiles for various
-platforms and compilers.  It has greatly simplified
-installation and porting.  Many thanks for John W. Eaton
-and Brendan Kehoe for their help with this.
-
-To install blitz, unpack the blitz-VERSION.tar.gz
-file (it will install into a subdirectory blitz-VERSION).
-
-Then cd into the subdirectory, and run
+Now cd into blitz-VERSION, and run
 
 ./configure --with-cxx=[compiler]
 
 The [compiler] options are:
-  --with-cxx=egcs   EGCS (http://egcs.cygnus.com/)
+  --with-cxx=gcc    gcc (http://gcc.cygnus.com/)
   --with-cxx=KCC    KAI C++ (http://www.kai.com/)
   --with-cxx=cray   Cray C++ 3.0 or better (http://www.cray.com/)
   --with-cxx=DECcxx DEC cxx 6.10 or better (http://www.dec.com/)
   --with-cxx=SGI64  SGI C++ 7.3 or better (http://www.sgi.com/)
   --with-cxx=SGI32          ... with 32-bit ABI (n32)
 
-Once the configure script is done, you can do any of these
-things:
+Then do:
+        make lib
 
-        make lib        Check the compiler and create libblitz.a
-        make check      Do the above plus build and check the testsuite
+This is a minimal build.  You can also do one of these:
+
+        make check      Do `make lib' plus build and check the testsuite
         make all        Do all of the above plus build the examples and
                         benchmarks (takes a long time)
 
 
-OTHER COMPILERS
+2.  Setting up symbolic links
+
+If you have root privileges, you can install some symbolic links
+to the headers and library.  Suppose you unpacked blitz in
+/software/Blitz++; then do these commands:
+
+# ln -s /software/Blitz++/blitz /usr/include/blitz
+# ln -s /software/Blitz++/lib/libblitz.a
+
+
+3.  Getting started
+
+There are example programs in the "examples" directory.
+Documentation is found in the "manual" directory.
+Point your browser at manual/index.html, or do "gv manual/blitz.ps".
+
+4.  OTHER COMPILERS
 
 If you want to try Blitz++ with a compiler not in the above
 list, I suggest the following approach:
 
-  1. Go into the compiler subdirectory and run the bzconfig
+  1. Check the "supported platforms" list at:
+     http://oonumerics.org/blitz/platforms/
+
+     and the development mailing list at:
+     http://oonumerics.org/blitz/contribute/blitz-dev/archive/index.html
+
+     To see what progress has been made on your compiler.
+     
+  2. Go into the compiler subdirectory and run the bzconfig
      script.  This will exercise your compiler to see what
      language features it supports.  If it doesn't have
      member templates and enum computations, just give up.
 
-  2. Install autoconf (from e.g. ftp://prep.ai.mit.edu/pub/gnu)
+  3. Install autoconf (from e.g. ftp://prep.ai.mit.edu/pub/gnu)
      if you don't have it already.
 
-  3. Make a backup of configure.in, and edit configure.in
+  4. Make a backup of configure.in, and edit configure.in
      to add appropriate cases for your compiler.  Then invoke
      autoconf to generate the configure script.  Then try
      configure with your new --with-cxx= option.  Repeat
      until it works..
 
-  4. Try building the testsuite ('make check').
+  5. Try building the testsuite ('make check').
 
-  5. Holy schmoly!  It works!  Quick, send these things to
-     <tveldhui@seurat.uwaterloo.ca> for incorporation into
-     the next blitz release:
+  6. Holy schmoly!  It works!  Quick, send these things to
+     <tveldhui@acm.org> for incorporation into the next blitz release:
 
         - diffs for configure.in
         - the file <blitz/config.h>
