@@ -157,7 +157,7 @@ AC_ARG_WITH(cxx,
      xlC*)              # IBM Visual Age C++   http://www.ibm.com/
        echo "Configuring for IBM Visual Age C++"
        bz_compiler=xlC
-       AC_BZ_SET_COMPILER($withval,"xlC","")
+       AC_BZ_SET_COMPILER($withval,"xlC","-qrtti=all")
        CXX_OPTIMIZE_FLAGS="-O3 -qstrict -Q -qansialias"
        CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
      ;;
