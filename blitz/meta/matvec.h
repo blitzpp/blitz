@@ -46,7 +46,7 @@ template<int N_rows, int N_columns, int N_rowStride, int N_colStride,
 class _bz_meta_matrixVectorProduct2;
 
 
-template<class T_numtype1, class T_numtype2, int N_rows, int N_columns, 
+template<typename T_numtype1, typename T_numtype2, int N_rows, int N_columns, 
     int N_rowStride, int N_colStride, int N_vecStride>
 class _bz_tinyMatrixVectorProduct {
 public:
@@ -93,8 +93,8 @@ public:
         return N_rows;
     }
 
-    _bz_bool _bz_hasFastAccess() const
-    { return _bz_true; }
+    bool _bz_hasFastAccess() const
+    { return true; }
 
     T_numtype _bz_fastAccess(unsigned i) const
     {
@@ -116,7 +116,7 @@ protected:
     const T_numtype2* vector_;
 };
 
-template<class T_numtype1, class T_numtype2, int N_rows, int N_columns>
+template<typename T_numtype1, typename T_numtype2, int N_rows, int N_columns>
 inline _bz_VecExpr<_bz_tinyMatrixVectorProduct<T_numtype1, T_numtype2, 
     N_rows, N_columns, N_columns, 1, 1> >
 product(const TinyMatrix<T_numtype1, N_rows, N_columns>& matrix,
@@ -136,7 +136,7 @@ class _bz_meta_matrixVectorProduct2 {
 public:
     enum { go = J < (N_columns-1) };
    
-    template<class T_numtype1, class T_numtype2> 
+    template<typename T_numtype1, typename T_numtype2> 
     static inline BZ_PROMOTE(T_numtype1, T_numtype2)
     f(const T_numtype1* matrix, const T_numtype2* vector, int i)
     {
@@ -163,7 +163,7 @@ class _bz_meta_matrixVectorProduct {
 public:
     enum { go = I < (N_rows - 1) };
 
-    template<class T_numtype1, class T_numtype2, class T_numtype3>
+    template<typename T_numtype1, typename T_numtype2, typename T_numtype3>
     static inline void f(TinyVector<T_numtype3, N_rows>& result,
         const T_numtype1* matrix, const T_numtype2* vector)
     {

@@ -35,9 +35,9 @@ public:
     _bz_meta_nullOperand() { }
 };
 
-template<class T> inline T operator+(const T& a, _bz_meta_nullOperand)
+template<typename T> inline T operator+(const T& a, _bz_meta_nullOperand)
 { return a; }
-template<class T> inline T operator*(const T& a, _bz_meta_nullOperand)
+template<typename T> inline T operator*(const T& a, _bz_meta_nullOperand)
 { return a; }
 
 // MetaMax

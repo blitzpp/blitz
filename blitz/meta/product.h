@@ -41,7 +41,7 @@ class _bz_meta_vectorProduct {
 public:
     enum { loopFlag = (I < N-1) ? 1 : 0 };
 
-    template<class T_expr1>
+    template<typename T_expr1>
     static inline BZ_SUMTYPE(_bz_typename T_expr1::T_numtype)
     f(const T_expr1& a)
     {
@@ -53,7 +53,7 @@ public:
 template<>
 class _bz_meta_vectorProduct<0,0> {
 public:
-    template<class T_expr1>
+    template<typename T_expr1>
     static inline _bz_meta_nullOperand f(const T_expr1&)
     { return _bz_meta_nullOperand(); }
 };

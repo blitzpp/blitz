@@ -34,7 +34,7 @@ class _bz_meta_matAssign2 {
 public:
     enum { go = (J < N_columns - 1) ? 1 : 0 };
 
-    template<class T_matrix, class T_expr, class T_updater>
+    template<typename T_matrix, typename T_expr, typename T_updater>
     static inline void f(T_matrix& mat, T_expr expr, T_updater u)
     {
         u.update(mat(I,J), expr(I,J));
@@ -46,7 +46,7 @@ public:
 template<>
 class _bz_meta_matAssign2<0,0,0,0> {
 public:
-    template<class T_matrix, class T_expr, class T_updater>
+    template<typename T_matrix, typename T_expr, typename T_updater>
     static inline void f(T_matrix&, T_expr, T_updater)
     { }
 };
@@ -56,7 +56,7 @@ class _bz_meta_matAssign {
 public:
     enum { go = (I < N_rows-1) ? 1 : 0 };
 
-    template<class T_matrix, class T_expr, class T_updater>
+    template<typename T_matrix, typename T_expr, typename T_updater>
     static inline void f(T_matrix& mat, T_expr expr, T_updater u)
     {
         _bz_meta_matAssign2<N_rows, N_columns, I, 0>::f(mat, expr, u);
@@ -68,7 +68,7 @@ public:
 template<>
 class _bz_meta_matAssign<0,0,0> {
 public:
-    template<class T_matrix, class T_expr, class T_updater>
+    template<typename T_matrix, typename T_expr, typename T_updater>
     static inline void f(T_matrix&, T_expr, T_updater)
     { }
 };

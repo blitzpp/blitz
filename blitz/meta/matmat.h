@@ -42,7 +42,7 @@ class _bz_meta_matrixMatrixProduct {
 public:
     enum { go = (K != N_columns - 1) };
 
-    template<class T_numtype1, class T_numtype2>
+    template<typename T_numtype1, typename T_numtype2>
     static inline BZ_PROMOTE(T_numtype1, T_numtype2)
     f(const T_numtype1* matrix1, const T_numtype2* matrix2, int i, int j)
     {
@@ -65,7 +65,7 @@ public:
 
 
 
-template<class T_numtype1, class T_numtype2, int N_rows1, int N_columns,
+template<typename T_numtype1, typename T_numtype2, int N_rows1, int N_columns,
     int N_columns2, int N_rowStride1, int N_colStride1,
     int N_rowStride2, int N_colStride2>
 class _bz_tinyMatrixMatrixProduct {
@@ -103,7 +103,7 @@ protected:
     const T_numtype2* matrix2_;    
 };
 
-template<class T_numtype1, class T_numtype2, int N_rows1, int N_columns1,
+template<typename T_numtype1, typename T_numtype2, int N_rows1, int N_columns1,
     int N_columns2>
 inline
 _bz_tinyMatExpr<_bz_tinyMatrixMatrixProduct<T_numtype1, T_numtype2, N_rows1, 

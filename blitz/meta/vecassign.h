@@ -33,7 +33,7 @@ class _bz_meta_vecAssign {
 public:
     enum { loopFlag = (I < N-1) ? 1 : 0 };
 
-    template<class T_vector, class T_expr, class T_updater>
+    template<typename T_vector, typename T_expr, typename T_updater>
     static inline void fastAssign(T_vector& vec, T_expr expr, T_updater u)
     {
         u.update(vec[I], expr._bz_fastAccess(I));
@@ -41,7 +41,7 @@ public:
            ::fastAssign(vec,expr,u);
     }
 
-    template<class T_vector, class T_expr, class T_updater>
+    template<typename T_vector, typename T_expr, typename T_updater>
     static inline void assign(T_vector& vec, T_expr expr, T_updater u)
     {
         u.update(vec[I], expr[I]);
@@ -49,7 +49,7 @@ public:
            ::assign(vec,expr,u);
     }
 
-    template<class T_vector, class T_numtype, class T_updater>
+    template<typename T_vector, typename T_numtype, typename T_updater>
     static inline void assignWithArgs(T_vector& vec, T_updater u,
         T_numtype x0, T_numtype x1=0, T_numtype x2=0, T_numtype x3=0,
         T_numtype x4=0, T_numtype x5=0, T_numtype x6=0, T_numtype x7=0,
@@ -65,15 +65,15 @@ public:
 template<>
 class _bz_meta_vecAssign<0,0> {
 public:
-    template<class T_vector, class T_expr, class T_updater>
+    template<typename T_vector, typename T_expr, typename T_updater>
     static inline void fastAssign(T_vector&, T_expr, T_updater)
     { }
 
-    template<class T_vector, class T_expr, class T_updater>
+    template<typename T_vector, typename T_expr, typename T_updater>
     static inline void assign(T_vector&, T_expr, T_updater)
     { }
 
-    template<class T_vector, class T_numtype, class T_updater>
+    template<typename T_vector, typename T_numtype, typename T_updater>
     static inline void assignWithArgs(T_vector&, T_updater,
         T_numtype, T_numtype =0, T_numtype =0, T_numtype =0,
         T_numtype =0, T_numtype =0, T_numtype =0, T_numtype =0,
