@@ -2,8 +2,6 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-SUBDIRS = .
-
 arraydir = $(includedir)/blitz/array
 
 array_HEADERS = asexpr.h bops.cc cartesian.h cgsolve.h complex.cc \

@@ -2,11 +2,9 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-SUBDIRS = .
-
 EXTRA_DIST = readme.txt
 
-INCLUDES = -I$(top_srcdir)
+INCLUDES = -I$(top_srcdir) -I$(top_builddir)
 
 lib_LIBRARIES = libblitz.a
 libblitz_a_SOURCES = $(top_srcdir)/src/globals.cpp

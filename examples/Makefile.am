@@ -2,12 +2,10 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-SUBDIRS = .
-
 EXTRA_DIST = stencil4.f profile.cpp tiny2.cpp tiny3.cpp
 
-INCLUDES = -I$(top_srcdir)
-LDADD = -L$(top_srcdir)/lib -lblitz
+INCLUDES = -I$(top_srcdir) -I$(top_builddir)
+LDADD = -L$(top_builddir)/lib -lblitz
 
 examplesdir = $(prefix)/examples
 examples_DATA = array.cpp cartesian.cpp cast.cpp cfd.cpp complex-test.cpp \

@@ -2,8 +2,6 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-SUBDIRS = .
-
 EXTRA_DIST = LEGAL bool.cpp bzconfig climits.cpp cmthscop.cpp \
 complex.cpp compmath.cpp constcst.cpp cstd.cpp default.cpp \
 dynamic.cpp elabbase.cpp elabret.cpp enumcmp2.cpp enumcomp.cpp except.cpp \
@@ -14,7 +12,7 @@ porder.cpp promote.cpp reinterp.cpp restric2.cpp restrict.cpp rtti.cpp \
 statcast.cpp std.cpp stl.cpp sysvmath.cpp tempkey.cpp template.cpp \
 tempqmt.cpp tempqual.cpp temptemp.cpp typename.cpp vac.icc valarray.cpp
 
-BZ_CONFIG_H = $(top_srcdir)/blitz/config.h
+BZ_CONFIG_H = $(top_builddir)/blitz/config.h
 
 all-am: check-compiler
 
@@ -26,4 +24,3 @@ $(BZ_CONFIG_H):	$(srcdir)/bzconfig
 
 clean-local:
 	-rm -rf bzjunk bzjunk.cpp bztemp bztest config.h logfile cxx_repository
-

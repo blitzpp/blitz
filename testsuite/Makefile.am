@@ -4,13 +4,11 @@
 
 # Blitz++ test suite makefile
 
-SUBDIRS = .
-
 EXTRA_DIST = testsuite.h
 
-INCLUDES = -I$(top_srcdir)
-CXXFLAGS = @CXXFLAGS@ @CXX_DEBUG_FLAGS@
-LDADD = -L$(top_srcdir)/lib -lblitz
+INCLUDES = -I$(top_srcdir) -I$(top_builddir)
+AM_CXXFLAGS = @CXXFLAGS@ @CXX_DEBUG_FLAGS@
+LDADD = -L$(top_builddir)/lib -lblitz
 
 # install this file
 testsuitedir = $(prefix)/testsuite

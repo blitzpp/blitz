@@ -2,8 +2,6 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-SUBDIRS = .
-
 randomdir = $(includedir)/random
 
 random_HEADERS = F.h Makefile.am beta.h chisquare.h default.h \

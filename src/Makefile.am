@@ -2,8 +2,6 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-SUBDIRS = .
-
 #INCLUDES = -I$(top_srcdir)
 #lib_LIBRARIES = libblitz.a
 #libblitz_a_SOURCES = globals.cpp
