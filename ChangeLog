@@ -4,6 +4,9 @@ Fri Jul 19 10:50:11 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* blitz/mathfunc.h: Added missing template member function prettyPrint
 	in template class _bz_negate (HP aCC complained during library
 	compilation).
+	* blitz/array/functorExpr.h: minmax::max(a,b) replaced by (a>b?a:b) due to
+	namespacing trouble with HP/aCC
+
 
 2002-07-17  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 	* blitz/memblock.h: Added missing semicolon after use of
