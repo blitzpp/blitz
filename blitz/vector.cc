@@ -55,7 +55,7 @@ void Vector<P_numtype>::makeUnique()
 template<typename P_numtype>
 void Vector<P_numtype>::reference(Vector<P_numtype>& x)
 {
-    MemoryBlockReference<P_numtype>::changeBlock(x, 0);
+    MemoryBlockReference<P_numtype>::changeBlock(x);
     length_ = x.length_;
     stride_ = x.stride_;
 }
