@@ -27,6 +27,8 @@
 
 BZ_NAMESPACE(blitz)
 
+#ifdef BZ_TEMPLATES_AS_TEMPLATE_ARGUMENTS
+
 /*
  * Unary functions and operators
  */
@@ -185,6 +187,12 @@ name(IndexPlaceholder<N1> d1, const T_other& d2)                                
     };                                                                                           \
                                                                                                  \
   BZ_DECLARE_ARRAY_ET_BINARY(name, name ## _impl)
+
+#else
+
+#include <blitz/array/newet-macros-old.h>
+
+#endif /* BZ_TEMPLATES_AS_TEMPLATE_ARGUMENTS */
 
 BZ_NAMESPACE_END
 
