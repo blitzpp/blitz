@@ -56,8 +56,8 @@ dnl			CXX_OPTIMIZE_FLAGS="-O3"
 	cxx) dnl DEC C++  http://www.digital.com/
 		CXX_VENDOR="Compaq"
 		CXX_V=`cxx -V`
-		cxx_version=`expr match "$CXX_V" '.*\(@<:@0-9@:>@\)\..*'`
-		cxx_release=`expr match "$CXX_V" '.*@<:@0-9@:>@\.\(@<:@0-9@:>@\).*'`
+		cxx_version=`expr "$CXX_V" : '.*\(@<:@0-9@:>@\)\..*'`
+		cxx_release=`expr "$CXX_V" : '.*@<:@0-9@:>@\.\(@<:@0-9@:>@\).*'`
 		if test $cxx_version -eq "6" -a $cxx_release -lt "3" ; then
 			CXXFLAGS="-std ansi -D__USE_STD_IOSTREAM -DBZ_ENABLE_XOPEN_SOURCE -ieee -model ansi -accept restrict_keyword -nousing_std"
 		else
@@ -73,9 +73,9 @@ dnl			CXX_OPTIMIZE_FLAGS="-O3"
 	g++) dnl GNU C++  http://gcc.gnu.org/
 		CXX_VENDOR="GNU" 
 		GCC_V=`g++ --version`
-		gcc_version=`expr match "$GCC_V" '.* \(@<:@0-9@:>@\)\..*'`
-		gcc_release=`expr match "$GCC_V" '.* @<:@0-9@:>@\.\(@<:@0-9@:>@\).*'`
-		if test "$gcc_version" -lt 3 ; then
+		gcc_version=`expr "$GCC_V" : '.* \(@<:@0-9@:>@\)\..*'`
+		gcc_release=`expr "$GCC_V" : '.* @<:@0-9@:>@\.\(@<:@0-9@:>@\).*'`
+		if test $gcc_version -lt "3" ; then
   		CXXFLAGS="-ftemplate-depth-40"
   		CXX_OPTIMIZE_FLAGS="-O2 -funroll-loops -fstrict-aliasing -fno-gcse"
 		else
