@@ -19,18 +19,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.1  2000/06/19 12:26:12  tveldhui
- * Initial revision
- *
- * Revision 1.2  1998/03/14 00:04:47  tveldhui
- * 0.2-alpha-05
- *
- * Revision 1.1  1997/07/16 14:51:20  tveldhui
- * Update: Alpha release 0.2 (Arrays)
- *
- */
+ ***************************************************************************/
 
 #ifndef BZ_TVECGLOBS_H
 #define BZ_TVECGLOBS_H
