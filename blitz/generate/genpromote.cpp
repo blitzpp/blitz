@@ -61,7 +61,7 @@ void generate()
         << "// Generated: " << __FILE__ << " " << __DATE__ << " " << __TIME__ << std::endl;
 
 ofs <<
-"template<class A, class B>\n"
+"template<typename A, typename B>\n"
 "class promote_trait {\n"
 "public:\n"
 "        typedef A   T_promote;\n"

@@ -42,31 +42,31 @@ BZ_NAMESPACE(blitz)
     
 /* Helper functions */
     
-template <class T>
+template <typename T>
 inline T blitz_sqr(T x)
 { return x*x; }
 
-template <class T>
+template <typename T>
 inline T blitz_cube(T x)
 { return x*x*x; }
 
-template <class T>
+template <typename T>
 inline T blitz_pow4(T x)
 { return x*x*x*x; }
 
-template <class T>
+template <typename T>
 inline T blitz_pow5(T x)
 { return x*x*x*x*x; }
 
-template <class T>
+template <typename T>
 inline T blitz_pow6(T x)
 { return x*x*x*x*x*x; }
 
-template <class T>
+template <typename T>
 inline T blitz_pow7(T x)
 { return x*x*x*x*x*x*x; }
 
-template <class T>
+template <typename T>
 inline T blitz_pow8(T x)
 { return x*x*x*x*x*x*x*x; }
 
@@ -74,7 +74,7 @@ inline T blitz_pow8(T x)
 /* Unary functions that return same type as argument */
     
 #define BZ_DEFINE_UNARY_FUNC(name,fun)                      \
-template<class T_numtype1>                                  \
+template<typename T_numtype1>                                  \
 struct name {                                               \
     typedef T_numtype1 T_numtype;                           \
                                                             \
@@ -82,7 +82,7 @@ struct name {                                               \
     apply(T_numtype1 a)                                     \
     { return fun(a); }                                      \
 							    \
-    template<class T1>                                      \
+    template<typename T1>                                      \
     static inline void prettyPrint(string& str,             \
         prettyPrintFormat& format, const T1& t1)            \
     {                                                       \
@@ -148,7 +148,7 @@ BZ_DEFINE_UNARY_FUNC(Fn_conj,BZ_CMATHFN_SCOPE(conj))
 /* Specialization of unary functor for complex type */
     
 #define BZ_DEFINE_UNARY_CFUNC(name,fun)                     \
-template<class T>                                           \
+template<typename T>                                           \
 struct name< complex<T> > {                                 \
     typedef complex<T> T_numtype1;                          \
     typedef complex<T> T_numtype;                           \
@@ -157,7 +157,7 @@ struct name< complex<T> > {                                 \
     apply(T_numtype1 a)                                     \
     { return fun(a); }                                      \
 							    \
-    template<class T1>                                      \
+    template<typename T1>                                      \
     static inline void prettyPrint(string& str,             \
         prettyPrintFormat& format, const T1& t1)            \
     {                                                       \
@@ -190,10 +190,10 @@ BZ_DEFINE_UNARY_CFUNC(Fn_pow8,BZ_BLITZ_SCOPE(blitz_pow8))
 /* Unary functions that apply only to complex<T> and return T */
     
 #define BZ_DEFINE_UNARY_CFUNC2(name,fun)                    \
-template<class T_numtype1>                                  \
+template<typename T_numtype1>                                  \
 struct name;                                                \
                                                             \
-template<class T>                                           \
+template<typename T>                                           \
 struct name< complex<T> > {                                 \
     typedef complex<T> T_numtype1;                          \
     typedef T T_numtype;                                    \
@@ -202,7 +202,7 @@ struct name< complex<T> > {                                 \
     apply(T_numtype1 a)                                     \
     { return fun(a); }                                      \
 							    \
-    template<class T1>                                      \
+    template<typename T1>                                      \
     static inline void prettyPrint(string& str,             \
         prettyPrintFormat& format, const T1& t1)            \
     {                                                       \
@@ -223,7 +223,7 @@ BZ_DEFINE_UNARY_CFUNC2(Fn_real,BZ_CMATHFN_SCOPE(real))
 /* Unary functions that return a specified type */
     
 #define BZ_DEFINE_UNARY_FUNC_RET(name,fun,ret)              \
-template<class T_numtype1>                                  \
+template<typename T_numtype1>                                  \
 struct name {                                               \
     typedef ret T_numtype;                                  \
                                                             \
@@ -231,7 +231,7 @@ struct name {                                               \
     apply(T_numtype1 a)                                     \
     { return fun(a); }                                      \
 							    \
-    template<class T1>                                      \
+    template<typename T1>                                      \
     static inline void prettyPrint(string& str,             \
         prettyPrintFormat& format, const T1& t1)            \
     {                                                       \
@@ -255,7 +255,7 @@ BZ_DEFINE_UNARY_FUNC_RET(Fn_uitrunc,BZ_IEEEMATHFN_SCOPE(uitrunc),unsigned int)
 /* Binary functions that return type based on type promotion */
     
 #define BZ_DEFINE_BINARY_FUNC(name,fun)                     \
-template<class T_numtype1, class T_numtype2>                \
+template<typename T_numtype1, typename T_numtype2>                \
 struct name {                                               \
     typedef BZ_PROMOTE(T_numtype1, T_numtype2) T_numtype;   \
                                                             \
@@ -263,7 +263,7 @@ struct name {                                               \
     apply(T_numtype1 a, T_numtype2 b)                       \
     { return fun(a,b); }                                    \
 							    \
-    template<class T1, class T2>                            \
+    template<typename T1, typename T2>                            \
     static inline void prettyPrint(string& str,             \
         prettyPrintFormat& format, const T1& t1,            \
         const T2& t2)                                       \
@@ -294,7 +294,7 @@ BZ_DEFINE_BINARY_FUNC(Fn_scalb,BZ_IEEEMATHFN_SCOPE(scalb))
 /* Specialization of binary functor for complex type */
     
 #define BZ_DEFINE_BINARY_CFUNC(name,fun)                    \
-template<class T>                                           \
+template<typename T>                                           \
 struct name< complex<T>, complex<T> > {                     \
     typedef complex<T> T_numtype1;                          \
     typedef complex<T> T_numtype2;                          \
@@ -304,7 +304,7 @@ struct name< complex<T>, complex<T> > {                     \
     apply(T_numtype1 a, T_numtype2 b)                       \
     { return fun(a,b); }                                    \
 							    \
-    template<class T1, class T2>                            \
+    template<typename T1, typename T2>                            \
     static inline void prettyPrint(string& str,             \
         prettyPrintFormat& format, const T1& t1,            \
         const T2& t2)                                       \
@@ -318,7 +318,7 @@ struct name< complex<T>, complex<T> > {                     \
     }                                                       \
 };                                                          \
                                                             \
-template<class T>                                           \
+template<typename T>                                           \
 struct name< complex<T>, T > {                              \
     typedef complex<T> T_numtype1;                          \
     typedef T T_numtype2;                                   \
@@ -328,7 +328,7 @@ struct name< complex<T>, T > {                              \
     apply(T_numtype1 a, T_numtype2 b)                       \
     { return fun(a,b); }                                    \
 							    \
-    template<class T1, class T2>                            \
+    template<typename T1, typename T2>                            \
     static inline void prettyPrint(string& str,             \
         prettyPrintFormat& format, const T1& t1,            \
         const T2& t2)                                       \
@@ -342,7 +342,7 @@ struct name< complex<T>, T > {                              \
     }                                                       \
 };                                                          \
                                                             \
-template<class T>                                           \
+template<typename T>                                           \
 struct name< T, complex<T> > {                              \
     typedef T T_numtype1;                                   \
     typedef complex<T> T_numtype2;                          \
@@ -352,7 +352,7 @@ struct name< T, complex<T> > {                              \
     apply(T_numtype1 a, T_numtype2 b)                       \
     { return fun(a,b); }                                    \
 							    \
-    template<class T1, class T2>                            \
+    template<typename T1, typename T2>                            \
     static inline void prettyPrint(string& str,             \
         prettyPrintFormat& format, const T1& t1,            \
         const T2& t2)                                       \
@@ -371,10 +371,10 @@ BZ_DEFINE_BINARY_CFUNC(Fn_pow,BZ_CMATHFN_SCOPE(pow))
 /* Binary functions that apply only to T and return complex<T> */
     
 #define BZ_DEFINE_BINARY_CFUNC2(name,fun)                   \
-template<class T_numtype1, class T_numtype2>                \
+template<typename T_numtype1, typename T_numtype2>                \
 struct name;                                                \
                                                             \
-template<class T>                                           \
+template<typename T>                                           \
 struct name<T, T> {                                         \
     typedef T T_numtype1;                                   \
     typedef T T_numtype2;                                   \
@@ -384,7 +384,7 @@ struct name<T, T> {                                         \
     apply(T_numtype1 a, T_numtype2 b)                       \
     { return fun(a,b); }                                    \
 							    \
-    template<class T1, class T2>                            \
+    template<typename T1, typename T2>                            \
     static inline void prettyPrint(string& str,             \
         prettyPrintFormat& format, const T1& t1,            \
         const T2& t2)                                       \
@@ -405,7 +405,7 @@ BZ_DEFINE_BINARY_CFUNC2(Fn_polar,BZ_CMATHFN_SCOPE(polar))
 /* Binary functions that return a specified type */
     
 #define BZ_DEFINE_BINARY_FUNC_RET(name,fun,ret)             \
-template<class T_numtype1, class T_numtype2>                \
+template<typename T_numtype1, typename T_numtype2>                \
 struct name {                                               \
     typedef ret T_numtype;                                  \
                                                             \
@@ -413,7 +413,7 @@ struct name {                                               \
     apply(T_numtype1 a, T_numtype2 b)                       \
     { return fun(a,b); }                                    \
 							    \
-    template<class T1, class T2>                            \
+    template<typename T1, typename T2>                            \
     static inline void prettyPrint(string& str,             \
         prettyPrintFormat& format, const T1& t1,            \
         const T2& t2)                                       \
@@ -435,7 +435,7 @@ BZ_DEFINE_BINARY_FUNC_RET(Fn_unordered,BZ_IEEEMATHFN_SCOPE(unordered),int)
 /* These functions don't quite fit the usual patterns */
     
 // abs()    Absolute value
-template<class T_numtype1>
+template<typename T_numtype1>
 struct Fn_abs;
 
 // abs(int)
@@ -448,7 +448,7 @@ struct Fn_abs< int > {
     apply(T_numtype1 a)
     { return BZ_MATHFN_SCOPE(abs)(a); }
     
-    template<class T1>
+    template<typename T1>
     static inline void prettyPrint(string& str,
         prettyPrintFormat& format, const T1& t1)
     {
@@ -469,7 +469,7 @@ struct Fn_abs< long int > {
     apply(T_numtype1 a)
     { return BZ_MATHFN_SCOPE(labs)(a); }
     
-    template<class T1>
+    template<typename T1>
     static inline void prettyPrint(string& str,
         prettyPrintFormat& format, const T1& t1)
     {
@@ -490,7 +490,7 @@ struct Fn_abs< float > {
     apply(T_numtype1 a)
     { return BZ_MATHFN_SCOPE(fabs)(a); }
     
-    template<class T1>
+    template<typename T1>
     static inline void prettyPrint(string& str,
         prettyPrintFormat& format, const T1& t1)
     {
@@ -511,7 +511,7 @@ struct Fn_abs< double > {
     apply(T_numtype1 a)
     { return BZ_MATHFN_SCOPE(fabs)(a); }
     
-    template<class T1>
+    template<typename T1>
     static inline void prettyPrint(string& str,
         prettyPrintFormat& format, const T1& t1)
     {
@@ -532,7 +532,7 @@ struct Fn_abs< long double > {
     apply(T_numtype1 a)
     { return BZ_MATHFN_SCOPE(fabs)(a); }
     
-    template<class T1>
+    template<typename T1>
     static inline void prettyPrint(string& str,
         prettyPrintFormat& format, const T1& t1)
     {
@@ -545,7 +545,7 @@ struct Fn_abs< long double > {
 
 #ifdef BZ_HAVE_COMPLEX_MATH
 // abs(complex<T>)
-template<class T>
+template<typename T>
 struct Fn_abs< complex<T> > {
     typedef complex<T> T_numtype1;
     typedef T T_numtype;
@@ -554,7 +554,7 @@ struct Fn_abs< complex<T> > {
     apply(T_numtype1 a)
     { return BZ_CMATHFN_SCOPE(abs)(a); }
     
-    template<class T1>
+    template<typename T1>
     static inline void prettyPrint(string& str,
         prettyPrintFormat& format, const T1& t1)
     {
@@ -569,7 +569,7 @@ struct Fn_abs< complex<T> > {
 
 #ifdef BZ_HAVE_IEEE_MATH
 // isnan()    Nonzero if NaNS or NaNQ
-template<class T_numtype1>
+template<typename T_numtype1>
 struct Fn_isnan {
     typedef int T_numtype;
     
@@ -585,7 +585,7 @@ struct Fn_isnan {
 #endif
     }
     
-    template<class T1>
+    template<typename T1>
     static inline void prettyPrint(string& str,
         prettyPrintFormat& format, const T1& t1)
     {
@@ -599,7 +599,7 @@ struct Fn_isnan {
 
 
 // Blitz cast() function
-template<class T_numtype1, class T_cast>
+template<typename T_numtype1, typename T_cast>
 struct Cast {
     typedef T_cast T_numtype;
     
@@ -607,7 +607,7 @@ struct Cast {
     apply(T_numtype1 a)
     { return T_numtype(a); }
 
-    template<class T1>
+    template<typename T1>
     static inline void prettyPrint(string& str,
         prettyPrintFormat& format, const T1& t1)
     {

@@ -76,116 +76,71 @@ public:
     // you are trying to use stack iteration mode on an expression
     // which contains an index placeholder.  You must use index 
     // iteration mode instead.
-    int operator*()
-    { 
+    int operator*() { 
         BZPRECONDITION(0); 
         return 0;
     }
 
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     template<int N_rank>
-    T_numtype operator()(TinyVector<int, N_rank> i)
-    { return i[N]; }
+    T_numtype operator()(TinyVector<int, N_rank> i) { return i[N]; }
 #else
     template<int N_rank>
-    T_numtype operator()(const TinyVector<int, N_rank>& i)
-    { return i[N]; }
+    T_numtype operator()(const TinyVector<int, N_rank>& i) { return i[N]; }
 #endif
 
-    int ascending(int) const
-    { return INT_MIN; }
-
-    int ordering(int) const
-    { return INT_MIN; }
-
-    int lbound(int) const
-    { return INT_MIN; }   // tiny(int());
-
-    int ubound(int) const
-    { return INT_MAX; }  // huge(int()); 
+    int ascending(int) const { return INT_MIN; }
+    int ordering(int)  const { return INT_MIN; }
+    int lbound(int)    const { return INT_MIN; }  // tiny(int());
+    int ubound(int)    const { return INT_MAX; }  // huge(int()); 
 
     // See operator*() note
-    void push(int)
-    { 
-        BZPRECONDITION(0); 
-    }
 
-    // See operator*() note
-    void pop(int)
-    { 
-        BZPRECONDITION(0); 
-    }
+    void push(int)       { BZPRECONDITION(0); }
+    void pop(int)        { BZPRECONDITION(0); }
+    void advance()       { BZPRECONDITION(0); }
+    void advance(int)    { BZPRECONDITION(0); }
+    void loadStride(int) { BZPRECONDITION(0); }
 
-    // See operator*() note
-    void advance()
-    { 
-        BZPRECONDITION(0); 
-    }
-
-    // See operator*() note
-    void advance(int)
-    { 
-        BZPRECONDITION(0); 
-    }
-
-    // See operator*() note
-    void loadStride(int)
-    { 
-        BZPRECONDITION(0); 
-    }
-
-    _bz_bool isUnitStride(int) const
-    { 
+    bool isUnitStride(int) const { 
         BZPRECONDITION(0);
         return false;
     }
 
-    void advanceUnitStride()
-    { 
-        BZPRECONDITION(0);
-    }
+    void advanceUnitStride() { BZPRECONDITION(0); }
 
-    _bz_bool canCollapse(int,int) const
-    {   
+    bool canCollapse(int,int) const {   
         BZPRECONDITION(0); 
-        return _bz_false; 
+        return false; 
     }
 
-    T_numtype operator[](int)
-    {
+    T_numtype operator[](int) {
         BZPRECONDITION(0);
         return T_numtype();
     }
 
-    T_numtype fastRead(int)
-    {
+    T_numtype fastRead(int) {
         BZPRECONDITION(0);
         return T_numtype();
     }
 
-    int suggestStride(int) const
-    {
+    int suggestStride(int) const {
         BZPRECONDITION(0);
         return 0;
     }
 
-    _bz_bool isStride(int,int) const
-    {
+    bool isStride(int,int) const {
         BZPRECONDITION(0);
-        return _bz_true;
+        return true;
     }
 
-    void prettyPrint(string& str, prettyPrintFormat&) const
-    {
+    void prettyPrint(string& str, prettyPrintFormat&) const {
         // NEEDS_WORK-- do real formatting for reductions
         str += "index-expr[NEEDS_WORK]";
     }
 
-    template<class T_shape>
-    _bz_bool shapeCheck(const T_shape&) const
-    {
-        return _bz_true;
-    }
+    template<typename T_shape>
+    bool shapeCheck(const T_shape&) const { return true; }
 };
 
 typedef IndexPlaceholder<0> firstIndex;

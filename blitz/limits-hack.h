@@ -39,7 +39,7 @@ enum float_denorm_style {
 
 // Base class for all specializations of numeric_limits.
 
-template <class __number>
+template <typename __number>
 class _Numeric_limits_base {
 public:
   static const bool is_specialized = false;
@@ -85,7 +85,7 @@ public:
 };
 
 #define __declare_numeric_base_member(__type, __mem) \
-template <class __number> \
+template <typename __number> \
   const __type _Numeric_limits_base<__number>:: __mem
 
 __declare_numeric_base_member(bool, is_specialized);
@@ -115,12 +115,11 @@ __declare_numeric_base_member(float_round_style, round_style);
 
 // Base class for integers.
 
-template <class _Int,
+template <typename _Int,
           _Int __imin,
           _Int __imax,
           int __idigits = -1>
-class _Integer_limits : public _Numeric_limits_base<_Int> 
-{
+class _Integer_limits : public _Numeric_limits_base<_Int> {
 public:
   static const bool is_specialized = true;
 
@@ -144,7 +143,7 @@ public:
 };
 
 #define __declare_integer_limits_member(__type, __mem) \
-template <class _Int, _Int __imin, _Int __imax, int __idigits> \
+template <typename _Int, _Int __imin, _Int __imax, int __idigits> \
   const __type _Integer_limits<_Int, __imin, __imax, __idigits>:: __mem
 
 __declare_integer_limits_member(bool, is_specialized);
@@ -160,7 +159,7 @@ __declare_integer_limits_member(bool, is_modulo);
 #undef __declare_integer_limits_member
 
 // Base class for floating-point numbers.
-template <class __number,
+template <typename __number,
          int __Digits, int __Digits10,
          int __MinExp, int __MaxExp,
          int __MinExp10, int __MaxExp10,
@@ -216,7 +215,7 @@ public:
 };
 
 #define __declare_float_limits_member(__type, __mem) \
-template <class __Num, int __Dig, int __Dig10, \
+template <typename __Num, int __Dig, int __Dig10, \
           int __MnX, int __MxX, int __MnX10, int __MxX10, \
           unsigned int __Inf, unsigned int __QNaN, unsigned int __SNaN, \
           bool __IsIEEE, float_round_style __Sty> \
@@ -250,7 +249,7 @@ __declare_float_limits_member(float_round_style, round_style);
 
 // The unspecialized class.
 
-template<class T> 
+template<typename T> 
 class numeric_limits : public _Numeric_limits_base<T> {};
 
 // Specializations for all built-in integral types.
@@ -259,64 +258,53 @@ class numeric_limits : public _Numeric_limits_base<T> {};
 
 template<>
 class numeric_limits<bool>
-  : public _Integer_limits<bool, false, true, 0>
-{};
+  : public _Integer_limits<bool, false, true, 0> {};
 
 #endif /* __STL_NO_BOOL */
 
 template<>
 class numeric_limits<char>
-  : public _Integer_limits<char, CHAR_MIN, CHAR_MAX>
-{};
+  : public _Integer_limits<char, CHAR_MIN, CHAR_MAX> {};
 
 template<>
 class numeric_limits<signed char>
-  : public _Integer_limits<signed char, SCHAR_MIN, SCHAR_MAX>
-{};
+  : public _Integer_limits<signed char, SCHAR_MIN, SCHAR_MAX> {};
 
 template<>
 class numeric_limits<unsigned char>
-  : public _Integer_limits<unsigned char, 0, UCHAR_MAX>
-{};
+  : public _Integer_limits<unsigned char, 0, UCHAR_MAX> {};
 
 #ifdef __STL_HAS_WCHAR_T
 
 template<>
 class numeric_limits<wchar_t>
-  : public _Integer_limits<wchar_t, INT_MIN, INT_MAX>
-{};
+  : public _Integer_limits<wchar_t, INT_MIN, INT_MAX> {};
 
 #endif
 
 template<>
 class numeric_limits<short>
-  : public _Integer_limits<short, SHRT_MIN, SHRT_MAX>
-{};
+  : public _Integer_limits<short, SHRT_MIN, SHRT_MAX> {};
 
 template<>
 class numeric_limits<unsigned short>
-  : public _Integer_limits<unsigned short, 0, USHRT_MAX>
-{};
+  : public _Integer_limits<unsigned short, 0, USHRT_MAX> {};
 
 template<>
 class numeric_limits<int>
-  : public _Integer_limits<int, INT_MIN, INT_MAX>
-{};
+  : public _Integer_limits<int, INT_MIN, INT_MAX> {};
 
 template<>
 class numeric_limits<unsigned int>
-  : public _Integer_limits<unsigned int, 0, UINT_MAX>
-{};
+  : public _Integer_limits<unsigned int, 0, UINT_MAX> {};
 
 template<>
 class numeric_limits<long>
-  : public _Integer_limits<long, LONG_MIN, LONG_MAX>
-{};
+  : public _Integer_limits<long, LONG_MIN, LONG_MAX> {};
 
 template<>
 class numeric_limits<unsigned long>
-  : public _Integer_limits<unsigned long, 0, ULONG_MAX>
-{};
+  : public _Integer_limits<unsigned long, 0, ULONG_MAX> {};
 
 #ifdef __STL_LONG_LONG
 #ifdef LONG_LONG_MIN
@@ -325,15 +313,13 @@ class numeric_limits<unsigned long>
 // fixed LONGLONG to be LONG_LONG
 template<>
 class numeric_limits<long long>
-  : public _Integer_limits<long long, LONG_LONG_MIN, LONG_LONG_MAX>
-{};
+  : public _Integer_limits<long long, LONG_LONG_MIN, LONG_LONG_MAX> {};
 
 // CYGNUS LOCAL 9/4/1998
 // fixed LONGLONG to be LONG_LONG
 template<>
 class numeric_limits<unsigned long long>
-  : public _Integer_limits<unsigned long long, 0, ULONG_LONG_MAX>
-{};
+  : public _Integer_limits<unsigned long long, 0, ULONG_LONG_MAX> {};
 
 #endif
 #endif /* __STL_LONG_LONG */

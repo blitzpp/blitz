@@ -109,7 +109,7 @@ void one(const char* applicName, const char* specialization, const char* funcNam
 
     if (!specialization)
     {
-        ofs << "template<class P_numtype1>" << std::endl;
+        ofs << "template<typename P_numtype1>" << std::endl;
     }
     else {
         ofs << "template<>" << std::endl;
@@ -179,7 +179,7 @@ void one(const char* applicName, const char* specialization, const char* funcNam
         ofs << "; }" << std::endl;
     }
 
-    ofs << std::endl << "    template<class T1>" << std::endl
+    ofs << std::endl << "    template<typename T1>" << std::endl
         << "    static void prettyPrint(string& str, prettyPrintFormat& format,"
         << std::endl
         << "        const T1& a)" << std::endl
@@ -230,7 +230,7 @@ void two(const char* applicName, const char* specialization, const char* funcNam
 
     if (!specialization)
     {
-        ofs << "template<class P_numtype1, class P_numtype2>" << std::endl;
+        ofs << "template<typename P_numtype1, typename P_numtype2>" << std::endl;
     }
     else {
         ofs << "template<>" << std::endl;
@@ -288,7 +288,7 @@ void two(const char* applicName, const char* specialization, const char* funcNam
         ofs << "(" << returnType << ")";
     ofs << "y); }" << std::endl;
 
-    ofs << std::endl << "    template<class T1, class T2>" << std::endl
+    ofs << std::endl << "    template<typename T1, typename T2>" << std::endl
         << "    static void prettyPrint(string& str, prettyPrintFormat& format,"
         << std::endl
         << "        const T1& a, const T2& b)" << std::endl
@@ -429,13 +429,13 @@ one("nearest", ""           ,"nearest" ,"double"       ,"Nearest floating point 
 two("nextafter", "",         "nextafter", "double",     "Next representable number after x towards y", bsdflag);
 
 ofs <<
-"template<class P_numtype>\n"
+"template<typename P_numtype>\n"
 "class _bz_negate : public OneOperandApplicativeTemplatesBase {\n"
 "public:\n"
 "    typedef BZ_SIGNEDTYPE(P_numtype) T_numtype;\n\n"
 "    static inline T_numtype apply(T_numtype x)\n"
 "    { return -x; }\n\n"
-"        template<class T1>\n"
+"        template<typename T1>\n"
 "        "
 "static void prettyPrint(string& str, prettyPrintFormat& format, const T1& a)\n"
 "        {\n"
@@ -474,13 +474,13 @@ one("sinh"   ,"complex<double> ", "sinh", "complex<double>", "", cflag);
 one("sinh", "complex<long double> ", "sinh", "complex<long double>", "", cflag);
 
 ofs << 
-"template<class P_numtype>\n"
+"template<typename P_numtype>\n"
 "class _bz_sqr : public OneOperandApplicativeTemplatesBase {\n"
 "public:\n"
 "    typedef P_numtype T_numtype;\n\n"
 "    static inline T_numtype apply(T_numtype x)\n"
 "    { return x*x; }\n"
-"    template<class T1>\n"
+"    template<typename T1>\n"
 "    static void prettyPrint(string& str, prettyPrintFormat& format,\n"
 "        const T1& a)\n"
 "    {\n"
@@ -491,7 +491,7 @@ ofs <<
 "};\n\n"
 "#ifdef BZ_HAVE_COMPLEX_MATH\n"
 "// Specialization of _bz_sqr for complex<T>\n"
-"template<class T>\n"
+"template<typename T>\n"
 "class _bz_sqr<complex<T> > : public OneOperandApplicativeTemplatesBase {\n"
 "public:\n"
 "    typedef complex<T> T_numtype;\n\n"
@@ -500,7 +500,7 @@ ofs <<
 "        T r = x.real();  T i = x.imag();\n"
 "        return T_numtype(r*r-i*i, 2*r*i);\n"
 "    }\n"
-"    template<class T1>\n"
+"    template<typename T1>\n"
 "    static void prettyPrint(string& str, prettyPrintFormat& format,\n"
 "        const T1& a)\n"
 "    {\n"
