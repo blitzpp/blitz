@@ -63,7 +63,9 @@ Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* blitz/vector.h: data_ replaced by this->data_ everywhere
 	* blitz/array/slicing.cc: likewise
 	* blitz/array/eval.cc: likewise
-	* blitz/array/methods.cc: likewise, 
+	* blitz/array/methods.cc: data_ replaced by this->data_ everywhere
 	numReferences() replaced by this->numReferences()
+	* blitz/vector.cc: data_ replaced by this->data_ everywhere, 
+	numReferences() by this->numReferences()
 
 
