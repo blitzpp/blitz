@@ -1,3 +1,19 @@
+2003-02-14  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+	* testsuite/matthias-troyer-2.cpp: Uncommented line which applies
+	the user-defined stencil.  With the recent fixes to
+	blitz/array/stencilops.h, this code now works as expected.
+	* blitz/array/stencilops.h: Changed A to (*A) as needed in stencil
+	op definitions.  This is necessary because A is an iterator type,
+	and the conversion operator is not automatically called when
+	T_numtype is not a built-in type.  Also made stencil op
+	definitions a bit more readable and fixed a typo in backward42
+	multicomponent stencil.  Factorized the central difference
+	expressions.
+	* blitz/array/stencils.cc: Removed names of unused parameters in
+	calcStencilExtent to eliminate gcc compiler warnings.
+	* blitz/array/stencil-et.h: Removed name of unused parameter to
+	eliminate gcc compiler warning.
+
 2003-02-07  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 	* blitz/indexexpr.h: Eliminated gcc compiler warnings about
 	explicitly initializing base class ETBase in IndexPlaceholder copy
