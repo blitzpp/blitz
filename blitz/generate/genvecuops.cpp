@@ -25,7 +25,7 @@ void one(const char* fname, int flag=0, const char* apname = 0)
     else if (flag == bsdflag)
         ofs << "#ifdef BZ_HAVE_SYSTEM_V_MATH" << std::endl;
     else if (flag == cmplxflag)
-        ofs << "#ifdef BZ_HAVE_COMPLEX_MATH" << std::endl;
+        ofs << "#ifdef BZ_HAVE_COMPLEX_FCNS" << std::endl;
 
     OperandTuple operands(1);
 
@@ -73,7 +73,7 @@ void two(const char* fname, int flag=0, const char* apname = 0)
     else if (flag == bsdflag)
         ofs << "#ifdef BZ_HAVE_SYSTEM_V_MATH" << std::endl;
     else if (flag == cmplxflag)
-        ofs << "#ifdef BZ_HAVE_COMPLEX_MATH" << std::endl;
+        ofs << "#ifdef BZ_HAVE_COMPLEX_FCNS" << std::endl;
 
     OperandTuple operands(2);
 
