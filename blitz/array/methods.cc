@@ -24,7 +24,7 @@ Array<P_numtype,N_rank>::Array(_bz_ArrayExpr<T_expr> expr)
         int ubound = expr.ubound(i);
         extent(i) = ubound - lbound(i) + 1;
         int orderingj = expr.ordering(i);
-        if (orderingj != INT_MAX && orderingj < N_rank &&
+        if (orderingj != INT_MIN && orderingj < N_rank &&
             !in_ordering( orderingj )) { // unique value in ordering array
             in_ordering( orderingj ) = true;
             ordering(j++) = orderingj;
@@ -34,7 +34,7 @@ Array<P_numtype,N_rank>::Array(_bz_ArrayExpr<T_expr> expr)
 
 #ifdef BZ_DEBUG
         if ((lbound(i) == INT_MIN) || (ubound == INT_MAX) 
-          || (ordering(i) == INT_MAX) || (ascending == INT_MAX))
+          || (ordering(i) == INT_MIN) || (ascending == INT_MIN))
         {
           BZPRECHECK(0,
            "Attempted to construct an array from an expression " << endl
