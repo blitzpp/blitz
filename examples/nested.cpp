@@ -1,6 +1,6 @@
 // Nested heterogeneous arrays
 
-#include <blitz/Array.h>
+#include <blitz/array.h>
 
 BZ_USING_NAMESPACE(blitz)
 
