@@ -1,0 +1,295 @@
+
+This section describes how to access the elements of an array.  There
+are three main ways:
+
+startit()
+
+it()   bf(Indexing) obtains a single element 
+it()   Creating a bf(subarray) which refers to a smaller portion of an 
+       array 
+it()   bf(Slicing) to produce a smaller-dimensional view of a portion
+       of an array 
+
+endit()
+
+Indexing, subarrays and slicing all use the overloaded parenthesis
+operator().
+
+As a running example, we'll consider the three dimensional array
+pictured below,
+which has index ranges (0..7, 0..7, 0..7).  Shaded portions of
+the array show regions which have been obtained by indexing,
+creating a subarray, and slicing.
+
+setlatexfigureext(.eps)
+figure(slice)(Examples of array indexing, subarrays, and slicing.)(slice)
+
+bzsubsect(Indexing)
+
+bzindex(Array!indexing)
+bzindex(indexing an array)
+
+There are two ways to get a single element from
+an array.  The simplest is to provide a set of integer operands to
+tt(operator()):
+bzverb(
+A(7,0,0) = 5;    
+cout << "A(7,0,0) = " << A(7,0,0) << endl;
+)
+This version of indexing is available for arrays of rank one through
+eleven.  If the array object isn't bf(const), the return type of
+tt(operator()) is a reference; if the array object is bf(const), the
+return type is a value.
+
+You can also get an element by providing an operand
+of type bf(TinyVector<int,N_rank>) where tt(N_rank) is the
+rank of the array object:
+bzverb(
+TinyVector<int,3> index;
+index = 7, 0, 0;
+A(index) = 5;
+cout << "A(7,0,0) = " << A(index) << endl;
+)
+
+This version of tt(operator()) is also available in a const-overloaded
+version.
+
+It's possible to use fewer than tt(N_rank) indices.  However, missing
+indices are bf(assumed to be zero), which will cause bounds errors
+if the valid index range does not include zero (e.g. Fortran arrays).
+For this reason, and for code clarity, it's a bad idea to omit indices.
+
+
+bzsubsect(Subarrays)
+
+bzindex(Array!subarrays)
+bzindex(subarrays)
+bzindex(Range objects)
+
+You can obtain a subarray by providing tt(Range)
+operands to tt(operator()).  A tt(Range) object represents a
+set of regularly spaced index values.  For example,
+bzverb(
+Array<int,3> B = A(Range(5,7), Range(5,7), Range(0,2));
+)
+
+The object B now refers to elements (5..7,5..7,0..2) of the
+array A.
+
+The returned subarray is of type tt(Array<T_numtype,N_rank>). This
+means that subarrays can be used wherever arrays can be: in expressions,
+as lvalues, etc.  Some examples:
+bzverb(
+// A three-dimensional stencil (used in solving PDEs)
+Range I(1,6), J(1,6), K(1,6);
+B = (A(I,J,K) + A(I+1,J,K) + A(I-1,J,K) + A(I,J+1,K)
+ + A(I,J-1,K) + A(I,J+1,K) + A(I,J,K+1) + A(I,J,K-1)) / 7.0;
+
+// Set a subarray of A to zero
+A(Range(5,7), Range(5,7), Range(5,7)) = 0.;
+)
+
+The bases of the subarray are equal to the bases of the original array:
+bzverb(
+Array<int,2> D(Range(1,5), Range(1,5));     // 1..5, 1..5
+Array<int,2> E = D(Range(2,3), Range(2,3)); // 1..2, 1..2
+)
+
+An array can be used on both sides of an expression only if the
+subarrays don't overlap.  If the arrays overlap, the result may
+depend on the order in which the array is traversed.  
+
+
+label(slicing-combo)
+bzsubsect(Slicing)
+
+bzindex(Array!slicing)
+bzindex(slicing arrays)
+
+A combination of integer and Range operands produces a bf(slice).
+Each integer operand reduces the rank of the array by one.  For
+example:
+bzverb(
+Array<int,2> F = A(Range::all(), 2, Range::all());
+Array<int,1> G = A(2,            7, Range::all());
+)
+
+Range and integer operands can be used in any combination, for arrays
+up to rank 11.
+
+bf(Note:) Using a combination of integer and Range operands requires
+a newer language feature (partial ordering of member templates) which
+not all compilers support.  If your compiler does provide this
+feature, tt(BZ_PARTIAL_ORDERING) will be defined in tt(<blitz/config.h>).
+If not, you can use this workaround:
+
+bzverb(
+Array<int,3> F = A(Range::all(), Range(2,2), Range::all());
+Array<int,3> G = A(Range(2,2),   Range(7,7), Range::all());
+)
+
+
+bzsubsect(More about Range objects)
+
+bzindex(Range objects)
+
+A tt(Range) object represents an ordered set of uniformly spaced
+integers.  Here are some examples of using Range objects to obtain
+subarrays:
+
+bzverb(\
+Array<int,1> A(7);
+A = 0, 1, 2, 3, 4, 5, 6;
+
+cout << A(Range::all())  << endl          // [ 0 1 2 3 4 5 6 ]
+     << A(Range(3,5))    << endl          // [ 3 4 5 ]
+     << A(Range(3,toEnd)) << endl         // [ 3 4 5 6 ]
+     << A(Range(fromStart,3)) << endl     // [ 0 1 2 3 ]
+     << A(Range(1,5,2)) << endl           // [ 1 3 5 ]
+     << A(Range(5,1,-2)) << endl          // [ 5 3 1 ]
+     << A(Range(fromStart,toEnd,2)) << endl; // [ 0 2 4 6 ]
+)
+
+The optional third constructor argument specifies
+a stride.  For example, tt(Range(1,5,2)) refers to elements
+[1 3 5].  Strides can also be negative: tt(Range(5,1,-2))
+refers to elements [5 3 1].
+
+Note that if you use the same Range frequently, you can just
+construct one object and use it multiple times.  For example:
+
+bzverb(\
+Range all = Range::all();
+A(0,all,all) = A(N-1,all,all);
+A(all,0,all) = A(all,N-1,all);
+A(all,all,0) = A(all,all,N-1);
+)
+
+Here's an example of using strides with a two-dimensional
+array:
+
+bzexample(\
+#include <blitz/array.h>
+
+using namespace blitz;
+
+int main()
+{
+    Array<int,2> A(8,8);
+    A = 0;
+
+    Array<int,2> B = A(Range(1,7,3), Range(1,5,2));
+    B = 1;
+
+    cout << "A = " << A << endl;
+    return 0;
+}
+)
+
+Here's an illustration of the tt(B) subarray:
+
+figure(strideslice)(Using strides to create non-contiguous subarrays)(strideslice)
+
+And the program output:
+
+bzexample(\
+0    0    0    0    0    0    0    0 
+0    1    0    1    0    1    0    0
+0    0    0    0    0    0    0    0
+0    0    0    0    0    0    0    0
+0    1    0    1    0    1    0    0
+0    0    0    0    0    0    0    0
+0    0    0    0    0    0    0    0
+0    1    0    1    0    1    0    0
+)
+
+bzsubsect(A note about assignment)
+
+bzindex(Array!=, meaning of)
+bzindex(=, meaning of)
+bzindex(shallow copies, see also reference())
+bzindex(assignment operator)
+
+The assignment operator (=) always results in the expression
+on the right-hand side (rhs) being em(copied) to the lhs (i.e. the
+data on the lhs is overwritten with the result from the rhs).  This
+is different from some array packages in which the assignment operator
+makes the lhs a reference (or alias) to the rhs.  To further confuse
+the issue, the copy constructor for arrays em(does) have reference
+semantics.  Here's an example which should clarify things:
+
+bzverb(\
+Array<int,1> A(5), B(10);
+A = B(Range(0,4));               // Statement 1
+Array<int,1> C = B(Range(0,4));  // Statement 2
+)
+
+Statement 1 results in a portion of tt(B)'s data being copied into 
+tt(A).  After Statement 1, both tt(A) and tt(B) have their own 
+(nonoverlapping) blocks of data.  Contrast this behaviour with that
+of Statement 2, which is bf(not) an assignment (it uses the copy 
+constructor).  After Statement 2 is executed, the array tt(C) is a 
+reference (or alias) to B's data.
+
+So to summarize: If you want to copy the rhs, use an assignment
+operator.  If you want to reference (or alias) the rhs, use the
+copy constructor (or alternately, the reference() member function
+in ref(arrays-reference)).
+
+bf(Very important:) whenever you have an assignment operator
+(=, +=, -=, etc.) the lhs bf(must) have the same shape as the
+bf(rhs).  If you want the array on the left hand side to be
+resized to the proper shape, you must do so by calling the
+bf(resize) method, for example:
+
+bzverb(\
+A.resize(B.shape());    // Make A the same size as B
+A = B;
+)
+
+bzsubsect(An example)
+
+bzexample(
+#include <blitz/array.h>
+
+using namespace blitz;
+
+int main()
+{
+    Array<int,2> A(6,6), B(3,3);
+  
+    // Set the upper left quadrant of A to 5 
+    A(Range(0,2), Range(0,2)) = 5; 
+
+    // Set the upper right quadrant of A to an identity matrix
+    B = 1, 0, 0,
+        0, 1, 0,
+        0, 0, 1;
+    A(Range(0,2), Range(3,5)) = B;
+
+    // Set the fourth row to 1
+    A(3, Range::all()) = 1;
+
+    // Set the last two rows to 0
+    A(Range(4, toEnd), Range::all()) = 0;
+
+    // Set the bottom right element to 8
+    A(5,5) = 8;
+
+    cout << "A = " << A << endl;
+
+    return 0;
+}
+)
+
+The output:
+
+bzexample(
+A = 6 x 6
+         5         5         5         1         0         0
+         5         5         5         0         1         0
+         5         5         5         0         0         1
+         1         1         1         1         1         1
+         0         0         0         0         0         0
+         0         0         0         0         0         8
+)
