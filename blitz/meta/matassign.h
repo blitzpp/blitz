@@ -47,7 +47,7 @@ template<>
 class _bz_meta_matAssign2<0,0,0,0> {
 public:
     template<class T_matrix, class T_expr, class T_updater>
-    static inline void f(T_matrix& mat, T_expr expr, T_updater u)
+    static inline void f(T_matrix&, T_expr, T_updater)
     { }
 };
 
@@ -69,7 +69,7 @@ template<>
 class _bz_meta_matAssign<0,0,0> {
 public:
     template<class T_matrix, class T_expr, class T_updater>
-    static inline void f(T_matrix& mat, T_expr expr, T_updater u)
+    static inline void f(T_matrix&, T_expr, T_updater)
     { }
 };
 
