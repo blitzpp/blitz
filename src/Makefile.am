@@ -7,6 +7,7 @@ SUBDIRS = .
 INCLUDES = -I$(top_srcdir)
 lib_LIBRARIES = libblitz.a
 libblitz_a_SOURCES = globals.cpp
+libblitz_a_AR = $(AR) $(AR_FLAGS)
 
 all-am: lib
 
