@@ -4,7 +4,7 @@ AC_PREREQ(2.53)
 AC_INIT
 AC_CANONICAL_TARGET([])
 AC_CONFIG_SRCDIR([blitz/blitz.h])
-AM_INIT_AUTOMAKE(Blitz++,0.6)
+AM_INIT_AUTOMAKE(Blitz++,0.7)
 
 # Avoid generating makefile rules to rebuild maintainer-only files by
 # default.  Maintainers may override this default and generate these
@@ -75,7 +75,7 @@ AC_ARG_WITH(cxx,
        echo "Configuring for SGI C++"
        bz_compiler=sgiCC
        AC_BZ_SET_COMPILER($withval,"CC","-LANG:std -LANG:restrict")
-       CXX_OPTIMIZE_FLAGS="-O3"
+       CXX_OPTIMIZE_FLAGS="-Ofast"
        CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
        AR="CC"
        AR_FLAGS="-ar -o"
@@ -226,9 +226,9 @@ case "$target" in
   *irix*)
     echo "IRIX: assuming f77 and f90"
     F77=f77
-    F77_OPTIMIZE_FLAGS="-O3"
+    F77_OPTIMIZE_FLAGS="-Ofast"
     F90=f90
-    F90_OPTIMIZE_FLAGS="-O3"
+    F90_OPTIMIZE_FLAGS="-Ofast"
     FORTLIBS="-lfortran -lffio -lftn"
     CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
     case "$CXX" in
