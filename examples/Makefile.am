@@ -4,7 +4,7 @@
 
 SUBDIRS = .
 
-EXTRA_DIST = stencil4.f
+EXTRA_DIST = stencil4.f profile.cpp tiny2.cpp tiny3.cpp
 
 INCLUDES = -I$(top_srcdir)
 LDADD = -L$(top_srcdir)/lib -lblitz
