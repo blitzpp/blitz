@@ -1,4 +1,8 @@
+2002-11-26  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
+	* benchmarks/qcdf.f: Corrected declaration of double precision
+	complex arrays in subroutine qcdf.  Use type complex*16 and make
+	site number the final (slowest varying) dimension.
 
 Fri Oct 25 10:56:21 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* configure.in: fixed Fortran compiler message for linux
