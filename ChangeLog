@@ -1,5 +1,53 @@
 
 
+Thu Mar 21 11:12:36 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* examples/io.cpp: added #ifdef BZ_HAVE_STD for #include <fstream>
+	* examples/polymorph.cpp: corrected polymorph container declaration 
+	Array<Material&,1> by Array<Material*,1>
+	* examples/prettyprint.cpp: removed unecessary #include <iostream.h>
+	* examples/rand2.cpp: likewise
+	* examples/rand2.cpp: added return 0; to function int main2()
+	* examples/tiny3.cpp: fixed typo #include <blitz/TinyMath.> into
+	#include <blitz/TinyMat.h>
+
+Thu Mar  7 09:06:58 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure.in: f90 optimisation flag set to O3 for platform *hp-hpux*
+	* blitz/array/io.cc: cosmetic change
+	* blitz/traversal.h: moved 
+	template<int N_dimensions>
+	_bz_typename TraversalOrderCollection<N_dimensions>::T_set
+	    TraversalOrderCollection<N_dimensions>::traversals_;
+	after the declaration of 
+	template<int N_dimensions> class TraversalOrderCollection
+	* TODO: new file
+	* blitz/array/expr.h: 
+	line 124 
+	#ifdef BZ_NEW_EXPRESSION_TEMPLATES replaced by
+	#if defined(BZ_NEW_EXPRESSION_TEMPLATES) && ! defined(__MWERKS__)
+	line 134 added 
+	#if !defined(__MWERKS__)
+	#endif
+	as suggested by Xavier Warin <xavier.warin@der.edfgdf.fr> 
+	for Metrowerks code warrior compiler
+	* random/mt.h: fixed use of STL iterator as suggested by 
+	Julian Cummings <cummings@cacr.caltech.edu> and 
+	Osamu Ogasawara <oogasawa@ims.u-tokyo.ac.jp>
+	* blitz/config-mwerks.h: new file, configuration file for Metrowerks code
+	warrior compiler proposed by Xavier Warin <xavier.warin@der.edfgdf.fr>
+	* INSTALL: updated with the new make targets
+	* Makefile.am (in each directory): fixed a bug for the target dist
+	* configure.in: added support for Intel icf (Fortran 90 compiler) when 
+	target is *linux* and CXX is Intel icc
+	* benchmarks/Makefile: added work.pc* in clean target, these files are
+	generated when running Intel Fortran 90 compiler ifc
+	* benchmarks/plot_benchmarks.m.in: new file to generate m-file
+	benchmarks/plot_benchmarks.m to plot benchmarks results
+	* configure.in: added benchmarks/plot_benchmarks.m to be generated from
+	benchmarks/plot_benchmarks.m.in
+	* configure.in: output correctly the available DEC (actually now Compaq:-) 
+	compilers
+	* INSTALL: likewise
+
 Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* ChangeLog: new file
 	* testsuite/mattias-lindstroem-1: removed (executable)
@@ -120,45 +168,5 @@ Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	Still a problem with the complex stencil, right now the statement
 	applyStencil(kinEnergy(),A,B); is commented
 
-
-Thu Mar  7 09:06:58 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
-	* configure.in: f90 optimisation flag set to O3 for platform *hp-hpux*
-	* blitz/array/io.cc: cosmetic change
-	* blitz/traversal.h: moved 
-	template<int N_dimensions>
-	_bz_typename TraversalOrderCollection<N_dimensions>::T_set
-	    TraversalOrderCollection<N_dimensions>::traversals_;
-	after the declaration of 
-	template<int N_dimensions> class TraversalOrderCollection
-	* TODO: new file
-	* blitz/array/expr.h: 
-	line 124 
-	#ifdef BZ_NEW_EXPRESSION_TEMPLATES replaced by
-	#if defined(BZ_NEW_EXPRESSION_TEMPLATES) && ! defined(__MWERKS__)
-	line 134 added 
-	#if !defined(__MWERKS__)
-	#endif
-	as suggested by Xavier Warin <xavier.warin@der.edfgdf.fr> 
-	for Metrowerks code warrior compiler
-	* random/mt.h: fixed use of STL iterator as suggested by 
-	Julian Cummings <cummings@cacr.caltech.edu> and 
-	Osamu Ogasawara <oogasawa@ims.u-tokyo.ac.jp>
-	* blitz/config-mwerks.h: new file, configuration file for Metrowerks code
-	warrior compiler proposed by Xavier Warin <xavier.warin@der.edfgdf.fr>
-	* INSTALL: updated with the new make targets
-	* Makefile.am (in each directory): fixed a bug for the target dist
-	* configure.in: added support for Intel icf (Fortran 90 compiler) when 
-	target is *linux* and CXX is Intel icc
-	* benchmarks/Makefile: added work.pc* in clean target, these files are
-	generated when running Intel Fortran 90 compiler ifc
-	* benchmarks/plot_benchmarks.m.in: new file to generate m-file
-	benchmarks/plot_benchmarks.m to plot benchmarks results
-	* configure.in: added benchmarks/plot_benchmarks.m to be generated from
-	benchmarks/plot_benchmarks.m.in
-	* configure.in: output correctly the available DEC (actually now Compaq:-) 
-	compilers
-	* INSTALL: likewise
-
-	
 
 	
