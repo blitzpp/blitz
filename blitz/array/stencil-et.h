@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/array/stencil-et.h  Expression-template-capabale stencils
  *
@@ -95,12 +96,12 @@ public:
     bool isStride(int rank, int stride) const
     { return iter_.isStride(rank,stride); }
 
-    void prettyPrint(string& str) const
+    void prettyPrint(BZ_STD_SCOPE(string) &str) const
     {
         str += "(stencil)";    // lame, needs work
     }
 
-    void prettyPrint(string& str, prettyPrintFormat&) const
+    void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat&) const
     {   str += "(stencil)"; }
 
     template<typename T_shape>

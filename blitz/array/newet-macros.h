@@ -232,7 +232,8 @@ struct name ## _impl {                                                   \
     typedef P_numtype T_numtype;                                         \
     static inline T_numtype apply(P_numtype x) { return name(x); }       \
     template <typename T>                                                \
-    static void prettyPrint(string& str,prettyPrintFormat& format,       \
+    static void prettyPrint(BZ_STD_SCOPE(string) &str,                   \
+                            prettyPrintFormat& format,                   \
                             const T& a) {                                \
         str += #name;                                                    \
         str += "(";                                                      \
@@ -249,7 +250,8 @@ struct name ## _impl {                                                   \
     typedef return_type T_numtype;                                       \
     static inline T_numtype apply(P_numtype x) { return name(x); }       \
     template <typename T>                                                \
-    static void prettyPrint(string& str,prettyPrintFormat& format,       \
+    static void prettyPrint(BZ_STD_SCOPE(string) &str,                   \
+                            prettyPrintFormat& format,                   \
                             const T& a) {                                \
         str += #name;                                                    \
         str += "(";                                                      \
@@ -268,7 +270,8 @@ struct name ## _impl {                                                   \
         return name(x,y);                                                \
     }                                                                    \
     template <typename T1,typename T2>                                   \
-    static void prettyPrint(string& str,prettyPrintFormat& format,       \
+    static void prettyPrint(BZ_STD_SCOPE(string) &str,                   \
+                            prettyPrintFormat& format,                   \
                             const T1& a,const T2& b) {                   \
         str += #name;                                                    \
         str += "(";                                                      \
@@ -289,7 +292,8 @@ struct name ## _impl {                                                   \
             return name(x,y);                                            \
     }                                                                    \
     template <typename T1,typename T2>                                   \
-    static void prettyPrint(string& str,prettyPrintFormat& format,       \
+    static void prettyPrint(BZ_STD_SCOPE(string) &str,                   \
+                            prettyPrintFormat& format,                   \
                             const T1& a,const T2& b) {                   \
         str += #name;                                                    \
         str += "(";                                                      \
@@ -316,7 +320,8 @@ struct name ## _impl {                                                   \
         return name(x,y,z);                                              \
     }                                                                    \
     template <typename T1, typename T2, typename T3>                     \
-    static void prettyPrint(string& str, prettyPrintFormat& format,      \
+    static void prettyPrint(BZ_STD_SCOPE(string) &str,                   \
+                            prettyPrintFormat& format,                   \
                             const T1& a,const T2& b, const T3& c) {      \
         str += #name;                                                    \
         str += "(";                                                      \
@@ -340,7 +345,8 @@ struct name ## _impl {                                                   \
         return name(x,y,z);                                              \
     }                                                                    \
     template <typename T1, typename T2, typename T3>                     \
-    static void prettyPrint(string& str, prettyPrintFormat& format,      \
+    static void prettyPrint(BZ_STD_SCOPE(string) &str,                   \
+                            prettyPrintFormat& format,                   \
                             const T1& a, const T2& b, const T3& c) {     \
         str += #name;                                                    \
         str += "(";                                                      \

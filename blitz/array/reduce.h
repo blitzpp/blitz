@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/array/reduce.h   Reductions of an array (or array expression) in a 
  *                        single rank: sum, mean, min, minIndex, max, maxIndex,
@@ -29,9 +30,7 @@
  #error <blitz/array/reduce.h> must be included after <blitz/array/expr.h>
 #endif
 
-#ifndef BZ_REDUCE_H
- #include <blitz/reduce.h>
-#endif
+#include <blitz/reduce.h>
 
 BZ_NAMESPACE(blitz)
 
@@ -195,7 +194,8 @@ public:
         return;
     }
 
-    void prettyPrint(string& str, prettyPrintFormat& format) const
+    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+        prettyPrintFormat& format) const
     {
         // NEEDS_WORK-- do real formatting for reductions
         str += "reduce[NEEDS_WORK](";
