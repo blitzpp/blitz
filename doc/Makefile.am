@@ -51,7 +51,7 @@ faq.texi help.texi install.texi legal.texi numinquire.texi parallel.texi \
 platforms.texi random.texi tau.texi tinymatrix.texi tinyvector.texi \
 tuning.texi copyright.texi $(STENCILS) $(EXAMPLES) $(OUTPUT)
 
-EXTRA_DIST = blitz.info blitz.ps blitz.pdf blitz.gif blitztiny.jpg \
+EXTRA_DIST = blitz.info blitz.dvi blitz.ps blitz.pdf blitz.gif blitztiny.jpg \
 	indirect.eps indirect.fig indirect.pdf indirect.gif indirect.txt \
 	sinsoid.eps sinsoid.pdf sinsoid.gif sinsoid.txt \
 	slice.eps slice.fig slice.pdf slice.gif slice.txt \
