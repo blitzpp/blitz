@@ -1,4 +1,7 @@
 Makefile
+Makefile.in
+*.o
+*.a
 *.lo
 *.la
 .deps
