@@ -23,6 +23,10 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.4  2002/06/28 01:39:47  jcumming
+ * Changed order of ctor initializers to match order of member data declarations,
+ * eliminating warning from gcc compiler.
+ *
  * Revision 1.3  2002/03/06 17:45:07  patricg
  *
  * for BZ_HAVE_STD only
@@ -73,7 +77,7 @@ public:
     // NB: this ctor does NOT preserve stack and stride
     // parameters.  This is for speed purposes.
     FastArrayIterator(const FastArrayIterator<P_numtype, N_rank>& x)
-        : array_(x.array_), data_(x.data_)
+        : data_(x.data_), array_(x.array_)
     { }
 
     void operator=(const FastArrayIterator<P_numtype, N_rank>& x)
