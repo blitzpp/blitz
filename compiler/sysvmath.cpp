@@ -20,7 +20,6 @@ int main()
     double y = 1.0;
 
     _class(x);
-    ilogb(x);
     itrunc(x);
     nearest(x);
     rsqrt(x);
@@ -28,7 +27,6 @@ int main()
 
     copysign(x,y);
     drem(x,y);
-    fmod(x,y);
     hypot(x,y);
     nextafter(x,y);
     remainder(x,y);
