@@ -1,3 +1,54 @@
+2003-12-10  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/applics.h blitz/array-impl.h blitz/bench.cc blitz/bench.h 
+	blitz/benchext.cc blitz/benchext.h blitz/blitz.h blitz/bzdebug.h 
+	blitz/compiler.h blitz/etbase.h blitz/extremum.h blitz/funcs.h 
+	blitz/indexexpr.h blitz/limits-hack.h blitz/listinit.h blitz/matbops.h
+	blitz/matdiag.h blitz/matexpr.h blitz/matgen.h blitz/mathf2.h 
+	blitz/mathfunc.h blitz/matltri.h blitz/matref.h blitz/matrix.cc 
+	blitz/matrix.h blitz/matsymm.h blitz/mattoep.h blitz/matuops.h 
+	blitz/matutri.h blitz/memblock.cc blitz/memblock.h blitz/minmax.h 
+	blitz/mstruct.h blitz/numinquire.h blitz/numtrait.h blitz/ops.h 
+	blitz/prettyprint.h blitz/promote-old.h blitz/promote.h 
+	blitz/rand-dunif.h blitz/rand-normal.h blitz/random.h blitz/randref.h 
+	blitz/range.h blitz/reduce.h blitz/shapecheck.h blitz/tinymat.h 
+	blitz/tinymatexpr.h blitz/tinyvec.cc blitz/tinyvec.h blitz/tinyvecio.cc
+	blitz/tinyveciter.h blitz/tvcross.h blitz/tvecglobs.h blitz/update.h 
+	blitz/vecaccum.cc blitz/vecall.cc blitz/vecany.cc blitz/vecbfn.cc 
+	blitz/vecbops.cc blitz/veccount.cc blitz/vecdelta.cc blitz/vecdot.cc 
+	blitz/vecexpr.h blitz/vecexprwrap.h blitz/vecio.cc blitz/veciter.h 
+	blitz/vecmax.cc blitz/vecmin.cc blitz/vecnorm.cc blitz/vecnorm1.cc 
+	blitz/vecpick.cc blitz/vecpick.h blitz/vecpickio.cc blitz/vecpickiter.h
+	blitz/vecsum.cc blitz/vector.cc blitz/vector.h blitz/vecuops.cc 
+	blitz/vecwhere.cc blitz/vecwhere.h blitz/zero.cc blitz/zero.h 
+	blitz/array/bops.cc blitz/array/cartesian.h blitz/array/cgsolve.h 
+	blitz/array/complex.cc blitz/array/convolve.cc blitz/array/convolve.h 
+	blitz/array/cycle.cc blitz/array/eval.cc blitz/array/expr.h 
+	blitz/array/fastiter.h blitz/array/funcs.h blitz/array/functorExpr.h 
+	blitz/array/geometry.h blitz/array/indirect.h blitz/array/interlace.cc 
+	blitz/array/io.cc blitz/array/iter.h blitz/array/map.h 
+	blitz/array/methods.cc blitz/array/misc.cc blitz/array/multi.h 
+	blitz/array/newet-macros-old.h blitz/array/ops.cc blitz/array/reduce.cc
+	blitz/array/reduce.h blitz/array/resize.cc blitz/array/slice.h 
+	blitz/array/slicing.cc blitz/array/stencil-et.h 
+	blitz/array/stencilops.h blitz/array/stencils.cc blitz/array/stencils.h
+	blitz/array/storage.h blitz/array/uops.cc blitz/array/where.h 
+	blitz/array/zip.h blitz/generate/genmathfunc.cpp 
+	blitz/generate/genpromote.cpp blitz/meta/dot.h blitz/meta/matassign.h 
+	blitz/meta/matmat.h blitz/meta/matvec.h blitz/meta/metaprog.h 
+	blitz/meta/product.h blitz/meta/sum.h blitz/meta/vecassign.h 
+	testsuite/extract.cpp testsuite/loop1.cpp 
+	testsuite/peter-nordlund-2.cpp testsuite/promote.cpp examples/diff.cpp 
+	examples/pauli.cpp examples/random.cpp examples/tiny2.cpp 
+	examples/tiny3.cpp: Patch from Theodore Papadopoulo that removes the 
+	use of some outdated macros such as _bz_bool, _bz_true, _bz_false, and 
+	_bz_explicit, and replaces them directly with the standard C++ 
+	keywords.  These keywords should now be implemented in virtually all 
+	C++ compilers, and this change makes the code much more standardized 
+	and readable.  This patch also replaces class with typename when 
+	specifying a template argument that is a type.  I have extended the 
+	patch to the codes in the testsuite and examples subdirectories. 
+	
 2003-11-25  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* blitz/array/eval.cc: Fixed stack traversal evaluation routines
