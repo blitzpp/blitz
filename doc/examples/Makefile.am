@@ -8,9 +8,7 @@
 #output.cpp range.cpp simple.cpp slicing.cpp storage.cpp strideslice.cpp \
 #xor.cpp
 
-EXTRA_DIST = cast.cpp debug.cpp dump.cpp fixed.cpp fixed-point.h outer.cpp \
-output.cpp range.cpp simple.cpp slicing.cpp storage.cpp strideslice.cpp \
-xor.cpp
+EXTRA_DIST = fixed-class.cpp fixed-point.h makefile.example io.data
 
 INCLUDES = -I$(top_srcdir) -I$(top_builddir)
 AM_CXXFLAGS = @CXXFLAGS@ @CXX_DEBUG_FLAGS@
