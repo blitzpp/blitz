@@ -6,7 +6,13 @@ SUBDIRS = examples stencils doxygen
 
 # install these files
 docdir = $(prefix)/doc
-doc_DATA = blitz.ps blitz.pdf
+doc_DATA = blitz.ps blitz.pdf blitz.html \
+	blitz_abt.html blitz_fot.html blitz_ovr.html blitz_toc.html \
+	blitz_1.html blitz_2.html blitz_3.html blitz_4.html blitz_5.html \
+	blitz_6.html blitz_7.html blitz_8.html blitz_9.html blitz_10.html \
+	blitz_11.html blitz_12.html blitz_13.html blitz_14.html blitz_15.html \
+	blitz_16.html indirect.gif slice.gif strideslice.gif sinsoid.gif \
+	tensor1.gif blitz.gif blitztiny.jpg
 
 HERE=$(CURDIR)
 DVIPS=export TEXPICTS=$(srcdir); dvips
@@ -50,7 +56,12 @@ EXTRA_DIST = blitz.info blitz.ps blitz.pdf blitz.gif blitztiny.jpg \
 	sinsoid.eps sinsoid.pdf sinsoid.gif sinsoid.txt \
 	slice.eps slice.fig slice.pdf slice.gif slice.txt \
 	strideslice.eps strideslice.fig strideslice.pdf strideslice.gif strideslice.txt \
-	tensor1.eps tensor1.fig tensor1.pdf tensor1.gif tensor1.txt
+	tensor1.eps tensor1.fig tensor1.pdf tensor1.gif tensor1.txt \
+	blitz.html blitz_abt.html blitz_fot.html blitz_ovr.html blitz_toc.html \
+	blitz_1.html blitz_2.html blitz_3.html blitz_4.html blitz_5.html \
+	blitz_6.html blitz_7.html blitz_8.html blitz_9.html blitz_10.html \
+	blitz_11.html blitz_12.html blitz_13.html blitz_14.html \
+	blitz_15.html blitz_16.html
 
 # Files from texi2dvi that should be removed, but which Automake does
 # not know.
@@ -60,9 +71,9 @@ CLEANFILES = blitz.tmp
 ## Other documentation formats.  ##
 ## ----------------------------- ##
 
-html: blitz_1.html
+html: blitz.html
 
-blitz_1.html: $(info_TEXINFOS) $(blitz_TEXINFOS)
+blitz.html: $(info_TEXINFOS) $(blitz_TEXINFOS)
 	$(TEXI2HTML) $(TEXI2HTML_FLAGS) $(srcdir)/blitz.texi
 
 stencils/%.texi:
