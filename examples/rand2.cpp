@@ -1,6 +1,5 @@
 #include <blitz/blitz.h>
 #include <random/exponential.h>
-#include <iostream.h>
 #include <random/discrete-uniform.h>
 #include <random/F.h>
 
@@ -17,6 +16,7 @@ int main2()
     for (int i=0; i < 100; ++i)
         cout << rng.random() << "  ";
     cout << endl;
+    return 0;
 }
 
 int main3()
