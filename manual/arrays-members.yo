@@ -1,0 +1,535 @@
+bzindex(dimension parameters)
+bzindex(Array!dimension parameters)
+
+bzsubsect(A note about dimension parameters)
+
+Several of the member functions take a em(dimension parameter) which
+is an integer in the range 0 .. N_rank - 1.  For example, the method
+tt(extent(int n)) returns the extent (or length) of the
+array in dimension tt(n).  
+
+These parameters are problematic:
+
+startit()
+
+it()    They make the code cryptic.  Someone unfamiliar
+        with the tt(reverse()) member function won't stand a chance of
+        understanding what tt(A.reverse(2)) does.
+
+it()    Some users are used to dimensions being
+        1 .. N_rank, rather than 0 .. N_rank - 1.  This makes
+        dimension numbers inherently error-prone.  Even though
+        I'm a experienced C/C++ programmer, I em(still) want
+        to think of the first dimension as 1 -- it doesn't make
+        sense to talk about the "zeroth" dimension.
+
+endit()
+
+As a solution to this problem, Blitz++ provides a series
+of symbolic constants which you can use to refer to dimensions:
+
+bzindex(firstDim)
+bzindex(secondDim)
+bzindex(thirdDim)
+bzindex(fourthDim)
+bzverb(\
+const int firstDim    = 0;
+const int secondDim   = 1;
+const int thirdDim    = 2;
+   .
+   .
+const int eleventhDim = 10;
+)
+
+These symbols should be used in place of the numerals 
+0, 1, ... N_rank - 1.  For example:
+
+bzverb(\
+A.reverse(thirdDim);
+)
+
+This code is clearer: you can see that the parameter refers
+to a dimension, and it isn't much of a leap to realize that it's
+reversing the element ordering in the third dimension.
+
+If you find tt(firstDim), tt(secondDim), ... aesthetically unpleasing,
+there are equivalent symbols tt(firstRank), tt(secondRank),
+tt(thirdRank), ..., tt(eleventhRank).
+
+bzindex(eleven, end of the universe at)
+
+nsubsubsect(Why stop at eleven?)
+
+The symbols
+had to stop somewhere, and eleven seemed an appropriate
+place to stop.  Besides, if you're working in more than eleven
+dimensions your code is going to be confusing no matter what help
+Blitz++ provides.
+
+bzindex(Array!member functions)
+bzsubsect(Member function descriptions)
+
+bzindex(Array!member functions!base())
+bzindex(base())
+bf(bzverb(\
+const TinyVector<int, N_rank>&    base() const;
+int                               base(int dimension) const;))
+The em(base) of a dimension is the first valid index value.  A typical
+C-style array will have base of zero; a Fortran-style array will have
+base of one.  The base can be different for each dimension, but only
+if you deliberately use a Range-argument constructor
+or design a custom storage ordering.
+
+The first version returns a reference to the vector of base values.
+The second version returns the base for just one dimension; it's
+equivalent to the tt(lbound()) member function.  See the
+note on dimension parameters such as tt(firstDim) above.
+
+bzindex(iterators for arrays)
+bzindex(const_iterator)
+bzindex(Array!iterators)
+bzindex(Array!member functions!begin())
+bzindex(STL iterators for arrays)
+bzindex(begin())
+bf(bzverb(\
+Array<T,N>::iterator              begin();
+Array<T,N>::const_iterator        begin() const;))
+These functions return STL-style forward and
+input iterators, respectively, positioned at the first
+element of the array.  Note that the array data
+is traversed in memory order (i.e. by rows for C-style
+arrays, and by columns for Fortran-style arrays).
+The tt(Array<T,N>::const_iterator) has these methods:
+bzverb(
+    const_iterator(const Array<T,N>&);
+    T operator*() const;
+    const T* [restrict] operator->() const;
+    const_iterator& operator++();
+    void operator++(int);
+    bool operator==(const const_iterator<T,N>&) const;
+    bool operator!=(const const_iterator<T,N>&) const;
+    const TinyVector<int,N>& position() const;
+)
+Note that postfix ++ returns void (this is not STL-compliant,
+but is done for efficiency).  The method tt(position()) returns
+a vector containing current index positions of the iterator.
+The tt(Array<T,N>::iterator) has the same methods as
+tt(const_iterator), with these exceptions:
+bzverb(
+    iterator& operator++();
+    T& operator*();
+    T* [restrict] operator->();
+)
+The tt(iterator) type may be used to modify array elements.
+To obtain iterator positioned at the end of the array,
+use the tt(end()) methods.
+
+bzindex(Array!member functions!cols())
+bzindex(Array!member functions!columns())
+bzindex(cols())
+bzindex(columns())
+bf(bzverb(\
+int                               cols() const;
+int                               columns() const;))
+Both of these functions return the extent of the array in the
+second dimension.  Equivalent to tt(extent(secondDim)).
+See also tt(rows()) and tt(depth()).
+
+bzindex(Array!member functions!copy())
+bzindex(Array!copying)
+bzindex(copy())
+bf(bzverb(\
+Array<T_numtype, N_rank>          copy() const;))
+This method creates a copy of the array's data, using the same
+storage ordering as the current array.  The returned array is
+guaranteed to be stored contiguously in memory, and to be
+the only object referring to its memory block (i.e. the data
+isn't shared with any other array object).
+
+bzindex(Array!getting pointer to array data)
+bzindex(data())
+bzindex(Array!member functions!data())
+bzindex(dataZero())
+bzindex(Array!member functions!dataZero())
+bzindex(dataFirst())
+bzindex(Array!member functions!dataFirst())
+bf(bzverb(\
+const T_numtype* [restrict]       data() const;
+      T_numtype* [restrict]       data();
+const T_numtype* [restrict]       dataZero() const;
+      T_numtype* [restrict]       dataZero();
+const T_numtype* [restrict]       dataFirst() const;
+      T_numtype* [restrict]       dataFirst();))
+These member functions all return pointers to the array data.
+The NCEG tt(restrict) qualifier is used only if your compiler
+supports it.
+If you're working with the default storage order (C-style arrays
+with base zero), you'll only need to use tt(data()).
+Otherwise, things get complicated:
+
+tt(data()) returns a pointer to the element whose indices
+are equal to the array base.  With a C-style array, this means
+the element (0,0,...,0); with a Fortran-style array, this means
+the element (1,1,...,1).  If tt(A) is an array object,
+tt(A.data()) is equivalent to (&A(A.base(firstDim), A.base(secondDim), ...)).
+If any of the dimensions are stored in reverse order, 
+tt(data()) will not refer to the element which comes first in
+memory.
+
+tt(dataZero()) returns a pointer to the element (0,0,...,0),
+even if such an element does not exist in the array.  What's
+the point of having such a pointer?  Say you want to access
+the element (i,j,k).  If you add to the pointer the dot product
+of (i,j,k) with the stride vector (tt(A.stride())), you get
+a pointer to the element (i,j,k).
+
+tt(dataFirst()) returns a pointer to the element of the array
+which comes first in memory.  Note however, that under some
+circumstances (e.g. subarrays), the data will
+not be stored contiguously in memory.  You have to be very
+careful when meddling directly with an array's data.
+
+Other relevant functions are: tt(isStorageContiguous()) and
+tt(zeroOffset()).
+
+bzindex(Array!member functions!depth())
+bzindex(depth())
+bf(bzverb(\
+int                               depth() const;))
+Returns the extent of the array in the third dimension.  This
+function is equivalent to tt(extent(thirdDim)).
+See also tt(rows()) and tt(columns()).
+
+bzindex(dimensions())
+bzindex(Array!member functions!dimensions())
+bf(bzverb(\
+int                               dimensions() const;))
+Returns the number of dimensions (rank) of the array.  The return
+value is the second template parameter (N_rank) of the
+tt(Array) object.  Same as tt(rank()).
+
+bzindex(domain())
+bzindex(Array!member functions!domain())
+bzindex(Array!obtaining domain of)
+bf(bzverb(\
+RectDomain<N_rank>                domain() const;))
+Returns the domain of the array.  The domain consists of
+a vector of lower bounds and a vector of upper bounds for
+the indices.  NEEDS_WORK-- need a section to explain
+methods of tt(RectDomain<N>).
+
+bzindex(end())
+bzindex(Array!member functions!end())
+bf(bzverb(\
+Array<T,N>::iterator              end();
+Array<T,N>::const_iterator        end() const;))
+Returns STL-style forward and input iterators (respectively)
+for the array, positioned at the end of the array.
+
+bzindex(extent())
+bzindex(Array!member functions!extent())
+bf(bzverb(\
+int                               extent(int dimension) const;))
+The first version the extent (length) of the array in the specified dimension.
+See the note about dimension 
+parameters such as tt(firstDim) in the previous section.
+
+bzindex(extractComponent())
+bzindex(Array!member functions!extractComponent())
+bzindex(Array!extracting components)
+bf(bzverb(\
+Array<T_numtype2,N_rank>          extractComponent(T_numtype2,
+                                    int componentNumber, int numComponents);))
+This method returns an array view of a single component of a
+multicomponent array.  In a multicomponent array, each element
+is a tuple of fixed size.  The components are numbered 0, 1, ...,
+tt(numComponents-1).  Example:
+
+bzverb(\
+    Array<TinyVector<int,3>,2> A(128,128);  // A 128x128 array of int[3]
+    Array<int,2> B = A.extractComponent(int(), 1, 3);)
+
+Now the B array refers to the 2nd component of every element in A.
+Note: for complex arrays, special global functions tt(real(A)) and
+tt(imag(A)) are provided to obtain real and imaginary components of
+an array.  See the bf(Global Functions) section.
+
+bzindex(free())
+bzindex(Array!member functions!free())
+bzindex(Array!freeing an)
+bf(bzverb(\
+void                              free();))
+This method resizes an array to zero size.  If the array data is
+not being shared with another array object, then it is freed.
+
+bzindex(isMajorRank())
+bzindex(Array!member functions!isMajorRank())
+bf(bzverb(\
+bool                              isMajorRank(int dimension) const;))
+Returns true if the dimension has the largest stride.  For
+C-style arrays (the default), the first dimension always has
+the largest stride.  For Fortran-style arrays, the last dimension
+has the largest stride.  See also tt(isMinorRank()) below and
+the note about dimension parameters such as tt(firstDim) in the
+previous section.
+
+bzindex(isMinorRank())
+bzindex(Array!member functions!isMinorRank())
+bf(bzverb(\
+bool                              isMinorRank(int dimension) const;))
+Returns true if the dimension em(does not) have the largest stride.
+See also tt(isMajorRank()).
+
+bzindex(isRankStoredAscending())
+bzindex(Array!member functions!isRankStoredAscending())
+bf(bzverb(\
+bool                              isRankStoredAscending(int dimension) const;))
+Returns true if the dimension is stored in ascending order in memory.
+This is the default.  It will only return false if you have reversed
+a dimension using tt(reverse()) or have created a custom storage order
+with a descending dimension.
+
+bzindex(isStorageContiguous())
+bzindex(Array!member functions!isStorageContiguous())
+bf(bzverb(\
+bool                              isStorageContiguous() const;))
+Returns true if the array data is stored contiguously in memory.
+If you slice the array or work on subarrays, there can be
+skips -- the array data is interspersed with other data not
+part of the array.  See also the various tt(data..()) functions.
+If you need to ensure that the storage is contiguous, try
+tt(reference(copy())).
+
+bzindex(lbound())
+bzindex(Array!member functions!lbound())
+bf(bzverb(\
+int                               lbound(int dimension) const;
+TinyVector<int,N_rank>            lbound() const;))
+The first version returns the lower bound of the valid index range
+for a dimension.  The second version returns a vector of lower bounds
+for all dimensions.
+The
+lower bound is the first valid index value.  If you're
+using a C-style array (the default), the lbound will be zero;
+Fortran-style arrays have lbound equal to one.  The lbound can
+be different for each dimension, but only if you deliberately
+set them that way using a Range constructor or a custom storage
+ordering.  This function is equivalent to tt(base(dimension)).
+See the note about dimension parameters such as tt(firstDim)
+in the previous section.
+
+COMMENT(
+bf(bzverb(\
+const TinyVector<int, N_rank>&    length() const;
+int                               length(int dimension) const;
+))
+bzindex(length())
+bzindex(Array!member functions!length())
+The first version returns the vector of lengths (or extents)
+of the array; it's equivalent to tt(shape()).  The second
+version returns the length (or extent) of the array in a specified
+dimension, and is equivalent to tt(extent(dimension)).  See the note 
+about dimension parameters such as tt(firstDim) in the previous section.
+)
+
+bzindex(makeUnique())
+bzindex(Array!member functions!makeUnique())
+bzindex(Array!making unique copy)
+bf(bzverb(\
+void                              makeUnique();))
+If the array's data is being shared with another Blitz++ array
+object, this member function creates a copy so the array object has
+a unique view of the data.  
+COMMENT(Note: if the array was created
+from pre-existing data (by passing a data pointer to 
+the array constructor), this method will create a copy.)
+
+bzindex(numElements())
+bzindex(Array!member functions!numElements())
+bzindex(Array!number of elements in)
+bf(bzverb(\
+int                               numElements() const;))
+Returns the total number of elements in the array, calculated
+by taking the product of the extent in each dimension.  Same
+as tt(size()).
+
+bzindex(ordering())
+bzindex(Array!member functions!ordering())
+bzindex(Array!storage ordering of)
+bf(bzverb(\
+const TinyVector<int, N_rank>&    ordering() const;
+int                               ordering(int storageRankIndex) const;))
+These member functions return information about how the data is
+ordered in memory.  The first version returns the complete ordering
+vector; the second version returns a single element from the
+ordering vector.  The argument for the second version must be
+in the range 0 .. N_rank-1.
+The ordering vector is a list of dimensions in increasing order 
+of stride;  tt(ordering(0)) will return the dimension number
+with the smallest stride, and tt(ordering(N_rank-1)) will return
+the dimension number with largest stride.  For a C-style
+array, the ordering vector contains the elements
+(N_rank-1, N_rank-2, ..., 0).  For a Fortran-style array,
+the ordering vector is (0, 1, ..., N_rank-1).  See also the
+description of custom storage orders in section ref(arrays-storage-detailed).
+
+bzindex(rank())
+bzindex(Array!member functions!rank())
+bf(bzverb(\
+int                               rank() const;))
+Returns the rank (number of dimensions) of the array.  The return
+value is equal to N_rank.  Equivalent to tt(dimensions()).
+
+bzindex(reference())
+bzindex(Array!member functions!reference())
+bzindex(Array!referencing another)
+label(arrays-reference)
+bf(bzverb(\
+void                              reference(Array<T_numtype,N_rank>& A);))
+This causes the array to adopt another array's data as its own.
+After this member function is used, the array object and the array
+tt(A) are indistinguishable -- they have identical sizes, index
+ranges, and data.  The data is shared between the two arrays.
+
+bzindex(reindex(), reindexSelf())
+bzindex(Array!member functions!reindex())
+bzindex(Array!member functions!reindexSelf())
+bzindex(Array!reindexing)
+bf(bzverb(\
+void                              reindexSelf(const TinyVector<int,N_rank>&);
+Array<T,N>                        reindex(const TinyVector<int,N_rank>&);))
+These methods reindex an array to use a new base vector.  The
+first version reindexes the array, and the second just returns a
+reindexed view of the array, leaving the original array unmodified.
+
+bzindex(resize())
+bzindex(Array!member functions!resize())
+bzindex(Array!resizing)
+bf(bzverb(\
+void                              resize(int extent1, ...);
+void                              resize(const TinyVector<int,N_rank>&);))
+COMMENT(void                              resize(Range r1, ...);)
+These functions resize an array to the specified size.  If
+the array is already the size specified, then no memory is
+allocated.  After resizing, the contents of the array are
+garbage.  See also tt(resizeAndPreserve()).
+
+bzindex(resizeAndPreserve())
+bzindex(Array!member functions!resizeAndPreserve())
+bf(bzverb(\
+void                              resizeAndPreserve(int extent1, ...);))
+These functions resize an array to the specified size.  If
+the array is already the size specified, then no change
+occurs (the array is not reallocated and copied).
+The contents of the array are preserved whenever possible;
+if the new array size is smaller, then some data will be
+lost.  Any new elements created by resizing the array
+are left uninitialized.
+
+bzindex(reverse(), reverseSelf())
+bzindex(Array!member functions!reverse())
+bzindex(Array!member functions!reverseSelf())
+bzindex(Array!reversing)
+bf(bzverb(\
+Array<T,N>                        reverse(int dimension);
+void                              reverseSelf(int dimension);))
+This method reverses the array in the specified dimension.
+For example, if tt(reverse(firstDim)) is invoked on a
+2-dimensional array, then the ordering of rows in the
+array will be reversed; tt(reverse(secondDim)) would
+reverse the order of the columns.  Note that this is
+implemented by twiddling the strides of the array, and
+doesn't cause any data copying.  The first version
+returns a reversed "view" of the array data; the second
+version applies the reversal to the array itself.
+
+bzindex(rows())
+bzindex(Array!member functions!rows())
+bf(bzverb(\
+int                               rows() const;))
+Returns the extent (length) of the array in the first dimension.
+This function is equivalent to tt(extent(firstDim)).
+See also tt(columns()), and tt(depth()).
+
+bzindex(size())
+bzindex(Array!member functions!size())
+bf(bzverb(\
+int                               size() const;))
+Returns the total number of elements in the array, calculated
+by taking the product of the extent in each dimension.  Same
+as tt(numElements()).
+
+COMMENT(bzverb(\
+void                              slice(int rank, Range r);))
+
+bzindex(shape() (Array method))
+bzindex(Array!member functions!shape())
+bzindex(Array!shape of)
+bf(bzverb(\
+const TinyVector<int, N_rank>&    shape() const;))
+Returns the vector of extents (lengths) of the array.
+
+bzindex(stride())
+bzindex(Array!member functions!stride())
+bzindex(Array!strides of)
+bf(bzverb(\
+const TinyVector<int, N_rank>&    stride() const;
+int                               stride(int dimension) const;))
+The first version returns the stride vector; the second version returns
+the stride associated with a dimension.  A stride is the distance
+between pointers to two array elements which are adjacent in a 
+dimension.  For example, tt(A.stride(firstDim)) is equal to
+tt(&A(1,0,0) - &A(0,0,0)).  The stride for the second dimension,
+tt(A.stride(secondDim)), is equal to tt(&A(0,1,0) - &A(0,0,0)),
+and so on.  For more information about strides, see the description
+of custom storage formats in Section ref(arrays-storage-detailed). 
+See also the description of parameters like tt(firstDim) and
+tt(secondDim) in the previous section.
+
+bzindex(Array!member functions!transpose())
+bzindex(Array!member functions!transposeSelf())
+bzindex(Array!transposing)
+bzindex(transposing arrays)
+bzindex(transpose(), transposeSelf())
+bf(bzverb(\
+Array<T,N>                        transpose(int dimension1, int dimension2, ...);
+void                              transposeSelf(int dimension1, 
+                                      int dimension2, ...);))
+These methods permute the dimensions of the array.  The
+dimensions of the array are reordered so that the first dimension is
+tt(dimension1), the second is tt(dimension2), and so on.  The
+arguments should be a permutation of the symbols tt(firstDim,
+secondDim, ...).  Note that this is implemented by twiddling the
+strides of the array, and doesn't cause any data copying.
+The first version returns a transposed "view"
+of the array data; the second version transposes the array itself.
+
+bzindex(Array!member functions!ubound())
+bzindex(ubound())
+bf(bzverb(\
+int                               ubound(int dimension) const;
+TinyVector<int,N_rank>            ubound() const;))
+The first version returns the upper bound of the valid index range for a dimension.  
+The second version returns a vector of upper bounds for all dimensions.
+The upper bound is the last valid index value.  If you're using
+a C-style array (the default), the ubound will be equal to the
+tt(extent(dimension)-1).  Fortran-style arrays will have
+ubound equal to tt(extent(dimension)).  The ubound can be
+different for each dimension.  The return value of
+tt(ubound(dimension)) will always be equal to
+tt(lbound(dimension) + extent(dimension) - 1).
+See the note about dimension parameters such as tt(firstDim)
+in the previous section.
+
+bzindex(zeroOffset())
+bzindex(Array!member functions!zeroOffset())
+bf(bzverb(\
+int                               zeroOffset() const;))
+This function has to do with the storage of arrays in memory.  You
+may want to refer to the description of the tt(data..()) member
+functions and of custom storage orders in Section ref(arrays-storage-detailed) 
+for clarification.  The return value of tt(zeroOffset()) is the
+distance from the first element in the array to the (possibly nonexistant)
+element tt((0,0,...,0)).  In this context, "first element" returns to the 
+element tt((base(firstDim),base(secondDim),...)).
+
