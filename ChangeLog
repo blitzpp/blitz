@@ -1,3 +1,28 @@
+2003-02-20  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+	* blitz/bzdebug.h: Added BZ_DEBUG_PARAM macro to suppress argument
+	name if it is only used within optional debugging code.  This will
+	allow us to eliminate compiler warnings about unused parameters
+	that occur when debugging code is disabled.  Also tidied up
+	formatting of some of the other macro definitions.
+	* blitz/array-impl.h: Use BZ_DEBUG_PARAM macro to eliminate
+	compiler warnings about unused parameters that appear only in
+	optional debugging code.
+	* blitz/array/expr.h: Use BZ_DEBUG_PARAM macro to eliminate
+	compiler warnings about unused parameters that appear only in
+	optional debugging code.
+	* blitz/array/stencils.cc: Use BZ_DEBUG_PARAM macro to eliminate
+	compiler warnings about unused parameters that appear only in
+	optional debugging code.
+	* blitz/array/indirect.h: Use BZ_DEBUG_PARAM macro to eliminate
+	compiler warnings about unused parameters that appear only in
+	optional debugging code.
+	* examples/rand2.cpp: Corrected mismatch between printf format
+	string and argument type.
+	* examples/tiny2.cpp: Include tinyvec-et.h header rather than
+	tinyvec.h to get ET support.
+	* examples/curldiv.cpp: Made some repairs to this example code so
+	that it properly uses stencil ops.
+
 2003-02-14  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 	* testsuite/matthias-troyer-2.cpp: Uncommented line which applies
 	the user-defined stencil.  With the recent fixes to
