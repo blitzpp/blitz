@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/blitz.h      Includes all the important header files
  *
