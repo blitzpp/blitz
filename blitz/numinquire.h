@@ -58,7 +58,7 @@ BZ_NAMESPACE(blitz)
  * at link time.  TV 980226
  */
 
-template<class T_numtype>
+template<typename T_numtype>
 struct _bz_OneZeroTraits {
     static inline T_numtype zero() { return 0; }
     static inline T_numtype one()  { return 1; }
@@ -89,31 +89,31 @@ struct _bz_OneZeroTraits<complex<long double> > {
 
 #endif // BZ_HAVE_COMPLEX
 
-template<class T>
+template<typename T>
 inline T zero(T)
 {
     return _bz_OneZeroTraits<T>::zero();
 }
 
-template<class T>
+template<typename T>
 inline T one(T)
 {
     return _bz_OneZeroTraits<T>::one();
 }
 
-template<class T>
+template<typename T>
 inline int digits(T)
 {
     return numeric_limits<T>::digits;
 }
 
-template<class T>
+template<typename T>
 inline int digits10(T)
 {
     return numeric_limits<T>::digits10;
 }
 
-template<class T>
+template<typename T>
 inline T epsilon(T) BZ_THROW
 {
     return numeric_limits<T>::epsilon();
@@ -121,190 +121,176 @@ inline T epsilon(T) BZ_THROW
 
 // neghuge() by Theodore Papadopoulo, to fix a problem with
 // max() reductions.
-template<class T>
+template<typename T>
 inline T neghuge(T) BZ_THROW
 {
     return numeric_limits<T>::is_integer ?    numeric_limits<T>::min()
                                          : - numeric_limits<T>::max();
 }
 
-template<class T>
+template<typename T>
 inline T huge(T) BZ_THROW
 {
     return numeric_limits<T>::max();
 }
 
-template<class T>
+template<typename T>
 inline T tiny(T) BZ_THROW
 {
     return numeric_limits<T>::min();
 }
 
-template<class T>
+template<typename T>
 inline int max_exponent(T)
 {
     return numeric_limits<T>::max_exponent;
 }
 
-template<class T>
+template<typename T>
 inline int min_exponent(T)
 {
     return numeric_limits<T>::min_exponent;
 }
 
-template<class T>
+template<typename T>
 inline int min_exponent10(T)
 {
     return numeric_limits<T>::min_exponent10;
 }
 
-template<class T>
+template<typename T>
 inline int max_exponent10(T)
 {
     return numeric_limits<T>::max_exponent10;
 }
 
-template<class T>
+template<typename T>
 inline int precision(T)
 {
     return numeric_limits<T>::digits10;
 }
 
-template<class T>
+template<typename T>
 inline int radix(T)
 {
     return numeric_limits<T>::radix;
 }
 
-template<class T>
+template<typename T>
 inline Range range(T)
 {
     return Range(numeric_limits<T>::min_exponent10, 
         numeric_limits<T>::max_exponent10);
 }
 
-template<class T>
-inline bool is_signed(T)
-{
+template<typename T>
+inline bool is_signed(T) {
     return numeric_limits<T>::is_signed;
 }
 
-template<class T>
-inline bool is_integer(T)
-{
+template<typename T>
+inline bool is_integer(T) {
     return numeric_limits<T>::is_integer;
 }
 
-template<class T>
-inline bool is_exact(T)
-{
+template<typename T>
+inline bool is_exact(T) {
     return numeric_limits<T>::is_exact;
 }
 
-template<class T>
+template<typename T>
 inline T round_error(T) BZ_THROW
 {
     return numeric_limits<T>::round_error();
 }
 
-template<class T>
-inline bool has_infinity(T) 
-{
+template<typename T>
+inline bool has_infinity(T) {
     return numeric_limits<T>::has_infinity;
 }
 
-template<class T>
-inline bool has_quiet_NaN(T)
-{
+template<typename T>
+inline bool has_quiet_NaN(T) {
     return numeric_limits<T>::has_quiet_NaN;
 }
 
-template<class T>
-inline bool has_signaling_NaN(T)
-{
+template<typename T>
+inline bool has_signaling_NaN(T) {
     return numeric_limits<T>::has_signaling_NaN;
 }
 
 // Provided for non-US english users
-template<class T>
-inline bool has_signalling_NaN(T)
-{
+template<typename T>
+inline bool has_signalling_NaN(T) {
     return numeric_limits<T>::has_signaling_NaN;
 }
 
-template<class T>
-inline bool has_denorm(T)
-{
+template<typename T>
+inline bool has_denorm(T) {
     return numeric_limits<T>::has_denorm;
 }
 
-template<class T>
-inline bool has_denorm_loss(T)
-{
+template<typename T>
+inline bool has_denorm_loss(T) {
     return numeric_limits<T>::has_denorm_loss;
 }
 
-template<class T>
+template<typename T>
 inline T infinity(T) BZ_THROW
 {
     return numeric_limits<T>::infinity();
 }
 
-template<class T>
+template<typename T>
 inline T quiet_NaN(T) BZ_THROW
 {
     return numeric_limits<T>::quiet_NaN();
 }
 
-template<class T>
+template<typename T>
 inline T signaling_NaN(T) BZ_THROW
 {
     return numeric_limits<T>::signaling_NaN();
 }
 
-template<class T>
+template<typename T>
 inline T signalling_NaN(T) BZ_THROW
 {
     return numeric_limits<T>::signaling_NaN();
 }
 
-template<class T>
+template<typename T>
 inline T denorm_min(T) BZ_THROW
 {
     return numeric_limits<T>::denorm_min();
 }
 
-template<class T>
-inline bool is_iec559(T)
-{
+template<typename T>
+inline bool is_iec559(T) {
     return numeric_limits<T>::is_iec559;
 }
 
-template<class T>
-inline bool is_bounded(T)
-{
+template<typename T>
+inline bool is_bounded(T) {
     return numeric_limits<T>::is_bounded;
 }
 
-template<class T>
-inline bool is_modulo(T)
-{
+template<typename T>
+inline bool is_modulo(T) {
     return numeric_limits<T>::is_modulo;
 }
 
-template<class T>
-inline bool traps(T)
-{
+template<typename T>
+inline bool traps(T) {
     return numeric_limits<T>::traps;
 }
 
-template<class T>
-inline bool tinyness_before(T)
-{
+template<typename T>
+inline bool tinyness_before(T) {
     return numeric_limits<T>::tinyness_before;
 }
 
-template<class T>
+template<typename T>
 inline BZ_STD_SCOPE(float_round_style) round_style(T)
 {
     return numeric_limits<T>::round_style;

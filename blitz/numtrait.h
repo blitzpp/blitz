@@ -44,7 +44,7 @@ BZ_NAMESPACE(blitz)
 #define BZ_FLOATTYPE(X) _bz_typename NumericTypeTraits<X>::T_floattype
 #define BZ_SIGNEDTYPE(X) _bz_typename NumericTypeTraits<X>::T_signedtype
 
-template<class P_numtype>
+template<typename P_numtype>
 class NumericTypeTraits {
 public:
     typedef P_numtype T_sumtype;    // Type to be used for summing

@@ -43,7 +43,7 @@ BZ_NAMESPACE(blitz)
  * by Jean-Louis Leroy.
  */
 
-template<class T>
+template<typename T>
 struct precision_trait {
     enum { precisionRank = 0,
            knowPrecisionRank = 0 };
@@ -70,7 +70,7 @@ BZ_DECLARE_PRECISION(complex<double>,900)
 BZ_DECLARE_PRECISION(complex<long double>,1000)
 #endif
 
-template<class T>
+template<typename T>
 struct autopromote_trait {
     typedef T T_numtype;
 };
@@ -90,17 +90,17 @@ BZ_DECLARE_AUTOPROMOTE(unsigned char, int)
 BZ_DECLARE_AUTOPROMOTE(short int, int)
 BZ_DECLARE_AUTOPROMOTE(short unsigned int, unsigned int)
 
-template<class T1, class T2, int promoteToT1>
+template<typename T1, typename T2, int promoteToT1>
 struct _bz_promote2 {
     typedef T1 T_promote;
 };
 
-template<class T1, class T2>
+template<typename T1, typename T2>
 struct _bz_promote2<T1,T2,0> {
     typedef T2 T_promote;
 };
 
-template<class T1_orig, class T2_orig>
+template<typename T1_orig, typename T2_orig>
 struct promote_trait {
     // Handle promotion of small integers to int/unsigned int
     typedef _bz_typename autopromote_trait<T1_orig>::T_numtype T1;
@@ -131,8 +131,8 @@ struct promote_trait {
     // We know T1 but not T2: true
     // We know T2 but not T1: false
     // Otherwise, if T1 is bigger than T2: true
-      defaultPromotion = knowT1butNotT2 ? _bz_false : 
-         (knowT2butNotT1 ? _bz_true : T1IsLarger)
+      defaultPromotion = knowT1butNotT2 ? false : 
+         (knowT2butNotT1 ? true : T1IsLarger)
     };
 
     // If we have both ranks, then use them.

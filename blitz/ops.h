@@ -44,7 +44,7 @@ BZ_NAMESPACE(blitz)
  * Originally these function objects had no template arguments, e.g.
  *
  * struct Add {
- *     template<class T_numtype1, class T_numtype2>
+ *     template<typename T_numtype1, typename T_numtype2>
  *     static inline BZ_PROMOTE(T_numtype1, T_numtype2)
  *     apply(T_numtype1 a, T_numtype2 b)
  *     { return a + b; }
@@ -57,7 +57,7 @@ BZ_NAMESPACE(blitz)
  * yield a different type.  To allow for this kind of behaviour, function
  * objects have been changed to take template parameters:
  *
- * template<class T_numtype1, class T_numtype2>
+ * template<typename T_numtype1, typename T_numtype2>
  * struct Add {
  *     typedef BZ_PROMOTE(T_numtype1, T_numtype2) T_numtype;
  *
@@ -75,7 +75,7 @@ BZ_NAMESPACE(blitz)
 /* Unary operators that return same type as argument */
     
 #define BZ_DEFINE_UNARY_OP(name,op)                         \
-template<class T_numtype1>                                  \
+template<typename T_numtype1>                                  \
 struct name {                                               \
     typedef T_numtype1 T_numtype;                           \
                                                             \
@@ -83,7 +83,7 @@ struct name {                                               \
     apply(T_numtype1 a)                                     \
     { return op a; }                                        \
 							    \
-    template<class T1>                                      \
+    template<typename T1>                                      \
     static inline void prettyPrint(string& str,             \
         prettyPrintFormat& format, const T1& t1)            \
     {                                                       \
@@ -100,14 +100,14 @@ BZ_DEFINE_UNARY_OP(UnaryMinus,-)
 /* Unary operators that return a specified type */
     
 #define BZ_DEFINE_UNARY_OP_RET(name,op,ret)                 \
-template<class T_numtype1>                                  \
+template<typename T_numtype1>                                  \
 struct name {                                               \
     typedef ret T_numtype;                                  \
     static inline T_numtype                                 \
     apply(T_numtype1 a)                                     \
     { return op a; }                                        \
                                                             \
-    template<class T1>                                      \
+    template<typename T1>                                      \
     static inline void prettyPrint(string& str,             \
         prettyPrintFormat& format, const T1& t1)            \
     {                                                       \
@@ -122,7 +122,7 @@ BZ_DEFINE_UNARY_OP_RET(LogicalNot,!,bool)
 /* Binary operators that return type based on type promotion */
     
 #define BZ_DEFINE_BINARY_OP(name,op)                        \
-template<class T_numtype1, class T_numtype2>                \
+template<typename T_numtype1, typename T_numtype2>                \
 struct name {                                               \
     typedef BZ_PROMOTE(T_numtype1, T_numtype2) T_numtype;   \
                                                             \
@@ -130,7 +130,7 @@ struct name {                                               \
     apply(T_numtype1 a, T_numtype2 b)                       \
     { return a op b; }                                      \
 							    \
-    template<class T1, class T2>                            \
+    template<typename T1, typename T2>                            \
     static inline void prettyPrint(string& str,             \
         prettyPrintFormat& format, const T1& t1,            \
         const T2& t2)                                       \
@@ -158,14 +158,14 @@ BZ_DEFINE_BINARY_OP(ShiftLeft,<<)
 /* Binary operators that return a specified type */
     
 #define BZ_DEFINE_BINARY_OP_RET(name,op,ret)                \
-template<class T_numtype1, class T_numtype2>                \
+template<typename T_numtype1, typename T_numtype2>                \
 struct name {                                               \
     typedef ret T_numtype;                                  \
     static inline T_numtype                                 \
     apply(T_numtype1 a, T_numtype2 b)                       \
     { return a op b; }                                      \
                                                             \
-    template<class T1, class T2>                            \
+    template<typename T1, typename T2>                            \
     static inline void prettyPrint(string& str,             \
         prettyPrintFormat& format, const T1& t1,            \
         const T2& t2)                                       \
