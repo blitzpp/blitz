@@ -1,3 +1,7 @@
+2003-12-17  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* doc/blitz.texi: Patch from Peter Bienstman to add directory info
+	to this file, so it can be incorporated in a global texinfo index.
 
 2003-12-17 Patrick Guio <patrick.guio@fys.uio.no>
 	* doc/stencils/Makefile.am: Updated to make full use of libtool to
