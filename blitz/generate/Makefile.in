@@ -364,7 +364,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-generic clean-noinstPROGRAMS mostlyclean-am
+clean-am: clean-generic clean-local clean-noinstPROGRAMS mostlyclean-am
 
 distclean: distclean-am
 
@@ -399,7 +399,7 @@ mostlyclean-am: mostlyclean-compile mostlyclean-generic
 
 uninstall-am: uninstall-info-am
 
-.PHONY: GTAGS all all-am check check-am clean clean-generic \
+.PHONY: GTAGS all all-am check check-am clean clean-generic clean-local \
 	clean-noinstPROGRAMS distclean distclean-compile \
 	distclean-depend distclean-generic distclean-tags distdir dvi \
 	dvi-am info info-am install install-am install-data \
@@ -410,6 +410,9 @@ uninstall-am: uninstall-info-am
 	mostlyclean-generic tags uninstall uninstall-am \
 	uninstall-info-am
 
+
+clean-local:
+	-rm -rf cxx_repository ti_files
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

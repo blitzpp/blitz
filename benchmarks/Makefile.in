@@ -838,7 +838,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-generic mostlyclean-am
+clean-am: clean-generic clean-local mostlyclean-am
 
 distclean: distclean-am
 
@@ -873,8 +873,8 @@ mostlyclean-am: mostlyclean-compile mostlyclean-generic
 
 uninstall-am: uninstall-benchmarkDATA uninstall-info-am
 
-.PHONY: GTAGS all all-am check check-am clean clean-generic distclean \
-	distclean-compile distclean-depend distclean-generic \
+.PHONY: GTAGS all all-am check check-am clean clean-generic clean-local \
+	distclean distclean-compile distclean-depend distclean-generic \
 	distclean-tags distdir dvi dvi-am info info-am install \
 	install-am install-benchmarkDATA install-data install-data-am \
 	install-exec install-exec-am install-info install-info-am \
@@ -915,8 +915,9 @@ check-benchmarks: run run-loops ctime
 
 ###########################################################################
 
-clean:
-	-rm -f *.o *.ii *.int.c *.s work.pc* $(BENCHMARKS) $(COMPILE_TIME_BENCHMARKS)
+clean-local:
+	-rm -rf *.o *.ii *.int.c *.s work.pc* cxx_repository ti_files \
+		$(BENCHMARKS) $(COMPILE_TIME_BENCHMARKS) 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

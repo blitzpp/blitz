@@ -358,7 +358,7 @@ uninstall-am: uninstall-info-am uninstall-libLIBRARIES
 #libblitz_la_SOURCES = $(top_srcdir)/src/globals.cpp
 
 clean-local:
-	-rm -f libblitz.a cxx_repository ti_files
+	-rm -rf cxx_repository ti_files
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
