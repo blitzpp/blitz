@@ -2,7 +2,7 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-SUBDIRS = examples stencils
+SUBDIRS = examples stencils doxygen
 
 # install these files
 docdir = $(prefix)/doc
@@ -40,7 +40,7 @@ blitz_TEXINFOS = about.texi arrays-ctors.texi arrays-debug.texi \
 arrays-expr.texi arrays-globals.texi arrays-indirect.texi arrays-intro.texi \
 arrays-io.texi arrays-members.texi arrays-multi.texi arrays-slicing.texi \
 arrays-stencils.texi arrays-storage.texi arrays-types.texi \
-arrays-usertype.texi blitz.texi compiling.texi constants.texi download.texi \
+arrays-usertype.texi compiling.texi constants.texi download.texi \
 faq.texi help.texi install.texi legal.texi numinquire.texi parallel.texi \
 platforms.texi random.texi tau.texi tinymatrix.texi tinyvector.texi \
 tuning.texi copyright.texi $(STENCILS) $(EXAMPLES) $(OUTPUT)
@@ -62,8 +62,17 @@ CLEANFILES = blitz.tmp
 
 html: blitz_1.html
 
-blitz_1.html: blitz.texi $(blitz_TEXINFOS)
+blitz_1.html: $(info_TEXINFOS) $(blitz_TEXINFOS)
 	$(TEXI2HTML) $(TEXI2HTML_FLAGS) $(srcdir)/blitz.texi
+
+stencils/%.texi:
+	(cd stencils; $(MAKE) $(AM_MAKEFLAGS) stencils)
+
+examples/%.texi:
+	(cd examples; $(MAKE) $(AM_MAKEFLAGS) -i texi)
+
+examples/%.out:
+	(cd examples; $(MAKE) $(AM_MAKEFLAGS) -i out)
 
 
 .PHONY: html
