@@ -9,6 +9,10 @@ Thu Mar 21 11:12:36 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* examples/rand2.cpp: added return 0; to function int main2()
 	* examples/tiny3.cpp: fixed typo #include <blitz/TinyMath.> into
 	#include <blitz/TinyMat.h>
+	* examples/Makefile.{am,in}: removed targets tiny2.cpp (no int main()), 
+	tiny3.cpp (no int main()) and profile.cpp (requires tau profiling)
+	* array/stencil-et.h: replaced iter_ by this->iter_ in derived template
+	classes of StencilExpr template class
 
 Thu Mar  7 09:06:58 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* configure.in: f90 optimisation flag set to O3 for platform *hp-hpux*
