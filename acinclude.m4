@@ -1,6 +1,6 @@
 ## AC_BZ_SET_COMPILER: Addition by Theodore Papadopoulo
 ## Patch by Jim McKelvey: change sed -e 's/ /@/g' to sed -e 's/ /@/'
-AC_DEFUN(AC_BZ_SET_COMPILER,
+AC_DEFUN([AC_BZ_SET_COMPILER],
   [cxxwith=`echo $1 | sed -e 's/ /@/'`
    case "$cxxwith" in
      *:*@*)                 # Full initialization syntax
@@ -20,7 +20,7 @@ AC_DEFUN(AC_BZ_SET_COMPILER,
 
 # Standard stuff follows
 
-AC_DEFUN(AC_CHECK_COMPILERS,
+AC_DEFUN([AC_CHECK_COMPILERS],
 [
   AC_ARG_ENABLE(debug,[  --enable-debug 	  creates debugging code [default=no]],
   [ 
@@ -171,7 +171,7 @@ EOF
 dnl Checking the compiler option which is used to set the
 dnl runtime library path.
 
-AC_DEFUN(AC_CHECK_RPATH_OPTION, [
+AC_DEFUN([AC_CHECK_RPATH_OPTION], [
 AC_MSG_CHECKING(whether to use '-R' or '-Wl,-rpath')
 AC_CACHE_VAL(ac_cv_check_rpath_option,
 [
@@ -201,7 +201,7 @@ dnl gcc returns an exit code of 0 even if the option does
 dnl not exist. So we have to check the output to see whether
 dnl the compiler complains... This is ugly and fragile.
 
-AC_DEFUN(AC_CHECK_RDYNAMICFLAG, [
+AC_DEFUN([AC_CHECK_RDYNAMICFLAG], [
 AC_MSG_CHECKING(whether to use '-rdynamic')
 AC_CACHE_VAL(ac_cv_check_rdynamic_option,
 [
