@@ -135,6 +135,59 @@ BZ_DECLARE_ARRAY_ET_BINARY(scalb,     Fn_scalb)
 BZ_DECLARE_ARRAY_ET_BINARY(unordered, Fn_unordered)
 #endif
 
+#ifdef BZ_HAVE_SYSTEM_V_MATH
+
+#define BZ_DECLARE_ARRAY_ET_SCALAR_FUNCS(sca)                   \
+                                                                \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(atan2,     Fn_atan2, sca)     \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(fmod,      Fn_fmod, sca)      \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(pow,       Fn_pow, sca)       \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(copysign,  Fn_copysign, sca)  \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(drem,      Fn_drem, sca)      \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(hypot,     Fn_hypot, sca)     \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(nextafter, Fn_nextafter, sca) \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(remainder, Fn_remainder, sca) \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(scalb,     Fn_scalb, sca)     \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(unordered, Fn_unordered, sca) \
+
+#else
+    
+#define BZ_DECLARE_ARRAY_ET_SCALAR_FUNCS(sca)                   \
+                                                                \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(atan2,     Fn_atan2, sca)     \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(fmod,      Fn_fmod, sca)      \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(pow,       Fn_pow, sca)       \
+
+#endif
+    
+BZ_DECLARE_ARRAY_ET_SCALAR_FUNCS(int)
+BZ_DECLARE_ARRAY_ET_SCALAR_FUNCS(float)
+BZ_DECLARE_ARRAY_ET_SCALAR_FUNCS(double)
+BZ_DECLARE_ARRAY_ET_SCALAR_FUNCS(long double)
+    
+#ifdef BZ_HAVE_COMPLEX_MATH
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(polar,     Fn_polar, int)
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(polar,     Fn_polar, float)
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(polar,     Fn_polar, double)
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(polar,     Fn_polar, long double)
+    
+template<typename T1, typename T2>
+inline _bz_ArrayExprBinaryOp<
+    typename asExpr<complex<T1> >::T_expr,
+    typename asExpr<T2>::T_expr, 
+    Fn_pow<complex<T1>,typename asExpr<T2>::T_expr::T_numtype> >
+pow(const complex<T1> d1, const ETBase<T2>& d2)
+{
+    return _bz_ArrayExprBinaryOp<
+        typename asExpr<complex<T1> >::T_expr,
+        typename asExpr<T2>::T_expr,
+        Fn_pow<complex<T1>,typename asExpr<T2>::T_expr::T_numtype> >
+        (asExpr<complex<T1> >::getExpr(d1),
+         asExpr<T2>::getExpr(d2.unwrap()));
+}
+
+#endif
+    
 BZ_NAMESPACE_END
 
 #endif // BZ_ARRAY_FUNCS_H
