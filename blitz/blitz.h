@@ -23,6 +23,12 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.5  2001/02/04 16:32:28  tveldhui
+ * Made memory block reference counting (optionally) threadsafe when
+ * BZ_THREADSAFE is defined.  Currently uses pthread mutex.
+ * When compiling with gcc -pthread, _REENTRANT automatically causes
+ * BZ_THREADSAFE to be enabled.
+ *
  * Revision 1.4  2001/01/26 18:30:50  tveldhui
  * More source code reorganization to reduce compile times.
  *
@@ -118,6 +124,26 @@ BZ_NAMESPACE(blitz)
 #else
  #define _bz_global extern
  #define BZ_GLOBAL_INIT(X) 
+#endif
+
+#ifdef _REENTRANT
+ #define BZ_THREADSAFE
+#endif
+
+#ifdef BZ_THREADSAFE
+ #include <pthread.h>
+
+ #define BZ_MUTEX_DECLARE(name)   pthread_mutex_t name
+ #define BZ_MUTEX_INIT(name)      pthread_mutex_init(&name,NULL)
+ #define BZ_MUTEX_LOCK(name)      pthread_mutex_lock(&name)
+ #define BZ_MUTEX_UNLOCK(name)    pthread_mutex_unlock(&name)
+ #define BZ_MUTEX_DESTROY(name)   pthread_mutex_destroy(&name)
+#else
+ #define BZ_MUTEX_DECLARE(name)
+ #define BZ_MUTEX_INIT(name)
+ #define BZ_MUTEX_LOCK(name)
+ #define BZ_MUTEX_UNLOCK(name)
+ #define BZ_MUTEX_DESTROY(name)
 #endif
 
 BZ_NAMESPACE_END

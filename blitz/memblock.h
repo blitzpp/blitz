@@ -3,7 +3,7 @@
  *
  * $Id$
  *
- * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
+ * Copyright (C) 1997-1999 Todd Veldhuizen <tveldhui@oonumerics.org>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,12 +23,11 @@
  *
  ***************************************************************************
  * $Log$
- * Revision 1.3  2001/01/26 19:34:19  tveldhui
- * Fixed bug with preexisting memory not being deleted, found by
- * Mike Smyth.
- *
- * Revision 1.2  2001/01/24 20:22:49  tveldhui
- * Updated copyright date in headers.
+ * Revision 1.4  2001/02/04 16:32:28  tveldhui
+ * Made memory block reference counting (optionally) threadsafe when
+ * BZ_THREADSAFE is defined.  Currently uses pthread mutex.
+ * When compiling with gcc -pthread, _REENTRANT automatically causes
+ * BZ_THREADSAFE to be enabled.
  *
  * Revision 1.1.1.1  2000/06/19 12:26:09  tveldhui
  * Imported sources
@@ -77,6 +76,10 @@
 
 #include <stddef.h>     // ptrdiff_t
 
+#ifdef BZ_THREADSAFE
+ #include <pthread.h>
+#endif
+
 BZ_NAMESPACE(blitz)
 
 enum preexistingMemoryPolicy { 
@@ -107,6 +110,8 @@ protected:
         data_ = 0;
         dataBlockAddress_ = 0;
         references_ = 0;
+
+        BZ_MUTEX_INIT(mutex);
     }
 
     _bz_explicit MemoryBlock(size_t items)
@@ -122,6 +127,8 @@ protected:
         BZASSERT(dataBlockAddress_ != 0);
 
         references_ = 0;
+
+        BZ_MUTEX_INIT(mutex);
     }
 
     MemoryBlock(size_t length, T_type* _bz_restrict data)
@@ -130,6 +137,7 @@ protected:
         data_ = data;
         dataBlockAddress_ = data;
         references_ = 0;
+        BZ_MUTEX_INIT(mutex);
     }
 
     virtual ~MemoryBlock()
@@ -144,17 +152,21 @@ protected:
 
             deallocate();
         }
+
+        BZ_MUTEX_DESTROY(mutex);
     }
 
     void          addReference()
     { 
+        BZ_MUTEX_LOCK(mutex);
         ++references_; 
 
 #ifdef BZ_DEBUG_LOG_REFERENCES
     cout << "MemoryBlock:    reffed " << setw(8) << length_ 
          << " at " << ((void *)dataBlockAddress_) << " (r=" 
-         << references_ << ")" << endl;
+         << (int)references_ << ")" << endl;
 #endif
+        BZ_MUTEX_UNLOCK(mutex);
 
     }
 
@@ -173,30 +185,28 @@ protected:
         return length_; 
     }
 
-    void          removeReference()
+    int           removeReference()
     {
-        --references_;
+
+        BZ_MUTEX_LOCK(mutex);
+        int refcount = --references_;
 
 #ifdef BZ_DEBUG_LOG_REFERENCES
     cout << "MemoryBlock: dereffed  " << setw(8) << length_
-         << " at " << ((void *)dataBlockAddress_) << " (r=" << references_ 
+         << " at " << ((void *)dataBlockAddress_) << " (r=" << (int)references_ 
          << ")" << endl;
 #endif
-
-        if (!references_)
-        {
-#ifdef BZ_DEBUG_LOG_ALLOCATIONS
-    cout << "MemoryBlock: no more refs, delete MemoryBlock object at "
-         << ((void*)this) << endl;
-#endif
-
-            delete this;
-        }
+        BZ_MUTEX_UNLOCK(mutex);
+        return refcount;
     }
 
     int references() const
     {
-        return references_;
+        BZ_MUTEX_LOCK(mutex);
+        int refcount = references_;
+        BZ_MUTEX_UNLOCK(mutex);
+
+        return refcount;
     }
 
 protected:
@@ -213,7 +223,14 @@ private:   // Disabled member functions
 private:   // Data members
     T_type * _bz_restrict data_;
     T_type * _bz_restrict dataBlockAddress_;
-    int     references_;
+
+#ifdef BZ_DEBUG_REFERENCE_ROLLOVER
+    volatile unsigned char references_;
+#else
+    volatile int references_;
+#endif
+
+    BZ_MUTEX_DECLARE(mutex);
     size_t  length_;
 };
 
@@ -250,18 +267,19 @@ class MemoryBlockReference {
 public:
     typedef P_type T_type;
 
+protected:
+    T_type * _bz_restrict data_;
+
+private:
+    MemoryBlock<T_type>* block_;
+    static NullMemoryBlock<T_type> nullBlock_;
+
+public:
+
     MemoryBlockReference()
     {
         block_ = &nullBlock_;
         block_->addReference();
-
-        // The C++ standard makes no guarantees about static
-        // initialization and templates.  Thus this kludge:
-        // give the NullMemoryBlock another reference to make 
-        // sure it doesn't delete itself and cause a seg fault 
-        // when we dereference it.
-        block_->addReference();
-
         data_ = 0;
     }
 
@@ -317,9 +335,23 @@ public:
 
     }
 
+    void blockRemoveReference()
+    {
+        int refcount = block_->removeReference();
+        if ((refcount == 0) && (block_ != &nullBlock_))
+        {
+#ifdef BZ_DEBUG_LOG_ALLOCATIONS
+    cout << "MemoryBlock: no more refs, delete MemoryBlock object at "
+         << ((void*)block_) << endl;
+#endif
+
+            delete block_;
+        }
+    }
+
    ~MemoryBlockReference()
     {
-        block_->removeReference();
+        blockRemoveReference();
     }
 
     int numReferences() const
@@ -331,7 +363,7 @@ protected:
 
     void changeToNullBlock()
     {
-        block_->removeReference();
+        blockRemoveReference();
         block_ = &nullBlock_;
         block_->addReference();
         data_ = 0;
@@ -339,7 +371,7 @@ protected:
 
     void changeBlock(MemoryBlockReference<T_type>& ref, size_t offset)
     {
-        block_->removeReference();
+        blockRemoveReference();
         block_ = ref.block_;
         block_->addReference();
         data_ = block_->data() + offset;
@@ -347,7 +379,7 @@ protected:
 
     void newBlock(size_t items)
     {
-        block_->removeReference();
+        blockRemoveReference();
         block_ = new MemoryBlock<T_type>(items);
         block_->addReference();
         data_ = block_->data();
@@ -361,13 +393,6 @@ protected:
 private:
     void operator=(const MemoryBlockReference<T_type>&)
     { }
-
-protected:
-    T_type * _bz_restrict data_;
-
-private:
-    MemoryBlock<T_type>* block_;
-    static NullMemoryBlock<T_type> nullBlock_;
 };
 
 
