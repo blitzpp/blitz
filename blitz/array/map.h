@@ -257,27 +257,27 @@ public:
     int ascending(int rank)
     {
         if (N_map0 == rank)
-            return array_.ascending(0);
+            return array_.isRankStoredAscending(0);
         else if ((N_map1 == rank) && (N_rank > 1))
-            return array_.ascending(1);
+            return array_.isRankStoredAscending(1);
         else if ((N_map2 == rank) && (N_rank > 2))
-            return array_.ascending(2);
+            return array_.isRankStoredAscending(2);
         else if ((N_map3 == rank) && (N_rank > 3))
-            return array_.ascending(3);
+            return array_.isRankStoredAscending(3);
         else if ((N_map4 == rank) && (N_rank > 4))
-            return array_.ascending(4);
+            return array_.isRankStoredAscending(4);
         else if ((N_map5 == rank) && (N_rank > 5))
-            return array_.ascending(5);
+            return array_.isRankStoredAscending(5);
         else if ((N_map6 == rank) && (N_rank > 6))
-            return array_.ascending(6);
+            return array_.isRankStoredAscending(6);
         else if ((N_map7 == rank) && (N_rank > 7))
-            return array_.ascending(7);
+            return array_.isRankStoredAscending(7);
         else if ((N_map8 == rank) && (N_rank > 8))
-            return array_.ascending(8);
+            return array_.isRankStoredAscending(8);
         else if ((N_map9 == rank) && (N_rank > 9))
-            return array_.ascending(9);
+            return array_.isRankStoredAscending(9);
         else if ((N_map10 == rank) && (N_rank > 10))
-            return array_.ascending(10);
+            return array_.isRankStoredAscending(10);
         else
             return INT_MIN;   // tiny(int());
     }
