@@ -67,5 +67,7 @@ Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	numReferences() replaced by this->numReferences()
 	* blitz/vector.cc: data_ replaced by this->data_ everywhere, 
 	numReferences() by this->numReferences()
+	* blitz/matrix.cc: data_ replaced by this->data_
+	* blitz/matrix.h: likewise everywhere
 
 
