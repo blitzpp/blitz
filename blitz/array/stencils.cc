@@ -61,11 +61,12 @@ template<int N_rank, class T_numtype1, class T_array2,
     class T_array3, class T_array4, class T_array5, class T_array6,
     class T_array7, class T_array8, class T_array9, class T_array10,
     class T_array11>
-void checkShapes(const Array<T_numtype1,N_rank>& A,
-    const T_array2& B, const T_array3& C, const T_array4& D, 
-    const T_array5& E, const T_array6& F, const T_array7& G, 
-    const T_array8& H, const T_array9& I, const T_array10& J, 
-    const T_array11& K)
+void checkShapes(const Array<T_numtype1,N_rank>& BZ_DEBUG_PARAM(A),
+    const T_array2& BZ_DEBUG_PARAM(B), const T_array3& BZ_DEBUG_PARAM(C),
+    const T_array4& BZ_DEBUG_PARAM(D), const T_array5& BZ_DEBUG_PARAM(E),
+    const T_array6& BZ_DEBUG_PARAM(F), const T_array7& BZ_DEBUG_PARAM(G), 
+    const T_array8& BZ_DEBUG_PARAM(H), const T_array9& BZ_DEBUG_PARAM(I),
+    const T_array10& BZ_DEBUG_PARAM(J), const T_array11& BZ_DEBUG_PARAM(K))
 {
     BZPRECONDITION(areShapesConformable(A.shape(),B.shape())
         && areShapesConformable(A.shape(),C.shape())

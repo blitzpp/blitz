@@ -1303,7 +1303,7 @@ public:
         return _bz_true;
     }
 
-    _bz_bool assertInRange(const T_index& index) const
+    _bz_bool assertInRange(const T_index& BZ_DEBUG_PARAM(index)) const
     {
         BZPRECHECK(isInRange(index), "Array index out of range: " << index
             << endl << "Lower bounds: " << storage_.base() << endl
@@ -1311,7 +1311,7 @@ public:
         return _bz_true;
     }
 
-    _bz_bool assertInRange(int i0) const
+    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0)) const
     {
         BZPRECHECK(isInRange(i0), "Array index out of range: " << i0
             << endl << "Lower bounds: " << storage_.base() << endl
@@ -1319,7 +1319,8 @@ public:
         return _bz_true;
     }
 
-    _bz_bool assertInRange(int i0, int i1) const
+    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0),
+        int BZ_DEBUG_PARAM(i1)) const
     {
         BZPRECHECK(isInRange(i0,i1), "Array index out of range: (" 
             << i0 << ", " << i1 << ")"
@@ -1328,7 +1329,8 @@ public:
         return _bz_true;
     }
 
-    _bz_bool assertInRange(int i0, int i1, int i2) const
+    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
+        int BZ_DEBUG_PARAM(i2)) const
     {
         BZPRECHECK(isInRange(i0,i1,i2), "Array index out of range: ("
             << i0 << ", " << i1 << ", " << i2 << ")"
@@ -1337,7 +1339,8 @@ public:
         return _bz_true;
     }
 
-    _bz_bool assertInRange(int i0, int i1, int i2, int i3) const
+    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
+        int BZ_DEBUG_PARAM(i2), int BZ_DEBUG_PARAM(i3)) const
     {
         BZPRECHECK(isInRange(i0,i1,i2,i3), "Array index out of range: ("
             << i0 << ", " << i1 << ", " << i2 << ", " << i3 << ")"
@@ -1346,7 +1349,9 @@ public:
         return _bz_true;
     }
 
-    _bz_bool assertInRange(int i0, int i1, int i2, int i3, int i4) const
+    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
+        int BZ_DEBUG_PARAM(i2), int BZ_DEBUG_PARAM(i3),
+        int BZ_DEBUG_PARAM(i4)) const
     {
         BZPRECHECK(isInRange(i0,i1,i2,i3,i4), "Array index out of range: ("
             << i0 << ", " << i1 << ", " << i2 << ", " << i3 
@@ -1356,8 +1361,9 @@ public:
         return _bz_true;
     }
 
-    _bz_bool assertInRange(int i0, int i1, int i2, int i3, int i4, 
-        int i5) const
+    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
+        int BZ_DEBUG_PARAM(i2), int BZ_DEBUG_PARAM(i3), int BZ_DEBUG_PARAM(i4),
+        int BZ_DEBUG_PARAM(i5)) const
     {
         BZPRECHECK(isInRange(i0,i1,i2,i3,i4,i5), "Array index out of range: ("
             << i0 << ", " << i1 << ", " << i2 << ", " << i3
@@ -1367,8 +1373,9 @@ public:
         return _bz_true;
     }
 
-    _bz_bool assertInRange(int i0, int i1, int i2, int i3, int i4,
-        int i5, int i6) const
+    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
+        int BZ_DEBUG_PARAM(i2), int BZ_DEBUG_PARAM(i3), int BZ_DEBUG_PARAM(i4),
+        int BZ_DEBUG_PARAM(i5), int BZ_DEBUG_PARAM(i6)) const
     {
         BZPRECHECK(isInRange(i0,i1,i2,i3,i4,i5,i6), 
             "Array index out of range: ("
@@ -1379,8 +1386,10 @@ public:
         return _bz_true;
     }
 
-    _bz_bool assertInRange(int i0, int i1, int i2, int i3, int i4,
-        int i5, int i6, int i7) const
+    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
+        int BZ_DEBUG_PARAM(i2), int BZ_DEBUG_PARAM(i3), int BZ_DEBUG_PARAM(i4),
+        int BZ_DEBUG_PARAM(i5), int BZ_DEBUG_PARAM(i6),
+        int BZ_DEBUG_PARAM(i7)) const
     {
         BZPRECHECK(isInRange(i0,i1,i2,i3,i4,i5,i6,i7),
             "Array index out of range: ("
@@ -1391,8 +1400,10 @@ public:
         return _bz_true;
     }
 
-    _bz_bool assertInRange(int i0, int i1, int i2, int i3, int i4,
-        int i5, int i6, int i7, int i8) const
+    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
+        int BZ_DEBUG_PARAM(i2), int BZ_DEBUG_PARAM(i3), int BZ_DEBUG_PARAM(i4),
+        int BZ_DEBUG_PARAM(i5), int BZ_DEBUG_PARAM(i6), int BZ_DEBUG_PARAM(i7),
+        int BZ_DEBUG_PARAM(i8)) const
     {
         BZPRECHECK(isInRange(i0,i1,i2,i3,i4,i5,i6,i7,i8),
             "Array index out of range: ("
@@ -1404,8 +1415,10 @@ public:
         return _bz_true;
     }
 
-    _bz_bool assertInRange(int i0, int i1, int i2, int i3, int i4,
-        int i5, int i6, int i7, int i8, int i9) const
+    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
+        int BZ_DEBUG_PARAM(i2), int BZ_DEBUG_PARAM(i3), int BZ_DEBUG_PARAM(i4),
+        int BZ_DEBUG_PARAM(i5), int BZ_DEBUG_PARAM(i6), int BZ_DEBUG_PARAM(i7),
+        int BZ_DEBUG_PARAM(i8), int BZ_DEBUG_PARAM(i9)) const
     {
         BZPRECHECK(isInRange(i0,i1,i2,i3,i4,i5,i6,i7,i8,i9),
             "Array index out of range: ("
@@ -1417,8 +1430,11 @@ public:
         return _bz_true;
     }
 
-    _bz_bool assertInRange(int i0, int i1, int i2, int i3, int i4,
-        int i5, int i6, int i7, int i8, int i9, int i10) const
+    _bz_bool assertInRange(int BZ_DEBUG_PARAM(i0), int BZ_DEBUG_PARAM(i1),
+        int BZ_DEBUG_PARAM(i2), int BZ_DEBUG_PARAM(i3), int BZ_DEBUG_PARAM(i4),
+        int BZ_DEBUG_PARAM(i5), int BZ_DEBUG_PARAM(i6), int BZ_DEBUG_PARAM(i7),
+        int BZ_DEBUG_PARAM(i8), int BZ_DEBUG_PARAM(i9),
+        int BZ_DEBUG_PARAM(i10)) const
     {
         BZPRECHECK(isInRange(i0,i1,i2,i3,i4,i5,i6,i7,i8,i9,i10),
             "Array index out of range: ("

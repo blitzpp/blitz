@@ -73,7 +73,7 @@ void IndirectArray<T_array, T_index>::operator=(T_rhs rhs)
 }
 
 template<class T_array, class T_arrayiter, class T_subdomain, class T_expr>
-inline void applyOverSubdomain(const T_array& array, T_arrayiter& arrayIter, 
+inline void applyOverSubdomain(const T_array& BZ_DEBUG_PARAM(array), T_arrayiter& arrayIter, 
     T_subdomain subdomain, T_expr expr)
 {
     BZPRECHECK(array.isInRange(subdomain),
@@ -91,7 +91,7 @@ inline void applyOverSubdomain(const T_array& array, T_arrayiter& arrayIter,
 
 // Specialization for RectDomain<N>
 template<class T_array, class T_arrayiter, int N_rank, class T_expr>
-inline void applyOverSubdomain(const T_array& array, T_arrayiter& arrayIter, 
+inline void applyOverSubdomain(const T_array& BZ_DEBUG_PARAM(array), T_arrayiter& arrayIter, 
     RectDomain<N_rank> subdomain,
     T_expr expr)
 {
