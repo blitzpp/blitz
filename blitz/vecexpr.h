@@ -255,8 +255,30 @@ operator-(Range r)
     return _bz_VecExpr<T_expr>(T_expr(r));
 }
 
+template<class P_numtype>
+inline
+_bz_VecExpr<_bz_VecExprUnaryOp<VectorPickIterConst<P_numtype>,
+    _bz_negate<P_numtype> > >
+operator-(const VectorPick<P_numtype>& a)
+{
+    typedef _bz_VecExprUnaryOp<VectorPickIterConst<P_numtype>,
+        _bz_negate<P_numtype> > T_expr;
 
-// NEEDS_WORK: implement operator- for Range, VectorPick, TinyVector
+    return _bz_VecExpr<T_expr>(T_expr(a.begin()));
+}
+
+template<class P_numtype, int N_length>
+inline
+_bz_VecExpr<_bz_VecExprUnaryOp<TinyVectorIterConst<P_numtype,N_length>,
+    _bz_negate<P_numtype> > >
+operator-(const TinyVector<P_numtype,N_length>& a)
+{
+    typedef _bz_VecExprUnaryOp<TinyVectorIterConst<P_numtype,N_length>,
+        _bz_negate<P_numtype> > T_expr;
+
+    return _bz_VecExpr<T_expr>(T_expr(a.begin()));
+}
+
 
 BZ_NAMESPACE_END
 
