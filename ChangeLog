@@ -1,3 +1,39 @@
+2004-06-18  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* testsuite/iter.cpp: Added testing of standard iterator interface
+	for blitz Array iterator types and run a couple of STL algorithms
+	using Array iterators if BZ_HAVE_STL is defined.
+	* blitz/array-impl.h: Eliminated the use of the _bz_endTag struct
+	to request an end iterator for an Array.  Just use the default
+	iterator constructor to do this.
+	* blitz/array/iter.h: Modified behavior of ArrayIterator and
+	ConstArrayIterator to be more STL compliant.  Specifically, the
+	postfix operator++ now returns a const reference to the iterator
+	object as it was before the increment.  Users should expect the
+	postfix operator++ to be slower than prefix operator++ and code
+	accordingly.  If BZ_HAVE_STL is defined, we provide
+	specializations of the struct std::iterator_traits<> to provide
+	the standard interface for the Array iterator types.
+
+	* INSTALL: Updated to describe present configuration procedure
+	using standardized autoconf configure script.  Added note on
+	running autoreconf when obtaining blitz from the cvs repository.
+	* README: Added information about the new Blitz++ website hosted
+	by SourceForge.  Updated the listing and explanation of the
+	directory structure.
+
+2004-06-15  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* blitz/array/reduce.h: Added new private method computeOrdering()
+	to class _bz_ArrayExprReduce that properly computes the ordering
+	values for each dimension of the reduction expression and stores
+	them in a data member.  The computeOrdering() method checks that
+	ordering values from the expression to be reduced are not invalid
+	and are unique.  This is similar to a patch submitted by Derrick
+	Bass for the code that constructs an Array from a _bz_ArrayExpr.
+	I have also eliminated the use of "rank" as a local variable name
+	to avoid possible confusion with the _bz_ArrayExprReduce enum of
+	the same name.
 2004-06-04  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* blitz/array/stencilops.h: Added missing typename keyword.
