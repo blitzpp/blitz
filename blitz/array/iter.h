@@ -59,7 +59,7 @@ public:
         pos_ = lbound_;
     }
 
-    ConstArrayIterator(const Array<T,N>& array, _bz_endTag)
+    ConstArrayIterator(const Array<T,N>&, _bz_endTag)
     {
         // The _bz_endTag type is provided by the end() method
         // in Array<T,N>, and indicates that an end iterator
