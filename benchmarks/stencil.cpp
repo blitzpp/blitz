@@ -1,6 +1,7 @@
 // Array stencil benchmark
 
 #include <blitz/array.h>
+#include <blitz/traversal.h>
 #include <blitz/benchext.h>
 #include <blitz/rand-uniform.h>
 

@@ -1,4 +1,5 @@
 #include <blitz/array.h>
+#include <blitz/traversal.h>
 #include <blitz/timer.h>
 #include <fstream>
 
