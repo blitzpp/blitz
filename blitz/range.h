@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.4  2002/12/19 20:35:21  julianc
+ * Removed name of an unused function argument.
+ *
  * Revision 1.3  2001/01/26 18:30:50  tveldhui
  * More source code reorganization to reduce compile times.
  *
@@ -139,7 +142,7 @@ public:
         return last_;
     }
 
-    unsigned length(int recommendedLength = 0) const
+    unsigned length(int =0) const
     {
         BZPRECONDITION(first_ != fromStart);
         BZPRECONDITION(last_ != toEnd);
