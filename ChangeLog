@@ -1,3 +1,14 @@
+2003-09-17  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* configure.in: Switched the optimization flag for the SGI CC
+	compiler back to -Ofast instead of -O3.  This setting includes the
+	-IPA option, which seems to make a large difference in code
+	performance.  Also, using the -IPA option does not seem to cause
+	problems when using a static libblitz.a, which is now once again
+	the default behavior of the configure script.  Also, bumped the
+	version number to 0.7 in anticipation of a new tarball
+	distribution.
+
 2003-09-09  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* configure.in: Activated automake macro that disables building of
