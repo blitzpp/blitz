@@ -272,7 +272,7 @@ public:
 private:
     const T_numtype * _bz_restrict          data_;
     const T_array&                          array_;
-    const T_numtype *                       stack_[N_rank];
+    ConstPointerStack<T_numtype,N_rank>     stack_;
     int                                     stride_;
 };
 
