@@ -30,6 +30,12 @@ Wed May  8 15:24:29 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	with autoconf 2.53, automake 1.6.1, libtool 1.4.2
 	* config.guess: imported from automake 1.6.1
 	* config.sub: likewise
+	* benchmarks/Makefile.am: removed target 'compile' that caused trouble when
+	'make dist'
+	* benchmarks/Makefile.in: regenerated with automake
+	* examples/Makefile.am: removed targes 'compile' and 'all' that caused
+	trouble when 'make dist'
+	* examples/Makefile.in: regenerated with automake
 
 Wed Apr 17 18:45:13 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* blitz/array/stencil-et.h: replaced T_numtype with P_numtype in
