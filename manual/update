@@ -1,0 +1,7 @@
+echo Generating Blitz++ HTML documentation...
+yodl2html -l2 blitz.yo
+./makeindex
+
+echo Generating Blitz++ Latex/PS documentation...
+./preview blitz
+
