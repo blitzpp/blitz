@@ -312,17 +312,17 @@ Array<T_numtype, N_rank>::evaluateWithStackTraversal1(
         else {
 
   #ifndef BZ_ARRAY_STACK_TRAVERSAL_UNROLL
-            for (int i=0; i < ubound; i += commonStride)
+            for (int i=0; i != ubound; i += commonStride)
                 T_update::update(data[i], expr.fastRead(i));
   #else
             int n1 = (length(firstRank) & 3) * commonStride;
 
             int i = 0;
-            for (; i < n1; i += commonStride)
+            for (; i != n1; i += commonStride)
                 T_update::update(data[i], expr.fastRead(i));
 
             int strideInc = 4 * commonStride;
-            for (; i < ubound; i += strideInc)
+            for (; i != ubound; i += strideInc)
             {
                 T_update::update(data[i], expr.fastRead(i));
                 int i2 = i + commonStride;
@@ -558,7 +558,7 @@ Array<T_numtype, N_rank>::evaluateWithStackTraversalN(
             }
 #ifdef BZ_ARRAY_EXPR_USE_COMMON_STRIDE
             else {
-                for (int i=0; i < ubound; i += commonStride)
+                for (int i=0; i != ubound; i += commonStride)
                     T_update::update(data[i], expr.fastRead(i));
             }
 #endif
