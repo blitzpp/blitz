@@ -39,4 +39,10 @@ Wed Mar  6 11:41:32 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* CHANGELOG: renamed to ChangeLog.1
 	* manual/examples/*.out: renamed to manual/examples/*.log due to
 	interference with automake
+	* compiler/elabbase.cpp: bar() replaced by this->bar() in zowee() const for
+	ANSI C++ correctness (14.6.2(3) in the C++ Standard)
+	* src/globals.cpp: char* _blitz_id replaced by char _blitz_id[]
+	* random/uniform.h: irng_.random() replaced by this->irng_.random()
+	everywhere for ANSI C++ correctness (14.6.2(3) in the C++ Standard)
+	* random/discrete-uniform.h: likewise
 
