@@ -433,7 +433,7 @@ RECURSIVE_TARGETS = info-recursive dvi-recursive install-info-recursive \
 	uninstall-info-recursive all-recursive install-data-recursive \
 	install-exec-recursive installdirs-recursive install-recursive \
 	uninstall-recursive check-recursive installcheck-recursive
-DIST_COMMON = Makefile.am Makefile.in compile plot_benchmarks.m.in
+DIST_COMMON = Makefile.am Makefile.in plot_benchmarks.m.in
 DIST_SUBDIRS = $(SUBDIRS)
 SOURCES = $(acou3d_SOURCES) $(acoustic_SOURCES) $(daxpy_SOURCES) $(haney_SOURCES) $(hao_he_SOURCES) $(loop1_SOURCES) $(loop10_SOURCES) $(loop11_SOURCES) $(loop12_SOURCES) $(loop13_SOURCES) $(loop14_SOURCES) $(loop15_SOURCES) $(loop16_SOURCES) $(loop17_SOURCES) $(loop18_SOURCES) $(loop19_SOURCES) $(loop2_SOURCES) $(loop21_SOURCES) $(loop22_SOURCES) $(loop23_SOURCES) $(loop24_SOURCES) $(loop25_SOURCES) $(loop3_SOURCES) $(loop36_SOURCES) $(loop5_SOURCES) $(loop6_SOURCES) $(loop8_SOURCES) $(loop9_SOURCES) $(qcd_SOURCES) $(stencil_SOURCES) $(tinydaxpy_SOURCES)
 
@@ -812,7 +812,7 @@ uninstall-info: uninstall-info-recursive
 %.o : %.f90
 	$(F90COMPILE) -c -o $@ $<
 
-compile: $(EXTRA_PROGRAMS) $(LOOP_KERNELS)
+#compile: $(EXTRA_PROGRAMS) $(LOOP_KERNELS)
 
 run:	$(EXTRA_PROGRAMS)
 	@for benchmark in $(BENCHMARKS) ; do \

@@ -402,7 +402,7 @@ RECURSIVE_TARGETS = info-recursive dvi-recursive install-info-recursive \
 	uninstall-info-recursive all-recursive install-data-recursive \
 	install-exec-recursive installdirs-recursive install-recursive \
 	uninstall-recursive check-recursive installcheck-recursive
-DIST_COMMON = Makefile.am Makefile.in compile
+DIST_COMMON = Makefile.am Makefile.in
 DIST_SUBDIRS = $(SUBDIRS)
 SOURCES = $(array_SOURCES) $(cartesian_SOURCES) $(cast_SOURCES) $(cfd_SOURCES) $(complex_test_SOURCES) $(convolve_SOURCES) $(curldiv_SOURCES) $(deriv_SOURCES) $(diff_SOURCES) $(erf_SOURCES) $(fixed_SOURCES) $(indirect_SOURCES) $(io_SOURCES) $(iter_SOURCES) $(matmult_SOURCES) $(nested_SOURCES) $(numinquire_SOURCES) $(outer_SOURCES) $(pauli_SOURCES) $(pick_SOURCES) $(polymorph_SOURCES) $(prettyprint_SOURCES) $(qcd_SOURCES) $(rand2_SOURCES) $(random_SOURCES) $(rangexpr_SOURCES) $(reduce_SOURCES) $(simple_SOURCES) $(slicing_SOURCES) $(stencil_SOURCES) $(stencil2_SOURCES) $(stencil3_SOURCES) $(stencilet_SOURCES) $(storage_SOURCES) $(tiny_SOURCES) $(transform_SOURCES) $(useret_SOURCES) $(where_SOURCES) $(whitt_SOURCES)
 
@@ -785,7 +785,7 @@ uninstall-info: uninstall-info-recursive
 	uninstall-info-recursive uninstall-recursive
 
 
-compile: $(EXTRA_PROGRAMS)
+#compile: $(EXTRA_PROGRAMS)
 
 check-examples: $(EXTRA_PROGRAMS)
 	@echo Running examples...
@@ -794,7 +794,7 @@ check-examples: $(EXTRA_PROGRAMS)
 	done
 	@echo All tests passed.
 
-all:
+#all:
 
 clean-local:
 	-rm -rf cxx_repository $(EXTRA_PROGRAMS)
