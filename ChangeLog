@@ -1,5 +1,10 @@
 2003-09-17  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
+	* blitz/Makefile.am: Added file config-VS.NET2003.h to EXTRA_DIST
+	for inclusion in distribution.
+	* Makefile.am: Deleted old file config.h.in from EXTRA_DIST list
+	and added new files README-VS.NET and Blitz-VS.NET.zip for
+	inclusion in distribution.
 	* configure.in: Switched the optimization flag for the SGI CC
 	compiler back to -Ofast instead of -O3.  This setting includes the
 	-IPA option, which seems to make a large difference in code
