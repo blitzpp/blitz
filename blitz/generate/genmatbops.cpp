@@ -45,10 +45,12 @@ int main()
      { "==", true,  true,  "_bz_Equal",          "Equality operators" },
      { "!=", true,  true,  "_bz_NotEqual",       "Not-equal operators" },
      { "&&", false, false, "_bz_LogicalAnd",     "Logical AND operators" },
-     { "||", false, false, "_bz_LogicalOr",      "Logical OR operators" }
+     { "||", false, false, "_bz_LogicalOr",      "Logical OR operators" },
+     { "min", false, false, "_bz_Min",      "Minimum Operators" },
+     { "max", false, false, "_bz_Max",      "Maximum Operators" }
     };
 
-    for (int i=0; i < 18; ++i)
+    for (int i=0; i < 20; ++i)
     {
     ofs << "/****************************************************************************" << std::endl
         << " * " << ops[i].comment << std::endl
@@ -89,7 +91,10 @@ int main()
         ofs << " > > >" << std::endl;
      
         // operator+(const Matrix<T_numtype1>& d1, _bz_MatExpr<T_expr2> d2)
-        ofs << "operator" << ops[i].opSymbol << "(";
+				if (ops[i].opSymbol[0] == 'm') 
+					ofs << ops[i].opSymbol << "(";
+				else
+        	ofs << "operator" << ops[i].opSymbol << "(";
         operands.printArgumentList(ofs, 1);
         ofs << ")" << std::endl << "{" << std::endl;
 

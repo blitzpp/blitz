@@ -51,10 +51,12 @@ int main()
      { "&",  false, false, "BitwiseAnd",     "Bitwise And Operators" },
      { "|",  false, false, "BitwiseOr",      "Bitwise Or Operators" },
      { ">>", false, false, "ShiftRight",     "Shift right Operators" },
-     { "<<", false, false, "ShiftLeft",      "Shift left Operators" }
+     { "<<", false, false, "ShiftLeft",      "Shift left Operators" },
+		 { "min", false, false, "_bz_Min",      "Minimum Operators" },
+		 { "max", false, false, "_bz_Max",      "Maximum Operators" }
     };
 
-    const int numOperators = 18;   // Should be 18
+    const int numOperators = 20;   // Should be 20
 
     for (int i=0; i < numOperators; ++i)
     {
@@ -106,7 +108,10 @@ int main()
         ofs << " > > >" << std::endl;
      
         // operator+(const Vector<T_numtype1>& d1, _bz_VecExpr<T_expr2> d2)
-        ofs << "operator" << ops[i].opSymbol << "(";
+				if (ops[i].opSymbol[0] == 'm')
+					ofs << ops[i].opSymbol << "(";
+				else
+        	ofs << "operator" << ops[i].opSymbol << "(";
         operands.printArgumentList(ofs, 1);
         ofs << ")" << std::endl << "{" << std::endl;
 
