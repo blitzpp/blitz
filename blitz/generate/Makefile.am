@@ -19,12 +19,30 @@ genmatbops_SOURCES = genmatbops.cpp
 genpromote_SOURCES = genpromote.cpp
 genvecwhere_SOURCES = genvecwhere.cpp
 
-generate-headers: $(noinst_PROGRAMS)
-	@echo Generating expression template headers ...
-	@for prog in $(noinst_PROGRAMS) ; do \
-		echo $$prog && ./$$prog || exit 1; \
-		done
-	@echo Header generation complete.
+%.h: 
+	./$< 
+
+%.cc: 
+	./$< 
+
+$(top_srcdir)/blitz/array/bops.cc: genarrbops
+$(top_srcdir)/blitz/array/uops.cc: genarruops
+$(top_srcdir)/blitz/matbops.h: genmatbops
+$(top_srcdir)/blitz/mathfunc.h: genmathfunc
+$(top_srcdir)/blitz/matuops.h: genmatuops
+$(top_srcdir)/blitz/promote-old.h: genpromote
+$(top_srcdir)/blitz/vecbops.cc: genvecbops
+$(top_srcdir)/blitz/vecuops.cc: genvecuops
+$(top_srcdir)/blitz/vecwhere.cc: genvecwhere
+
+generate-headers: $(top_srcdir)/blitz/array/bops.cc \
+$(top_srcdir)/blitz/array/uops.cc $(top_srcdir)/blitz/matbops.h \
+$(top_srcdir)/blitz/mathfunc.h $(top_srcdir)/blitz/matuops.h \
+$(top_srcdir)/blitz/promote-old.h $(top_srcdir)/blitz/vecbops.cc \
+$(top_srcdir)/blitz/vecuops.cc $(top_srcdir)/blitz/vecwhere.cc
+
+all-am:
+	$(MAKE) $(AM_MAKEFLAGS) generate-headers
 
 clean-local:
 	-rm -rf cxx_repository ti_files ii_files $(noinst_PROGRAMS)
