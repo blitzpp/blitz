@@ -2,15 +2,15 @@ C  Initial Fortran 77 version of the Lattice QCD benchmark.
 
        subroutine qcdf(M, res, src, V, iters)
        integer V, iters, i, site, spin, col
-       real*8 complex M(V,3,3), res(V,3,2), src(V,3,2)
+       complex*16 M(3,3,V), res(3,2,V), src(3,2,V)
   
        DO i=1,iters
          DO site=1,V
            DO spin=1,2
              DO col=1,3
-                res(site,col,spin) = M(site,col,1) * src(site,1,spin) 
-     .            + M(site,col,2) * src(site,2,spin) 
-     .            + M(site,col,3) * src(site,3,spin)
+                res(col,spin,site) = M(col,1,site) * src(1,spin,site) 
+     .            + M(col,2,site) * src(2,spin,site) 
+     .            + M(col,3,site) * src(3,spin,site)
              ENDDO
            ENDDO
          ENDDO
@@ -28,7 +28,7 @@ C    o Unwinding both loops was faster than unwinding just one.
 
        subroutine qcdf2(M, res, src, V, iters)
        integer V, iters, i, site
-       real*8 complex M(3,3,V), res(3,2,V), src(3,2,V)
+       complex*16 M(3,3,V), res(3,2,V), src(3,2,V)
 
        DO i=1,iters
          DO site=1,V
