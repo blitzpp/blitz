@@ -7,12 +7,10 @@
 
 BZ_USING_NAMESPACE(blitz)
 
-#ifdef BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES
+#if defined(BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES)
   #define qcdf  qcdf_
   #define qcdf2 qcdf2_
-#endif
-
-#ifdef BZ_FORTRAN_SYMBOLS_CAPS
+#elif defined( BZ_FORTRAN_SYMBOLS_CAPS)
   #define qcdf  QCDF
   #define qcdf2 QCDF2
 #endif
