@@ -13,6 +13,9 @@
 	examples/outer.cpp examples/pick.cpp examples/qcd.cpp examples/rangexpr.cpp
 	examples/reduce.cpp examples/simple.cpp examples/slicing.cpp
 	examples/storage.cpp examples/tiny.cpp examples/where.cpp: likewise
+	* blitz/meta/dot.h blitz/meta/matassign.h blitz/meta/matmat.h
+	blitz/meta/matvec.h blitz/meta/metaprog.h blitz/meta/product.h
+	blitz/meta/sum.h blitz/meta/vecassign.h: likewise
 
 2003-01-10 Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
     * blitz/array/*.h: Removed the cvs log and added them to the ChangeLog.
@@ -744,6 +747,9 @@ Wed Oct  9 10:17:27 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 		examples/simple.cpp examples/slicing.cpp examples/storage.cpp
 		examples/tiny.cpp examples/where.cpp: More source code reorganization
 		to reduce compile times.
+		* blitz/meta/metaprog.h: Updated docs to reflect isnan -> blitz_isnan
+		change
+		* blitz/meta/sum.h: Fixed bug found by Masahiro TATSUMI
 
 2001-01-25 tveldhui
     * blitz/array/asexpr.h blitz/array/cartesian.h blitz/array/cgsolve.h
