@@ -16,7 +16,7 @@
 
 BZ_NAMESPACE(blitz)
 
-template<class P_numtype>
+template<typename P_numtype>
 ostream& operator<<(ostream& os, const VectorPick<P_numtype>& x)
 {
     Vector<P_numtype> y(x.length());
