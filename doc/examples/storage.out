@@ -1,0 +1,56 @@
+A = 3 x 3
+[         1         2         3 
+          4         5         6 
+          7         8         9 ]
+
+B = 3 x 3
+[         1         2         3 
+          4         5         6 
+          7         8         9 ]
+
+C = 3 x 3
+[         1         2         3 
+          4         5         6 
+          7         8         9 ]
+
+Dump of Array<i, 2>:
+ordering_      = 2 [          1         0 ]
+ascendingFlag_ = 2 [          1         1 ]
+base_          = 2 [          0         0 ]
+length_        = 2 [          3         3 ]
+stride_        = 2 [          3         1 ]
+zeroOffset_    = 0
+numElements()  = 9
+isStorageContiguous() = 1
+Dump of Array<i, 2>:
+ordering_      = 2 [          0         1 ]
+ascendingFlag_ = 2 [          1         1 ]
+base_          = 2 [          0         0 ]
+length_        = 2 [          3         3 ]
+stride_        = 2 [          1         3 ]
+zeroOffset_    = 0
+numElements()  = 9
+isStorageContiguous() = 1
+Dump of Array<i, 2>:
+ordering_      = 2 [          0         1 ]
+ascendingFlag_ = 2 [          1         0 ]
+base_          = 2 [          0         0 ]
+length_        = 2 [          3         3 ]
+stride_        = 2 [          1        -3 ]
+zeroOffset_    = 6
+numElements()  = 9
+isStorageContiguous() = 1
+Dump of Array<i, 2>:
+ordering_      = 2 [          1         0 ]
+ascendingFlag_ = 2 [          1         1 ]
+base_          = 2 [          0         0 ]
+length_        = 2 [          3         3 ]
+stride_        = 2 [          3         1 ]
+zeroOffset_    = 0
+numElements()  = 9
+isStorageContiguous() = 1
+D = 3 x 3
+[         3         6         9 
+         12        15        18 
+         21        24        27 ]
+

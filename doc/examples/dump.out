@@ -1,0 +1,9 @@
+Dump of Array<f, 4>:
+ordering_      = 4 [          0         1         2         3 ]
+ascendingFlag_ = 4 [          1         1         1         1 ]
+base_          = 4 [          1         1         1         1 ]
+length_        = 4 [          3         7         8         2 ]
+stride_        = 4 [          1         3        21       168 ]
+zeroOffset_    = -193
+numElements()  = 336
+isStorageContiguous() = 1
