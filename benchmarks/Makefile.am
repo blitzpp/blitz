@@ -2,8 +2,6 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-SUBDIRS = .
-
 EXTRA_DIST = arrdaxpy.cpp arrdaxpy.m arrdaxpy2.m arrdaxpyf.f arrexpr1.cpp \
 arrexpr1.m cfd.cpp cfdf.f cfortran.h chunky.cpp compiletime.cpp \
 ctime-results ctime1.cpp ctime1v.cpp ctime2.cpp ctime2v.cpp ctime3.cpp \
@@ -14,7 +12,7 @@ loop4.cpp loop4f.f loop4f90.f90 loopstruct.cpp looptest.cpp makelogo.cpp \
 makeloops.cpp qcd.txt quinlan.cpp stenciln.cpp tiny3.cpp
 
 
-CXXFLAGS = -I$(top_srcdir) @CXXF90FLAG@ @CXXFLAGS@ @CXX_OPTIMIZE_FLAGS@ \
+AM_CXXFLAGS = -I$(top_srcdir) @CXXF90FLAG@ @CXXFLAGS@ @CXX_OPTIMIZE_FLAGS@ \
 	@CXXFFLAGS@ 
 
 F77FLAGS = @F77_OPTIMIZE_FLAGS@

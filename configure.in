@@ -25,12 +25,6 @@ echo ""
 echo "Configuring Blitz++ for $target"
 echo ""
 
-# substitute SUBDIRS in Makefile
-SUBDIRS=". bin blitz random compiler src lib manual testsuite examples \
-benchmarks demos"
-AC_SUBST(SUBDIRS)
-
-
 # Declare variables which we want substituted in the Makefile.in's
 
 AC_SUBST(CXX_LIBS)
@@ -59,7 +53,7 @@ AR_FLAGS="-cru"
 know_compiler=0
 
 AC_ARG_WITH(cxx,
-  [  --with-cxx=COMPILER[:name-flags]     set options for COMPILER (KCC, SGI, FCC, cray, gcc, DECcxx, aCC, icc, pgCC, xlC)],
+  [  --with-cxx=COMPILER[:name-flags]     set options for COMPILER (KCC, SGI, FCC, cray, gcc, old-gcc, DECcxx, aCC, icc, pgCC, xlC)],
   [case "$withval" in
      KCCdev)             # KAI C++ (development flags)
        echo "Configuring for KAI C++ development environment"
@@ -151,11 +145,18 @@ AC_ARG_WITH(cxx,
        CXX_OPTIMIZE_FLAGS="-O3 -hpipeline3 -hunroll -haggress -hscalar2"
        CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
      ;;
-     gcc*)               # gcc  http://gcc.gnu.org/
+     old-gcc*)               # gcc  http://gcc.gnu.org/
        echo "Configuring for gcc (wahoo!)"
        bz_compiler=gcc
        AC_BZ_SET_COMPILER($withval,"g++","-ftemplate-depth-30")
        CXX_OPTIMIZE_FLAGS="-O2 -funroll-loops -fstrict-aliasing -fno-gcse"
+       CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
+     ;;
+     gcc*)               # gcc  http://gcc.gnu.org/
+       echo "Configuring for gcc (wahoo!)"
+       bz_compiler=gcc
+       AC_BZ_SET_COMPILER($withval,"g++","")
+       CXX_OPTIMIZE_FLAGS="-O2 -funroll-loops"
        CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
      ;;
      aCC)                # HP-UX compiler http://www.hp.com/go/c++
@@ -201,7 +202,8 @@ This script only recognizes a small set of compilers and platforms so far.
 You will have to rerun this script with one of these options:
   --with-cxx=KCC          KAI C++ (http://www.kai.com/)
   --with-cxx=SGI          SGI C++ 7.3 or better (http://www.sgi.com/)
-  --with-cxx=gcc          gcc (http://gcc.gnu.org/)
+  --with-cxx=gcc          gcc (version 3.1 and up) (http://gcc.gnu.org/)
+  --with-cxx=old-gcc      old gcc version (http://gcc.gnu.org/)
   --with-cxx=cray         Cray C++ 3.0 or better (http://www.cray.com/)
   --with-cxx=DECcxx6.2    DEC cxx 6.2 (http://www.dec.com/)
   --with-cxx=DECcxx6.3    DEC cxx 6.3 or better (http://www.dec.com/)
@@ -551,5 +553,3 @@ You have several options now:
 	make install          Install Blitz++
 
 EOH
-
-

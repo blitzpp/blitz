@@ -1,4 +1,12 @@
 2003-01-06 Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+    * configure.in: Do not substitute the variable SUBDIRS.
+    * All Makefiles.am: Remove SUBDIRS where appropriate.
+    * testsuite/Makefile.am, examples/Makefile.am: Use top_builddir
+      instead of top_srcdir to allow building in a separate directory.
+    * blitz/generate/Makefile.am: Partial rewrite to allow the build
+      of the generation programs.
+
+2003-01-06 Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
     * testsuite/reduce.cpp: Bug correction.
 
 2003-01-06 Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
