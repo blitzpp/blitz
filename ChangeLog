@@ -1,3 +1,8 @@
+2005-04-01  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* testsuite/reduce.cpp: Added test of count() function.
+	* blitz/array/expr.h: Use typedef T_expr consistently inside
+	ArrayExpr class definition.
 
 2005-02-23  Patrick Guio  <patrick.guio@bccs.uib.no>
 
