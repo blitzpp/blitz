@@ -37,7 +37,7 @@ BZ_NAMESPACE(blitz)
 // first element being the extreme value, and the send its location.
 // An object of type Extremum can be automatically converted to
 // the numeric type via operator T_numtype().
-template<class P_numtype, class P_index>
+template<typename P_numtype, typename P_index>
 class Extremum {
 public:
     typedef P_numtype T_numtype;
