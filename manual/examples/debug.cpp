@@ -8,7 +8,7 @@ int main()
 
     Z = complex<float>(0.0, 1.0);
 
-    Z(3,3) = complex<float>(1.0, 0.0);
+    Z(4,4) = complex<float>(1.0, 0.0);
 
     return 0;
 }
