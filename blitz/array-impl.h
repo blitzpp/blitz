@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.4  2001/02/15 13:14:39  tveldhui
+ * Fixed typo
+ *
  * Revision 1.3  2001/02/11 22:10:55  tveldhui
  * Fixed prototype typos
  *
@@ -2332,7 +2335,7 @@ public:
     inline T_array& evaluateWithFastTraversal(
         const TraversalOrder<N_rank - 1>& order, 
         T_expr expr, T_update);
-#endif BZ_ARRAY_SPACE_FILLING_TRAVERSAL
+#endif // BZ_ARRAY_SPACE_FILLING_TRAVERSAL
 #endif
 
 #ifdef BZ_ARRAY_2D_STENCIL_TILING
