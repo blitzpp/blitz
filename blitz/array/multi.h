@@ -54,7 +54,7 @@ struct multicomponent_traits<TinyVector<T_numtype,N_rank> > {
     enum { numComponents = N_rank };
 };
 
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX
 // complex<T>
 template<typename T>
 struct multicomponent_traits<complex<T> > {
