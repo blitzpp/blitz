@@ -7,9 +7,14 @@ public:
     template<class T> static T convert() { return T(); }
 };
 
+template <typename T>
+double f() {
+    return Foo::template convert<double>();
+}
+
 int main()
 {
-    double z = Foo::template convert<double>();
+    double z = f<double>();
     return 0;
 }
 
