@@ -16,6 +16,9 @@
 	* blitz/meta/dot.h blitz/meta/matassign.h blitz/meta/matmat.h
 	blitz/meta/matvec.h blitz/meta/metaprog.h blitz/meta/product.h
 	blitz/meta/sum.h blitz/meta/vecassign.h: likewise
+	* blitz/generate/bzfstream.h blitz/generate/genarrbops.cpp
+	* blitz/generate/genmatbops.cpp blitz/generate/genmatuops.cpp
+	* blitz/generate/genvecbops.cpp: likewise
 
 2003-01-10 Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
     * blitz/array/*.h: Removed the cvs log and added them to the ChangeLog.
@@ -780,6 +783,8 @@ Wed Oct  9 10:17:27 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* manual/examples/storage.cpp: Initial source check-in; added files not
 	usually released in the distribution.
 	* manual/blitz02.html: likewise
+	* blitz/generate/genarrbops.cpp blitz/generate/genvecbops.cpp: Initial source check-in; added files not
+	usually released in thedistribution.
 
 1999-01-25 allan@stokes.ca (Allan Stokes) www.stokes.ca
 	* random/mt.h: adapted to STL-like idiom 
