@@ -24,6 +24,10 @@
  * $Id$
  *
  * $Log$
+ * Revision 1.4  2002/03/06 16:58:19  patricg
+ *
+ * typename replaced by _bz_typename
+ *
  * Revision 1.3  2001/01/25 00:25:55  tveldhui
  * Ensured that source files have cvs logs.
  *
@@ -151,7 +155,7 @@ struct promote_trait {
         : BZ_ENUM_CAST(defaultPromotion)) ? 1 : 0
     };
 
-    typedef typename _bz_promote2<T1,T2,promoteToT1>::T_promote T_promote;
+    typedef _bz_typename _bz_promote2<T1,T2,promoteToT1>::T_promote T_promote;
 };
 
 #else  // !BZ_PARTIAL_SPECIALIZATION
