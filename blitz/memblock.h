@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.5  2002/02/28 23:38:20  tveldhui
+ * Fixed extra semicolon problem with KCC
+ *
  * Revision 1.4  2001/02/04 16:32:28  tveldhui
  * Made memory block reference counting (optionally) threadsafe when
  * BZ_THREADSAFE is defined.  Currently uses pthread mutex.
@@ -230,7 +233,7 @@ private:   // Data members
     volatile int references_;
 #endif
 
-    BZ_MUTEX_DECLARE(mutex);
+    BZ_MUTEX_DECLARE(mutex)
     size_t  length_;
 };
 
