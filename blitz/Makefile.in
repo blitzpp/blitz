@@ -125,6 +125,8 @@ config-SGi.h config-g++2.7.2.h config-mwerks.h config-xlC.h
 subdir = blitz
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES =
+depcomp =
+am__depfiles_maybe =
 DIST_SOURCES =
 HEADERS = $(blitz_HEADERS)
 
@@ -140,7 +142,7 @@ all: all-recursive
 .SUFFIXES:
 $(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  blitz/Makefile
+	  $(AUTOMAKE) --gnu  --ignore-deps blitz/Makefile
 Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 uninstall-info-am:
