@@ -1344,7 +1344,15 @@ public:
     typedef int T_numtype;
 
     static inline T_numtype apply(T_numtype1 x)
-    { return BZ_IEEEMATHFN_SCOPE(isnan)(x); }
+    { 
+#ifdef isnan
+        // Some platforms define isnan as a macro, which causes the
+        // BZ_IEEEMATHFN_SCOPE macro to break.
+        return isnan(x); 
+#else
+        return BZ_IEEEMATHFN_SCOPE(isnan)(x);
+#endif
+    }
 
     template<class T1>
     static void prettyPrint(string& str, prettyPrintFormat& format,

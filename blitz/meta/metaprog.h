@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2001/01/26 21:34:59  tveldhui
+ * Updated docs to reflect isnan -> blitz_isnan change
+ *
  * Revision 1.2  2001/01/24 20:22:51  tveldhui
  * Updated copyright date in headers.
  *
@@ -53,7 +56,6 @@ template<class T> inline T operator+(const T& a, _bz_meta_nullOperand)
 { return a; }
 template<class T> inline T operator*(const T& a, _bz_meta_nullOperand)
 { return a; }
-
 
 // MetaMax
 
