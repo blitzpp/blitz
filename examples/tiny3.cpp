@@ -1,5 +1,5 @@
-#include <blitz/TinyVec.h>
-#include <blitz/TinyMat.h>
+#include <blitz/tinyvec-et.h>
+#include <blitz/tinymat.h>
 
 using namespace blitz;
 

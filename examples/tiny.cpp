@@ -4,6 +4,9 @@
  * $Id$
  *
  * $Log$
+ * Revision 1.3  2002/07/02 19:49:02  jcumming
+ * Updated to use new header file names that avoid capitalization.
+ *
  * Revision 1.2  2001/01/26 18:30:51  tveldhui
  * More source code reorganization to reduce compile times.
  *
@@ -27,7 +30,7 @@
  * of light bouncing off a perfectly reflective, smooth surface.  
  */
 
-#include <blitz/TinyVec.h>
+#include <blitz/tinyvec-et.h>
 
 #ifdef BZ_NAMESPACES
 using namespace blitz;
