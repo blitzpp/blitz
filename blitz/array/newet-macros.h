@@ -35,13 +35,14 @@ BZ_NAMESPACE(blitz)
  */
 
 #define BZ_DECLARE_ARRAY_ET_UNARY(name,functor)                           \
+                                                                          \
 template <typename T1>                                                    \
 _bz_inline_et                                                             \
 typename BzUnaryExprResult<functor,T1>::T_result                          \
 name(const ETBase<T1>& d1)                                                \
 {                                                                         \
     typedef typename BzUnaryExprResult<functor,T1>::T_result result;      \
-    return result(d1.unwrap());                                           \
+    return result(asExpr<T1>::getExpr(d1.unwrap()));                      \
 }
 
 /*
@@ -53,49 +54,36 @@ name(const ETBase<T1>& d1)                                                \
 
 #define BZ_DECLARE_ARRAY_ET_BINARY(name, applic)                         \
                                                                          \
-template <typename T_numtype1,int N_rank1,typename T_other>              \
-_bz_inline_et                                                            \
-typename                                                                 \
-BzBinaryExprResult<applic,Array<T_numtype1,N_rank1>,T_other>::T_result   \
-name (const Array<T_numtype1,N_rank1>& d1, const T_other& d2)            \
-{                                                                        \
-    typedef typename                                                     \
-        BzBinaryExprResult<applic,Array<T_numtype1,N_rank1>,             \
-                           T_other>::T_result result;                    \
-    return result(d1.beginFast(),d2);                                    \
-}                                                                        \
-                                                                         \
-template <typename T_expr1,typename T_other>                             \
-_bz_inline_et                                                            \
-typename                                                                 \
-BzBinaryExprResult<applic,_bz_ArrayExpr<T_expr1>,T_other>::T_result      \
-name(const _bz_ArrayExpr<T_expr1>& d1, const T_other& d2)                \
-{                                                                        \
-    typedef typename                                                     \
-        BzBinaryExprResult<applic,_bz_ArrayExpr<T_expr1>,                \
-                           T_other>::T_result result;                    \
-    return result(d1,d2);                                                \
-}                                                                        \
-                                                                         \
-template <int N1,typename T_other>                                       \
-_bz_inline_et                                                            \
-typename                                                                 \
-BzBinaryExprResult<applic,IndexPlaceholder<N1>,T_other>::T_result        \
-name(IndexPlaceholder<N1> d1, const T_other& d2)                         \
-{                                                                        \
-    typedef typename                                                     \
-        BzBinaryExprResult<applic,IndexPlaceholder<N1>,                  \
-                           T_other>::T_result result;                    \
-    return result(d1,d2);                                                \
-}                                                                        \
-                                                                         \
 template <typename T1,typename T2>                                       \
 _bz_inline_et                                                            \
 typename BzBinaryExprResult<applic,T1,T2>::T_result                      \
-name(const T1& d1,const ETBase<T2>& d2)                                  \
+name(const ETBase<T1>& d1,const ETBase<T2>& d2)                          \
 {                                                                        \
     typedef typename BzBinaryExprResult<applic,T1,T2>::T_result result;  \
-    return result(d1,d2.unwrap());                                       \
+    return result(asExpr<T1>::getExpr(d1.unwrap()),                      \
+                  asExpr<T2>::getExpr(d2.unwrap()));                     \
+}
+
+#define BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(name, applic, sca)              \
+                                                                          \
+template<typename T>                                                      \
+_bz_inline_et                                                             \
+typename BzBinaryExprResult<applic,sca,T>::T_result                       \
+name(const sca d1, const ETBase<T>& d2)                                   \
+{                                                                         \
+    typedef typename BzBinaryExprResult<applic,sca,T>::T_result result;   \
+    return result(asExpr<sca>::getExpr(d1),                               \
+                  asExpr<T>::getExpr(d2.unwrap()));                       \
+}                                                                         \
+                                                                          \
+template<typename T>                                                      \
+_bz_inline_et                                                             \
+typename BzBinaryExprResult<applic,T,sca>::T_result                       \
+name(const ETBase<T>& d1, const sca d2)                                   \
+{                                                                         \
+    typedef typename BzBinaryExprResult<applic,T,sca>::T_result result;   \
+    return result(asExpr<T>::getExpr(d1.unwrap()),                        \
+                  asExpr<sca>::getExpr(d2));                              \
 }
 
 /*
@@ -110,10 +98,12 @@ name(const T1& d1,const ETBase<T2>& d2)                                  \
 template <typename T1, typename T2, typename T3>                              \
 _bz_inline_et                                                                 \
 typename BzTernaryExprResult<applic, T1, T2, T3>::T_result                    \
-name(const T1& d1, const T2& d2, const T3& d3)                                \
+name(const ETBase<T1>& d1, const ETBase<T2>& d2, const ETBase<T3>& d3)        \
 {                                                                             \
     typedef typename BzTernaryExprResult<applic,T1,T2,T3>::T_result result;   \
-    return result(d1,d2,d3);                                                  \
+    return result(asExpr<T1>::getExpr(d1.unwrap()),                           \
+                  asExpr<T2>::getExpr(d2.unwrap()),                           \
+                  asExpr<T3>::getExpr(d3.unwrap()));                          \
 }
     
 #else
@@ -123,16 +113,18 @@ name(const T1& d1, const T2& d2, const T3& d3)                                \
  */
 
 #define BZ_DECLARE_ARRAY_ET_UNARY(name, functor)                          \
+                                                                          \
 template<typename T1>                                                     \
 _bz_inline_et                                                             \
-_bz_ArrayExpr<_bz_ArrayExprUnaryOp<_bz_typename asExpr<T1>::T_expr,       \
+_bz_ArrayExpr<_bz_ArrayExprUnaryOp<                                       \
+    _bz_typename asExpr<T1>::T_expr,                                      \
     functor<_bz_typename asExpr<T1>::T_expr::T_numtype> > >               \
 name(const ETBase<T1>& d1)                                                \
 {                                                                         \
     return _bz_ArrayExpr<_bz_ArrayExprUnaryOp<                            \
         _bz_typename asExpr<T1>::T_expr,                                  \
         functor<_bz_typename asExpr<T1>::T_expr::T_numtype> > >           \
-        (d1.unwrap());                                     \
+        (asExpr<T1>::getExpr(d1.unwrap()));                               \
 }
 
 /*
@@ -143,60 +135,57 @@ name(const ETBase<T1>& d1)                                                \
  */
 
 #define BZ_DECLARE_ARRAY_ET_BINARY(name, applic)                          \
-template<typename T_numtype1, int N_rank1, typename T_other>              \
-_bz_inline_et                                                             \
-_bz_ArrayExpr<_bz_ArrayExprOp<FastArrayIterator<T_numtype1, N_rank1>,     \
-    _bz_typename asExpr<T_other>::T_expr, applic<T_numtype1,              \
-    _bz_typename asExpr<T_other>::T_expr::T_numtype> > >                  \
-name(const Array<T_numtype1,N_rank1>& d1, const T_other& d2)              \
-{                                                                         \
-    return _bz_ArrayExpr<_bz_ArrayExprOp<FastArrayIterator<T_numtype1,    \
-        N_rank1>, _bz_typename asExpr<T_other>::T_expr,                   \
-        applic<T_numtype1,                                                \
-        _bz_typename asExpr<T_other>::T_expr::T_numtype> > >              \
-        (d1.beginFast(),d2);                                              \
-}                                                                         \
-                                                                          \
-template<typename T_expr1, typename T_other>                              \
-_bz_inline_et                                                             \
-_bz_ArrayExpr<_bz_ArrayExprOp<_bz_ArrayExpr<T_expr1>,                     \
-    _bz_typename asExpr<T_other>::T_expr,                                 \
-    applic<_bz_typename T_expr1::T_numtype,                               \
-    _bz_typename asExpr<T_other>::T_expr::T_numtype> > >                  \
-name(const _bz_ArrayExpr<T_expr1>& d1, const T_other& d2)                 \
-{                                                                         \
-    return _bz_ArrayExpr<_bz_ArrayExprOp<_bz_ArrayExpr<T_expr1>,          \
-        _bz_typename asExpr<T_other>::T_expr,                             \
-        applic<_bz_typename T_expr1::T_numtype,                           \
-        _bz_typename asExpr<T_other>::T_expr::T_numtype> > >(d1,d2);      \
-}                                                                         \
-                                                                          \
-template<int N1, typename T_other>                                        \
-_bz_inline_et                                                             \
-_bz_ArrayExpr<_bz_ArrayExprOp<IndexPlaceholder<N1>,                       \
-    _bz_typename asExpr<T_other>::T_expr,                                 \
-    applic<int, _bz_typename asExpr<T_other>::T_expr::T_numtype> > >      \
-name(IndexPlaceholder<N1> d1, const T_other& d2)                          \
-{                                                                         \
-    return _bz_ArrayExpr<_bz_ArrayExprOp<IndexPlaceholder<N1>,            \
-        _bz_typename asExpr<T_other>::T_expr,                             \
-        applic<int, _bz_typename asExpr<T_other>::T_expr::T_numtype> > >  \
-        (d1,d2);                                                          \
-}                                                                         \
                                                                           \
 template<typename T1, typename T2>                                        \
 _bz_inline_et                                                             \
-_bz_ArrayExpr<_bz_ArrayExprOp<_bz_typename asExpr<T1>::T_expr,            \
+_bz_ArrayExpr<_bz_ArrayExprBinaryOp<                                      \
+    _bz_typename asExpr<T1>::T_expr,                                      \
     _bz_typename asExpr<T2>::T_expr,                                      \
     applic<_bz_typename asExpr<T1>::T_expr::T_numtype,                    \
-    _bz_typename asExpr<T2>::T_expr::T_numtype> > >                       \
-name(const T1& d1, const ETBase<T2>& d2)                                  \
+           _bz_typename asExpr<T2>::T_expr::T_numtype> > >                \
+name(const ETBase<T1>& d1, const ETBase<T2>& d2)                          \
 {                                                                         \
-    return _bz_ArrayExpr<_bz_ArrayExprOp<_bz_typename asExpr<T1>::T_expr, \
+    return _bz_ArrayExpr<_bz_ArrayExprBinaryOp<                           \
+        _bz_typename asExpr<T1>::T_expr,                                  \
         _bz_typename asExpr<T2>::T_expr,                                  \
         applic<_bz_typename asExpr<T1>::T_expr::T_numtype,                \
-        _bz_typename asExpr<T2>::T_expr::T_numtype> > >                   \
-        (d1, d2.unwrap());                                                \
+               _bz_typename asExpr<T2>::T_expr::T_numtype> > >            \
+        (asExpr<T1>::getExpr(d1.unwrap()),                                \
+         asExpr<T2>::getExpr(d2.unwrap()));                               \
+}
+
+#define BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(name, applic, sca)              \
+                                                                          \
+template<typename T>                                                      \
+_bz_inline_et                                                             \
+_bz_ArrayExprBinaryOp<                                                    \
+    asExpr<sca>::T_expr,                                                  \
+    _bz_typename asExpr<T>::T_expr,                                       \
+    applic<sca,_bz_typename asExpr<T>::T_expr::T_numtype> >               \
+name(const sca d1, const ETBase<T>& d2)                                   \
+{                                                                         \
+    return _bz_ArrayExprBinaryOp<                                         \
+        asExpr<sca>::T_expr,                                              \
+        _bz_typename asExpr<T>::T_expr,                                   \
+        applic<sca,_bz_typename asExpr<T>::T_expr::T_numtype> >           \
+        (asExpr<sca>::getExpr(d1),                                        \
+         asExpr<T>::getExpr(d2.unwrap()));                                \
+}                                                                         \
+                                                                          \
+template<typename T>                                                      \
+_bz_inline_et                                                             \
+_bz_ArrayExprBinaryOp<                                                    \
+    _bz_typename asExpr<T>::T_expr,                                       \
+    asExpr<sca>::T_expr,                                                  \
+    applic<_bz_typename asExpr<T>::T_expr::T_numtype,sca> >               \
+name(const ETBase<T>& d1, const sca d2)                                   \
+{                                                                         \
+    return _bz_ArrayExprBinaryOp<                                         \
+        _bz_typename asExpr<T>::T_expr,                                   \
+        asExpr<sca>::T_expr,                                              \
+        applic<_bz_typename asExpr<T>::T_expr::T_numtype,sca> >           \
+        (asExpr<T>::getExpr(d1.unwrap()),                                 \
+         asExpr<sca>::getExpr(d2));                                       \
 }
 
 /*
@@ -207,6 +196,7 @@ name(const T1& d1, const ETBase<T2>& d2)                                  \
  */
 
 #define BZ_DECLARE_ARRAY_ET_TERNARY(name, applic)                         \
+                                                                          \
 template<typename T1, typename T2, typename T3>                           \
 _bz_inline_et                                                             \
 _bz_ArrayExpr<_bz_ArrayExprTernaryOp<                                     \
@@ -216,7 +206,7 @@ _bz_ArrayExpr<_bz_ArrayExprTernaryOp<                                     \
     applic<_bz_typename asExpr<T1>::T_expr::T_numtype,                    \
            _bz_typename asExpr<T2>::T_expr::T_numtype,                    \
            _bz_typename asExpr<T3>::T_expr::T_numtype> > >                \
-name(const T1& d1, const T2& d2, const T3& d3)                            \
+name(const ETBase<T1>& d1, const ETBase<T2>& d2, const ETBase<T3>& d3)    \
 {                                                                         \
     return _bz_ArrayExpr<_bz_ArrayExprTernaryOp<                          \
         _bz_typename asExpr<T1>::T_expr,                                  \
@@ -225,7 +215,9 @@ name(const T1& d1, const T2& d2, const T3& d3)                            \
         applic<_bz_typename asExpr<T1>::T_expr::T_numtype,                \
                _bz_typename asExpr<T2>::T_expr::T_numtype,                \
                _bz_typename asExpr<T3>::T_expr::T_numtype> > >            \
-        (d1, d2, d3);                                                     \
+        (asExpr<T1>::getExpr(d1.unwrap()),                                \
+         asExpr<T2>::getExpr(d2.unwrap()),                                \
+         asExpr<T3>::getExpr(d3.unwrap()));                               \
 }
 
 #endif /* BZ_TEMPLATES_AS_TEMPLATE_ARGUMENTS */
