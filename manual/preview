@@ -1,0 +1,7 @@
+yodl2tex -l2 $1
+latex $1
+makeindex $1.idx
+latex $1
+dvips $1.dvi >$1.ps
+# ghostview $1.ps
+

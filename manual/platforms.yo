@@ -1,0 +1,96 @@
+For up-to-date information on supported platforms, please consult
+the Blitz++ web page:
+
+url(http://oonumerics.org/blitz/platforms/)(http://oonumerics.org/blitz/platforms/)
+
+The information in this document may be out of date.
+
+
+bzsubsect(KAI C++)
+
+Blitz++ was developed and tested using KAI C++ under AIX.  It should
+(in theory) port to other KAI C++ platforms (Cray, SGI, HP, Sun,
+Linux, DEC) without difficulty.  Since KAI C++ uses an EDG front
+end, other EDG front-ended compilers (e.g. Comeau) should be able
+to compile Blitz++.
+
+bzindex(KAI C++)
+Recommended compile flags are:
+
+bzverb(\
++K3 -O2 --restrict --abstract_pointer --abstract_float -tused
+)
+
+Note that you cannot compile with tt(-tall) (this will generate
+lots of errors).
+
+Under Linux, you may need the flag tt(-D__signed__=).  You should
+omit tt(-tused) since this template instantiation model is not
+supported by tt(gcc), which is used as the back-end compiler.
+
+bzsubsect(Intel C++)
+
+bzindex(Intel C++)
+Intel has a drop-in compiler based on the EDG front end.  It used
+to compile Blitz++, but since that time I've made use of some language
+features it doesn't support.  However, there is a new beta version
+out (3.0) which may be able to compile Blitz++.  Allan Stokes is
+working on this.
+
+More information:
+
+url(http://developer.intel.com/design/perftool/icl24/)(http://developer.intel.com/design/perftool/icl24/)
+
+url(http://developer.intel.com/design/perftool/icl24/icl24wht.htm)(http://developer.intel.com/design/perftool/icl24/icl24wht.htm)
+
+
+bzsubsect(gcc)
+
+bzindex(gcc)
+gcc is a free GNU C++ compiler.  It is a fast-moving version of gcc.
+It compiles Blitz++ reliably.
+
+gcc may be downloaded from 
+url(http://gcc.cygnus.com/)(http://gcc.cygnus.com/).
+
+If you are using gcc under Solaris, SunOS, or OSF/1, please see the
+README.binutils file included in the distribution.
+
+bzsubsect(DECcxx)
+
+bzindex(DECcxx)
+
+The Digital C++ compiler is supported.
+
+bzsubsect(Cray T3E/Cray T90/Cray C90/Cray J90)
+
+bzindex(Cray compiler)
+
+As of Version 0.2-alpha-02 of Blitz++, Version 3.0.0.0 of the
+Cray C++ compiler is supported (well, tolerated anyway).
+It seems to be based on an older version of the EDG front
+end, so some kludges are required.  It doesn't support
+partial ordering of member templates, so slicing arrays
+requires the workaround described in Section ref(slicing-combo).
+Portions of the standard library are missing, such as
+<limits>, <complex>, and <set>.  This means you won't be
+able to use complex numbers (well, not the ISO/ANSI C++
+versions anyway), numeric inquiry functions, or
+fast traversal orders.
+
+These compilation flags are recommended:
+
+bzverb(\
+-h instantiate=used
+)
+
+For optimization, you'll want:
+
+bzverb(\
+-O3 -h aggress
+)
+
+The ability of the Cray C++ compiler to optimize away temporary
+objects is disappointing.  It's not able to optimize away expression
+templates overhead or comma-delimited array initializers.
+
