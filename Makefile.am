@@ -5,9 +5,10 @@
 AUTOMAKE_OPTIONS = foreign
 
 SUBDIRS = bin compiler blitz random src lib testsuite \
-	examples benchmarks doc
+	examples benchmarks doc manual
 
-EXTRA_DIST = LEGAL LICENSE README.binutils README-VS.NET Blitz-VS.NET.zip ChangeLog.1 
+EXTRA_DIST = LEGAL LICENSE README.binutils README-VS.NET Blitz-VS.NET.zip \
+	ChangeLog.1 
 
 # demodir = $(prefix)/demos
 # demo_DATA = demos/Makefile
