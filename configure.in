@@ -120,21 +120,15 @@ AC_ARG_WITH(cxx,
        AC_BZ_SET_COMPILER($withval,"g++","-ftemplate-depth-30")
        CXX_OPTIMIZE_FLAGS="-O2 -funroll-loops -fstrict-aliasing -fno-gcse"
        CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
-       F77=g77
-       F77_OPTIMIZE_FLAGS="-O2 -funroll-loops"
-       FORTLIBS="-lg2c"
-       CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_DOUBLE_TRAILING_UNDERSCORES"
      ;;
-     aCC*)               # HP-UX compiler http://www.hp.com/go/c++
+     aCC)                # HP-UX compiler http://www.hp.com/go/c++
        echo "Configuring for aCC (HP-UX)"
        bz_compiler=aCC
        AC_BZ_SET_COMPILER($withval,"aCC","-AA")
        CXX_OPTIMIZE_FLAGS="-O"
        CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
-       F77=f77
-       F77_OPTIMIZE_FLAGS="-O"
      ;;
-     icc*)               # Intel C++ compiler   http://www.intel.com/
+     icc)                # Intel C++ compiler   http://www.intel.com/
        echo "Configuring for Intel C++"
        bz_compiler=icc
        AC_BZ_SET_COMPILER($withval,"icc","")
@@ -201,6 +195,27 @@ case "$target" in
       ;;
     esac
   ;;
+	*linux*)
+		echo "Linux: assuming g++/g77 or icc/icf"
+		case "$CXX" in
+			g++)
+       F77=g77
+       F77_OPTIMIZE_FLAGS="-O2 -funroll-loops"
+       F90=g77
+       F90_OPTIMIZE_FLAGS="-O2 -funroll-loops"
+       CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_DOUBLE_TRAILING_UNDERSCORES"
+       FORTLIBS="-lg2c"
+			;;
+			icc)
+       F77=ifc
+       F77_OPTIMIZE_FLAGS="-w90 -O2"
+       F90=ifc
+       F90_OPTIMIZE_FLAGS="-O2"
+       CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
+       FORTLIBS="-lF90 -lCEPCF90 -lIEPCF90 -lintrins"
+			;;
+		esac
+	;;
   *solaris*)
     echo "Solaris: assuming f77 and f90"
     F77=f77
