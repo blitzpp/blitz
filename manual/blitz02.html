@@ -29,7 +29,7 @@ features.
 
 <p><!-- BZINDEX Array!template parameters --><a name="index00029">
 <p>The <code>Array</code> class takes two template parameters:
-<p><ul>
+<p><dl>
 <p><li >   <code>T_numtype</code> is the numeric type to be stored in the array.
        <code>T_numtype</code> can be an integral type (bool, char, unsigned char,
        short int, short unsigned int, int, unsigned int, long,
@@ -39,7 +39,7 @@ features.
 <p><li >   <code>N_rank</code> is the <strong>rank</strong> (or dimensionality) of the array.  
        This should be a positive integer. <!-- BZINDEX Array!rank parameter --><a name="index00030">
        <!-- BZINDEX rank parameter of arrays --><a name="index00031">
-<p></ul>
+<p></dl>
 <p>To use the <code>Array</code> class, include the header
 <code>&lt;blitz/array.h&gt;</code> and use the namespace <code>blitz</code>:
 <!-- BZINDEX using namespace blitz --><a name="index00032">
@@ -73,7 +73,7 @@ excerpt sets <code>y</code> equal to a 4x4 identity matrix:
 
 <p><!-- BZINDEX Array!types --><a name="index00035">
 <p>The <code>Array&lt;T,N&gt;</code> class supports a variety of arrays:
-<p><ul>
+<p><dl>
 <p><li > Arrays of scalar types, such as <code>Array&lt;int,1&gt;</code> and <code>Array&lt;float,3&gt;</code>
 <!-- BZINDEX Array!scalar arrays --><a name="index00036">
 <p><li > Complex arrays, such as <code>Array&lt;complex&lt;float&gt;,2&gt;</code>
@@ -100,7 +100,7 @@ vector field.
 <p><li > Nested heterogeneous arrays, such as <code>Array&lt;Array&lt;int,1&gt;,1&gt;</code>, in
 which each element is a variable-length array.
 <p>
-<p></ul>
+<p></dl>
 <p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.1.3: A simple example</font></td></tr></table><a name="l30"></a>
 
 <p>Here's an example program which creates two 3x3 arrays, initializes
@@ -188,7 +188,7 @@ and the starting indices can be arbitrary.
 
 <a name="arrays-types"></a>
     The <code>Array</code> class declares these public types:
-<p><ul>
+<p><dl>
 <p><li >    <code>T_numtype</code> is the element type stored in the array.  For example,
         the type <code>Array&lt;double,2&gt;::T_numtype</code> would be <code>double</code>.
 <p><li >    <code>T_index</code> is a vector index into the array.  The class
@@ -197,7 +197,7 @@ and the starting indices can be arbitrary.
 <p><li >    <code>T_iterator</code> is an iterator type.  NB: this iterator is 
         not yet fully implemented, and is NOT STL compatible at the
         present time.
-<p></ul>
+<p></dl>
 <p>
 <p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>2.3: Constructors</font></td></tr></table><br><a name="l33"></a>
 
@@ -447,13 +447,13 @@ deletes itself and frees the allocated memory.
     
 This section describes how to access the elements of an array.  There
 are three main ways:
-<p><ul>
+<p><dl>
 <p><li >   <strong>Indexing</strong> obtains a single element 
 <li >   Creating a <strong>subarray</strong> which refers to a smaller portion of an 
        array 
 <li >   <strong>Slicing</strong> to produce a smaller-dimensional view of a portion
        of an array 
-<p></ul>
+<p></dl>
 <p>Indexing, subarrays and slicing all use the overloaded parenthesis
 operator().
 <p>As a running example, we'll consider the three dimensional array
@@ -465,7 +465,6 @@ creating a subarray, and slicing.
 <a name="slice"></a><p><center><img src="slice.gif" align="bottom" alt="Figure 1 is shown here."><br> 
 Figure 1: Examples of array indexing, subarrays, and slicing. 
 </center><p><br>
-    
 <p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>2.4.1: Indexing</font></td></tr></table><a name="l44"></a>
 
 <p><!-- BZINDEX Array!indexing --><a name="index00077">
@@ -605,7 +604,6 @@ int main()
 <p><a name="strideslice"></a><p><center><img src="strideslice.gif" align="bottom" alt="Figure 2 is shown here."><br> 
 Figure 2: Using strides to create non-contiguous subarrays 
 </center><p><br>
-    
 <p>And the program output:
 <p><center><table border cellpadding=20 align=top><tr><td bgcolor="C0C0C0"><pre>
 0    0    0    0    0    0    0    0 
@@ -768,7 +766,7 @@ is an integer in the range 0 .. N_rank - 1.  For example, the method
 <code>extent(int n)</code> returns the extent (or length) of the
 array in dimension <code>n</code>.  
 <p>These parameters are problematic:
-<p><ul>
+<p><dl>
 <p><li >    They make the code cryptic.  Someone unfamiliar
         with the <code>reverse()</code> member function won't stand a chance of
         understanding what <code>A.reverse(2)</code> does.
@@ -778,7 +776,7 @@ array in dimension <code>n</code>.
         I'm a experienced C/C++ programmer, I <em>still</em> want
         to think of the first dimension as 1 -- it doesn't make
         sense to talk about the "zeroth" dimension.
-<p></ul>
+<p></dl>
 <p>As a solution to this problem, Blitz++ provides a series
 of symbolic constants which you can use to refer to dimensions:
 <p><!-- BZINDEX firstDim --><a name="index00094">
@@ -1345,14 +1343,14 @@ restored from the stream.  The <code>&gt;&gt;</code> operator expects an
 array in the same input format as generated by the <code>&lt;&lt;</code> operator,
 namely:
 <p><!-- BZINDEX Array!persistence format --><a name="index00217">
-<p><ul>
+<p><dl>
 <li > The size of the array, for example "32" for a 1-dimensional
 array of 32 elements, "12 x 64 x 128" for a 3-dimensional array
 of size 12x64x128.
 <p><li > The symbol <code>'['</code> indicating the start of the array data
 <p><li > The array elements, listed in memory storage order
 <p><li > The symbol <code>']'</code> indicating the end of the array data
-<p></ul>
+<p></dl>
 <p>The operator prototype is:
 <p><pre>
 
@@ -1540,7 +1538,7 @@ Array&lt;int,2&gt; A(Range(5,8), Range(2,5));
 a complete description of the storage format.  If you want a
 storage format other than C or Fortran-style, you have two
 choices:
-<p><ul>
+<p><dl>
 <p><li >     You can create an object of type <code>GeneralArrayStorage&lt;N_rank&gt;</code>,
          customize the storage format, and use the object as a argument
          for the <code>Array</code> constructor.
@@ -1551,7 +1549,7 @@ choices:
          to create the <code>FortranArray&lt;N_rank&gt;</code> objects.  If you want
          to take this approach, you can use the declaration of
          <code>FortranArray&lt;N_rank&gt;</code> in <code>&lt;blitz/array.h&gt;</code> as a guide.
-<p></ul>
+<p></dl>
 <p>The next sections describe how to modify a <code>GeneralArrayStorage&lt;N_rank&gt;</code>
 object to suit your needs.
 <p><p><strong>In higher dimensions</strong><br><br>
@@ -1623,14 +1621,14 @@ contains the base index value for each dimension.  By default,
 the base vector is set to zero.  <code>FortranArray&lt;N_rank&gt;</code> sets
 the base vector to one.  
 <p>To set your own set of bases, you have two choices:
-<p><ul>
+<p><dl>
 <p><li >      You can modify the <code>base</code> vector inside the
           <code>GeneralArrayStorage&lt;N_rank&gt;</code> object.  The method
           <code>base()</code> returns a mutable reference to the <code>base</code>
           vector which you can use to set the bases.
 <p><li >      You can provide a set of <code>Range</code> arguments to the
           <code>Array</code> constructor.
-<p></ul>
+<p></dl>
 <p>Here are some examples of the first approach:
 <p><pre>
 // Set all bases equal to 5
@@ -1726,8 +1724,17 @@ major order.
  * $Id$
  *
  * $Log$
- * Revision 1.1  2000/06/19 12:26:19  tveldhui
- * Initial revision
+ * Revision 1.2  2001/01/24 23:41:56  tveldhui
+ * Widespread changes to reduce compile time.  For backwards
+ * compatibility, #include <blitz/array.h> enables BZ_GANG_INCLUDE
+ * mode which includes all array and vector functionality (about
+ * 120000 lines of code).  #include <blitz/array-only.h> includes
+ * a minimal subset of Array funcitonality; other features must
+ * be included explicitly.
+ *
+ * Revision 1.1  2000/06/19 13:03:29  tveldhui
+ * Initial source check-in; added files not usually released in the
+ * distribution.
  *
  * Revision 1.1  1997/07/16 19:38:23  tveldhui
  * Update: Alpha release 0.2 (Arrays)

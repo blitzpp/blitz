@@ -2,8 +2,16 @@
  * $Id$
  *
  * $Log$
- * Revision 1.1  2000/06/19 12:26:13  tveldhui
- * Initial revision
+ * Revision 1.2  2001/01/24 23:41:53  tveldhui
+ * Widespread changes to reduce compile time.  For backwards
+ * compatibility, #include <blitz/array.h> enables BZ_GANG_INCLUDE
+ * mode which includes all array and vector functionality (about
+ * 120000 lines of code).  #include <blitz/array-only.h> includes
+ * a minimal subset of Array funcitonality; other features must
+ * be included explicitly.
+ *
+ * Revision 1.1.1.1  2000/06/19 12:26:13  tveldhui
+ * Imported sources
  *
  * Revision 1.4  1998/03/14 00:04:47  tveldhui
  * 0.2-alpha-05
@@ -364,7 +372,8 @@ Array<T_numtype2,N_rank> Array<T_numtype,N_rank>::extractComponent(T_numtype2,
         && (componentNumber < numComponents));
 
     TinyVector<int,N_rank> stride2;
-    stride2 = stride_ * numComponents;
+    for (int i=0; i < N_rank; ++i)
+      stride2(i) = stride_(i) * numComponents;
     const T_numtype2* dataFirst2 = 
         ((const T_numtype2*)dataFirst()) + componentNumber;
     return Array<T_numtype2,N_rank>(const_cast<T_numtype2*>(dataFirst2), 

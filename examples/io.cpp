@@ -1,4 +1,5 @@
-#include <blitz/array.h>
+#include <blitz/array-only.h>
+#include <blitz/array/ops.h>
 #include <fstream.h>
 
 BZ_USING_NAMESPACE(blitz)

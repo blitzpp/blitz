@@ -33,7 +33,7 @@
 #define NO_STIRRING
 #undef NO_GRAVITY
 
-#include <blitz/array.h>
+#include <blitz/array.h>     
 #include <blitz/array/cgsolve.h>
 #include <fstream.h>
 

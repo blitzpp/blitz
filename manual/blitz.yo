@@ -18,8 +18,8 @@ latexcommand(\textheight 8.5in)
 latexcommand(\textwidth 6in)
 
 XXsetdocumentheader(Blitz++ User's Guide)
-                   (Todd Veldhuizen nl() <tt(tveldhui@acm.org)>)
-                   (Version 0.5, June 1999)
+                   (Todd Veldhuizen nl() tt(<tveldhui@acm.org>))
+                   (Version 0.6, January 2001)
 
 COMMENT(
        ( PIPETHROUGH(date +"%B %d, %Y")(x)

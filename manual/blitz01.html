@@ -155,37 +155,37 @@ the option <code>--with-blas=...</code> to specify the path where the
 blas library is found.
 <p>Once the configure script is done, you can do any of these
 things:
-<p><ul>
-<p><li><strong><code>make lib    </code></strong>     Check the compiler and create libblitz.a
-<p><li><strong><code>make check  </code></strong>     Do the above plus build and check the testsuite
-<p><li><strong><code>make all    </code></strong>     Do the above plus build the examples and benchmarks.
+<p><dl>
+<p><p></p><dt><strong><code>make lib    </code></strong><dd>     Check the compiler and create libblitz.a
+<p><p></p><dt><strong><code>make check  </code></strong><dd>     Do the above plus build and check the testsuite
+<p><p></p><dt><strong><code>make all    </code></strong><dd>     Do the above plus build the examples and benchmarks.
 This may take a <strong>long</strong> time.
-<p></ul>
+<p></dl>
 <p>Building the benchmark programs requires both a Fortran 77 and
 Fortran 90 compiler.
 <p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>1.4.2: The Blitz++ directory tree</font></td></tr></table><a name="l12"></a>
 
 <p>The main Blitz++ directory contains these subdirectories:
-<p><ul>
-<p><li><strong><code>blitz/       </code></strong> Blitz++ headers and source files
-<p><li><strong><code>random/      </code></strong> Random number generators
-<p><li><strong><code>compiler/    </code></strong> Blitz++ compiler tests.  The <code>bzconfig</code> script is used
+<p><dl>
+<p><p></p><dt><strong><code>blitz/       </code></strong><dd> Blitz++ headers and source files
+<p><p></p><dt><strong><code>random/      </code></strong><dd> Random number generators
+<p><p></p><dt><strong><code>compiler/    </code></strong><dd> Blitz++ compiler tests.  The <code>bzconfig</code> script is used
    to test a compiler for ISO/ANSI C++ compatability.  This script creates
    the <code>blitz/config.h</code> header file, which may enable various kludges
    to compensate for deficiencies of your compiler.
-<p><li><strong><code>examples/    </code></strong> Example programs
-<p><li><strong><code>manual/      </code></strong> Documentation in HTML and PostScript.
-<p><li><strong><code>benchmarks/  </code></strong> Benchmark programs
-<p><li><strong><code>testsuite/   </code></strong> Testsuite programs
-<p><li><strong><code>src/         </code></strong> Source code for <code>libblitz.a</code>
-<p><li><strong><code>lib/         </code></strong> Where <code>libblitz.a</code> lives.
-<p></ul>
+<p><p></p><dt><strong><code>examples/    </code></strong><dd> Example programs
+<p><p></p><dt><strong><code>manual/      </code></strong><dd> Documentation in HTML and PostScript.
+<p><p></p><dt><strong><code>benchmarks/  </code></strong><dd> Benchmark programs
+<p><p></p><dt><strong><code>testsuite/   </code></strong><dd> Testsuite programs
+<p><p></p><dt><strong><code>src/         </code></strong><dd> Source code for <code>libblitz.a</code>
+<p><p></p><dt><strong><code>lib/         </code></strong><dd> Where <code>libblitz.a</code> lives.
+<p></dl>
 <p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>1.4.3: Porting Blitz++</font></td></tr></table><a name="l13"></a>
 
 <p><!-- BZINDEX porting Blitz++ --><a name="index00011">
 <p>If you want to try porting Blitz++ to a new compiler or platform,
 I suggest the following approach:
-<p><ul>
+<p><dl>
 <p><li > First check the Blitz++ web page to make sure you have
 the latest snapshot, and that someone hasn't already ported
 blitz to your platform.
@@ -200,7 +200,7 @@ blitz to your platform.
      autoconf to generate the configure script.  Then try
      configure with your new --with-cxx= option.  Repeat
      until it works..
-<p></ul>
+<p></dl>
 <p>
 <p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>1.5: Compiling with Blitz++</font></td></tr></table><br><a name="l14"></a>
 

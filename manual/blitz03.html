@@ -52,14 +52,14 @@ be set to the value in <code>A(1)</code>.
 For 1D arrays, this means it will go from beginning to the end
 of the array in memory (see notes below).  For multidimensional arrays, it 
 will do one of two things:
-<p><ul>
+<p><dl>
 <p><li > try to go through the destination array in the order it is 
 laid out in memory (i.e.  row-major for row-major arrays, 
 column-major for column-major arrays).
 <p><li > if the expression is a stencil, Blitz will do tiling to
 improve cache use.  Under some circumstances blitz will even use 
 a traversal based on a hilbert curve (a fractal) for 3D arrays.  
-<p></ul>
+<p></dl>
 <p>Because the traversal order is not always predictable, it is
 safest to put the result in a new array if you are doing a
 stencil-style expression.  Blitz guarantees this
@@ -68,7 +68,7 @@ of the operands, you have to guess correctly which traversal order
 blitz will choose.  This is easy for the 1D case, but hard for
 the multidimensional case.
 <p>Some special notes about 1D array traversals:
-<p><ul>
+<p><dl>
 <p><li > if your array is stored in reverse order,
   i.e. because of a A.reverse(firstDim) or funny storage order,
   blitz will go through the array from end to beginning in
@@ -78,12 +78,12 @@ the multidimensional case.
   for stride = +1, and it would be wasteful to also specialize
   for the case stride = -1.  So 1D arrays are traversed from
   beginning to end (in memory storage order).
-<p></ul>
+<p></dl>
 <p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>3.2: Expression operands</font></td></tr></table><br><a name="l64"></a>
 
 <p><!-- BZINDEX Array!expression operands --><a name="index00231">
 <p>An expression can contain any mix of these operands:
-<p><ul>
+<p><dl>
 <p><li >    An array of any type, so long as it is of the same rank.  Expressions
         which contain a mixture of array types are handled through the
         type promotion mechanism described below.
@@ -91,7 +91,7 @@ the multidimensional case.
         or <code>complex&lt;T&gt;</code>
 <p><li >    Index placeholders, described below
 <p><li >    Other expressions (e.g. <code>A+(B+C)</code>)
-<p></ul>
+<p></dl>
 <p>
 <p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>3.3: Array operands</font></td></tr></table><br><a name="l65"></a>
 
@@ -110,13 +110,13 @@ A(I,J) = (B(I,J) + B(I+1,J) + B(I-1,J)
 Arrays with different storage formats (for example, C-style and
 Fortran-style) can be mixed in the same expression.  Blitz++
 will handle the different storage formats automatically.  However:
-<p><ul>
+<p><dl>
 <p><li >    Evaluation may be slower, since a different traversal order
         may be used.
 <p><li >    If you are using index placeholders (see below) or reductions
         in the expression, you may <strong>not</strong> mix array objects with
         different starting bases.  
-<p></ul>
+<p></dl>
 <p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>3.4: Expression operators</font></td></tr></table><br><a name="l66"></a>
 
 <p><!-- BZINDEX operators, array expressions --><a name="index00234">
@@ -181,12 +181,12 @@ These assignment operators are supported:
 <p><code>= += -= *= /= %= ^= &amp;= |= &gt;&gt;= &lt;&lt;=</code>
 <p>An array object should appear on the left side of the operator.  The
 right side can be:
-<p><ul>
+<p><dl>
 <p><li >   A constant (or literal) of type <code>T_numtype</code>
 <p><li >   An array of appropriate rank, possibly of a different numeric
        type
 <p><li >   An array expression, with appropriate rank and shape
-<p></ul>
+<p></dl>
 <p>
 <p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>3.6: Index placeholders</font></td></tr></table><br><a name="l68"></a>
  <a name="index-placeholders"></a>
@@ -245,7 +245,6 @@ F = cos(omega * sqrt(pow2(i-midpoint) + pow2(j-midpoint)))
 <a name="sinsoid"></a><p><center><img src="sinsoid.gif" align="bottom" alt="Figure 3 is shown here."><br> 
 Figure 3: Array filled using an index placeholder expression 
 </center><p><br>
-    
 <p>You can use index placeholder expressions in up to 11 dimensions.
 Here's a three dimensional example:
 <p><pre>// Fill a three-dimensional array with a Gaussian function
@@ -313,7 +312,7 @@ to whichever type has greater precision.
 <p>The rules for type promotion of user-defined types (or
 types from another library) are a bit complicated.
 Here's how a pair of operand types are promoted:
-<p><ul>
+<p><dl>
 <p><li >    If both types are intrinsic (e.g. bool, int, float)
         then type promotion follows the standard C rules.
         This generally means that the result will be promoted
@@ -328,10 +327,10 @@ Here's how a pair of operand types are promoted:
         promoted to whichever type requires more storage space
         (as determined by <code>sizeof()</code>).  The rationale is that
         more storage space probably indicates more precision.
-<p></ul>
+<p></dl>
 <p>If you wish to alter the default type promotion rules
 above, you have two choices:
-<p><ul>
+<p><dl>
 <p><!-- BZINDEX promote_trait --><a name="index00258">
 <p><li >    If the type promotion behaviour isn't dependent on the
         type of operation performed, then you can provide appropriate
@@ -340,7 +339,7 @@ above, you have two choices:
 <p><li >    If type promotion does depend on the type of operation,
         then you will need to specialize the appropriate function
         objects in <code>&lt;blitz/ops.h&gt;</code>.
-<p></ul>
+<p></dl>
 <p>Note that you can do these specializations in your own header
 files (you don't have to edit promote.h or ops.h).
 <p><h3>Manual casts</h3><p>
@@ -383,41 +382,41 @@ A = sin(B);
 <p>These math functions are available on all platforms:
 <p><!-- BZINDEX math functions --><a name="index00262">
 <!-- BZINDEX complex math functions --><a name="index00263">
-<p><ul>
-<li><strong>abs()</strong> Absolute value <!-- BZINDEX abs() --><a name="index00264">
-<li><strong>acos()</strong> Inverse cosine.  For real arguments, the return value is
+<p><dl>
+<p></p><dt><strong>abs()</strong><dd> Absolute value <!-- BZINDEX abs() --><a name="index00264">
+<p></p><dt><strong>acos()</strong><dd> Inverse cosine.  For real arguments, the return value is
             in the range [0, pi].  <!-- BZINDEX acos() --><a name="index00265">
-<li><strong>arg()</strong>  Argument of a complex number (atan2(Im,Re)). <!-- BZINDEX arg() --><a name="index00266">
-<li><strong>asin()</strong> Inverse sine.  For real arguments, the return value is
+<p></p><dt><strong>arg()</strong><dd>  Argument of a complex number (atan2(Im,Re)). <!-- BZINDEX arg() --><a name="index00266">
+<p></p><dt><strong>asin()</strong><dd> Inverse sine.  For real arguments, the return value is
             in the range [-pi/2, pi/2].  <!-- BZINDEX asin() --><a name="index00267">
-<li><strong>atan()</strong> Inverse tangent.  For real arguments, the return value is
+<p></p><dt><strong>atan()</strong><dd> Inverse tangent.  For real arguments, the return value is
             in the range [-pi/2, pi/2].  See also <code>atan2()</code> in section 
             <a href="blitz03.html#arrays-atan2">3.9</a>.  <!-- BZINDEX atan() --><a name="index00268">
-<li><strong>ceil()</strong> Ceiling function: smallest floating-point integer value not less
+<p></p><dt><strong>ceil()</strong><dd> Ceiling function: smallest floating-point integer value not less
             than the argument. <!-- BZINDEX ceil() --><a name="index00269">
-<li><strong>cexp()</strong> Complex exponential; same as exp(). <!-- BZINDEX cexp() --><a name="index00270">
-<li><strong>conj()</strong> Conjugate of a complex number. <!-- BZINDEX conj() --><a name="index00271">
-<li><strong>cos()</strong>  Cosine.  Works for <code>complex&lt;T&gt;</code>.  <!-- BZINDEX cos() --><a name="index00272">
-<li><strong>cosh()</strong> Hyperbolic cosine.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX cosh() --><a name="index00273">
-<li><strong>csqrt()</strong> Complex square root; same as sqrt(). <!-- BZINDEX csqrt() --><a name="index00274">
-<li><strong>exp()</strong>  Exponential.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX exp() --><a name="index00275">
-<li><strong>fabs()</strong> Same as abs().  <!-- BZINDEX fabs() --><a name="index00276">
-<li><strong>floor()</strong> Floor function: largest floating-point integer value not greater
+<p></p><dt><strong>cexp()</strong><dd> Complex exponential; same as exp(). <!-- BZINDEX cexp() --><a name="index00270">
+<p></p><dt><strong>conj()</strong><dd> Conjugate of a complex number. <!-- BZINDEX conj() --><a name="index00271">
+<p></p><dt><strong>cos()</strong><dd>  Cosine.  Works for <code>complex&lt;T&gt;</code>.  <!-- BZINDEX cos() --><a name="index00272">
+<p></p><dt><strong>cosh()</strong><dd> Hyperbolic cosine.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX cosh() --><a name="index00273">
+<p></p><dt><strong>csqrt()</strong><dd> Complex square root; same as sqrt(). <!-- BZINDEX csqrt() --><a name="index00274">
+<p></p><dt><strong>exp()</strong><dd>  Exponential.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX exp() --><a name="index00275">
+<p></p><dt><strong>fabs()</strong><dd> Same as abs().  <!-- BZINDEX fabs() --><a name="index00276">
+<p></p><dt><strong>floor()</strong><dd> Floor function: largest floating-point integer value not greater
             than the argument. <!-- BZINDEX floor() --><a name="index00277">
-<li><strong>log()</strong>  Natural logarithm.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX log() --><a name="index00278">
-<li><strong>log10()</strong> Base 10 logarithm.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX log10() --><a name="index00279">
-<li><strong>pow2(), pow3(), pow4(), pow5(), pow6(), pow7(), pow8()</strong> These functions
+<p></p><dt><strong>log()</strong><dd>  Natural logarithm.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX log() --><a name="index00278">
+<p></p><dt><strong>log10()</strong><dd> Base 10 logarithm.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX log10() --><a name="index00279">
+<p></p><dt><strong>pow2(), pow3(), pow4(), pow5(), pow6(), pow7(), pow8()</strong><dd> These functions
             compute an integer power.  They expand to a series of 
             multiplications, so they can be used on any type for
             which multiplication is well-defined. <!-- BZINDEX pow2() --><a name="index00280">
             <!-- BZINDEX pow3() --> <!-- BZINDEX pow?() --><a name="index00281">
-<li><strong>sin()</strong>  Sine.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX sin() --><a name="index00282">
-<li><strong>sinh()</strong> Hyperbolic sine.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX cos() --><a name="index00283">
-<li><strong>sqr()</strong>  Same as pow2().  Computes x*x. Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX sqr() --><a name="index00284">
-<li><strong>sqrt()</strong> Square root.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX sqrt() --><a name="index00285">
-<li><strong>tan()</strong>  Tangent.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX tan() --><a name="index00286">
-<li><strong>tanh()</strong> Hyperbolic tangent.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX tanh() --><a name="index00287">
-<p></ul>
+<p></p><dt><strong>sin()</strong><dd>  Sine.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX sin() --><a name="index00282">
+<p></p><dt><strong>sinh()</strong><dd> Hyperbolic sine.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX cos() --><a name="index00283">
+<p></p><dt><strong>sqr()</strong><dd>  Same as pow2().  Computes x*x. Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX sqr() --><a name="index00284">
+<p></p><dt><strong>sqrt()</strong><dd> Square root.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX sqrt() --><a name="index00285">
+<p></p><dt><strong>tan()</strong><dd>  Tangent.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX tan() --><a name="index00286">
+<p></p><dt><strong>tanh()</strong><dd> Hyperbolic tangent.  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX tanh() --><a name="index00287">
+<p></dl>
 <p><h3>IEEE/System V math functions</h3><p>
 <p><!-- BZINDEX IEEE math functions --><a name="index00288">
 <!-- BZINDEX System V math functions --><a name="index00289">
@@ -450,58 +449,58 @@ unsatisfactory and will probably change in a future version.
 <p>You may have to link with <code>-lm</code> and/or <code>-lmsaa</code> to use these
 functions.
 <p>None of these functions are available for <code>complex&lt;T&gt;</code>.
-<p><ul>
-<p><li><strong>acosh()</strong>   Inverse hyperbolic cosine <!-- BZINDEX acosh() --><a name="index00294">
-<li><strong>asinh()</strong>   Inverse hyperbolic sine <!-- BZINDEX asinh() --><a name="index00295">
-<li><strong>atanh()</strong>   Inverse hyperbolic tangent <!-- BZINDEX atanh() --><a name="index00296">
-<li><strong>_class()</strong>  Classification of floating point values.  The return type
+<p><dl>
+<p><p></p><dt><strong>acosh()</strong><dd>   Inverse hyperbolic cosine <!-- BZINDEX acosh() --><a name="index00294">
+<p></p><dt><strong>asinh()</strong><dd>   Inverse hyperbolic sine <!-- BZINDEX asinh() --><a name="index00295">
+<p></p><dt><strong>atanh()</strong><dd>   Inverse hyperbolic tangent <!-- BZINDEX atanh() --><a name="index00296">
+<p></p><dt><strong>_class()</strong><dd>  Classification of floating point values.  The return type
                is integer and will be one of: <!-- BZINDEX _class() --><a name="index00297">
-   <ul>
-      <li><strong>FP_PLUS_NORM</strong> Positive normalized, nonzero <!-- BZINDEX FP_PLUS_NORM --><a name="index00298">
-      <li><strong>FP_MINUS_NORM</strong> Negative normalized, nonzero <!-- BZINDEX FP_MINUS_NORM --><a name="index00299">
-      <li><strong>FP_PLUS_DENORM</strong> Positive denormalized, nonzero <!-- BZINDEX FP_PLUS_DENORM --><a name="index00300">
-      <li><strong>FP_MINUS_DENORM</strong> Negative denormalized, nonzero <!-- BZINDEX FP_MINUS_DENORM --><a name="index00301">
-      <li><strong>FP_PLUS_ZERO</strong> +0.0 <!-- BZINDEX FP_PLUS_ZERO --><a name="index00302">
-      <li><strong>FP_MINUS_ZERO</strong> -0.0 <!-- BZINDEX FP_MINUS_ZERO --><a name="index00303">
-      <li><strong>FP_PLUS_INF</strong>  Positive infinity  <!-- BZINDEX FP_PLUS_INF --><a name="index00304">
-      <li><strong>FP_MINUS_INF</strong>  Negative infinity <!-- BZINDEX FP_MINUS_INF --><a name="index00305">
-      <li><strong>FP_NANS</strong>      Signalling Not a Number (NaNS) <!-- BZINDEX FP_NANS --><a name="index00306">
-      <li><strong>FP_NANQ</strong>      Quiet Not a Number (NaNQ) <!-- BZINDEX FP_NANQ --><a name="index00307">
-   </ul>
-<p><li><strong>cbrt()</strong>   Cubic root <!-- BZINDEX cbrt() --><a name="index00308">
-<li><strong>expm1()</strong>  Computes exp(x)-1 <!-- BZINDEX expm1() --><a name="index00309">
-<li><strong>erf()</strong>    Computes the error function:  <!-- BZINDEX erf() --><a name="index00310">
+   <dl>
+      <p></p><dt><strong>FP_PLUS_NORM</strong><dd> Positive normalized, nonzero <!-- BZINDEX FP_PLUS_NORM --><a name="index00298">
+      <p></p><dt><strong>FP_MINUS_NORM</strong><dd> Negative normalized, nonzero <!-- BZINDEX FP_MINUS_NORM --><a name="index00299">
+      <p></p><dt><strong>FP_PLUS_DENORM</strong><dd> Positive denormalized, nonzero <!-- BZINDEX FP_PLUS_DENORM --><a name="index00300">
+      <p></p><dt><strong>FP_MINUS_DENORM</strong><dd> Negative denormalized, nonzero <!-- BZINDEX FP_MINUS_DENORM --><a name="index00301">
+      <p></p><dt><strong>FP_PLUS_ZERO</strong><dd> +0.0 <!-- BZINDEX FP_PLUS_ZERO --><a name="index00302">
+      <p></p><dt><strong>FP_MINUS_ZERO</strong><dd> -0.0 <!-- BZINDEX FP_MINUS_ZERO --><a name="index00303">
+      <p></p><dt><strong>FP_PLUS_INF</strong><dd>  Positive infinity  <!-- BZINDEX FP_PLUS_INF --><a name="index00304">
+      <p></p><dt><strong>FP_MINUS_INF</strong><dd>  Negative infinity <!-- BZINDEX FP_MINUS_INF --><a name="index00305">
+      <p></p><dt><strong>FP_NANS</strong><dd>      Signalling Not a Number (NaNS) <!-- BZINDEX FP_NANS --><a name="index00306">
+      <p></p><dt><strong>FP_NANQ</strong><dd>      Quiet Not a Number (NaNQ) <!-- BZINDEX FP_NANQ --><a name="index00307">
+   </dl>
+<p><p></p><dt><strong>cbrt()</strong><dd>   Cubic root <!-- BZINDEX cbrt() --><a name="index00308">
+<p></p><dt><strong>expm1()</strong><dd>  Computes exp(x)-1 <!-- BZINDEX expm1() --><a name="index00309">
+<p></p><dt><strong>erf()</strong><dd>    Computes the error function:  <!-- BZINDEX erf() --><a name="index00310">
               
               erf(x) = 2/sqrt(Pi) * integral(exp(-t^2), t=0..x)
               Note that for large values of the parameter, calculating
                1.0-erf(x)
               can result in extreme loss of accuracy.  Instead, use erfc().
-<li><strong>erfc()</strong>   Computes the complementary error function <!-- BZINDEX erfc() --><a name="index00311">
+<p></p><dt><strong>erfc()</strong><dd>   Computes the complementary error function <!-- BZINDEX erfc() --><a name="index00311">
               
               erfc(x) = 1.0 - erf(x).  
 
-<li><strong>ilogb()</strong>  Returns an integer which is equal to the unbiased exponent
+<p></p><dt><strong>ilogb()</strong><dd>  Returns an integer which is equal to the unbiased exponent
               of the parameter.               <!-- BZINDEX ilogb() --><a name="index00312">
-<li><strong>isnan()</strong>  Returns a nonzero integer if the parameter is NaNQ or NaNS
+<p></p><dt><strong>isnan()</strong><dd>  Returns a nonzero integer if the parameter is NaNQ or NaNS
               (quiet or signalling Not a Number). <!-- BZINDEX isnan() --><a name="index00313">
-<li><strong>itrunc()</strong> Round a floating-point number to a signed integer.  Returns
+<p></p><dt><strong>itrunc()</strong><dd> Round a floating-point number to a signed integer.  Returns
               the nearest signed integer to the parameter in the direction of
               0. <!-- BZINDEX itrunc() --><a name="index00314">
-<li><strong>j0()</strong>     Bessel function of the first kind, order 0. <!-- BZINDEX Bessel functions --> <!-- BZINDEX j0() --><a name="index00315">
-<li><strong>j1()</strong>     Bessel function of the first kind, order 1. <!-- BZINDEX j1() --><a name="index00316">
-<li><strong>lgamma()</strong> Natural logarithm of the gamma function.  The gamma function
+<p></p><dt><strong>j0()</strong><dd>     Bessel function of the first kind, order 0. <!-- BZINDEX Bessel functions --> <!-- BZINDEX j0() --><a name="index00315">
+<p></p><dt><strong>j1()</strong><dd>     Bessel function of the first kind, order 1. <!-- BZINDEX j1() --><a name="index00316">
+<p></p><dt><strong>lgamma()</strong><dd> Natural logarithm of the gamma function.  The gamma function
               <!-- BZINDEX lgamma() --> <!-- BZINDEX Gamma function --><a name="index00317">
                Gamma(x) is defined as:
               
               
                 Gamma(x) = integral(e^(-t) * t^(x-1), t=0..infinity)
-<li><strong>logb()</strong>   Returns a floating-point double that is equal to the
+<p></p><dt><strong>logb()</strong><dd>   Returns a floating-point double that is equal to the
               unbiased exponent of the parameter. <!-- BZINDEX logb() --><a name="index00318">
-<li><strong>log1p()</strong>  Calculates log(1+x), where x is the parameter. <!-- BZINDEX log1p() --><a name="index00319">
-<li><strong>nearest()</strong> Returns the nearest floating-point integer value to the
+<p></p><dt><strong>log1p()</strong><dd>  Calculates log(1+x), where x is the parameter. <!-- BZINDEX log1p() --><a name="index00319">
+<p></p><dt><strong>nearest()</strong><dd> Returns the nearest floating-point integer value to the
               parameter.  If the parameter is exactly halfway between
               two integer values, an even value is returned. <!-- BZINDEX nearest() --><a name="index00320">
-<li><strong>rint()</strong>   Rounds the parameter and returns a floating-point integer
+<p></p><dt><strong>rint()</strong><dd>   Rounds the parameter and returns a floating-point integer
               value.  Whether <code>rint()</code> rounds up or down or to the nearest
               integer depends on the current floating-point rounding mode.
               If you haven't altered the rounding mode, <code>rint()</code> should be
@@ -511,81 +510,81 @@ functions.
               <code>floor()</code>.  If the mode is round toward zero, <code>rint()</code>
               is equivalent to <code>trunc()</code>. <!-- BZINDEX rint() --><a name="index00321">
               <!-- BZINDEX rounding: rint() -->)<a name="index00322">
-<li><strong>rsqrt()</strong>  Reciprocal square root. <!-- BZINDEX rsqrt() --><a name="index00323">
+<p></p><dt><strong>rsqrt()</strong><dd>  Reciprocal square root. <!-- BZINDEX rsqrt() --><a name="index00323">
 
-<li><strong>uitrunc()</strong> Returns the nearest unsigned integer to the parameter in
+<p></p><dt><strong>uitrunc()</strong><dd> Returns the nearest unsigned integer to the parameter in
               the direction of zero. <!-- BZINDEX uitrunc() --><a name="index00324">
-<li><strong>y0()</strong>     Bessel function of the second kind, order 0. <!-- BZINDEX y0() --><a name="index00325">
-<li><strong>y1()</strong>     Bessel function of the second kind, order 1. <!-- BZINDEX y1() --><a name="index00326">
-<p></ul>
+<p></p><dt><strong>y0()</strong><dd>     Bessel function of the second kind, order 0. <!-- BZINDEX y0() --><a name="index00325">
+<p></p><dt><strong>y1()</strong><dd>     Bessel function of the second kind, order 1. <!-- BZINDEX y1() --><a name="index00326">
+<p></dl>
 <p>There may be better descriptions of these functions in your
 system man pages.
 <p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>3.9: Two-argument math functions</font></td></tr></table><br><a name="l71"></a>
 
 <p>The math functions described in this section take two arguments.
 Most combinations of these types may be used as arguments:
-<p><ul>
+<p><dl>
 <p><li >    An Array object
 <p><li >    An Array expression
 <p><li >    An index placeholder
 <p><li >    A scalar of type <code>float</code>, <code>double</code>, <code>long double</code>,
         or <code>complex&lt;T&gt;</code>
-<p></ul>
+<p></dl>
 <p><h3>ANSI C++ math functions</h3><p>
 <p>These math functions are available on all platforms, and work for
 complex numbers.
-<p><ul>
+<p><dl>
 <p><a name="arrays-atan2"></a>
 <p><!-- BZINDEX math functions --><a name="index00327">
 <!-- BZINDEX complex math functions --><a name="index00328">
-<p><li><strong>atan2(x,y)</strong>  Inverse tangent of (y/x).  The signs of both
+<p><p></p><dt><strong>atan2(x,y)</strong><dd>  Inverse tangent of (y/x).  The signs of both
                  parameters are used to determine the quadrant of the
                  return value, which is in the range [-pi, pi].
                  Works for <code>complex&lt;T&gt;</code>. <!-- BZINDEX atan2() --><a name="index00329">
-<li><strong>blitz::polar(r,t)</strong>      Computes 
+<p></p><dt><strong>blitz::polar(r,t)</strong><dd>      Computes 
                      r e<sup>it</sup>; i.e. converts
                      polar-form to Cartesian form complex numbers.
                  The <code>blitz::</code> scope qualifier is needed to
                  disambiguate the ANSI C++ function template
                  <code>polar(T,T)</code>.  This qualifier will hopefully
                  disappear in a future version. <!-- BZINDEX polar() --><a name="index00330">
-<li><strong>pow(x,y)</strong>    Computes x to the exponent y.  Works for
+<p></p><dt><strong>pow(x,y)</strong><dd>    Computes x to the exponent y.  Works for
                  <code>complex&lt;T&gt;</code>. <!-- BZINDEX pow() --><a name="index00331">
-<p></ul>
+<p></dl>
 <p><h3>IEEE/System V math functions</h3><p>
 <p>See the notes about IEEE/System V math functions in the previous
 section.  None of these functions work for complex numbers.
 They will all cast their arguments to double precision.
-<p><ul>
-<p><li><strong>copysign(x,y)</strong>   Returns the x parameter with the same sign as
+<p><dl>
+<p><p></p><dt><strong>copysign(x,y)</strong><dd>   Returns the x parameter with the same sign as
                      the y parameter. <!-- BZINDEX copysign() --><a name="index00332">
-<li><strong>drem(x,y)</strong>       Computes a floating point remainder.  The return
+<p></p><dt><strong>drem(x,y)</strong><dd>       Computes a floating point remainder.  The return
                      value r is equal to r = x - n * y, where n is
                      equal to <code>nearest(x/y)</code> (the nearest integer to
                      x/y).  The return value will lie in the range
                      [ -y/2, +y/2 ].  If y is zero or x is +INF or -INF,
                      NaNQ is returned. <!-- BZINDEX drem() --><a name="index00333">
                      <!-- BZINDEX remainder, floating point drem() --><a name="index00334">
-<li><strong>fmod(x,y)</strong>       Computes a floating point modulo remainder.  The
+<p></p><dt><strong>fmod(x,y)</strong><dd>       Computes a floating point modulo remainder.  The
                      return value r is equal to r = x - n * y, where
                      n is selected so that r has the same sign as x
                      and magnitude less than abs(y).  In order words,
                      if x &gt; 0, r is in the range [0, |y|], and if x &lt; 0,
                      r is in the range [-|y|, 0]. <!-- BZINDEX fmod() --><a name="index00335">
                      <!-- BZINDEX modulo, floating point fmod() --><a name="index00336">
-<li><strong>hypot(x,y)</strong>      Computes 
+<p></p><dt><strong>hypot(x,y)</strong><dd>      Computes 
                      sqrt(x<sup>2</sup> + y<sup>2</sup>) so
                      that underflow does not occur and overflow occurs only
                      if the final result warrants it. <!-- BZINDEX hypot() --><a name="index00337">
-<li><strong>nextafter(x,y)</strong>  Returns the next representable number after 
+<p></p><dt><strong>nextafter(x,y)</strong><dd>  Returns the next representable number after 
                      x in the direction of y. <!-- BZINDEX nextafter() --><a name="index00338">
-<li><strong>remainder(x,y)</strong>  Equivalent to drem(x,y). <!-- BZINDEX remainder() --><a name="index00339">
-<li><strong>scalb(x,y)</strong>      Calculates  
+<p></p><dt><strong>remainder(x,y)</strong><dd>  Equivalent to drem(x,y). <!-- BZINDEX remainder() --><a name="index00339">
+<p></p><dt><strong>scalb(x,y)</strong><dd>      Calculates  
                      x * 2<sup>y</sup>. <!-- BZINDEX scalb() --><a name="index00340">
-<li><strong>unordered(x,y)</strong>  Returns a nonzero value if a floating-point comparison
+<p></p><dt><strong>unordered(x,y)</strong><dd>  Returns a nonzero value if a floating-point comparison
                      between x and y would be unordered.  Otherwise, it
                      returns zero. <!-- BZINDEX unordered() --><a name="index00341">
-<p></ul>
+<p></dl>
 <p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>3.10: Declaring your own math functions on arrays</font></td></tr></table><br><a name="l72"></a>
 
 <p><a name="user-et"></a>
@@ -690,7 +689,6 @@ C    = A  x  - A  y
 <p><a name="tensor1"></a><p><center><img src="tensor1.gif" align="bottom" alt="Figure 4 is shown here."><br> 
 Figure 4: Examples of array indexing, subarrays, and slicing. 
 </center><p><br>
-    
 <p>Here's an example which computes an outer product of two one-dimensional
 arrays:
 <!-- BZINDEX outer product --><a name="index00348">
@@ -819,14 +817,14 @@ you are probably best off manually creating temporaries for
 <!-- BZINDEX reductions --><a name="index00355">
 <p>Currently, Blitz++ arrays support two forms of reduction: (A
 future version will likely support block reductions.)
-<p><ul>
+<p><dl>
 <p><li >     Reductions which transform an array into a scalar (for example,
          summing the elements).  These are referred to as
          <strong>complete reductions</strong>.
 <p><li >     Reducing an N dimensional array (or array expression) to an N-1 
          dimensional array expression.  These are called <strong>partial
          reductions</strong>.
-<p></ul>
+<p></dl>
 <p><!-- BZINDEX Array!reductions!complete --><a name="index00356">
 <!-- BZINDEX complete reductions --><a name="index00357">
 <!-- BZINDEX reductions!complete --><a name="index00358">
@@ -843,25 +841,25 @@ cout &lt;&lt; sum(A) &lt;&lt; endl          // 36
      &lt;&lt; count(A &gt;= 4) &lt;&lt; endl;  // 5
 </pre>
 <p>Here are the available complete reductions:
-<p><ul>
-<p><li><strong>sum()</strong>      Summation (may be promoted to a higher-precision type)
+<p><dl>
+<p><p></p><dt><strong>sum()</strong><dd>      Summation (may be promoted to a higher-precision type)
                 <!-- BZINDEX sum() reduction --><a name="index00359">
-<li><strong>product()</strong>  Product <!-- BZINDEX product() reduction --><a name="index00360">
-<li><strong>mean()</strong>     Arithmetic mean (promoted to floating-point type if necessary)
+<p></p><dt><strong>product()</strong><dd>  Product <!-- BZINDEX product() reduction --><a name="index00360">
+<p></p><dt><strong>mean()</strong><dd>     Arithmetic mean (promoted to floating-point type if necessary)
                 <!-- BZINDEX mean() reduction --><a name="index00361">
-<li><strong>min()</strong>      Minimum value <!-- BZINDEX min() reduction --><a name="index00362">
-<li><strong>max()</strong>      Maximum value <!-- BZINDEX max() reduction --><a name="index00363">
-<li><strong>minIndex()</strong> Index of the minimum value (TinyVector&lt;int,N_rank&gt;)
+<p></p><dt><strong>min()</strong><dd>      Minimum value <!-- BZINDEX min() reduction --><a name="index00362">
+<p></p><dt><strong>max()</strong><dd>      Maximum value <!-- BZINDEX max() reduction --><a name="index00363">
+<p></p><dt><strong>minIndex()</strong><dd> Index of the minimum value (TinyVector&lt;int,N_rank&gt;)
                 <!-- BZINDEX minIndex() reduction --><a name="index00364">
-<li><strong>maxIndex()</strong> Index of the maximum value (TinyVector&lt;int,N_rank&gt;)
+<p></p><dt><strong>maxIndex()</strong><dd> Index of the maximum value (TinyVector&lt;int,N_rank&gt;)
                 <!-- BZINDEX maxIndex() reduction --><a name="index00365">
-<li><strong>count()</strong>    Counts the number of times the expression is logical true (int)
+<p></p><dt><strong>count()</strong><dd>    Counts the number of times the expression is logical true (int)
                 <!-- BZINDEX count() reduction --><a name="index00366">
-<li><strong>any()</strong>      True if the expression is true anywhere (bool)
+<p></p><dt><strong>any()</strong><dd>      True if the expression is true anywhere (bool)
                 <!-- BZINDEX any() reduction --><a name="index00367">
-<li><strong>all()</strong>      True if the expression is true everywhere (bool)
+<p></p><dt><strong>all()</strong><dd>      True if the expression is true everywhere (bool)
                 <!-- BZINDEX all() reduction --><a name="index00368">
-<p></ul>
+<p></dl>
 <p><strong>Note: minIndex() and maxIndex() return TinyVectors, even when
 the rank of the array (or array expression) is 1.</strong>
 <p>Reductions can be combined with <code>where</code> expressions (<a href="blitz03.html#where-expr">3.15</a>)
@@ -883,11 +881,11 @@ secondIndex j;
 rs = sum(A, j);
 </pre>
 <p>The reduction <code>sum()</code> takes two arguments:
-<p><ul>
+<p><dl>
 <p><li >    The first argument is an array or array expression.
 <p><li >    The second argument is an index placeholder indicating
         the dimension over which the reduction is to occur.  
-<p></ul>
+<p></dl>
 <p>Reductions have an <strong>important restriction</strong>: It is currently only 
 possible to reduce over the <em>last</em> dimension of an array or array 
 expression.  Reducing a dimension other than the last would require
@@ -910,24 +908,24 @@ manually, prior to the reduction:
 <p>Writing <code>A(i,k,j)</code> interchanges the second and third dimensions,
 permitting you to reduce over the second dimension.
 Here's a list of the reduction operations currently supported:
-<p><ul>
-<p><li><strong>sum()</strong>    Summation
-<li><strong>product()</strong> Product 
-<li><strong>mean()</strong>   Arithmetic mean (promoted to floating-point type if necessary)
-<li><strong>min()</strong>    Minimum value
-<li><strong>max()</strong>    Maximum value
-<li><strong>minIndex()</strong> Index of the minimum value (int)
-<li><strong>maxIndex()</strong> Index of the maximum value (int)
-<li><strong>count()</strong>    Counts the number of times the expression is logical true (int)
-<li><strong>any()</strong>      True if the expression is true anywhere (bool)
-<li><strong>all()</strong>      True if the expression is true everywhere (bool)
-<li><strong>first()</strong>    First index at which the expression is logical true (int); if
+<p><dl>
+<p><p></p><dt><strong>sum()</strong><dd>    Summation
+<p></p><dt><strong>product()</strong><dd> Product 
+<p></p><dt><strong>mean()</strong><dd>   Arithmetic mean (promoted to floating-point type if necessary)
+<p></p><dt><strong>min()</strong><dd>    Minimum value
+<p></p><dt><strong>max()</strong><dd>    Maximum value
+<p></p><dt><strong>minIndex()</strong><dd> Index of the minimum value (int)
+<p></p><dt><strong>maxIndex()</strong><dd> Index of the maximum value (int)
+<p></p><dt><strong>count()</strong><dd>    Counts the number of times the expression is logical true (int)
+<p></p><dt><strong>any()</strong><dd>      True if the expression is true anywhere (bool)
+<p></p><dt><strong>all()</strong><dd>      True if the expression is true everywhere (bool)
+<p></p><dt><strong>first()</strong><dd>    First index at which the expression is logical true (int); if
 		the expression is logical true nowhere, then <code>tiny(int())</code>
                 (INT_MIN) is returned.
-<li><strong>last()</strong>     Last index at which the expression is logical true (int); if
+<p></p><dt><strong>last()</strong><dd>     Last index at which the expression is logical true (int); if
                 the expression is logical true nowhere, then <code>huge(int())</code>
                 (INT_MAX) is returned.
-</ul>
+</dl>
 <p>The reductions <code>any()</code>, <code>all()</code>, and <code>first()</code> have short-circuit
 semantics: the reduction will halt as soon as the answer is known.  For
 example, if you use <code>any()</code>, scanning of the expression will stop as

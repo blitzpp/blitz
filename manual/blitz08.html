@@ -21,15 +21,15 @@ random number generators (RNGs):
 <p><!-- BZINDEX RNGs --><a name="index00421">
 <!-- BZINDEX Random Number Generators --><a name="index00422">
 <!-- BZINDEX Random Number Generators!overview --><a name="index00423">
-<p><ul>
-<li><strong>Uniform</strong>  Uniform reals on [0,1)
-<li><strong>Normal</strong> Normal with specified mean and variance
-<li><strong>Exponential</strong> Exponential with specified mean
-<li><strong>DiscreteUniform</strong> Integers uniformly distributed over a specified range.
-<li><strong>Beta</strong> Beta distribution
-<li><strong>Gamma</strong> Gamma distribution
-<li><strong>F</strong> F distribution
-</ul>
+<p><dl>
+<p></p><dt><strong>Uniform</strong><dd>  Uniform reals on [0,1)
+<p></p><dt><strong>Normal</strong><dd> Normal with specified mean and variance
+<p></p><dt><strong>Exponential</strong><dd> Exponential with specified mean
+<p></p><dt><strong>DiscreteUniform</strong><dd> Integers uniformly distributed over a specified range.
+<p></p><dt><strong>Beta</strong><dd> Beta distribution
+<p></p><dt><strong>Gamma</strong><dd> Gamma distribution
+<p></p><dt><strong>F</strong><dd> F distribution
+</dl>
 <p>To use these generators, you need to include
 some subset of these headers:
 <p><pre>#include &lt;random/uniform.h&gt;
@@ -119,12 +119,12 @@ a static initializer is, don't worry -- you're safe!
 
 <p><!-- BZINDEX Random Number Generators!details --><a name="index00427">
 <p>There are really two types of RNGs:
-<p><ul>
-<li><strong>Integer RNGs</strong> provide uniformly distributed, unsigned
+<p><dl>
+<p></p><dt><strong>Integer RNGs</strong><dd> provide uniformly distributed, unsigned
 32 bit integers. <!-- BZINDEX IRNGs --> <!-- BZINDEX Integer RNGs --><a name="index00428">
-<li><strong>RNGs</strong> use Integer RNGs to provide other kinds of random
+<p></p><dt><strong>RNGs</strong><dd> use Integer RNGs to provide other kinds of random
 numbers. 
-</ul>
+</dl>
 <p>By default, the Integer RNG used is a faithful adaptation of
 the Mersenne Twister MT19937 <!-- BZINDEX MersenneTwister --> due to<a name="index00429">
 Matsumoto and Nishimura (see ACM Transactions on Modeling
@@ -140,21 +140,21 @@ has speed comparable to other modern generators.
 <p>RNGs take three template parameters, all of which have default
 values.  Using the <code>Uniform</code> RNG as an example, the template
 parameters of <code>Uniform&lt;T, IRNG, stateTag&gt;</code> are:
-<p><ul>
-<li><strong>T</strong> is the type of random number to generate (one of float, double,
+<p><dl>
+<p></p><dt><strong>T</strong><dd> is the type of random number to generate (one of float, double,
 or long double for continuous distributions; an integer type for
 discrete distributions).  Note that generating double and
 long double RNGs takes longer, because filling the entire mantissa
 with random bits requires several random integers.
 The default parameter for most generators is <code>float</code>.
-<p><li><strong>IRNG</strong> is the underlying Integer RNG to use.  The default is
+<p><p></p><dt><strong>IRNG</strong><dd> is the underlying Integer RNG to use.  The default is
 MersenneTwister.
-<p><li><strong>stateTag</strong> is either <code>sharedState</code> or <code>independentState</code>.
+<p><p></p><dt><strong>stateTag</strong><dd> is either <code>sharedState</code> or <code>independentState</code>.
 <!-- BZINDEX stateTag (RNGs) --><a name="index00430">
 If <code>sharedState</code>, the IRNG is shared with other generators.
 If <code>independentState</code>, the RNG contains its own IRNG.  The
 default is sharedState.
-<p></ul>
+<p></dl>
 <p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>8.6: Member functions</font></td></tr></table><br><a name="l121"></a>
 
 <p><!-- BZINDEX Random Number Generators!member functions --><a name="index00431">

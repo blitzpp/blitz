@@ -161,8 +161,8 @@ you wish to see the implementation.
 <p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.1: Central differences</font></td></tr></table><a name="l83"></a>
 
 <p><!-- BZINDEX central differences --><a name="index00383">
-<p><ul>
-<p><li><strong>central12(A,dimension)</strong>: 1st derivative, 2nd order accurate.  Factor: 2h
+<p><dl>
+<p><p></p><dt><strong>central12(A,dimension)</strong><dd>: 1st derivative, 2nd order accurate.  Factor: 2h
 <p><a name="stencils/central12.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -170,7 +170,7 @@ you wish to see the implementation.
 </table>
 
 
-<p><li><strong>central22(A,dimension)</strong>: 2nd derivative, 2nd order accurate.  Factor: h^2
+<p><p></p><dt><strong>central22(A,dimension)</strong><dd>: 2nd derivative, 2nd order accurate.  Factor: h^2
 <p><a name="stencils/central22.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -178,7 +178,7 @@ you wish to see the implementation.
 </table>
 
 
-<p><li><strong>central32(A,dimension)</strong>: 3rd derivative, 2nd order accurate.  Factor: 2h^3
+<p><p></p><dt><strong>central32(A,dimension)</strong><dd>: 3rd derivative, 2nd order accurate.  Factor: 2h^3
 <p><a name="stencils/central32.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -186,7 +186,7 @@ you wish to see the implementation.
 </table>
 
 
-<p><li><strong>central42(A,dimension)</strong>: 4th derivative, 2nd order accurate.  Factor: h^4
+<p><p></p><dt><strong>central42(A,dimension)</strong><dd>: 4th derivative, 2nd order accurate.  Factor: h^4
 <p><a name="stencils/central42.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -194,7 +194,7 @@ you wish to see the implementation.
 </table>
 
 
-<p><li><strong>central14(A,dimension)</strong>: 1st derivative, 4th order accurate.  Factor: 12h
+<p><p></p><dt><strong>central14(A,dimension)</strong><dd>: 1st derivative, 4th order accurate.  Factor: 12h
 <p><a name="stencils/central14.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -202,7 +202,7 @@ you wish to see the implementation.
 </table>
 
 
-<p><li><strong>central24(A,dimension)</strong>: 2nd derivative, 4th order accurate.  Factor: 12h^2
+<p><p></p><dt><strong>central24(A,dimension)</strong><dd>: 2nd derivative, 4th order accurate.  Factor: 12h^2
 <p><a name="stencils/central24.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -210,7 +210,7 @@ you wish to see the implementation.
 </table>
 
 
-<p><li><strong>central34(A,dimension)</strong>: 3rd derivative, 4th order accurate.  Factor: 8h^3
+<p><p></p><dt><strong>central34(A,dimension)</strong><dd>: 3rd derivative, 4th order accurate.  Factor: 8h^3
 <p><a name="stencils/central34.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -218,7 +218,7 @@ you wish to see the implementation.
 </table>
 
 
-<p><li><strong>central44(A,dimension)</strong>: 4th derivative, 4th order accurate.  Factor: 6h^4
+<p><p></p><dt><strong>central44(A,dimension)</strong><dd>: 4th derivative, 4th order accurate.  Factor: 6h^4
 <p><a name="stencils/central44.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -226,7 +226,7 @@ you wish to see the implementation.
 </table>
 
 
-<p></ul>
+<p></dl>
 <p>Note that the above are available in normalized versions
 <code>central12n</code>, <code>central22n</code>, ..., <code>central44n</code> which
 have factors of <code>h</code>, <code>h^2</code>, <code>h^3</code>, or <code>h^4</code> as
@@ -237,8 +237,8 @@ specified component (Components are numbered 0, 1, ... N-1).
 <p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.2: Forward differences</font></td></tr></table><a name="l84"></a>
 
 <p><!-- BZINDEX forward differences --><a name="index00384">
-<p><ul>
-<p><li><strong>forward11(A,dimension)</strong>: 1st derivative, 1st order accurate.  Factor: h
+<p><dl>
+<p><p></p><dt><strong>forward11(A,dimension)</strong><dd>: 1st derivative, 1st order accurate.  Factor: h
 <p><a name="stencils/forward11.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -246,7 +246,7 @@ specified component (Components are numbered 0, 1, ... N-1).
 </table>
 
 
-<p><li><strong>forward21(A,dimension)</strong>: 2nd derivative, 1st order accurate.  Factor: h^2
+<p><p></p><dt><strong>forward21(A,dimension)</strong><dd>: 2nd derivative, 1st order accurate.  Factor: h^2
 <p><a name="stencils/forward21.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -254,7 +254,7 @@ specified component (Components are numbered 0, 1, ... N-1).
 </table>
 
 
-<p><li><strong>forward31(A,dimension)</strong>: 3rd derivative, 1st order accurate.  Factor: h^3
+<p><p></p><dt><strong>forward31(A,dimension)</strong><dd>: 3rd derivative, 1st order accurate.  Factor: h^3
 <p><a name="stencils/forward31.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -262,7 +262,7 @@ specified component (Components are numbered 0, 1, ... N-1).
 </table>
 
 
-<p><li><strong>forward41(A,dimension)</strong>: 4th derivative, 1st order accurate.  Factor: h^4
+<p><p></p><dt><strong>forward41(A,dimension)</strong><dd>: 4th derivative, 1st order accurate.  Factor: h^4
 <p><a name="stencils/forward41.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -270,7 +270,7 @@ specified component (Components are numbered 0, 1, ... N-1).
 </table>
 
 
-<p><li><strong>forward12(A,dimension)</strong>: 1st derivative, 2nd order accurate.  Factor: 2h
+<p><p></p><dt><strong>forward12(A,dimension)</strong><dd>: 1st derivative, 2nd order accurate.  Factor: 2h
 <p><a name="stencils/forward12.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -278,7 +278,7 @@ specified component (Components are numbered 0, 1, ... N-1).
 </table>
 
 
-<p><li><strong>forward22(A,dimension)</strong>: 2nd derivative, 2nd order accurate.  Factor: h^2
+<p><p></p><dt><strong>forward22(A,dimension)</strong><dd>: 2nd derivative, 2nd order accurate.  Factor: h^2
 <p><a name="stencils/forward22.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -286,7 +286,7 @@ specified component (Components are numbered 0, 1, ... N-1).
 </table>
 
 
-<p><li><strong>forward32(A,dimension)</strong>: 3rd derivative, 2nd order accurate.  Factor: 2h^3
+<p><p></p><dt><strong>forward32(A,dimension)</strong><dd>: 3rd derivative, 2nd order accurate.  Factor: 2h^3
 <p><a name="stencils/forward32.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -294,7 +294,7 @@ specified component (Components are numbered 0, 1, ... N-1).
 </table>
 
 
-<p><li><strong>forward42(A,dimension)</strong>: 4th derivative, 2nd order accurate.  Factor: h^4
+<p><p></p><dt><strong>forward42(A,dimension)</strong><dd>: 4th derivative, 2nd order accurate.  Factor: h^4
 <p><a name="stencils/forward42.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -302,7 +302,7 @@ specified component (Components are numbered 0, 1, ... N-1).
 </table>
 
 
-<p></ul>
+<p></dl>
 <p>Note that the above are available in normalized versions
 <code>forward11n</code>, <code>forward21n</code>, ..., <code>forward42n</code> which
 have factors of <code>h</code>, <code>h^2</code>, <code>h^3</code>, or <code>h^4</code> as
@@ -313,8 +313,8 @@ specified component (Components are numbered 0, 1, ... N-1).
 <p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.3: Backward differences</font></td></tr></table><a name="l85"></a>
 
 <p><!-- BZINDEX backward differences --><a name="index00385">
-<p><ul>
-<p><li><strong>backward11(A,dimension)</strong>: 1st derivative, 1st order accurate.  Factor: h
+<p><dl>
+<p><p></p><dt><strong>backward11(A,dimension)</strong><dd>: 1st derivative, 1st order accurate.  Factor: h
 <p><a name="stencils/backward11.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -322,7 +322,7 @@ specified component (Components are numbered 0, 1, ... N-1).
 </table>
 
 
-<p><li><strong>backward21(A,dimension)</strong>: 2nd derivative, 1st order accurate.  Factor: h^2
+<p><p></p><dt><strong>backward21(A,dimension)</strong><dd>: 2nd derivative, 1st order accurate.  Factor: h^2
 <p><a name="stencils/backward21.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -330,7 +330,7 @@ specified component (Components are numbered 0, 1, ... N-1).
 </table>
 
 
-<p><li><strong>backward31(A,dimension)</strong>: 3rd derivative, 1st order accurate.  Factor: h^3
+<p><p></p><dt><strong>backward31(A,dimension)</strong><dd>: 3rd derivative, 1st order accurate.  Factor: h^3
 <p><a name="stencils/backward31.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -338,7 +338,7 @@ specified component (Components are numbered 0, 1, ... N-1).
 </table>
 
 
-<p><li><strong>backward41(A,dimension)</strong>: 4th derivative, 1st order accurate.  Factor: h^4
+<p><p></p><dt><strong>backward41(A,dimension)</strong><dd>: 4th derivative, 1st order accurate.  Factor: h^4
 <p><a name="stencils/backward41.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -346,7 +346,7 @@ specified component (Components are numbered 0, 1, ... N-1).
 </table>
 
 
-<p><li><strong>backward12(A,dimension)</strong>: 1st derivative, 2nd order accurate.  Factor: 2h
+<p><p></p><dt><strong>backward12(A,dimension)</strong><dd>: 1st derivative, 2nd order accurate.  Factor: 2h
 <p><a name="stencils/backward12.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -354,7 +354,7 @@ specified component (Components are numbered 0, 1, ... N-1).
 </table>
 
 
-<p><li><strong>backward22(A,dimension)</strong>: 2nd derivative, 2nd order accurate.  Factor: h^2
+<p><p></p><dt><strong>backward22(A,dimension)</strong><dd>: 2nd derivative, 2nd order accurate.  Factor: h^2
 <p><a name="stencils/backward22.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -362,7 +362,7 @@ specified component (Components are numbered 0, 1, ... N-1).
 </table>
 
 
-<p><li><strong>backward32(A,dimension)</strong>: 3rd derivative, 2nd order accurate.  Factor: 2h^3
+<p><p></p><dt><strong>backward32(A,dimension)</strong><dd>: 3rd derivative, 2nd order accurate.  Factor: 2h^3
 <p><a name="stencils/backward32.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -370,7 +370,7 @@ specified component (Components are numbered 0, 1, ... N-1).
 </table>
 
 
-<p><li><strong>backward42(A,dimension)</strong>: 4th derivative, 2nd order accurate.  Factor: h^4
+<p><p></p><dt><strong>backward42(A,dimension)</strong><dd>: 4th derivative, 2nd order accurate.  Factor: h^4
 <p><a name="stencils/backward42.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -378,7 +378,7 @@ specified component (Components are numbered 0, 1, ... N-1).
 </table>
 
 
-<p></ul>
+<p></dl>
 <p>Note that the above are available in normalized versions
 <code>backward11n</code>, <code>backward21n</code>, ..., <code>backward42n</code> which
 have factors of <code>h</code>, <code>h^2</code>, <code>h^3</code>, or <code>h^4</code> as
@@ -390,8 +390,8 @@ specified component (Components are numbered 0, 1, ... N-1).
 
 <p><!-- BZINDEX Laplacian operators --><a name="index00386">
 
-<p><ul>
-<p><li><strong>Laplacian2D(A)</strong>: 2nd order accurate, 2-dimensional laplacian.  Factor: h^2
+<p><dl>
+<p><p></p><dt><strong>Laplacian2D(A)</strong><dd>: 2nd order accurate, 2-dimensional laplacian.  Factor: h^2
 <p><a name="stencils/Laplacian2D.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -401,8 +401,8 @@ specified component (Components are numbered 0, 1, ... N-1).
 </table>
 
 
-<p><li><strong>Laplacian3D(A)</strong>: 2nd order accurate, 3-dimensional laplacian.  Factor: h^2
-<p><li><strong>Laplacian2D4(A)</strong>: 4th order accurate, 2-dimensional laplacian.  Factor: 12h^2
+<p><p></p><dt><strong>Laplacian3D(A)</strong><dd>: 2nd order accurate, 3-dimensional laplacian.  Factor: h^2
+<p><p></p><dt><strong>Laplacian2D4(A)</strong><dd>: 4th order accurate, 2-dimensional laplacian.  Factor: 12h^2
 <p><a name="stencils/Laplacian2D4.yo"></a>
     
 <table cellpadding=2 rules=all>
@@ -414,8 +414,8 @@ specified component (Components are numbered 0, 1, ... N-1).
 </table>
 
 
-<p><li><strong>Laplacian3D4(A)</strong>: 4th order accurate, 3-dimensional laplacian.  Factor: 12h^2
-</ul>
+<p><p></p><dt><strong>Laplacian3D4(A)</strong><dd>: 4th order accurate, 3-dimensional laplacian.  Factor: 12h^2
+</dl>
 <p>Note that the above are available in normalized versions
 <code>Laplacian2D4n</code>, <code>Laplacian3D4n</code> which have factors
 h^2.
@@ -423,13 +423,13 @@ h^2.
 
 <p><!-- BZINDEX gradient operators --><a name="index00387">
 <p>These return <code>TinyVector</code>s of the appropriate numeric type and length:
-<p><ul>
-<p><li><strong>grad2D(A)</strong>: 2nd order, 2-dimensional gradient (vector of first derivatives),
+<p><dl>
+<p><p></p><dt><strong>grad2D(A)</strong><dd>: 2nd order, 2-dimensional gradient (vector of first derivatives),
 generated using the central12 operator.  Factor: 2h
-<p><li><strong>grad2D4(A)</strong>: 4th order, 2-dimensional gradient, using central14 operator.  Factor: 12h
-<p><li><strong>grad3D(A)</strong>: 2nd order, 3-dimensional gradient, using central12 operator.  Factor: 2h
-<p><li><strong>grad3D4(A)</strong>: 4th order, 3-dimensional gradient, using central14 operator.  Factor: 12h
-<p></ul>
+<p><p></p><dt><strong>grad2D4(A)</strong><dd>: 4th order, 2-dimensional gradient, using central14 operator.  Factor: 12h
+<p><p></p><dt><strong>grad3D(A)</strong><dd>: 2nd order, 3-dimensional gradient, using central12 operator.  Factor: 2h
+<p><p></p><dt><strong>grad3D4(A)</strong><dd>: 4th order, 3-dimensional gradient, using central14 operator.  Factor: 12h
+<p></dl>
 <p>These are available in normalized versions
 <code>grad2Dn</code>, <code>grad2D4n</code>, <code>grad3Dn</code> and <code>grad3D4n</code> which
 have factors h.
@@ -440,12 +440,12 @@ have factors h.
 (e.g. <code>Array&lt;TinyVector&lt;double,3&gt;,3&gt;</code>).  They return a
 <code>TinyMatrix&lt;T,3,3&gt;</code> where T is the numeric type of the
 vector field.
-<p><ul>
-<p><li><strong>Jacobian3D(A)</strong>: 2nd order, 3-dimensional Jacobian
+<p><dl>
+<p><p></p><dt><strong>Jacobian3D(A)</strong><dd>: 2nd order, 3-dimensional Jacobian
 using the central12 operator.  Factor: 2h.
-<p><li><strong>Jacobian3D4(A)</strong>: 4th order, 3-dimensional Jacobian 
+<p><p></p><dt><strong>Jacobian3D4(A)</strong><dd>: 4th order, 3-dimensional Jacobian 
 using the central14 operator.  Factor: 12h.
-<p></ul>
+<p></dl>
 <p>These are also available in normalized
 versions <code>Jacobian3Dn</code> and <code>Jacobain3D4n</code> which
 have factors h.
@@ -454,16 +454,16 @@ have factors h.
 <p><!-- BZINDEX Grad-squared operators --><a name="index00389">
 <p>There are also grad-squared operators, which return <code>TinyVector</code>s of
 second derivatives:
-<p><ul>
-<p><li><strong>gradSqr2D(A)</strong>: 2nd order, 2-dimensional grad-squared (vector
+<p><dl>
+<p><p></p><dt><strong>gradSqr2D(A)</strong><dd>: 2nd order, 2-dimensional grad-squared (vector
 of second derivatives), generated using the central22 operator.  Factor: h^2
-<p><li><strong>gradSqr2D4(A)</strong>: 4th order, 2-dimensional grad-squared, using
+<p><p></p><dt><strong>gradSqr2D4(A)</strong><dd>: 4th order, 2-dimensional grad-squared, using
 central24 operator.  Factor: 12h^2
-<p><li><strong>gradSqr3D(A)</strong>: 2nd order, 3-dimensional grad-squared,
+<p><p></p><dt><strong>gradSqr3D(A)</strong><dd>: 2nd order, 3-dimensional grad-squared,
 using the central22 operator.  Factor: h^2
-<p><li><strong>gradSqr3D4(A)</strong>: 4th order, 3-dimensional grad-squared, using
+<p><p></p><dt><strong>gradSqr3D4(A)</strong><dd>: 4th order, 3-dimensional grad-squared, using
 central24 operator.  Factor: 12h^2
-<p></ul>
+<p></dl>
 <p>Note that the above are available in normalized versions
 <code>gradSqr2Dn</code>, <code>gradSqr2D4n</code>, <code>gradSqr3Dn</code>, <code>gradSqr3D4n</code>
 which have factors h^2.
@@ -472,32 +472,32 @@ which have factors h^2.
 <p><!-- BZINDEX curl operator --><a name="index00390">
 
 <p>These curl operators return scalar values:
-<p><ul>
-<p><li><strong>curl(Vx,Vy)</strong>: 2nd order curl operator using the central12 operator.
+<p><dl>
+<p><p></p><dt><strong>curl(Vx,Vy)</strong><dd>: 2nd order curl operator using the central12 operator.
 Factor: 2h
-<p><li><strong>curl4(Vx,Vy)</strong>: 4th order curl operator using the central14 operator.
+<p><p></p><dt><strong>curl4(Vx,Vy)</strong><dd>: 4th order curl operator using the central14 operator.
 Factor: 12h
-<p><li><strong>curl2D(V)</strong>: 2nd order curl operator on a 2D vector field
+<p><p></p><dt><strong>curl2D(V)</strong><dd>: 2nd order curl operator on a 2D vector field
 (e.g. <code>Array&lt;TinyVector&lt;float,2&gt;,2&gt;</code>), using the central12 operator.
 Factor: 2h
-<p><li><strong>curl2D4(V)</strong>: 4th order curl operator on a 2D vector field,
+<p><p></p><dt><strong>curl2D4(V)</strong><dd>: 4th order curl operator on a 2D vector field,
 using the central12 operator.  Factor: 12h
-<p></ul>
+<p></dl>
 <p>Available in normalized forms <code>curln</code>, <code>curl4n</code>, <code>curl2Dn</code>,
 <code>curl2D4n</code>.
 <p>These curl operators return three-dimensional <code>TinyVector</code>s of the 
 appropriate numeric type:
-<p><ul>
-<p><li><strong>curl(Vx,Vy,Vz)</strong>: 2nd order curl operator using the central12 operator.  
+<p><dl>
+<p><p></p><dt><strong>curl(Vx,Vy,Vz)</strong><dd>: 2nd order curl operator using the central12 operator.  
 Factor: 2h
-<p><li><strong>curl4(Vx,Vy,Vz)</strong>: 4th order curl operator using the central14 operator.  
+<p><p></p><dt><strong>curl4(Vx,Vy,Vz)</strong><dd>: 4th order curl operator using the central14 operator.  
 Factor: 12h
-<p><li><strong>curl(V)</strong>: 2nd order curl operator on a 3D vector
+<p><p></p><dt><strong>curl(V)</strong><dd>: 2nd order curl operator on a 3D vector
 field (e.g. <code>Array&lt;TinyVector&lt;double,3&gt;,3&gt;</code>, using the
 central12 operator.  Factor: 2h
-<p><li><strong>curl4(V)</strong>: 4th order curl operator on a 3D vector
+<p><p></p><dt><strong>curl4(V)</strong><dd>: 4th order curl operator on a 3D vector
 field, using the central14 operator.  Factor: 12h
-<p></ul>
+<p></dl>
 <p>Note that the above are available in normalized versions <code>curln</code> and
 <code>curl4n</code>, which have factors of <code>h</code>.
 <p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.9: Divergence operators</font></td></tr></table><a name="l91"></a>
@@ -505,36 +505,36 @@ field, using the central14 operator.  Factor: 12h
 <p>The divergence operators return a scalar value.
 <!-- BZINDEX divergence operator --><a name="index00391">
 
-<p><ul>
-<p><li><strong>div(Vx,Vy)</strong>: 2nd order div operator using the central12 operator.
+<p><dl>
+<p><p></p><dt><strong>div(Vx,Vy)</strong><dd>: 2nd order div operator using the central12 operator.
 Factor: 2h
-<p><li><strong>div4(Vx,Vy)</strong>: 4th order div operator using the central14 operator.
+<p><p></p><dt><strong>div4(Vx,Vy)</strong><dd>: 4th order div operator using the central14 operator.
 Factor: 12h
-<p><li><strong>div(Vx,Vy,Vz)</strong>: 2nd order div operator using the central12 operator.
+<p><p></p><dt><strong>div(Vx,Vy,Vz)</strong><dd>: 2nd order div operator using the central12 operator.
 Factor: 2h
-<p><li><strong>div4(Vx,Vy,Vz)</strong>: 4th order div operator using the central14 operator.
+<p><p></p><dt><strong>div4(Vx,Vy,Vz)</strong><dd>: 4th order div operator using the central14 operator.
 Factor: 12h
-<p><li><strong>div2D(V)</strong>: 2nd order div operator on a 2D vector field,
+<p><p></p><dt><strong>div2D(V)</strong><dd>: 2nd order div operator on a 2D vector field,
 using the central12 operator.  Factor: 2h
-<p><li><strong>div2D4(V)</strong>: 2nd order div operator on a 2D vector
+<p><p></p><dt><strong>div2D4(V)</strong><dd>: 2nd order div operator on a 2D vector
 field, using the central14 operator.  Factor: 12h
-<p><li><strong>div3D(V)</strong>: 2nd order div operator on a 3D vector field,
+<p><p></p><dt><strong>div3D(V)</strong><dd>: 2nd order div operator on a 3D vector field,
 using the central12 operator.  Factor: 2h
-<p><li><strong>div3D4(V)</strong>: 2nd order div operator on a 3D vector field
+<p><p></p><dt><strong>div3D4(V)</strong><dd>: 2nd order div operator on a 3D vector field
 using the central14 operator.  Factor: 12h
-<p></ul>
+<p></dl>
 <p>These are available in normalized versions
 <code>divn</code>, <code>div4n</code>, <code>div2Dn</code>, <code>div2D4n</code>, <code>div3Dn</code>, and
 <code>div3D4n</code> which have factors of <code>h</code>.
 <p><br><br><table width="100%" border="0" cellpadding="3"><tr><td align="left" bgcolor="#1080BF"><font color="#ffffff" face="Helvetica" size=+3>4.4.10: Mixed partial derivatives</font></td></tr></table><a name="l92"></a>
 
 <p><!-- BZINDEX mixed partial operators --><a name="index00392">
-<ul>
-<p><li><strong>mixed22(A,dim1,dim2)</strong>: 2nd order accurate, 2nd mixed partial derivative.
+<dl>
+<p><p></p><dt><strong>mixed22(A,dim1,dim2)</strong><dd>: 2nd order accurate, 2nd mixed partial derivative.
 Factor: 4h^2
-<p><li><strong>mixed24(A,dim1,dim2)</strong>: 4th order accurate, 2nd mixed partial derivative.
+<p><p></p><dt><strong>mixed24(A,dim1,dim2)</strong><dd>: 4th order accurate, 2nd mixed partial derivative.
 Factor: 144h^2
-<p></ul>
+<p></dl>
 <p>There are also normalized versions of the above, <code>mixed22n</code> and
 <code>mixed24n</code> which have factors <code>h^2</code>.
 <p><br><br><br><table width="100%" border="0" cellpadding=10 align=center><tr><td align="left" bgcolor="#0b6698"><font color="#ffffff" face="Helvetica" size=+5>4.5: Declaring your own stencil operators</font></td></tr></table><br><a name="l93"></a>

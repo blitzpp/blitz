@@ -4,8 +4,16 @@
  * $Id$
  *
  * $Log$
- * Revision 1.1  2000/06/19 12:26:17  tveldhui
- * Initial revision
+ * Revision 1.2  2001/01/24 23:41:54  tveldhui
+ * Widespread changes to reduce compile time.  For backwards
+ * compatibility, #include <blitz/array.h> enables BZ_GANG_INCLUDE
+ * mode which includes all array and vector functionality (about
+ * 120000 lines of code).  #include <blitz/array-only.h> includes
+ * a minimal subset of Array funcitonality; other features must
+ * be included explicitly.
+ *
+ * Revision 1.1.1.1  2000/06/19 12:26:17  tveldhui
+ * Imported sources
  *
  * Revision 1.1  1997/07/19 14:19:35  tveldhui
  * Initial revision
@@ -16,7 +24,8 @@
  * using a custom type.  
  */
 
-#include <blitz/array.h>
+#include <blitz/array-only.h>
+#include <blitz/array/ops.h>
 #include <blitz/numinquire.h>
 
 #ifdef BZ_NAMESPACES
