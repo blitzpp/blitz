@@ -75,6 +75,6 @@ all-am:
 	$(MAKE) $(AM_MAKEFLAGS) -i out
 
 clean-local:
-	-rm -rf cxx_repository $(EXTRA_PROGRAMS) *.texi *.out core.[0-9]*
+	-rm -rf *.ii *.ti cxx_repository Template.dir ii_files ti_files $(EXTRA_PROGRAMS) *.texi *.out core.[0-9]*
 
 
