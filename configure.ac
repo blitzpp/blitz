@@ -47,17 +47,28 @@ AC_CXX_FLAGS_PRESET
 
 # Prefix config macros with BZ_ and create compiler-specific bzconfig.h
 case "$CXX" in
-  xlc++)  AX_PREFIX_CONFIG_H([blitz/apple/bzconfig.h],[BZ]) ;;
-  icpc)   AX_PREFIX_CONFIG_H([blitz/intel/bzconfig.h],[BZ]) ;;
-  xlC)    AX_PREFIX_CONFIG_H([blitz/ibm/bzconfig.h],[BZ]) ;;
-  cxx)    AX_PREFIX_CONFIG_H([blitz/compaq/bzconfig.h],[BZ]) ;;
-  aCC)    AX_PREFIX_CONFIG_H([blitz/hp/bzconfig.h],[BZ]) ;;
-  CC)     AX_PREFIX_CONFIG_H([blitz/sgi/bzconfig.h],[BZ]) ;;
-  g++)    AX_PREFIX_CONFIG_H([blitz/gnu/bzconfig.h],[BZ]) ;;
-  pgCC)   AX_PREFIX_CONFIG_H([blitz/pgi/bzconfig.h],[BZ]) ;;
-  KCC)    AX_PREFIX_CONFIG_H([blitz/kai/bzconfig.h],[BZ]) ;;
-  FCC)    AX_PREFIX_CONFIG_H([blitz/fujitsu/bzconfig.h],[BZ]) ;;
+  xlc++)  AX_PREFIX_CONFIG_H([blitz/apple/bzconfig.h],[BZ]) 
+          COMPILER_SPECIFIC_HEADER="apple/bzconfig.h" ;;
+  icpc)   AX_PREFIX_CONFIG_H([blitz/intel/bzconfig.h],[BZ]) 
+          COMPILER_SPECIFIC_HEADER="intel/bzconfig.h" ;;
+  xlC)    AX_PREFIX_CONFIG_H([blitz/ibm/bzconfig.h],[BZ]) 
+          COMPILER_SPECIFIC_HEADER="ibm/bzconfig.h" ;;
+  cxx)    AX_PREFIX_CONFIG_H([blitz/compaq/bzconfig.h],[BZ]) 
+          COMPILER_SPECIFIC_HEADER="compaq/bzconfig.h" ;;
+  aCC)    AX_PREFIX_CONFIG_H([blitz/hp/bzconfig.h],[BZ]) 
+          COMPILER_SPECIFIC_HEADER="hp/bzconfig.h" ;;
+  CC)     AX_PREFIX_CONFIG_H([blitz/sgi/bzconfig.h],[BZ]) 
+          COMPILER_SPECIFIC_HEADER="sgi/bzconfig.h" ;;
+  g++)    AX_PREFIX_CONFIG_H([blitz/gnu/bzconfig.h],[BZ]) 
+          COMPILER_SPECIFIC_HEADER="gnu/bzconfig.h" ;;
+  pgCC)   AX_PREFIX_CONFIG_H([blitz/pgi/bzconfig.h],[BZ]) 
+          COMPILER_SPECIFIC_HEADER="pgi/bzconfig.h" ;;
+  KCC)    AX_PREFIX_CONFIG_H([blitz/kai/bzconfig.h],[BZ]) 
+          COMPILER_SPECIFIC_HEADER="kai/bzconfig.h" ;;
+  FCC)    AX_PREFIX_CONFIG_H([blitz/fujitsu/bzconfig.h],[BZ]) 
+          COMPILER_SPECIFIC_HEADER="fujitsu/bzconfig.h" ;;
 esac
+AC_SUBST(COMPILER_SPECIFIC_HEADER,$COMPILER_SPECIFIC_HEADER)
 
 # Doxygen documentation
 AC_PROG_DOXYGEN
