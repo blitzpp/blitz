@@ -88,7 +88,7 @@ int main()
         iters[i] = 10000000L / parameters[i];
         if (iters[i] < 2)
             iters[i] = 2;
-        flops[i] = 0 * parameters[i];
+        flops[i] = 6 * parameters[i];
     }
 
     bench.setParameterVector(parameters);
