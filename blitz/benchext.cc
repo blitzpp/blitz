@@ -6,6 +6,9 @@
  * conditions of use.
  *
  * $Log$
+ * Revision 1.3  2002/06/28 05:05:58  jcumming
+ * Changed loop variable j to unsigned to eliminate signed/unsigned comparisons.
+ *
  * Revision 1.2  2001/01/26 18:30:50  tveldhui
  * More source code reorganization to reduce compile times.
  *
@@ -27,7 +30,7 @@
  #error <blitz/benchext.cc> must be included via <blitz/benchext.h>
 #endif
 
-#include <blitz/Vector.h>
+#include <blitz/vector-et.h>
 
 #ifdef BZ_HAVE_STD
  #include <fstream>
@@ -286,7 +289,7 @@ void BenchmarkExt<P_parameter>::saveMatlabGraph(const char* filename) const
     ofs << "Mf = [ ";
     for (i=0; i < numParameters_; ++i)
     {
-        for (int j=0; j < numImplementations_; ++j)
+        for (unsigned j=0; j < numImplementations_; ++j)
         {
             ofs << setprecision(12) << getMflops(j,i) << " ";
         }
@@ -300,7 +303,7 @@ void BenchmarkExt<P_parameter>::saveMatlabGraph(const char* filename) const
         << "ylabel('" << rateDescription_ << "')" << endl
         << "legend(";
     
-    for (int j=0; j < numImplementations_; ++j)
+    for (unsigned j=0; j < numImplementations_; ++j)
     {
         ofs << "'" << implementationDescriptions_(j) << "'";
         if (j != numImplementations_ - 1)
