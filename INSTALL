@@ -21,16 +21,18 @@ The [compiler] options are:
   --with-cxx=DECcxx DEC cxx 6.10 or better (http://www.dec.com/)
   --with-cxx=SGI64  SGI C++ 7.3 or better (http://www.sgi.com/)
   --with-cxx=SGI32          ... with 32-bit ABI (n32)
+	--with-cxx=aCC    HP-UX aCC (http://www.hp.com/go/c++)
+	--with-cxx=icc    Intel icc (http://www.intel.com/)
 
 Then do:
-        make lib
+        make
 
 This is a minimal build.  You can also do one of these:
 
-        make check      Do `make lib' plus build and check the testsuite
-        make all        Do all of the above plus build the examples and
-                        benchmarks (takes a long time)
-
+        make check-testsuite  Build and check the testsuite
+        make check-examples   Build and check the examples
+        make check-benchmarks Build and check the benchmarks (takes a long time)
+				make install          Install Blitz++
 
 2.  Setting up symbolic links
 
@@ -75,7 +77,7 @@ list, I suggest the following approach:
      configure with your new --with-cxx= option.  Repeat
      until it works..
 
-  5. Try building the testsuite ('make check').
+  5. Try building the testsuite ('make check-testsuite').
 
   6. Holy schmoly!  It works!  Quick, send these things to
      <tveldhui@acm.org> for incorporation into the next blitz release:
