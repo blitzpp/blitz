@@ -14,7 +14,7 @@ inline void reflect(vec& reflection, const vec& incident,
     reflection = incident - 2 * dot(incident,surfaceNormal) * surfaceNormal;
 }
 
-template<class T>
+template<typename T>
 void optimizationSink(T&);
 
 void foo(TinyVector<double,3>& x)

@@ -3,7 +3,7 @@
 
 using namespace blitz;
 
-template<class T>
+template<typename T>
 void optimizationSink(T&);
 
 void foo()
