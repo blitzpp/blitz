@@ -22,7 +22,7 @@
  */ 
 
 // Generated source file.  Do not edit. 
-// genvecuops.cpp Jun 25 2003 19:46:17
+// genvecuops.cpp Sep  2 2003 14:54:50
 
 #ifndef BZ_VECUOPS_CC
 #define BZ_VECUOPS_CC
@@ -1597,6 +1597,73 @@ ceil(const TinyVector<P_numtype1, N_length1>& d1)
     return _bz_VecExpr<T_expr>(T_expr(d1.begin()));
 }
 
+
+/****************************************************************************
+ * conj
+ ****************************************************************************/
+
+#ifdef BZ_HAVE_COMPLEX_MATH
+template<class P_numtype1>
+inline
+_bz_VecExpr<_bz_VecExprUnaryOp<VectorIterConst<P_numtype1>,
+    _bz_conj<P_numtype1> > >
+conj(const Vector<P_numtype1>& d1)
+{
+    typedef _bz_VecExprUnaryOp<VectorIterConst<P_numtype1>,
+        _bz_conj<P_numtype1> > T_expr;
+
+    return _bz_VecExpr<T_expr>(T_expr(d1.begin()));
+}
+
+template<class P_expr1>
+inline
+_bz_VecExpr<_bz_VecExprUnaryOp<_bz_VecExpr<P_expr1>,
+    _bz_conj<typename P_expr1::T_numtype> > >
+conj(_bz_VecExpr<P_expr1> d1)
+{
+    typedef _bz_VecExprUnaryOp<_bz_VecExpr<P_expr1>,
+        _bz_conj<typename P_expr1::T_numtype> > T_expr;
+
+    return _bz_VecExpr<T_expr>(T_expr(d1));
+}
+
+template<class P_numtype1>
+inline
+_bz_VecExpr<_bz_VecExprUnaryOp<VectorPickIterConst<P_numtype1>,
+    _bz_conj<P_numtype1> > >
+conj(const VectorPick<P_numtype1>& d1)
+{
+    typedef _bz_VecExprUnaryOp<VectorPickIterConst<P_numtype1>,
+        _bz_conj<P_numtype1> > T_expr;
+
+    return _bz_VecExpr<T_expr>(T_expr(d1.begin()));
+}
+
+
+inline
+_bz_VecExpr<_bz_VecExprUnaryOp<Range,
+    _bz_conj<int> > >
+conj(Range d1)
+{
+    typedef _bz_VecExprUnaryOp<Range,
+        _bz_conj<int> > T_expr;
+
+    return _bz_VecExpr<T_expr>(T_expr(d1));
+}
+
+template<class P_numtype1, int N_length1>
+inline
+_bz_VecExpr<_bz_VecExprUnaryOp<TinyVectorIterConst<P_numtype1, N_length1>,
+    _bz_conj<P_numtype1> > >
+conj(const TinyVector<P_numtype1, N_length1>& d1)
+{
+    typedef _bz_VecExprUnaryOp<TinyVectorIterConst<P_numtype1, N_length1>,
+        _bz_conj<P_numtype1> > T_expr;
+
+    return _bz_VecExpr<T_expr>(T_expr(d1.begin()));
+}
+
+#endif
 
 /****************************************************************************
  * copysign
