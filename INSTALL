@@ -1,5 +1,18 @@
 Installation procedure
 
+
+1.  Quick install with g++:
+
+./configure --with-cxx=gcc
+make lib
+
+If you have root privileges, you can install some symbolic links
+to the headers and library.  Suppose you unpacked blitz in
+/software/Blitz++; then do these commands:
+
+# ln -s /software/Blitz++/blitz /usr/include/blitz
+# ln -s /software/Blitz++/lib/libblitz.a 
+
 As of the 980404 snapshot, Blitz++ uses GNU autoconf.
 This utility handles rewriting Makefiles for various
 platforms and compilers.  It has greatly simplified
