@@ -1,5 +1,5 @@
 #include "testsuite.h"
-#include <blitz/Array.h>
+#include <blitz/array.h>
 
 BZ_USING_NAMESPACE(blitz)
 
@@ -26,7 +26,7 @@ int main()
 {
   Array<complex<float>,1> test(5),test2(5) ;
   Array<float,1> test3(5) ;
-  test3 = 0.64 ;
+  test3 = 0.64f ;
   test2 = complex<float>(3,3) ;
   test = 2*test3*test2 ;
   test = test3*test2;
