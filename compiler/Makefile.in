@@ -93,9 +93,9 @@ install_sh = @install_sh@
 #
 
 
-SUBDIRS = 
+SUBDIRS = .
 
-EXTRA_DIST = LEGAL README bool.cpp bzconfig climits.cpp cmthscop.cpp \
+EXTRA_DIST = LEGAL bool.cpp bzconfig climits.cpp cmthscop.cpp \
 complex.cpp compmath.cpp constcst.cpp cstd.cpp default.cpp \
 dynamic.cpp elabbase.cpp elabret.cpp enumcmp2.cpp enumcomp.cpp except.cpp \
 explicit.cpp fullspec.cpp getruse.cpp ieeemath.cpp instant.cpp \

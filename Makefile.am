@@ -2,7 +2,7 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-EXTRA_DIST = CHANGELOG LEGAL LICENSE config.h.in GPL README.binutils
+EXTRA_DIST = LEGAL LICENSE README.binutils config.h.in ChangeLog.1 
 
 demodir = $(prefix)/demos
 demo_DATA = demos/Makefile

@@ -93,7 +93,7 @@ install_sh = @install_sh@
 #
 
 
-SUBDIRS = 
+SUBDIRS = .
 
 metadir = $(includedir)/blitz/meta
 

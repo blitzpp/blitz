@@ -2,7 +2,7 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-SUBDIRS =
+SUBDIRS = .
 
 INCLUDES = -I$(top_srcdir)
 lib_LIBRARIES = libblitz.a

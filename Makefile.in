@@ -94,7 +94,7 @@ install_sh = @install_sh@
 #
 
 
-EXTRA_DIST = CHANGELOG LEGAL LICENSE config.h.in GPL README.binutils
+EXTRA_DIST = LEGAL LICENSE README.binutils config.h.in ChangeLog.1 
 
 demodir = $(prefix)/demos
 demo_DATA = demos/Makefile
@@ -107,7 +107,7 @@ DATA =  $(demo_DATA)
 
 depcomp = 
 DIST_COMMON =  README AUTHORS COPYING ChangeLog INSTALL Makefile.am \
-Makefile.in NEWS acinclude.m4 aclocal.m4 config.guess config.sub \
+Makefile.in NEWS TODO acinclude.m4 aclocal.m4 config.guess config.sub \
 configure configure.in install-sh missing mkinstalldirs
 
 

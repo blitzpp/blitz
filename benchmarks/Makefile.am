@@ -2,7 +2,7 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-SUBDIRS =
+SUBDIRS = .
 
 EXTRA_DIST = arrdaxpy.cpp arrdaxpy.m arrdaxpy2.m arrdaxpyf.f arrexpr1.cpp \
 arrexpr1.m cfd.cpp cfdf.f cfortran.h chunky.cpp compiletime.cpp \

@@ -47,6 +47,8 @@ all:
 
 install:
 
+check:
+
 distdir: Makefile.in
 	cp -pR Makefile.in ../@PACKAGE@-@VERSION@/demos
 

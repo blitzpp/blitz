@@ -2,7 +2,7 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-SUBDIRS =
+SUBDIRS = .
 
 docdir = $(prefix)/doc/blitz/examples
 doc_DATA = cast.cpp debug.cpp dump.cpp fixed.cpp outer.cpp outer.log output.cpp \

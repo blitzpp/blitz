@@ -2,7 +2,7 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-SUBDIRS =
+SUBDIRS = .
 
 docdir = $(prefix)/doc/blitz/stencils
 doc_DATA = Laplacian2D.yo Laplacian2D4.yo backward11.yo backward12.yo \

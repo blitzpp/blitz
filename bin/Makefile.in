@@ -93,8 +93,9 @@ install_sh = @install_sh@
 #
 
 
-SUBDIRS = 
-EXTRA_DIST = autotest
+SUBDIRS = .
+
+EXTRA_DIST = autotest includes
 subdir = bin
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES = 

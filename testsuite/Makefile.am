@@ -4,7 +4,7 @@
 
 # Blitz++ test suite makefile
 
-SUBDIRS =
+SUBDIRS = .
 
 EXTRA_DIST = testsuite.h
 

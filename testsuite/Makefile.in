@@ -94,7 +94,7 @@ install_sh = @install_sh@
 # Blitz++ test suite makefile
 
 
-SUBDIRS = 
+SUBDIRS = .
 
 EXTRA_DIST = testsuite.h
 

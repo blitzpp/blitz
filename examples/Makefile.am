@@ -2,7 +2,7 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-SUBDIRS =
+SUBDIRS = .
 
 EXTRA_DIST = stencil4.f
 

@@ -9,7 +9,7 @@ blitzdir = $(includedir)/blitz
 blitz_HEADERS = Array.h TinyMat.h TinyVec.h Vector.h applics.h array-impl.h \
 array.h bench.cc bench.h benchext.cc benchext.h blitz.h bzdebug.h compiler.h \
 config-ICL.h config-KCC.h config-SC4.0.h config-SGi.h config-g++2.7.2.h \
-config-xlC.h etbase.h extremum.h indexexpr.h limits-hack.h \
+config-mwerks.h config-xlC.h etbase.h extremum.h indexexpr.h limits-hack.h \
 listinit.h matbops.h matdiag.h matexpr.h matgen.h mathf2.h mathfunc.h \
 matltri.h matref.h matrix.cc matrix.h matsymm.h mattoep.h matuops.h \
 matutri.h memblock.cc memblock.h minmax.h mstruct.h numinquire.h numtrait.h \

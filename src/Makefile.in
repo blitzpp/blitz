@@ -93,7 +93,7 @@ install_sh = @install_sh@
 #
 
 
-SUBDIRS = 
+SUBDIRS = .
 
 INCLUDES = -I$(top_srcdir)
 lib_LIBRARIES = libblitz.a
