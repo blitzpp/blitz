@@ -1,4 +1,9 @@
 
+2003-04-02 Patrick Guio <patrick.guio@fys.uio.no>
+	* blitz/array/resize.cc: Added the definition of the Array class member 
+	function resize(...) with Range argument as it was declared already
+	present in the Array class declaration.
+
 2003-03-31 Patrick Guio <patrick.guio@fys.uio.no>
 	* lib/Makefile.am: Enable required libtool library target libblitz.la since
 	AC_PROG_LIBTOOL is now in use.
