@@ -1,0 +1,8 @@
+config.sub
+config.guess
+depcomp
+install-sh
+ltmain.sh
+mdate-sh
+missing
+

@@ -57,6 +57,9 @@
 	flags in the front page.
 	* benchmarks/stencil.cpp: Replaced Matlab semilogx command by a linear
 	plot command.
+	* config: New directory containing generated configuration files.
+	* config/texinfo.tex: New file. Replace doc/texinfo.tex.
+	* doc/texinfo.tex: Removed. Replaced by config/texinfo.tex.
 
 2004-03-16  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
