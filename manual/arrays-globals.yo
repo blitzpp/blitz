@@ -1,0 +1,121 @@
+bf(bzverb(\
+void                              allocateArrays(TinyVector<int,N>& shape,
+                                    Array<T,N>& A, Array<T,N>& B, ...);
+)) bzindex(allocateArrays())
+This function will allocate interlaced arrays, but only if interlacing
+is desirable for your architecture.  This is controlled by the
+tt(BZ_INTERLACE_ARRAYS) flag in <blitz/tuning.h>.  You can provide up
+to 11 arrays as parameters.  Any views currently associated with the
+array objects are lost.  Here is a typical use:
+
+bzverb(
+    Array<int,2> A, B, C;
+    allocateArrays(shape(64,64),A,B,C);
+)
+
+bzindex(interlacing) bzindex(Array!interlacing)
+If array interlacing is enabled, then the arrays are stored in
+memory like this:  A(0,0), B(0,0), C(0,0), A(0,1), B(0,1), ...
+If interlacing is disabled, then the arrays are allocated in
+the normal fashion: each array has its own block of memory.
+Once interlaced arrays are allocated, they can be used just
+like regular arrays.
+
+bzindex(convolution, 1-D) 
+bzindex(Array!convolution)
+bf(bzverb(\
+#include <blitz/array/convolve.h>
+Array<T,1>                        convolve(const Array<T,1>& B, 
+                                     const Array<T,1>& C);
+))
+This function computes the 1-D convolution of the arrays B and C:
+whenhtml(
+A[i] = sum(B[j] * C[i-j], j)
+)
+whenlatex(latexcommand(
+\begin{displaymath}
+A[i] = \sum_j B[j] C[i-j]
+\end{displaymath}
+))
+
+whenhtml(
+If the array B has domain bl..bh, and array C has domain cl..ch,
+then the resulting array has domain al..ah, with al=bl+cl and
+ah=bh+ch.
+)
+whenlatex(latexcommand(
+If the array $B$ has domain $b_l \ldots b_h$, and array
+$C$ has domain $c_l \ldots c_h$, then the resulting array
+has domain $a_l \ldots a_h$, with $a_l = b_l + c_l$ and
+$a_h = b_h + c_h$.
+))
+
+A new array is allocated to contain the result.  To avoid copying
+the result array, you should use it as a constructor argument.
+For example:
+bzverb(\
+Array<float,1> A = convolve(B,C);)
+The convolution is computed in the spatial domain.  Frequency-domain
+transforms are not used.  If you are convolving two large arrays,
+then this will be slower than using a Fourier transform.
+
+bzindex(correlation) bzindex(Array!correlation)
+Note that if you need a cross-correlation, you can use the
+convolve function with one of the arrays reversed.  For
+example:
+bzverb(\
+Array<float,1> A = convolve(B,C.reverse());)
+Autocorrelation can be performed using the same approach.
+
+bf(bzverb(\
+void                              cycleArrays(Array<T,N>& A, Array<T,N>& B);
+void                              cycleArrays(Array<T,N>& A, Array<T,N>& B, 
+                                    Array<T,N>& C);
+void                              cycleArrays(Array<T,N>& A, Array<T,N>& B, 
+                                    Array<T,N>& C, Array<T,N>& D);
+void                              cycleArrays(Array<T,N>& A, Array<T,N>& B, 
+                                    Array<T,N>& C, Array<T,N>& D, 
+                                    Array<T,N>& E);
+)) bzindex(cycleArrays()) bzindex(time-stepping)
+These routines are useful for time-stepping PDEs.  They take a set of
+arrays such as [A,B,C,D] and cyclically rotate them to [B,C,D,A]; i.e.
+the A array then refers to what was B's data, the B array refers to what
+was C's data, and the D array refers to what was A's data.  These functions
+operate in constant time, since only the handles change (i.e. no data
+is copied; only pointers change).
+
+bf(bzverb(\
+Array<T,N>                        imag(Array<complex<T>,N>&);
+))
+This method returns a view of the imaginary portion of the array.
+bzindex(imag())
+
+bf(bzverb(\
+void                              interlaceArrays(TinyVector<int,N>& shape,
+                                    Array<T,N>& A, Array<T,N>& B, ...);
+))
+This function is similar to tt(allocateArrays()) above, except that
+the arrays are bf(always) interlaced, regardless of the setting of
+the tt(BZ_INTERLACE_ARRAYS) flag.
+bzindex(interlaceArrays())
+
+bf(bzverb(\
+Array<T,N>                        real(Array<complex<T>,N>&);
+))
+This method returns a view of the real portion of the array.
+bzindex(real())
+
+bf(bzverb(\
+TinyVector<int,1>                 shape(int L);
+TinyVector<int,2>                 shape(int L, int M);
+TinyVector<int,3>                 shape(int L, int M, int N);
+TinyVector<int,4>                 shape(int L, int M, int N, int O);
+... [up to 11 dimensions]
+))
+bzindex(shape())
+These functions may be used to create shape parameters.
+They package the set of integer arguments as a tt(TinyVector) of
+appropriate length.  For an example use, see tt(allocateArrays())
+above.
+
+
