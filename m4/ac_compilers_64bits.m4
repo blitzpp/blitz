@@ -25,7 +25,7 @@ if test "$bz_64bit" = true; then
 			AR_FLAGS="-q64 $AR_FLAGS"
 			LDFLAGS="-b64 $LDFLAGS"
 		;;
-		g++)
+		*g++)
 			CXXFLAGS="-maix64 $CXXFLAGS"
 			AR_FLAGS="-cruX64"
 			LDFLAGS="-Wl,-b64 $LDFLAGS"
@@ -57,7 +57,7 @@ if test "$bz_64bit" = true; then
 			LDFLAGS="-64 $LDFLAGS"
 			AR_FLAGS="-64 $AR_FLAGS"
 		;;
-		g++)
+		*g++)
 			CXXFLAGS="-mabi=64 $CXXFLAGS"
 			LDFLAGS="-Wl,-64 $LDFLAGS"
 		;;
