@@ -11,5 +11,5 @@ libblitz_la_SOURCES = $(top_srcdir)/src/globals.cpp
 
 
 clean-local:
-	-rm -rf cxx_repository ti_files
+	-rm -rf *.ii *.ti cxx_repository Template.dir ii_files ti_files
 
