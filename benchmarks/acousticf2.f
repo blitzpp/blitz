@@ -14,12 +14,15 @@
       REAL check
       REAL P1(N,N), P2(N,N), P3(N,N), C(N,N)
       INTEGER i, j
+      INTEGER nitersd3, remainder
 
       CALL echo_f77_set(c, P1, P2, P3, N)
       CALL checkArray2(P2, N)
       CALL checkArray2(c, N)
 
-      IF (MODULO(niters, 3) .GT. 0) THEN
+      nitersd3 = niters / 3
+      remainder = niters - 3 * nitersd3
+      IF (remainder .NE. 0) THEN
         PRINT *, 'niters should be divisible by 3, results will be off'
       ENDIF
 
