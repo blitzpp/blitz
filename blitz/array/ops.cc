@@ -23,6 +23,14 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2002/06/27 00:11:52  jcumming
+ * Changed T_numtype to P_numtype when used outside the argument list or body
+ * of a member function definition (i.e., outside the class scope).  Inside
+ * the class scope, we can use the typedef T_numtype.  The IBM xlC compiler
+ * gets confused if P_numtype is used as a template parameter name in a member
+ * function declaration and then T_numtype is used as the parameter name in
+ * the member function definition.  Fixed usage to be more consistent.
+ *
  * Revision 1.2  2001/01/25 00:25:55  tveldhui
  * Ensured that source files have cvs logs.
  *
@@ -45,8 +53,8 @@ BZ_NAMESPACE(blitz)
  * Constant operands
  */
 
-template<class T_numtype, int N_rank>
-inline Array<T_numtype, N_rank>& Array<T_numtype,N_rank>::initialize(
+template<class P_numtype, int N_rank>
+inline Array<P_numtype, N_rank>& Array<P_numtype,N_rank>::initialize(
     T_numtype x)
 {
     (*this) = _bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
@@ -55,18 +63,18 @@ inline Array<T_numtype, N_rank>& Array<T_numtype,N_rank>::initialize(
 
 #ifdef BZ_NEW_EXPRESSION_TEMPLATES
 
-template<class T_numtype, int N_rank> template<class T_expr>
-inline Array<T_numtype,N_rank>&
-Array<T_numtype,N_rank>::operator=(const ETBase<T_expr>& expr)
+template<class P_numtype, int N_rank> template<class T_expr>
+inline Array<P_numtype,N_rank>&
+Array<P_numtype,N_rank>::operator=(const ETBase<T_expr>& expr)
 {
     evaluate(static_cast<const T_expr&>(expr), 
         _bz_update<T_numtype, _bz_typename T_expr::T_numtype>());
     return *this;
 }
 
-template<class T_numtype, int N_rank>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator=(const Array<T_numtype,N_rank>& x)
+template<class P_numtype, int N_rank>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator=(const Array<T_numtype,N_rank>& x)
 {
     (*this) = _bz_ArrayExpr<FastArrayIterator<T_numtype, N_rank> >
         (x.beginFast());
@@ -74,10 +82,10 @@ Array<T_numtype, N_rank>::operator=(const Array<T_numtype,N_rank>& x)
 }
 
 #define BZ_ARRAY_UPDATE(op,name) \
-template<class T_numtype, int N_rank> \
+template<class P_numtype, int N_rank> \
 template<class T> \
-inline Array<T_numtype,N_rank>& \
-Array<T_numtype,N_rank>::operator op(const T& expr) \
+inline Array<P_numtype,N_rank>& \
+Array<P_numtype,N_rank>::operator op(const T& expr) \
 { \
     evaluate(_bz_typename asExpr<T>::T_expr(expr), \
       name<T_numtype, _bz_typename asExpr<T>::T_expr::T_numtype>()); \
@@ -97,81 +105,81 @@ BZ_ARRAY_UPDATE(>>=, _bz_shiftr_update)
 
 #else
 
-template<class T_numtype, int N_rank>
-inline Array<T_numtype, N_rank>& 
-Array<T_numtype,N_rank>::operator+=(T_numtype x)
+template<class P_numtype, int N_rank>
+inline Array<P_numtype, N_rank>& 
+Array<P_numtype,N_rank>::operator+=(T_numtype x)
 {
     (*this) += _bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
     return *this;
 }
 
-template<class T_numtype, int N_rank>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype,N_rank>::operator-=(T_numtype x)
+template<class P_numtype, int N_rank>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype,N_rank>::operator-=(T_numtype x)
 {
     (*this) -= _bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
     return *this;
 }
 
-template<class T_numtype, int N_rank>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype,N_rank>::operator*=(T_numtype x)
+template<class P_numtype, int N_rank>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype,N_rank>::operator*=(T_numtype x)
 {
     (*this) *= _bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
     return *this;
 }
 
-template<class T_numtype, int N_rank>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype,N_rank>::operator/=(T_numtype x)
+template<class P_numtype, int N_rank>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype,N_rank>::operator/=(T_numtype x)
 {
     (*this) /= _bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
     return *this;
 }
 
-template<class T_numtype, int N_rank>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype,N_rank>::operator%=(T_numtype x)
+template<class P_numtype, int N_rank>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype,N_rank>::operator%=(T_numtype x)
 {
     (*this) %= _bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
     return *this;
 }
 
-template<class T_numtype, int N_rank>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype,N_rank>::operator^=(T_numtype x)
+template<class P_numtype, int N_rank>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype,N_rank>::operator^=(T_numtype x)
 {
     (*this) ^= _bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
     return *this;
 }
 
-template<class T_numtype, int N_rank>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype,N_rank>::operator&=(T_numtype x)
+template<class P_numtype, int N_rank>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype,N_rank>::operator&=(T_numtype x)
 {
     (*this) &= _bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
     return *this;
 }
 
-template<class T_numtype, int N_rank>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype,N_rank>::operator|=(T_numtype x)
+template<class P_numtype, int N_rank>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype,N_rank>::operator|=(T_numtype x)
 {
     (*this) |= _bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
     return *this;
 }
 
-template<class T_numtype, int N_rank>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype,N_rank>::operator>>=(T_numtype x)
+template<class P_numtype, int N_rank>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype,N_rank>::operator>>=(T_numtype x)
 {
     (*this) <<= _bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
     return *this;
 }
 
-template<class T_numtype, int N_rank>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype,N_rank>::operator<<=(T_numtype x)
+template<class P_numtype, int N_rank>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype,N_rank>::operator<<=(T_numtype x)
 {
     (*this) <<= _bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
     return *this;
@@ -181,99 +189,99 @@ Array<T_numtype,N_rank>::operator<<=(T_numtype x)
  * Array operands
  */
 
-template<class T_numtype, int N_rank>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator=(const Array<T_numtype,N_rank>& x)
+template<class P_numtype, int N_rank>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator=(const Array<T_numtype,N_rank>& x)
 {
     (*this) = _bz_ArrayExpr<FastArrayIterator<T_numtype, N_rank> >(x.beginFast());
     return *this;
 }
 
-template<class T_numtype, int N_rank> template<class T_numtype2>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator=(const Array<T_numtype2,N_rank>& x)
+template<class P_numtype, int N_rank> template<class P_numtype2>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator=(const Array<P_numtype2,N_rank>& x)
 {
-    (*this) = _bz_ArrayExpr<FastArrayIterator<T_numtype2, N_rank> >(x.beginFast());
+    (*this) = _bz_ArrayExpr<FastArrayIterator<P_numtype2, N_rank> >(x.beginFast());
     return *this;
 }
 
-template<class T_numtype, int N_rank> template<class T_numtype2>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator+=(const Array<T_numtype2,N_rank>& x)
+template<class P_numtype, int N_rank> template<class P_numtype2>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator+=(const Array<P_numtype2,N_rank>& x)
 {
-    (*this) += _bz_ArrayExpr<FastArrayIterator<T_numtype2, N_rank> >(x.beginFast());
+    (*this) += _bz_ArrayExpr<FastArrayIterator<P_numtype2, N_rank> >(x.beginFast());
     return *this;
 }
 
-template<class T_numtype, int N_rank> template<class T_numtype2>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator-=(const Array<T_numtype2,N_rank>& x)
+template<class P_numtype, int N_rank> template<class P_numtype2>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator-=(const Array<P_numtype2,N_rank>& x)
 {
-    (*this) -= _bz_ArrayExpr<FastArrayIterator<T_numtype2, N_rank> >(x.beginFast());
+    (*this) -= _bz_ArrayExpr<FastArrayIterator<P_numtype2, N_rank> >(x.beginFast());
     return *this;
 }
 
-template<class T_numtype, int N_rank> template<class T_numtype2>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator*=(const Array<T_numtype2,N_rank>& x)
+template<class P_numtype, int N_rank> template<class P_numtype2>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator*=(const Array<P_numtype2,N_rank>& x)
 {
-    (*this) *= _bz_ArrayExpr<FastArrayIterator<T_numtype2, N_rank> >(x.beginFast());
+    (*this) *= _bz_ArrayExpr<FastArrayIterator<P_numtype2, N_rank> >(x.beginFast());
     return *this;
 }
 
-template<class T_numtype, int N_rank> template<class T_numtype2>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator/=(const Array<T_numtype2,N_rank>& x)
+template<class P_numtype, int N_rank> template<class P_numtype2>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator/=(const Array<P_numtype2,N_rank>& x)
 {
-    (*this) /= _bz_ArrayExpr<FastArrayIterator<T_numtype2, N_rank> >(x.beginFast());
+    (*this) /= _bz_ArrayExpr<FastArrayIterator<P_numtype2, N_rank> >(x.beginFast());
     return *this;
 }
 
-template<class T_numtype, int N_rank> template<class T_numtype2>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator%=(const Array<T_numtype2,N_rank>& x)
+template<class P_numtype, int N_rank> template<class P_numtype2>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator%=(const Array<P_numtype2,N_rank>& x)
 {
-    (*this) %= _bz_ArrayExpr<FastArrayIterator<T_numtype2, N_rank> >(x.beginFast());
+    (*this) %= _bz_ArrayExpr<FastArrayIterator<P_numtype2, N_rank> >(x.beginFast());
     return *this;
 }
 
-template<class T_numtype, int N_rank> template<class T_numtype2>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator^=(const Array<T_numtype2,N_rank>& x)
+template<class P_numtype, int N_rank> template<class P_numtype2>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator^=(const Array<P_numtype2,N_rank>& x)
 {
-    (*this) ^= _bz_ArrayExpr<FastArrayIterator<T_numtype2, N_rank> >(x.beginFast());
+    (*this) ^= _bz_ArrayExpr<FastArrayIterator<P_numtype2, N_rank> >(x.beginFast());
     return *this;
 }
 
-template<class T_numtype, int N_rank> template<class T_numtype2>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator&=(const Array<T_numtype2,N_rank>& x)
+template<class P_numtype, int N_rank> template<class P_numtype2>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator&=(const Array<P_numtype2,N_rank>& x)
 {
-    (*this) &= _bz_ArrayExpr<FastArrayIterator<T_numtype2, N_rank> >(x.beginFast());
+    (*this) &= _bz_ArrayExpr<FastArrayIterator<P_numtype2, N_rank> >(x.beginFast());
     return *this;
 }
 
-template<class T_numtype, int N_rank> template<class T_numtype2>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator|=(const Array<T_numtype2,N_rank>& x)
+template<class P_numtype, int N_rank> template<class P_numtype2>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator|=(const Array<P_numtype2,N_rank>& x)
 {
-    (*this) |= _bz_ArrayExpr<FastArrayIterator<T_numtype2, N_rank> >(x.beginFast());
+    (*this) |= _bz_ArrayExpr<FastArrayIterator<P_numtype2, N_rank> >(x.beginFast());
     return *this;
 }
 
-template<class T_numtype, int N_rank> template<class T_numtype2>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator>>=(const Array<T_numtype2,N_rank>& x)
+template<class P_numtype, int N_rank> template<class P_numtype2>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator>>=(const Array<P_numtype2,N_rank>& x)
 {
-    (*this) >>= _bz_ArrayExpr<FastArrayIterator<T_numtype2, N_rank> >(x.beginFast());
+    (*this) >>= _bz_ArrayExpr<FastArrayIterator<P_numtype2, N_rank> >(x.beginFast());
     return *this;
 }
 
-template<class T_numtype, int N_rank> template<class T_numtype2>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator<<=(const Array<T_numtype2,N_rank>& x)
+template<class P_numtype, int N_rank> template<class P_numtype2>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator<<=(const Array<P_numtype2,N_rank>& x)
 {
-    (*this) <<= _bz_ArrayExpr<FastArrayIterator<T_numtype2, N_rank> >(x.beginFast());
+    (*this) <<= _bz_ArrayExpr<FastArrayIterator<P_numtype2, N_rank> >(x.beginFast());
     return *this;
 }
 
@@ -281,97 +289,97 @@ Array<T_numtype, N_rank>::operator<<=(const Array<T_numtype2,N_rank>& x)
  * Array expression operands
  */
 
-template<class T_numtype, int N_rank> template<class T_expr>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
+template<class P_numtype, int N_rank> template<class T_expr>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
     evaluate(expr, _bz_update<T_numtype, _bz_typename T_expr::T_numtype>());
     return *this;
 }
 
-template<class T_numtype, int N_rank> template<class T_expr>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator+=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
+template<class P_numtype, int N_rank> template<class T_expr>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator+=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
     evaluate(expr, _bz_plus_update<T_numtype, _bz_typename T_expr::T_numtype>());
     return *this;
 }
 
-template<class T_numtype, int N_rank> template<class T_expr>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator-=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
+template<class P_numtype, int N_rank> template<class T_expr>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator-=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
     evaluate(expr, _bz_minus_update<T_numtype, 
         _bz_typename T_expr::T_numtype>());
     return *this;
 }
 
-template<class T_numtype, int N_rank> template<class T_expr>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator*=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
+template<class P_numtype, int N_rank> template<class T_expr>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator*=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
     evaluate(expr, _bz_multiply_update<T_numtype,
         _bz_typename T_expr::T_numtype>());
     return *this;
 }
 
-template<class T_numtype, int N_rank> template<class T_expr>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator/=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
+template<class P_numtype, int N_rank> template<class T_expr>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator/=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
     evaluate(expr, _bz_divide_update<T_numtype,
         _bz_typename T_expr::T_numtype>());
     return *this;
 }
 
-template<class T_numtype, int N_rank> template<class T_expr>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator%=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
+template<class P_numtype, int N_rank> template<class T_expr>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator%=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
     evaluate(expr, _bz_mod_update<T_numtype,
         _bz_typename T_expr::T_numtype>());
     return *this;
 }
 
-template<class T_numtype, int N_rank> template<class T_expr>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator^=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
+template<class P_numtype, int N_rank> template<class T_expr>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator^=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
     evaluate(expr, _bz_xor_update<T_numtype,
         _bz_typename T_expr::T_numtype>());
     return *this;
 }
 
-template<class T_numtype, int N_rank> template<class T_expr>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator&=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
+template<class P_numtype, int N_rank> template<class T_expr>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator&=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
     evaluate(expr, _bz_bitand_update<T_numtype,
         _bz_typename T_expr::T_numtype>());
     return *this;
 }
 
-template<class T_numtype, int N_rank> template<class T_expr>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator|=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
+template<class P_numtype, int N_rank> template<class T_expr>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator|=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
     evaluate(expr, _bz_bitor_update<T_numtype,
         _bz_typename T_expr::T_numtype>());
     return *this;
 }
 
-template<class T_numtype, int N_rank> template<class T_expr>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator>>=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
+template<class P_numtype, int N_rank> template<class T_expr>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator>>=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
     evaluate(expr, _bz_shiftr_update<T_numtype,
         _bz_typename T_expr::T_numtype>());
     return *this;
 }
 
-template<class T_numtype, int N_rank> template<class T_expr>
-inline Array<T_numtype, N_rank>&
-Array<T_numtype, N_rank>::operator<<=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
+template<class P_numtype, int N_rank> template<class T_expr>
+inline Array<P_numtype, N_rank>&
+Array<P_numtype, N_rank>::operator<<=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
     evaluate(expr, _bz_shiftl_update<T_numtype,
         _bz_typename T_expr::T_numtype>());
