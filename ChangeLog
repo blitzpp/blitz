@@ -1,3 +1,11 @@
+2004-05-06  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+
+    * configure.in: Do not execute the AC_FC_FREEFORM and AC_FC_SRCEXT
+    macros if no fortran 90 compiler was found.
+
+    * benchmarks/Makefile.am: search source files in $(srcdir) for
+    compilation speed tests.
+
 2004-05-05  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* lib/Makefile.am: Restored -I$(top_builddir) flag needed to find
