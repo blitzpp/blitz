@@ -100,12 +100,33 @@ am__quote = @am__quote@
 install_sh = @install_sh@
 
 EXTRA_DIST = readme.txt
+
+INCLUDES = -I$(top_srcdir)
+
+lib_LIBRARIES = libblitz.a
+libblitz_a_SOURCES = $(top_srcdir)/src/globals.cpp
+libblitz_a_AR = $(AR) $(AR_FLAGS)
 subdir = lib
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES =
+LIBRARIES = $(lib_LIBRARIES)
+
+libblitz_a_LIBADD =
+am_libblitz_a_OBJECTS = globals.$(OBJEXT)
+libblitz_a_OBJECTS = $(am_libblitz_a_OBJECTS)
+
+DEFS = @DEFS@
+DEFAULT_INCLUDES =  -I. -I$(srcdir)
+CPPFLAGS = @CPPFLAGS@
+LIBS = @LIBS@
 depcomp =
 am__depfiles_maybe =
-DIST_SOURCES =
+CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+CXXLD = $(CXX)
+CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
+	-o $@
+DIST_SOURCES = $(libblitz_a_SOURCES)
 
 RECURSIVE_TARGETS = info-recursive dvi-recursive install-info-recursive \
 	uninstall-info-recursive all-recursive install-data-recursive \
@@ -113,14 +134,70 @@ RECURSIVE_TARGETS = info-recursive dvi-recursive install-info-recursive \
 	uninstall-recursive check-recursive installcheck-recursive
 DIST_COMMON = Makefile.am Makefile.in
 DIST_SUBDIRS = $(SUBDIRS)
+SOURCES = $(libblitz_a_SOURCES)
+
 all: all-recursive
 
 .SUFFIXES:
+.SUFFIXES: .cpp .o .obj
 $(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
 	  $(AUTOMAKE) --gnu  --ignore-deps lib/Makefile
 Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
+libLIBRARIES_INSTALL = $(INSTALL_DATA)
+install-libLIBRARIES: $(lib_LIBRARIES)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(libdir)
+	@list='$(lib_LIBRARIES)'; for p in $$list; do \
+	  if test -f $$p; then \
+	    f="`echo $$p | sed -e 's|^.*/||'`"; \
+	    echo " $(libLIBRARIES_INSTALL) $$p $(DESTDIR)$(libdir)/$$f"; \
+	    $(libLIBRARIES_INSTALL) $$p $(DESTDIR)$(libdir)/$$f; \
+	  else :; fi; \
+	done
+	@$(POST_INSTALL)
+	@list='$(lib_LIBRARIES)'; for p in $$list; do \
+	  if test -f $$p; then \
+	    p="`echo $$p | sed -e 's|^.*/||'`"; \
+	    echo " $(RANLIB) $(DESTDIR)$(libdir)/$$p"; \
+	    $(RANLIB) $(DESTDIR)$(libdir)/$$p; \
+	  else :; fi; \
+	done
+
+uninstall-libLIBRARIES:
+	@$(NORMAL_UNINSTALL)
+	@list='$(lib_LIBRARIES)'; for p in $$list; do \
+	  p="`echo $$p | sed -e 's|^.*/||'`"; \
+	  echo " rm -f $(DESTDIR)$(libdir)/$$p"; \
+	  rm -f $(DESTDIR)$(libdir)/$$p; \
+	done
+
+clean-libLIBRARIES:
+	-test -z "$(lib_LIBRARIES)" || rm -f $(lib_LIBRARIES)
+globals.$(OBJEXT): $(top_srcdir)/src/globals.cpp
+libblitz.a: $(libblitz_a_OBJECTS) $(libblitz_a_DEPENDENCIES) 
+	-rm -f libblitz.a
+	$(libblitz_a_AR) libblitz.a $(libblitz_a_OBJECTS) $(libblitz_a_LIBADD)
+	$(RANLIB) libblitz.a
+
+mostlyclean-compile:
+	-rm -f *.$(OBJEXT) core *.core
+
+distclean-compile:
+	-rm -f *.tab.c
+
+.cpp.o:
+	$(CXXCOMPILE) -c -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
+
+.cpp.obj:
+	$(CXXCOMPILE) -c -o $@ `cygpath -w $<`
+
+globals.o: $(top_srcdir)/src/globals.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o globals.o `test -f '$(top_srcdir)/src/globals.cpp' || echo '$(srcdir)/'`$(top_srcdir)/src/globals.cpp
+
+globals.obj: $(top_srcdir)/src/globals.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o globals.obj `cygpath -w $(top_srcdir)/src/globals.cpp`
 uninstall-info-am:
 
 # This directory's subdirectories are mostly independent; you can cd
@@ -259,9 +336,10 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-recursive
-all-am: Makefile
+all-am: Makefile $(LIBRARIES)
 installdirs: installdirs-recursive
 installdirs-am:
+	$(mkinstalldirs) $(DESTDIR)$(libdir)
 
 install: install-recursive
 install-exec: install-exec-recursive
@@ -289,11 +367,12 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-recursive
 
-clean-am: clean-generic clean-local mostlyclean-am
+clean-am: clean-generic clean-libLIBRARIES clean-local mostlyclean-am
 
 distclean: distclean-recursive
 
-distclean-am: clean-am distclean-generic distclean-tags
+distclean-am: clean-am distclean-compile distclean-generic \
+	distclean-tags
 
 dvi: dvi-recursive
 
@@ -305,7 +384,7 @@ info-am:
 
 install-data-am:
 
-install-exec-am:
+install-exec-am: install-libLIBRARIES
 
 install-info: install-info-recursive
 
@@ -319,30 +398,35 @@ maintainer-clean-am: distclean-am maintainer-clean-generic
 
 mostlyclean: mostlyclean-recursive
 
-mostlyclean-am: mostlyclean-generic
+mostlyclean-am: mostlyclean-compile mostlyclean-generic
 
-uninstall-am: uninstall-info-am
+uninstall-am: uninstall-info-am uninstall-libLIBRARIES
 
 uninstall-info: uninstall-info-recursive
 
 .PHONY: $(RECURSIVE_TARGETS) GTAGS all all-am check check-am clean \
-	clean-generic clean-local clean-recursive distclean \
-	distclean-generic distclean-recursive distclean-tags distdir \
-	dvi dvi-am dvi-recursive info info-am info-recursive install \
-	install-am install-data install-data-am install-data-recursive \
+	clean-generic clean-libLIBRARIES clean-local clean-recursive \
+	distclean distclean-compile distclean-generic \
+	distclean-recursive distclean-tags distdir dvi dvi-am \
+	dvi-recursive info info-am info-recursive install install-am \
+	install-data install-data-am install-data-recursive \
 	install-exec install-exec-am install-exec-recursive \
-	install-info install-info-am install-info-recursive install-man \
-	install-recursive install-strip installcheck installcheck-am \
-	installdirs installdirs-am installdirs-recursive \
-	maintainer-clean maintainer-clean-generic \
-	maintainer-clean-recursive mostlyclean mostlyclean-generic \
-	mostlyclean-recursive tags tags-recursive uninstall \
-	uninstall-am uninstall-info-am uninstall-info-recursive \
+	install-info install-info-am install-info-recursive \
+	install-libLIBRARIES install-man install-recursive \
+	install-strip installcheck installcheck-am installdirs \
+	installdirs-am installdirs-recursive maintainer-clean \
+	maintainer-clean-generic maintainer-clean-recursive mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-recursive \
+	tags tags-recursive uninstall uninstall-am uninstall-info-am \
+	uninstall-info-recursive uninstall-libLIBRARIES \
 	uninstall-recursive
 
 
+#lib_LTLIBRARIES = libblitz.la
+#libblitz_la_SOURCES = $(top_srcdir)/src/globals.cpp
+
 clean-local:
-	-rm -f libblitz.a
+	-rm -f libblitz.a cxx_repository ti_files
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
