@@ -14,6 +14,9 @@
 	complex<T>.
 	* blitz/generate/genmatuops.cpp: Undo blitz_isnan to isnan.
 	* blitz/generate/genvecuops.cpp: Undo blitz_isnan to isnan.
+	* blitz/generate/genmathfunc.cpp: Removed implicit conversion from string
+	literal to char* in `one' and `two' functions by `const' the function
+	prototypes. 
 
 
 2003-01-21  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
