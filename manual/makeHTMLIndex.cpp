@@ -1,6 +1,7 @@
 #include <iostream.h>
 #include <fstream.h>
 #include <strings.h>
+#include <string.h>
 #include <stdio.h>
 
 int tagnum = 1;
