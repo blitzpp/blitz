@@ -10,7 +10,11 @@
 #include <blitz/vector.h>
 #include <blitz/rand-uniform.h>
 #include <blitz/benchext.h>
-#include <valarray.h>
+#ifdef BZ_HAVE_STD
+	#include <valarray>
+#else
+	#include <valarray.h>
+#endif
 
 BZ_USING_NAMESPACE(blitz)
 
