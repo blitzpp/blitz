@@ -1,5 +1,9 @@
 
 
+Thu Dec 12 15:31:15 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* aclocal.m4: updated using the autoconf tool autoreconf 2.53 that is
+	dedicated to update generated configuration files
+
 Tue Dec 10 15:48:02 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* benchmarks/loops.data: new file. Input file for benchmarks/makeloop
 	* configure.in: added flag -fno-second-underscore for GNU g77 and
