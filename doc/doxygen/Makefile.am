@@ -2,38 +2,45 @@
 
 # Support doxygen documentation ?
 
-docdir = $(datadir)/doc/$(PACKAGE)-doc-$(VERSION)
+docdir = $(datadir)/doc/$(PACKAGE)-$(VERSION)/doxygen
 
-if DOC
+DISTCLEANFILES = Doxyfile doxygen-warning 
+
+if DOXYGEN_DOC
+
 
 html/index.html: Doxyfile
-	@DOXYGEN@
+	@DOXYGEN@ 
 
 # Document Targets
 html: html/index.html
-ps: $(PACKAGE).ps
 pdf: $(PACKAGE).pdf
-
-$(PACKAGE).ps: html/index.html
-	@if test -d latex; then \
-	echo "Making PostScript manual"; \
-		$(MAKE) -C latex refman.ps; \
-	mv ./latex/refman.ps $(PACKAGE).ps; \
-	fi
+ps: $(PACKAGE).ps
 
 $(PACKAGE).pdf: html/index.html
-	@if test -d latex; then \
+	@if test -d ./latex; then \
 	echo "Making PDF manual"; \
-		$(MAKE) -C latex refman.pdf; \
-		mv ./latex/refman.pdf $(PACKAGE).pdf; \
+	if test -f $@; then \
+		$(RM) $@; \
+	fi; \
+		$(MAKE) -C ./latex refman.pdf; \
+		$(LN_S) ./latex/refman.pdf $@; \
+	fi
+
+$(PACKAGE).ps: html/index.html
+	@if test -d ./latex; then \
+	echo "Making PS manual"; \
+	if test -f $@; then \
+		$(RM) $@; \
+	fi; \
+		$(MAKE) -C ./latex refman.ps; \
+		$(LN_S) ./latex/refman.pdf $@; \
 	fi
 
 doc: html/index.html
-	@if test ! -f html/blitz.tag; then \
-		(cd html; doxytag -t blitz.tag); \
-	fi
 	@if test -d latex; then \
-		make pdf; \
+		$(MAKE) ps; \
+		$(MAKE) pdf; \
 	fi
 
 else
@@ -50,20 +57,14 @@ doc-dist: doc
 		echo "please wait while archiving the docs."; \
 		tar cf - -C html . | bzip2 --best -c > $(PACKAGE)-docs.tar.bz2; \
 	fi
-	@if test -f $(PACKAGE).ps; then \
-		bzip2 --force --best $(PACKAGE).ps; \
-	fi
-	@if test -f $(PACKAGE).pdf; then \
-		bzip2 --force --best $(PACKAGE).pdf; \
-	fi
 
 # Clean hooks
 clean-local:
 	@if test -f $(PACKAGE).pdf; then \
 		$(RM) -f $(PACKAGE).pdf; \
 	fi
-	@if test -f $(PACKAGE).pdf.bz2; then \
-		$(RM) -f $(PACKAGE).pdf.bz2; \
+	@if test -f $(PACKAGE).ps; then \
+		$(RM) -f $(PACKAGE).ps; \
 	fi
 	@if test -d html; then \
 		$(RM) -rf html; \
@@ -83,12 +84,12 @@ install-data-hook: make-install-dirs
 		echo Installing documentations into $(docdir) ; \
 		$(INSTALL_DATA) html/* $(docdir) ; \
 	fi
-	@if test -f $(PACKAGE).ps; then \
-		echo Installing PostScript manual into $(docdir) ; \
-		$(INSTALL_DATA) $(PACKAGE).ps $(docdir) ; \
-	fi
 	@if test -f $(PACKAGE).pdf; then \
 		echo Installing PDF manual into $(docdir) ; \
 		$(INSTALL_DATA) $(PACKAGE).pdf $(docdir) ; \
+	fi
+	@if test -f $(PACKAGE).ps; then \
+		echo Installing PS manual into $(docdir) ; \
+		$(INSTALL_DATA) $(PACKAGE).ps $(docdir) ; \
 	fi
 
