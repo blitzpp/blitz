@@ -5,7 +5,12 @@ BZ_USING_NAMESPACE(blitz)
 
 class RGB24 {
 public:
+#if defined(_IBMR2)
+// hack for bug in IBM xlC compiler
+    enum {red=0, green=1, blue=2};
+#else
     static const int red=0, green=1, blue=2;
+#endif
 
     RGB24() { }
 
