@@ -1,5 +1,5 @@
 /***************************************************************************
- * blitz/ops.h           Function objects for operators
+ * blitz/ops.h           Function objects for math operators
  *
  * $Id$
  *
@@ -23,6 +23,11 @@
  *
  *************************************************************************
  * $Log$
+ * Revision 1.4  2002/07/02 19:11:06  jcumming
+ * Rewrote and reorganized this file to make better use of macros to
+ * generate all the functor classes needed to provide unary and binary
+ * operators for the "new" style of expression templates.
+ *
  * Revision 1.3  2002/03/06 16:06:19  patricg
  *
  * os replaced by str in the BitwiseNot template
@@ -52,8 +57,8 @@
  #include <blitz/promote.h>
 #endif
 
-#ifndef BZ_MATHFUNC_H
- #include <blitz/mathfunc.h>
+#ifndef BZ_PRETTYPRINT_H
+ #include <blitz/prettyprint.h>
 #endif
 
 BZ_NAMESPACE(blitz)
@@ -89,8 +94,57 @@ BZ_NAMESPACE(blitz)
  *
  * Users are free to specialize these function objects for their own types.
  */
+    
+/* Unary operators that return same type as argument */
+    
+#define BZ_DEFINE_UNARY_OP(name,op)                         \
+template<class T_numtype1>                                  \
+struct name {                                               \
+    typedef T_numtype1 T_numtype;                           \
+                                                            \
+    static inline T_numtype                                 \
+    apply(T_numtype1 a)                                     \
+    { return op a; }                                        \
+							    \
+    template<class T1>                                      \
+    static inline void prettyPrint(string& str,             \
+        prettyPrintFormat& format, const T1& t1)            \
+    {                                                       \
+        str += #op;                                         \
+        t1.prettyPrint(str, format);                        \
+    }                                                       \
+};
 
-#define BZ_DEFINE_OP(name,op,symbol)                        \
+BZ_DEFINE_UNARY_OP(BitwiseNot,~)
+BZ_DEFINE_UNARY_OP(UnaryPlus,+)
+BZ_DEFINE_UNARY_OP(UnaryMinus,-)
+    
+    
+/* Unary operators that return a specified type */
+    
+#define BZ_DEFINE_UNARY_OP_RET(name,op,ret)                 \
+template<class T_numtype1>                                  \
+struct name {                                               \
+    typedef ret T_numtype;                                  \
+    static inline T_numtype                                 \
+    apply(T_numtype1 a)                                     \
+    { return op a; }                                        \
+                                                            \
+    template<class T1>                                      \
+    static inline void prettyPrint(string& str,             \
+        prettyPrintFormat& format, const T1& t1)            \
+    {                                                       \
+        str += #op;                                         \
+        t1.prettyPrint(str, format);                        \
+    }                                                       \
+};
+
+BZ_DEFINE_UNARY_OP_RET(LogicalNot,!,bool)
+    
+    
+/* Binary operators that return type based on type promotion */
+    
+#define BZ_DEFINE_BINARY_OP(name,op)                        \
 template<class T_numtype1, class T_numtype2>                \
 struct name {                                               \
     typedef BZ_PROMOTE(T_numtype1, T_numtype2) T_numtype;   \
@@ -106,28 +160,31 @@ struct name {                                               \
     {                                                       \
         str += "(";                                         \
         t1.prettyPrint(str, format);                        \
-        str += symbol;                                      \
+        str += #op;                                         \
         t2.prettyPrint(str, format);                        \
         str += ")";                                         \
     }                                                       \
-}
+};
 
-BZ_DEFINE_OP(Add,+,"+");
-BZ_DEFINE_OP(Subtract,-,"-");
-BZ_DEFINE_OP(Multiply,*,"*");
-BZ_DEFINE_OP(Divide,/,"/");
-BZ_DEFINE_OP(Modulo,%,"%");
-BZ_DEFINE_OP(BitwiseXor,^,"^");
-BZ_DEFINE_OP(BitwiseAnd,&,"&");
-BZ_DEFINE_OP(BitwiseOr,|,"|");
-BZ_DEFINE_OP(ShiftRight,>>,">>");
-BZ_DEFINE_OP(ShiftLeft,<<,"<<");
-
-#define BZ_DEFINE_BOOL_OP(name,op,symbol)                   \
+BZ_DEFINE_BINARY_OP(Add,+)
+BZ_DEFINE_BINARY_OP(Subtract,-)
+BZ_DEFINE_BINARY_OP(Multiply,*)
+BZ_DEFINE_BINARY_OP(Divide,/)
+BZ_DEFINE_BINARY_OP(Modulo,%)
+BZ_DEFINE_BINARY_OP(BitwiseXor,^)
+BZ_DEFINE_BINARY_OP(BitwiseAnd,&)
+BZ_DEFINE_BINARY_OP(BitwiseOr,|)
+BZ_DEFINE_BINARY_OP(ShiftRight,>>)
+BZ_DEFINE_BINARY_OP(ShiftLeft,<<)
+    
+    
+/* Binary operators that return a specified type */
+    
+#define BZ_DEFINE_BINARY_OP_RET(name,op,ret)                \
 template<class T_numtype1, class T_numtype2>                \
 struct name {                                               \
-    typedef bool T_numtype;                                 \
-    static inline bool                                      \
+    typedef ret T_numtype;                                  \
+    static inline T_numtype                                 \
     apply(T_numtype1 a, T_numtype2 b)                       \
     { return a op b; }                                      \
                                                             \
@@ -138,84 +195,24 @@ struct name {                                               \
     {                                                       \
         str += "(";                                         \
         t1.prettyPrint(str, format);                        \
-        str += symbol;                                      \
+        str += #op;                                         \
         t2.prettyPrint(str, format);                        \
         str += ")";                                         \
     }                                                       \
-}
-
-BZ_DEFINE_BOOL_OP(Greater,>,">");
-BZ_DEFINE_BOOL_OP(Less,<,"<");
-BZ_DEFINE_BOOL_OP(GreaterOrEqual,>=,">=");
-BZ_DEFINE_BOOL_OP(LessOrEqual,<=,"<=");
-BZ_DEFINE_BOOL_OP(Equal,==,"==");
-BZ_DEFINE_BOOL_OP(NotEqual,!=,"!=");
-BZ_DEFINE_BOOL_OP(LogicalAnd,&&,"&&");
-BZ_DEFINE_BOOL_OP(LogicalOr,||,"||");
-
-template<class T_numtype1, class T_cast>
-struct Cast {
-    typedef T_cast T_numtype;
-    static inline T_cast apply(T_numtype1 a)
-    { return a; }
-
-    template<class T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
-        const T1& a)
-    {
-        str += BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_cast);
-        str += "(";
-        a.prettyPrint(str, format);
-        str += ")";
-    }
 };
 
-template<class T_numtype1>
-struct LogicalNot {
-    typedef bool T_numtype;
-    static inline bool apply(T_numtype1 a)
-    { return !a; }
-
-    template<class T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
-        const T1& a)
-    {
-        str += "!";
-        a.prettyPrint(str, format);
-    }
-};
-
-template<class T_numtype1>
-struct BitwiseNot {
-    typedef T_numtype1 T_numtype;
-    static inline T_numtype apply(T_numtype1 a)
-    { return ~a; }
-
-    template<class T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
-        const T1& a)
-    {
-        str += "~";
-        a.prettyPrint(str,format);
-    }
-};
-
-template<class T_numtype1>
-struct Negate {
-    typedef T_numtype1 T_numtype;
-    static inline T_numtype apply(T_numtype1 a)
-    { return -a; }
-
-    template<class T1>
-    static void prettyPrint(string& str, prettyPrintFormat& format,
-        const T1& a)
-    {
-        str += "-";
-        a.prettyPrint(str, format);
-    }
-};
+BZ_DEFINE_BINARY_OP_RET(Greater,>,bool)
+BZ_DEFINE_BINARY_OP_RET(Less,<,bool)
+BZ_DEFINE_BINARY_OP_RET(GreaterOrEqual,>=,bool)
+BZ_DEFINE_BINARY_OP_RET(LessOrEqual,<=,bool)
+BZ_DEFINE_BINARY_OP_RET(Equal,==,bool)
+BZ_DEFINE_BINARY_OP_RET(NotEqual,!=,bool)
+BZ_DEFINE_BINARY_OP_RET(LogicalAnd,&&,bool)
+BZ_DEFINE_BINARY_OP_RET(LogicalOr,||,bool)
+    
+    
 BZ_NAMESPACE_END
 
-#endif
+#endif // BZ_OPS_H
 
 
