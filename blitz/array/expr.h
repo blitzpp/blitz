@@ -87,13 +87,13 @@ public:
     typedef T_expr T_ctorArg1;
     typedef int    T_ctorArg2;    // dummy
 
-    enum { numArrayOperands = BZ_ENUM_CAST(P_expr::numArrayOperands),
-        numIndexPlaceholders = BZ_ENUM_CAST(P_expr::numIndexPlaceholders),
-        rank = BZ_ENUM_CAST(P_expr::rank) };
+    enum { numArrayOperands = BZ_ENUM_CAST(T_expr::numArrayOperands),
+        numIndexPlaceholders = BZ_ENUM_CAST(T_expr::numIndexPlaceholders),
+        rank = BZ_ENUM_CAST(T_expr::rank) };
 
-    _bz_ArrayExpr(const _bz_ArrayExpr<P_expr>& a)
+    _bz_ArrayExpr(const _bz_ArrayExpr<T_expr>& a)
 #ifdef BZ_NEW_EXPRESSION_TEMPLATES
-        : ETBase< _bz_ArrayExpr<P_expr> >(a), iter_(a.iter_)
+        : ETBase< _bz_ArrayExpr<T_expr> >(a), iter_(a.iter_)
 #else
         : iter_(a.iter_)
 #endif
