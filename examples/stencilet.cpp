@@ -1,4 +1,4 @@
-#include <blitz/Array.h>
+#include <blitz/array.h>
 #include <blitz/array/stencil-et.h>
 
 using namespace blitz;
