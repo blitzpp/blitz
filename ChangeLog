@@ -1,3 +1,20 @@
+2002-07-23  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+	* blitz/array/functorExpr.h: Changed _bz_FunctorExpr classes to
+	store user-defined functor by value rather than by const
+	reference.  This fixes a problem under certain compilers with the
+	state of the user-defined functor being corrupted prior to
+	evaluation of the Array expression.  Also, cleaned up remnants
+	from previous use of Blitz minmax function.
+	* blitz/array/expr.h: Added a four-argument templated constructor
+	for _bz_ArrayExpr, which is needed when building an Array
+	expression containing a functor that takes three arguments.  This
+	is needed to support functorExpr.h, which allows functors with up
+	to three arguments.
+	* testsuite/newet.cpp: Changed expressions used in final test to
+	ensure that two-argument pow() function is called with first
+	argument being non-negative.  Otherwise, the results of the
+	function call are undefined.
+
 2002-07-19  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 	* blitz/blitz.h: Put ending semicolon into definition of
 	BZ_MUTEX_* macros so that you don't need to add a semicolon after
