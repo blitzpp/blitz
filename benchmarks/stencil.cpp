@@ -7,13 +7,11 @@
 
 BZ_USING_NAMESPACE(blitz)
 
-#ifdef BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES
+#if defined(BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES)
   #define stencilf stencilf_
   #define stencilftiled stencilftiled_
   #define stencilf90 stencilf90_
-#endif
-
-#ifdef BZ_FORTRAN_SYMBOLS_CAPS
+#elif defined(BZ_FORTRAN_SYMBOLS_CAPS)
   #define stencilf       STENCILF
   #define stencilftiled  STENCILFTILED
   #define stencilf90     STENCILF90
@@ -25,14 +23,21 @@ extern "C" {
     void stencilf90(double* A, double* B, int& N, int& iters);
 }
 
+#ifdef FORTRAN_90
 void stencilFortran90Version(BenchmarkExt<int>& bench);
+#endif
 void stencilFortran77Version(BenchmarkExt<int>& bench);
 void stencilFortran77VersionTiled(BenchmarkExt<int>& bench);
 void stencilBlitzVersion(BenchmarkExt<int>& bench);
 
 int main()
 {
-    BenchmarkExt<int> bench("Array stencil", 4);
+    int numBenchmarks = 4;
+#ifndef FORTRAN_90
+		numBenchmarks--;   // No fortran 90
+#endif
+
+    BenchmarkExt<int> bench("Array stencil", numBenchmarks);
 
     const int numSizes = 16;
 
@@ -58,7 +63,9 @@ int main()
     bench.setFlopsPerIteration(flops);
 
     bench.beginBenchmarking();
+#ifdef FORTRAN_90
     stencilFortran90Version(bench);
+#endif
     stencilBlitzVersion(bench);
     stencilFortran77Version(bench);
     stencilFortran77VersionTiled(bench);
@@ -178,6 +185,7 @@ void stencilFortran77VersionTiled(BenchmarkExt<int>& bench)
     bench.endImplementation();
 }
 
+#ifdef FORTRAN_90
 void stencilFortran90Version(BenchmarkExt<int>& bench)
 {
    bench.beginImplementation("Fortran 90");
@@ -209,4 +217,4 @@ void stencilFortran90Version(BenchmarkExt<int>& bench)
 
     bench.endImplementation();
 }
-
+#endif
