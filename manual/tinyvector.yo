@@ -11,7 +11,9 @@ or use the directive tt(using namespace blitz;).
 
 The Blitz++ tt(Array) object uses tt(TinyVector) internally, so
 if you include tt(<blitz/array.h>), the TinyVector
-header is automatically included.
+header is automatically included.   However, to use tt(TinyVector) 
+expressions, you will need to include tt(<blitz/tinyvec-et.h>).
+
 
 bzsect(Template parameters and types)
 
