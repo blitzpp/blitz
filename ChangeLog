@@ -1,4 +1,13 @@
-
+2002-08-30  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+	* testsuite/storage.cpp: Modified construction of one Array to
+	test new setStorage() method.
+	* blitz/array/methods.cc: Added definition of setStorage() method,
+	which lets user set Array storage format after construction.  We
+	check that Array is not allocated first.
+	* blitz/array-impl.h: Added declaration of setStorage() method,
+	which lets user set Array storage format after construction.
+	* blitz/array/storage.h: Added explicit assignment operator for
+	GeneralArrayStorage class.
 
 Wed Jul 24 11:06:41 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* configure.in: Removed occurences of -DBZ_DISABLE_XOPEN_SOURCE, this is
