@@ -1,3 +1,23 @@
+2004-06-23  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+
+	* m4/ac_fortran_flags_preset.m4: Tuned up some of the optimization
+	flags and cleaned up file formatting.  Allow modified forms of
+	compiler name for KCC, SGI and IBM compilers, so we can use
+	special scripts to invoke these compilers (e.g., mpxlC or newKCC).
+
+	* m4/ac_cxx_flags_preset.m4: Tuned up some of the optimization
+	flags and cleaned up file formatting.  Allow modified forms of
+	compiler name for KCC, SGI and IBM compilers, so we can use
+	special scripts to invoke these compilers (e.g., mpxlC or newKCC).
+
+	* m4/ac_compilers_64bits.m4: Added special 64-bit flags for the
+	archiver and loader as needed.  Allow modified forms of compiler
+	name for KCC, SGI and IBM compilers, so we can use special scripts
+	to invoke these compilers (e.g., mpxlC or newKCC).
+
+	* configure.in: Moved test for 64-bit option ahead of libtool
+	configuration, so that libtool will pick up the proper 64-bit
+	flags for the archiver tool, if requested.
 2004-06-18  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* testsuite/iter.cpp: Added testing of standard iterator interface
