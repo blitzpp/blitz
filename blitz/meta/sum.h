@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.3  2001/01/26 20:34:57  tveldhui
+ * Fixed bug found by Masahiro TATSUMI
+ *
  * Revision 1.2  2001/01/24 20:22:51  tveldhui
  * Updated copyright date in headers.
  *
@@ -56,7 +59,7 @@ public:
     f(const T_expr1& a)
     {
         return a[I] +
-            + _bz_meta_vectorSum<loopFlag * N, loopFlag * (I+1)>::f(a);
+            _bz_meta_vectorSum<loopFlag * N, loopFlag * (I+1)>::f(a);
     }
 };
 
