@@ -1,3 +1,26 @@
+
+2004-11-03  Patrick Guio  <patrick.guio@bccs.uib.no>
+
+	* m4/ac_prog_doxygen.m4 doc/doxygen/Makefile.am: Renamed automake
+	conditional tag 'DOC' into more explicit 'DOXYGEN_DOC' as well as
+	references.
+
+	* doc/doxygen/Doxyfile.in: Upgraded config file to doxygen 1.3.6.
+	Replaced ../.. by autoconf variables in INPUT tag. 
+	Removed *.cc from the FILE_PATTERNS tag since they are just
+	implementation. Limited the class to document by explicitly exclude 
+	concerned files using the EXCLUDE tag. Fine tuned some doxygen and
+	dot behaviour tags.
+
+	* doc/doxygen/Makefile.am: Set docdir to be 
+	$(datadir)/doc/$(PACKAGE)-$(VERSION)/doxygen, indeed a 
+	subdirectory of the blitz root document directory. 
+	Use more systematically available variables.
+	Cosmetic Changes.
+
+	* TODO: new item: make available RPM as a dist medium.
+
+
 2004-10-29  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
 	* doc/doxygen/Makefile.am: Set docdir to
@@ -12,6 +35,7 @@
 	* doc/doxygen/Doxyfile.in: Changed FILE_PATTERNS from *.cpp to
 	*.cc, since that is the extension used for blitz template
 	implementation header files.
+
 2004-10-26  Patrick Guio  <patrick.guio@ii.uib.no>
 
 	* doc/Makefile.am: Assigned variable docdir the value
