@@ -1,6 +1,47 @@
+2003-02-07  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+	* blitz/indexexpr.h: Eliminated gcc compiler warnings about
+	explicitly initializing base class ETBase in IndexPlaceholder copy
+	constructor.
+	* blitz/array/expr.h: Removed names of some unused parameters in
+	_bz_ArrayExprConstant member functions to eliminate gcc compiler
+	warnings.  Eliminated gcc compiler warnings about explicitly 
+	initializing base class ETBase in _bz_ArrayExpr copy constructor.
+	* blitz/array/reduce.h: Removed names of some unused parameters in
+	_bz_ArrayExprReduce member functions to eliminate warnings from
+	gcc compiler.
+	* blitz/array/map.h: Removed names of unused parameters in some
+	ArrayIndexMapping member functions to eliminate warnings from gcc.
+	* blitz/array-impl.h: Removed names of unused parameters in
+	slice() function to eliminate compiler warnings from gcc.
+	Eliminated gcc compiler warnings about explicitly initializing 
+	base classes MemoryBlockReference and ETBase in Array copy
+	constructor.
+	* blitz/array/slicing.cc: Removed name of an unused parameter in
+	slice() function to eliminate a warning from gcc compiler.
+	* blitz/array/iter.h: Removed name of unused Array parameter when
+	constructing a ConstArrayIterator with a _bz_endTag specifier.
+	Eliminates a warning from gcc.
+	* blitz/benchext.cc: Changed type of some loop variables from int
+	to unsigned to avoid comparisons between int and unsigned
+	expressions.  Eliminated some unnecessary comparisons of unsigned
+	quantities with zero.
+	* blitz/benchext.h: Changed type of data members numParameters_
+	and parameterNumber_ from int to unsigned, since these can never
+	be negative.
+	* blitz/array/stencils.cc: Removed names of unused parameters in
+	function getStencilExtent() to eliminate gcc warnings.
+	* blitz/meta/matassign.h: Removed names of some unused parameters
+	in fully specialized versions of _bz_meta_matAssign::f() to
+	eliminate gcc warnings.
+	* blitz/blitz.h: Added "mutable" keyword (if available) to macro
+	definition for declaring a mutex object.  Need to make mutex
+	mutable when it is a member of a class with const member functions
+	that use the mutex, as is the case with the MemoryBlock class when
+	using threads.  This addresses a problem noted by Patrik Jonsson
+	<patrik@ucolick.org>.
 
 2003-02-05 Patrick Guio <patrick.guio@fys.uio.no>
-  * depcomp install-sh mkinstalldirs missing: Removed from repository
+        * depcomp install-sh mkinstalldirs missing: Removed from repository
 	since generated running `autoreconf -v -i'.
 	* Makefile.am: Added a guard to avoid overwriting COPYING and INSTALL
 	files when running `autoreconf -v -i -f'.
