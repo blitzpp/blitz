@@ -146,5 +146,6 @@ Thu Mar  7 09:06:58 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* blitz/config-mwerks.h: new file, configuration file for Metrowerks code
 	warrior compiler proposed by Xavier Warin <xavier.warin@der.edfgdf.fr>
 	* INSTALL: updated with the new make targets
+	* Makefile.am (in each directory): fixed a bug for the target dist
 	
 	
