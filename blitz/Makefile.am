@@ -2,7 +2,7 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-SUBDIRS = array generate meta
+SUBDIRS = generate meta array
 
 blitzdir = $(includedir)/blitz
 
