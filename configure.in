@@ -208,7 +208,7 @@ case "$target" in
     F90=f90
     F90_OPTIMIZE_FLAGS="-O3"
   ;;
-	*hppa1.0-hp-hpux11.1*)
+	*hp-hpux*)
 		echo "HP-UX: assuming f70 and f90"
 		F77=f90
 		F77_OPTIMIZE_FLAGS="-O4"
