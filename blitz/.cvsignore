@@ -16,4 +16,13 @@ new-config.h
 new-config.h.in
 stamp-h1
 config.h.in
-
+apple
+intel
+ibm
+compaq
+hp
+sgi
+gnu
+pgi
+kai
+fujitsu

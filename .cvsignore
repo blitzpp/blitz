@@ -1,7 +1,12 @@
 Makefile
 Makefile.in
+_configs.sed
 aclocal.m4
 autom4te.cache
+blitz-uninstalled.pc
+blitz.pc
+blitz.pc.in
+config
 config.cache
 config.guess
 config.h.in
@@ -16,9 +21,5 @@ libtool
 ltmain.sh
 mkinstalldirs
 missing
-config
 .deps
-blitz-uninstalled.pc
-blitz.pc
-blitz.pc.in
 
