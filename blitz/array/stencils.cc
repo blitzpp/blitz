@@ -165,9 +165,9 @@ template<int N_rank,
     class T_array11>
 static inline void getStencilExtent(TinyVector<int,N_rank>& minb,
     TinyVector<int,N_rank>& maxb,
-    const T_stencil& stencil, Array<T_numtype1,N_rank>& A,
-    T_array2& B, T_array3& C, T_array4& D, T_array5& E, T_array6& F,
-    T_array7& G, T_array8& H, T_array9& I, T_array10& J, T_array11& K)
+    const T_stencil& stencil, Array<T_numtype1,N_rank>&,
+    T_array2&, T_array3&, T_array4&, T_array5&, T_array6&,
+    T_array7&, T_array8&, T_array9&, T_array10&, T_array11&)
 {
     stencil.getExtent(minb, maxb);
 }
