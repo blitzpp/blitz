@@ -17,7 +17,12 @@ int main()
     C =  14, 921, 74, 225;
     BZTEST(count(C == B) == 4);
 
+    // workaround for MIPSpro compiler bug
+#if defined(__sgi)
+    TinyVector<int,1> N = maxIndex(B);
+#else
     TinyVector<int,1> N = maxIndex(sum(pow2(A),j));
+#endif
     BZTEST(N(0) == 1);
 
     return 0;
