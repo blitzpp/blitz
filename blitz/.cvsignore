@@ -1,6 +1,14 @@
 Makefile
+Makefile.in
 *.lo
 *.la
 .deps
 .libs
 config.h
+matbops.h
+mathfunc.h
+matuops.h
+vecbops.cc
+vecuops.cc
+vecwhere.cc
+
