@@ -150,7 +150,7 @@ public:
         BZPRECONDITION(0);
     }
 
-    _bz_bool isUnitStride(int rank) const
+    _bz_bool isUnitStride(int) const
     {
         BZPRECONDITION(0);
         return false;
@@ -189,7 +189,7 @@ public:
     }
 
     template<int N_rank>
-    void moveTo(const TinyVector<int,N_rank>& i)
+    void moveTo(const TinyVector<int,N_rank>&)
     {
         BZPRECONDITION(0);
         return;
@@ -204,7 +204,7 @@ public:
     }
 
     template<class T_shape>
-    _bz_bool shapeCheck(const T_shape& shape) const
+    _bz_bool shapeCheck(const T_shape&) const
     { 
         // NEEDS_WORK-- do a real shape check (tricky)
         return _bz_true; 
