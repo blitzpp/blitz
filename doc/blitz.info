@@ -1,5 +1,10 @@
 This is blitz.info, produced by makeinfo version 4.1 from blitz.texi.
 
+INFO-DIR-SECTION Blitz++ library
+START-INFO-DIR-ENTRY
+* Blitz++: (blitz++).           High-performance C++ numeric library
+END-INFO-DIR-ENTRY
+
 
 File: blitz.info,  Node: Top,  Up: (DIR)
 
@@ -1326,14 +1331,14 @@ array which doesn't exist:
    When compiled with `-DBZ_DEBUG', the out of bounds indices are
 detected and an error message results:
 
-     [Blitz++] Precondition failure: Module ../../blitz/array-impl.h line 1318
+     [Blitz++] Precondition failure: Module ../../blitz/array-impl.h line 1295
      Array index out of range: (4, 4)
      Lower bounds: 2 [          0         0 ]
      Length:       2 [          4         4 ]
      
-     debug: ../../blitz/array-impl.h:1318: bool blitz::Array<T, N>::assertInRange
-     (int, int) const [with P_numtype = complex<float>, int N_rank = 2]: Assertion
-     `0' failed.
+     debug: ../../blitz/array-impl.h:1295: bool blitz::Array<T,
+     N>::assertInRange(int, int) const [with P_numtype = std::complex<float>, int
+     N_rank = 2]: Assertion `0' failed.
 
    Precondition failures send their error messages to the standard
 error stream (`cerr').  After displaying the error message, `assert(0)'
@@ -4640,7 +4645,8 @@ namespace blitz;'.
 
    The Blitz++ `Array' object uses `TinyVector' internally, so if you
 include `<blitz/array.h>', the `TinyVector' header is automatically
-included.
+included.  However, to use `TinyVector' expressions, you will need to
+include `<blitz/tinyvec-et.h>'.
 
 Template parameters and types
 =============================
@@ -5980,48 +5986,48 @@ Concept Index
 
 
 Tag Table:
-Node: Top71
-Node: Introduction2575
-Node: about3102
-Node: platforms3768
-Node: download6735
-Node: install7063
-Node: compiling10657
-Node: legal14202
-Node: help14905
-Node: Arrays16558
-Node: Array intro17289
-Node: Array types22172
-Node: Array ctors22794
-Ref: Array ctors-Footnote-132524
-Node: Array slicing32731
-Node: Slicing combo37915
-Node: Array debug44213
-Node: Array members45774
-Node: Array globals63171
-Node: Array I/O67521
-Node: Array storage71198
-Ref: Array storage-Footnote-185981
-Ref: Array storage-Footnote-286112
-Node: Array Expressions86219
-Node: Array expressions87179
-Node: Index placeholders93072
-Node: Math functions 198930
-Node: Math functions 2105714
-Node: User et108224
-Node: Where expr120285
-Node: Stencils120889
-Node: Customised Arrays139353
-Node: Array multi139665
-Node: Array usertype145105
-Node: Indirection148036
-Ref: Indirection-Footnote-1155261
-Node: TinyVector155442
-Node: Parallel Computing159689
-Node: Random Number Generators161009
-Node: Numeric properties168823
-Node: FAQ176231
-Node: Keyword Index181741
-Node: Concept Index193105
+Node: Top214
+Node: Introduction2718
+Node: about3245
+Node: platforms3911
+Node: download6878
+Node: install7206
+Node: compiling10800
+Node: legal14345
+Node: help15048
+Node: Arrays16701
+Node: Array intro17432
+Node: Array types22315
+Node: Array ctors22937
+Ref: Array ctors-Footnote-132667
+Node: Array slicing32874
+Node: Slicing combo38058
+Node: Array debug44356
+Node: Array members45921
+Node: Array globals63318
+Node: Array I/O67668
+Node: Array storage71345
+Ref: Array storage-Footnote-186128
+Ref: Array storage-Footnote-286259
+Node: Array Expressions86366
+Node: Array expressions87326
+Node: Index placeholders93219
+Node: Math functions 199077
+Node: Math functions 2105861
+Node: User et108371
+Node: Where expr120432
+Node: Stencils121036
+Node: Customised Arrays139500
+Node: Array multi139812
+Node: Array usertype145252
+Node: Indirection148183
+Ref: Indirection-Footnote-1155408
+Node: TinyVector155589
+Node: Parallel Computing159928
+Node: Random Number Generators161248
+Node: Numeric properties169062
+Node: FAQ176470
+Node: Keyword Index181980
+Node: Concept Index193344
 
 End Tag Table
