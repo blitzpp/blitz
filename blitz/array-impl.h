@@ -1916,7 +1916,7 @@ public:
      * the appropriate cases exist above.
      */
 
-#ifdef BZ_PARTIAL_ORDERING
+#ifdef BZ_HAVE_PARTIAL_ORDERING
 
     template<typename T1, typename T2>
     typename SliceInfo<T_numtype,T1,T2>::T_slice
@@ -2014,7 +2014,7 @@ public:
         return slice(noConst(), r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11);
     }
 
-#endif // BZ_PARTIAL_ORDERING
+#endif // BZ_HAVE_PARTIAL_ORDERING
 
     /*
      * These versions of operator() are provided to support tensor-style
