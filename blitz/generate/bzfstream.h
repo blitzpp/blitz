@@ -21,16 +21,7 @@
  * For more information, please see the Blitz++ Home Page:
  *    http://oonumerics.org/blitz/
  *
- ***************************************************************************
- * $Log$
- * Revision 1.4  2003/01/06 14:42:17  papadop
- * Load of ISO C++ changes (some are necessary for the future g++-3.4).
- *
- * Revision 1.3  2002/06/28 23:59:49  jcumming
- * Files for generating Matrix operators and math functions.
- *
- *
- */
+ ***************************************************************************/
 
 
 #include <fstream>

@@ -1,15 +1,3 @@
-/*
- * $Id$
- *
- * $Log$
- * Revision 1.2  2003/01/06 14:42:22  papadop
- * Load of ISO C++ changes (some are necessary for the future g++-3.4).
- *
- * Revision 1.1  2002/06/28 23:59:49  jcumming
- * Files for generating Matrix operators and math functions.
- *
- *
- */
 
 #include <fstream>
 #include <iostream>

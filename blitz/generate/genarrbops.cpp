@@ -1,16 +1,3 @@
-/*
- * $Id$
- *
- * $Log$
- * Revision 1.2  2003/01/06 14:42:20  papadop
- * Load of ISO C++ changes (some are necessary for the future g++-3.4).
- *
- * Revision 1.1  2000/06/19 13:02:48  tveldhui
- * Initial source check-in; added files not usually released in the
- * distribution.
- *
- *
- */
 
 #include <iostream>
 #include <fstream>
