@@ -23,6 +23,9 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.5  2002/05/27 19:43:30  jcumming
+ * Removed use of this->.  iter_ is now declared in scope of derived classes.
+ *
  * Revision 1.4  2002/04/17 16:56:42  patricg
  *
  * replaced T_numtype with P_numtype in every macros definitions. Fixed a
@@ -141,20 +144,23 @@ template<class P_numtype, int N_rank> \
 class name ## _et : public StencilExpr<P_numtype,N_rank,result>, \
   public ETBase<name ## _et<P_numtype,N_rank> > \
  { \
+private: \
+    typedef StencilExpr<P_numtype,N_rank,result> T_base; \
+    using T_base::iter_; \
 public: \
     name ## _et(const Array<P_numtype,N_rank>& A) \
         : StencilExpr<P_numtype,N_rank,result>(A) \
     { } \
     result operator*() \
-    { return name(this->iter_); } \
+    { return name(iter_); } \
     result operator()(const TinyVector<int,N_rank>& a) \
-    { this->iter_.moveTo(a); return name(this->iter_); } \
+    { iter_.moveTo(a); return name(iter_); } \
     result fastRead(int i) \
     { \
-      const P_numtype* tmp = this->iter_.data(); \
-      this->iter_._bz_setData(tmp + i); \
-      P_numtype r = name(this->iter_); \
-      this->iter_._bz_setData(tmp); \
+      const P_numtype* tmp = iter_.data(); \
+      iter_._bz_setData(tmp + i); \
+      P_numtype r = name(iter_); \
+      iter_._bz_setData(tmp); \
       return r; \
     } \
 }; \
@@ -171,21 +177,24 @@ class name ## _et : public StencilExpr<P_numtype,N_rank, \
     TinyVector<P_numtype,rank> >, \
   public ETBase<name ## _et<P_numtype,N_rank> > \
  { \
+private: \
+    typedef StencilExpr<P_numtype,N_rank,TinyVector<P_numtype,rank> > T_base; \
+    using T_base::iter_; \
 public: \
     typedef TinyVector<P_numtype,rank> result; \
     name ## _et(const Array<P_numtype,N_rank>& A) \
         : StencilExpr<P_numtype,N_rank,result>(A) \
     { } \
     result operator*() \
-    { return name(this->iter_); } \
+    { return name(iter_); } \
     result operator()(const TinyVector<int,N_rank>& a) \
-    { this->iter_.moveTo(a); return name(this->iter_); } \
+    { iter_.moveTo(a); return name(iter_); } \
     result fastRead(int i) \
     { \
-      const P_numtype* tmp = this->iter_.data(); \
-      this->iter_._bz_setData(tmp + i); \
-      P_numtype r = name(this->iter_); \
-      this->iter_._bz_setData(tmp); \
+      const P_numtype* tmp = iter_.data(); \
+      iter_._bz_setData(tmp + i); \
+      P_numtype r = name(iter_); \
+      iter_._bz_setData(tmp); \
       return r; \
     } \
 }; \
@@ -201,20 +210,23 @@ template<class P_numtype, int N_rank> \
 class name ## _et : public StencilExpr<P_numtype,N_rank,P_numtype>, \
   public ETBase<name ## _et<P_numtype,N_rank> > \
  { \
+private: \
+    typedef StencilExpr<P_numtype,N_rank,P_numtype> T_base; \
+    using T_base::iter_; \
 public: \
     name ## _et(const Array<P_numtype,N_rank>& A, int dim) \
         : StencilExpr<P_numtype,N_rank,P_numtype>(A), dim_(dim) \
     { } \
     P_numtype operator*() \
-    { return name(this->iter_); } \
+    { return name(iter_); } \
     P_numtype operator()(const TinyVector<int,N_rank>& a) \
-    { this->iter_.moveTo(a); return name(this->iter_,dim_); } \
+    { iter_.moveTo(a); return name(iter_,dim_); } \
     P_numtype fastRead(int i) \
     { \
-      const P_numtype* tmp = this->iter_.data(); \
-      this->iter_._bz_setData(tmp + i); \
-      P_numtype r = name(this->iter_,dim_); \
-      this->iter_._bz_setData(tmp); \
+      const P_numtype* tmp = iter_.data(); \
+      iter_._bz_setData(tmp + i); \
+      P_numtype r = name(iter_,dim_); \
+      iter_._bz_setData(tmp); \
       return r; \
     } \
 private: \
