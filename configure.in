@@ -196,9 +196,9 @@ case "$target" in
   *aix*)
     echo "AIX: assuming f77 and xlf90"
     F77=f77
-    F77_OPTIMIZE_FLAGS="-O3 -qhot"
-    F90=xlf90
-    F90_OPTIMIZE_FLAGS="-O3 -qhot"
+    F77_OPTIMIZE_FLAGS="-O3 -qstrict -qhot"
+    F90="xlf90 -qsuffix=f=f90"
+    F90_OPTIMIZE_FLAGS="-O3 -qstrict -qhot"
     FORTLIBS="-lxlf90"
   ;;
   *irix*)
