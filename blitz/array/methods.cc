@@ -14,13 +14,21 @@ Array<P_numtype,N_rank>::Array(_bz_ArrayExpr<T_expr> expr)
 
     TinyVector<int,N_rank> lbound, extent, ordering;
     TinyVector<bool,N_rank> ascendingFlag;
+    TinyVector<bool,N_rank> in_ordering;
+    in_ordering = false;
 
+    int j = 0;
     for (int i=0; i < N_rank; ++i)
     {
         lbound(i) = expr.lbound(i);
         int ubound = expr.ubound(i);
         extent(i) = ubound - lbound(i) + 1;
-        ordering(i) = expr.ordering(i);
+        int orderingj = expr.ordering(i);
+        if (orderingj != INT_MAX && orderingj < N_rank &&
+            !in_ordering( orderingj )) { // unique value in ordering array
+            in_ordering( orderingj ) = true;
+            ordering(j++) = orderingj;
+        }
         int ascending = expr.ascending(i);
         ascendingFlag(i) = (ascending == 1);
 
@@ -36,6 +44,15 @@ Array<P_numtype,N_rank>::Array(_bz_ArrayExpr<T_expr> expr)
           return;
         }
 #endif
+    }
+
+    // It is possible that ordering is not a permutation of 0,...,N_rank-1.
+    // In that case j will be less than N_rank. We fill in ordering with the
+    // usused values in decreasing order.
+    for (int i = N_rank-1; j < N_rank; ++j) {
+        while (in_ordering(i))
+          --i;
+        ordering(j) = i--;
     }
 
     Array<T_numtype,N_rank> A(lbound,extent,
