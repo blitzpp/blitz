@@ -1,5 +1,14 @@
 2004-10-06  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
+	* blitz/Makefile.am: Modified to install the compiler-specific
+	header file that was created.  Added definition of EXTRA_HEADERS
+	with list of all possible header files of this sort.  Seems to be
+	required by automake.
+
+	* configure.ac: Modified compiler-specific header file logic to
+	define the name of the header file that is produced as
+	COMPILER_SPECIFIC_HEADER.  We need this in order to tell the blitz
+	subdirectory Makefile which header to install.
 	* random/mt.h: Changed BZ_NAMESPACES to BZ_HAVE_NAMESPACES.
 	* examples/cfd.cpp: Changed BZ_NAMESPACES to BZ_HAVE_NAMESPACES.
 	* examples/simple.cpp: Use blitz macro for using directive.
