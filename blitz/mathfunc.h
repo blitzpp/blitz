@@ -1,4 +1,4 @@
-// Generated: genmathfunc.cpp Mar  9 2004 15:26:46
+// Generated: genmathfunc.cpp Jan 28 2005 12:04:32
 
 #ifndef BZ_MATHFUNC_H
 #define BZ_MATHFUNC_H
@@ -115,7 +115,7 @@ public:
 };
 
 // abs(complex<float> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_FCNS
 template<>
 class _bz_abs<complex<float> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -137,7 +137,7 @@ public:
 #endif
 
 // abs(complex<double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_FCNS
 template<>
 class _bz_abs<complex<double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -159,7 +159,7 @@ public:
 #endif
 
 // abs(complex<long double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_FCNS
 template<>
 class _bz_abs<complex<long double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -239,6 +239,72 @@ public:
         str += ")";
     }
 };
+
+// acos(complex<float> )
+#ifdef BZ_HAVE_COMPLEX_MATH2
+template<>
+class _bz_acos<complex<float> > : public OneOperandApplicativeTemplatesBase {
+public:
+    typedef complex<float>  T_numtype1;
+    typedef complex<float> T_numtype;
+
+    static inline T_numtype apply(T_numtype1 x)
+    { return BZ_CMATHFN_SCOPE(acos)((complex<float> )x); }
+
+    template<typename T1>
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
+        const T1& a)
+    {
+        str += "acos(";
+        a.prettyPrint(str,format);
+        str += ")";
+    }
+};
+#endif
+
+// acos(complex<double> )
+#ifdef BZ_HAVE_COMPLEX_MATH2
+template<>
+class _bz_acos<complex<double> > : public OneOperandApplicativeTemplatesBase {
+public:
+    typedef complex<double>  T_numtype1;
+    typedef complex<double> T_numtype;
+
+    static inline T_numtype apply(T_numtype1 x)
+    { return BZ_CMATHFN_SCOPE(acos)((complex<double> )x); }
+
+    template<typename T1>
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
+        const T1& a)
+    {
+        str += "acos(";
+        a.prettyPrint(str,format);
+        str += ")";
+    }
+};
+#endif
+
+// acos(complex<long double> )
+#ifdef BZ_HAVE_COMPLEX_MATH2
+template<>
+class _bz_acos<complex<long double> > : public OneOperandApplicativeTemplatesBase {
+public:
+    typedef complex<long double>  T_numtype1;
+    typedef complex<long double> T_numtype;
+
+    static inline T_numtype apply(T_numtype1 x)
+    { return BZ_CMATHFN_SCOPE(acos)((complex<long double> )x); }
+
+    template<typename T1>
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
+        const T1& a)
+    {
+        str += "acos(";
+        a.prettyPrint(str,format);
+        str += ")";
+    }
+};
+#endif
 
 // acosh(P_numtype1)    Inverse hyperbolic cosine
 #ifdef BZ_HAVE_IEEE_MATH
@@ -322,6 +388,72 @@ public:
     }
 };
 
+// asin(complex<float> )
+#ifdef BZ_HAVE_COMPLEX_MATH2
+template<>
+class _bz_asin<complex<float> > : public OneOperandApplicativeTemplatesBase {
+public:
+    typedef complex<float>  T_numtype1;
+    typedef complex<float> T_numtype;
+
+    static inline T_numtype apply(T_numtype1 x)
+    { return BZ_CMATHFN_SCOPE(asin)((complex<float> )x); }
+
+    template<typename T1>
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
+        const T1& a)
+    {
+        str += "asin(";
+        a.prettyPrint(str,format);
+        str += ")";
+    }
+};
+#endif
+
+// asin(complex<double> )
+#ifdef BZ_HAVE_COMPLEX_MATH2
+template<>
+class _bz_asin<complex<double> > : public OneOperandApplicativeTemplatesBase {
+public:
+    typedef complex<double>  T_numtype1;
+    typedef complex<double> T_numtype;
+
+    static inline T_numtype apply(T_numtype1 x)
+    { return BZ_CMATHFN_SCOPE(asin)((complex<double> )x); }
+
+    template<typename T1>
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
+        const T1& a)
+    {
+        str += "asin(";
+        a.prettyPrint(str,format);
+        str += ")";
+    }
+};
+#endif
+
+// asin(complex<long double> )
+#ifdef BZ_HAVE_COMPLEX_MATH2
+template<>
+class _bz_asin<complex<long double> > : public OneOperandApplicativeTemplatesBase {
+public:
+    typedef complex<long double>  T_numtype1;
+    typedef complex<long double> T_numtype;
+
+    static inline T_numtype apply(T_numtype1 x)
+    { return BZ_CMATHFN_SCOPE(asin)((complex<long double> )x); }
+
+    template<typename T1>
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
+        const T1& a)
+    {
+        str += "asin(";
+        a.prettyPrint(str,format);
+        str += ")";
+    }
+};
+#endif
+
 // asinh(P_numtype1)    Inverse hyperbolic sine
 #ifdef BZ_HAVE_IEEE_MATH
 template<typename P_numtype1>
@@ -345,7 +477,7 @@ public:
 #endif
 
 // arg(P_numtype1)
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_FCNS
 template<typename P_numtype1>
 class _bz_arg : public OneOperandApplicativeTemplatesBase {
 public:
@@ -367,7 +499,7 @@ public:
 #endif
 
 // arg(complex<float> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_FCNS
 template<>
 class _bz_arg<complex<float> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -389,7 +521,7 @@ public:
 #endif
 
 // arg(complex<double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_FCNS
 template<>
 class _bz_arg<complex<double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -411,7 +543,7 @@ public:
 #endif
 
 // arg(complex<long double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_FCNS
 template<>
 class _bz_arg<complex<long double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -491,6 +623,72 @@ public:
         str += ")";
     }
 };
+
+// atan(complex<float> )
+#ifdef BZ_HAVE_COMPLEX_MATH2
+template<>
+class _bz_atan<complex<float> > : public OneOperandApplicativeTemplatesBase {
+public:
+    typedef complex<float>  T_numtype1;
+    typedef complex<float> T_numtype;
+
+    static inline T_numtype apply(T_numtype1 x)
+    { return BZ_CMATHFN_SCOPE(atan)((complex<float> )x); }
+
+    template<typename T1>
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
+        const T1& a)
+    {
+        str += "atan(";
+        a.prettyPrint(str,format);
+        str += ")";
+    }
+};
+#endif
+
+// atan(complex<double> )
+#ifdef BZ_HAVE_COMPLEX_MATH2
+template<>
+class _bz_atan<complex<double> > : public OneOperandApplicativeTemplatesBase {
+public:
+    typedef complex<double>  T_numtype1;
+    typedef complex<double> T_numtype;
+
+    static inline T_numtype apply(T_numtype1 x)
+    { return BZ_CMATHFN_SCOPE(atan)((complex<double> )x); }
+
+    template<typename T1>
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
+        const T1& a)
+    {
+        str += "atan(";
+        a.prettyPrint(str,format);
+        str += ")";
+    }
+};
+#endif
+
+// atan(complex<long double> )
+#ifdef BZ_HAVE_COMPLEX_MATH2
+template<>
+class _bz_atan<complex<long double> > : public OneOperandApplicativeTemplatesBase {
+public:
+    typedef complex<long double>  T_numtype1;
+    typedef complex<long double> T_numtype;
+
+    static inline T_numtype apply(T_numtype1 x)
+    { return BZ_CMATHFN_SCOPE(atan)((complex<long double> )x); }
+
+    template<typename T1>
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
+        const T1& a)
+    {
+        str += "atan(";
+        a.prettyPrint(str,format);
+        str += ")";
+    }
+};
+#endif
 
 // atanh(P_numtype1)    Inverse hyperbolic tangent
 #ifdef BZ_HAVE_IEEE_MATH
@@ -688,7 +886,7 @@ public:
 };
 
 // conj(P_numtype1)
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_FCNS
 template<typename P_numtype1>
 class _bz_conj : public OneOperandApplicativeTemplatesBase {
 public:
@@ -770,7 +968,7 @@ public:
 };
 
 // cos(complex<float> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_cos<complex<float> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -792,7 +990,7 @@ public:
 #endif
 
 // cos(complex<double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_cos<complex<double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -813,8 +1011,9 @@ public:
 };
 #endif
 
+#ifndef __PGI
 // cos(complex<long double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_cos<complex<long double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -835,6 +1034,7 @@ public:
 };
 #endif
 
+#endif
 // copysign(P_numtype1, P_numtype2)
 #ifdef BZ_HAVE_SYSTEM_V_MATH
 template<typename P_numtype1, typename P_numtype2>
@@ -921,7 +1121,7 @@ public:
 };
 
 // cosh(complex<float> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_cosh<complex<float> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -943,7 +1143,7 @@ public:
 #endif
 
 // cosh(complex<double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_cosh<complex<double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -964,8 +1164,9 @@ public:
 };
 #endif
 
+#ifndef __PGI
 // cosh(complex<long double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_cosh<complex<long double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -986,6 +1187,7 @@ public:
 };
 #endif
 
+#endif
 // drem(P_numtype1, P_numtype2)    Remainder
 #ifdef BZ_HAVE_SYSTEM_V_MATH
 template<typename P_numtype1, typename P_numtype2>
@@ -1072,7 +1274,7 @@ public:
 };
 
 // exp(complex<float> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_exp<complex<float> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -1094,7 +1296,7 @@ public:
 #endif
 
 // exp(complex<double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_exp<complex<double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -1115,8 +1317,9 @@ public:
 };
 #endif
 
+#ifndef __PGI
 // exp(complex<long double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_exp<complex<long double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -1137,6 +1340,7 @@ public:
 };
 #endif
 
+#endif
 // expm1(P_numtype1)    Exp(x)-1
 #ifdef BZ_HAVE_IEEE_MATH
 template<typename P_numtype1>
@@ -1512,7 +1716,7 @@ public:
 };
 
 // log(complex<float> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_log<complex<float> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -1534,7 +1738,7 @@ public:
 #endif
 
 // log(complex<double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_log<complex<double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -1555,8 +1759,9 @@ public:
 };
 #endif
 
+#ifndef __PGI
 // log(complex<long double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_log<complex<long double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -1577,6 +1782,7 @@ public:
 };
 #endif
 
+#endif
 // logb(P_numtype1)    Unbiased exponent (IEEE)
 #ifdef BZ_HAVE_IEEE_MATH
 template<typename P_numtype1>
@@ -1681,6 +1887,72 @@ public:
     }
 };
 
+// log10(complex<float> )
+#ifdef BZ_HAVE_COMPLEX_MATH2
+template<>
+class _bz_log10<complex<float> > : public OneOperandApplicativeTemplatesBase {
+public:
+    typedef complex<float>  T_numtype1;
+    typedef complex<float> T_numtype;
+
+    static inline T_numtype apply(T_numtype1 x)
+    { return BZ_CMATHFN_SCOPE(log10)((complex<float> )x); }
+
+    template<typename T1>
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
+        const T1& a)
+    {
+        str += "log10(";
+        a.prettyPrint(str,format);
+        str += ")";
+    }
+};
+#endif
+
+// log10(complex<double> )
+#ifdef BZ_HAVE_COMPLEX_MATH2
+template<>
+class _bz_log10<complex<double> > : public OneOperandApplicativeTemplatesBase {
+public:
+    typedef complex<double>  T_numtype1;
+    typedef complex<double> T_numtype;
+
+    static inline T_numtype apply(T_numtype1 x)
+    { return BZ_CMATHFN_SCOPE(log10)((complex<double> )x); }
+
+    template<typename T1>
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
+        const T1& a)
+    {
+        str += "log10(";
+        a.prettyPrint(str,format);
+        str += ")";
+    }
+};
+#endif
+
+// log10(complex<long double> )
+#ifdef BZ_HAVE_COMPLEX_MATH2
+template<>
+class _bz_log10<complex<long double> > : public OneOperandApplicativeTemplatesBase {
+public:
+    typedef complex<long double>  T_numtype1;
+    typedef complex<long double> T_numtype;
+
+    static inline T_numtype apply(T_numtype1 x)
+    { return BZ_CMATHFN_SCOPE(log10)((complex<long double> )x); }
+
+    template<typename T1>
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
+        const T1& a)
+    {
+        str += "log10(";
+        a.prettyPrint(str,format);
+        str += ")";
+    }
+};
+#endif
+
 // nearest(P_numtype1)    Nearest floating point integer
 #ifdef BZ_HAVE_SYSTEM_V_MATH
 template<typename P_numtype1>
@@ -1746,7 +2018,7 @@ public:
 };
 
 // norm(P_numtype1)
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_FCNS
 template<typename P_numtype1>
 class _bz_norm : public OneOperandApplicativeTemplatesBase {
 public:
@@ -1768,7 +2040,7 @@ public:
 #endif
 
 // polar(P_numtype1, P_numtype2)
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_FCNS
 template<typename P_numtype1, typename P_numtype2>
 class _bz_polar : public TwoOperandApplicativeTemplatesBase {
 public:
@@ -1815,6 +2087,7 @@ public:
     }
 };
 
+#ifndef __PGI
 // pow(float, float)
 template<>
 class _bz_pow<float, float > : public TwoOperandApplicativeTemplatesBase {
@@ -1838,6 +2111,7 @@ public:
     }
 };
 
+#endif
 // pow(long double, long double)
 template<>
 class _bz_pow<long double, long double > : public TwoOperandApplicativeTemplatesBase {
@@ -1862,7 +2136,7 @@ public:
 };
 
 // pow(complex<float>, complex<float>)
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_pow<complex<float>, complex<float> > : public TwoOperandApplicativeTemplatesBase {
 public:
@@ -1887,7 +2161,7 @@ public:
 #endif
 
 // pow(complex<double>, complex<double>)
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_pow<complex<double>, complex<double> > : public TwoOperandApplicativeTemplatesBase {
 public:
@@ -1911,8 +2185,9 @@ public:
 };
 #endif
 
+#ifndef __PGI
 // pow(complex<long double>, complex<long double>)
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_pow<complex<long double>, complex<long double> > : public TwoOperandApplicativeTemplatesBase {
 public:
@@ -1936,6 +2211,7 @@ public:
 };
 #endif
 
+#endif
 // remainder(P_numtype1, P_numtype2)    Remainder
 #ifdef BZ_HAVE_SYSTEM_V_MATH
 template<typename P_numtype1, typename P_numtype2>
@@ -2091,7 +2367,7 @@ public:
 };
 
 // sin(complex<float> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_sin<complex<float> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -2113,7 +2389,7 @@ public:
 #endif
 
 // sin(complex<double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_sin<complex<double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -2134,8 +2410,9 @@ public:
 };
 #endif
 
+#ifndef __PGI
 // sin(complex<long double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_sin<complex<long double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -2156,6 +2433,7 @@ public:
 };
 #endif
 
+#endif
 // sinh(P_numtype1)    Hyperbolic sine
 template<typename P_numtype1>
 class _bz_sinh : public OneOperandApplicativeTemplatesBase {
@@ -2217,7 +2495,7 @@ public:
 };
 
 // sinh(complex<float> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_sinh<complex<float> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -2239,7 +2517,7 @@ public:
 #endif
 
 // sinh(complex<double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_sinh<complex<double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -2260,8 +2538,9 @@ public:
 };
 #endif
 
+#ifndef __PGI
 // sinh(complex<long double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_sinh<complex<long double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -2282,6 +2561,7 @@ public:
 };
 #endif
 
+#endif
 template<typename P_numtype>
 class _bz_sqr : public OneOperandApplicativeTemplatesBase {
 public:
@@ -2299,7 +2579,7 @@ public:
     }
 };
 
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX
 // Specialization of _bz_sqr for complex<T>
 template<typename T>
 class _bz_sqr<complex<T> > : public OneOperandApplicativeTemplatesBase {
@@ -2383,7 +2663,7 @@ public:
 };
 
 // sqrt(complex<float> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_sqrt<complex<float> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -2405,7 +2685,7 @@ public:
 #endif
 
 // sqrt(complex<double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_sqrt<complex<double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -2426,8 +2706,9 @@ public:
 };
 #endif
 
+#ifndef __PGI
 // sqrt(complex<long double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_sqrt<complex<long double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -2448,6 +2729,7 @@ public:
 };
 #endif
 
+#endif
 // tan(P_numtype1)    Tangent
 template<typename P_numtype1>
 class _bz_tan : public OneOperandApplicativeTemplatesBase {
@@ -2509,7 +2791,7 @@ public:
 };
 
 // tan(complex<float> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_tan<complex<float> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -2531,7 +2813,7 @@ public:
 #endif
 
 // tan(complex<double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_tan<complex<double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -2552,8 +2834,9 @@ public:
 };
 #endif
 
+#ifndef __PGI
 // tan(complex<long double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_tan<complex<long double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -2574,6 +2857,7 @@ public:
 };
 #endif
 
+#endif
 // tanh(P_numtype1)    Hyperbolic tangent
 template<typename P_numtype1>
 class _bz_tanh : public OneOperandApplicativeTemplatesBase {
@@ -2635,7 +2919,7 @@ public:
 };
 
 // tanh(complex<float> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_tanh<complex<float> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -2657,7 +2941,7 @@ public:
 #endif
 
 // tanh(complex<double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_tanh<complex<double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -2678,8 +2962,9 @@ public:
 };
 #endif
 
+#ifndef __PGI
 // tanh(complex<long double> )
-#ifdef BZ_HAVE_COMPLEX_MATH
+#ifdef BZ_HAVE_COMPLEX_MATH1
 template<>
 class _bz_tanh<complex<long double> > : public OneOperandApplicativeTemplatesBase {
 public:
@@ -2700,6 +2985,7 @@ public:
 };
 #endif
 
+#endif
 // uitrunc(P_numtype1)    Truncate and convert to unsigned
 #ifdef BZ_HAVE_SYSTEM_V_MATH
 template<typename P_numtype1>
