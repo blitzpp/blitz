@@ -155,6 +155,9 @@ Thu Mar  7 09:06:58 CET 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	benchmarks/plot_benchmarks.m to plot benchmarks results
 	* configure.in: added benchmarks/plot_benchmarks.m to be generated from
 	benchmarks/plot_benchmarks.m.in
+	* configure.in: output correctly the available DEC (actually now Compaq:-) 
+	compilers
+	* INSTALL: likewise
 
 	
 
