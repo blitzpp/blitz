@@ -1,4 +1,12 @@
 2002-06-27  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
+	* compiler/sysvmath.cpp: Removed ilogb() and fmod() from this
+	test.  ilogb() is now in the IEEE math test and fmod() should be
+	in the standard C math library.
+	* compiler/ieeemath.cpp: Added tests for cbrt() and ilogb() here.
+	* compiler/getruse.cpp: Added code to check if getrusage() is
+	available.
+	* blitz/benchext.cc: Changed loop variable j to unsigned to
+	eliminate signed/unsigned comparisons.
 	* testsuite/complex-test.cpp: Added some explicit casts to float
 	to eliminate precision loss warnings from implicit conversions of
 	double to float.  Changed abs() to fabs() for floating-point
