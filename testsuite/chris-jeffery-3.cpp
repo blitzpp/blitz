@@ -13,9 +13,12 @@ test = 5;
 Range I(2,6) ;
 Range J(3,7) ;
 
-// Next line should be test(I,J) > test(I-1,J) but this causes a
-// conflict with std::relops; is there a less ugly workaround?
+// Koenig lookup hack
+#if defined(__GNUC__) && (__GNUC__ < 3)
 test2 = where(blitz::operator> (test(I,J), test(I-1,J)), 0, test(I,J));
+#else
+test2 = where(test(I,J) > test(I-1,J), 0, test(I,J));
+#endif
 
 BZTEST(test2(3,3) == 5);
 
