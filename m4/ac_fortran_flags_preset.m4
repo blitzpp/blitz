@@ -8,15 +8,13 @@ AC_SUBST(CXXFFLAGS)
 AC_SUBST(CXXFCFLAG)
 AC_SUBST(F77_OPTIMIZE_FLAGS)
 AC_SUBST(FC_OPTIMIZE_FLAGS)
-AC_SUBST(FORTLIBS)
 
 AC_ARG_VAR(CXXFFLAGS,[C++ compiler flags to link Fortran 77 subroutines])
 AC_ARG_VAR(CXXFCFLAG,[C++ compiler flags to link Fortran 90 subroutines])
 AC_ARG_VAR(F77_OPTIMIZE_FLAGS,[Fortran 77 optimization flags])
 AC_ARG_VAR(FC_OPTIMIZE_FLAGS,[Fortran 90 optimization flags])
-AC_ARG_VAR(FORTLIBS,[Libraries to link Fortran 77/90 subroutines together with C++ code])
 
-AC_MSG_CHECKING([whether using $F77 and $FC preset flags])
+AC_MSG_CHECKING([whether using Fortran preset flags])
 AC_ARG_ENABLE(fortran-flags-preset,
 AS_HELP_STRING([--enable-fortran-flags-preset],
 [Enable Fortran compiler flags preset @<:@default yes@:>@]),[],[enableval='yes'])
@@ -24,118 +22,92 @@ AS_HELP_STRING([--enable-fortran-flags-preset],
 
 if test "$enableval" = yes ; then
 
+	AC_MSG_RESULT([yes])
+
 	case "$target" in
 	*aix*)
 		case "$F77" in
-		*xlf) dnl IBM Fortran compiler
+		*xlf*)  dnl IBM Fortran compiler
 			F77_OPTIMIZE_FLAGS="-O5 -qstrict -qstrict_induction -qnosave -qmaxmem=8192"
 		;;
-		esac
-		case $FC in 
-		*xlf90) dnl IBM F90 compiler
-			FCFLAGS="-qsuffix=f=f90"
-			FC_OPTIMIZE_FLAGS="-O5 -qstrict -qstrict_induction -qnosave -qmaxmem=8192"
-			FORTLIBS="-lxlf90"
+		g77)    dnl GNU Fortran compiler
+			FFLAGS="-fno-second-underscore $FFLAGS"
+			F77_OPTIMIZE_FLAGS="-O2 -funroll-loops"
+			CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
 		;;
 		esac
 	;;
 	*irix*)
 		case "$F77" in
-		*f77) dnl SGI Fortran compiler
+		*f77*)  dnl SGI Fortran compiler
   			F77_OPTIMIZE_FLAGS="-Ofast"
 			CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
-			FORTLIBS="-lfortran -lffio -lftn"
 		;;
-		esac
-		case "$FC" in
- 		*f90) dnl SGI F90 compiler
-			FC_OPTIMIZE_FLAGS="-Ofast"
-			CXXFCFLAG="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
-			FORTLIBS="-lfortran -lffio -lftn"
+		g77)    dnl GNU Fortran compiler
+			FFLAGS="-fno-second-underscore $FFLAGS"
+			F77_OPTIMIZE_FLAGS="-O2 -funroll-loops"
+			CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
 		;;
 		esac
 	;;
 	*linux*)
 		case "$F77" in
-		g77) dnl GNU Fortran compiler
-			FFLAGS="-fno-second-underscore"
+		gfortran) dnl GNU Fortran 95 compiler
+			FFLAGS="-fno-second-underscore $FFLAGS"
 			F77_OPTIMIZE_FLAGS="-O2 -funroll-loops"
 			CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
-			FORTLIBS="-lg2c"
 		;;
-		ifc) dnl Intel 7.1 Fortran compiler
-			FCFLAGS=""
-			FC_OPTIMIZE_FLAGS="-O3 -Zp16 -ip -pad -unroll -fno-alias -safe_cray_ptr"
-			FORTLIBS="-lF90 -lIEPCF90 -lintrins $FORTLIBS"
+		g77)    dnl GNU Fortran compiler
+			FFLAGS="-fno-second-underscore $FFLAGS"
+			F77_OPTIMIZE_FLAGS="-O2 -funroll-loops"
+			CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
 		;;
-		ifort) dnl Intel 8.0 Fortran compiler
-			FCFLAGS=""
-			FC_OPTIMIZE_FLAGS="-O3 -Zp16 -ip -pad -unroll -fno-alias -safe_cray_ptr"
-			FORTLIBS="-lifport -lifcore $FORTLIBS"
+		ifc)    dnl Intel 7.1 Fortran compiler
+			F77_OPTIMIZE_FLAGS="-O3 -Zp16 -ip -pad -unroll -fno-alias -safe_cray_ptr"
 		;;
-		f77) dnl Absoft Fortran compiler
-			FFLAGS="-B108 -f"
+		ifort)  dnl Intel 8.0 Fortran compiler
+			F77_OPTIMIZE_FLAGS="-O3 -Zp16 -ip -pad -unroll -fno-alias -safe_cray_ptr"
+		;;
+		f77)    dnl Absoft Fortran compiler
+			FFLAGS="-B108 -f $FFLAGS"
 			F77_OPTIMIZE_FLAGS="-O2"
 			CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
-			FORTLIBS="-L$ABSOFT/lib -lfio -lU77 -lf77math"
-		;;
-		esac
-		case "$FC" in
-		ifc) dnl Intel 7.1 F90 compiler
-			FCFLAGS="-FR"
-			FC_OPTIMIZE_FLAGS="-O3 -Zp16 -ip -pad -unroll -fno-alias -safe_cray_ptr"
-			FORTLIBS="-lF90 -lIEPCF90 -lintrins $FORTLIBS"
-		;;
-		ifort) dnl Intel 8.0 F90 compiler
-			FCFLAGS="-FR"
-			FC_OPTIMIZE_FLAGS="-O3 -Zp16 -ip -pad -unroll -fno-alias -safe_cray_ptr"
-			FORTLIBS="-lifport -lifcore $FORTLIBS"
-		;;
-		f90) dnl Absoft F90 compiler
-			FCFLAGS="-B108 -YEXT_NAMES=LCS"
-			FC_OPTIMIZE_FLAGS="-O3"
-			CXXFCFLAG="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
-			FORTLIBS="-L$ABSOFT/lib -lfio -lf90math -lU77 -lf77math"
 		;;
 		esac
 	;;
 	*solaris*)
 		case "$F77" in
-		f77) dnl Sun Fortran compiler
+		f77)    dnl Sun Fortran compiler
 			F77_OPTIMIZE_FLAGS="-O3"
 		;;
-		esac
-		case "$FC" in
-		f90) dnl Sun F90 compiler
-			FC_OPTIMIZE_FLAGS="-O3"
+		g77)    dnl GNU Fortran compiler
+			FFLAGS="-fno-second-underscore $FFLAGS"
+			F77_OPTIMIZE_FLAGS="-O2 -funroll-loops"
+			CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
 		;;
 		esac
 	;;
 	*hp-hpux*)
 		case "$F77" in
-		f90) dnl HP Fortran compiler
+		f90)    dnl HP Fortran compiler
 			F77_OPTIMIZE_FLAGS="-O3"
 		;;
-		esac
-		case "$FC" in
-		f90) dnl HP F90 compiler
-			FC_OPTIMIZE_FLAGS="-O3"
-			FORTLIBS="-lc -lF90"
+		g77)    dnl GNU Fortran compiler
+			FFLAGS="-fno-second-underscore $FFLAGS"
+			F77_OPTIMIZE_FLAGS="-O2 -funroll-loops"
+			CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
 		;;
 		esac
 	;;
 	*osf*)
 		case "$F77" in
-		f77) dnl Compaq Fortran compiler
+		f77)    dnl Compaq Fortran compiler
 			F77_OPTIMIZE_FLAGS="-O4 -tune host"
-			FORTLIBS="-lUfor -lfor -lFutil"
 		;;
-		esac
-		case "$FC" in
-		f90) dnl Compaq F90 compiler
-			FC_OPTIMIZE_FLAGS="-O4 -tune host"
-			CXXFCFLAG="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
-			FORTLIBS="-lUfor -lfor -lFutil"
+		g77)    dnl GNU Fortran compiler
+			FFLAGS="-fno-second-underscore $FFLAGS"
+			F77_OPTIMIZE_FLAGS="-O2 -funroll-loops"
+			CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
 		;;
 		esac
 	;;
@@ -145,8 +117,74 @@ if test "$enableval" = yes ; then
 			F77_OPTIMIZE_FLAGS="-O aggress -O 3 -O unroll2 -O pipeline3"
 		;;
 		esac
+	;;
+	*) 
+		ac_fortran_flags_preset=no
+	;;
+	esac
+
+	if test -n "$FC"; then
+	case "$target" in
+	*aix*)
+		case "$FC" in 
+		*xlf90*) dnl IBM F90 compiler
+			 FC_OPTIMIZE_FLAGS="-O5 -qstrict -qstrict_induction -qnosave -qmaxmem=8192"
+		;;
+		esac
+	;;
+	*irix*)
 		case "$FC" in
-		f90) dnl Cray F90 compiler
+ 		*f90*)  dnl SGI F90 compiler
+			FC_OPTIMIZE_FLAGS="-Ofast"
+			CXXFCFLAG="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
+		;;
+		esac
+	;;
+	*linux*)
+		case "$FC" in
+		gfortran) dnl GNU Fortran 95 compiler
+			FCFLAGS="-fno-second-underscore $FCFLAGS"
+			FC_OPTIMIZE_FLAGS="-O2 -funroll-loops"
+			CXXFCFLAG="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
+		;;
+		ifc)    dnl Intel 7.1 F90 compiler
+			FC_OPTIMIZE_FLAGS="-O3 -Zp16 -ip -pad -unroll -fno-alias -safe_cray_ptr"
+		;;
+		ifort)  dnl Intel 8.0 F90 compiler
+			FC_OPTIMIZE_FLAGS="-O3 -Zp16 -ip -pad -unroll -fno-alias -safe_cray_ptr"
+		;;
+		f90)    dnl Absoft F90 compiler
+			FCFLAGS="-B108 -YEXT_NAMES=LCS $FCFLAGS"
+			FC_OPTIMIZE_FLAGS="-O3"
+			CXXFCFLAG="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
+		;;
+		esac
+	;;
+	*solaris*)
+		case "$FC" in
+		f90)    dnl Sun F90 compiler
+			FC_OPTIMIZE_FLAGS="-O3"
+		;;
+		esac
+	;;
+	*hp-hpux*)
+		case "$FC" in
+		f90)    dnl HP F90 compiler
+			FC_OPTIMIZE_FLAGS="-O3"
+		;;
+		esac
+	;;
+	*osf*)
+		case "$FC" in
+		f90)    dnl Compaq F90 compiler
+			FC_OPTIMIZE_FLAGS="-O4 -tune host"
+			CXXFCFLAG="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
+		;;
+		esac
+	;;
+	alpha-cray-unicos)
+		case "$FC" in
+		f90)    dnl Cray F90 compiler
 			FC_OPTIMIZE_FLAGS="-O 3 -O aggress -O unroll2 -O pipeline3"
 			CXXFCFLAG="-DBZ_FORTRAN_SYMBOLS_CAPS"
 		;;
@@ -156,8 +194,7 @@ if test "$enableval" = yes ; then
 		ac_fortran_flags_preset=no
 	;;
 	esac
-
-	AC_MSG_RESULT([yes])
+	fi
 
 else
 
@@ -174,10 +211,10 @@ building fortran benchmarks, and performance may be unexciting.
 	])
 fi
 
-if [test ! x"$FC" = x]; then
+if test -n "$FC"; then
 	CXXFCFLAG="-DFORTRAN_90 $CXXFCFLAG"
 fi
-AM_CONDITIONAL(F90_COMPILER, [test ! x"$FC" = x])
+AM_CONDITIONAL(F90_COMPILER, [test -n "$FC"])
 
 ])
 
