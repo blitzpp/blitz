@@ -2,6 +2,11 @@
  * $Id$
  *
  * $Log$
+ * Revision 1.4  2002/03/06 16:16:18  patricg
+ *
+ * data_ replaced by this->data_ everywhere
+ * numReferences() replaced by this->numReferences()
+ *
  * Revision 1.3  2001/01/26 18:30:50  tveldhui
  * More source code reorganization to reduce compile times.
  *
@@ -222,7 +227,7 @@ void Array<P_numtype, N_rank>::reference(const Array<P_numtype, N_rank>& array)
     MemoryBlockReference<P_numtype>::changeBlock(array.noConst(),
         array.zeroOffset_);
 
-    data_ = const_cast<P_numtype*>(array.data_);
+    this->data_ = const_cast<P_numtype*>(array.data_);
 }
 
 /*
@@ -255,7 +260,7 @@ _bz_inline2 void Array<P_numtype, N_rank>::setupStorage(int lastRankInitialized)
 
     // Adjust the base of the array to account for non-zero base
     // indices and reversals
-    data_ += zeroOffset_;
+    this->data_ += zeroOffset_;
 }
 
 template<class T_numtype, int N_rank>
@@ -276,7 +281,7 @@ Array<T_numtype, N_rank> Array<T_numtype, N_rank>::copy() const
 template<class T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::makeUnique()
 {
-    if (numReferences() > 1)
+    if (this->numReferences() > 1)
     {
         T_array tmp = copy();
         reference(tmp);
@@ -355,7 +360,7 @@ void Array<T_numtype, N_rank>::reverseSelf(int rank)
 
     int adjustment = stride_[rank] * (lbound(rank) + ubound(rank));
     zeroOffset_ += adjustment;
-    data_ += adjustment;
+    this->data_ += adjustment;
     stride_[rank] *= -1;
 }
 
@@ -397,7 +402,7 @@ _bz_inline2 void Array<P_numtype, N_rank>::reindexSelf(const
     for (int i=0; i < N_rank; ++i)
       delta += (base(i) - newBase(i)) * stride_(i);
 
-    data_ += delta;
+    this->data_ += delta;
 
     // WAS: dot(base() - newBase, stride_);
 
