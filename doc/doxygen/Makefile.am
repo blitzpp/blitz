@@ -75,21 +75,21 @@ clean-local:
 
 # Install hooks
 make-install-dirs:
-	@if test '!' -d $(docdir) ; \
-		then mkdir -p $(docdir) ; \
+	@if test '!' -d $(DESTDIR)$(docdir) ; \
+		then mkdir -p $(DESTDIR)$(docdir) ; \
 	fi
 
 install-data-hook: make-install-dirs
 	@if test -d html; then \
-		echo Installing documentations into $(docdir) ; \
-		$(INSTALL_DATA) html/* $(docdir) ; \
+		echo Installing documentations into $(DESTDIR)$(docdir) ; \
+		$(INSTALL_DATA) html/* $(DESTDIR)$(docdir) ; \
 	fi
 	@if test -f $(PACKAGE).pdf; then \
-		echo Installing PDF manual into $(docdir) ; \
-		$(INSTALL_DATA) $(PACKAGE).pdf $(docdir) ; \
+		echo Installing PDF manual into $(DESTDIR)$(docdir) ; \
+		$(INSTALL_DATA) $(PACKAGE).pdf $(DESTDIR)$(docdir) ; \
 	fi
 	@if test -f $(PACKAGE).ps; then \
-		echo Installing PS manual into $(docdir) ; \
-		$(INSTALL_DATA) $(PACKAGE).ps $(docdir) ; \
+		echo Installing PS manual into $(DESTDIR)$(docdir) ; \
+		$(INSTALL_DATA) $(PACKAGE).ps $(DESTDIR)$(docdir) ; \
 	fi
 
