@@ -23,6 +23,13 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.4  2002/04/17 16:56:42  patricg
+ *
+ * replaced T_numtype with P_numtype in every macros definitions. Fixed a
+ * compilation problem with aCC/HP in the stencils examples (stencils2.cpp,
+ * stencil3.cpp, stencilet.cpp) in the directory examples.
+ * Suggested by Robert W. Techentin <techentin.robert@mayo.edu>
+ *
  * Revision 1.3  2002/03/21 15:03:01  patricg
  *
  * replaced iter_ by this->iter_ in derived template classes of StencilExpr
@@ -135,8 +142,8 @@ class name ## _et : public StencilExpr<P_numtype,N_rank,result>, \
   public ETBase<name ## _et<P_numtype,N_rank> > \
  { \
 public: \
-    name ## _et(const Array<T_numtype,N_rank>& A) \
-        : StencilExpr<T_numtype,N_rank,result>(A) \
+    name ## _et(const Array<P_numtype,N_rank>& A) \
+        : StencilExpr<P_numtype,N_rank,result>(A) \
     { } \
     result operator*() \
     { return name(this->iter_); } \
@@ -144,18 +151,18 @@ public: \
     { this->iter_.moveTo(a); return name(this->iter_); } \
     result fastRead(int i) \
     { \
-      const T_numtype* tmp = this->iter_.data(); \
+      const P_numtype* tmp = this->iter_.data(); \
       this->iter_._bz_setData(tmp + i); \
-      T_numtype r = name(this->iter_); \
+      P_numtype r = name(this->iter_); \
       this->iter_._bz_setData(tmp); \
       return r; \
     } \
 }; \
-template<class T_numtype, int N_rank> \
-inline _bz_ArrayExpr<name ## _et<T_numtype, N_rank> > \
-name(Array<T_numtype,N_rank>& A) \
+template<class P_numtype, int N_rank> \
+inline _bz_ArrayExpr<name ## _et<P_numtype, N_rank> > \
+name(Array<P_numtype,N_rank>& A) \
 { \
-    return _bz_ArrayExpr<name ## _et<T_numtype, N_rank> >(A); \
+    return _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >(A); \
 }
 
 #define BZ_ET_STENCILV(name,rank) \
@@ -165,9 +172,9 @@ class name ## _et : public StencilExpr<P_numtype,N_rank, \
   public ETBase<name ## _et<P_numtype,N_rank> > \
  { \
 public: \
-    typedef TinyVector<T_numtype,rank> result; \
-    name ## _et(const Array<T_numtype,N_rank>& A) \
-        : StencilExpr<T_numtype,N_rank,result>(A) \
+    typedef TinyVector<P_numtype,rank> result; \
+    name ## _et(const Array<P_numtype,N_rank>& A) \
+        : StencilExpr<P_numtype,N_rank,result>(A) \
     { } \
     result operator*() \
     { return name(this->iter_); } \
@@ -175,18 +182,18 @@ public: \
     { this->iter_.moveTo(a); return name(this->iter_); } \
     result fastRead(int i) \
     { \
-      const T_numtype* tmp = this->iter_.data(); \
+      const P_numtype* tmp = this->iter_.data(); \
       this->iter_._bz_setData(tmp + i); \
-      T_numtype r = name(this->iter_); \
+      P_numtype r = name(this->iter_); \
       this->iter_._bz_setData(tmp); \
       return r; \
     } \
 }; \
-template<class T_numtype, int N_rank> \
-inline _bz_ArrayExpr<name ## _et<T_numtype, N_rank> > \
-name(Array<T_numtype,N_rank>& A) \
+template<class P_numtype, int N_rank> \
+inline _bz_ArrayExpr<name ## _et<P_numtype, N_rank> > \
+name(Array<P_numtype,N_rank>& A) \
 { \
-    return _bz_ArrayExpr< name ## _et<T_numtype, N_rank> >(A); \
+    return _bz_ArrayExpr< name ## _et<P_numtype, N_rank> >(A); \
 }
 
 #define BZ_ET_STENCIL_DIFF(name) \
@@ -195,29 +202,29 @@ class name ## _et : public StencilExpr<P_numtype,N_rank,P_numtype>, \
   public ETBase<name ## _et<P_numtype,N_rank> > \
  { \
 public: \
-    name ## _et(const Array<T_numtype,N_rank>& A, int dim) \
-        : StencilExpr<T_numtype,N_rank,P_numtype>(A), dim_(dim) \
+    name ## _et(const Array<P_numtype,N_rank>& A, int dim) \
+        : StencilExpr<P_numtype,N_rank,P_numtype>(A), dim_(dim) \
     { } \
-    T_numtype operator*() \
+    P_numtype operator*() \
     { return name(this->iter_); } \
-    T_numtype operator()(const TinyVector<int,N_rank>& a) \
+    P_numtype operator()(const TinyVector<int,N_rank>& a) \
     { this->iter_.moveTo(a); return name(this->iter_,dim_); } \
-    T_numtype fastRead(int i) \
+    P_numtype fastRead(int i) \
     { \
-      const T_numtype* tmp = this->iter_.data(); \
+      const P_numtype* tmp = this->iter_.data(); \
       this->iter_._bz_setData(tmp + i); \
-      T_numtype r = name(this->iter_,dim_); \
+      P_numtype r = name(this->iter_,dim_); \
       this->iter_._bz_setData(tmp); \
       return r; \
     } \
 private: \
     int dim_; \
 }; \
-template<class T_numtype, int N_rank> \
-inline _bz_ArrayExpr<name ## _et<T_numtype, N_rank> > \
-name(Array<T_numtype,N_rank>& A, int dim) \
+template<class P_numtype, int N_rank> \
+inline _bz_ArrayExpr<name ## _et<P_numtype, N_rank> > \
+name(Array<P_numtype,N_rank>& A, int dim) \
 { \
-    return _bz_ArrayExpr<name ## _et<T_numtype, N_rank> >(A,dim); \
+    return _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >(A,dim); \
 }
 
 
