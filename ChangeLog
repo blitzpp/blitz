@@ -1,5 +1,9 @@
 
 
+Fri Oct 25 10:56:21 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
+	* configure.in: fixed Fortran compiler message for linux
+	* configure: rebuilt with autoconf 2.53
+
 Wed Oct  9 10:17:27 CEST 2002 Patrick Guio <patrick.guio@fys.uio.no>
 	* src/Makefile.am: moved library target libblitz.a into lib directory 
 	to avoid unecessary and not so clean target like making a copy into lib
