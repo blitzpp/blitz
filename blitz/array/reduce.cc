@@ -41,7 +41,7 @@ _bz_ArrayExprFullReduce(T_expr expr, T_reduction reduction)
 #ifdef BZ_TAU_PROFILING
     // Tau profiling code.  Provide Tau with a pretty-printed version of
     // the expression.
-    static string exprDescription;
+    static BZ_STD_SCOPE(string) exprDescription;
     if (!exprDescription.length())      // faked static initializer
     {
         exprDescription = T_reduction::name();

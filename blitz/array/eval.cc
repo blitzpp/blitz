@@ -104,7 +104,7 @@ Array<T_numtype, N_rank>::evaluate(T_expr expr,
              << " line " << __LINE__ << endl
              << "          Expression: ";
         prettyPrintFormat format(true);   // Use terse formatting
-        string str;
+        BZ_STD_SCOPE(string) str;
         expr.prettyPrint(str, format);
         cerr << str << endl ;
       }
@@ -139,8 +139,9 @@ Array<T_numtype, N_rank>::evaluate(T_expr expr,
         return *this;
 
 #ifdef BZ_DEBUG_TRAVERSE
-cout << "T_expr::numIndexPlaceholders = " << T_expr::numIndexPlaceholders
-     << endl; cout.flush();
+    cout << "T_expr::numIndexPlaceholders = " << T_expr::numIndexPlaceholders
+         << endl; 
+    cout.flush();
 #endif
 
     // Tau profiling code.  Provide Tau with a pretty-printed version of
@@ -148,7 +149,7 @@ cout << "T_expr::numIndexPlaceholders = " << T_expr::numIndexPlaceholders
     // NEEDS_WORK-- use a static initializer somehow.
 
 #ifdef BZ_TAU_PROFILING
-    static string exprDescription;
+    static BZ_STD_SCOPE(string) exprDescription;
     if (!exprDescription.length())   // faked static initializer
     {
         exprDescription = "A";
