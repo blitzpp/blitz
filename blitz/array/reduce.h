@@ -48,29 +48,29 @@ public:
 
     _bz_ArrayExprReduce(const _bz_ArrayExprReduce<T_expr,N_index,T_reduction>&
         reduce)
-        : reduce_(reduce.reduce_), iter_(reduce.iter_)
+        : reduce_(reduce.reduce_), iter_(reduce.iter_), ordering_(reduce.ordering_)
     {
     }
 
     _bz_ArrayExprReduce(T_expr expr)
         : iter_(expr)
-    { }
+    { computeOrdering(); }
 
     _bz_ArrayExprReduce(T_expr expr, T_reduction reduce)
         : iter_(expr), reduce_(reduce)
-    { }
+    { computeOrdering(); }
 
-    int ascending(int rank)
-    { return iter_.ascending(rank); }
+    int ascending(int r)
+    { return iter_.ascending(r); }
 
-    int ordering(int rank)
-    { return iter_.ordering(rank); }
+    int ordering(int r)
+    { return ordering_[r]; }
 
-    int lbound(int rank)
-    { return iter_.lbound(rank); }
+    int lbound(int r)
+    { return iter_.lbound(r); }
 
-    int ubound(int rank)
-    { return iter_.ubound(rank); }
+    int ubound(int r)
+    { return iter_.ubound(r); }
 
     template<int N_destRank>
     T_numtype operator()(const TinyVector<int, N_destRank>& destIndex)
@@ -212,9 +212,37 @@ public:
 
 private: 
     _bz_ArrayExprReduce() { }
+// method for properly initializing the ordering values
+    void computeOrdering()
+    {
+        TinyVector<bool,rank> in_ordering;
+        in_ordering = false;
+
+        int j = 0;
+        for (int i=0; i<rank; ++i)
+        {
+            int orderingj = iter_.ordering(i);
+            if (orderingj != INT_MIN && orderingj < rank &&
+                !in_ordering(orderingj)) { // unique value in ordering array
+                in_ordering(orderingj) = true;
+                ordering_(j++) = orderingj;
+            }
+
+        }
+
+        // It is possible that ordering is not a permutation of 0,...,rank-1.
+        // In that case j will be less than rank. We fill in ordering with
+        // the unused values in decreasing order.
+        for (int i = rank-1; j < rank; ++j) {
+            while (in_ordering(i))
+                --i;
+            ordering_(j) = i--;
+        }
+    }
 
     T_reduction reduce_;
     T_expr iter_;
+    TinyVector<int,rank> ordering_;
 };
 
 #define BZ_DECL_ARRAY_PARTIAL_REDUCE(fn,reduction)                      \
