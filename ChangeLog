@@ -1,4 +1,11 @@
+2004-10-14  Julian Cummings  <cummings@artemis.cacr.caltech.edu>
 
+	* configure.ac: Modification suggested by Derrick Bass
+	(derrick@caltech.edu) that disables use of the F90 compiler if it
+	does not support free format source code or source code files with
+	a .f90 extension.
+	* testsuite/newet.cpp: Fixed typo reported by Derrick Bass
+	(derrick@caltech.edu).
 
 2004-10-14  Patrick Guio  <patrick.guio@ii.uib.no>
 
