@@ -1,5 +1,6 @@
 Blitz++ is a C++ template class library which provides array objects
-for scientific computing.  
+for scientific computing.  It is not a linear algebra or fft library;
+see http://oonumerics.org/oon/ for libraries that will do those things.
 
 Find Blitz on the web at http://oonumerics.org/blitz/
 
@@ -10,10 +11,7 @@ restrictive (non-viral) "artistic license".
 
 1.  Directories
 
-manual        Documentation in HTML format, for Arrays, vectors, and Range.
-              The Arrays documentation is the most complete.
-              A postscript version of the arrays documentation (arrays.ps)
-              is also provided.
+manual        Documentation in HTML and PS format.
 examples      Example programs 
 blitz         Blitz++ headers and source files
 blitz/meta    More Blitz++ headers

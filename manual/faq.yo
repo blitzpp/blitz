@@ -12,6 +12,19 @@ bzfaq(I downloaded Blitz++, but when I try to gunzip it, I get
 You forgot to set binary download mode in ftp.  Do so with
 the "binary" command.
 
+bzindex(`Array' undeclared)
+
+bzfaq(The compiler complains that there is no Array class, even though I've
+included <blitz.h>.)
+
+You forgot to say:
+
+bzverb(\
+using namespace blitz;
+)
+
+after including <blitz.h>.
+
 bzindex(gcc!memory hog)
 bzindex(memory hog, gcc)
 bzindex(out of virtual memory, gcc)
