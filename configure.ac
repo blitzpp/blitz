@@ -2,7 +2,7 @@
 
 AC_PREREQ(2.59)
 
-AC_INIT(blitz, 0.7, blitz-bugs@oonumerics.org)
+AC_INIT(blitz, 0.8, blitz-bugs@oonumerics.org)
 
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_SRCDIR(blitz/blitz.h)
@@ -44,7 +44,7 @@ AC_FORTRAN_FLAGS_PRESET
 
 # C++ compiler
 AC_LANG(C++)
-AC_PROG_CXX([xlc++ icpc xlC cxx aCC CC g++ pgCC KCC FCC])
+AC_PROG_CXX([xlc++ icpc icc xlC cxx aCC CC g++ pgCC KCC FCC])
 AC_CXX_FLAGS_PRESET
 
 # Prefix config macros with BZ_ and create compiler-specific bzconfig.h
@@ -99,15 +99,17 @@ AC_CONFIG_FILES([
 	doc/examples/Makefile
 	doc/stencils/Makefile
 	doc/doxygen/Makefile
+	doc/doxygen/Doxyfile
 	])
+
+#	Obsolete makefiles
+#
 #	demos/Makefile
 #	compiler/Makefile
 #	manual/Makefile
 #	manual/examples/Makefile
 #	manual/stencils/Makefile
 #	src/Makefile 
-
-AC_CONFIG_FILES([doc/doxygen/Doxyfile])
 
 AX_CREATE_PKGCONFIG_INFO
 
