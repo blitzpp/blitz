@@ -23,6 +23,12 @@
  *
  ***************************************************************************
  * $Log$
+ * Revision 1.5  2002/07/16 22:05:54  jcumming
+ * Removed ET support for Array expressions involving ldexp(), jn() and yn()
+ * functions.  These functions require specialized macros that allow one of
+ * the function arguments to be an ordinary int.  Such macros have not yet
+ * been added to <blitz/funcs.h>.
+ *
  * Revision 1.4  2002/07/02 19:14:01  jcumming
  * Use new style of Array ET macros to declare unary and binary math functions
  * that act on Array types.
@@ -137,16 +143,10 @@ cast(const ETBase<T1>& expr)
 
 BZ_DECLARE_ARRAY_ET_BINARY(atan2,     Fn_atan2)
 BZ_DECLARE_ARRAY_ET_BINARY(fmod,      Fn_fmod)
-BZ_DECLARE_ARRAY_ET_BINARY(ldexp,     Fn_ldexp)
 BZ_DECLARE_ARRAY_ET_BINARY(pow,       Fn_pow)
 
 #ifdef BZ_HAVE_COMPLEX_MATH
 BZ_DECLARE_ARRAY_ET_BINARY(polar,     Fn_polar)
-#endif
-    
-#ifdef BZ_HAVE_IEEE_MATH
-BZ_DECLARE_ARRAY_ET_BINARY(jn,        Fn_jn)
-BZ_DECLARE_ARRAY_ET_BINARY(yn,        Fn_yn)
 #endif
     
 #ifdef BZ_HAVE_SYSTEM_V_MATH
