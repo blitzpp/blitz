@@ -207,7 +207,7 @@ loop25_SOURCES = loop25.cpp loop25f.f loop25f90.f90
 loop36_SOURCES = loop36.cpp loop36f.f loop36f90.f90
 subdir = benchmarks
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
-CONFIG_CLEAN_FILES = 
+CONFIG_CLEAN_FILES =  plot_benchmarks.m
 
 DEFS = @DEFS@ -I. -I$(srcdir)
 CPPFLAGS = @CPPFLAGS@
@@ -385,7 +385,7 @@ $(loop9_SOURCES) $(qcd_SOURCES) $(stencil_SOURCES) $(tinydaxpy_SOURCES)
 DATA =  $(benchmark_DATA)
 
 depcomp = 
-DIST_COMMON =  Makefile.am Makefile.in
+DIST_COMMON =  Makefile.am Makefile.in plot_benchmarks.m.in
 
 
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -404,6 +404,8 @@ Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
+plot_benchmarks.m: $(top_builddir)/config.status plot_benchmarks.m.in
+	cd $(top_builddir) && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
 mostlyclean-compile:
 	-rm -f *.o core *.core

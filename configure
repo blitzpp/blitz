@@ -1212,7 +1212,7 @@ if test "`CDPATH=:; cd $srcdir && pwd`" != "`pwd`" &&
 fi
 
 # Define the identity of the package.
-PACKAGE=blitz
+PACKAGE=Blitz++
 VERSION=0.5
 
 cat >>confdefs.h <<EOF
@@ -2618,6 +2618,7 @@ ac_config_files="$ac_config_files
 	testsuite/Makefile
 	examples/Makefile
 	benchmarks/Makefile
+	benchmarks/plot_benchmarks.m
 	demos/Makefile
 	"
 
@@ -2748,7 +2749,7 @@ sed '/^$/d;s/^/| /' confdefs.h >&5
 : ${CONFIG_STATUS=./config.status}
 ac_clean_files_save=$ac_clean_files
 ac_clean_files="$ac_clean_files $CONFIG_STATUS"
-{ echo "$as_me:2751: creating $CONFIG_STATUS" >&5
+{ echo "$as_me:2752: creating $CONFIG_STATUS" >&5
 echo "creating $CONFIG_STATUS" >&6;}
 cat >$CONFIG_STATUS <<\_ACEOF
 #! /bin/sh
@@ -2944,6 +2945,7 @@ Try \`$0 --help' for more information." >&2
   'testsuite/Makefile' ) CONFIG_FILES="$CONFIG_FILES testsuite/Makefile" ;;
   'examples/Makefile' ) CONFIG_FILES="$CONFIG_FILES examples/Makefile" ;;
   'benchmarks/Makefile' ) CONFIG_FILES="$CONFIG_FILES benchmarks/Makefile" ;;
+  'benchmarks/plot_benchmarks.m' ) CONFIG_FILES="$CONFIG_FILES benchmarks/plot_benchmarks.m" ;;
   'demos/Makefile' ) CONFIG_FILES="$CONFIG_FILES demos/Makefile" ;;
   'default-1' ) CONFIG_COMMANDS="$CONFIG_COMMANDS default-1" ;;
 
@@ -3194,7 +3196,7 @@ done; }
   esac
 
   if test x"$ac_file" != x-; then
-    { echo "$as_me:3197: creating $ac_file" >&5
+    { echo "$as_me:3199: creating $ac_file" >&5
 echo "creating $ac_file" >&6;}
     rm -f "$ac_file"
   fi

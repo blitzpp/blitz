@@ -20,7 +20,7 @@ echo ""
 echo "Configuring Blitz++ for $target"
 echo ""
 
-AM_INIT_AUTOMAKE(blitz,0.5)
+AM_INIT_AUTOMAKE(Blitz++,0.5)
 
 # substitute SUBDIRS in Makefile
 SUBDIRS=". bin blitz random compiler src lib manual testsuite examples \
@@ -379,6 +379,7 @@ AC_CONFIG_FILES([
 	testsuite/Makefile 
 	examples/Makefile
 	benchmarks/Makefile 
+	benchmarks/plot_benchmarks.m
 	demos/Makefile
 	])
 AC_OUTPUT
