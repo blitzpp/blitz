@@ -5,9 +5,7 @@
 #include <blitz/vector-et.h>
 #include <blitz/vecpick.h>
 
-#ifdef BZ_NAMESPACES
-using namespace blitz;
-#endif
+BZ_USING_NAMESPACE(blitz)
 
 int main()
 {                                         //   0  1  2  3        8  9
