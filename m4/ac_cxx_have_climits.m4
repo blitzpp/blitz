@@ -1,18 +1,17 @@
 
 
-AC_DEFUN([AC_CXX_HAVE_CLIMITS],[AC_MSG_CHECKING([whether $CXX has <climits>])
-AC_COMPILE_IFELSE(
-[AC_LANG_PROGRAM([[
-// has the <climits> header?
-
-#include <climits>
-
-]],[[
-    int i = INT_MIN;
-    return 0;
-]])],
-[AC_MSG_RESULT([yes])
-AC_DEFINE([BZ_HAVE_CLIMITS],[],[Does it have <climits>?])],
-[AC_MSG_RESULT([no])])])
+AC_DEFUN([AC_CXX_HAVE_CLIMITS],
+[AC_CACHE_CHECK(whether the compiler has <climits> header,
+ac_cv_cxx_have_climits,
+[AC_LANG_SAVE
+ AC_LANG_CPLUSPLUS
+ AC_TRY_COMPILE([#include <climits>],[int i = INT_MIN; return 0;],
+ ac_cv_cxx_have_climits=yes, ac_cv_cxx_have_climits=no)
+ AC_LANG_RESTORE
+])
+if test "$ac_cv_cxx_have_climits" = yes; then
+  AC_DEFINE(HAVE_CLIMITS,,[define if the compiler has <climits> header])
+fi
+])
 
 
