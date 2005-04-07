@@ -46,7 +46,7 @@ if test -n "$FC"; then
 fi
 
 # C++ compiler
-AC_PROG_CXX([xlc++ icpc icc xlC cxx aCC CC g++ pgCC KCC FCC])
+AC_PROG_CXX([xlc++ xlC icpc icc cxx aCC c++ CC g++ pgCC KCC FCC])
 AC_LANG(C++)
 AC_CXX_FLAGS_PRESET
 
