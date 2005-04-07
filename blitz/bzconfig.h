@@ -30,6 +30,10 @@
 /* SGI CC compiler */
 #include "sgi/bzconfig.h"
 
+#elif defined(__SUNPRO_CC)
+/* SunPRO CC compiler */
+#include "sun/bzconfig.h"
+
 #elif defined(__GNUC__)
 /* GNU gcc compiler */
 #include "gnu/bzconfig.h"
