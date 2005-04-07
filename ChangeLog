@@ -1,3 +1,22 @@
+2005-04-06  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* m4/ac_cxx_flags_preset.m4: Added case for solaris target with CC
+	compiler (SunPRO).  The preset flags have been verified to work
+	with Sun Studio 10, C++ version 5.7.  Also added handling of c++
+	compiler name as pseudonym for g++ and reordered the cases
+	somewhat.  I am also removing the -strict_ansi flag with the Intel
+	C++ compiler for now, since this has been reported to cause
+	trouble with newer versions of icc and gcc.
+	* m4/ac_compiler_specific_header.m4: Added case for SunPRO CC
+	compiler (CC on solaris target) and handling of c++ compiler name.
+	Generalized all compiler names.
+	* configure.ac: Inserted c++ into C++ compiler search list, so
+	that Darwin systems (which are case-insensitive) will pick up c++
+	(a symbolic link to g++) rather than CC (which is really cc, a 
+	symbolic link to gcc).  We need c++ in front of CC in the search list.
+	* blitz/bzconfig.h: Added case to check for SunPRO CC compiler and
+	defer to sun/bzconfig.h.
+
 2005-04-01  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* testsuite/reduce.cpp: Added test of count() function.
