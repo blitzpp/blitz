@@ -29,7 +29,7 @@ Configuring $PACKAGE_STRING for $target
 ])
 
 # Fortran compiler
-AC_PROG_F77([xlf ifort ifc f77 g77 gfortran pgf77 fort77])
+AC_PROG_F77([xlf ifort ifc f77 g77 g95 gfortran pgf77 fort77])
 AC_PROG_FC([xlf90 ifort ifc f90 g95 gfortran pgf90])
 AC_FORTRAN_FLAGS_PRESET
 
