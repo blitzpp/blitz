@@ -32,16 +32,16 @@ if test "$enableval" = yes ; then
 	*xlc++*) dnl IBM C++ compiler for Darwin
 		CXX_VENDOR="IBM"
 		CXXFLAGS="-qrtti -D__APPLE"
-		CXX_OPTIMIZE_FLAGS="-O5 -qstrict -qstrict_induction -qmaxmem=8192 -qansialias"
-		CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
-		CXX_PROFIL_FLAGS="-p"
+		CXX_OPTIMIZE_FLAGS="-O3 -qstrict -qstrict_induction -qinline -qmaxmem=8192 -qansialias -qhot -qunroll=yes"
+		CXX_DEBUG_FLAGS="-g -qcheck=all -DBZ_DEBUG"
+		CXX_PROFIL_FLAGS="-pg"
 	;;      
 	*xlC*)  dnl IBM Visual Age C++   http://www.ibm.com/
 		CXX_VENDOR="IBM"
 		CXXFLAGS="-qrtti=all -D__IBM"
-		CXX_OPTIMIZE_FLAGS="-O5 -qstrict -qstrict_induction -qmaxmem=8192 -qansialias"
-		CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
-		CXX_PROFIL_FLAGS="-p"
+		CXX_OPTIMIZE_FLAGS="-O3 -qstrict -qstrict_induction -qinline -qmaxmem=8192 -qansialias -qhot -qunroll=yes"
+		CXX_DEBUG_FLAGS="-g -qcheck=all -DBZ_DEBUG"
+		CXX_PROFIL_FLAGS="-pg"
 	;;      
 	*icpc*|*icc*) dnl Intel icc http://www.intel.com/
 		CXX_VENDOR="Intel"
@@ -77,7 +77,7 @@ if test "$enableval" = yes ; then
 			CXX_OPTIMIZE_FLAGS="-O2 -funroll-loops -fstrict-aliasing -fno-gcse"
 		else
 			CXXFLAGS=""
-			CXX_OPTIMIZE_FLAGS="-O3 -funroll-loops -fomit-frame-pointer -ffast-math"
+			CXX_OPTIMIZE_FLAGS="-O3 -funroll-loops -fstrict-aliasing -fomit-frame-pointer -ffast-math"
 		fi
 		CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
 		CXX_PROFIL_FLAGS="-pg"
