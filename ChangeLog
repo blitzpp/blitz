@@ -1,3 +1,24 @@
+2005-04-14  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* m4/ac_cxx_flags_preset.m4: A few modidfications to the GNU and
+	IBM XL C++ compiler optimization flags.
+
+	* m4/ac_fortran_flags_preset.m4: Added cases to specifically
+	handle the darwin build target.  Added cases for F77=g95, which
+	can be useful on Darwin platform.  Generalized all Fortran
+	compiler names.  A few modifications to the GNU and IBM XL Fortran
+	compiler optimization options.
+
+	* configure.ac: Added g95 compiler to the Fortran 77 compiler
+	search list.  This is primarily for the benefit of users running
+	on the Darwin (Mac OS X) platform.  These systems often do not
+	come with the g77 compiler installed, and it can be difficult to
+	install g77 and g++ at the same version level.  Mixing different
+	versions of g77 and g++ can lead to link-time errors in the blitz
+	benchmark codes.  Using g95 as both the Fortran 77 and Fortran 90
+	compiler offers another solution.  Note that use of the g95
+	compiler under Mac OS X requires cctools-528.  Info on how to
+	install this is at www.g95.org.
 2005-04-06  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* m4/ac_cxx_flags_preset.m4: Added case for solaris target with CC
