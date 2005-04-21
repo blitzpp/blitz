@@ -1,3 +1,19 @@
+2005-04-20  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* m4/ac_fortran_flags_preset.m4: Added the proper flag for Fortran
+	external symbol translation when using the Intel Fortran compiler.
+	Moved the AM_CONDITIONAL for F90_COMPILER into configure.ac so
+	that it is always defined.
+	* m4/ac_cxx_flags_preset.m4: Use -ansi flag with Intel compiler
+	for now.  The -strict_ansi flag does not work with the newer gcc
+	header files, but -ansi is better than nothing.  Also fixed the
+	profiling flag for the Intel compiler.
+
+	* configure.ac: Added option --disable-fortran that allows user to
+	skip the Fortran compiler configuration.  With this option, the
+	banchmarks directory will not be configured.  The default is
+	--enable-fortran.  I also moved the C++ compiler configuration
+	ahead of the Fortran configuration, in case Fortran is skipped.
 2005-04-14  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* m4/ac_cxx_flags_preset.m4: A few modidfications to the GNU and
