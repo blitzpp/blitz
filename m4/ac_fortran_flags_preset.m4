@@ -72,10 +72,12 @@ if test "$enableval" = yes ; then
 		*ifc*)  dnl Intel 7.x Fortran compiler
 			FFLAGS=""
 			F77_OPTIMIZE_FLAGS="-O3 -Zp16 -ip -pad -unroll -fno-alias -safe_cray_ptr"
+			CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
 		;;
 		*ifort*) dnl Intel 8.x Fortran compiler
 			FFLAGS=""
 			F77_OPTIMIZE_FLAGS="-O3 -Zp16 -ip -pad -unroll -fno-alias -safe_cray_ptr"
+			CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
 		;;
 		*pgf77*) dnl PGI Fortran compiler
 			FFLAGS=""
@@ -201,10 +203,12 @@ if test "$enableval" = yes ; then
 		*ifc*)  dnl Intel 7.x F90 compiler
 			FCFLAGS=""
 			FC_OPTIMIZE_FLAGS="-O3 -Zp16 -ip -pad -unroll -fno-alias -safe_cray_ptr"
+			CXXFCFLAG="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
 		;;
 		*ifort*) dnl Intel 8.x F90 compiler
 			FCFLAGS=""
 			FC_OPTIMIZE_FLAGS="-O3 -Zp16 -ip -pad -unroll -fno-alias -safe_cray_ptr"
+			CXXFCFLAG="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
 		;;
 		*pgf90*) dnl PGI F90 compiler
 			FCFLAGS=""
@@ -289,7 +293,5 @@ fi
 if test -n "$FC"; then
 	CXXFCFLAG="-DFORTRAN_90 $CXXFCFLAG"
 fi
-AM_CONDITIONAL(F90_COMPILER, [test -n "$FC"])
-
 ])
 
