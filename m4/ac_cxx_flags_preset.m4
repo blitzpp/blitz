@@ -45,10 +45,10 @@ if test "$enableval" = yes ; then
 	;;      
 	*icpc*|*icc*) dnl Intel icc http://www.intel.com/
 		CXX_VENDOR="Intel"
-		CXXFLAGS="" dnl -strict_ansi flag causes trouble
+		CXXFLAGS="-ansi" dnl -strict_ansi flag causes trouble
 		CXX_OPTIMIZE_FLAGS="-O3 -Zp16 -ip -ansi_alias"
 		CXX_DEBUG_FLAGS="-g -O0 -C -DBZ_DEBUG"
-		CXX_PROFIL_FLAGS="-p"
+		CXX_PROFIL_FLAGS="-pg"
 	;;
 	*cxx*)  dnl Compaq C++  http://www.compaq.com/
 		CXX_VENDOR="Compaq"
