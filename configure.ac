@@ -28,27 +28,39 @@ Configuring $PACKAGE_STRING for $target
 
 ])
 
-# Fortran compiler
-AC_PROG_F77([xlf ifort ifc f77 g77 g95 gfortran pgf77 fort77])
-AC_PROG_FC([xlf90 ifort ifc f90 g95 gfortran pgf90])
-AC_FORTRAN_FLAGS_PRESET
-
-AC_LANG(Fortran 77)
-AC_F77_LIBRARY_LDFLAGS
-AC_LANG(Fortran)
-AC_FC_LIBRARY_LDFLAGS
-
-if test -n "$FC"; then
-    AC_FC_FREEFORM(,FC=)
-fi
-if test -n "$FC"; then
-    AC_FC_SRCEXT(f90,,FC=)
-fi
-
 # C++ compiler
 AC_PROG_CXX([xlc++ xlC icpc icc cxx aCC c++ CC g++ pgCC KCC FCC])
 AC_LANG(C++)
 AC_CXX_FLAGS_PRESET
+
+# Option to disable Fortran (benchmarks will not compile)
+AC_MSG_CHECKING([whether to enable Fortran compilation for benchmark codes])
+AC_ARG_ENABLE(fortran,
+  AS_HELP_STRING([--enable-fortran],[Enable Fortran compilation]),,[
+  enable_fortran="yes"])
+AC_MSG_RESULT([$enable_fortran])
+
+# Fortran compiler
+if test $enable_fortran = yes; then
+  AC_PROG_F77([xlf ifort ifc f77 g77 g95 gfortran pgf77 fort77])
+  AC_PROG_FC([xlf90 ifort ifc f90 g95 gfortran pgf90])
+  AC_FORTRAN_FLAGS_PRESET
+
+  AC_LANG_PUSH(Fortran 77)
+  AC_F77_LIBRARY_LDFLAGS
+  AC_LANG_POP(Fortran 77)
+  AC_LANG_PUSH(Fortran)
+  AC_FC_LIBRARY_LDFLAGS
+
+  if test -n "$FC"; then
+    AC_FC_FREEFORM(,FC=)
+  fi
+  if test -n "$FC"; then
+    AC_FC_SRCEXT(f90,,FC=)
+  fi
+  AC_LANG_POP(Fortran)
+fi
+AM_CONDITIONAL(F90_COMPILER, [test -n "$FC"])
 
 # Prefix config macros with BZ_ and create compiler-specific bzconfig.h
 AC_SET_COMPILER_SPECIFIC_HEADER
@@ -91,14 +103,20 @@ AC_CONFIG_FILES([
 	lib/Makefile
 	testsuite/Makefile 
 	examples/Makefile
-	benchmarks/Makefile 
-	benchmarks/plot_benchmarks.m
 	doc/Makefile
 	doc/examples/Makefile
 	doc/stencils/Makefile
 	doc/doxygen/Makefile
 	doc/doxygen/Doxyfile
 	])
+
+# Benchmarks require Fortran compiler
+if test $enable_fortran = yes; then
+AC_CONFIG_FILES([
+	benchmarks/Makefile 
+	benchmarks/plot_benchmarks.m
+	])
+fi
 
 #	Obsolete makefiles
 #
