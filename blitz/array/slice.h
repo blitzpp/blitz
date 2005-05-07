@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/array/slice.h    Helper classes for slicing arrays
  *
@@ -40,25 +41,25 @@ class nilArraySection { };
 template<typename T>
 class ArraySectionInfo {
 public:
-    enum { isValidType = 0, rank = 0, isPick = 0 };
+    static const int isValidType = 0, rank = 0, isPick = 0;
 };
 
 template<>
 class ArraySectionInfo<Range> {
 public:
-    enum { isValidType = 1, rank = 1, isPick = 0 };
+    static const int isValidType = 1, rank = 1, isPick = 0;
 };
 
 template<>
 class ArraySectionInfo<int> {
 public:
-    enum { isValidType = 1, rank = 0, isPick = 0 };
+    static const int isValidType = 1, rank = 0, isPick = 0;
 };
 
 template<>
 class ArraySectionInfo<nilArraySection> {
 public:
-    enum { isValidType = 1, rank = 0, isPick = 0 };
+    static const int isValidType = 1, rank = 0, isPick = 0;
 };
 
 template<typename T_numtype, typename T1, typename T2 = nilArraySection, 
@@ -69,7 +70,7 @@ template<typename T_numtype, typename T1, typename T2 = nilArraySection,
     class T11 = nilArraySection>
 class SliceInfo {
 public:
-    enum { 
+    static const int 
         numValidTypes = ArraySectionInfo<T1>::isValidType
                       + ArraySectionInfo<T2>::isValidType
                       + ArraySectionInfo<T3>::isValidType
@@ -104,8 +105,7 @@ public:
                       + ArraySectionInfo<T8>::isPick
                       + ArraySectionInfo<T9>::isPick
                       + ArraySectionInfo<T10>::isPick
-                      + ArraySectionInfo<T11>::isPick
-        };
+                      + ArraySectionInfo<T11>::isPick;
 
     typedef Array<T_numtype,numValidTypes> T_array;
     typedef Array<T_numtype,rank> T_slice;
