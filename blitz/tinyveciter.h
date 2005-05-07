@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/tinyveciter.h   Declaration of TinyVectorIter<T,N,stride>
  *
@@ -81,9 +82,9 @@ public:
     int length(int) const
     { return N_length; }
 
-    enum { _bz_staticLengthCount = 1,
-           _bz_dynamicLengthCount = 0,
-           _bz_staticLength = 0 };
+    static const int _bz_staticLengthCount = 1,
+                     _bz_dynamicLengthCount = 0,
+                     _bz_staticLength = 0;
 
     bool _bz_hasFastAccess() const
     { return true; }
@@ -140,9 +141,9 @@ public:
     int length(int) const
     { return N_length; }
 
-    enum { _bz_staticLengthCount = 1,
-           _bz_dynamicLengthCount = 0,
-           _bz_staticLength = 0 };
+    static const int _bz_staticLengthCount = 1,
+                     _bz_dynamicLengthCount = 0,
+                     _bz_staticLength = 0;
 
     bool _bz_hasFastAccess() const
     { return true; }

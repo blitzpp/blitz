@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/tinymatexpr.h   Tiny Matrix Expressions
  *
@@ -37,10 +38,9 @@ class _bz_tinyMatExpr {
 public:
     typedef _bz_typename T_expr::T_numtype T_numtype;
 
-    enum {
+    static const int
         rows = T_expr::rows,
-        columns = T_expr::columns
-    };
+        columns = T_expr::columns;
 
     _bz_tinyMatExpr(T_expr expr)
         : expr_(expr)
