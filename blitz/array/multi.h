@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/array/multi.h  Support for multicomponent arrays
  *
@@ -44,14 +45,14 @@ BZ_NAMESPACE(blitz)
 template<typename T_component>
 struct multicomponent_traits {
     typedef T_component T_element;
-    enum { numComponents = 0 };
+    static const int numComponents = 0;
 };
 
 // TinyVector
 template<typename T_numtype, int N_rank>
 struct multicomponent_traits<TinyVector<T_numtype,N_rank> > {
     typedef T_numtype T_element;
-    enum { numComponents = N_rank };
+    static const int numComponents = N_rank;
 };
 
 #ifdef BZ_HAVE_COMPLEX
@@ -59,7 +60,7 @@ struct multicomponent_traits<TinyVector<T_numtype,N_rank> > {
 template<typename T>
 struct multicomponent_traits<complex<T> > {
     typedef T T_element;
-    enum { numComponents = 2 };
+    static const int numComponents = 2;
 };
 #endif
 
@@ -71,7 +72,7 @@ struct multicomponent_traits<complex<T> > {
   template<>                                                 \
   struct multicomponent_traits<T_tuple > {                   \
     typedef T T_element;                                     \
-    enum { numComponents = N };                              \
+    static const int numComponents = N;                      \
   };                                                         \
   BZ_NAMESPACE_END
 
