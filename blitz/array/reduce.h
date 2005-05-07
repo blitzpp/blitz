@@ -42,9 +42,10 @@ public:
     typedef T_expr      T_ctorArg1;
     typedef T_reduction T_ctorArg2;
 
-    enum { numArrayOperands = BZ_ENUM_CAST(T_expr::numArrayOperands),
-        numIndexPlaceholders = BZ_ENUM_CAST(T_expr::numIndexPlaceholders) + 1,
-        rank = BZ_ENUM_CAST(T_expr::rank) - 1 };
+    static const int 
+        numArrayOperands = T_expr::numArrayOperands,
+        numIndexPlaceholders = T_expr::numIndexPlaceholders + 1,
+        rank = T_expr::rank - 1;
 
     _bz_ArrayExprReduce(const _bz_ArrayExprReduce<T_expr,N_index,T_reduction>&
         reduce)
