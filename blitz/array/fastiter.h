@@ -45,8 +45,10 @@ public:
     typedef const T_array& T_ctorArg1;
     typedef int            T_ctorArg2;    // dummy
 
-    enum { numArrayOperands = 1, numIndexPlaceholders = 0,
-        rank = N_rank };
+    static const int 
+        numArrayOperands = 1, 
+        numIndexPlaceholders = 0,
+        rank = N_rank;
 
     // NB: this ctor does NOT preserve stack and stride
     // parameters.  This is for speed purposes.

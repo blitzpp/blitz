@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/array-impl.h    Definition of the Array<P_numtype, N_rank> class
  *
@@ -142,7 +143,7 @@ public:
     typedef ArrayIterator<T_numtype,N_rank> iterator;
     typedef ConstArrayIterator<T_numtype,N_rank> const_iterator;
 
-    enum { _bz_rank = N_rank };
+    static const int _bz_rank = N_rank;
 
     //////////////////////////////////////////////
     // Constructors                             //

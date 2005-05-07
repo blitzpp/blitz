@@ -87,9 +87,10 @@ public:
     typedef T_expr T_ctorArg1;
     typedef int    T_ctorArg2;    // dummy
 
-    enum { numArrayOperands = BZ_ENUM_CAST(T_expr::numArrayOperands),
-        numIndexPlaceholders = BZ_ENUM_CAST(T_expr::numIndexPlaceholders),
-        rank = BZ_ENUM_CAST(T_expr::rank) };
+    static const int 
+        numArrayOperands = T_expr::numArrayOperands,
+        numIndexPlaceholders = T_expr::numIndexPlaceholders,
+        rank = T_expr::rank;
 
     _bz_ArrayExpr(const _bz_ArrayExpr<T_expr>& a)
 #ifdef BZ_NEW_EXPRESSION_TEMPLATES
@@ -327,9 +328,10 @@ public:
     typedef T_expr T_ctorArg1;
     typedef int    T_ctorArg2;    // dummy
 
-    enum { numArrayOperands = BZ_ENUM_CAST(T_expr::numArrayOperands),
-        numIndexPlaceholders = BZ_ENUM_CAST(T_expr::numIndexPlaceholders),
-        rank = BZ_ENUM_CAST(T_expr::rank) };
+    static const int 
+        numArrayOperands = T_expr::numArrayOperands,
+        numIndexPlaceholders = T_expr::numIndexPlaceholders,
+        rank = T_expr::rank;
 
     _bz_ArrayExprUnaryOp(const _bz_ArrayExprUnaryOp<T_expr, T_op>& a)
         : iter_(a.iter_)
@@ -459,13 +461,13 @@ public:
     typedef T_expr1 T_ctorArg1;
     typedef T_expr2 T_ctorArg2;
 
-    enum { numArrayOperands = BZ_ENUM_CAST(T_expr1::numArrayOperands)
-                            + BZ_ENUM_CAST(T_expr2::numArrayOperands),
-           numIndexPlaceholders = BZ_ENUM_CAST(T_expr1::numIndexPlaceholders)
-                                + BZ_ENUM_CAST(T_expr2::numIndexPlaceholders),
-           rank = (BZ_ENUM_CAST(T_expr1::rank) > BZ_ENUM_CAST(T_expr2::rank)) 
-                ? BZ_ENUM_CAST(T_expr1::rank) : BZ_ENUM_CAST(T_expr2::rank)
-    };
+    static const int 
+        numArrayOperands = T_expr1::numArrayOperands
+                         + T_expr2::numArrayOperands,
+        numIndexPlaceholders = T_expr1::numIndexPlaceholders
+                             + T_expr2::numIndexPlaceholders,
+        rank = (T_expr1::rank > T_expr2::rank) 
+             ? T_expr1::rank : T_expr2::rank;
 
     _bz_ArrayExprBinaryOp(
         const _bz_ArrayExprBinaryOp<T_expr1, T_expr2, T_op>& a)
@@ -617,18 +619,18 @@ public:
     typedef T_expr2 T_ctorArg2;
     typedef T_expr3 T_ctorArg3;
 
-    enum { numArrayOperands = BZ_ENUM_CAST(T_expr1::numArrayOperands)
-                            + BZ_ENUM_CAST(T_expr2::numArrayOperands)
-                            + BZ_ENUM_CAST(T_expr3::numArrayOperands),
-           numIndexPlaceholders = BZ_ENUM_CAST(T_expr1::numIndexPlaceholders)
-                                + BZ_ENUM_CAST(T_expr2::numIndexPlaceholders)
-                                + BZ_ENUM_CAST(T_expr3::numIndexPlaceholders),
-           rank = (BZ_ENUM_CAST(T_expr1::rank) > BZ_ENUM_CAST(T_expr2::rank)) 
-                ? ((BZ_ENUM_CAST(T_expr1::rank) > BZ_ENUM_CAST(T_expr3::rank))
-                   ? BZ_ENUM_CAST(T_expr1::rank) : BZ_ENUM_CAST(T_expr3::rank))
-                : ((BZ_ENUM_CAST(T_expr2::rank) > BZ_ENUM_CAST(T_expr3::rank)) 
-                   ? BZ_ENUM_CAST(T_expr2::rank) : BZ_ENUM_CAST(T_expr3::rank))
-    };
+    static const int 
+        numArrayOperands = T_expr1::numArrayOperands
+                         + T_expr2::numArrayOperands
+                         + T_expr3::numArrayOperands,
+        numIndexPlaceholders = T_expr1::numIndexPlaceholders
+                             + T_expr2::numIndexPlaceholders
+                             + T_expr3::numIndexPlaceholders,
+        rank = (T_expr1::rank > T_expr2::rank) 
+             ? ((T_expr1::rank > T_expr3::rank)
+                ? T_expr1::rank : T_expr3::rank)
+             : ((T_expr2::rank > T_expr3::rank) 
+                ? T_expr2::rank : T_expr3::rank);
 
     _bz_ArrayExprTernaryOp(
         const _bz_ArrayExprTernaryOp<T_expr1, T_expr2, T_expr3, T_op>& a)
@@ -802,7 +804,10 @@ public:
     typedef T_numtype T_ctorArg1;
     typedef int       T_ctorArg2;    // dummy
 
-    enum { numArrayOperands = 0, numIndexPlaceholders = 0, rank = 0 };
+    static const int 
+        numArrayOperands = 0, 
+        numIndexPlaceholders = 0, 
+        rank = 0;
 
     _bz_ArrayExprConstant(const _bz_ArrayExprConstant<T_numtype>& a)
         : value_(a.value_)
