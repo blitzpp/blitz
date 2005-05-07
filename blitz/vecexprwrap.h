@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/vecexprwrap.h   Vector expression templates wrapper class
  *
@@ -64,9 +65,10 @@ public:
     int length(int recommendedLength) const
     { return iter_.length(recommendedLength); }
 
-    enum { _bz_staticLengthCount = BZ_ENUM_CAST(P_expr::_bz_staticLengthCount),
-           _bz_dynamicLengthCount = BZ_ENUM_CAST(P_expr::_bz_dynamicLengthCount),
-           _bz_staticLength = BZ_ENUM_CAST(P_expr::_bz_staticLength) };
+    static const int 
+        _bz_staticLengthCount = P_expr::_bz_staticLengthCount,
+        _bz_dynamicLengthCount = P_expr::_bz_dynamicLengthCount,
+        _bz_staticLength = P_expr::_bz_staticLength;
 
     int _bz_suggestLength() const
     { return iter_._bz_suggestLength(); }
