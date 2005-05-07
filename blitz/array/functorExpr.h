@@ -109,10 +109,10 @@ public:
     typedef int       T_ctorArg2;    // dummy
     typedef int       T_ctorArg3;    // dummy
 
-    enum { numArrayOperands = BZ_ENUM_CAST(T_expr::numArrayOperands),
-	   numIndexPlaceholders = BZ_ENUM_CAST(T_expr::numIndexPlaceholders),
-	   rank = BZ_ENUM_CAST(T_expr::rank)
-    };
+    static const int 
+        numArrayOperands = T_expr::numArrayOperands,
+	numIndexPlaceholders = T_expr::numIndexPlaceholders,
+	rank = T_expr::rank;
     
     _bz_FunctorExpr(const _bz_FunctorExpr<P_functor,P_expr,P_result>& a)
         : f_(a.f_), iter_(a.iter_)
@@ -236,13 +236,13 @@ public:
     typedef T_expr1 T_ctorArg2;
     typedef int T_ctorArg3;  // dummy
 
-    enum { numArrayOperands = BZ_ENUM_CAST(T_expr1::numArrayOperands) +
-                              BZ_ENUM_CAST(T_expr2::numArrayOperands),
-	   numIndexPlaceholders = BZ_ENUM_CAST(T_expr1::numIndexPlaceholders) +
-	                          BZ_ENUM_CAST(T_expr2::numIndexPlaceholders),
-	   rank = BZ_ENUM_CAST(T_expr1::rank) > BZ_ENUM_CAST(T_expr2::rank) ?
-                  BZ_ENUM_CAST(T_expr1::rank) : BZ_ENUM_CAST(T_expr2::rank)
-    };
+    static const int 
+        numArrayOperands = T_expr1::numArrayOperands
+                         + T_expr2::numArrayOperands,
+	numIndexPlaceholders = T_expr1::numIndexPlaceholders
+	                     + T_expr2::numIndexPlaceholders,
+	rank = T_expr1::rank > T_expr2::rank
+             ? T_expr1::rank : T_expr2::rank;
   
     _bz_FunctorExpr2(const _bz_FunctorExpr2<P_functor, P_expr1, P_expr2,
         P_result>& a) 
@@ -406,17 +406,16 @@ public:
     typedef T_expr2 T_ctorArg2;
     typedef T_expr3 T_ctorArg3;
 
-    enum { numArrayOperands = BZ_ENUM_CAST(T_expr1::numArrayOperands) +
-                              BZ_ENUM_CAST(T_expr2::numArrayOperands) +
-                              BZ_ENUM_CAST(T_expr3::numArrayOperands),
-	   numIndexPlaceholders = BZ_ENUM_CAST(T_expr1::numIndexPlaceholders) +
-	                          BZ_ENUM_CAST(T_expr2::numIndexPlaceholders) +
-	                          BZ_ENUM_CAST(T_expr3::numIndexPlaceholders),
-	   rank12 = BZ_ENUM_CAST(T_expr1::rank) > BZ_ENUM_CAST(T_expr2::rank) ?
-	            BZ_ENUM_CAST(T_expr1::rank) : BZ_ENUM_CAST(T_expr2::rank),
-	   rank = rank12 > BZ_ENUM_CAST(T_expr3::rank) ?
-	          rank12 : BZ_ENUM_CAST(T_expr3::rank)
-    };
+    static const int 
+        numArrayOperands = T_expr1::numArrayOperands
+                         + T_expr2::numArrayOperands
+                         + T_expr3::numArrayOperands,
+	numIndexPlaceholders = T_expr1::numIndexPlaceholders
+	                     + T_expr2::numIndexPlaceholders
+	                     + T_expr3::numIndexPlaceholders,
+	rank12 = T_expr1::rank > T_expr2::rank
+	       ? T_expr1::rank : T_expr2::rank,
+	rank = rank12 > T_expr3::rank ? rank12 : T_expr3::rank;
   
     _bz_FunctorExpr3(const _bz_FunctorExpr3<P_functor, P_expr1, P_expr2,
         P_expr3, P_result>& a) 

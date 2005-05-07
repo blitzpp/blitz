@@ -209,7 +209,7 @@ public:
      * then maxRank10 + 1, since the IndexPlaceholders start at 0 rather than
      * 1.  
      */
-    enum {
+    static const int
         maxRank1 = (N_map0 > N_map1) ? N_map0 : N_map1,
         maxRank2 = (N_map2 > maxRank1) ? N_map2 : maxRank1,
         maxRank3 = (N_map3 > maxRank2) ? N_map3 : maxRank2,
@@ -219,11 +219,12 @@ public:
         maxRank7 = (N_map7 > maxRank6) ? N_map7 : maxRank6,
         maxRank8 = (N_map8 > maxRank7) ? N_map8 : maxRank7,
         maxRank9 = (N_map9 > maxRank8) ? N_map9 : maxRank8,
-        maxRank10 = (N_map10 > maxRank9) ? N_map10 : maxRank9
-    };
+        maxRank10 = (N_map10 > maxRank9) ? N_map10 : maxRank9;
 
-    enum { numArrayOperands = 1, numIndexPlaceholders = 1,
-        rank = maxRank10 + 1 };
+    static const int 
+        numArrayOperands = 1, 
+        numIndexPlaceholders = 1,
+        rank = maxRank10 + 1;
 
     ArrayIndexMapping(const Array<T_numtype, N_rank>& array)
         : array_(array)
