@@ -62,8 +62,10 @@ public:
     typedef int T_ctorArg1;     // Dummy; not used
     typedef int T_ctorArg2;     // Ditto
 
-    enum { numArrayOperands = 0, numIndexPlaceholders = 1,
-        rank = N+1 };
+    static const int 
+        numArrayOperands = 0, 
+        numIndexPlaceholders = 1,
+        rank = N+1;
 
     // If you have a precondition failure on this routine, it means
     // you are trying to use stack iteration mode on an expression

@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/numtrait.h      Declaration of the NumericTypeTraits class
  *
