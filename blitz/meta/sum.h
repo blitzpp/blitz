@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/meta/sum.h      TinyVector sum metaprogram
  *
@@ -35,7 +36,7 @@ BZ_NAMESPACE(blitz)
 template<int N, int I>
 class _bz_meta_vectorSum {
 public:
-    enum { loopFlag = (I < N-1) ? 1 : 0 };
+    static const int loopFlag = (I < N-1) ? 1 : 0;
 
     template<typename T_expr1>
     static inline _bz_typename T_expr1::T_numtype
