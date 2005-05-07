@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/meta/metaprog.h   Useful metaprogram declarations
  *
@@ -45,7 +46,7 @@ template<typename T> inline T operator*(const T& a, _bz_meta_nullOperand)
 template<int N1, int N2>
 class _bz_meta_max {
 public:
-    enum { max = (N1 > N2) ? N1 : N2 };
+    static const int max = (N1 > N2) ? N1 : N2;
 };
 
 // MetaMin
@@ -53,7 +54,7 @@ public:
 template<int N1, int N2>
 class _bz_meta_min {
 public:
-    enum { min = (N1 < N2) ? N1 : N2 };
+    static const int min = (N1 < N2) ? N1 : N2;
 };
 
 BZ_NAMESPACE_END 

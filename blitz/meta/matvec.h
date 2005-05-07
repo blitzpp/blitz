@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/tiny/matvec.h   TinyMatrix/TinyVector product metaprogram
  *
@@ -75,18 +76,16 @@ public:
             N_colStride, N_vecStride, 0>::f(matrix_, vector_, i);
     }
 
-    enum {
+    static const int
         _bz_staticLengthCount = 1,
         _bz_dynamicLengthCount = 0,
-        _bz_staticLength = N_rows
+        _bz_staticLength = N_rows;
 
 #ifdef BZ_HAVE_COSTS
-     ,
+    static const int 
         _bz_costPerEval = 2 * N_columns * costs::memoryAccess
-            + (N_columns-1) * costs::add
+                        + (N_columns-1) * costs::add;
 #endif
-
-    };
 
     unsigned _bz_suggestLength() const
     {
@@ -134,7 +133,7 @@ template<int N_rows, int N_columns, int N_rowStride, int N_colStride,
 class _bz_meta_matrixVectorProduct2 {
 
 public:
-    enum { go = J < (N_columns-1) };
+    static const int go = J < (N_columns-1) ? 1 : 0;
    
     template<typename T_numtype1, typename T_numtype2> 
     static inline BZ_PROMOTE(T_numtype1, T_numtype2)
@@ -161,7 +160,7 @@ template<int N_rows, int N_columns, int N_rowStride, int N_colStride,
     int N_vecStride, int I>
 class _bz_meta_matrixVectorProduct {
 public:
-    enum { go = I < (N_rows - 1) };
+    static const int go = I < (N_rows - 1) ? 1 : 0;
 
     template<typename T_numtype1, typename T_numtype2, typename T_numtype3>
     static inline void f(TinyVector<T_numtype3, N_rows>& result,

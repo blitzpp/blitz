@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/meta/dot.h      Tiny vector dot product metaprogram
  *
@@ -39,7 +40,7 @@ BZ_NAMESPACE(blitz)
 template<int N, int I>
 class _bz_meta_vectorDot {
 public:
-    enum { loopFlag = (I < N-1) ? 1 : 0 };
+    static const int loopFlag = (I < N-1) ? 1 : 0;
 
     template<typename T_expr1, typename T_expr2>
     static inline BZ_PROMOTE(_bz_typename T_expr1::T_numtype,

@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/meta/matassign.h   TinyMatrix assignment metaprogram
  *
@@ -32,7 +33,7 @@ BZ_NAMESPACE(blitz)
 template<int N_rows, int N_columns, int I, int J>
 class _bz_meta_matAssign2 {
 public:
-    enum { go = (J < N_columns - 1) ? 1 : 0 };
+    static const int go = (J < N_columns - 1) ? 1 : 0;
 
     template<typename T_matrix, typename T_expr, typename T_updater>
     static inline void f(T_matrix& mat, T_expr expr, T_updater u)
@@ -54,7 +55,7 @@ public:
 template<int N_rows, int N_columns, int I> 
 class _bz_meta_matAssign {
 public:
-    enum { go = (I < N_rows-1) ? 1 : 0 };
+    static const int go = (I < N_rows-1) ? 1 : 0;
 
     template<typename T_matrix, typename T_expr, typename T_updater>
     static inline void f(T_matrix& mat, T_expr expr, T_updater u)

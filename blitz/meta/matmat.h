@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/meta/matmat.h   TinyMatrix matrix-matrix product metaprogram
  *
@@ -40,7 +41,7 @@ template<int N_rows1, int N_columns, int N_columns2, int N_rowStride1,
     int N_colStride1, int N_rowStride2, int N_colStride2, int K>
 class _bz_meta_matrixMatrixProduct {
 public:
-    enum { go = (K != N_columns - 1) };
+    static const int go = (K != N_columns - 1) ? 1 : 0;
 
     template<typename T_numtype1, typename T_numtype2>
     static inline BZ_PROMOTE(T_numtype1, T_numtype2)
@@ -72,7 +73,7 @@ class _bz_tinyMatrixMatrixProduct {
 public:
     typedef BZ_PROMOTE(T_numtype1, T_numtype2) T_numtype;
 
-    enum { rows = N_rows1, columns = N_columns2 };
+    static const int rows = N_rows1, columns = N_columns2;
 
     _bz_tinyMatrixMatrixProduct(const T_numtype1* matrix1,
         const T_numtype2* matrix2)
