@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/veciter.h      Iterator classes for Vector<P_numtype>
  *
@@ -107,9 +108,10 @@ public:
     // disappear in future releases.
     /////////////////////////////////////////////
 
-    enum { _bz_staticLengthCount = 0,
-           _bz_dynamicLengthCount = 1,
-           _bz_staticLength = 0 };
+    static const int 
+        _bz_staticLengthCount = 0,
+        _bz_dynamicLengthCount = 1,
+        _bz_staticLength = 0;
 
     bool _bz_hasFastAccess() const
     { return isUnitStride(); }
@@ -176,9 +178,10 @@ public:
     // disappear in future releases.
     /////////////////////////////////////////////
 
-    enum { _bz_staticLengthCount = 0,
-           _bz_dynamicLengthCount = 1,
-           _bz_staticLength = 0 };
+    static const int 
+        _bz_staticLengthCount = 0,
+        _bz_dynamicLengthCount = 1,
+        _bz_staticLength = 0;
 
     bool  _bz_hasFastAccess() const
     { return isUnitStride(); }
