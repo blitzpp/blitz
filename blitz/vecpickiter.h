@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/vecpickiter.h      Declaration of VectorPickIter<T_numtype> and
  *                          VectorPickIterConst<T_numtype> classes
@@ -92,9 +93,10 @@ public:
          return data_[index_[i]];
     }
 
-    enum { _bz_staticLengthCount = 0,
-           _bz_dynamicLengthCount = 1,
-           _bz_staticLength = 0 };
+    static const int
+        _bz_staticLengthCount = 0,
+        _bz_dynamicLengthCount = 1,
+        _bz_staticLength = 0;
 
 private:
     T_numtype * restrict data_;
@@ -152,9 +154,10 @@ public:
          return data_[index_[i]];
     }
 
-    enum { _bz_staticLengthCount = 0,
-           _bz_dynamicLengthCount = 1,
-           _bz_staticLength = 0 };
+    static const int 
+        _bz_staticLengthCount = 0,
+        _bz_dynamicLengthCount = 1,
+        _bz_staticLength = 0;
 
 private:
     const T_numtype * restrict data_;

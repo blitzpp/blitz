@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/vecwhere.h      where(X,Y,Z) function for vectors
  *
@@ -64,19 +65,16 @@ public:
         return iter1_[i] ? iter2_[i] : iter3_[i];
     }
 
-    enum {
-           _bz_staticLengthCount =
-      P_expr1::_bz_staticLengthCount + P_expr2::_bz_staticLengthCount
-         + P_expr3::_bz_staticLengthCount,
-
-           _bz_dynamicLengthCount =
-      P_expr1::_bz_dynamicLengthCount + P_expr2::_bz_dynamicLengthCount
-         + P_expr3::_bz_dynamicLengthCount,
-
-           _bz_staticLength =
-      _bz_meta_max<_bz_meta_max<P_expr1::_bz_staticLength, 
-            P_expr2::_bz_staticLength>::max, P_expr3::_bz_staticLength>::max
-    };
+    static const int
+        _bz_staticLengthCount = P_expr1::_bz_staticLengthCount
+                              + P_expr2::_bz_staticLengthCount
+                              + P_expr3::_bz_staticLengthCount,
+        _bz_dynamicLengthCount = P_expr1::_bz_dynamicLengthCount
+                               + P_expr2::_bz_dynamicLengthCount
+                               + P_expr3::_bz_dynamicLengthCount,
+        _bz_staticLength =
+            _bz_meta_max<_bz_meta_max<P_expr1::_bz_staticLength, 
+            P_expr2::_bz_staticLength>::max, P_expr3::_bz_staticLength>::max;
 
     T_numtype _bz_fastAccess(int i) const
     { 
