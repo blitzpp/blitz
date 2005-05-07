@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/meta/vecassign.h   TinyVector assignment metaprogram
  *
@@ -31,7 +32,7 @@ BZ_NAMESPACE(blitz)
 template<int N, int I> 
 class _bz_meta_vecAssign {
 public:
-    enum { loopFlag = (I < N-1) ? 1 : 0 };
+    static const int loopFlag = (I < N-1) ? 1 : 0;
 
     template<typename T_vector, typename T_expr, typename T_updater>
     static inline void fastAssign(T_vector& vec, T_expr expr, T_updater u)
