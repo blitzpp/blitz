@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/range.h      Declaration of the Range class
  *
@@ -181,9 +182,10 @@ public:
     // disappear in future releases.
     /////////////////////////////////////////////
 
-    enum { _bz_staticLengthCount = 0,
-           _bz_dynamicLengthCount = 0,
-           _bz_staticLength = 0 };
+    static const int
+        _bz_staticLengthCount = 0,
+        _bz_dynamicLengthCount = 0,
+        _bz_staticLength = 0;
 
     bool _bz_hasFastAccess() const
     { return stride_ == 1; }

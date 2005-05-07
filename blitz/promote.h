@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***********************************************************************
  * promote.h   Arithmetic type promotion trait class
  * Author: Todd Veldhuizen         (tveldhui@oonumerics.org)
@@ -45,15 +46,15 @@ BZ_NAMESPACE(blitz)
 
 template<typename T>
 struct precision_trait {
-    enum { precisionRank = 0,
-           knowPrecisionRank = 0 };
+    static const int precisionRank = 0;
+    static const bool knowPrecisionRank = false;
 };
 
-#define BZ_DECLARE_PRECISION(T,rank)          \
-    template<>                                \
-    struct precision_trait< T > {             \
-        enum { precisionRank = rank,          \
-           knowPrecisionRank = 1 };           \
+#define BZ_DECLARE_PRECISION(T,rank)                  \
+    template<>                                        \
+    struct precision_trait< T > {                     \
+        static const int precisionRank = rank;        \
+        static const bool knowPrecisionRank = true;   \
     };
 
 BZ_DECLARE_PRECISION(int,100)
@@ -107,42 +108,36 @@ struct promote_trait {
     typedef _bz_typename autopromote_trait<T2_orig>::T_numtype T2;
 
     // True if T1 is higher ranked
-    enum {
-      T1IsBetter =
-        BZ_ENUM_CAST(precision_trait<T1>::precisionRank) >
-          BZ_ENUM_CAST(precision_trait<T2>::precisionRank),
+    static const bool
+        T1IsBetter =
+            precision_trait<T1>::precisionRank >
+            precision_trait<T2>::precisionRank,
 
     // True if we know ranks for both T1 and T2
-      knowBothRanks =
-        BZ_ENUM_CAST(precision_trait<T1>::knowPrecisionRank)
-      && BZ_ENUM_CAST(precision_trait<T2>::knowPrecisionRank),
+        knowBothRanks =
+            precision_trait<T1>::knowPrecisionRank && precision_trait<T2>::knowPrecisionRank,
 
     // True if we know T1 but not T2
-      knowT1butNotT2 =  BZ_ENUM_CAST(precision_trait<T1>::knowPrecisionRank)
-        && !(BZ_ENUM_CAST(precision_trait<T2>::knowPrecisionRank)),
+        knowT1butNotT2 =  precision_trait<T1>::knowPrecisionRank && !precision_trait<T2>::knowPrecisionRank,
 
     // True if we know T2 but not T1
-      knowT2butNotT1 =  BZ_ENUM_CAST(precision_trait<T2>::knowPrecisionRank)
-        && !(BZ_ENUM_CAST(precision_trait<T1>::knowPrecisionRank)),
+        knowT2butNotT1 =  precision_trait<T2>::knowPrecisionRank && !precision_trait<T1>::knowPrecisionRank,
 
     // True if T1 is bigger than T2
-      T1IsLarger = sizeof(T1) >= sizeof(T2),
+        T1IsLarger = sizeof(T1) >= sizeof(T2),
 
     // We know T1 but not T2: true
     // We know T2 but not T1: false
     // Otherwise, if T1 is bigger than T2: true
-      defaultPromotion = knowT1butNotT2 ? false : 
-         (knowT2butNotT1 ? true : T1IsLarger)
-    };
+        defaultPromotion = knowT1butNotT2 ? false : 
+          (knowT2butNotT1 ? true : T1IsLarger);
 
     // If we have both ranks, then use them.
     // If we have only one rank, then use the unknown type.
     // If we have neither rank, then promote to the larger type.
 
-    enum {
-      promoteToT1 = (BZ_ENUM_CAST(knowBothRanks) ? BZ_ENUM_CAST(T1IsBetter)
-        : BZ_ENUM_CAST(defaultPromotion)) ? 1 : 0
-    };
+    static const int
+        promoteToT1 = (knowBothRanks ? T1IsBetter : defaultPromotion) ? true : false;
 
     typedef _bz_typename _bz_promote2<T1,T2,promoteToT1>::T_promote T_promote;
 };

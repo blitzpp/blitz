@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/reduce.h        Reduction operators: sum, mean, min, max,
  *                       minIndex, maxIndex, product, count, any, all
@@ -49,7 +50,7 @@ public:
     typedef P_resulttype T_resulttype;
     typedef T_resulttype T_numtype;
 
-    enum { needIndex = 0, canProvideInitialValue = 1 };
+    static const bool needIndex = false, canProvideInitialValue = true;
 
     ReduceSum()
     { reset(); }
@@ -93,7 +94,7 @@ public:
     typedef P_resulttype T_resulttype;
     typedef T_resulttype T_numtype;
 
-    enum { needIndex = 0, canProvideInitialValue = 0 };
+    static const bool needIndex = false, canProvideInitialValue = false;
 
     ReduceMean()
     { reset(); }
@@ -143,7 +144,7 @@ public:
     typedef P_sourcetype T_resulttype;
     typedef T_resulttype T_numtype;
 
-    enum { needIndex = 0, canProvideInitialValue = 1 };
+    static const bool needIndex = false, canProvideInitialValue = false;
 
     ReduceMin()
     { reset(); }
@@ -191,7 +192,7 @@ public:
     typedef P_sourcetype T_resulttype;
     typedef T_resulttype T_numtype;
 
-    enum { needIndex = 0, canProvideInitialValue = 1 };
+    static const bool needIndex = false, canProvideInitialValue = true;
 
     ReduceMax()
     { reset(); }
@@ -239,7 +240,7 @@ public:
     typedef int          T_resulttype;
     typedef T_resulttype T_numtype;
 
-    enum { needIndex = 1, canProvideInitialValue = 0 };
+    static const bool needIndex = true, canProvideInitialValue = false;
 
     ReduceMinIndex()
     { reset(); }
@@ -296,7 +297,7 @@ public:
     typedef TinyVector<int,N> T_resulttype;
     typedef T_resulttype T_numtype;
 
-    enum { canProvideInitialValue = 0 };
+    static const bool canProvideInitialValue = false;
 
     ReduceMinIndexVector()
     { reset(); }
@@ -359,7 +360,7 @@ public:
     typedef int          T_resulttype;
     typedef T_resulttype T_numtype;
 
-    enum { needIndex = 1, canProvideInitialValue = 0 };
+    static const bool needIndex = true, canProvideInitialValue = false;
 
     ReduceMaxIndex()
     { reset(); }
@@ -416,7 +417,7 @@ public:
     typedef TinyVector<int,N_rank> T_resulttype;
     typedef T_resulttype T_numtype;
 
-    enum { canProvideInitialValue = 0 };
+    static const bool canProvideInitialValue = false;
 
     ReduceMaxIndexVector()
     { reset(); }
@@ -473,7 +474,7 @@ public:
     typedef int          T_resulttype;
     typedef T_resulttype T_numtype;
 
-    enum { needIndex = 1, canProvideInitialValue = 0 };
+    static const bool needIndex = true, canProvideInitialValue = false;
 
     ReduceFirst()
     { reset(); }
@@ -529,7 +530,7 @@ public:
     typedef int          T_resulttype;
     typedef T_resulttype T_numtype;
 
-    enum { needIndex = 1, canProvideInitialValue = 0 };
+    static const bool needIndex = true, canProvideInitialValue = false;
 
     ReduceLast()
     { reset(); }
@@ -585,7 +586,7 @@ public:
     typedef P_resulttype T_resulttype;
     typedef T_resulttype T_numtype;
 
-    enum { needIndex = 0, canProvideInitialValue = 1 };
+    static const bool needIndex = false, canProvideInitialValue = true;
 
     ReduceProduct()
     { product_ = one(T_resulttype()); }
@@ -629,7 +630,7 @@ public:
     typedef int          T_resulttype;
     typedef T_resulttype T_numtype;
 
-    enum { needIndex = 0, canProvideInitialValue = 1 };
+    static const bool needIndex = false, canProvideInitialValue = true;
 
     ReduceCount()
     { reset(); }
@@ -677,7 +678,7 @@ public:
     typedef bool     T_resulttype;
     typedef T_resulttype T_numtype;
 
-    enum { needIndex = 0, canProvideInitialValue = 0 };
+    static const bool needIndex = false, canProvideInitialValue = false;
 
     ReduceAny()
     { reset(); }
@@ -736,7 +737,7 @@ public:
     typedef bool     T_resulttype;
     typedef T_resulttype T_numtype;
 
-    enum { needIndex = 0, canProvideInitialValue = 0 };
+    static const bool needIndex = false, canProvideInitialValue = false;
 
     ReduceAll()
     { reset(); }
