@@ -35,8 +35,10 @@ public:
     typedef const T_array& T_ctorArg1;
     typedef int T_ctorArg2;
 
-    enum { numArrayOperands = 1, numIndexPlaceholders = 0,
-        rank = N_rank };
+    static const int 
+        numArrayOperands = 1, 
+        numIndexPlaceholders = 0,
+        rank = N_rank;
 
     StencilExpr(const T_array& array)
         : iter_(array)

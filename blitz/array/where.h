@@ -44,15 +44,15 @@ public:
     typedef T_expr2 T_ctorArg2;
     typedef T_expr3 T_ctorArg3;
 
-    enum { numArrayOperands = BZ_ENUM_CAST(P_expr1::numArrayOperands)
-                            + BZ_ENUM_CAST(P_expr2::numArrayOperands)
-                            + BZ_ENUM_CAST(P_expr3::numArrayOperands),
-           numIndexPlaceholders = BZ_ENUM_CAST(P_expr1::numIndexPlaceholders)
-                            + BZ_ENUM_CAST(P_expr2::numIndexPlaceholders)
-                            + BZ_ENUM_CAST(P_expr3::numIndexPlaceholders),
-           rank = _bz_meta_max<_bz_meta_max<P_expr1::rank,P_expr2::rank>::max,
-                            P_expr3::rank>::max
-    };
+    static const int 
+        numArrayOperands = P_expr1::numArrayOperands
+                         + P_expr2::numArrayOperands
+                         + P_expr3::numArrayOperands,
+        numIndexPlaceholders = P_expr1::numIndexPlaceholders
+                             + P_expr2::numIndexPlaceholders
+                             + P_expr3::numIndexPlaceholders,
+        rank = _bz_meta_max<_bz_meta_max<P_expr1::rank,P_expr2::rank>::max,
+                            P_expr3::rank>::max;
 
     _bz_ArrayWhere(const _bz_ArrayWhere<T_expr1,T_expr2,T_expr3>& a)
       : iter1_(a.iter1_), iter2_(a.iter2_), iter3_(a.iter3_)

@@ -59,10 +59,10 @@
         minb = MINS; \
         maxb = MAXS; \
     } \
-    enum { hasExtent = 1 }; \
+    static const bool hasExtent = true; \
 };
 
-#define BZ_END_STENCIL } enum { hasExtent = 0 }; };
+#define BZ_END_STENCIL } static const bool hasExtent = false; };
 #define BZ_STENCIL_END BZ_END_STENCIL
 
 #define BZ_DECLARE_STENCIL3(name,A,B,C)         \
