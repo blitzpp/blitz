@@ -91,13 +91,13 @@ BZ_DECLARE_AUTOPROMOTE(unsigned char, int)
 BZ_DECLARE_AUTOPROMOTE(short int, int)
 BZ_DECLARE_AUTOPROMOTE(short unsigned int, unsigned int)
 
-template<typename T1, typename T2, int promoteToT1>
+template<typename T1, typename T2, bool promoteToT1>
 struct _bz_promote2 {
     typedef T1 T_promote;
 };
 
 template<typename T1, typename T2>
-struct _bz_promote2<T1,T2,0> {
+struct _bz_promote2<T1,T2,false> {
     typedef T2 T_promote;
 };
 
@@ -115,13 +115,18 @@ struct promote_trait {
 
     // True if we know ranks for both T1 and T2
         knowBothRanks =
-            precision_trait<T1>::knowPrecisionRank && precision_trait<T2>::knowPrecisionRank,
+            precision_trait<T1>::knowPrecisionRank && 
+            precision_trait<T2>::knowPrecisionRank,
 
     // True if we know T1 but not T2
-        knowT1butNotT2 =  precision_trait<T1>::knowPrecisionRank && !precision_trait<T2>::knowPrecisionRank,
+        knowT1butNotT2 =  
+            precision_trait<T1>::knowPrecisionRank && 
+            !precision_trait<T2>::knowPrecisionRank,
 
     // True if we know T2 but not T1
-        knowT2butNotT1 =  precision_trait<T2>::knowPrecisionRank && !precision_trait<T1>::knowPrecisionRank,
+        knowT2butNotT1 =  
+            precision_trait<T2>::knowPrecisionRank && 
+            !precision_trait<T1>::knowPrecisionRank,
 
     // True if T1 is bigger than T2
         T1IsLarger = sizeof(T1) >= sizeof(T2),
@@ -130,14 +135,12 @@ struct promote_trait {
     // We know T2 but not T1: false
     // Otherwise, if T1 is bigger than T2: true
         defaultPromotion = knowT1butNotT2 ? false : 
-          (knowT2butNotT1 ? true : T1IsLarger);
+            (knowT2butNotT1 ? true : T1IsLarger),
 
     // If we have both ranks, then use them.
     // If we have only one rank, then use the unknown type.
     // If we have neither rank, then promote to the larger type.
-
-    static const int
-        promoteToT1 = (knowBothRanks ? T1IsBetter : defaultPromotion) ? true : false;
+        promoteToT1 = knowBothRanks ? T1IsBetter : defaultPromotion;
 
     typedef _bz_typename _bz_promote2<T1,T2,promoteToT1>::T_promote T_promote;
 };
