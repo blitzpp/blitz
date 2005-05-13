@@ -54,7 +54,8 @@ int main()
 
     check(char(), float(), float());
 
-#ifndef BZ_DISABLE_NEW_PROMOTE  // Old type-promotion doesn't handle bool
+#ifndef BZ_DISABLE_NEW_PROMOTE  
+// Old type-promotion doesn't handle bool
     check(bool(), bool(), int());
     check(bool(), shortint(), int());
 #endif
@@ -69,16 +70,23 @@ int main()
 
 #ifdef BZ_HAVE_COMPLEX
     check(complex<float>(),int(),complex<float>());
+#ifndef BZ_DISABLE_NEW_PROMOTE  
+// Old type-promotion doesn't handle bool
     check(bool(),complex<long double>(),complex<long double>());
+// Old type-promotion doesn't handle user-defined types
     check(complex<float>(), foo(), foo());
+#endif
     check(float(), complex<float>(), complex<float>());
 #endif
 
+#ifndef BZ_DISABLE_NEW_PROMOTE  
+// Old type-promotion doesn't handle user-defined types
     check(int(), foo(), foo());
     check(bigfoo(), foo(), bigfoo());
     check(foo(), bigfoo(), bigfoo());
     check(int(), tinyfoo(), tinyfoo());
     check(tinyfoo(), int(), tinyfoo());
+#endif
 
     return 0;
 }
