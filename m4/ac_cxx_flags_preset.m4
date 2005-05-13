@@ -45,7 +45,7 @@ if test "$enableval" = yes ; then
 	;;      
 	*icpc*|*icc*) dnl Intel icc http://www.intel.com/
 		CXX_VENDOR="Intel"
-		CXXFLAGS="-ansi" dnl -strict_ansi flag causes trouble
+		CXXFLAGS="-ansi -DBZ_DISABLE_NEW_PROMOTE" dnl -strict_ansi flag causes trouble
 		CXX_OPTIMIZE_FLAGS="-O3 -Zp16 -ip -ansi_alias"
 		CXX_DEBUG_FLAGS="-g -O0 -C -DBZ_DEBUG"
 		CXX_PROFIL_FLAGS="-pg"
