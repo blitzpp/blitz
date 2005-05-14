@@ -1,3 +1,34 @@
+2005-05-13  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* testsuite/promote.cpp: Used cpp directives to skip some code
+	that will not work under the old type promotion system.
+
+	* m4/ac_cxx_flags_preset.m4: Just discovered that the Intel C++
+	compiler is unhappy with the change from unnamed enums to static
+	const bool.  It gives an error on one particular initialization in
+	<blitz/promote.h>.  I have reported this to Intel as a bug in the
+	compiler, since other compilers seem to accept it.  As a temporary
+	solution, I am adding -DBZ_DISABLE_NEW_PROMOTE to the preset flags
+	for icpc.  This will force the usage of the older code in
+	promote-old.h.  This is just to allow the library and testsuite
+	codes to compile under icpc again.  I will undo this change as
+	soon as we determine what's going wrong here.
+
+	* blitz/promote.h: Some additional cleanup after migrating from
+	anonymous enum types to static const types.  Changed promoteToT1
+	from int to bool and simplified expression for promoteToT1.
+2005-05-06  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* blitz/array-impl.h: Converted most unnamed enums into static const 
+	int or bool types where appropriate, in order to resolve compilation 
+	problems under gcc-4.0.0.  This new compiler complains whenever it 
+	sees an unnamed enum being used in an expression where there has been
+	a templated version of the operator in the expression already declared.
+	It tries to instantiate the templated operator with the unnamed enum,
+	which is illegal and results in a compile error.  Very annoying!  In
+	any case, I also removed the usages of BZ_ENUM_CAST that were no longer
+	necessary, since we are now using real types.  This is probably a safer
+	way to write the code anyway...
 2005-04-20  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* m4/ac_fortran_flags_preset.m4: Added the proper flag for Fortran
