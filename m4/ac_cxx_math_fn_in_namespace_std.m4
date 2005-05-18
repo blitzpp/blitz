@@ -1,10 +1,8 @@
-
-
-
 AC_DEFUN([AC_CXX_MATH_FN_IN_NAMESPACE_STD],
 [AC_CACHE_CHECK(whether the compiler has C math functions in namespace std,
 ac_cv_cxx_mathfn_std,
-[AC_LANG_SAVE
+[AC_REQUIRE([AC_CXX_NAMESPACES])
+ AC_LANG_SAVE
  AC_LANG_CPLUSPLUS
  AC_TRY_COMPILE([#include <cmath>
 namespace blitz { double pow(double x, double y){ return std::pow(x,y); } };],[
