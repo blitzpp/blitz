@@ -1547,10 +1547,8 @@ public:
 
     static inline T_numtype apply(T_numtype1 x)
     {
-#ifdef isnan
-        // Some platforms define isnan as a macro, which causes the
-        // BZ_IEEEMATHFN_SCOPE macro to break.
-        return isnan(x);
+#ifdef BZ_ISNAN_IN_NAMESPACE_STD
+        return BZ_STD_SCOPE(isnan)(x);
 #else
         return BZ_IEEEMATHFN_SCOPE(isnan)(x);
 #endif
