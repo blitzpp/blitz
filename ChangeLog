@@ -1,3 +1,31 @@
+2005-05-18  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* blitz/mathfunc.h: Replaced broken test "#ifdef isnan" with a
+	test for the preprocessor symbol defined by the new
+	AC_CXX_ISNAN_IN_NAMESPACE_STD autoconf macro.  If the isnan
+	function is provided in namespace std, we invoke it as std::isnan
+	in order to avoid problems with using the C99 isnan macro from
+	within the blitz namespace.
+	* blitz/funcs.h: Replaced broken test "#ifdef isnan" with a test
+	for the preprocessor symbol defined by the new
+	AC_CXX_ISNAN_IN_NAMESPACE_STD autoconf macro.  If the isnan
+	function is provided in namespace std, we invoke it as std::isnan
+	in order to avoid problems with using the C99 isnan macro from
+	within the blitz namespace.
+	* blitz/blitz.h: Only include <math.h> header explicitly if the
+	test for standard math functions in the std namespace failed.
+	Otherwise, it will normally be included implicitly by the <cmath>
+	header.
+	* m4/ac_cxx_math_fn_in_namespace_std.m4: Added an AC_REQUIRE of
+	AC_CXX_NAMESPACES here, since C++ namespaces are a prerequisite
+	for this test.
+
+	* m4/ac_cxx_standard_library.m4: Added invocation of new macro
+	AC_CXX_ISNAN_IN_NAMESPACE_STD that checks if the isnan function is
+	provided in the std namespace when you include the <cmath> header.
+	If it is, we will use std::isnan when calling this function from
+	within the blitz namespace to avoid problems with the C99 isnan
+	macro.
 2005-05-13  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* testsuite/promote.cpp: Used cpp directives to skip some code
