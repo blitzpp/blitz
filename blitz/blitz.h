@@ -61,9 +61,9 @@
 
 #ifdef BZ_MATH_FN_IN_NAMESPACE_STD 
   #include <cmath>
+#else
+  #include <math.h>
 #endif
-
-#include <math.h>
 
 #ifdef BZ_HAVE_COMPLEX
   #include <complex>
