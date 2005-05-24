@@ -109,7 +109,7 @@ public:
 
     ConstArrayIterator<T,N>& operator++();
 
-    const ConstArrayIterator<T,N>& operator++(int)
+    ConstArrayIterator<T,N> operator++(int)
     {
         ConstArrayIterator<T,N> tmp = *this;
         ++(*this); 
@@ -168,7 +168,7 @@ public:
         return *this;
     }
 
-    const ArrayIterator<T,N>& operator++(int)
+    ArrayIterator<T,N> operator++(int)
     {
         ArrayIterator<T,N> tmp = *this;
         ++(*this); 
