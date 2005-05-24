@@ -52,16 +52,40 @@ name(const ETBase<T1>& d1)                                                \
  * which implements the operation.
  */
 
-#define BZ_DECLARE_ARRAY_ET_BINARY(name, applic)                         \
-                                                                         \
-template <typename T1,typename T2>                                       \
-_bz_inline_et                                                            \
-typename BzBinaryExprResult<applic,T1,T2>::T_result                      \
-name(const ETBase<T1>& d1,const ETBase<T2>& d2)                          \
-{                                                                        \
-    typedef typename BzBinaryExprResult<applic,T1,T2>::T_result result;  \
-    return result(asExpr<T1>::getExpr(d1.unwrap()),                      \
-                  asExpr<T2>::getExpr(d2.unwrap()));                     \
+#define BZ_DECLARE_ARRAY_ET_BINARY(name, applic)                          \
+                                                                          \
+template <typename T1,typename T2>                                        \
+_bz_inline_et                                                             \
+typename BzBinaryExprResult<applic,T1,T2>::T_result                       \
+name(const ETBase<T1>& d1,const ETBase<T2>& d2)                           \
+{                                                                         \
+    typedef typename BzBinaryExprResult<applic,T1,T2>::T_result result;   \
+    return result(asExpr<T1>::getExpr(d1.unwrap()),                       \
+                  asExpr<T2>::getExpr(d2.unwrap()));                      \
+}
+
+#define BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(name, applic)                  \
+                                                                          \
+template <typename T1, typename T2, int N>                                \
+_bz_inline_et                                                             \
+typename BzBinaryExprResult<applic,TinyVector<T2,N>,T1>::T_result         \
+name(const TinyVector<T2,N> d1, const ETBase<T1>& d2)                     \
+{                                                                         \
+    typedef typename                                                      \
+        BzBinaryExprResult<applic,TinyVector<T2,N>,T1>::T_result result;  \
+    return result(asExpr<TinyVector<T2,N> >::getExpr(d1),                 \
+                  asExpr<T1>::getExpr(d2.unwrap()));                      \
+}                                                                         \
+                                                                          \
+template <typename T1, typename T2, int N>                                \
+_bz_inline_et                                                             \
+typename BzBinaryExprResult<applic,T1,TinyVector<T2,N> >::T_result        \
+name(const ETBase<T1>& d1, const TinyVector<T2,N> d2)                     \
+{                                                                         \
+    typedef typename                                                      \
+        BzBinaryExprResult<applic,T1,TinyVector<T2,N> >::T_result result; \
+    return result(asExpr<T1>::getExpr(d1.unwrap()),                       \
+                  asExpr<TinyVector<T2,N> >::getExpr(d2));                \
 }
 
 #define BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(name, applic, sca)              \
@@ -152,6 +176,44 @@ name(const ETBase<T1>& d1, const ETBase<T2>& d2)                          \
                _bz_typename asExpr<T2>::T_expr::T_numtype> > >            \
         (asExpr<T1>::getExpr(d1.unwrap()),                                \
          asExpr<T2>::getExpr(d2.unwrap()));                               \
+}
+
+#define BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(name, applic)                  \
+                                                                          \
+template <typename T1, typename T2, int N>                                \
+_bz_inline_et                                                             \
+_bz_ArrayExprBinaryOp<                                                    \
+    _bz_typename asExpr<TinyVector<T2,N> >::T_expr,                       \
+    _bz_typename asExpr<T1>::T_expr,                                      \
+    applic<TinyVector<T2,N>,                                              \
+    _bz_typename asExpr<T1>::T_expr::T_numtype> >                         \
+name(const TinyVector<T2,N> d1, const ETBase<T1>& d2)                     \
+{                                                                         \
+    return _bz_ArrayExprBinaryOp<                                         \
+        _bz_typename asExpr<TinyVector<T2,N> >::T_expr,                   \
+        _bz_typename asExpr<T1>::T_expr,                                  \
+        applic<TinyVector<T2,N>,                                          \
+        _bz_typename asExpr<T1>::T_expr::T_numtype> >                     \
+        (asExpr<TinyVector<T2,N> >::getExpr(d1),                          \
+         asExpr<T1>::getExpr(d2.unwrap()));                               \
+}                                                                         \
+                                                                          \
+template <typename T1, typename T2, int N>                                \
+_bz_inline_et                                                             \
+_bz_ArrayExprBinaryOp<                                                    \
+    _bz_typename asExpr<T1>::T_expr,                                      \
+    _bz_typename asExpr<TinyVector<T2,N> >::T_expr,                       \
+    applic<_bz_typename asExpr<T1>::T_expr::T_numtype,                    \
+    TinyVector<T2,N> > >                                                  \
+name(const ETBase<T1>& d1, const TinyVector<T2,N> d2)                     \
+{                                                                         \
+    return _bz_ArrayExprBinaryOp<                                         \
+        _bz_typename asExpr<T1>::T_expr,                                  \
+        _bz_typename asExpr<TinyVector<T2,N> >::T_expr,                   \
+        applic<_bz_typename asExpr<T1>::T_expr::T_numtype,                \
+        TinyVector<T2,N> > >                                              \
+        (asExpr<T1>::getExpr(d1.unwrap()),                                \
+         asExpr<TinyVector<T2,N> >::getExpr(d2));                         \
 }
 
 #define BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(name, applic, sca)              \
