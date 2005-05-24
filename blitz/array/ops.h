@@ -65,6 +65,27 @@ BZ_DECLARE_ARRAY_ET_BINARY(min, _bz_Min)
 BZ_DECLARE_ARRAY_ET_BINARY(max, _bz_Max)
 
 
+// Declare binary ops between Array and "scalar-like" TinyVector 
+BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator+,  Add)
+BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator-,  Subtract)
+BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator*,  Multiply)
+BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator/,  Divide)
+BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator%,  Modulo)
+BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator^,  BitwiseXor)
+BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator&,  BitwiseAnd)
+BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator|,  BitwiseOr)
+BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator>,  Greater)
+BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator<,  Less)
+BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator>=, GreaterOrEqual)
+BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator<=, LessOrEqual)
+BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator==, Equal)
+BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator!=, NotEqual)
+BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator&&, LogicalAnd)
+BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator||, LogicalOr)
+BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(min, _bz_Min)
+BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(max, _bz_Max)
+
+
 #define BZ_DECLARE_ARRAY_ET_SCALAR_OPS(sca)                            \
                                                                        \
 BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator+,  Add, sca)                \
