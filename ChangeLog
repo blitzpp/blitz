@@ -1,3 +1,25 @@
+2005-05-24  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* blitz/array/ops.h: Use new BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC
+	macro to declare the standard binary math operations between an
+	Array-like object and a TinyVector.  The TinyVector is treated
+	like a scalar in these operations, interacting with each element
+	of the Array separately.
+	* blitz/array/newet-macros.h: Added macro
+	BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC to generate code for binary
+	math operations between any Array-like type and a TinyVector.  The
+	TinyVector is treated as a scalar-like type and the operation is
+	performed between the TinyVector and each element of the
+	Array-like object.  The definitions for binary operations between
+	the TinyVector and the Array element type should be provided
+	elsewhere in <blitz/vector-et.h>.
+
+	* blitz/array/iter.h: Modified postfix operator++ for
+	ConstArrayIterator and ArrayIterator to return the iterator object
+	by value rather than by const reference, since you are returning a
+	local copy of the iterator before it was incremented.  Some
+	compilers such as the MS VS.NET 2003 C++ compiler would crash if
+	you tried to use the const reference that was returned previously.
 2005-05-18  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* blitz/mathfunc.h: Replaced broken test "#ifdef isnan" with a
