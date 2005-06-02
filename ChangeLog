@@ -1,3 +1,15 @@
+2005-06-02  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* blitz/vecmax.cc: Put parentheses around "max" in definitions of
+	max() function for Vector-like objects, to avoid triggering any
+	max macro that may be defined.  A workaround for sloppiness in
+	boost and Windows header files.
+
+	* blitz/vecmin.cc: Put parentheses around "min" in definitions of
+	min() function for Vector-like objects, to avoid triggering any
+	min macro that may be defined.  A workaround for sloppiness in
+	boost and Windows header files.
+
 2005-05-24  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* blitz/array/ops.h: Use new BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC
