@@ -56,7 +56,7 @@ Extremum<_bz_typename P_expr::T_numtype, int> _bz_vec_max(P_expr vector)
 // max(vector)
 template<typename P_numtype>
 inline
-Extremum<P_numtype, int> max(const Vector<P_numtype>& x)
+Extremum<P_numtype, int> (max)(const Vector<P_numtype>& x)
 {
     return _bz_vec_max(x._bz_asVecExpr());
 }
@@ -64,7 +64,7 @@ Extremum<P_numtype, int> max(const Vector<P_numtype>& x)
 // max(expr)
 template<typename P_expr>
 inline
-Extremum<_bz_typename P_expr::T_numtype,int> max(_bz_VecExpr<P_expr> x)
+Extremum<_bz_typename P_expr::T_numtype,int> (max)(_bz_VecExpr<P_expr> x)
 {
     return _bz_vec_max(x);
 }
@@ -72,7 +72,7 @@ Extremum<_bz_typename P_expr::T_numtype,int> max(_bz_VecExpr<P_expr> x)
 // max(vecpick)
 template<typename P_numtype>
 inline
-Extremum<P_numtype, int> max(const VectorPick<P_numtype>& x)
+Extremum<P_numtype, int> (max)(const VectorPick<P_numtype>& x)
 {
     return _bz_vec_max(x._bz_asVecExpr());
 }
@@ -80,8 +80,7 @@ Extremum<P_numtype, int> max(const VectorPick<P_numtype>& x)
 // max(TinyVector)
 template<typename P_numtype, int N_length>
 inline
-Extremum<P_numtype, int>
-max(const TinyVector<P_numtype, N_length>& x)
+Extremum<P_numtype, int> (max)(const TinyVector<P_numtype, N_length>& x)
 {
     return _bz_vec_max(x._bz_asVecExpr());
 }
@@ -90,7 +89,7 @@ max(const TinyVector<P_numtype, N_length>& x)
 // maxIndex(vector)
 template<typename P_numtype>
 inline
-int  maxIndex(const Vector<P_numtype>& x)
+int maxIndex(const Vector<P_numtype>& x)
 {
     return _bz_vec_max(x).index();
 }
@@ -105,14 +104,14 @@ int maxIndex(_bz_VecExpr<P_expr> x)
 
 // maxIndex(vecpick)
 template<typename P_numtype>
-int  maxIndex(const VectorPick<P_numtype>& x)
+int maxIndex(const VectorPick<P_numtype>& x)
 {
     return _bz_vec_max(x._bz_asVecExpr()).index();
 }
 
 // maxIndex(TinyVector)
 template<typename P_numtype, int N_length>
-int  maxIndex(const TinyVector<P_numtype, N_length>& x)
+int maxIndex(const TinyVector<P_numtype, N_length>& x)
 {
     return _bz_vec_max(x._bz_asVecExpr()).index();
 }
@@ -120,7 +119,7 @@ int  maxIndex(const TinyVector<P_numtype, N_length>& x)
 // maxValue(vector)
 template<typename P_numtype>
 inline
-int  maxValue(const Vector<P_numtype>& x)
+int maxValue(const Vector<P_numtype>& x)
 {
     return _bz_vec_max(x._bz_asVecExpr()).value();
 }
@@ -128,21 +127,21 @@ int  maxValue(const Vector<P_numtype>& x)
 // maxValue(expr)
 template<typename P_expr>
 inline
-int  maxValue(_bz_VecExpr<P_expr> x)
+int maxValue(_bz_VecExpr<P_expr> x)
 {
     return _bz_vec_max(x).value();
 }
 
 // maxValue(vecpick)
 template<typename P_numtype>
-int  maxValue(const VectorPick<P_numtype>& x)
+int maxValue(const VectorPick<P_numtype>& x)
 {
     return _bz_vec_max(x._bz_asVecExpr()).value();
 }
 
 // maxValue(TinyVector)
 template<typename P_numtype, int N_length>
-int  maxValue(const TinyVector<P_numtype, N_length>& x)
+int maxValue(const TinyVector<P_numtype, N_length>& x)
 {
     return _bz_vec_max(x._bz_asVecExpr()).value();
 }
