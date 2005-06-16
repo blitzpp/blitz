@@ -307,6 +307,12 @@ public:
         return block_->references();
     }
 
+    static void swap(MemoryBlockReference<P_type>& a,MemoryBlockReference<P_type>& b) {
+        std::swap(a.data_,b.data_);
+        std::swap(a.block_,b.block_);
+    }
+  
+
 protected:
 
     void changeToNullBlock()

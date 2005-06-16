@@ -96,7 +96,8 @@ class _bz_ArrayExpr;
 template<typename T_array, typename T_index>
 class IndirectArray;
 
-
+template <typename P_numtype,int N_rank>
+void swap(Array<P_numtype,N_rank>&,Array<P_numtype,N_rank>&);
 
 /*
  * Declaration of class Array
@@ -2391,6 +2392,8 @@ protected:
 
     void doTranspose(int destRank, int sourceRank, T_array& array);
 
+    friend void swap<>(Array<P_numtype,N_rank>&,Array<P_numtype,N_rank>&);
+
 protected:
     //////////////////////////////////////////////
     // Data members
@@ -2471,6 +2474,15 @@ ostream& operator<<(ostream&, const Array<T_numtype,N_rank>&);
 template<typename T_numtype, int N_rank>
 istream& operator>>(istream& is, Array<T_numtype,N_rank>& x);
 
+template <typename P_numtype,int N_rank>
+void swap(Array<P_numtype,N_rank>& a,Array<P_numtype,N_rank>& b) {
+    MemoryBlockReference<P_numtype>::swap(a,b);
+    std::swap(a.storage_,b.storage_);
+    std::swap(a.length_,b.length_);
+    std::swap(a.stride_,b.stride_);
+    std::swap(a.zeroOffset_,b.zeroOffset_);
+}
+
 BZ_NAMESPACE_END
 
 /*
@@ -2498,4 +2510,3 @@ BZ_NAMESPACE_END
 #include <blitz/array/stencils.h>   // Stencil objects
 
 #endif // BZ_ARRAY_H
-

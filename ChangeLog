@@ -1,3 +1,9 @@
+2005-06-16  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+
+    * blitz/memblock.h: Added support for swapping memblocks.
+    * blitz/array-impl.h: Added support for swapping arrays using the
+    memblock swapping.
+
 2005-06-02  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* blitz/vecmax.cc: Put parentheses around "max" in definitions of
