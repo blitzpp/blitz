@@ -2392,8 +2392,6 @@ protected:
 
     void doTranspose(int destRank, int sourceRank, T_array& array);
 
-    friend void swap<>(Array<P_numtype,N_rank>&,Array<P_numtype,N_rank>&);
-
 protected:
     //////////////////////////////////////////////
     // Data members
@@ -2476,11 +2474,10 @@ istream& operator>>(istream& is, Array<T_numtype,N_rank>& x);
 
 template <typename P_numtype,int N_rank>
 void swap(Array<P_numtype,N_rank>& a,Array<P_numtype,N_rank>& b) {
-    MemoryBlockReference<P_numtype>::swap(a,b);
-    std::swap(a.storage_,b.storage_);
-    std::swap(a.length_,b.length_);
-    std::swap(a.stride_,b.stride_);
-    std::swap(a.zeroOffset_,b.zeroOffset_);
+    Array<P_numtype,N_rank> c;
+    c.reference(a);
+    a.reference(b);
+    b.reference(c);
 }
 
 BZ_NAMESPACE_END
