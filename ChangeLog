@@ -1,3 +1,9 @@
+2005-07-08  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+    * blitz/memblock.h: Removed previous modification.
+    * blitz/array-impl.h: Improved support for swapping arrays (now
+    avoids using the friend feature and thus works for MS VS.NET C++).
+
 2005-06-16  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
 
     * blitz/memblock.h: Added support for swapping memblocks.
