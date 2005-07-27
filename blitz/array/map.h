@@ -62,6 +62,7 @@ struct _bz_doArrayIndexMapping {
         // rank greater than 11, then you'll get a precondition failure
         // here.
         BZPRECONDITION(0);
+        return T_numtype();
     }
 };
 
