@@ -39,6 +39,7 @@ AC_ARG_ENABLE(fortran,
   AS_HELP_STRING([--enable-fortran],[Enable Fortran compilation]),,[
   enable_fortran="yes"])
 AC_MSG_RESULT([$enable_fortran])
+AM_CONDITIONAL(FORTRAN_ENABLED, [test $enable_fortran = yes])
 
 # Fortran compiler
 if test $enable_fortran = yes; then
