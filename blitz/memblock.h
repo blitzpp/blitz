@@ -90,7 +90,7 @@ protected:
     {
         length_ = length;
         data_ = data;
-        dataBlockAddress_ = 0;
+        dataBlockAddress_ = data;
         references_ = 0;
         BZ_MUTEX_INIT(mutex)
     }
@@ -133,6 +133,11 @@ protected:
     const T_type* restrict data()      const
     { 
         return data_; 
+    }
+
+    T_type*&      dataBlockAddress() 
+    { 
+        return dataBlockAddress_; 
     }
 
     size_t        length()    const
@@ -195,6 +200,9 @@ public:
     UnownedMemoryBlock(size_t length, P_type* restrict data)
         : MemoryBlock<P_type>(length,data)
     {
+        // This ensures that MemoryBlock destructor will not 
+        // attempt to delete data
+        MemoryBlock<P_type>::dataBlockAddress() = 0;
     }
 
     virtual ~UnownedMemoryBlock()
