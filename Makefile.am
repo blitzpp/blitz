@@ -4,8 +4,12 @@
 
 ACLOCAL_AMFLAGS  = -I m4
 
+if FORTRAN_ENABLED
+FORTRAN_DIRS = benchmarks
+endif
+
 SUBDIRS = bin blitz random lib testsuite \
-	examples benchmarks doc
+	examples $(FORTRAN_DIRS) doc
 
 EXTRA_DIST = LEGAL LICENSE README.binutils README-VS.NET.txt Blitz-VS.NET.zip \
 	ChangeLog.1 
