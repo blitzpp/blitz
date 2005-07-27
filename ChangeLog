@@ -1,8 +1,41 @@
-2005-07-08  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+2005-07-27  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
-    * blitz/memblock.h: Removed previous modification.
-    * blitz/array-impl.h: Improved support for swapping arrays (now
-    avoids using the friend feature and thus works for MS VS.NET C++).
+	* blitz/memblock.h: Fixed problem with the deleteDataWhenDone
+	policy.  It was not actually deleting the data as expected.
+	Solution was to set dataBlockAddress_ pointer to the address of
+	the preexisting memory in MemoryBlock constructor.  In subclass
+	UnownedMemoryBlock constructor, we reset this pointer to 0 to
+	indicate that any preexisting memory is not our responsibility.
+	* Makefile.am: Use new FORTRAN_ENABLED conditional to only build
+	in the benchmarks directory if Fortran compilation is enabled.
+	* configure.ac: Added conditional to indicate whether Fortran
+	compilation (needed for the benchmark codes) has been enabled.
+	* blitz/array/map.h: Added return of dummy T_numtype object in
+	generic version of map method to eliminate possible compiler
+	warning about no return statement in non-void function.
+2005-07-07  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* blitz/memblock.h: Removed the swap() method that was added here.
+	The Array method reference() uses the existing
+	MemoryBlockReference method changeBlock() to implement a swap of
+	the memory block in a safer manner with reference counting.
+	* blitz/array-impl.h: Modified Theo's implementation of the swap()
+	function to use the existing reference() method.  This is easier
+	and does not require the swap() function to be a friend of the
+	Array class.  The MS VS.NET C++ compiler was confused by the
+	tricky syntax for templated functions that are friended and using
+	the friend feature of C++ is a bad idea anyway.  There may be a
+	tiny bit more overhead with this implementation because it
+	constructs a null temporary Array, but the temporary allocates no
+	space for data elements, only for Array metadata and the Array
+	ordering description.
+2005-06-16  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* m4/ac_cxx_template_qualified_base_class.m4: Fixed up the
+	compiler test for support of template-qualified base classes to
+	work properly under the new gcc 4.0.0 compiler by adding the full
+	template specialization syntax and explicitly qualifying the call
+	to f in the base class as required by the ANSI standard.
 
 2005-06-16  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
 
