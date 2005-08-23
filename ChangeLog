@@ -1,3 +1,10 @@
+2005-08-23  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* testsuite/complex-test.cpp: Added some tests of math ops with
+	complex<long double> type.
+
+	* blitz/array/ops.h: Added missing support for math operations
+	between complex<long double> Array and scalar types.
 2005-07-27  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* blitz/memblock.h: Fixed problem with the deleteDataWhenDone
