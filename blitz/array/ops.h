@@ -122,6 +122,7 @@ BZ_DECLARE_ARRAY_ET_SCALAR_OPS(long double)
 #ifdef BZ_HAVE_COMPLEX
 BZ_DECLARE_ARRAY_ET_SCALAR_OPS(complex<float>)
 BZ_DECLARE_ARRAY_ET_SCALAR_OPS(complex<double>)
+BZ_DECLARE_ARRAY_ET_SCALAR_OPS(complex<long double>)
 #endif
 
 
