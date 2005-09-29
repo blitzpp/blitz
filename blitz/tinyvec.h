@@ -76,8 +76,8 @@ class _bz_matrixVectorProduct;
 
 template<typename P_numtype, int N_length>
 class TinyVector {
-
 public:
+
     //////////////////////////////////////////////
     // Public Types
     //////////////////////////////////////////////
@@ -90,18 +90,19 @@ public:
     typedef T_constIterator const_iterator;
     enum { numElements = N_length };
 
-    TinyVector()
-    { }
-
-    ~TinyVector() 
-    { }
+    TinyVector()  { }
+    ~TinyVector() { }
 
     inline TinyVector(const TinyVector<T_numtype,N_length>& x);
 
     template <typename T_numtype2>
     inline TinyVector(const TinyVector<T_numtype2,N_length>& x);
 
-    inline TinyVector(T_numtype initValue);
+    inline TinyVector(const T_numtype initValue);
+
+    inline TinyVector(const T_numtype x[]) {
+        memcpy(data_,x,N_length*sizeof(T_numtype));
+    }
 
     TinyVector(T_numtype x0, T_numtype x1)
     {
@@ -224,14 +225,11 @@ public:
     template<typename P_expr>
     inline TinyVector(_bz_VecExpr<P_expr> expr);
 
-    T_iterator begin()
-    { return T_iterator(*this); }
+    T_iterator      begin()       { return T_iterator(*this);      }
+    T_constIterator begin() const { return T_constIterator(*this); }
 
-    T_constIterator begin() const
-    { return T_constIterator(*this); }
-
-    // T_iterator end();
-    // T_constIterator end() const;
+    T_iterator      end()       { return begin()+N_length; }
+    T_constIterator end() const { return begin()+N_length; }
 
     T_numtype * restrict data()
     { return data_; }
@@ -284,7 +282,7 @@ public:
         return true;
     }
 
-    T_numtype operator()(unsigned i) const
+    const T_numtype& operator()(unsigned i) const
     {
         BZPRECONDITION(lengthCheck(i));
         return data_[i];
@@ -296,7 +294,7 @@ public:
         return data_[i];
     }
 
-    T_numtype operator[](unsigned i) const
+    const T_numtype& operator[](unsigned i) const
     {
         BZPRECONDITION(lengthCheck(i));
         return data_[i];
@@ -318,17 +316,17 @@ public:
         return ListInitializationSwitch<T_vector,T_numtype*>(*this, x);
     }
 
-    T_vector& initialize(T_numtype);
-    T_vector& operator+=(T_numtype);
-    T_vector& operator-=(T_numtype);
-    T_vector& operator*=(T_numtype);
-    T_vector& operator/=(T_numtype);
-    T_vector& operator%=(T_numtype);
-    T_vector& operator^=(T_numtype);
-    T_vector& operator&=(T_numtype);
-    T_vector& operator|=(T_numtype);
-    T_vector& operator>>=(int);
-    T_vector& operator<<=(int);
+    T_vector& initialize(const T_numtype);
+    T_vector& operator+=(const T_numtype);
+    T_vector& operator-=(const T_numtype);
+    T_vector& operator*=(const T_numtype);
+    T_vector& operator/=(const T_numtype);
+    T_vector& operator%=(const T_numtype);
+    T_vector& operator^=(const T_numtype);
+    T_vector& operator&=(const T_numtype);
+    T_vector& operator|=(const T_numtype);
+    T_vector& operator>>=(const int);
+    T_vector& operator<<=(const int);
 
     template<typename P_numtype2> 
     T_vector& operator=(const TinyVector<P_numtype2, N_length> &);
@@ -403,17 +401,17 @@ public:
     T_vector& operator<<=(const VectorPick<P_numtype2> &);
 
     // Range operand
-    T_vector& operator=(Range);
-    T_vector& operator+=(Range);
-    T_vector& operator-=(Range);
-    T_vector& operator*=(Range);
-    T_vector& operator/=(Range);
-    T_vector& operator%=(Range);
-    T_vector& operator^=(Range);
-    T_vector& operator&=(Range);
-    T_vector& operator|=(Range);
-    T_vector& operator>>=(Range);
-    T_vector& operator<<=(Range);
+    T_vector& operator=(const Range&);
+    T_vector& operator+=(const Range&);
+    T_vector& operator-=(const Range&);
+    T_vector& operator*=(const Range&);
+    T_vector& operator/=(const Range&);
+    T_vector& operator%=(const Range&);
+    T_vector& operator^=(const Range&);
+    T_vector& operator&=(const Range&);
+    T_vector& operator|=(const Range&);
+    T_vector& operator>>=(const Range&);
+    T_vector& operator<<=(const Range&);
 
     T_numtype* restrict getInitializationIterator()
     { return dataFirst(); }

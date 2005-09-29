@@ -1,3 +1,11 @@
+2005-09-29  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+
+    * blitz/tinyvec.h: Constified many methods. Added a end() method.
+    Returning const references insteadof copies for operator() const
+    and operator[] const.
+
+    * blitz/tinyvec.cc: Constified many methods accordingly.
+    
 2005-08-23  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* testsuite/complex-test.cpp: Added some tests of math ops with
@@ -5,6 +13,7 @@
 
 	* blitz/array/ops.h: Added missing support for math operations
 	between complex<long double> Array and scalar types.
+
 2005-07-27  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* blitz/memblock.h: Fixed problem with the deleteDataWhenDone
@@ -20,6 +29,7 @@
 	* blitz/array/map.h: Added return of dummy T_numtype object in
 	generic version of map method to eliminate possible compiler
 	warning about no return statement in non-void function.
+
 2005-07-07  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* blitz/memblock.h: Removed the swap() method that was added here.
@@ -36,6 +46,7 @@
 	constructs a null temporary Array, but the temporary allocates no
 	space for data elements, only for Array metadata and the Array
 	ordering description.
+
 2005-06-16  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* m4/ac_cxx_template_qualified_base_class.m4: Fixed up the

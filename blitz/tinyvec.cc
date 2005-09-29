@@ -43,43 +43,36 @@
 BZ_NAMESPACE(blitz)
 
 template<typename P_numtype, int N_length>
-inline TinyVector<P_numtype, N_length>::TinyVector(T_numtype initValue)
-{
+inline TinyVector<P_numtype, N_length>::TinyVector(const T_numtype initValue) {
     for (int i=0; i < N_length; ++i)
         data_[i] = initValue;
 }
 
 template<typename P_numtype, int N_length>
-inline TinyVector<P_numtype, N_length>::TinyVector(const 
-    TinyVector<T_numtype, N_length>& x)
-{
+inline TinyVector<P_numtype, N_length>::TinyVector(const TinyVector<T_numtype, N_length>& x) {
     for (int i=0; i < N_length; ++i)
         data_[i] = x.data_[i];
 }
 
-template<typename P_numtype, int N_length> template<typename P_numtype2>
-inline TinyVector<P_numtype, N_length>::TinyVector(const 
-    TinyVector<P_numtype2, N_length>& x)
-{
+template<typename P_numtype, int N_length>
+template<typename P_numtype2>
+inline TinyVector<P_numtype, N_length>::TinyVector(const TinyVector<P_numtype2, N_length>& x) {
     for (int i=0; i < N_length; ++i)
         data_[i] = static_cast<P_numtype>(x[i]);
 }
 
-template<typename P_numtype, int N_length> template<typename P_expr, typename P_updater>
-inline
-void TinyVector<P_numtype, N_length>::_bz_assign(P_expr expr, P_updater up)
-{
+template<typename P_numtype, int N_length>
+template<typename P_expr, typename P_updater>
+inline void TinyVector<P_numtype, N_length>::_bz_assign(P_expr expr, P_updater up) {
     BZPRECHECK(expr.length(N_length) == N_length,
         "An expression with length " << expr.length(N_length)
         << " was assigned to a TinyVector<"
         << BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_numtype)
         << "," << N_length << ">");
 
-    if (expr._bz_hasFastAccess())
-    {
+    if (expr._bz_hasFastAccess()) {
         _bz_meta_vecAssign<N_length, 0>::fastAssign(*this, expr, up);
-    }
-    else {
+    } else {
         _bz_meta_vecAssign<N_length, 0>::assign(*this, expr, up);
     }
 }
@@ -199,7 +192,7 @@ TinyVector<P_numtype, N_length>::operator>>=(_bz_VecExpr<P_expr> expr)
 
 template<typename P_numtype, int N_length> 
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::initialize(T_numtype x)
+TinyVector<P_numtype, N_length>::initialize(const T_numtype x)
 {
 #ifndef BZ_KCC_COPY_PROPAGATION_KLUDGE
     typedef _bz_VecExprConstant<T_numtype> T_expr;
@@ -215,7 +208,7 @@ TinyVector<P_numtype, N_length>::initialize(T_numtype x)
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator+=(T_numtype x)
+TinyVector<P_numtype, N_length>::operator+=(const T_numtype x)
 {
     typedef _bz_VecExprConstant<T_numtype> T_expr;
     (*this) += _bz_VecExpr<T_expr>(T_expr(x));
@@ -224,7 +217,7 @@ TinyVector<P_numtype, N_length>::operator+=(T_numtype x)
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator-=(T_numtype x)
+TinyVector<P_numtype, N_length>::operator-=(const T_numtype x)
 {
     typedef _bz_VecExprConstant<T_numtype> T_expr;
     (*this) -= _bz_VecExpr<T_expr>(T_expr(x));
@@ -233,7 +226,7 @@ TinyVector<P_numtype, N_length>::operator-=(T_numtype x)
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator*=(T_numtype x)
+TinyVector<P_numtype, N_length>::operator*=(const T_numtype x)
 {
     typedef _bz_VecExprConstant<T_numtype> T_expr;
     (*this) *= _bz_VecExpr<T_expr>(T_expr(x));
@@ -242,7 +235,7 @@ TinyVector<P_numtype, N_length>::operator*=(T_numtype x)
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator/=(T_numtype x)
+TinyVector<P_numtype, N_length>::operator/=(const T_numtype x)
 {
     typedef _bz_VecExprConstant<T_numtype> T_expr;
     (*this) /= _bz_VecExpr<T_expr>(T_expr(x));
@@ -251,7 +244,7 @@ TinyVector<P_numtype, N_length>::operator/=(T_numtype x)
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator%=(T_numtype x)
+TinyVector<P_numtype, N_length>::operator%=(const T_numtype x)
 {
     typedef _bz_VecExprConstant<T_numtype> T_expr;
     (*this) %= _bz_VecExpr<T_expr>(T_expr(x));
@@ -260,7 +253,7 @@ TinyVector<P_numtype, N_length>::operator%=(T_numtype x)
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator^=(T_numtype x)
+TinyVector<P_numtype, N_length>::operator^=(const T_numtype x)
 {
     typedef _bz_VecExprConstant<T_numtype> T_expr;
     (*this) ^= _bz_VecExpr<T_expr>(T_expr(x));
@@ -269,7 +262,7 @@ TinyVector<P_numtype, N_length>::operator^=(T_numtype x)
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator&=(T_numtype x)
+TinyVector<P_numtype, N_length>::operator&=(const T_numtype x)
 {
     typedef _bz_VecExprConstant<T_numtype> T_expr;
     (*this) &= _bz_VecExpr<T_expr>(T_expr(x));
@@ -278,7 +271,7 @@ TinyVector<P_numtype, N_length>::operator&=(T_numtype x)
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator|=(T_numtype x)
+TinyVector<P_numtype, N_length>::operator|=(const T_numtype x)
 {
     typedef _bz_VecExprConstant<T_numtype> T_expr;
     (*this) |= _bz_VecExpr<T_expr>(T_expr(x));
@@ -287,7 +280,7 @@ TinyVector<P_numtype, N_length>::operator|=(T_numtype x)
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator<<=(int x)
+TinyVector<P_numtype, N_length>::operator<<=(const int x)
 {
     typedef _bz_VecExprConstant<int> T_expr;
     (*this) <<= _bz_VecExpr<T_expr>(T_expr(x));
@@ -296,7 +289,7 @@ TinyVector<P_numtype, N_length>::operator<<=(int x)
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator>>=(int x)
+TinyVector<P_numtype, N_length>::operator>>=(const int x)
 {
     typedef _bz_VecExprConstant<int> T_expr;
     (*this) >>= _bz_VecExpr<T_expr>(T_expr(x));
@@ -309,9 +302,7 @@ TinyVector<P_numtype, N_length>::operator>>=(int x)
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator=(const 
-    TinyVector<P_numtype2, N_length>& x)
-{
+TinyVector<P_numtype, N_length>::operator=(const TinyVector<P_numtype2, N_length>& x) {
     (*this) = _bz_VecExpr<_bz_typename 
         TinyVector<P_numtype2, N_length>::T_constIterator>(x.begin());
     return *this;
@@ -319,9 +310,7 @@ TinyVector<P_numtype, N_length>::operator=(const
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator+=(const
-    TinyVector<P_numtype2, N_length>& x)
-{
+TinyVector<P_numtype, N_length>::operator+=(const TinyVector<P_numtype2, N_length>& x) {
     (*this) += _bz_VecExpr<_bz_typename
         TinyVector<P_numtype2, N_length>::T_constIterator>(x.begin());
     return *this;
@@ -329,9 +318,7 @@ TinyVector<P_numtype, N_length>::operator+=(const
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator-=(const
-    TinyVector<P_numtype2, N_length>& x)
-{
+TinyVector<P_numtype, N_length>::operator-=(const TinyVector<P_numtype2, N_length>& x) {
     (*this) -= _bz_VecExpr<_bz_typename
         TinyVector<P_numtype2, N_length>::T_constIterator>(x.begin());
     return *this;
@@ -339,9 +326,7 @@ TinyVector<P_numtype, N_length>::operator-=(const
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator*=(const
-    TinyVector<P_numtype2, N_length>& x)
-{
+TinyVector<P_numtype, N_length>::operator*=(const TinyVector<P_numtype2, N_length>& x) {
     (*this) *= _bz_VecExpr<_bz_typename
         TinyVector<P_numtype2, N_length>::T_constIterator>(x.begin());
     return *this;
@@ -349,9 +334,7 @@ TinyVector<P_numtype, N_length>::operator*=(const
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator/=(const
-    TinyVector<P_numtype2, N_length>& x)
-{
+TinyVector<P_numtype, N_length>::operator/=(const TinyVector<P_numtype2, N_length>& x) {
     (*this) /= _bz_VecExpr<_bz_typename
         TinyVector<P_numtype2, N_length>::T_constIterator>(x.begin());
     return *this;
@@ -359,9 +342,7 @@ TinyVector<P_numtype, N_length>::operator/=(const
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator%=(const
-    TinyVector<P_numtype2, N_length>& x)
-{
+TinyVector<P_numtype, N_length>::operator%=(const TinyVector<P_numtype2, N_length>& x) {
     (*this) %= _bz_VecExpr<_bz_typename
         TinyVector<P_numtype2, N_length>::T_constIterator>(x.begin());
     return *this;
@@ -369,9 +350,7 @@ TinyVector<P_numtype, N_length>::operator%=(const
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator^=(const
-    TinyVector<P_numtype2, N_length>& x)
-{
+TinyVector<P_numtype, N_length>::operator^=(const TinyVector<P_numtype2, N_length>& x) {
     (*this) ^= _bz_VecExpr<_bz_typename
         TinyVector<P_numtype2, N_length>::T_constIterator>(x.begin());
     return *this;
@@ -379,9 +358,7 @@ TinyVector<P_numtype, N_length>::operator^=(const
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator&=(const
-    TinyVector<P_numtype2, N_length>& x)
-{
+TinyVector<P_numtype, N_length>::operator&=(const TinyVector<P_numtype2, N_length>& x) {
     (*this) &= _bz_VecExpr<_bz_typename
         TinyVector<P_numtype2, N_length>::T_constIterator>(x.begin());
     return *this;
@@ -389,9 +366,7 @@ TinyVector<P_numtype, N_length>::operator&=(const
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator|=(const
-    TinyVector<P_numtype2, N_length>& x)
-{
+TinyVector<P_numtype, N_length>::operator|=(const TinyVector<P_numtype2, N_length>& x) {
     (*this) |= _bz_VecExpr<_bz_typename
         TinyVector<P_numtype2, N_length>::T_constIterator>(x.begin());
     return *this;
@@ -399,9 +374,7 @@ TinyVector<P_numtype, N_length>::operator|=(const
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator<<=(const
-    TinyVector<P_numtype2, N_length>& x)
-{
+TinyVector<P_numtype, N_length>::operator<<=(const TinyVector<P_numtype2, N_length>& x) {
     (*this) <<= _bz_VecExpr<_bz_typename
         TinyVector<P_numtype2, N_length>::T_constIterator>(x.begin());
     return *this;
@@ -409,9 +382,7 @@ TinyVector<P_numtype, N_length>::operator<<=(const
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator>>=(const
-    TinyVector<P_numtype2, N_length>& x)
-{
+TinyVector<P_numtype, N_length>::operator>>=(const TinyVector<P_numtype2, N_length>& x) {
     (*this) >>= _bz_VecExpr<_bz_typename
         TinyVector<P_numtype2, N_length>::T_constIterator>(x.begin());
     return *this;
@@ -423,88 +394,77 @@ TinyVector<P_numtype, N_length>::operator>>=(const
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator=(const Vector<P_numtype2>& x)
-{
+TinyVector<P_numtype, N_length>::operator=(const Vector<P_numtype2>& x) {
     (*this) = x._bz_asVecExpr();
     return *this;
 }
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator+=(const Vector<P_numtype2>& x)
-{
+TinyVector<P_numtype, N_length>::operator+=(const Vector<P_numtype2>& x) {
     (*this) += x._bz_asVecExpr();
     return *this;
 }
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator-=(const Vector<P_numtype2>& x)
-{
+TinyVector<P_numtype, N_length>::operator-=(const Vector<P_numtype2>& x) {
     (*this) -= x._bz_asVecExpr();
     return *this;
 }
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator*=(const Vector<P_numtype2>& x)
-{
+TinyVector<P_numtype, N_length>::operator*=(const Vector<P_numtype2>& x) {
     (*this) *= x._bz_asVecExpr();
     return *this;
 }
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator/=(const Vector<P_numtype2>& x)
-{
+TinyVector<P_numtype, N_length>::operator/=(const Vector<P_numtype2>& x) {
     (*this) /= x._bz_asVecExpr();
     return *this;
 }
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator%=(const Vector<P_numtype2>& x)
-{
+TinyVector<P_numtype, N_length>::operator%=(const Vector<P_numtype2>& x) {
     (*this) %= x._bz_asVecExpr();
     return *this;
 }
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator^=(const Vector<P_numtype2>& x)
-{
+TinyVector<P_numtype, N_length>::operator^=(const Vector<P_numtype2>& x) {
     (*this) ^= x._bz_asVecExpr();
     return *this;
 }
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator&=(const Vector<P_numtype2>& x)
-{
+TinyVector<P_numtype, N_length>::operator&=(const Vector<P_numtype2>& x) {
     (*this) &= x._bz_asVecExpr();
     return *this;
 }
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator|=(const Vector<P_numtype2>& x)
-{
+TinyVector<P_numtype, N_length>::operator|=(const Vector<P_numtype2>& x) {
     (*this) |= x._bz_asVecExpr();
     return *this;
 }
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator<<=(const Vector<P_numtype2>& x)
-{
+TinyVector<P_numtype, N_length>::operator<<=(const Vector<P_numtype2>& x) {
     (*this) <<= x._bz_asVecExpr();
     return *this;
 }
 
 template<typename P_numtype, int N_length> template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator>>=(const Vector<P_numtype2>& x)
-{
+TinyVector<P_numtype, N_length>::operator>>=(const Vector<P_numtype2>& x) {
     (*this) >>= x._bz_asVecExpr();
     return *this;
 }
@@ -515,88 +475,77 @@ TinyVector<P_numtype, N_length>::operator>>=(const Vector<P_numtype2>& x)
 
 template<typename P_numtype, int N_length> 
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator=(Range r)
-{
+TinyVector<P_numtype, N_length>::operator=(const Range& r) {
     (*this) = r._bz_asVecExpr();
     return *this;
 }
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator+=(Range r)
-{
+TinyVector<P_numtype, N_length>::operator+=(const Range& r) {
     (*this) += r._bz_asVecExpr();
     return *this;
 }
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator-=(Range r)
-{
+TinyVector<P_numtype, N_length>::operator-=(const Range& r) {
     (*this) -= r._bz_asVecExpr();
     return *this;
 }
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator*=(Range r)
-{
+TinyVector<P_numtype, N_length>::operator*=(const Range& r) {
     (*this) *= r._bz_asVecExpr();
     return *this;
 }
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator/=(Range r)
-{
+TinyVector<P_numtype, N_length>::operator/=(const Range& r) {
     (*this) /= r._bz_asVecExpr();
     return *this;
 }
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator%=(Range r)
-{
+TinyVector<P_numtype, N_length>::operator%=(const Range& r) {
     (*this) %= r._bz_asVecExpr();
     return *this;
 }
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator^=(Range r)
-{
+TinyVector<P_numtype, N_length>::operator^=(const Range& r) {
     (*this) ^= r._bz_asVecExpr();
     return *this;
 }
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator&=(Range r)
-{
+TinyVector<P_numtype, N_length>::operator&=(const Range& r) {
     (*this) &= r._bz_asVecExpr();
     return *this;
 }
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator|=(Range r)
-{
+TinyVector<P_numtype, N_length>::operator|=(const Range& r) {
     (*this) |= r._bz_asVecExpr();
     return *this;
 }
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator<<=(Range r)
-{
+TinyVector<P_numtype, N_length>::operator<<=(const Range& r) {
     (*this) <<= r._bz_asVecExpr();
     return *this;
 }
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>&
-TinyVector<P_numtype, N_length>::operator>>=(Range r)
-{
+TinyVector<P_numtype, N_length>::operator>>=(const Range& r) {
     (*this) >>= r._bz_asVecExpr();
     return *this;
 }
