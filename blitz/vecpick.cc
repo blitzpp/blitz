@@ -10,25 +10,11 @@
 #ifndef BZ_VECPICK_CC
 #define BZ_VECPICK_CC
 
-#ifndef BZ_VECPICK_H
- #include <blitz/vecpick.h>
-#endif
+#include <blitz/vecpick.h>
+#include <blitz/update.h>
+#include <blitz/random.h>
+#include <blitz/vecexpr.h>
 
-#ifndef BZ_UPDATE_H
- #include <blitz/update.h>
-#endif
-
-#ifndef BZ_RANDOM_H
- #include <blitz/random.h>
-#endif
-
-#ifndef BZ_VECEXPR_H
- #include <blitz/vecexpr.h>
-#endif
-
-#ifndef BZ_RANDOM_H
- #include <blitz/random.h>
-#endif
 BZ_NAMESPACE(blitz)
 
 /*****************************************************************************
@@ -307,7 +293,7 @@ template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>& 
 VectorPick<P_numtype>::operator=(const Vector<P_numtype2>& x)
 {
-    (*this) = _bz_VecExpr<VectorIterConst<P_numtype2> >(x.begin());
+    (*this) = _bz_VecExpr<VectorIterConst<P_numtype2> >(x.beginFast());
     return *this;
 }
 
@@ -315,7 +301,7 @@ template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>&
 VectorPick<P_numtype>::operator+=(const Vector<P_numtype2>& x)
 {
-    (*this) += _bz_VecExpr<VectorIterConst<P_numtype2> >(x.begin());
+    (*this) += _bz_VecExpr<VectorIterConst<P_numtype2> >(x.beginFast());
     return *this;
 }
 
@@ -323,7 +309,7 @@ template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>&
 VectorPick<P_numtype>::operator-=(const Vector<P_numtype2>& x)
 {
-    (*this) -= _bz_VecExpr<VectorIterConst<P_numtype2> >(x.begin());
+    (*this) -= _bz_VecExpr<VectorIterConst<P_numtype2> >(x.beginFast());
     return *this;
 }
 
@@ -331,7 +317,7 @@ template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>&
 VectorPick<P_numtype>::operator*=(const Vector<P_numtype2>& x)
 {
-    (*this) *= _bz_VecExpr<VectorIterConst<P_numtype2> >(x.begin());
+    (*this) *= _bz_VecExpr<VectorIterConst<P_numtype2> >(x.beginFast());
     return *this;
 }
 
@@ -339,7 +325,7 @@ template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>&
 VectorPick<P_numtype>::operator/=(const Vector<P_numtype2>& x)
 {
-    (*this) /= _bz_VecExpr<VectorIterConst<P_numtype2> >(x.begin());
+    (*this) /= _bz_VecExpr<VectorIterConst<P_numtype2> >(x.beginFast());
     return *this;
 }
 
@@ -347,7 +333,7 @@ template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>&
 VectorPick<P_numtype>::operator%=(const Vector<P_numtype2>& x)
 {
-    (*this) %= _bz_VecExpr<VectorIterConst<P_numtype2> >(x.begin());
+    (*this) %= _bz_VecExpr<VectorIterConst<P_numtype2> >(x.beginFast());
     return *this;
 }
 
@@ -355,7 +341,7 @@ template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>&
 VectorPick<P_numtype>::operator^=(const Vector<P_numtype2>& x)
 {
-    (*this) ^= _bz_VecExpr<VectorIterConst<P_numtype2> >(x.begin());
+    (*this) ^= _bz_VecExpr<VectorIterConst<P_numtype2> >(x.beginFast());
     return *this;
 }
 
@@ -363,7 +349,7 @@ template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>&
 VectorPick<P_numtype>::operator&=(const Vector<P_numtype2>& x)
 {
-    (*this) &= _bz_VecExpr<VectorIterConst<P_numtype2> >(x.begin());
+    (*this) &= _bz_VecExpr<VectorIterConst<P_numtype2> >(x.beginFast());
     return *this;
 }
 
@@ -371,7 +357,7 @@ template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>&
 VectorPick<P_numtype>::operator|=(const Vector<P_numtype2>& x)
 {
-    (*this) |= _bz_VecExpr<VectorIterConst<P_numtype2> >(x.begin());
+    (*this) |= _bz_VecExpr<VectorIterConst<P_numtype2> >(x.beginFast());
     return *this;
 }
 
@@ -379,7 +365,7 @@ template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>&
 VectorPick<P_numtype>::operator<<=(const Vector<P_numtype2>& x)
 {
-    (*this) <<= _bz_VecExpr<VectorIterConst<P_numtype2> >(x.begin());
+    (*this) <<= _bz_VecExpr<VectorIterConst<P_numtype2> >(x.beginFast());
     return *this;
 }
 
@@ -387,7 +373,7 @@ template<typename P_numtype> template<typename P_numtype2>
 inline VectorPick<P_numtype>&
 VectorPick<P_numtype>::operator>>=(const Vector<P_numtype2>& x)
 {
-    (*this) >>= _bz_VecExpr<VectorIterConst<P_numtype2> >(x.begin());
+    (*this) >>= _bz_VecExpr<VectorIterConst<P_numtype2> >(x.beginFast());
     return *this;
 }
 
@@ -481,7 +467,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator=(const
     VectorPick<P_numtype2>& x)
 {
     typedef VectorPickIterConst<P_numtype2> T_expr;
-    (*this) = _bz_VecExpr<T_expr>(x.begin());
+    (*this) = _bz_VecExpr<T_expr>(x.beginFast());
     return *this;
 }
 
@@ -490,7 +476,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator+=(const
     VectorPick<P_numtype2>& x)
 {
     typedef VectorPickIterConst<P_numtype2> T_expr;
-    (*this) += _bz_VecExpr<T_expr>(x.begin());
+    (*this) += _bz_VecExpr<T_expr>(x.beginFast());
     return *this;
 }
 
@@ -500,7 +486,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator-=(const
     VectorPick<P_numtype2>& x)
 {
     typedef VectorPickIterConst<P_numtype2> T_expr;
-    (*this) -= _bz_VecExpr<T_expr>(x.begin());
+    (*this) -= _bz_VecExpr<T_expr>(x.beginFast());
     return *this;
 }
 
@@ -509,7 +495,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator*=(const
     VectorPick<P_numtype2>& x)
 {
     typedef VectorPickIterConst<P_numtype2> T_expr;
-    (*this) *= _bz_VecExpr<T_expr>(x.begin());
+    (*this) *= _bz_VecExpr<T_expr>(x.beginFast());
     return *this;
 }
 
@@ -518,7 +504,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator/=(const
     VectorPick<P_numtype2>& x)
 {
     typedef VectorPickIterConst<P_numtype2> T_expr;
-    (*this) /= _bz_VecExpr<T_expr>(x.begin());
+    (*this) /= _bz_VecExpr<T_expr>(x.beginFast());
     return *this;
 }
 
@@ -527,7 +513,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator%=(const
     VectorPick<P_numtype2>& x)
 {
     typedef VectorPickIterConst<P_numtype2> T_expr;
-    (*this) %= _bz_VecExpr<T_expr>(x.begin());
+    (*this) %= _bz_VecExpr<T_expr>(x.beginFast());
     return *this;
 }
 
@@ -536,7 +522,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator^=(const
     VectorPick<P_numtype2>& x)
 {
     typedef VectorPickIterConst<P_numtype2> T_expr;
-    (*this) ^= _bz_VecExpr<T_expr>(x.begin());
+    (*this) ^= _bz_VecExpr<T_expr>(x.beginFast());
     return *this;
 }
 
@@ -545,7 +531,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator&=(const
     VectorPick<P_numtype2>& x)
 {
     typedef VectorPickIterConst<P_numtype2> T_expr;
-    (*this) &= _bz_VecExpr<T_expr>(x.begin());
+    (*this) &= _bz_VecExpr<T_expr>(x.beginFast());
     return *this;
 }
 
@@ -554,7 +540,7 @@ inline VectorPick<P_numtype>& VectorPick<P_numtype>::operator|=(const
     VectorPick<P_numtype2>& x)
 {
     typedef VectorPickIterConst<P_numtype2> T_expr;
-    (*this) |= _bz_VecExpr<T_expr>(x.begin());
+    (*this) |= _bz_VecExpr<T_expr>(x.beginFast());
     return *this;
 }
 

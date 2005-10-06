@@ -26,9 +26,7 @@
 #ifndef BZ_VECPICK_H
 #define BZ_VECPICK_H
 
-#ifndef BZ_VECTOR_H
- #include <blitz/vector.h>
-#endif
+#include <blitz/vector.h>
 
 BZ_NAMESPACE(blitz)
 
@@ -75,10 +73,10 @@ public:
     // Member functions
     //////////////////////////////////////////////
 
-    T_iterator         begin()
+    T_iterator         beginFast()
     { return VectorPickIter<T_numtype>(*this); }
 
-    T_constIterator    begin()      const
+    T_constIterator    beginFast()      const
     { return VectorPickIterConst<T_numtype>(*this); }
 
     // T_vector           copy()       const;
@@ -127,7 +125,7 @@ public:
     { return vector_._bz_fastAccess(index_._bz_fastAccess(i)); }
 
     _bz_VecExpr<T_constIterator> _bz_asVecExpr() const
-    { return _bz_VecExpr<T_constIterator>(begin()); }
+    { return _bz_VecExpr<T_constIterator>(beginFast()); }
 
     //////////////////////////////////////////////
     // Subscripting operators
