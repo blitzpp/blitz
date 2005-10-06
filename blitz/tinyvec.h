@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/tinyvec.h      Declaration of the TinyVector<T, N> class
  *
@@ -26,18 +27,9 @@
 #ifndef BZ_TINYVEC_H
 #define BZ_TINYVEC_H
 
-#ifndef BZ_BLITZ_H
- #include <blitz/blitz.h>
-#endif
-
-#ifndef BZ_RANGE_H
- #include <blitz/range.h>
-#endif
-
-#ifndef BZ_LISTINIT_H
- #include <blitz/listinit.h>
-#endif
-
+#include <blitz/blitz.h>
+#include <blitz/range.h>
+#include <blitz/listinit.h>
 #include <blitz/tiny.h>
 
 BZ_NAMESPACE(blitz)
@@ -86,8 +78,8 @@ public:
     typedef TinyVector<T_numtype,N_length>               T_vector;
     typedef TinyVectorIter<T_numtype,N_length,1>         T_iterator;
     typedef TinyVectorIterConst<T_numtype,N_length,1>    T_constIterator;
-    typedef T_iterator iterator;
-    typedef T_constIterator const_iterator;
+    typedef T_numtype*                                   iterator;
+    typedef const T_numtype*                             const_iterator;
     enum { numElements = N_length };
 
     TinyVector()  { }
@@ -225,11 +217,14 @@ public:
     template<typename P_expr>
     inline TinyVector(_bz_VecExpr<P_expr> expr);
 
-    T_iterator      begin()       { return T_iterator(*this);      }
-    T_constIterator begin() const { return T_constIterator(*this); }
+    T_iterator      beginFast()       { return T_iterator(*this);      }
+    T_constIterator beginFast() const { return T_constIterator(*this); }
 
-    T_iterator      end()       { return begin()+N_length; }
-    T_constIterator end() const { return begin()+N_length; }
+    iterator       begin()       { return data_; }
+    const_iterator begin() const { return data_; }
+
+    iterator       end()       { return data_ + N_length; }
+    const_iterator end() const { return data_ + N_length; }
 
     T_numtype * restrict data()
     { return data_; }
@@ -252,23 +247,23 @@ public:
     // disappear in future releases.
     /////////////////////////////////////////////
 
-    unsigned        _bz_suggestLength() const
+    unsigned _bz_suggestLength() const
     { return N_length; }
 
-    bool        _bz_hasFastAccess() const
+    bool _bz_hasFastAccess() const
     { return true; }
 
-    T_numtype& restrict     _bz_fastAccess(unsigned i)
+    T_numtype& restrict _bz_fastAccess(unsigned i)
     { return data_[i]; }
 
-    T_numtype       _bz_fastAccess(unsigned i) const
+    T_numtype _bz_fastAccess(unsigned i) const
     { return data_[i]; }
 
     template<typename P_expr, typename P_updater>
     void _bz_assign(P_expr, P_updater);
 
     _bz_VecExpr<T_constIterator> _bz_asVecExpr() const
-    { return _bz_VecExpr<T_constIterator>(begin()); }
+    { return _bz_VecExpr<T_constIterator>(beginFast()); }
    
     //////////////////////////////////////////////
     // Subscripting operators
