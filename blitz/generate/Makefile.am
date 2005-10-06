@@ -26,16 +26,16 @@ genvecbfn_SOURCES = genvecbfn.cpp
 	$(MAKE) $(AM_MAKEFLAGS) $(patsubst %.cpp,%$(EXEEXT),$<)
 	./$(patsubst %.cpp,%$(EXEEXT),$<)
 
-$(top_srcdir)/blitz/array/bops.cc: genarrbops.cpp
-$(top_srcdir)/blitz/array/uops.cc: genarruops.cpp
-$(top_srcdir)/blitz/matbops.h: genmatbops.cpp
+$(top_srcdir)/blitz/array/bops.cc: genarrbops.cpp bzfstream.h arroperands.h arroptuple.h
+$(top_srcdir)/blitz/array/uops.cc: genarruops.cpp bzfstream.h arroperands.h arroptuple.h
+$(top_srcdir)/blitz/matbops.h: genmatbops.cpp bzfstream.h operands2.h optuple2.h
 $(top_srcdir)/blitz/mathfunc.h: genmathfunc.cpp
-$(top_srcdir)/blitz/matuops.h: genmatuops.cpp
+$(top_srcdir)/blitz/matuops.h: genmatuops.cpp bzfstream.h operands2.h optuple2.h
 $(top_srcdir)/blitz/promote-old.h: genpromote.cpp
-$(top_srcdir)/blitz/vecbops.cc: genvecbops.cpp
-$(top_srcdir)/blitz/vecuops.cc: genvecuops.cpp
-$(top_srcdir)/blitz/vecwhere.cc: genvecwhere.cpp
-$(top_srcdir)/blitz/vecbfn.cc: genvecbfn.cpp
+$(top_srcdir)/blitz/vecbops.cc: genvecbops.cpp bzfstream.h operands.h optuple.h
+$(top_srcdir)/blitz/vecuops.cc: genvecuops.cpp bzfstream.h operands.h optuple.h
+$(top_srcdir)/blitz/vecwhere.cc: genvecwhere.cpp bzfstream.h operands.h optuple.h
+$(top_srcdir)/blitz/vecbfn.cc: genvecbfn.cpp bzfstream.h operands.h optuple.h
 
 generate-headers: $(top_srcdir)/blitz/array/bops.cc \
 $(top_srcdir)/blitz/array/uops.cc $(top_srcdir)/blitz/matbops.h \
@@ -48,4 +48,4 @@ all-am:
 	$(MAKE) $(AM_MAKEFLAGS) generate-headers
 
 clean-local:
-	-rm -rf cxx_repository ti_files ii_files $(noinst_PROGRAMS)
+	-rm -rf cxx_repository ti_files ii_files $(EXTRA_PROGRAMS)
