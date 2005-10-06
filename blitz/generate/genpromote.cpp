@@ -1,11 +1,13 @@
 #include <iostream>
 #include <fstream>
 
-struct {
+struct TypePromotions {
     int priority;
     int promotion;
     const char* name;
-} types[] = {
+};
+
+TypePromotions types[] = {
     { 9,  4, "char" },
     { 9,  4, "unsigned char" },
     { 9,  4, "short int" },
