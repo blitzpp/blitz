@@ -183,11 +183,8 @@ public:
         stride_ = 1;
     }
 
-    T_iterator      begin()
-    { return T_iterator(*this); }
-
-    T_constIterator begin()  const
-    { return T_constIterator(*this); }
+    T_iterator      beginFast()        { return T_iterator(*this);      }
+    T_constIterator beginFast()  const { return T_constIterator(*this); }
 
     T_vector        copy()   const;
 
@@ -227,7 +224,7 @@ public:
     { return stride_; }
 
     operator _bz_VecExpr<VectorIterConst<T_numtype> > () const
-    { return _bz_VecExpr<VectorIterConst<T_numtype> >(begin()); }
+    { return _bz_VecExpr<VectorIterConst<T_numtype> >(beginFast()); }
 
     /////////////////////////////////////////////
     // Library-internal member functions
@@ -251,7 +248,7 @@ public:
     void            _bz_assign(P_expr, P_updater);
 
     _bz_VecExpr<T_constIterator> _bz_asVecExpr() const
-    { return _bz_VecExpr<T_constIterator>(begin()); }
+    { return _bz_VecExpr<T_constIterator>(beginFast()); }
 
     //////////////////////////////////////////////
     // Subscripting operators
@@ -320,7 +317,7 @@ public:
     }
 
     T_iterator getInitializationIterator()
-    { return begin(); }
+    { return beginFast(); }
 
     T_vector& initialize(T_numtype);
     T_vector& operator+=(T_numtype);
