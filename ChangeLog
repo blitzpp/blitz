@@ -1,3 +1,37 @@
+2005-10-06  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+	
+	* blitz/array-impl.h: Allow components to be referred with
+	unsigned.
+
+2005-10-06  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* blitz/generate/genpromote.cpp: Eliminate gcc-4.0.0 compiler
+	warning about using an anonymous struct (thanks Theo!).
+	* blitz/generate/Makefile.am: Repaired clean-local target.  Added
+	header file dependencies.
+	* blitz/generate/operands.h: Changed initialization method for
+	vector types from begin() to beginFast() to avoid conflict with
+	standard begin() method that is expected to produce an STL
+	iterator.
+	* blitz/vecexpr.h: Change begin() to beginFast().
+	* blitz/vecpick.cc: Change begin() to beginFast().
+	* blitz/vecpick.h: Change begin() to beginFast().
+	* blitz/vector.cc: Replaced begin() with beginFast().
+	* blitz/vector.h: Changed begin() to beginFast().  Need to add an
+	STL-compliant iterator for Vector.
+	* blitz/tinyvec.cc: Replace begin() with beginFast().
+	* blitz/tinyvec.h: Renamed pre-existing begin() method beginFast()
+	to avoid conflict with standard begin() method that is presumed to
+	deliver an STL-compliant iterator.  TinyVectorIter and
+	TinyVectorIterConst are not STL compliant at all and are really
+	just glorified indices.  Define begin() and end() to return raw
+	data pointers instead, since these will have the STL iterator
+	semantics automatically.
+
+2005-10-03  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* README-VS.NET.txt: Updated README file for VS.NET stuff to
+	mention new Blitz-Examples solution file.
 2005-09-29  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
 
     * blitz/tinyvec.h: Constified many methods. Added a end() method.
