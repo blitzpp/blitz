@@ -96,7 +96,7 @@ class VecOperand : public operand {
 public:
     VecOperand()
       : operand("Vector", "P_numtype", "VectorIterConst",
-           "P_numtype", ".begin()")
+           "P_numtype", ".beginFast()")
     { }
 
     virtual void printArgument(std::ostream& os)
@@ -112,7 +112,7 @@ class TinyVecOperand : public operand {
 public:
     TinyVecOperand()
       : operand("TinyVector", "P_numtype", "TinyVectorIterConst",
-           "P_numtype", ".begin()")
+           "P_numtype", ".beginFast()")
     { }
 
     virtual void printArgument(std::ostream& os)
@@ -167,7 +167,7 @@ class VecPickOperand : public operand  {
 public:
     VecPickOperand()
       : operand("VectorPick", "P_numtype", "VectorPickIterConst",
-            "P_numtype", ".begin()")
+            "P_numtype", ".beginFast()")
     { }
 
     virtual void printArgument(std::ostream& os)
