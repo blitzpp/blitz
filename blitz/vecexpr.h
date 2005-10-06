@@ -28,21 +28,10 @@
 #ifndef BZ_VECEXPR_H
 #define BZ_VECEXPR_H
 
-#ifndef BZ_VECTOR_H
- #include <blitz/vector.h>
-#endif
-
-#ifndef BZ_APPLICS_H
- #include <blitz/applics.h>
-#endif
-
-#ifndef BZ_META_METAPROG_H
- #include <blitz/meta/metaprog.h>
-#endif
-
-#ifndef BZ_VECEXPRWRAP_H
- #include <blitz/vecexprwrap.h>           // _bz_VecExpr wrapper class
-#endif
+#include <blitz/vector.h>
+#include <blitz/applics.h>
+#include <blitz/meta/metaprog.h>
+#include <blitz/vecexprwrap.h>           // _bz_VecExpr wrapper class
 
 BZ_NAMESPACE(blitz)
 
@@ -252,7 +241,7 @@ operator-(const Vector<P_numtype>& a)
     typedef _bz_VecExprUnaryOp<VectorIterConst<P_numtype>,
         _bz_negate<P_numtype> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(a.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(a.beginFast()));
 }
 
 inline
@@ -273,7 +262,7 @@ operator-(const VectorPick<P_numtype>& a)
     typedef _bz_VecExprUnaryOp<VectorPickIterConst<P_numtype>,
         _bz_negate<P_numtype> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(a.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(a.beginFast()));
 }
 
 template<typename P_numtype, int N_length>
@@ -285,7 +274,7 @@ operator-(const TinyVector<P_numtype,N_length>& a)
     typedef _bz_VecExprUnaryOp<TinyVectorIterConst<P_numtype,N_length>,
         _bz_negate<P_numtype> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(a.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(a.beginFast()));
 }
 
 BZ_NAMESPACE_END
