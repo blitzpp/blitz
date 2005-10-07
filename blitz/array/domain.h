@@ -23,13 +23,8 @@
 #ifndef BZ_DOMAIN_H
 #define BZ_DOMAIN_H
 
-#ifndef BZ_TINYVEC_H
- #include <blitz/tinyvec.h>
-#endif
-
-#ifndef BZ_RANGE_H
- #include <blitz/range.h>
-#endif
+#include <blitz/tinyvec.h>
+#include <blitz/range.h>
 
 /*
  * Portions of this class were inspired by the "RectDomain" class
@@ -41,130 +36,121 @@ BZ_NAMESPACE(blitz)
 template<int N_rank>
 class RectDomain {
 
+    typedef TinyVector<int,N_rank> Bounds;
+
 public:
-    RectDomain(const TinyVector<int,N_rank>& lbound,
-        const TinyVector<int,N_rank>& ubound)
-      : lbound_(lbound), ubound_(ubound)
-    { }
+
+    RectDomain() { }
+    RectDomain(const Bounds& lbound,const Bounds& ubound): lbound_(lbound),ubound_(ubound) { }
+    RectDomain(const TinyVector<Range,N_rank>& bounds): lbound_(),ubound_() {
+        for (int i=0;i<N_rank;++i) {
+            lbound_(i) = bounds(i).first();
+            ubound_(i) = bounds(i).last();
+        }
+    }
 
     // NEEDS_WORK: better constructors
     // RectDomain(Range, Range, ...)
     // RectDomain with any combination of Range and int
 
-    const TinyVector<int,N_rank>& lbound() const
-    { return lbound_; }
+          Bounds& lbound()       { return lbound_; }
+          Bounds& ubound()       { return ubound_; }
+    const Bounds& lbound() const { return lbound_; }
+    const Bounds& ubound() const { return ubound_; }
 
-    int lbound(int i) const
-    { return lbound_(i); }
+    int& lbound(const int i)       { return lbound_(i); }
+    int& ubound(const int i)       { return ubound_(i); }
+    int  lbound(const int i) const { return lbound_(i); }
+    int  ubound(const int i) const { return ubound_(i); }
 
-    const TinyVector<int,N_rank>& ubound() const
-    { return ubound_; }
+    Range operator[](const int rank) const { return Range(lbound_(rank), ubound_(rank)); }
 
-    int ubound(int i) const
-    { return ubound_(i); }
-
-    Range operator[](int rank) const
-    { return Range(lbound_(rank), ubound_(rank)); }
-
-    void shrink(int amount)
-    {
+    void shrink(const int amount) {
         lbound_ += amount;
         ubound_ -= amount;
     }
 
-    void shrink(int dim, int amount)
-    {
+    void shrink(const int dim,const int amount) {
         lbound_(dim) += amount;
         ubound_(dim) -= amount;
     }
 
-    void expand(int amount)
-    {
+    void expand(const int amount) {
         lbound_ -= amount;
         ubound_ += amount;
     }
 
-    void expand(int dim, int amount)
-    {
+    void expand(const int dim,const int amount) {
         lbound_(dim) -= amount;
         ubound_(dim) += amount;
     }
 
 private:
-    TinyVector<int,N_rank> lbound_, ubound_;
+
+    Bounds lbound_;
+    Bounds ubound_;
 };
 
 /*
  * StridedDomain added by Julian Cummings
  */
+
 template<int N_rank>
 class StridedDomain {
 
+    typedef TinyVector<int,N_rank> Bounds;
+    typedef TinyVector<int,N_rank> Strides;
+
 public:
-    StridedDomain(const TinyVector<int,N_rank>& lbound,
-        const TinyVector<int,N_rank>& ubound,
-        const TinyVector<int,N_rank>& stride)
-      : lbound_(lbound), ubound_(ubound), stride_(stride)
-    { }
+
+    StridedDomain(const Bounds& lbound,const Bounds& ubound,const Strides& stride):
+        lbound_(lbound),ubound_(ubound),stride_(stride) { }
 
     // NEEDS_WORK: better constructors
     // StridedDomain(Range, Range, ...)
     // StridedDomain with any combination of Range and int
 
-    const TinyVector<int,N_rank>& lbound() const
-    { return lbound_; }
+    const Bounds&  lbound() const { return lbound_; }
+    const Bounds&  ubound() const { return ubound_; }
+    const Strides& stride() const { return stride_; }
 
-    int lbound(int i) const
-    { return lbound_(i); }
+    int lbound(const int i) const { return lbound_(i); }
+    int ubound(const int i) const { return ubound_(i); }
+    int stride(const int i) const { return stride_(i); }
 
-    const TinyVector<int,N_rank>& ubound() const
-    { return ubound_; }
+    Range operator[](const int rank) const { return Range(lbound_(rank),ubound_(rank),stride_(rank)); }
 
-    int ubound(int i) const
-    { return ubound_(i); }
-
-    const TinyVector<int,N_rank>& stride() const
-    { return stride_; }
-
-    int stride(int i) const
-    { return stride_(i); }
-
-    Range operator[](int rank) const
-    { return Range(lbound_(rank), ubound_(rank), stride_(rank)); }
-
-    void shrink(int amount)
-    {
-        lbound_ += amount * stride_;
-        ubound_ -= amount * stride_;
+    void shrink(const int amount) {
+        lbound_ += amount*stride_;
+        ubound_ -= amount*stride_;
     }
 
-    void shrink(int dim, int amount)
-    {
-        lbound_(dim) += amount * stride_(dim);
-        ubound_(dim) -= amount * stride_(dim);
+    void shrink(const int dim,const int amount) {
+        lbound_(dim) += amount*stride_(dim);
+        ubound_(dim) -= amount*stride_(dim);
     }
 
-    void expand(int amount)
-    {
-        lbound_ -= amount * stride_;
-        ubound_ += amount * stride_;
+    void expand(const int amount) {
+        lbound_ -= amount*stride_;
+        ubound_ += amount*stride_;
     }
 
-    void expand(int dim, int amount)
-    {
-        lbound_(dim) -= amount * stride_(dim);
-        ubound_(dim) += amount * stride_(dim);
+    void expand(const int dim,const int amount) {
+        lbound_(dim) -= amount*stride_(dim);
+        ubound_(dim) += amount*stride_(dim);
     }
 
 private:
-    TinyVector<int,N_rank> lbound_, ubound_, stride_;
+
+    Bounds  lbound_;
+    Bounds  ubound_;
+    Strides stride_;
 };
 
 
 template<int N_rank>
-inline RectDomain<N_rank> strip(const TinyVector<int,N_rank>& startPosition,
-    int stripDimension, int ubound)
-{
+inline RectDomain<N_rank>
+strip(const TinyVector<int,N_rank>& startPosition,const int stripDimension,const int ubound) {
     BZPRECONDITION((stripDimension >= 0) && (stripDimension < N_rank));
     BZPRECONDITION(ubound >= startPosition(stripDimension));
 
