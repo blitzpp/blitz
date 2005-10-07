@@ -38,35 +38,17 @@
 #ifndef BZ_ARRAY_H
 #define BZ_ARRAY_H
 
-#ifndef BZ_BLITZ_H
- #include <blitz/blitz.h>
-#endif
-
-#ifndef BZ_MEMBLOCK_H
- #include <blitz/memblock.h>
-#endif
-
-#ifndef BZ_RANGE_H
- #include <blitz/range.h>
-#endif
-
-#ifndef BZ_TINYVEC_H
- #include <blitz/tinyvec.h>
-#endif
+#include <blitz/blitz.h>
+#include <blitz/memblock.h>
+#include <blitz/range.h>
+#include <blitz/tinyvec.h>
 
 #ifdef BZ_ARRAY_SPACE_FILLING_TRAVERSAL
-#ifndef BZ_TRAVERSAL_H
- #include <blitz/traversal.h>
-#endif
+#include <blitz/traversal.h>
 #endif
 
-#ifndef BZ_INDEXEXPR_H
- #include <blitz/indexexpr.h>
-#endif
-
-#ifndef BZ_PRETTYPRINT_H
- #include <blitz/prettyprint.h>
-#endif
+#include <blitz/indexexpr.h>
+#include <blitz/prettyprint.h>
 
 #include <blitz/array/slice.h>     // Subarrays and slicing
 #include <blitz/array/map.h>       // Tensor index notation
@@ -98,6 +80,9 @@ class IndirectArray;
 
 template <typename P_numtype,int N_rank>
 void swap(Array<P_numtype,N_rank>&,Array<P_numtype,N_rank>&);
+
+template <typename P_numtype, int N_rank>
+void find(Array<TinyVector<int,N_rank>,1>&,const Array<P_numtype,N_rank>&);
 
 /*
  * Declaration of class Array
@@ -2489,6 +2474,30 @@ void swap(Array<P_numtype,N_rank>& a,Array<P_numtype,N_rank>& b) {
     a.reference(b);
     b.reference(c);
 }
+
+template <typename P_expr>
+void find(Array<TinyVector<int,P_expr::rank>,1>& indices,
+          const _bz_ArrayExpr<P_expr>& expr) {
+    find(indices,
+         static_cast< Array<typename P_expr::T_numtype,P_expr::rank> >(expr));
+}
+
+template <typename P_numtype, int N_rank>
+void find(Array<TinyVector<int,N_rank>,1>& indices,
+          const Array<P_numtype,N_rank>& exprVals) {
+    indices.resize(exprVals.size());
+    typename Array<P_numtype,N_rank>::const_iterator it, end = exprVals.end();
+    int j=0; 
+    for (it = exprVals.begin(); it != end; ++it)
+        if (*it) 
+            indices(j++) = it.position();
+    if (j) 
+        indices.resizeAndPreserve(j);
+    else 
+        indices.free();
+    return;
+}
+
 
 BZ_NAMESPACE_END
 
