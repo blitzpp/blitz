@@ -15,5 +15,10 @@ int main()
     A *= 10;
 
     cout << A << endl;
+
+    TinyVector<int,3>::iterator it, end=B.end();
+    for (it = B.begin(); it != end; ++it) 
+        cout << *it << " ";
+    cout << endl;
 }
 
