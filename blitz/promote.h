@@ -111,36 +111,45 @@ struct promote_trait {
     static const bool
         T1IsBetter =
             precision_trait<T1>::precisionRank >
-            precision_trait<T2>::precisionRank,
+            precision_trait<T2>::precisionRank;
 
     // True if we know ranks for both T1 and T2
+    static const bool
         knowBothRanks =
             precision_trait<T1>::knowPrecisionRank && 
-            precision_trait<T2>::knowPrecisionRank,
+            precision_trait<T2>::knowPrecisionRank;
 
     // True if we know T1 but not T2
+    static const bool
         knowT1butNotT2 =  
             precision_trait<T1>::knowPrecisionRank && 
-            !precision_trait<T2>::knowPrecisionRank,
+            !precision_trait<T2>::knowPrecisionRank;
 
     // True if we know T2 but not T1
+    static const bool
         knowT2butNotT1 =  
             precision_trait<T2>::knowPrecisionRank && 
-            !precision_trait<T1>::knowPrecisionRank,
+            !precision_trait<T1>::knowPrecisionRank;
 
     // True if T1 is bigger than T2
-        T1IsLarger = sizeof(T1) >= sizeof(T2),
+    static const bool
+        T1IsLarger = sizeof(T1) >= sizeof(T2);
 
-    // We know T1 but not T2: true
-    // We know T2 but not T1: false
+    // We know T1 but not T2: false
+    // We know T2 but not T1: true
     // Otherwise, if T1 is bigger than T2: true
-        defaultPromotion = knowT1butNotT2 ? false : 
-            (knowT2butNotT1 ? true : T1IsLarger),
+//     static const bool
+//         defaultPromotion = knowT1butNotT2 ? false : 
+//             (knowT2butNotT1 ? true : T1IsLarger);
 
     // If we have both ranks, then use them.
     // If we have only one rank, then use the unknown type.
     // If we have neither rank, then promote to the larger type.
-        promoteToT1 = knowBothRanks ? T1IsBetter : defaultPromotion;
+    static const bool
+        promoteToT1 = knowBothRanks ? T1IsBetter : (knowT1butNotT2 ? false : 
+            (knowT2butNotT1 ? true : T1IsLarger));
+//     static const bool
+//         promoteToT1 = knowBothRanks ? T1IsBetter : defaultPromotion;
 
     typedef _bz_typename _bz_promote2<T1,T2,promoteToT1>::T_promote T_promote;
 };
