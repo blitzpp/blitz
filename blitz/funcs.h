@@ -135,10 +135,38 @@ BZ_DEFINE_UNARY_FUNC(Fn_pow6,BZ_BLITZ_SCOPE(blitz_pow6))
 BZ_DEFINE_UNARY_FUNC(Fn_pow7,BZ_BLITZ_SCOPE(blitz_pow7))
 BZ_DEFINE_UNARY_FUNC(Fn_pow8,BZ_BLITZ_SCOPE(blitz_pow8))
 
-#ifdef BZ_HAVE_COMPLEX_FCNS
-BZ_DEFINE_UNARY_FUNC(Fn_conj,BZ_CMATHFN_SCOPE(conj))
-#endif
+/* Unary functions that return a specified type */
+    
+#define BZ_DEFINE_UNARY_FUNC_RET(name,fun,ret)                 \
+template<typename T_numtype1>                                  \
+struct name {                                                  \
+    typedef ret T_numtype;                                     \
+                                                               \
+    static inline T_numtype                                    \
+    apply(T_numtype1 a)                                        \
+    { return fun(a); }                                         \
+							       \
+    template<typename T1>                                      \
+    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,  \
+        prettyPrintFormat& format, const T1& t1)               \
+    {                                                          \
+        str += #fun;                                           \
+        str += "(";                                            \
+        t1.prettyPrint(str, format);                           \
+        str += ")";                                            \
+    }                                                          \
+};
 
+#ifdef BZ_HAVE_IEEE_MATH
+BZ_DEFINE_UNARY_FUNC_RET(Fn_ilogb,BZ_IEEEMATHFN_SCOPE(ilogb),int)
+#endif
+    
+#ifdef BZ_HAVE_SYSTEM_V_MATH
+BZ_DEFINE_UNARY_FUNC_RET(Fn_itrunc,BZ_IEEEMATHFN_SCOPE(itrunc),int)
+BZ_DEFINE_UNARY_FUNC_RET(Fn_uitrunc,BZ_IEEEMATHFN_SCOPE(uitrunc),unsigned int)
+#endif
+    
+    
 #ifdef BZ_HAVE_COMPLEX
 /* Specialization of unary functor for complex type */
     
@@ -162,6 +190,10 @@ struct name< complex<T> > {                                    \
         str += ")";                                            \
     }                                                          \
 };
+
+#ifdef BZ_HAVE_COMPLEX_FCNS
+BZ_DEFINE_UNARY_FUNC(Fn_conj,BZ_CMATHFN_SCOPE(conj))
+#endif
 
 #ifdef BZ_HAVE_COMPLEX_MATH1
 BZ_DEFINE_UNARY_CFUNC(Fn_cos,BZ_CMATHFN_SCOPE(cos))
@@ -219,38 +251,6 @@ BZ_DEFINE_UNARY_CFUNC2(Fn_real,BZ_CMATHFN_SCOPE(real))
     
 #endif // BZ_HAVE_COMPLEX
     
-/* Unary functions that return a specified type */
-    
-#define BZ_DEFINE_UNARY_FUNC_RET(name,fun,ret)                 \
-template<typename T_numtype1>                                  \
-struct name {                                                  \
-    typedef ret T_numtype;                                     \
-                                                               \
-    static inline T_numtype                                    \
-    apply(T_numtype1 a)                                        \
-    { return fun(a); }                                         \
-							       \
-    template<typename T1>                                      \
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,  \
-        prettyPrintFormat& format, const T1& t1)               \
-    {                                                          \
-        str += #fun;                                           \
-        str += "(";                                            \
-        t1.prettyPrint(str, format);                           \
-        str += ")";                                            \
-    }                                                          \
-};
-
-#ifdef BZ_HAVE_IEEE_MATH
-BZ_DEFINE_UNARY_FUNC_RET(Fn_ilogb,BZ_IEEEMATHFN_SCOPE(ilogb),int)
-#endif
-    
-#ifdef BZ_HAVE_SYSTEM_V_MATH
-BZ_DEFINE_UNARY_FUNC_RET(Fn_itrunc,BZ_IEEEMATHFN_SCOPE(itrunc),int)
-BZ_DEFINE_UNARY_FUNC_RET(Fn_uitrunc,BZ_IEEEMATHFN_SCOPE(uitrunc),unsigned int)
-#endif
-    
-    
 /* Binary functions that return type based on type promotion */
     
 #define BZ_DEFINE_BINARY_FUNC(name,fun)                           \
@@ -287,6 +287,35 @@ BZ_DEFINE_BINARY_FUNC(Fn_hypot,BZ_IEEEMATHFN_SCOPE(hypot))
 BZ_DEFINE_BINARY_FUNC(Fn_nextafter,BZ_IEEEMATHFN_SCOPE(nextafter))
 BZ_DEFINE_BINARY_FUNC(Fn_remainder,BZ_IEEEMATHFN_SCOPE(remainder))
 BZ_DEFINE_BINARY_FUNC(Fn_scalb,BZ_IEEEMATHFN_SCOPE(scalb))
+#endif
+    
+/* Binary functions that return a specified type */
+    
+#define BZ_DEFINE_BINARY_FUNC_RET(name,fun,ret)                   \
+template<typename T_numtype1, typename T_numtype2>                \
+struct name {                                                     \
+    typedef ret T_numtype;                                        \
+                                                                  \
+    static inline T_numtype                                       \
+    apply(T_numtype1 a, T_numtype2 b)                             \
+    { return fun(a,b); }                                          \
+							          \
+    template<typename T1, typename T2>                            \
+    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,     \
+        prettyPrintFormat& format, const T1& t1,                  \
+        const T2& t2)                                             \
+    {                                                             \
+        str += #fun;                                              \
+        str += "(";                                               \
+        t1.prettyPrint(str, format);                              \
+        str += ",";                                               \
+        t2.prettyPrint(str, format);                              \
+        str += ")";                                               \
+    }                                                             \
+};
+
+#ifdef BZ_HAVE_SYSTEM_V_MATH
+BZ_DEFINE_BINARY_FUNC_RET(Fn_unordered,BZ_IEEEMATHFN_SCOPE(unordered),int)
 #endif
     
 #ifdef BZ_HAVE_COMPLEX
@@ -371,7 +400,7 @@ BZ_DEFINE_BINARY_CFUNC(Fn_pow,BZ_CMATHFN_SCOPE(pow))
 
 /* Binary functions that apply only to T and return complex<T> */
     
-#define BZ_DEFINE_BINARY_CFUNC2(name,fun)                         \
+#define BZ_DEFINE_BINARY_FUNC_CRET(name,fun)                      \
 template<typename T_numtype1, typename T_numtype2>                \
 struct name;                                                      \
                                                                   \
@@ -400,40 +429,68 @@ struct name<T, T> {                                               \
 };
 
 #ifdef BZ_HAVE_COMPLEX_FCNS
-BZ_DEFINE_BINARY_CFUNC2(Fn_polar,BZ_CMATHFN_SCOPE(polar))
+BZ_DEFINE_BINARY_FUNC_CRET(Fn_polar,BZ_CMATHFN_SCOPE(polar))
 #endif
     
 #endif // BZ_HAVE_COMPLEX
     
-/* Binary functions that return a specified type */
+/* Ternary functions that return type based on type promotion */
     
-#define BZ_DEFINE_BINARY_FUNC_RET(name,fun,ret)                   \
-template<typename T_numtype1, typename T_numtype2>                \
+#define BZ_DEFINE_TERNARY_FUNC(name,fun)                          \
+template <typename P_numtype1, typename P_numtype2,               \
+          typename P_numtype3>                                    \
 struct name {                                                     \
-    typedef ret T_numtype;                                        \
+    typedef BZ_PROMOTE(P_numtype1,                                \
+            BZ_PROMOTE(P_numtype2,P_numtype3)) T_numtype;         \
                                                                   \
     static inline T_numtype                                       \
-    apply(T_numtype1 a, T_numtype2 b)                             \
-    { return fun(a,b); }                                          \
-							          \
-    template<typename T1, typename T2>                            \
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,     \
-        prettyPrintFormat& format, const T1& t1,                  \
-        const T2& t2)                                             \
+    apply(P_numtype1 x, P_numtype2 y, P_numtype3 z)               \
+    { return fun(x,y,z); }                                        \
+                                                                  \
+    template <typename T1, typename T2, typename T3>              \
+    static void prettyPrint(BZ_STD_SCOPE(string) &str,            \
+        prettyPrintFormat& format,                                \
+        const T1& a,const T2& b, const T3& c)                     \
     {                                                             \
         str += #fun;                                              \
         str += "(";                                               \
-        t1.prettyPrint(str, format);                              \
+        a.prettyPrint(str,format);                                \
         str += ",";                                               \
-        t2.prettyPrint(str, format);                              \
+        b.prettyPrint(str,format);                                \
+        str += ",";                                               \
+        c.prettyPrint(str,format);                                \
         str += ")";                                               \
     }                                                             \
 };
 
-#ifdef BZ_HAVE_SYSTEM_V_MATH
-BZ_DEFINE_BINARY_FUNC_RET(Fn_unordered,BZ_IEEEMATHFN_SCOPE(unordered),int)
-#endif
+/* Ternary functions that return a specified type */
     
+#define BZ_DEFINE_TERNARY_FUNC_RET(name,fun,ret)                  \
+template <typename P_numtype1, typename P_numtype2,               \
+          typename P_numtype3>                                    \
+struct name {                                                     \
+    typedef ret T_numtype;                                        \
+                                                                  \
+    static inline T_numtype                                       \
+    apply(P_numtype1 x, P_numtype2 y, P_numtype3 z)               \
+    { return fun(x,y,z); }                                        \
+                                                                  \
+    template <typename T1, typename T2, typename T3>              \
+    static void prettyPrint(BZ_STD_SCOPE(string) &str,            \
+        prettyPrintFormat& format,                                \
+        const T1& a,const T2& b, const T3& c)                     \
+    {                                                             \
+        str += #fun;                                              \
+        str += "(";                                               \
+        a.prettyPrint(str,format);                                \
+        str += ",";                                               \
+        b.prettyPrint(str,format);                                \
+        str += ",";                                               \
+        c.prettyPrint(str,format);                                \
+        str += ")";                                               \
+    }                                                             \
+};
+
     
 /* These functions don't quite fit the usual patterns */
     
