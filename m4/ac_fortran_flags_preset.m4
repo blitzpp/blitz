@@ -84,6 +84,11 @@ if test "$enableval" = yes ; then
 			F77_OPTIMIZE_FLAGS="-fastsse -O3 -Minline -Minfo"
 			CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
 		;;
+		*pathf90*)  dnl Pathscale Fortran compiler
+			FFLAGS=""
+			F77_OPTIMIZE_FLAGS="-O3"
+			CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
+		;;
 		*f77*)
 		    if test ".$G77" == .yes; then
 			dnl GNU Fortran compiler
@@ -213,6 +218,11 @@ if test "$enableval" = yes ; then
 		*pgf90*) dnl PGI F90 compiler
 			FCFLAGS=""
 			FC_OPTIMIZE_FLAGS="-fastsse -O3 -Minline -Minfo"
+			CXXFCFLAG="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
+		;;
+		*pathf90*)  dnl Pathscale pathf90 compiler
+			FCFLAGS=""
+			FC_OPTIMIZE_FLAGS="-O3"
 			CXXFCFLAG="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
 		;;
 		*f90*)  dnl Absoft F90 compiler
