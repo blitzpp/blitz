@@ -50,6 +50,10 @@
 /* Fujitsu FCC compiler */
 #include <blitz/fujitsu/bzconfig.h>
 
+#elif defined(__PATHSCALE)
+/* Pathscale pathCC compiler */
+#include <blitz/pathscale/bzconfig.h>
+
 /* Add other compilers here */
 
 #else
