@@ -2,7 +2,7 @@
 
 AC_PREREQ(2.59)
 
-AC_INIT(blitz, 0.8, blitz-bugs@oonumerics.org)
+AC_INIT(blitz, 0.8.1, blitz-bugs@oonumerics.org)
 
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_SRCDIR(blitz/blitz.h)
@@ -29,7 +29,7 @@ Configuring $PACKAGE_STRING for $target
 ])
 
 # C++ compiler
-AC_PROG_CXX([xlc++ xlC icpc icc cxx aCC c++ CC g++ pgCC KCC FCC])
+AC_PROG_CXX([xlc++ xlC icpc icc pathCC cxx aCC c++ CC g++ pgCC KCC FCC])
 AC_LANG(C++)
 AC_CXX_FLAGS_PRESET
 
@@ -43,8 +43,8 @@ AM_CONDITIONAL(FORTRAN_ENABLED, [test $enable_fortran = yes])
 
 # Fortran compiler
 if test $enable_fortran = yes; then
-  AC_PROG_F77([xlf ifort ifc f77 g77 g95 gfortran pgf77 fort77])
-  AC_PROG_FC([xlf90 ifort ifc f90 g95 gfortran pgf90])
+  AC_PROG_F77([xlf ifort ifc pathf90 f77 g77 g95 gfortran pgf77 fort77])
+  AC_PROG_FC([xlf90 ifort ifc pathf90 f90 g95 gfortran pgf90])
   AC_FORTRAN_FLAGS_PRESET
 
   AC_LANG_PUSH(Fortran 77)
