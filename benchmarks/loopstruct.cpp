@@ -36,7 +36,12 @@ public:
         state_ = stopped;
     }
 
+/* Compaq cxx compiler in ansi mode cannot print out long double type! */
+#if defined(__DECCXX)
+    double elapsedSeconds()
+#else
     long double elapsedSeconds()
+#endif
     {
         return t2_ - t1_;
     }
