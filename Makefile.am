@@ -17,6 +17,8 @@ EXTRA_DIST = LEGAL LICENSE README.binutils README-VS.NET.txt Blitz-VS.NET.zip \
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = blitz.pc blitz-uninstalled.pc
 
+DISTCLEANFILES = blitz.pc blitz.pc.in blitz-uninstalled.pc
+
 lib: blitz-library
 
 blitz-library:
