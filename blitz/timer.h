@@ -62,8 +62,13 @@ public:
         BZPRECONDITION(state_ == running);
         state_ = stopped;
     }
-
+    
+/* Compaq cxx compiler in ansi mode cannot print out long double type! */
+#if defined(__DECCXX)
+    double elapsedSeconds()
+#else
     long double elapsedSeconds()
+#endif
     {
         BZPRECONDITION(state_ == stopped);
         return t2_ - t1_;
