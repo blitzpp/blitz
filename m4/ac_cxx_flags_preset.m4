@@ -120,6 +120,15 @@ if test "$enableval" = yes ; then
 		CXX_OPTIMIZE_FLAGS="-O4 -Mnoframe -Mnodepchk -Minline=levels:25"
 		CXX_DEBUG_FLAGS="-g -O0 -DBZ_DEBUG"
 	;;
+	*pathCC*) dnl Pathscale pathCC compiler   http://www.pathscale.com
+		CXX_VENDOR="pathCC"
+		CXXFLAGS="-D__PATHSCALE -ansi"
+		CXX_OPTIMIZE_FLAGS="-O3 -fstrict-aliasing -finline-functions"
+		CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
+		CXX_PROFIL_FLAGS="-pg"
+		AR="$CXX"
+		AR_FLAGS="-ar -o"
+	;;
 	*CC*) 
 		case "$target" in
 		*sgi*) dnl SGI C++  http://www.sgi.com
