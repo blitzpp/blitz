@@ -27,9 +27,13 @@ vector.cc vector.h vecwhere.h wrap-climits.h zero.cc zero.h $(genheaders)
 
 EXTRA_HEADERS = apple/bzconfig.h intel/bzconfig.h ibm/bzconfig.h \
 compaq/bzconfig.h hp/bzconfig.h sgi/bzconfig.h gnu/bzconfig.h \
-pgi/bzconfig.h kai/bzconfig.h fujitsu/bzconfig.h
+pgi/bzconfig.h pathscale/bzconfig.h kai/bzconfig.h fujitsu/bzconfig.h
 
 nobase_blitz_HEADERS = $(COMPILER_SPECIFIC_HEADER)
+
+DISTCLEANFILES = apple/bzconfig.h intel/bzconfig.h ibm/bzconfig.h \
+compaq/bzconfig.h hp/bzconfig.h sgi/bzconfig.h gnu/bzconfig.h \
+pgi/bzconfig.h pathscale/bzconfig.h kai/bzconfig.h fujitsu/bzconfig.h
 
 clean-local:
 	-rm -rf config.h 
