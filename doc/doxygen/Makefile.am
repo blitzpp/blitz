@@ -81,7 +81,7 @@ make-install-dirs:
 
 install-data-hook: make-install-dirs
 	@if test -d html; then \
-		echo Installing documentations into $(DESTDIR)$(docdir) ; \
+		echo Installing HTML documentation into $(DESTDIR)$(docdir) ; \
 		$(INSTALL_DATA) html/* $(DESTDIR)$(docdir) ; \
 	fi
 	@if test -f $(PACKAGE).pdf; then \
@@ -92,4 +92,10 @@ install-data-hook: make-install-dirs
 		echo Installing PS manual into $(DESTDIR)$(docdir) ; \
 		$(INSTALL_DATA) $(PACKAGE).ps $(DESTDIR)$(docdir) ; \
 	fi
+
+uninstall-hook: 
+	@echo Uninstalling doxygen documentation directory ; \
+	rm -rf "$(DESTDIR)$(docdir)";
+
+
 
