@@ -18,7 +18,7 @@ HERE=$(CURDIR)
 DVIPS=export TEXPICTS=$(srcdir); dvips
 AM_MAKEINFOFLAGS = --no-split -I$(HERE)
 TEXI2HTML = texi2html
-TEXI2HTML_FLAGS = -split_chapter
+TEXI2HTML_FLAGS = --out_file=. -split_chapter
 
 STENCILS = stencils/backward11.texi stencils/backward12.texi \
 stencils/backward21.texi stencils/backward22.texi stencils/backward31.texi \
