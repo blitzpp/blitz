@@ -1,3 +1,20 @@
+2005-10-11  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* examples/.cvsignore: Added matlab output files to cvs ignore
+	list.
+	* doc/doxygen/.cvsignore: Added doxygen-warning message file to
+	ignore list.
+	* .cvsignore: Added older ChangeLog_ files to ignore list.
+	* blitz/.cvsignore: Oops!  I put the ChangeLog_ stuff in the wrong
+	cvsignore file.
+	* blitz/.cvsignore: Added old ChangeLog_ files and pathscale
+	compiler directory.
+	* blitz/memblock.h: Removed the restrict qualifier from a few
+	places where it was being used inappropriately with pointers as
+	function parameters.  These were flagged by the IBM xlC compiler.
+	Basically, you cannot assign a restricted pointer to another
+	pointer that is in an outer (containing) scope because you may be
+	creating an alias outside of the current scope.
 
 2005-10-11  Patrick Guio <patrick.guio@bccs.uib.no>
 
@@ -12,6 +29,33 @@
 	command into @iftex block since it caused trouble to newer
 	texi2html v1.76.
 
+
+2005-10-10  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* benchmarks/loopstruct.cpp: Added hack for Compaq cxx compiler,
+	which does not provide support for writing out the long double
+	type in std ansi mode.
+	* blitz/timer.h: Added hack for Compaq cxx compiler, which does
+	not provide support for writing out the long double type in std
+	ansi mode.
+	* doc/doxygen/Makefile.am: Added an uninstall-hook target to clean
+	up doxygen install dir.
+	* configure.ac: Added Pathscale compilers to default compiler
+	search lists.  Bumped blitz package version number to 0.8.1.  A
+	few more minor fixes and doc updates before we actually release
+	the new version, but we're close now!
+	* blitz/bzconfig.h: Added section for Pathscale compiler-specific
+	header.
+	* m4/ac_fortran_flags_preset.m4: Added support for Pathscale
+	pathf90 compiler.
+	* m4/ac_cxx_flags_preset.m4: Added support for Pathscale C++
+	compiler (pathCC).
+	* blitz/Makefile.am: Added list of compiler-specific header files
+	to list of files to be removed by distclean.  One
+	compiler-specific header file will always be present within the
+	distribution.
+	* Makefile.am: Added pkgconfig data files to list of files to be
+	removed by distclean.
 
 2005-10-07  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
