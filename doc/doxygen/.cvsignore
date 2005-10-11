@@ -1,5 +1,6 @@
 Doxyfile
 Makefile
 Makefile.in
+doxygen-warning
 html
 latex
