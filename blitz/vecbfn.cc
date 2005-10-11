@@ -22,7 +22,7 @@
  */ 
 
 // Generated source file.  Do not edit. 
-// genvecbfn.cpp Dec 10 2003 17:58:43
+// genvecbfn.cpp Oct  6 2005 15:58:50
 
 #ifndef BZ_VECBFN_CC
 #define BZ_VECBFN_CC
@@ -50,8 +50,8 @@ min(const Vector<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_Min<P_numtype1, P_numtype2> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast()));
 }
 
 // Vector<P_numtype1> min _bz_VecExpr<P_expr2>
@@ -67,7 +67,7 @@ min(const Vector<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_Min<P_numtype1, typename P_expr2::T_numtype> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2));
 }
 
@@ -84,8 +84,8 @@ min(const Vector<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_Min<P_numtype1, P_numtype2> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast()));
 }
 
 // Vector<P_numtype1> min Range
@@ -101,7 +101,7 @@ min(const Vector<P_numtype1>& d1,
       Range, 
       _bz_Min<P_numtype1, int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2));
 }
 
@@ -118,8 +118,8 @@ min(const Vector<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_Min<P_numtype1, P_numtype2> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast()));
 }
 
 // Vector<P_numtype1> min int
@@ -135,7 +135,7 @@ min(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<int>, 
       _bz_Min<P_numtype1, int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2)));
 }
 
@@ -152,7 +152,7 @@ min(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<float>, 
       _bz_Min<P_numtype1, float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2)));
 }
 
@@ -169,7 +169,7 @@ min(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<double>, 
       _bz_Min<P_numtype1, double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2)));
 }
 
@@ -186,7 +186,7 @@ min(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<long double>, 
       _bz_Min<P_numtype1, long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2)));
 }
 #ifdef BZ_HAVE_COMPLEX
@@ -204,7 +204,7 @@ min(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       _bz_Min<P_numtype1, complex<T2> > > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2)));
 }
 #endif // BZ_HAVE_COMPLEX
@@ -224,7 +224,7 @@ min(_bz_VecExpr<P_expr1> d1,
       _bz_Min<typename P_expr1::T_numtype, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // _bz_VecExpr<P_expr1> min _bz_VecExpr<P_expr2>
@@ -258,7 +258,7 @@ min(_bz_VecExpr<P_expr1> d1,
       _bz_Min<typename P_expr1::T_numtype, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // _bz_VecExpr<P_expr1> min Range
@@ -292,7 +292,7 @@ min(_bz_VecExpr<P_expr1> d1,
       _bz_Min<typename P_expr1::T_numtype, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // _bz_VecExpr<P_expr1> min int
@@ -396,8 +396,8 @@ min(const VectorPick<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_Min<P_numtype1, P_numtype2> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast()));
 }
 
 // VectorPick<P_numtype1> min _bz_VecExpr<P_expr2>
@@ -413,7 +413,7 @@ min(const VectorPick<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_Min<P_numtype1, typename P_expr2::T_numtype> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2));
 }
 
@@ -430,8 +430,8 @@ min(const VectorPick<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_Min<P_numtype1, P_numtype2> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast()));
 }
 
 // VectorPick<P_numtype1> min Range
@@ -447,7 +447,7 @@ min(const VectorPick<P_numtype1>& d1,
       Range, 
       _bz_Min<P_numtype1, int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2));
 }
 
@@ -464,8 +464,8 @@ min(const VectorPick<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_Min<P_numtype1, P_numtype2> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast()));
 }
 
 // VectorPick<P_numtype1> min int
@@ -481,7 +481,7 @@ min(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<int>, 
       _bz_Min<P_numtype1, int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2)));
 }
 
@@ -498,7 +498,7 @@ min(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<float>, 
       _bz_Min<P_numtype1, float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2)));
 }
 
@@ -515,7 +515,7 @@ min(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<double>, 
       _bz_Min<P_numtype1, double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2)));
 }
 
@@ -532,7 +532,7 @@ min(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<long double>, 
       _bz_Min<P_numtype1, long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2)));
 }
 #ifdef BZ_HAVE_COMPLEX
@@ -550,7 +550,7 @@ min(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       _bz_Min<P_numtype1, complex<T2> > > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2)));
 }
 #endif // BZ_HAVE_COMPLEX
@@ -570,7 +570,7 @@ min(Range d1,
       _bz_Min<int, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // Range min _bz_VecExpr<P_expr2>
@@ -604,7 +604,7 @@ min(Range d1,
       _bz_Min<int, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // Range min Range
@@ -638,7 +638,7 @@ min(Range d1,
       _bz_Min<int, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // Range min float
@@ -725,8 +725,8 @@ min(const TinyVector<P_numtype1, N_length1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_Min<P_numtype1, P_numtype2> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast()));
 }
 
 // TinyVector<P_numtype1, N_length1> min _bz_VecExpr<P_expr2>
@@ -742,7 +742,7 @@ min(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_Min<P_numtype1, typename P_expr2::T_numtype> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2));
 }
 
@@ -759,8 +759,8 @@ min(const TinyVector<P_numtype1, N_length1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_Min<P_numtype1, P_numtype2> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast()));
 }
 
 // TinyVector<P_numtype1, N_length1> min Range
@@ -776,7 +776,7 @@ min(const TinyVector<P_numtype1, N_length1>& d1,
       Range, 
       _bz_Min<P_numtype1, int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2));
 }
 
@@ -793,8 +793,8 @@ min(const TinyVector<P_numtype1, N_length1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_Min<P_numtype1, P_numtype2> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast()));
 }
 
 // TinyVector<P_numtype1, N_length1> min int
@@ -810,7 +810,7 @@ min(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<int>, 
       _bz_Min<P_numtype1, int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2)));
 }
 
@@ -827,7 +827,7 @@ min(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<float>, 
       _bz_Min<P_numtype1, float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2)));
 }
 
@@ -844,7 +844,7 @@ min(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<double>, 
       _bz_Min<P_numtype1, double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2)));
 }
 
@@ -861,7 +861,7 @@ min(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<long double>, 
       _bz_Min<P_numtype1, long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2)));
 }
 #ifdef BZ_HAVE_COMPLEX
@@ -879,7 +879,7 @@ min(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       _bz_Min<P_numtype1, complex<T2> > > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2)));
 }
 #endif // BZ_HAVE_COMPLEX
@@ -899,7 +899,7 @@ min(int d1,
       _bz_Min<int, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<int>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // int min _bz_VecExpr<P_expr2>
@@ -933,7 +933,7 @@ min(int d1,
       _bz_Min<int, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<int>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // int min TinyVector<P_numtype2, N_length2>
@@ -950,7 +950,7 @@ min(int d1,
       _bz_Min<int, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<int>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // float min Vector<P_numtype2>
@@ -967,7 +967,7 @@ min(float d1,
       _bz_Min<float, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<float>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // float min _bz_VecExpr<P_expr2>
@@ -1001,7 +1001,7 @@ min(float d1,
       _bz_Min<float, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<float>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // float min Range
@@ -1035,7 +1035,7 @@ min(float d1,
       _bz_Min<float, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<float>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // double min Vector<P_numtype2>
@@ -1052,7 +1052,7 @@ min(double d1,
       _bz_Min<double, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<double>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // double min _bz_VecExpr<P_expr2>
@@ -1086,7 +1086,7 @@ min(double d1,
       _bz_Min<double, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<double>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // double min Range
@@ -1120,7 +1120,7 @@ min(double d1,
       _bz_Min<double, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<double>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // long double min Vector<P_numtype2>
@@ -1137,7 +1137,7 @@ min(long double d1,
       _bz_Min<long double, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<long double>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // long double min _bz_VecExpr<P_expr2>
@@ -1171,7 +1171,7 @@ min(long double d1,
       _bz_Min<long double, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<long double>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // long double min Range
@@ -1205,7 +1205,7 @@ min(long double d1,
       _bz_Min<long double, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<long double>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 #ifdef BZ_HAVE_COMPLEX
 
@@ -1223,7 +1223,7 @@ min(complex<T1> d1,
       _bz_Min<complex<T1> , P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<complex<T1> > (d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 #endif // BZ_HAVE_COMPLEX
 
@@ -1263,7 +1263,7 @@ min(complex<T1> d1,
       _bz_Min<complex<T1> , P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<complex<T1> > (d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 #endif // BZ_HAVE_COMPLEX
 
@@ -1303,7 +1303,7 @@ min(complex<T1> d1,
       _bz_Min<complex<T1> , P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<complex<T1> > (d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 #endif // BZ_HAVE_COMPLEX
 
@@ -1324,8 +1324,8 @@ max(const Vector<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_Max<P_numtype1, P_numtype2> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast()));
 }
 
 // Vector<P_numtype1> max _bz_VecExpr<P_expr2>
@@ -1341,7 +1341,7 @@ max(const Vector<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_Max<P_numtype1, typename P_expr2::T_numtype> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2));
 }
 
@@ -1358,8 +1358,8 @@ max(const Vector<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_Max<P_numtype1, P_numtype2> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast()));
 }
 
 // Vector<P_numtype1> max Range
@@ -1375,7 +1375,7 @@ max(const Vector<P_numtype1>& d1,
       Range, 
       _bz_Max<P_numtype1, int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2));
 }
 
@@ -1392,8 +1392,8 @@ max(const Vector<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_Max<P_numtype1, P_numtype2> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast()));
 }
 
 // Vector<P_numtype1> max int
@@ -1409,7 +1409,7 @@ max(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<int>, 
       _bz_Max<P_numtype1, int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2)));
 }
 
@@ -1426,7 +1426,7 @@ max(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<float>, 
       _bz_Max<P_numtype1, float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2)));
 }
 
@@ -1443,7 +1443,7 @@ max(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<double>, 
       _bz_Max<P_numtype1, double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2)));
 }
 
@@ -1460,7 +1460,7 @@ max(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<long double>, 
       _bz_Max<P_numtype1, long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2)));
 }
 #ifdef BZ_HAVE_COMPLEX
@@ -1478,7 +1478,7 @@ max(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       _bz_Max<P_numtype1, complex<T2> > > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2)));
 }
 #endif // BZ_HAVE_COMPLEX
@@ -1498,7 +1498,7 @@ max(_bz_VecExpr<P_expr1> d1,
       _bz_Max<typename P_expr1::T_numtype, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // _bz_VecExpr<P_expr1> max _bz_VecExpr<P_expr2>
@@ -1532,7 +1532,7 @@ max(_bz_VecExpr<P_expr1> d1,
       _bz_Max<typename P_expr1::T_numtype, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // _bz_VecExpr<P_expr1> max Range
@@ -1566,7 +1566,7 @@ max(_bz_VecExpr<P_expr1> d1,
       _bz_Max<typename P_expr1::T_numtype, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // _bz_VecExpr<P_expr1> max int
@@ -1670,8 +1670,8 @@ max(const VectorPick<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_Max<P_numtype1, P_numtype2> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast()));
 }
 
 // VectorPick<P_numtype1> max _bz_VecExpr<P_expr2>
@@ -1687,7 +1687,7 @@ max(const VectorPick<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_Max<P_numtype1, typename P_expr2::T_numtype> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2));
 }
 
@@ -1704,8 +1704,8 @@ max(const VectorPick<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_Max<P_numtype1, P_numtype2> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast()));
 }
 
 // VectorPick<P_numtype1> max Range
@@ -1721,7 +1721,7 @@ max(const VectorPick<P_numtype1>& d1,
       Range, 
       _bz_Max<P_numtype1, int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2));
 }
 
@@ -1738,8 +1738,8 @@ max(const VectorPick<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_Max<P_numtype1, P_numtype2> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast()));
 }
 
 // VectorPick<P_numtype1> max int
@@ -1755,7 +1755,7 @@ max(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<int>, 
       _bz_Max<P_numtype1, int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2)));
 }
 
@@ -1772,7 +1772,7 @@ max(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<float>, 
       _bz_Max<P_numtype1, float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2)));
 }
 
@@ -1789,7 +1789,7 @@ max(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<double>, 
       _bz_Max<P_numtype1, double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2)));
 }
 
@@ -1806,7 +1806,7 @@ max(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<long double>, 
       _bz_Max<P_numtype1, long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2)));
 }
 #ifdef BZ_HAVE_COMPLEX
@@ -1824,7 +1824,7 @@ max(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       _bz_Max<P_numtype1, complex<T2> > > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2)));
 }
 #endif // BZ_HAVE_COMPLEX
@@ -1844,7 +1844,7 @@ max(Range d1,
       _bz_Max<int, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // Range max _bz_VecExpr<P_expr2>
@@ -1878,7 +1878,7 @@ max(Range d1,
       _bz_Max<int, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // Range max Range
@@ -1912,7 +1912,7 @@ max(Range d1,
       _bz_Max<int, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // Range max float
@@ -1999,8 +1999,8 @@ max(const TinyVector<P_numtype1, N_length1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_Max<P_numtype1, P_numtype2> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast()));
 }
 
 // TinyVector<P_numtype1, N_length1> max _bz_VecExpr<P_expr2>
@@ -2016,7 +2016,7 @@ max(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_Max<P_numtype1, typename P_expr2::T_numtype> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2));
 }
 
@@ -2033,8 +2033,8 @@ max(const TinyVector<P_numtype1, N_length1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_Max<P_numtype1, P_numtype2> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast()));
 }
 
 // TinyVector<P_numtype1, N_length1> max Range
@@ -2050,7 +2050,7 @@ max(const TinyVector<P_numtype1, N_length1>& d1,
       Range, 
       _bz_Max<P_numtype1, int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2));
 }
 
@@ -2067,8 +2067,8 @@ max(const TinyVector<P_numtype1, N_length1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_Max<P_numtype1, P_numtype2> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast()));
 }
 
 // TinyVector<P_numtype1, N_length1> max int
@@ -2084,7 +2084,7 @@ max(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<int>, 
       _bz_Max<P_numtype1, int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2)));
 }
 
@@ -2101,7 +2101,7 @@ max(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<float>, 
       _bz_Max<P_numtype1, float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2)));
 }
 
@@ -2118,7 +2118,7 @@ max(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<double>, 
       _bz_Max<P_numtype1, double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2)));
 }
 
@@ -2135,7 +2135,7 @@ max(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<long double>, 
       _bz_Max<P_numtype1, long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2)));
 }
 #ifdef BZ_HAVE_COMPLEX
@@ -2153,7 +2153,7 @@ max(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       _bz_Max<P_numtype1, complex<T2> > > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2)));
 }
 #endif // BZ_HAVE_COMPLEX
@@ -2173,7 +2173,7 @@ max(int d1,
       _bz_Max<int, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<int>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // int max _bz_VecExpr<P_expr2>
@@ -2207,7 +2207,7 @@ max(int d1,
       _bz_Max<int, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<int>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // int max TinyVector<P_numtype2, N_length2>
@@ -2224,7 +2224,7 @@ max(int d1,
       _bz_Max<int, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<int>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // float max Vector<P_numtype2>
@@ -2241,7 +2241,7 @@ max(float d1,
       _bz_Max<float, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<float>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // float max _bz_VecExpr<P_expr2>
@@ -2275,7 +2275,7 @@ max(float d1,
       _bz_Max<float, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<float>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // float max Range
@@ -2309,7 +2309,7 @@ max(float d1,
       _bz_Max<float, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<float>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // double max Vector<P_numtype2>
@@ -2326,7 +2326,7 @@ max(double d1,
       _bz_Max<double, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<double>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // double max _bz_VecExpr<P_expr2>
@@ -2360,7 +2360,7 @@ max(double d1,
       _bz_Max<double, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<double>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // double max Range
@@ -2394,7 +2394,7 @@ max(double d1,
       _bz_Max<double, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<double>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // long double max Vector<P_numtype2>
@@ -2411,7 +2411,7 @@ max(long double d1,
       _bz_Max<long double, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<long double>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // long double max _bz_VecExpr<P_expr2>
@@ -2445,7 +2445,7 @@ max(long double d1,
       _bz_Max<long double, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<long double>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 
 // long double max Range
@@ -2479,7 +2479,7 @@ max(long double d1,
       _bz_Max<long double, P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<long double>(d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 #ifdef BZ_HAVE_COMPLEX
 
@@ -2497,7 +2497,7 @@ max(complex<T1> d1,
       _bz_Max<complex<T1> , P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<complex<T1> > (d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 #endif // BZ_HAVE_COMPLEX
 
@@ -2537,7 +2537,7 @@ max(complex<T1> d1,
       _bz_Max<complex<T1> , P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<complex<T1> > (d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 #endif // BZ_HAVE_COMPLEX
 
@@ -2577,7 +2577,7 @@ max(complex<T1> d1,
       _bz_Max<complex<T1> , P_numtype2> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(_bz_VecExprConstant<complex<T1> > (d1), 
-      d2.begin()));
+      d2.beginFast()));
 }
 #endif // BZ_HAVE_COMPLEX
 

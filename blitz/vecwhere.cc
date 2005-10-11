@@ -22,7 +22,7 @@
  */ 
 
 // Generated source file.  Do not edit. 
-// genvecwhere.cpp Dec 10 2003 17:58:35
+// genvecwhere.cpp Oct  6 2005 15:58:49
 
 #ifndef BZ_VECWHERE_CC
 #define BZ_VECWHERE_CC
@@ -43,9 +43,9 @@ where(const Vector<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, Vector<P_numtype2>, _bz_VecExpr<P_expr3>)
@@ -62,8 +62,8 @@ where(const Vector<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -81,9 +81,9 @@ where(const Vector<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, Vector<P_numtype2>, Range)
@@ -100,8 +100,8 @@ where(const Vector<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -119,9 +119,9 @@ where(const Vector<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, Vector<P_numtype2>, int)
@@ -138,8 +138,8 @@ where(const Vector<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_VecExprConstant<int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<int>(d3)));
 }
 
@@ -157,8 +157,8 @@ where(const Vector<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_VecExprConstant<float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<float>(d3)));
 }
 
@@ -176,8 +176,8 @@ where(const Vector<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_VecExprConstant<double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<double>(d3)));
 }
 
@@ -195,8 +195,8 @@ where(const Vector<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_VecExprConstant<long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<long double>(d3)));
 }
 
@@ -215,8 +215,8 @@ where(const Vector<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
 #endif // BZ_HAVE_COMPLEX
@@ -235,9 +235,9 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, _bz_VecExpr<P_expr2>, _bz_VecExpr<P_expr3>)
@@ -254,7 +254,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       d3));
 }
@@ -273,9 +273,9 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, _bz_VecExpr<P_expr2>, Range)
@@ -292,7 +292,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       d3));
 }
@@ -311,9 +311,9 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, _bz_VecExpr<P_expr2>, int)
@@ -330,7 +330,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_VecExprConstant<int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<int>(d3)));
 }
@@ -349,7 +349,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_VecExprConstant<float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<float>(d3)));
 }
@@ -368,7 +368,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_VecExprConstant<double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<double>(d3)));
 }
@@ -387,7 +387,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_VecExprConstant<long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<long double>(d3)));
 }
@@ -407,7 +407,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
@@ -427,9 +427,9 @@ where(const Vector<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, VectorPick<P_numtype2>, _bz_VecExpr<P_expr3>)
@@ -446,8 +446,8 @@ where(const Vector<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -465,9 +465,9 @@ where(const Vector<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, VectorPick<P_numtype2>, Range)
@@ -484,8 +484,8 @@ where(const Vector<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -503,9 +503,9 @@ where(const Vector<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, VectorPick<P_numtype2>, int)
@@ -522,8 +522,8 @@ where(const Vector<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_VecExprConstant<int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<int>(d3)));
 }
 
@@ -541,8 +541,8 @@ where(const Vector<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_VecExprConstant<float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<float>(d3)));
 }
 
@@ -560,8 +560,8 @@ where(const Vector<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_VecExprConstant<double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<double>(d3)));
 }
 
@@ -579,8 +579,8 @@ where(const Vector<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_VecExprConstant<long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<long double>(d3)));
 }
 
@@ -599,8 +599,8 @@ where(const Vector<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
 #endif // BZ_HAVE_COMPLEX
@@ -619,9 +619,9 @@ where(const Vector<P_numtype1>& d1,
       Range, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, Range, _bz_VecExpr<P_expr3>)
@@ -638,7 +638,7 @@ where(const Vector<P_numtype1>& d1,
       Range, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       d3));
 }
@@ -657,9 +657,9 @@ where(const Vector<P_numtype1>& d1,
       Range, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, Range, Range)
@@ -676,7 +676,7 @@ where(const Vector<P_numtype1>& d1,
       Range, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       d3));
 }
@@ -695,9 +695,9 @@ where(const Vector<P_numtype1>& d1,
       Range, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, Range, int)
@@ -714,7 +714,7 @@ where(const Vector<P_numtype1>& d1,
       Range, 
       _bz_VecExprConstant<int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<int>(d3)));
 }
@@ -733,7 +733,7 @@ where(const Vector<P_numtype1>& d1,
       Range, 
       _bz_VecExprConstant<float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<float>(d3)));
 }
@@ -752,7 +752,7 @@ where(const Vector<P_numtype1>& d1,
       Range, 
       _bz_VecExprConstant<double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<double>(d3)));
 }
@@ -771,7 +771,7 @@ where(const Vector<P_numtype1>& d1,
       Range, 
       _bz_VecExprConstant<long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<long double>(d3)));
 }
@@ -791,7 +791,7 @@ where(const Vector<P_numtype1>& d1,
       Range, 
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
@@ -811,9 +811,9 @@ where(const Vector<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, TinyVector<P_numtype2, N_length2>, _bz_VecExpr<P_expr3>)
@@ -830,8 +830,8 @@ where(const Vector<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -849,9 +849,9 @@ where(const Vector<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, TinyVector<P_numtype2, N_length2>, Range)
@@ -868,8 +868,8 @@ where(const Vector<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -887,9 +887,9 @@ where(const Vector<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, TinyVector<P_numtype2, N_length2>, int)
@@ -906,8 +906,8 @@ where(const Vector<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_VecExprConstant<int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<int>(d3)));
 }
 
@@ -925,8 +925,8 @@ where(const Vector<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_VecExprConstant<float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<float>(d3)));
 }
 
@@ -944,8 +944,8 @@ where(const Vector<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_VecExprConstant<double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<double>(d3)));
 }
 
@@ -963,8 +963,8 @@ where(const Vector<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_VecExprConstant<long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<long double>(d3)));
 }
 
@@ -983,8 +983,8 @@ where(const Vector<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
 #endif // BZ_HAVE_COMPLEX
@@ -1003,9 +1003,9 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<int>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, int, _bz_VecExpr<P_expr3>)
@@ -1022,7 +1022,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<int>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2), 
       d3));
 }
@@ -1041,9 +1041,9 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<int>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, int, Range)
@@ -1060,7 +1060,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<int>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2), 
       d3));
 }
@@ -1079,9 +1079,9 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<int>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, int, int)
@@ -1098,7 +1098,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<int>, 
       _bz_VecExprConstant<int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2), 
       _bz_VecExprConstant<int>(d3)));
 }
@@ -1117,9 +1117,9 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<float>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, float, _bz_VecExpr<P_expr3>)
@@ -1136,7 +1136,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<float>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2), 
       d3));
 }
@@ -1155,9 +1155,9 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<float>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, float, Range)
@@ -1174,7 +1174,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<float>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2), 
       d3));
 }
@@ -1193,9 +1193,9 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<float>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, float, float)
@@ -1212,7 +1212,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<float>, 
       _bz_VecExprConstant<float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2), 
       _bz_VecExprConstant<float>(d3)));
 }
@@ -1231,9 +1231,9 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<double>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, double, _bz_VecExpr<P_expr3>)
@@ -1250,7 +1250,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<double>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2), 
       d3));
 }
@@ -1269,9 +1269,9 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<double>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, double, Range)
@@ -1288,7 +1288,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<double>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2), 
       d3));
 }
@@ -1307,9 +1307,9 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<double>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, double, double)
@@ -1326,7 +1326,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<double>, 
       _bz_VecExprConstant<double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2), 
       _bz_VecExprConstant<double>(d3)));
 }
@@ -1345,9 +1345,9 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<long double>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, long double, _bz_VecExpr<P_expr3>)
@@ -1364,7 +1364,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<long double>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2), 
       d3));
 }
@@ -1383,9 +1383,9 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<long double>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, long double, Range)
@@ -1402,7 +1402,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<long double>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2), 
       d3));
 }
@@ -1421,9 +1421,9 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<long double>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Vector<P_numtype1>, long double, long double)
@@ -1440,7 +1440,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<long double>, 
       _bz_VecExprConstant<long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2), 
       _bz_VecExprConstant<long double>(d3)));
 }
@@ -1460,9 +1460,9 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 #endif // BZ_HAVE_COMPLEX
 
@@ -1481,7 +1481,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2), 
       d3));
 }
@@ -1502,9 +1502,9 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 #endif // BZ_HAVE_COMPLEX
 
@@ -1523,7 +1523,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2), 
       d3));
 }
@@ -1544,9 +1544,9 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 #endif // BZ_HAVE_COMPLEX
 
@@ -1565,7 +1565,7 @@ where(const Vector<P_numtype1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2), 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
@@ -1586,8 +1586,8 @@ where(_bz_VecExpr<P_expr1> d1,
       VectorIterConst<P_numtype3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
-      d3.begin()));
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, Vector<P_numtype2>, _bz_VecExpr<P_expr3>)
@@ -1605,7 +1605,7 @@ where(_bz_VecExpr<P_expr1> d1,
       _bz_VecExpr<P_expr3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -1624,8 +1624,8 @@ where(_bz_VecExpr<P_expr1> d1,
       VectorPickIterConst<P_numtype3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
-      d3.begin()));
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, Vector<P_numtype2>, Range)
@@ -1643,7 +1643,7 @@ where(_bz_VecExpr<P_expr1> d1,
       Range > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -1662,8 +1662,8 @@ where(_bz_VecExpr<P_expr1> d1,
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
-      d3.begin()));
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, Vector<P_numtype2>, int)
@@ -1681,7 +1681,7 @@ where(_bz_VecExpr<P_expr1> d1,
       _bz_VecExprConstant<int> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<int>(d3)));
 }
 
@@ -1700,7 +1700,7 @@ where(_bz_VecExpr<P_expr1> d1,
       _bz_VecExprConstant<float> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<float>(d3)));
 }
 
@@ -1719,7 +1719,7 @@ where(_bz_VecExpr<P_expr1> d1,
       _bz_VecExprConstant<double> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<double>(d3)));
 }
 
@@ -1738,7 +1738,7 @@ where(_bz_VecExpr<P_expr1> d1,
       _bz_VecExprConstant<long double> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<long double>(d3)));
 }
 
@@ -1758,7 +1758,7 @@ where(_bz_VecExpr<P_expr1> d1,
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
 #endif // BZ_HAVE_COMPLEX
@@ -1779,7 +1779,7 @@ where(_bz_VecExpr<P_expr1> d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, _bz_VecExpr<P_expr2>, _bz_VecExpr<P_expr3>)
@@ -1817,7 +1817,7 @@ where(_bz_VecExpr<P_expr1> d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, _bz_VecExpr<P_expr2>, Range)
@@ -1855,7 +1855,7 @@ where(_bz_VecExpr<P_expr1> d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, _bz_VecExpr<P_expr2>, int)
@@ -1970,8 +1970,8 @@ where(_bz_VecExpr<P_expr1> d1,
       VectorIterConst<P_numtype3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
-      d3.begin()));
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, VectorPick<P_numtype2>, _bz_VecExpr<P_expr3>)
@@ -1989,7 +1989,7 @@ where(_bz_VecExpr<P_expr1> d1,
       _bz_VecExpr<P_expr3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -2008,8 +2008,8 @@ where(_bz_VecExpr<P_expr1> d1,
       VectorPickIterConst<P_numtype3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
-      d3.begin()));
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, VectorPick<P_numtype2>, Range)
@@ -2027,7 +2027,7 @@ where(_bz_VecExpr<P_expr1> d1,
       Range > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -2046,8 +2046,8 @@ where(_bz_VecExpr<P_expr1> d1,
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
-      d3.begin()));
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, VectorPick<P_numtype2>, int)
@@ -2065,7 +2065,7 @@ where(_bz_VecExpr<P_expr1> d1,
       _bz_VecExprConstant<int> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<int>(d3)));
 }
 
@@ -2084,7 +2084,7 @@ where(_bz_VecExpr<P_expr1> d1,
       _bz_VecExprConstant<float> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<float>(d3)));
 }
 
@@ -2103,7 +2103,7 @@ where(_bz_VecExpr<P_expr1> d1,
       _bz_VecExprConstant<double> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<double>(d3)));
 }
 
@@ -2122,7 +2122,7 @@ where(_bz_VecExpr<P_expr1> d1,
       _bz_VecExprConstant<long double> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<long double>(d3)));
 }
 
@@ -2142,7 +2142,7 @@ where(_bz_VecExpr<P_expr1> d1,
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
 #endif // BZ_HAVE_COMPLEX
@@ -2163,7 +2163,7 @@ where(_bz_VecExpr<P_expr1> d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, Range, _bz_VecExpr<P_expr3>)
@@ -2201,7 +2201,7 @@ where(_bz_VecExpr<P_expr1> d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, Range, Range)
@@ -2239,7 +2239,7 @@ where(_bz_VecExpr<P_expr1> d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, Range, int)
@@ -2354,8 +2354,8 @@ where(_bz_VecExpr<P_expr1> d1,
       VectorIterConst<P_numtype3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
-      d3.begin()));
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, TinyVector<P_numtype2, N_length2>, _bz_VecExpr<P_expr3>)
@@ -2373,7 +2373,7 @@ where(_bz_VecExpr<P_expr1> d1,
       _bz_VecExpr<P_expr3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -2392,8 +2392,8 @@ where(_bz_VecExpr<P_expr1> d1,
       VectorPickIterConst<P_numtype3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
-      d3.begin()));
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, TinyVector<P_numtype2, N_length2>, Range)
@@ -2411,7 +2411,7 @@ where(_bz_VecExpr<P_expr1> d1,
       Range > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -2430,8 +2430,8 @@ where(_bz_VecExpr<P_expr1> d1,
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
-      d3.begin()));
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, TinyVector<P_numtype2, N_length2>, int)
@@ -2449,7 +2449,7 @@ where(_bz_VecExpr<P_expr1> d1,
       _bz_VecExprConstant<int> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<int>(d3)));
 }
 
@@ -2468,7 +2468,7 @@ where(_bz_VecExpr<P_expr1> d1,
       _bz_VecExprConstant<float> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<float>(d3)));
 }
 
@@ -2487,7 +2487,7 @@ where(_bz_VecExpr<P_expr1> d1,
       _bz_VecExprConstant<double> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<double>(d3)));
 }
 
@@ -2506,7 +2506,7 @@ where(_bz_VecExpr<P_expr1> d1,
       _bz_VecExprConstant<long double> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<long double>(d3)));
 }
 
@@ -2526,7 +2526,7 @@ where(_bz_VecExpr<P_expr1> d1,
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
 #endif // BZ_HAVE_COMPLEX
@@ -2547,7 +2547,7 @@ where(_bz_VecExpr<P_expr1> d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<int>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, int, _bz_VecExpr<P_expr3>)
@@ -2585,7 +2585,7 @@ where(_bz_VecExpr<P_expr1> d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<int>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, int, Range)
@@ -2623,7 +2623,7 @@ where(_bz_VecExpr<P_expr1> d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<int>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, int, int)
@@ -2661,7 +2661,7 @@ where(_bz_VecExpr<P_expr1> d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<float>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, float, _bz_VecExpr<P_expr3>)
@@ -2699,7 +2699,7 @@ where(_bz_VecExpr<P_expr1> d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<float>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, float, Range)
@@ -2737,7 +2737,7 @@ where(_bz_VecExpr<P_expr1> d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<float>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, float, float)
@@ -2775,7 +2775,7 @@ where(_bz_VecExpr<P_expr1> d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, double, _bz_VecExpr<P_expr3>)
@@ -2813,7 +2813,7 @@ where(_bz_VecExpr<P_expr1> d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, double, Range)
@@ -2851,7 +2851,7 @@ where(_bz_VecExpr<P_expr1> d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, double, double)
@@ -2889,7 +2889,7 @@ where(_bz_VecExpr<P_expr1> d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<long double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, long double, _bz_VecExpr<P_expr3>)
@@ -2927,7 +2927,7 @@ where(_bz_VecExpr<P_expr1> d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<long double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, long double, Range)
@@ -2965,7 +2965,7 @@ where(_bz_VecExpr<P_expr1> d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<long double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(_bz_VecExpr<P_expr1>, long double, long double)
@@ -3004,7 +3004,7 @@ where(_bz_VecExpr<P_expr1> d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<complex<T2> > (d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 #endif // BZ_HAVE_COMPLEX
 
@@ -3046,7 +3046,7 @@ where(_bz_VecExpr<P_expr1> d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<complex<T2> > (d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 #endif // BZ_HAVE_COMPLEX
 
@@ -3088,7 +3088,7 @@ where(_bz_VecExpr<P_expr1> d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<complex<T2> > (d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 #endif // BZ_HAVE_COMPLEX
 
@@ -3127,9 +3127,9 @@ where(const VectorPick<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, Vector<P_numtype2>, _bz_VecExpr<P_expr3>)
@@ -3146,8 +3146,8 @@ where(const VectorPick<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -3165,9 +3165,9 @@ where(const VectorPick<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, Vector<P_numtype2>, Range)
@@ -3184,8 +3184,8 @@ where(const VectorPick<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -3203,9 +3203,9 @@ where(const VectorPick<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, Vector<P_numtype2>, int)
@@ -3222,8 +3222,8 @@ where(const VectorPick<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_VecExprConstant<int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<int>(d3)));
 }
 
@@ -3241,8 +3241,8 @@ where(const VectorPick<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_VecExprConstant<float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<float>(d3)));
 }
 
@@ -3260,8 +3260,8 @@ where(const VectorPick<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_VecExprConstant<double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<double>(d3)));
 }
 
@@ -3279,8 +3279,8 @@ where(const VectorPick<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_VecExprConstant<long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<long double>(d3)));
 }
 
@@ -3299,8 +3299,8 @@ where(const VectorPick<P_numtype1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
 #endif // BZ_HAVE_COMPLEX
@@ -3319,9 +3319,9 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, _bz_VecExpr<P_expr2>, _bz_VecExpr<P_expr3>)
@@ -3338,7 +3338,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       d3));
 }
@@ -3357,9 +3357,9 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, _bz_VecExpr<P_expr2>, Range)
@@ -3376,7 +3376,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       d3));
 }
@@ -3395,9 +3395,9 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, _bz_VecExpr<P_expr2>, int)
@@ -3414,7 +3414,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_VecExprConstant<int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<int>(d3)));
 }
@@ -3433,7 +3433,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_VecExprConstant<float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<float>(d3)));
 }
@@ -3452,7 +3452,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_VecExprConstant<double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<double>(d3)));
 }
@@ -3471,7 +3471,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_VecExprConstant<long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<long double>(d3)));
 }
@@ -3491,7 +3491,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
@@ -3511,9 +3511,9 @@ where(const VectorPick<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, VectorPick<P_numtype2>, _bz_VecExpr<P_expr3>)
@@ -3530,8 +3530,8 @@ where(const VectorPick<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -3549,9 +3549,9 @@ where(const VectorPick<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, VectorPick<P_numtype2>, Range)
@@ -3568,8 +3568,8 @@ where(const VectorPick<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -3587,9 +3587,9 @@ where(const VectorPick<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, VectorPick<P_numtype2>, int)
@@ -3606,8 +3606,8 @@ where(const VectorPick<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_VecExprConstant<int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<int>(d3)));
 }
 
@@ -3625,8 +3625,8 @@ where(const VectorPick<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_VecExprConstant<float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<float>(d3)));
 }
 
@@ -3644,8 +3644,8 @@ where(const VectorPick<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_VecExprConstant<double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<double>(d3)));
 }
 
@@ -3663,8 +3663,8 @@ where(const VectorPick<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_VecExprConstant<long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<long double>(d3)));
 }
 
@@ -3683,8 +3683,8 @@ where(const VectorPick<P_numtype1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
 #endif // BZ_HAVE_COMPLEX
@@ -3703,9 +3703,9 @@ where(const VectorPick<P_numtype1>& d1,
       Range, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, Range, _bz_VecExpr<P_expr3>)
@@ -3722,7 +3722,7 @@ where(const VectorPick<P_numtype1>& d1,
       Range, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       d3));
 }
@@ -3741,9 +3741,9 @@ where(const VectorPick<P_numtype1>& d1,
       Range, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, Range, Range)
@@ -3760,7 +3760,7 @@ where(const VectorPick<P_numtype1>& d1,
       Range, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       d3));
 }
@@ -3779,9 +3779,9 @@ where(const VectorPick<P_numtype1>& d1,
       Range, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, Range, int)
@@ -3798,7 +3798,7 @@ where(const VectorPick<P_numtype1>& d1,
       Range, 
       _bz_VecExprConstant<int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<int>(d3)));
 }
@@ -3817,7 +3817,7 @@ where(const VectorPick<P_numtype1>& d1,
       Range, 
       _bz_VecExprConstant<float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<float>(d3)));
 }
@@ -3836,7 +3836,7 @@ where(const VectorPick<P_numtype1>& d1,
       Range, 
       _bz_VecExprConstant<double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<double>(d3)));
 }
@@ -3855,7 +3855,7 @@ where(const VectorPick<P_numtype1>& d1,
       Range, 
       _bz_VecExprConstant<long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<long double>(d3)));
 }
@@ -3875,7 +3875,7 @@ where(const VectorPick<P_numtype1>& d1,
       Range, 
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
@@ -3895,9 +3895,9 @@ where(const VectorPick<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, TinyVector<P_numtype2, N_length2>, _bz_VecExpr<P_expr3>)
@@ -3914,8 +3914,8 @@ where(const VectorPick<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -3933,9 +3933,9 @@ where(const VectorPick<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, TinyVector<P_numtype2, N_length2>, Range)
@@ -3952,8 +3952,8 @@ where(const VectorPick<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -3971,9 +3971,9 @@ where(const VectorPick<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, TinyVector<P_numtype2, N_length2>, int)
@@ -3990,8 +3990,8 @@ where(const VectorPick<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_VecExprConstant<int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<int>(d3)));
 }
 
@@ -4009,8 +4009,8 @@ where(const VectorPick<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_VecExprConstant<float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<float>(d3)));
 }
 
@@ -4028,8 +4028,8 @@ where(const VectorPick<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_VecExprConstant<double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<double>(d3)));
 }
 
@@ -4047,8 +4047,8 @@ where(const VectorPick<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_VecExprConstant<long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<long double>(d3)));
 }
 
@@ -4067,8 +4067,8 @@ where(const VectorPick<P_numtype1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
 #endif // BZ_HAVE_COMPLEX
@@ -4087,9 +4087,9 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<int>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, int, _bz_VecExpr<P_expr3>)
@@ -4106,7 +4106,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<int>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2), 
       d3));
 }
@@ -4125,9 +4125,9 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<int>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, int, Range)
@@ -4144,7 +4144,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<int>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2), 
       d3));
 }
@@ -4163,9 +4163,9 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<int>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, int, int)
@@ -4182,7 +4182,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<int>, 
       _bz_VecExprConstant<int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2), 
       _bz_VecExprConstant<int>(d3)));
 }
@@ -4201,9 +4201,9 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<float>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, float, _bz_VecExpr<P_expr3>)
@@ -4220,7 +4220,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<float>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2), 
       d3));
 }
@@ -4239,9 +4239,9 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<float>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, float, Range)
@@ -4258,7 +4258,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<float>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2), 
       d3));
 }
@@ -4277,9 +4277,9 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<float>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, float, float)
@@ -4296,7 +4296,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<float>, 
       _bz_VecExprConstant<float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2), 
       _bz_VecExprConstant<float>(d3)));
 }
@@ -4315,9 +4315,9 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<double>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, double, _bz_VecExpr<P_expr3>)
@@ -4334,7 +4334,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<double>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2), 
       d3));
 }
@@ -4353,9 +4353,9 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<double>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, double, Range)
@@ -4372,7 +4372,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<double>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2), 
       d3));
 }
@@ -4391,9 +4391,9 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<double>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, double, double)
@@ -4410,7 +4410,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<double>, 
       _bz_VecExprConstant<double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2), 
       _bz_VecExprConstant<double>(d3)));
 }
@@ -4429,9 +4429,9 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<long double>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, long double, _bz_VecExpr<P_expr3>)
@@ -4448,7 +4448,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<long double>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2), 
       d3));
 }
@@ -4467,9 +4467,9 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<long double>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, long double, Range)
@@ -4486,7 +4486,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<long double>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2), 
       d3));
 }
@@ -4505,9 +4505,9 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<long double>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(VectorPick<P_numtype1>, long double, long double)
@@ -4524,7 +4524,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<long double>, 
       _bz_VecExprConstant<long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2), 
       _bz_VecExprConstant<long double>(d3)));
 }
@@ -4544,9 +4544,9 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 #endif // BZ_HAVE_COMPLEX
 
@@ -4565,7 +4565,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2), 
       d3));
 }
@@ -4586,9 +4586,9 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 #endif // BZ_HAVE_COMPLEX
 
@@ -4607,7 +4607,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2), 
       d3));
 }
@@ -4628,9 +4628,9 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 #endif // BZ_HAVE_COMPLEX
 
@@ -4649,7 +4649,7 @@ where(const VectorPick<P_numtype1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2), 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
@@ -4670,8 +4670,8 @@ where(Range d1,
       VectorIterConst<P_numtype3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
-      d3.begin()));
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(Range, Vector<P_numtype2>, _bz_VecExpr<P_expr3>)
@@ -4689,7 +4689,7 @@ where(Range d1,
       _bz_VecExpr<P_expr3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -4708,8 +4708,8 @@ where(Range d1,
       VectorPickIterConst<P_numtype3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
-      d3.begin()));
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(Range, Vector<P_numtype2>, Range)
@@ -4727,7 +4727,7 @@ where(Range d1,
       Range > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -4746,8 +4746,8 @@ where(Range d1,
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
-      d3.begin()));
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(Range, Vector<P_numtype2>, int)
@@ -4765,7 +4765,7 @@ where(Range d1,
       _bz_VecExprConstant<int> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<int>(d3)));
 }
 
@@ -4784,7 +4784,7 @@ where(Range d1,
       _bz_VecExprConstant<float> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<float>(d3)));
 }
 
@@ -4803,7 +4803,7 @@ where(Range d1,
       _bz_VecExprConstant<double> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<double>(d3)));
 }
 
@@ -4822,7 +4822,7 @@ where(Range d1,
       _bz_VecExprConstant<long double> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<long double>(d3)));
 }
 
@@ -4842,7 +4842,7 @@ where(Range d1,
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
 #endif // BZ_HAVE_COMPLEX
@@ -4863,7 +4863,7 @@ where(Range d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Range, _bz_VecExpr<P_expr2>, _bz_VecExpr<P_expr3>)
@@ -4901,7 +4901,7 @@ where(Range d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Range, _bz_VecExpr<P_expr2>, Range)
@@ -4939,7 +4939,7 @@ where(Range d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Range, _bz_VecExpr<P_expr2>, int)
@@ -5054,8 +5054,8 @@ where(Range d1,
       VectorIterConst<P_numtype3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
-      d3.begin()));
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(Range, VectorPick<P_numtype2>, _bz_VecExpr<P_expr3>)
@@ -5073,7 +5073,7 @@ where(Range d1,
       _bz_VecExpr<P_expr3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -5092,8 +5092,8 @@ where(Range d1,
       VectorPickIterConst<P_numtype3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
-      d3.begin()));
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(Range, VectorPick<P_numtype2>, Range)
@@ -5111,7 +5111,7 @@ where(Range d1,
       Range > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -5130,8 +5130,8 @@ where(Range d1,
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
-      d3.begin()));
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(Range, VectorPick<P_numtype2>, int)
@@ -5149,7 +5149,7 @@ where(Range d1,
       _bz_VecExprConstant<int> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<int>(d3)));
 }
 
@@ -5168,7 +5168,7 @@ where(Range d1,
       _bz_VecExprConstant<float> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<float>(d3)));
 }
 
@@ -5187,7 +5187,7 @@ where(Range d1,
       _bz_VecExprConstant<double> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<double>(d3)));
 }
 
@@ -5206,7 +5206,7 @@ where(Range d1,
       _bz_VecExprConstant<long double> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<long double>(d3)));
 }
 
@@ -5226,7 +5226,7 @@ where(Range d1,
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
 #endif // BZ_HAVE_COMPLEX
@@ -5247,7 +5247,7 @@ where(Range d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Range, Range, _bz_VecExpr<P_expr3>)
@@ -5285,7 +5285,7 @@ where(Range d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Range, Range, Range)
@@ -5323,7 +5323,7 @@ where(Range d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Range, Range, int)
@@ -5438,8 +5438,8 @@ where(Range d1,
       VectorIterConst<P_numtype3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
-      d3.begin()));
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(Range, TinyVector<P_numtype2, N_length2>, _bz_VecExpr<P_expr3>)
@@ -5457,7 +5457,7 @@ where(Range d1,
       _bz_VecExpr<P_expr3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -5476,8 +5476,8 @@ where(Range d1,
       VectorPickIterConst<P_numtype3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
-      d3.begin()));
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(Range, TinyVector<P_numtype2, N_length2>, Range)
@@ -5495,7 +5495,7 @@ where(Range d1,
       Range > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -5514,8 +5514,8 @@ where(Range d1,
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
-      d3.begin()));
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(Range, TinyVector<P_numtype2, N_length2>, int)
@@ -5533,7 +5533,7 @@ where(Range d1,
       _bz_VecExprConstant<int> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<int>(d3)));
 }
 
@@ -5552,7 +5552,7 @@ where(Range d1,
       _bz_VecExprConstant<float> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<float>(d3)));
 }
 
@@ -5571,7 +5571,7 @@ where(Range d1,
       _bz_VecExprConstant<double> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<double>(d3)));
 }
 
@@ -5590,7 +5590,7 @@ where(Range d1,
       _bz_VecExprConstant<long double> > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<long double>(d3)));
 }
 
@@ -5610,7 +5610,7 @@ where(Range d1,
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
-      d2.begin(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
 #endif // BZ_HAVE_COMPLEX
@@ -5631,7 +5631,7 @@ where(Range d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<int>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Range, int, _bz_VecExpr<P_expr3>)
@@ -5669,7 +5669,7 @@ where(Range d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<int>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Range, int, Range)
@@ -5707,7 +5707,7 @@ where(Range d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<int>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Range, int, int)
@@ -5745,7 +5745,7 @@ where(Range d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<float>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Range, float, _bz_VecExpr<P_expr3>)
@@ -5783,7 +5783,7 @@ where(Range d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<float>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Range, float, Range)
@@ -5821,7 +5821,7 @@ where(Range d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<float>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Range, float, float)
@@ -5859,7 +5859,7 @@ where(Range d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Range, double, _bz_VecExpr<P_expr3>)
@@ -5897,7 +5897,7 @@ where(Range d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Range, double, Range)
@@ -5935,7 +5935,7 @@ where(Range d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Range, double, double)
@@ -5973,7 +5973,7 @@ where(Range d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<long double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Range, long double, _bz_VecExpr<P_expr3>)
@@ -6011,7 +6011,7 @@ where(Range d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<long double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Range, long double, Range)
@@ -6049,7 +6049,7 @@ where(Range d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<long double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(Range, long double, long double)
@@ -6088,7 +6088,7 @@ where(Range d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<complex<T2> > (d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 #endif // BZ_HAVE_COMPLEX
 
@@ -6130,7 +6130,7 @@ where(Range d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<complex<T2> > (d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 #endif // BZ_HAVE_COMPLEX
 
@@ -6172,7 +6172,7 @@ where(Range d1,
 
     return _bz_VecExpr<T_expr>(T_expr(d1, 
       _bz_VecExprConstant<complex<T2> > (d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 #endif // BZ_HAVE_COMPLEX
 
@@ -6211,9 +6211,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       VectorIterConst<P_numtype2>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, Vector<P_numtype2>, _bz_VecExpr<P_expr3>)
@@ -6230,8 +6230,8 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -6249,9 +6249,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       VectorIterConst<P_numtype2>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, Vector<P_numtype2>, Range)
@@ -6268,8 +6268,8 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       VectorIterConst<P_numtype2>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -6287,9 +6287,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       VectorIterConst<P_numtype2>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, Vector<P_numtype2>, int)
@@ -6306,8 +6306,8 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_VecExprConstant<int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<int>(d3)));
 }
 
@@ -6325,8 +6325,8 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_VecExprConstant<float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<float>(d3)));
 }
 
@@ -6344,8 +6344,8 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_VecExprConstant<double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<double>(d3)));
 }
 
@@ -6363,8 +6363,8 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_VecExprConstant<long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<long double>(d3)));
 }
 
@@ -6383,8 +6383,8 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       VectorIterConst<P_numtype2>, 
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
 #endif // BZ_HAVE_COMPLEX
@@ -6403,9 +6403,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExpr<P_expr2>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, _bz_VecExpr<P_expr2>, _bz_VecExpr<P_expr3>)
@@ -6422,7 +6422,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       d3));
 }
@@ -6441,9 +6441,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExpr<P_expr2>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, _bz_VecExpr<P_expr2>, Range)
@@ -6460,7 +6460,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExpr<P_expr2>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       d3));
 }
@@ -6479,9 +6479,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExpr<P_expr2>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, _bz_VecExpr<P_expr2>, int)
@@ -6498,7 +6498,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_VecExprConstant<int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<int>(d3)));
 }
@@ -6517,7 +6517,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_VecExprConstant<float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<float>(d3)));
 }
@@ -6536,7 +6536,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_VecExprConstant<double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<double>(d3)));
 }
@@ -6555,7 +6555,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_VecExprConstant<long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<long double>(d3)));
 }
@@ -6575,7 +6575,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExpr<P_expr2>, 
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
@@ -6595,9 +6595,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       VectorPickIterConst<P_numtype2>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, VectorPick<P_numtype2>, _bz_VecExpr<P_expr3>)
@@ -6614,8 +6614,8 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -6633,9 +6633,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       VectorPickIterConst<P_numtype2>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, VectorPick<P_numtype2>, Range)
@@ -6652,8 +6652,8 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       VectorPickIterConst<P_numtype2>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -6671,9 +6671,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       VectorPickIterConst<P_numtype2>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, VectorPick<P_numtype2>, int)
@@ -6690,8 +6690,8 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_VecExprConstant<int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<int>(d3)));
 }
 
@@ -6709,8 +6709,8 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_VecExprConstant<float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<float>(d3)));
 }
 
@@ -6728,8 +6728,8 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_VecExprConstant<double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<double>(d3)));
 }
 
@@ -6747,8 +6747,8 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_VecExprConstant<long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<long double>(d3)));
 }
 
@@ -6767,8 +6767,8 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       VectorPickIterConst<P_numtype2>, 
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
 #endif // BZ_HAVE_COMPLEX
@@ -6787,9 +6787,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       Range, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, Range, _bz_VecExpr<P_expr3>)
@@ -6806,7 +6806,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       Range, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       d3));
 }
@@ -6825,9 +6825,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       Range, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, Range, Range)
@@ -6844,7 +6844,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       Range, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       d3));
 }
@@ -6863,9 +6863,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       Range, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, Range, int)
@@ -6882,7 +6882,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       Range, 
       _bz_VecExprConstant<int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<int>(d3)));
 }
@@ -6901,7 +6901,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       Range, 
       _bz_VecExprConstant<float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<float>(d3)));
 }
@@ -6920,7 +6920,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       Range, 
       _bz_VecExprConstant<double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<double>(d3)));
 }
@@ -6939,7 +6939,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       Range, 
       _bz_VecExprConstant<long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<long double>(d3)));
 }
@@ -6959,7 +6959,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       Range, 
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       d2, 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
@@ -6979,9 +6979,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, TinyVector<P_numtype2, N_length2>, _bz_VecExpr<P_expr3>)
@@ -6998,8 +6998,8 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -7017,9 +7017,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, TinyVector<P_numtype2, N_length2>, Range)
@@ -7036,8 +7036,8 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       d3));
 }
 
@@ -7055,9 +7055,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
-      d3.begin()));
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, TinyVector<P_numtype2, N_length2>, int)
@@ -7074,8 +7074,8 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_VecExprConstant<int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<int>(d3)));
 }
 
@@ -7093,8 +7093,8 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_VecExprConstant<float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<float>(d3)));
 }
 
@@ -7112,8 +7112,8 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_VecExprConstant<double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<double>(d3)));
 }
 
@@ -7131,8 +7131,8 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_VecExprConstant<long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<long double>(d3)));
 }
 
@@ -7151,8 +7151,8 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       TinyVectorIterConst<P_numtype2, N_length2>, 
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
-      d2.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
+      d2.beginFast(), 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
 #endif // BZ_HAVE_COMPLEX
@@ -7171,9 +7171,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<int>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, int, _bz_VecExpr<P_expr3>)
@@ -7190,7 +7190,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<int>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2), 
       d3));
 }
@@ -7209,9 +7209,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<int>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, int, Range)
@@ -7228,7 +7228,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<int>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2), 
       d3));
 }
@@ -7247,9 +7247,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<int>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, int, int)
@@ -7266,7 +7266,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<int>, 
       _bz_VecExprConstant<int> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<int>(d2), 
       _bz_VecExprConstant<int>(d3)));
 }
@@ -7285,9 +7285,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<float>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, float, _bz_VecExpr<P_expr3>)
@@ -7304,7 +7304,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<float>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2), 
       d3));
 }
@@ -7323,9 +7323,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<float>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, float, Range)
@@ -7342,7 +7342,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<float>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2), 
       d3));
 }
@@ -7361,9 +7361,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<float>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, float, float)
@@ -7380,7 +7380,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<float>, 
       _bz_VecExprConstant<float> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<float>(d2), 
       _bz_VecExprConstant<float>(d3)));
 }
@@ -7399,9 +7399,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<double>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, double, _bz_VecExpr<P_expr3>)
@@ -7418,7 +7418,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<double>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2), 
       d3));
 }
@@ -7437,9 +7437,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<double>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, double, Range)
@@ -7456,7 +7456,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<double>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2), 
       d3));
 }
@@ -7475,9 +7475,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<double>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, double, double)
@@ -7494,7 +7494,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<double>, 
       _bz_VecExprConstant<double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<double>(d2), 
       _bz_VecExprConstant<double>(d3)));
 }
@@ -7513,9 +7513,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<long double>, 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, long double, _bz_VecExpr<P_expr3>)
@@ -7532,7 +7532,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<long double>, 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2), 
       d3));
 }
@@ -7551,9 +7551,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<long double>, 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, long double, Range)
@@ -7570,7 +7570,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<long double>, 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2), 
       d3));
 }
@@ -7589,9 +7589,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<long double>, 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 
 // where(TinyVector<P_numtype1, N_length1>, long double, long double)
@@ -7608,7 +7608,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<long double>, 
       _bz_VecExprConstant<long double> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<long double>(d2), 
       _bz_VecExprConstant<long double>(d3)));
 }
@@ -7628,9 +7628,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       VectorIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 #endif // BZ_HAVE_COMPLEX
 
@@ -7649,7 +7649,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       _bz_VecExpr<P_expr3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2), 
       d3));
 }
@@ -7670,9 +7670,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       VectorPickIterConst<P_numtype3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 #endif // BZ_HAVE_COMPLEX
 
@@ -7691,7 +7691,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       Range > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2), 
       d3));
 }
@@ -7712,9 +7712,9 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       TinyVectorIterConst<P_numtype3, N_length3> > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2), 
-      d3.begin()));
+      d3.beginFast()));
 }
 #endif // BZ_HAVE_COMPLEX
 
@@ -7733,7 +7733,7 @@ where(const TinyVector<P_numtype1, N_length1>& d1,
       _bz_VecExprConstant<complex<T2> > , 
       _bz_VecExprConstant<complex<T3> >  > T_expr;
 
-    return _bz_VecExpr<T_expr>(T_expr(d1.begin(), 
+    return _bz_VecExpr<T_expr>(T_expr(d1.beginFast(), 
       _bz_VecExprConstant<complex<T2> > (d2), 
       _bz_VecExprConstant<complex<T3> > (d3)));
 }
