@@ -155,7 +155,17 @@ Nishimura (see @cite{ACM Transactions on Modeling and Computer Simulation,
 @w{Vol. 8}, @w{No. 1}, @w{January 1998}, @w{pp 3-30}},
 @uref{http://www.math.keio.ac.jp/~matumoto/emt.html},
 @uref{http://www.acm.org/pubs/citations/journals/tomacs/1998-8-1/p3-matsumoto/}).
-This generator has a period of @math{2^{19937}-1}, passed several stringent
+This generator has a period of 
+@iftex
+@math{2^{19937}-1}
+@end iftex
+@ifinfo
+@math{2^{19937}-1}
+@end ifinfo
+@ifhtml
+2^(19937)-1
+@end ifhtml
+, passed several stringent
 statistical tests (including the
 @uref{http://stat.fsu.edu/~geo/diehard.html} tests), and has speed
 comparable to other modern generators.
