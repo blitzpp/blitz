@@ -4,9 +4,9 @@
 @include version.texi
 @settitle Blitz++
 @setchapternewpage odd
-@setcontentsaftertitlepage
 @finalout
 @iftex
+@setcontentsaftertitlepage
 @afourpaper
 @end iftex
 @c %**end of header
