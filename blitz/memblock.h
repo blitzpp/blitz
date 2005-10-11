@@ -86,7 +86,7 @@ protected:
         BZ_MUTEX_INIT(mutex)
     }
 
-    MemoryBlock(size_t length, T_type* restrict data)
+    MemoryBlock(size_t length, T_type* data)
     {
         length_ = length;
         data_ = data;
@@ -197,7 +197,7 @@ private:   // Data members
 template<typename P_type>
 class UnownedMemoryBlock : public MemoryBlock<P_type> {
 public:
-    UnownedMemoryBlock(size_t length, P_type* restrict data)
+    UnownedMemoryBlock(size_t length, P_type* data)
         : MemoryBlock<P_type>(length,data)
     {
         // This ensures that MemoryBlock destructor will not 
