@@ -2469,8 +2469,7 @@ istream& operator>>(istream& is, Array<T_numtype,N_rank>& x);
 
 template <typename P_numtype,int N_rank>
 void swap(Array<P_numtype,N_rank>& a,Array<P_numtype,N_rank>& b) {
-    Array<P_numtype,N_rank> c;
-    c.reference(a);
+    Array<P_numtype,N_rank> c(a);
     a.reference(b);
     b.reference(c);
 }
