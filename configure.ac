@@ -2,7 +2,7 @@
 
 AC_PREREQ(2.59)
 
-AC_INIT(blitz, 0.8.1, blitz-bugs@oonumerics.org)
+AC_INIT(blitz, 0.9, blitz-bugs@oonumerics.org)
 
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_SRCDIR(blitz/blitz.h)
