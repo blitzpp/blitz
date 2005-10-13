@@ -44,6 +44,12 @@ public:
     void seed(IRNG_int x)
     { irng_.seed(x); }
 
+    typedef typename IRNG::T_state T_state;
+    T_state getState() const { return irng_.getState(); }
+    std::string getStateString() const { return irng_.getStateString(); }
+    void setState(const T_state& s) { irng_.setState(s); }
+    void setState(const std::string& s) { irng_.setState(s); }
+
 protected:
     static IRNG irng_;
 };
@@ -57,6 +63,12 @@ class IRNGWrapper<IRNG,independentState> {
 public:
     void seed(IRNG_int x)
     { irng_.seed(x); }
+
+    typedef typename IRNG::T_state T_state;
+    T_state getState() const { return irng_.getState(); }
+    std::string getStateString() const { return irng_.getStateString(); }
+    void setState(const T_state& s) { irng_.setState(s); }
+    void setState(const std::string& s) { irng_.setState(s); }
 
 protected:
     IRNG irng_;
