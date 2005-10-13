@@ -46,11 +46,13 @@
 #ifndef BZ_RAND_MT
 #define BZ_RAND_MT
 
-#ifndef BZ_BLITZ_H
- #include <blitz/blitz.h>
-#endif
+#include <blitz/blitz.h>
 
 #include <vector>
+#include <string>
+#include <sstream> 
+#include <iostream>
+#include <iterator>
 
 #ifndef UINT_MAX
   #include <limits.h>
@@ -180,6 +182,53 @@ public:
     return y;
   }
 
+  // functions for getting/setting state
+  class mt_state {
+    friend class MersenneTwister;
+  private:
+    State S;
+    int I;
+  public: 
+    mt_state() { }
+    mt_state(State s, int i) : S(s), I(i) { }
+    mt_state(const std::string& s) {
+      std::istringstream is(s);
+      is >> I;
+      S = State(std::istream_iterator<twist_int>(is),
+		std::istream_iterator<twist_int>());
+      assert(!S.empty());
+    }
+    operator bool() const { return !S.empty(); }
+    std::string str() const {
+      if (S.empty())
+	return std::string();
+      std::ostringstream os;
+      os << I << " ";
+      std::copy(S.begin(), S.end(),
+		std::ostream_iterator<twist_int>(os," "));
+      return os.str();
+    }
+  };
+  
+  typedef mt_state T_state;
+  T_state getState() const { return T_state(S, I-S.begin()); }
+  std::string getStateString() const {
+    T_state tmp(S, I-S.begin());
+    return tmp.str();
+  }
+  void setState(const T_state& s) {
+    if (!s) {
+      std::cerr << "Error: state is empty" << std::endl;
+      return;
+    } 
+    S = s.S;
+    I = S.begin() + s.I;
+  }
+  void setState(const std::string& s) {
+    T_state tmp(s);
+    setState(tmp);
+  }
+  
 private:
   State   S;
   Iter    I;
