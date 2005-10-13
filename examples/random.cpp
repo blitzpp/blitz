@@ -33,6 +33,13 @@ void printRandoms()
 
 int main()
 {
+// test get/set state interface
+  Uniform<double> x;
+  Uniform<double>::T_state S = x.getState();
+  x.setState(S);
+  std::string str = x.getStateString();
+  x.setState(str);
+
   cout << "Some random float: " << endl;
   printRandoms<float>();
 
