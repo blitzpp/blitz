@@ -8,9 +8,9 @@
 @cindex autoconf 
 @cindex makefiles
 
-Blitz++ uses @acronym{GNU} Autoconf, which handles rewriting Makefiles for various
-platforms and compilers.  It has greatly simplified installation and
-porting.  Many thanks for John W. Eaton and Brendan Kehoe for their help
+Blitz++ uses @acronym{GNU} Autoconf, which handles rewriting Makefiles for
+various platforms and compilers.  It has greatly simplified installation and
+porting.  Many thanks to John W. Eaton and Brendan Kehoe for their help
 with this.
 
 To install blitz, unpack the @file{blitz-VERSION.tar.gz} file (it will
@@ -31,21 +31,26 @@ blitz-0.5/THANKS
   .
 @end example
 
-Then go into the main blitz directory, and type:
+Then go into the @file{blitz-VERSION} directory, and type:
 
 @cindex configure script
 @example
 ./configure CXX=[compiler]
 @end example
 
-where [compiler] is one of @code{xlc++}, @code{icpc}, @code{xlC}, @code{cxx}, 
-@code{aCC}, @code{CC}, @code{g++}, @code{KCC}, @code{pgCC} or @code{FCC}.
+where [compiler] is one of @code{xlc++}, @code{icpc}, @code{pathCC}, 
+@code{xlC}, @code{cxx}, @code{aCC}, @code{CC}, @code{g++}, @code{KCC}, 
+@code{pgCC} or @code{FCC}.  (If you do not choose a C++ compiler, the
+configure script will attempt to find an appropriate compiler for the
+current platform.)
 
-You can also specify special command-line options for your compiler, using
-this syntax:
+By default, the configure script will use a particular set of options
+with each C++ compiler.  You can disable these default settings and then
+substitute your own preferred compiler options with the CXXFLAGS variable,
+using this syntax:
 
 @example
-./configure CXX=g++ CXXFLAGS="-ftemplate-depth-50"
+./configure CXX=g++ --disable-cxx-flags-preset CXXFLAGS="-ftemplate-depth-50"
 @end example
 
 If you are interested in benchmarking, you may want to use the option
