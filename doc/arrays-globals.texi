@@ -100,6 +100,19 @@ time, since only the handles change (i.e.@: no data is copied; only pointers
 change).
 
 @example
+void                         find(Array<TinyVector<int,Expr::rank>,1>& indices,
+                                  const _bz_ArrayExpr<Expr>& expr);
+void                         find(Array<TinyVector<int,N>,1>& indices,
+                                  const Array<bool,N>& exprVals);
+@end example
+
+This is an analogue to the Matlab @code{find()} method, which takes a
+boolean array expression or an array of bools and returns a 1d array
+of indices for all locations where the array or expression is true.
+
+@findex find()
+
+@example
 Array<T,N>                        imag(Array<complex<T>,N>&);
 @end example
 
@@ -140,4 +153,14 @@ TinyVector<int,4>                 shape(int L, int M, int N, int O);
 These functions may be used to create shape parameters.  They package the
 set of integer arguments as a @code{TinyVector} of appropriate length.  For
 an example use, see @code{allocateArrays()} above.
+
+@example
+void                              swap(Array<T,N>& A, Array<T,N>& B);
+@end example
+
+This function swaps the storage of two arrays, just like the @code{std::swap()}
+function does for STL container types.  This is a synonym for the 
+two-argument version of @code{cycleArrays()} above.
+
+@findex swap()
 
