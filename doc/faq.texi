@@ -11,6 +11,65 @@
 You forgot to set binary download mode in ftp.  Do so with
 the ``binary'' command.
 
+@cindex Configuration/Install errors under Mac OS X
+
+@faq{After accessing blitz from the cvs repository, the ``autoreconf -fiv''
+command seems to fail mysteriously.}
+
+The current blitz autoconf build system uses libtool to manage building
+either static or shared versions of the library.  Mac OS X systems have 
+their own version of libtool and libtoolize that conflict with the GNU 
+versions, so these have been renamed glibtool and glibtoolize.  You must
+set environment variables to indicate the right tools to use.  Try this:
+
+@example
+export LIBTOOL=/usr/bin/glibtool
+export LIBTOOLIZE=/usr/bin/glibtoolize
+@end example
+
+@cindex Fortran compiler requirement
+
+@faq{The blitz configure script fails to find a valid Fortran compiler.  
+Why the heck do I need a Fortran compiler for Blitz++ anyway?}
+
+A Fortran compiler is only needed to compile the Fortran portions of the 
+blitz benchmark codes in the banchmarks subdirectory, which compare the
+speed of blitz code to that of raw Fortran 77 or Fortran 90 arrays.  Many
+Darwin systems do not come with a Fortran compiler installed by default,
+and it can be difficult to obtain a GNU Fortran compiler for Mac OS X that
+is completely compatible with the default C/C++ compiler.  Therefore, the
+blitz configure script now provides the option --disable-fortran, which 
+will skip over Fortran configuration.  This will render the benchmark codes
+unusable, but will allow you to build and install the blitz library.
+
+@cindex Undefined references
+
+@faq{The linker complains about undefined references when compiling my 
+blitz application code.}
+
+Although almost all of blitz consists of inlined templated code provided
+in header files via @code{<blitz/array.h>}, there are a few static global
+objects whose definitions are provided in a compiled blitz library.  So
+always remember to include the appropriate -L flag and -lblitz on your 
+linker command line in order to link your code against the blitz library.
+
+@cindex No match for TinyVector operators
+
+@faq{The compiler complains that there is no match for the TinyVector
+unary or binary math operator I have invoked, even though I've included
+@code{<blitz/tinyvec.h>}.}
+
+In versions prior to blitz 0.8, the @code{tinyvec.h} header automatically 
+included all of the blitz support for expressions involving TinyVectors.
+Because this code is intimately linked with the expression template support 
+for Vector, VectorPick and other Vector-like classes, this turns out to be a
+large amount of code.  The blitz Array class uses TinyVector to represent 
+Array shapes, and thus @code{array.h} must include @code{tinyvec.h}.  This 
+was creating a large amount of compile-time overhead, so it was decided 
+to separate the TinyVector expression template support and put this in a new
+header file @code{tinyvec-et.h}.  Therefore, your code must include 
+@code{<blitz/tinyvec-et.h>} explicitly if it uses expressions with TinyVectors.
+
 @cindex `Array' undeclared
 
 @faq{The compiler complains that there is no Array class, even though I've
