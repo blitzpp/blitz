@@ -1,3 +1,38 @@
+2005-10-14  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+        Tagging repository contents with Blitz_0_9 tag.
+	* m4/ac_compiler_specific_header.m4: Added support for PathScale
+	pathCC compiler.
+	* doc/download.texi: Added reference to the newer blitz project
+	page on SourceForge.
+	* doc/help.texi: Updated the Help page to refer to the newer
+	SourceForge project page and mailing lists for blitz.
+	* doc/install.texi: Minor updates to the notes on configuration
+	and installation of blitz.
+	* doc/platforms.texi: Updates to platform and compiler notes.  I
+	tried to add a comment for every platform/compiler combination
+	that has active or historical support.
+
+2005-10-13  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* doc/faq.texi: Added a few items that have been asked about a lot
+	over the past year, including configuration under Mac OS X, the
+	Fortran compiler requirement, and the need to include the
+	<blitz/tinyvec-et.h> header.
+	* doc/arrays-globals.texi: Added information on the newer global
+	Array functions swap() and find().
+	* blitz/array-impl.h: Slight simplification of swap() function.
+	* configure.ac: Changed blitz version number from 0.8.1 to 0.9 as
+	we agreed upon.  We will reserve use of the patch number only when
+	providing a single critical patch.
+	* examples/random.cpp: Added a few lines of code to briefly
+	exercise the new get/set state interface.
+	* random/mt.h: Added implementation of get/set state for the
+	MersenneTwister IRNG, as suggested by Patrik Jonsson
+	(patrik@ucolick.org), with minor corrections and modifications.
+	* random/default.h: Added interface for getting or setting the
+	state of the IRNG, as suggested by Patrik Jonsson
+	(patrik@ucolick.org).
 
 2005-10-13  Patrick Guio <patrick.guio@bccs.uib.no>
 
