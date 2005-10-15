@@ -28,6 +28,8 @@ case "$CXX" in
                 COMPILER_SPECIFIC_HEADER="pgi/bzconfig.h" ;;
   *FCC*)        AX_PREFIX_CONFIG_H([blitz/fujitsu/bzconfig.h],[BZ])
                 COMPILER_SPECIFIC_HEADER="fujitsu/bzconfig.h" ;;
+  *pathCC*)     AX_PREFIX_CONFIG_H([blitz/pathscale/bzconfig.h],[BZ])
+                COMPILER_SPECIFIC_HEADER="pathscale/bzconfig.h" ;;
   *CC*)
     case "$target" in
     *sgi*)      AX_PREFIX_CONFIG_H([blitz/sgi/bzconfig.h],[BZ])
