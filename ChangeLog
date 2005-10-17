@@ -1,3 +1,7 @@
+2005-10-17  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* blitz/tinyvec.cc: Fixed major screwup in blitz 0.9 release.
+	Changed beginfast to beginFast!
 2005-10-14  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
         Tagging repository contents with Blitz_0_9 tag.
