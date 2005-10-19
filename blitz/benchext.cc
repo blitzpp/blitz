@@ -42,7 +42,7 @@ BenchmarkExt<P_parameter>::BenchmarkExt(const char* name,
     // parameters_ = pow(10.0, Range(1,20)/4.0);
 
     for (unsigned i=0; i < numParameters_; ++i)
-        parameters_[i] = (P_parameter)::pow(10.0, (i+1)/4.0);
+        parameters_[i] = static_cast<P_parameter>(BZ_MATHFN_SCOPE(pow)(10.0, (i+1)/4.0));
 
     iterations_ = 5.0e+5 / parameters_;
     flopsPerIteration_ = parameters_;
