@@ -143,7 +143,7 @@ if test "$enableval" = yes ; then
 			CXX_VENDOR="SUN"
 			CXXFLAGS="-features=tmplife -library=stlport4"
 			CXX_OPTIMIZE_FLAGS="-O3"
-			CXX_DEBUG_FLAGS="-g"
+			CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
 		;;
 		*cray*) dnl Cray C++
 			CXX_VENDOR="Cray"
