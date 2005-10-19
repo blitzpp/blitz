@@ -18,6 +18,10 @@
 
 BZ_USING_NAMESPACE(blitz)
 
+#ifndef M_PI
+ #define M_PI   3.14159265358979323846
+#endif
+
 #ifdef BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES
 #define vecopsf    vecopsf_
 #define vecopsfo   vecopsfo_
