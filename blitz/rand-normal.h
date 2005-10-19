@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/rand-normal.h    Random Gaussian (Normal) generator
  *
@@ -38,15 +39,18 @@
 #ifndef BZ_RAND_NORMAL_H
 #define BZ_RAND_NORMAL_H
 
-#ifndef BZ_RANDOM_H
- #include <blitz/random.h>
-#endif
+#include <blitz/random.h>
+#include <blitz/rand-uniform.h>
 
-#ifndef BZ_RAND_UNIFORM_H
- #include <blitz/rand-uniform.h>
-#endif
-
+#if defined(BZ_HAVE_STD)
+#include <cmath>
+#else
 #include <math.h>
+#endif
+
+#ifndef M_PI
+#define M_PI		3.14159265358979323846	/* pi */
+#endif
 
 BZ_NAMESPACE(blitz)
 
@@ -57,7 +61,7 @@ public:
     typedef double T_numtype;
 
     Normal(double mean = 0.0, double variance = 1.0, double = 0.0)
-        : mean_(mean), sigma_(::sqrt(variance))
+        : mean_(mean), sigma_(BZ_MATHFN_SCOPE(sqrt)(variance))
     { 
     }
 
@@ -75,7 +79,7 @@ public:
             v = uniform_.random();    
         } while (v == 0);
 
-        return mean_ + sigma_ * ::sqrt(-2*::log(v)) * ::cos(M_PI * (2*u - 1));
+        return mean_ + sigma_ * BZ_MATHFN_SCOPE(sqrt)(-2*BZ_MATHFN_SCOPE(log)(v)) * BZ_MATHFN_SCOPE(cos)(M_PI * (2*u - 1));
     } 
 
 private:
