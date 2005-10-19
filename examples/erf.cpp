@@ -15,6 +15,9 @@
 // this flag defined as well, so that the Blitz++ flag BZ_HAVE_IEEE_MATH
 // will be set properly in <blitz/config.h>.
 
+// Explicitly include <math.h> header to get declaration of non-standard erf()
+#include <math.h>
+
 BZ_USING_NAMESPACE(blitz)
 
 int main()
