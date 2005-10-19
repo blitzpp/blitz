@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/array/cgsolve.h  Basic conjugate gradient solver for linear systems
  *
@@ -37,7 +38,7 @@ void dump(const char* name, Array<T_numtype,3>& A)
         for (int k=A.lbound(2); k <= A.ubound(2); ++k)
         {
             T_numtype tmp = A(i,j,k);
-            normA += ::fabs(tmp);
+            normA += BZ_MATHFN_SCOPE(fabs)(tmp);
         }
       }
     }
