@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/bench.h      Benchmark classes
  *
@@ -24,15 +25,14 @@
 #ifndef BZ_BENCH_H
 #define BZ_BENCH_H
 
-#ifndef BZ_MATRIX_H
- #include <blitz/matrix.h>
-#endif
+#include <blitz/matrix.h>
+#include <blitz/timer.h>
 
-#ifndef BZ_TIMER_H
- #include <blitz/timer.h>
-#endif
-
+#if defined(BZ_HAVE_STD)
+#include <cmath>
+#else
 #include <math.h>
+#endif
 
 BZ_NAMESPACE(blitz)
 
@@ -80,7 +80,7 @@ public:
     { return 19; }
 
     virtual T_parameter getParameterSetting(unsigned i) const
-    { return ::pow(10.0, (i+1)/4.0); }
+    { return BZ_MATHFN_SCOPE(pow)(10.0, (i+1)/4.0); }
 
     virtual long getIterationSetting(unsigned i) const
     { return 1000000L / getParameterSetting(i); }
