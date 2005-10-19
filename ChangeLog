@@ -1,3 +1,23 @@
+2005-10-19  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* examples/erf.cpp: Explicitly include <math.h> header to get
+	declaration of non-standard erf().
+	* benchmarks/haney.cpp: Add definition of M_PI if not provided by
+	standard math header.
+	* blitz/rand-normal.h: Use BZ_MATHFN_SCOPE macro around standard
+	math functions like sqrt.  Removed external include guards.  Use
+	standard header <cmath> if available.  Add definition of M_PI if
+	not provided by math header.
+	* blitz/benchext.cc: Use BZ_MATHFN_SCOPE around standard math
+	functions like pow.
+	* blitz/bench.h: Use BZ_MATHFN_SCOPE macro around standard math
+	functions like pow.  Removed external include guards.  Use
+	standard header <cmath> if available.
+	* blitz/array/cgsolve.h: Use BZ_MATHFN_SCOPE macro around standard
+	math functions like fabs.
+	* m4/ac_cxx_flags_preset.m4: Added missing debug flag -DBZ_DEBUG
+	for SunPRO C++ compiler, which was reported by Paul Floyd
+	(paul.floyd@laposte.net).
 2005-10-17  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* blitz/tinyvec.cc: Fixed major screwup in blitz 0.9 release.
