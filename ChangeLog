@@ -1,3 +1,9 @@
+2005-10-20  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* m4/ ac_cxx_lib_blitz.m4: Added macro definition HAVE_BLITZ if 
+	compilation test successfull. Added support to parse include and library
+	directories specified independently and as --with-blitz=inc_dir,lib_dir.
+
 2005-10-19  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* examples/erf.cpp: Explicitly include <math.h> header to get
