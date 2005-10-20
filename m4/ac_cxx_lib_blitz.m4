@@ -4,13 +4,13 @@ dnl Check whether Blitz++ is installed.
 dnl Blitz++ is available at http://sourceforge.net/projects/blitz
 dnl
 dnl   Set the path for Blitz++  with the option
-dnl      --with-blitz[=DIR]
+dnl      --with-blitz[=DIR] | --with-blitz=INCDIR,LIBDIR
+dnl 
 dnl   Blitz headers should be under DIR/includes
 dnl   Blitz library should be under DIR/lib
 dnl   Then try to compile and run a simple program with a Blitz Array
 dnl   Optional argument `required' triggers an error if Blitz++ not installed
 dnl 
-dnl @version $Id$
 dnl @author Patrick Guio <patrick.guio@matnat.uio.no>
 dnl
 AC_DEFUN([AC_MSG_ERROR_BLITZ],[
@@ -19,6 +19,8 @@ $PACKAGE_STRING requires the Blitz++ template library
 available at http://sourceforge.net/projects/blitz
 When installed give the directory of installation with the option
   --with-blitz@<:@=DIR@:>@
+	or
+  --with-blitz@<:@=INCDIR,LIBDIR@:>@
 ])])
 
 
@@ -38,10 +40,25 @@ if test "$withval" != no ; then
 	saveLDFLAGS=$LDFLAGS
 	saveLIBS=$LIBS
 
-	if test "$withval" != 'yes'; then
-		CPPFLAGS="-I$withval/include"
-		LDFLAGS="-L$withval/lib"
-	fi
+  case "$withval" in
+	  *,*)
+		  incdir="`echo $withval | cut -f1 -d,`"
+			libdir="`echo $withval | cut -f2 -d, -s`"
+			;;
+		*)
+		  if test -n "$withval" -a "$withval" != yes ; then
+			  incdir="$withval/include"
+				libdir="$withval/lib"
+			fi
+			;;
+	esac
+  if test -n "$incdir"; then
+    CPPFLAGS="-I$incdir"
+  fi
+  if test -n "$libdir"; then
+    LDFLAGS="-L$libdir"
+  fi
+
 	LIBS="-lblitz"
 
 	AC_CACHE_CHECK([whether Blitz++ is installed],ac_cxx_lib_blitz,
@@ -62,9 +79,12 @@ x = blitz::tensor::i;
 	LIBS=$saveLIBS
 
 	if test "$ac_cxx_lib_blitz" = yes ; then
-		if test "$withval" != yes ; then
-			CPPFLAGS="-I$withval/include $CPPFLAGS"
-			LDFLAGS="-L$withval/lib $LDFLAGS"
+		AC_DEFINE([HAVE_BLITZ], [1],[Define Blitz support])
+		if test -n "$incdir"; then
+			CPPFLAGS="-I$incdir $CPPFLAGS"
+		fi
+		if test -n "$libdir"; then
+			LDFLAGS="-L$libdir $LDFLAGS"
 		fi
 		LIBS="-lblitz $LIBS"
 	else
