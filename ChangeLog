@@ -1,3 +1,8 @@
+
+2005-10-21  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* doc/doxygen/Doxyfile.in: Enabled TREEVIEW for html documentation. 
+
 2005-10-20  Patrick Guio <patrick.guio@bccs.uib.no>
 
 	* m4/ ac_cxx_lib_blitz.m4: Added macro definition HAVE_BLITZ if 
