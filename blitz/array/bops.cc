@@ -22,7 +22,7 @@
  */ 
 
 // Generated source file.  Do not edit. 
-// genarrbops.cpp Dec 30 2003 16:48:46
+// genarrbops.cpp Oct 31 2005 18:04:53
 
 #ifndef BZ_ARRAYBOPS_CC
 #define BZ_ARRAYBOPS_CC
@@ -8377,7 +8377,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<ArrayIterator<T_numtype1, N_rank1>, 
       ArrayIterator<T_numtype2, N_rank2>,
       _bz_Min<T_numtype1, T_numtype2 > > >
-min(const Array<T_numtype1, N_rank1>& d1, 
+(min)(const Array<T_numtype1, N_rank1>& d1, 
       const Array<T_numtype2, N_rank2>& d2)
 {
     return _bz_ArrayExprBinaryOp<ArrayIterator<T_numtype1, N_rank1>, 
@@ -8393,7 +8393,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<ArrayIterator<T_numtype1, N_rank1>, 
       _bz_ArrayExpr<P_expr2>,
       _bz_Min<T_numtype1, typename P_expr2::T_numtype > > >
-min(const Array<T_numtype1, N_rank1>& d1, 
+(min)(const Array<T_numtype1, N_rank1>& d1, 
       _bz_ArrayExpr<P_expr2> d2)
 {
     return _bz_ArrayExprBinaryOp<ArrayIterator<T_numtype1, N_rank1>, 
@@ -8409,7 +8409,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<ArrayIterator<T_numtype1, N_rank1>, 
       IndexPlaceholder<N_index2>,
       _bz_Min<T_numtype1, int > > >
-min(const Array<T_numtype1, N_rank1>& d1, 
+(min)(const Array<T_numtype1, N_rank1>& d1, 
       IndexPlaceholder<N_index2> d2)
 {
     return _bz_ArrayExprBinaryOp<ArrayIterator<T_numtype1, N_rank1>, 
@@ -8425,7 +8425,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<ArrayIterator<T_numtype1, N_rank1>, 
       _bz_ArrayExprConstant<int>,
       _bz_Min<T_numtype1, int > > >
-min(const Array<T_numtype1, N_rank1>& d1, 
+(min)(const Array<T_numtype1, N_rank1>& d1, 
       int d2)
 {
     return _bz_ArrayExprBinaryOp<ArrayIterator<T_numtype1, N_rank1>, 
@@ -8441,7 +8441,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<_bz_ArrayExpr<P_expr1>, 
       ArrayIterator<T_numtype2, N_rank2>,
       _bz_Min<typename P_expr1::T_numtype, T_numtype2 > > >
-min(_bz_ArrayExpr<P_expr1> d1, 
+(min)(_bz_ArrayExpr<P_expr1> d1, 
       const Array<T_numtype2, N_rank2>& d2)
 {
     return _bz_ArrayExprBinaryOp<_bz_ArrayExpr<P_expr1>, 
@@ -8457,7 +8457,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<_bz_ArrayExpr<P_expr1>, 
       _bz_ArrayExpr<P_expr2>,
       _bz_Min<typename P_expr1::T_numtype, typename P_expr2::T_numtype > > >
-min(_bz_ArrayExpr<P_expr1> d1, 
+(min)(_bz_ArrayExpr<P_expr1> d1, 
       _bz_ArrayExpr<P_expr2> d2)
 {
     return _bz_ArrayExprBinaryOp<_bz_ArrayExpr<P_expr1>, 
@@ -8473,7 +8473,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<_bz_ArrayExpr<P_expr1>, 
       IndexPlaceholder<N_index2>,
       _bz_Min<typename P_expr1::T_numtype, int > > >
-min(_bz_ArrayExpr<P_expr1> d1, 
+(min)(_bz_ArrayExpr<P_expr1> d1, 
       IndexPlaceholder<N_index2> d2)
 {
     return _bz_ArrayExprBinaryOp<_bz_ArrayExpr<P_expr1>, 
@@ -8489,7 +8489,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<_bz_ArrayExpr<P_expr1>, 
       _bz_ArrayExprConstant<int>,
       _bz_Min<typename P_expr1::T_numtype, int > > >
-min(_bz_ArrayExpr<P_expr1> d1, 
+(min)(_bz_ArrayExpr<P_expr1> d1, 
       int d2)
 {
     return _bz_ArrayExprBinaryOp<_bz_ArrayExpr<P_expr1>, 
@@ -8505,7 +8505,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<IndexPlaceholder<N_index1>, 
       ArrayIterator<T_numtype2, N_rank2>,
       _bz_Min<int, T_numtype2 > > >
-min(IndexPlaceholder<N_index1> d1, 
+(min)(IndexPlaceholder<N_index1> d1, 
       const Array<T_numtype2, N_rank2>& d2)
 {
     return _bz_ArrayExprBinaryOp<IndexPlaceholder<N_index1>, 
@@ -8521,7 +8521,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<IndexPlaceholder<N_index1>, 
       _bz_ArrayExpr<P_expr2>,
       _bz_Min<int, typename P_expr2::T_numtype > > >
-min(IndexPlaceholder<N_index1> d1, 
+(min)(IndexPlaceholder<N_index1> d1, 
       _bz_ArrayExpr<P_expr2> d2)
 {
     return _bz_ArrayExprBinaryOp<IndexPlaceholder<N_index1>, 
@@ -8537,7 +8537,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<IndexPlaceholder<N_index1>, 
       IndexPlaceholder<N_index2>,
       _bz_Min<int, int > > >
-min(IndexPlaceholder<N_index1> d1, 
+(min)(IndexPlaceholder<N_index1> d1, 
       IndexPlaceholder<N_index2> d2)
 {
     return _bz_ArrayExprBinaryOp<IndexPlaceholder<N_index1>, 
@@ -8553,7 +8553,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<IndexPlaceholder<N_index1>, 
       _bz_ArrayExprConstant<int>,
       _bz_Min<int, int > > >
-min(IndexPlaceholder<N_index1> d1, 
+(min)(IndexPlaceholder<N_index1> d1, 
       int d2)
 {
     return _bz_ArrayExprBinaryOp<IndexPlaceholder<N_index1>, 
@@ -8569,7 +8569,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<_bz_ArrayExprConstant<int>, 
       ArrayIterator<T_numtype2, N_rank2>,
       _bz_Min<int, T_numtype2 > > >
-min(int d1, 
+(min)(int d1, 
       const Array<T_numtype2, N_rank2>& d2)
 {
     return _bz_ArrayExprBinaryOp<_bz_ArrayExprConstant<int>, 
@@ -8585,7 +8585,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<_bz_ArrayExprConstant<int>, 
       _bz_ArrayExpr<P_expr2>,
       _bz_Min<int, typename P_expr2::T_numtype > > >
-min(int d1, 
+(min)(int d1, 
       _bz_ArrayExpr<P_expr2> d2)
 {
     return _bz_ArrayExprBinaryOp<_bz_ArrayExprConstant<int>, 
@@ -8601,7 +8601,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<_bz_ArrayExprConstant<int>, 
       IndexPlaceholder<N_index2>,
       _bz_Min<int, int > > >
-min(int d1, 
+(min)(int d1, 
       IndexPlaceholder<N_index2> d2)
 {
     return _bz_ArrayExprBinaryOp<_bz_ArrayExprConstant<int>, 
@@ -8620,7 +8620,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<ArrayIterator<T_numtype1, N_rank1>, 
       ArrayIterator<T_numtype2, N_rank2>,
       _bz_Max<T_numtype1, T_numtype2 > > >
-max(const Array<T_numtype1, N_rank1>& d1, 
+(max)(const Array<T_numtype1, N_rank1>& d1, 
       const Array<T_numtype2, N_rank2>& d2)
 {
     return _bz_ArrayExprBinaryOp<ArrayIterator<T_numtype1, N_rank1>, 
@@ -8636,7 +8636,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<ArrayIterator<T_numtype1, N_rank1>, 
       _bz_ArrayExpr<P_expr2>,
       _bz_Max<T_numtype1, typename P_expr2::T_numtype > > >
-max(const Array<T_numtype1, N_rank1>& d1, 
+(max)(const Array<T_numtype1, N_rank1>& d1, 
       _bz_ArrayExpr<P_expr2> d2)
 {
     return _bz_ArrayExprBinaryOp<ArrayIterator<T_numtype1, N_rank1>, 
@@ -8652,7 +8652,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<ArrayIterator<T_numtype1, N_rank1>, 
       IndexPlaceholder<N_index2>,
       _bz_Max<T_numtype1, int > > >
-max(const Array<T_numtype1, N_rank1>& d1, 
+(max)(const Array<T_numtype1, N_rank1>& d1, 
       IndexPlaceholder<N_index2> d2)
 {
     return _bz_ArrayExprBinaryOp<ArrayIterator<T_numtype1, N_rank1>, 
@@ -8668,7 +8668,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<ArrayIterator<T_numtype1, N_rank1>, 
       _bz_ArrayExprConstant<int>,
       _bz_Max<T_numtype1, int > > >
-max(const Array<T_numtype1, N_rank1>& d1, 
+(max)(const Array<T_numtype1, N_rank1>& d1, 
       int d2)
 {
     return _bz_ArrayExprBinaryOp<ArrayIterator<T_numtype1, N_rank1>, 
@@ -8684,7 +8684,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<_bz_ArrayExpr<P_expr1>, 
       ArrayIterator<T_numtype2, N_rank2>,
       _bz_Max<typename P_expr1::T_numtype, T_numtype2 > > >
-max(_bz_ArrayExpr<P_expr1> d1, 
+(max)(_bz_ArrayExpr<P_expr1> d1, 
       const Array<T_numtype2, N_rank2>& d2)
 {
     return _bz_ArrayExprBinaryOp<_bz_ArrayExpr<P_expr1>, 
@@ -8700,7 +8700,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<_bz_ArrayExpr<P_expr1>, 
       _bz_ArrayExpr<P_expr2>,
       _bz_Max<typename P_expr1::T_numtype, typename P_expr2::T_numtype > > >
-max(_bz_ArrayExpr<P_expr1> d1, 
+(max)(_bz_ArrayExpr<P_expr1> d1, 
       _bz_ArrayExpr<P_expr2> d2)
 {
     return _bz_ArrayExprBinaryOp<_bz_ArrayExpr<P_expr1>, 
@@ -8716,7 +8716,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<_bz_ArrayExpr<P_expr1>, 
       IndexPlaceholder<N_index2>,
       _bz_Max<typename P_expr1::T_numtype, int > > >
-max(_bz_ArrayExpr<P_expr1> d1, 
+(max)(_bz_ArrayExpr<P_expr1> d1, 
       IndexPlaceholder<N_index2> d2)
 {
     return _bz_ArrayExprBinaryOp<_bz_ArrayExpr<P_expr1>, 
@@ -8732,7 +8732,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<_bz_ArrayExpr<P_expr1>, 
       _bz_ArrayExprConstant<int>,
       _bz_Max<typename P_expr1::T_numtype, int > > >
-max(_bz_ArrayExpr<P_expr1> d1, 
+(max)(_bz_ArrayExpr<P_expr1> d1, 
       int d2)
 {
     return _bz_ArrayExprBinaryOp<_bz_ArrayExpr<P_expr1>, 
@@ -8748,7 +8748,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<IndexPlaceholder<N_index1>, 
       ArrayIterator<T_numtype2, N_rank2>,
       _bz_Max<int, T_numtype2 > > >
-max(IndexPlaceholder<N_index1> d1, 
+(max)(IndexPlaceholder<N_index1> d1, 
       const Array<T_numtype2, N_rank2>& d2)
 {
     return _bz_ArrayExprBinaryOp<IndexPlaceholder<N_index1>, 
@@ -8764,7 +8764,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<IndexPlaceholder<N_index1>, 
       _bz_ArrayExpr<P_expr2>,
       _bz_Max<int, typename P_expr2::T_numtype > > >
-max(IndexPlaceholder<N_index1> d1, 
+(max)(IndexPlaceholder<N_index1> d1, 
       _bz_ArrayExpr<P_expr2> d2)
 {
     return _bz_ArrayExprBinaryOp<IndexPlaceholder<N_index1>, 
@@ -8780,7 +8780,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<IndexPlaceholder<N_index1>, 
       IndexPlaceholder<N_index2>,
       _bz_Max<int, int > > >
-max(IndexPlaceholder<N_index1> d1, 
+(max)(IndexPlaceholder<N_index1> d1, 
       IndexPlaceholder<N_index2> d2)
 {
     return _bz_ArrayExprBinaryOp<IndexPlaceholder<N_index1>, 
@@ -8796,7 +8796,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<IndexPlaceholder<N_index1>, 
       _bz_ArrayExprConstant<int>,
       _bz_Max<int, int > > >
-max(IndexPlaceholder<N_index1> d1, 
+(max)(IndexPlaceholder<N_index1> d1, 
       int d2)
 {
     return _bz_ArrayExprBinaryOp<IndexPlaceholder<N_index1>, 
@@ -8812,7 +8812,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<_bz_ArrayExprConstant<int>, 
       ArrayIterator<T_numtype2, N_rank2>,
       _bz_Max<int, T_numtype2 > > >
-max(int d1, 
+(max)(int d1, 
       const Array<T_numtype2, N_rank2>& d2)
 {
     return _bz_ArrayExprBinaryOp<_bz_ArrayExprConstant<int>, 
@@ -8828,7 +8828,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<_bz_ArrayExprConstant<int>, 
       _bz_ArrayExpr<P_expr2>,
       _bz_Max<int, typename P_expr2::T_numtype > > >
-max(int d1, 
+(max)(int d1, 
       _bz_ArrayExpr<P_expr2> d2)
 {
     return _bz_ArrayExprBinaryOp<_bz_ArrayExprConstant<int>, 
@@ -8844,7 +8844,7 @@ inline
 _bz_ArrayExpr<_bz_ArrayExprBinaryOp<_bz_ArrayExprConstant<int>, 
       IndexPlaceholder<N_index2>,
       _bz_Max<int, int > > >
-max(int d1, 
+(max)(int d1, 
       IndexPlaceholder<N_index2> d2)
 {
     return _bz_ArrayExprBinaryOp<_bz_ArrayExprConstant<int>, 

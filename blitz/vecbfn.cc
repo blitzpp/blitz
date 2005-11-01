@@ -22,7 +22,7 @@
  */ 
 
 // Generated source file.  Do not edit. 
-// genvecbfn.cpp Oct  6 2005 15:58:50
+// genvecbfn.cpp Oct 31 2005 18:04:54
 
 #ifndef BZ_VECBFN_CC
 #define BZ_VECBFN_CC
@@ -43,7 +43,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorIterConst<P_numtype1>, 
       VectorIterConst<P_numtype2>,
       _bz_Min<P_numtype1, P_numtype2 > > >
-min(const Vector<P_numtype1>& d1, 
+(min)(const Vector<P_numtype1>& d1, 
       const Vector<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<VectorIterConst<P_numtype1>, 
@@ -60,7 +60,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorIterConst<P_numtype1>, 
       _bz_VecExpr<P_expr2>,
       _bz_Min<P_numtype1, typename P_expr2::T_numtype > > >
-min(const Vector<P_numtype1>& d1, 
+(min)(const Vector<P_numtype1>& d1, 
       _bz_VecExpr<P_expr2> d2)
 {
     typedef _bz_VecExprOp<VectorIterConst<P_numtype1>, 
@@ -77,7 +77,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorIterConst<P_numtype1>, 
       VectorPickIterConst<P_numtype2>,
       _bz_Min<P_numtype1, P_numtype2 > > >
-min(const Vector<P_numtype1>& d1, 
+(min)(const Vector<P_numtype1>& d1, 
       const VectorPick<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<VectorIterConst<P_numtype1>, 
@@ -94,7 +94,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorIterConst<P_numtype1>, 
       Range,
       _bz_Min<P_numtype1, int > > >
-min(const Vector<P_numtype1>& d1, 
+(min)(const Vector<P_numtype1>& d1, 
       Range d2)
 {
     typedef _bz_VecExprOp<VectorIterConst<P_numtype1>, 
@@ -111,7 +111,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorIterConst<P_numtype1>, 
       TinyVectorIterConst<P_numtype2, N_length2>,
       _bz_Min<P_numtype1, P_numtype2 > > >
-min(const Vector<P_numtype1>& d1, 
+(min)(const Vector<P_numtype1>& d1, 
       const TinyVector<P_numtype2, N_length2>& d2)
 {
     typedef _bz_VecExprOp<VectorIterConst<P_numtype1>, 
@@ -128,7 +128,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorIterConst<P_numtype1>, 
       _bz_VecExprConstant<int>,
       _bz_Min<P_numtype1, int > > >
-min(const Vector<P_numtype1>& d1, 
+(min)(const Vector<P_numtype1>& d1, 
       int d2)
 {
     typedef _bz_VecExprOp<VectorIterConst<P_numtype1>, 
@@ -145,7 +145,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorIterConst<P_numtype1>, 
       _bz_VecExprConstant<float>,
       _bz_Min<P_numtype1, float > > >
-min(const Vector<P_numtype1>& d1, 
+(min)(const Vector<P_numtype1>& d1, 
       float d2)
 {
     typedef _bz_VecExprOp<VectorIterConst<P_numtype1>, 
@@ -162,7 +162,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorIterConst<P_numtype1>, 
       _bz_VecExprConstant<double>,
       _bz_Min<P_numtype1, double > > >
-min(const Vector<P_numtype1>& d1, 
+(min)(const Vector<P_numtype1>& d1, 
       double d2)
 {
     typedef _bz_VecExprOp<VectorIterConst<P_numtype1>, 
@@ -179,7 +179,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorIterConst<P_numtype1>, 
       _bz_VecExprConstant<long double>,
       _bz_Min<P_numtype1, long double > > >
-min(const Vector<P_numtype1>& d1, 
+(min)(const Vector<P_numtype1>& d1, 
       long double d2)
 {
     typedef _bz_VecExprOp<VectorIterConst<P_numtype1>, 
@@ -197,7 +197,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorIterConst<P_numtype1>, 
       _bz_VecExprConstant<complex<T2> > ,
       _bz_Min<P_numtype1, complex<T2>  > > >
-min(const Vector<P_numtype1>& d1, 
+(min)(const Vector<P_numtype1>& d1, 
       complex<T2> d2)
 {
     typedef _bz_VecExprOp<VectorIterConst<P_numtype1>, 
@@ -216,7 +216,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExpr<P_expr1>, 
       VectorIterConst<P_numtype2>,
       _bz_Min<typename P_expr1::T_numtype, P_numtype2 > > >
-min(_bz_VecExpr<P_expr1> d1, 
+(min)(_bz_VecExpr<P_expr1> d1, 
       const Vector<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExpr<P_expr1>, 
@@ -233,7 +233,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExpr<P_expr1>, 
       _bz_VecExpr<P_expr2>,
       _bz_Min<typename P_expr1::T_numtype, typename P_expr2::T_numtype > > >
-min(_bz_VecExpr<P_expr1> d1, 
+(min)(_bz_VecExpr<P_expr1> d1, 
       _bz_VecExpr<P_expr2> d2)
 {
     typedef _bz_VecExprOp<_bz_VecExpr<P_expr1>, 
@@ -250,7 +250,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExpr<P_expr1>, 
       VectorPickIterConst<P_numtype2>,
       _bz_Min<typename P_expr1::T_numtype, P_numtype2 > > >
-min(_bz_VecExpr<P_expr1> d1, 
+(min)(_bz_VecExpr<P_expr1> d1, 
       const VectorPick<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExpr<P_expr1>, 
@@ -267,7 +267,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExpr<P_expr1>, 
       Range,
       _bz_Min<typename P_expr1::T_numtype, int > > >
-min(_bz_VecExpr<P_expr1> d1, 
+(min)(_bz_VecExpr<P_expr1> d1, 
       Range d2)
 {
     typedef _bz_VecExprOp<_bz_VecExpr<P_expr1>, 
@@ -284,7 +284,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExpr<P_expr1>, 
       TinyVectorIterConst<P_numtype2, N_length2>,
       _bz_Min<typename P_expr1::T_numtype, P_numtype2 > > >
-min(_bz_VecExpr<P_expr1> d1, 
+(min)(_bz_VecExpr<P_expr1> d1, 
       const TinyVector<P_numtype2, N_length2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExpr<P_expr1>, 
@@ -301,7 +301,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExpr<P_expr1>, 
       _bz_VecExprConstant<int>,
       _bz_Min<typename P_expr1::T_numtype, int > > >
-min(_bz_VecExpr<P_expr1> d1, 
+(min)(_bz_VecExpr<P_expr1> d1, 
       int d2)
 {
     typedef _bz_VecExprOp<_bz_VecExpr<P_expr1>, 
@@ -318,7 +318,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExpr<P_expr1>, 
       _bz_VecExprConstant<float>,
       _bz_Min<typename P_expr1::T_numtype, float > > >
-min(_bz_VecExpr<P_expr1> d1, 
+(min)(_bz_VecExpr<P_expr1> d1, 
       float d2)
 {
     typedef _bz_VecExprOp<_bz_VecExpr<P_expr1>, 
@@ -335,7 +335,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExpr<P_expr1>, 
       _bz_VecExprConstant<double>,
       _bz_Min<typename P_expr1::T_numtype, double > > >
-min(_bz_VecExpr<P_expr1> d1, 
+(min)(_bz_VecExpr<P_expr1> d1, 
       double d2)
 {
     typedef _bz_VecExprOp<_bz_VecExpr<P_expr1>, 
@@ -352,7 +352,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExpr<P_expr1>, 
       _bz_VecExprConstant<long double>,
       _bz_Min<typename P_expr1::T_numtype, long double > > >
-min(_bz_VecExpr<P_expr1> d1, 
+(min)(_bz_VecExpr<P_expr1> d1, 
       long double d2)
 {
     typedef _bz_VecExprOp<_bz_VecExpr<P_expr1>, 
@@ -370,7 +370,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExpr<P_expr1>, 
       _bz_VecExprConstant<complex<T2> > ,
       _bz_Min<typename P_expr1::T_numtype, complex<T2>  > > >
-min(_bz_VecExpr<P_expr1> d1, 
+(min)(_bz_VecExpr<P_expr1> d1, 
       complex<T2> d2)
 {
     typedef _bz_VecExprOp<_bz_VecExpr<P_expr1>, 
@@ -389,7 +389,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
       VectorIterConst<P_numtype2>,
       _bz_Min<P_numtype1, P_numtype2 > > >
-min(const VectorPick<P_numtype1>& d1, 
+(min)(const VectorPick<P_numtype1>& d1, 
       const Vector<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
@@ -406,7 +406,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
       _bz_VecExpr<P_expr2>,
       _bz_Min<P_numtype1, typename P_expr2::T_numtype > > >
-min(const VectorPick<P_numtype1>& d1, 
+(min)(const VectorPick<P_numtype1>& d1, 
       _bz_VecExpr<P_expr2> d2)
 {
     typedef _bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
@@ -423,7 +423,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
       VectorPickIterConst<P_numtype2>,
       _bz_Min<P_numtype1, P_numtype2 > > >
-min(const VectorPick<P_numtype1>& d1, 
+(min)(const VectorPick<P_numtype1>& d1, 
       const VectorPick<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
@@ -440,7 +440,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
       Range,
       _bz_Min<P_numtype1, int > > >
-min(const VectorPick<P_numtype1>& d1, 
+(min)(const VectorPick<P_numtype1>& d1, 
       Range d2)
 {
     typedef _bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
@@ -457,7 +457,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
       TinyVectorIterConst<P_numtype2, N_length2>,
       _bz_Min<P_numtype1, P_numtype2 > > >
-min(const VectorPick<P_numtype1>& d1, 
+(min)(const VectorPick<P_numtype1>& d1, 
       const TinyVector<P_numtype2, N_length2>& d2)
 {
     typedef _bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
@@ -474,7 +474,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
       _bz_VecExprConstant<int>,
       _bz_Min<P_numtype1, int > > >
-min(const VectorPick<P_numtype1>& d1, 
+(min)(const VectorPick<P_numtype1>& d1, 
       int d2)
 {
     typedef _bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
@@ -491,7 +491,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
       _bz_VecExprConstant<float>,
       _bz_Min<P_numtype1, float > > >
-min(const VectorPick<P_numtype1>& d1, 
+(min)(const VectorPick<P_numtype1>& d1, 
       float d2)
 {
     typedef _bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
@@ -508,7 +508,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
       _bz_VecExprConstant<double>,
       _bz_Min<P_numtype1, double > > >
-min(const VectorPick<P_numtype1>& d1, 
+(min)(const VectorPick<P_numtype1>& d1, 
       double d2)
 {
     typedef _bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
@@ -525,7 +525,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
       _bz_VecExprConstant<long double>,
       _bz_Min<P_numtype1, long double > > >
-min(const VectorPick<P_numtype1>& d1, 
+(min)(const VectorPick<P_numtype1>& d1, 
       long double d2)
 {
     typedef _bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
@@ -543,7 +543,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
       _bz_VecExprConstant<complex<T2> > ,
       _bz_Min<P_numtype1, complex<T2>  > > >
-min(const VectorPick<P_numtype1>& d1, 
+(min)(const VectorPick<P_numtype1>& d1, 
       complex<T2> d2)
 {
     typedef _bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
@@ -562,7 +562,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<Range, 
       VectorIterConst<P_numtype2>,
       _bz_Min<int, P_numtype2 > > >
-min(Range d1, 
+(min)(Range d1, 
       const Vector<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<Range, 
@@ -579,7 +579,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<Range, 
       _bz_VecExpr<P_expr2>,
       _bz_Min<int, typename P_expr2::T_numtype > > >
-min(Range d1, 
+(min)(Range d1, 
       _bz_VecExpr<P_expr2> d2)
 {
     typedef _bz_VecExprOp<Range, 
@@ -596,7 +596,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<Range, 
       VectorPickIterConst<P_numtype2>,
       _bz_Min<int, P_numtype2 > > >
-min(Range d1, 
+(min)(Range d1, 
       const VectorPick<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<Range, 
@@ -613,7 +613,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<Range, 
       Range,
       _bz_Min<int, int > > >
-min(Range d1, 
+(min)(Range d1, 
       Range d2)
 {
     typedef _bz_VecExprOp<Range, 
@@ -630,7 +630,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<Range, 
       TinyVectorIterConst<P_numtype2, N_length2>,
       _bz_Min<int, P_numtype2 > > >
-min(Range d1, 
+(min)(Range d1, 
       const TinyVector<P_numtype2, N_length2>& d2)
 {
     typedef _bz_VecExprOp<Range, 
@@ -647,7 +647,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<Range, 
       _bz_VecExprConstant<float>,
       _bz_Min<int, float > > >
-min(Range d1, 
+(min)(Range d1, 
       float d2)
 {
     typedef _bz_VecExprOp<Range, 
@@ -664,7 +664,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<Range, 
       _bz_VecExprConstant<double>,
       _bz_Min<int, double > > >
-min(Range d1, 
+(min)(Range d1, 
       double d2)
 {
     typedef _bz_VecExprOp<Range, 
@@ -681,7 +681,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<Range, 
       _bz_VecExprConstant<long double>,
       _bz_Min<int, long double > > >
-min(Range d1, 
+(min)(Range d1, 
       long double d2)
 {
     typedef _bz_VecExprOp<Range, 
@@ -699,7 +699,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<Range, 
       _bz_VecExprConstant<complex<T2> > ,
       _bz_Min<int, complex<T2>  > > >
-min(Range d1, 
+(min)(Range d1, 
       complex<T2> d2)
 {
     typedef _bz_VecExprOp<Range, 
@@ -718,7 +718,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
       VectorIterConst<P_numtype2>,
       _bz_Min<P_numtype1, P_numtype2 > > >
-min(const TinyVector<P_numtype1, N_length1>& d1, 
+(min)(const TinyVector<P_numtype1, N_length1>& d1, 
       const Vector<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
@@ -735,7 +735,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
       _bz_VecExpr<P_expr2>,
       _bz_Min<P_numtype1, typename P_expr2::T_numtype > > >
-min(const TinyVector<P_numtype1, N_length1>& d1, 
+(min)(const TinyVector<P_numtype1, N_length1>& d1, 
       _bz_VecExpr<P_expr2> d2)
 {
     typedef _bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
@@ -752,7 +752,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
       VectorPickIterConst<P_numtype2>,
       _bz_Min<P_numtype1, P_numtype2 > > >
-min(const TinyVector<P_numtype1, N_length1>& d1, 
+(min)(const TinyVector<P_numtype1, N_length1>& d1, 
       const VectorPick<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
@@ -769,7 +769,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
       Range,
       _bz_Min<P_numtype1, int > > >
-min(const TinyVector<P_numtype1, N_length1>& d1, 
+(min)(const TinyVector<P_numtype1, N_length1>& d1, 
       Range d2)
 {
     typedef _bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
@@ -786,7 +786,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
       TinyVectorIterConst<P_numtype2, N_length2>,
       _bz_Min<P_numtype1, P_numtype2 > > >
-min(const TinyVector<P_numtype1, N_length1>& d1, 
+(min)(const TinyVector<P_numtype1, N_length1>& d1, 
       const TinyVector<P_numtype2, N_length2>& d2)
 {
     typedef _bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
@@ -803,7 +803,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
       _bz_VecExprConstant<int>,
       _bz_Min<P_numtype1, int > > >
-min(const TinyVector<P_numtype1, N_length1>& d1, 
+(min)(const TinyVector<P_numtype1, N_length1>& d1, 
       int d2)
 {
     typedef _bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
@@ -820,7 +820,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
       _bz_VecExprConstant<float>,
       _bz_Min<P_numtype1, float > > >
-min(const TinyVector<P_numtype1, N_length1>& d1, 
+(min)(const TinyVector<P_numtype1, N_length1>& d1, 
       float d2)
 {
     typedef _bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
@@ -837,7 +837,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
       _bz_VecExprConstant<double>,
       _bz_Min<P_numtype1, double > > >
-min(const TinyVector<P_numtype1, N_length1>& d1, 
+(min)(const TinyVector<P_numtype1, N_length1>& d1, 
       double d2)
 {
     typedef _bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
@@ -854,7 +854,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
       _bz_VecExprConstant<long double>,
       _bz_Min<P_numtype1, long double > > >
-min(const TinyVector<P_numtype1, N_length1>& d1, 
+(min)(const TinyVector<P_numtype1, N_length1>& d1, 
       long double d2)
 {
     typedef _bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
@@ -872,7 +872,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
       _bz_VecExprConstant<complex<T2> > ,
       _bz_Min<P_numtype1, complex<T2>  > > >
-min(const TinyVector<P_numtype1, N_length1>& d1, 
+(min)(const TinyVector<P_numtype1, N_length1>& d1, 
       complex<T2> d2)
 {
     typedef _bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
@@ -891,7 +891,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<int>, 
       VectorIterConst<P_numtype2>,
       _bz_Min<int, P_numtype2 > > >
-min(int d1, 
+(min)(int d1, 
       const Vector<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<int>, 
@@ -908,7 +908,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<int>, 
       _bz_VecExpr<P_expr2>,
       _bz_Min<int, typename P_expr2::T_numtype > > >
-min(int d1, 
+(min)(int d1, 
       _bz_VecExpr<P_expr2> d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<int>, 
@@ -925,7 +925,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<int>, 
       VectorPickIterConst<P_numtype2>,
       _bz_Min<int, P_numtype2 > > >
-min(int d1, 
+(min)(int d1, 
       const VectorPick<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<int>, 
@@ -942,7 +942,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<int>, 
       TinyVectorIterConst<P_numtype2, N_length2>,
       _bz_Min<int, P_numtype2 > > >
-min(int d1, 
+(min)(int d1, 
       const TinyVector<P_numtype2, N_length2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<int>, 
@@ -959,7 +959,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<float>, 
       VectorIterConst<P_numtype2>,
       _bz_Min<float, P_numtype2 > > >
-min(float d1, 
+(min)(float d1, 
       const Vector<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<float>, 
@@ -976,7 +976,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<float>, 
       _bz_VecExpr<P_expr2>,
       _bz_Min<float, typename P_expr2::T_numtype > > >
-min(float d1, 
+(min)(float d1, 
       _bz_VecExpr<P_expr2> d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<float>, 
@@ -993,7 +993,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<float>, 
       VectorPickIterConst<P_numtype2>,
       _bz_Min<float, P_numtype2 > > >
-min(float d1, 
+(min)(float d1, 
       const VectorPick<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<float>, 
@@ -1010,7 +1010,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<float>, 
       Range,
       _bz_Min<float, int > > >
-min(float d1, 
+(min)(float d1, 
       Range d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<float>, 
@@ -1027,7 +1027,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<float>, 
       TinyVectorIterConst<P_numtype2, N_length2>,
       _bz_Min<float, P_numtype2 > > >
-min(float d1, 
+(min)(float d1, 
       const TinyVector<P_numtype2, N_length2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<float>, 
@@ -1044,7 +1044,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<double>, 
       VectorIterConst<P_numtype2>,
       _bz_Min<double, P_numtype2 > > >
-min(double d1, 
+(min)(double d1, 
       const Vector<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<double>, 
@@ -1061,7 +1061,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<double>, 
       _bz_VecExpr<P_expr2>,
       _bz_Min<double, typename P_expr2::T_numtype > > >
-min(double d1, 
+(min)(double d1, 
       _bz_VecExpr<P_expr2> d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<double>, 
@@ -1078,7 +1078,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<double>, 
       VectorPickIterConst<P_numtype2>,
       _bz_Min<double, P_numtype2 > > >
-min(double d1, 
+(min)(double d1, 
       const VectorPick<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<double>, 
@@ -1095,7 +1095,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<double>, 
       Range,
       _bz_Min<double, int > > >
-min(double d1, 
+(min)(double d1, 
       Range d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<double>, 
@@ -1112,7 +1112,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<double>, 
       TinyVectorIterConst<P_numtype2, N_length2>,
       _bz_Min<double, P_numtype2 > > >
-min(double d1, 
+(min)(double d1, 
       const TinyVector<P_numtype2, N_length2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<double>, 
@@ -1129,7 +1129,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<long double>, 
       VectorIterConst<P_numtype2>,
       _bz_Min<long double, P_numtype2 > > >
-min(long double d1, 
+(min)(long double d1, 
       const Vector<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<long double>, 
@@ -1146,7 +1146,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<long double>, 
       _bz_VecExpr<P_expr2>,
       _bz_Min<long double, typename P_expr2::T_numtype > > >
-min(long double d1, 
+(min)(long double d1, 
       _bz_VecExpr<P_expr2> d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<long double>, 
@@ -1163,7 +1163,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<long double>, 
       VectorPickIterConst<P_numtype2>,
       _bz_Min<long double, P_numtype2 > > >
-min(long double d1, 
+(min)(long double d1, 
       const VectorPick<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<long double>, 
@@ -1180,7 +1180,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<long double>, 
       Range,
       _bz_Min<long double, int > > >
-min(long double d1, 
+(min)(long double d1, 
       Range d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<long double>, 
@@ -1197,7 +1197,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<long double>, 
       TinyVectorIterConst<P_numtype2, N_length2>,
       _bz_Min<long double, P_numtype2 > > >
-min(long double d1, 
+(min)(long double d1, 
       const TinyVector<P_numtype2, N_length2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<long double>, 
@@ -1215,7 +1215,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<complex<T1> > , 
       VectorIterConst<P_numtype2>,
       _bz_Min<complex<T1> , P_numtype2 > > >
-min(complex<T1> d1, 
+(min)(complex<T1> d1, 
       const Vector<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<complex<T1> > , 
@@ -1235,7 +1235,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<complex<T1> > , 
       _bz_VecExpr<P_expr2>,
       _bz_Min<complex<T1> , typename P_expr2::T_numtype > > >
-min(complex<T1> d1, 
+(min)(complex<T1> d1, 
       _bz_VecExpr<P_expr2> d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<complex<T1> > , 
@@ -1255,7 +1255,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<complex<T1> > , 
       VectorPickIterConst<P_numtype2>,
       _bz_Min<complex<T1> , P_numtype2 > > >
-min(complex<T1> d1, 
+(min)(complex<T1> d1, 
       const VectorPick<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<complex<T1> > , 
@@ -1275,7 +1275,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<complex<T1> > , 
       Range,
       _bz_Min<complex<T1> , int > > >
-min(complex<T1> d1, 
+(min)(complex<T1> d1, 
       Range d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<complex<T1> > , 
@@ -1295,7 +1295,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<complex<T1> > , 
       TinyVectorIterConst<P_numtype2, N_length2>,
       _bz_Min<complex<T1> , P_numtype2 > > >
-min(complex<T1> d1, 
+(min)(complex<T1> d1, 
       const TinyVector<P_numtype2, N_length2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<complex<T1> > , 
@@ -1317,7 +1317,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorIterConst<P_numtype1>, 
       VectorIterConst<P_numtype2>,
       _bz_Max<P_numtype1, P_numtype2 > > >
-max(const Vector<P_numtype1>& d1, 
+(max)(const Vector<P_numtype1>& d1, 
       const Vector<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<VectorIterConst<P_numtype1>, 
@@ -1334,7 +1334,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorIterConst<P_numtype1>, 
       _bz_VecExpr<P_expr2>,
       _bz_Max<P_numtype1, typename P_expr2::T_numtype > > >
-max(const Vector<P_numtype1>& d1, 
+(max)(const Vector<P_numtype1>& d1, 
       _bz_VecExpr<P_expr2> d2)
 {
     typedef _bz_VecExprOp<VectorIterConst<P_numtype1>, 
@@ -1351,7 +1351,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorIterConst<P_numtype1>, 
       VectorPickIterConst<P_numtype2>,
       _bz_Max<P_numtype1, P_numtype2 > > >
-max(const Vector<P_numtype1>& d1, 
+(max)(const Vector<P_numtype1>& d1, 
       const VectorPick<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<VectorIterConst<P_numtype1>, 
@@ -1368,7 +1368,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorIterConst<P_numtype1>, 
       Range,
       _bz_Max<P_numtype1, int > > >
-max(const Vector<P_numtype1>& d1, 
+(max)(const Vector<P_numtype1>& d1, 
       Range d2)
 {
     typedef _bz_VecExprOp<VectorIterConst<P_numtype1>, 
@@ -1385,7 +1385,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorIterConst<P_numtype1>, 
       TinyVectorIterConst<P_numtype2, N_length2>,
       _bz_Max<P_numtype1, P_numtype2 > > >
-max(const Vector<P_numtype1>& d1, 
+(max)(const Vector<P_numtype1>& d1, 
       const TinyVector<P_numtype2, N_length2>& d2)
 {
     typedef _bz_VecExprOp<VectorIterConst<P_numtype1>, 
@@ -1402,7 +1402,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorIterConst<P_numtype1>, 
       _bz_VecExprConstant<int>,
       _bz_Max<P_numtype1, int > > >
-max(const Vector<P_numtype1>& d1, 
+(max)(const Vector<P_numtype1>& d1, 
       int d2)
 {
     typedef _bz_VecExprOp<VectorIterConst<P_numtype1>, 
@@ -1419,7 +1419,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorIterConst<P_numtype1>, 
       _bz_VecExprConstant<float>,
       _bz_Max<P_numtype1, float > > >
-max(const Vector<P_numtype1>& d1, 
+(max)(const Vector<P_numtype1>& d1, 
       float d2)
 {
     typedef _bz_VecExprOp<VectorIterConst<P_numtype1>, 
@@ -1436,7 +1436,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorIterConst<P_numtype1>, 
       _bz_VecExprConstant<double>,
       _bz_Max<P_numtype1, double > > >
-max(const Vector<P_numtype1>& d1, 
+(max)(const Vector<P_numtype1>& d1, 
       double d2)
 {
     typedef _bz_VecExprOp<VectorIterConst<P_numtype1>, 
@@ -1453,7 +1453,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorIterConst<P_numtype1>, 
       _bz_VecExprConstant<long double>,
       _bz_Max<P_numtype1, long double > > >
-max(const Vector<P_numtype1>& d1, 
+(max)(const Vector<P_numtype1>& d1, 
       long double d2)
 {
     typedef _bz_VecExprOp<VectorIterConst<P_numtype1>, 
@@ -1471,7 +1471,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorIterConst<P_numtype1>, 
       _bz_VecExprConstant<complex<T2> > ,
       _bz_Max<P_numtype1, complex<T2>  > > >
-max(const Vector<P_numtype1>& d1, 
+(max)(const Vector<P_numtype1>& d1, 
       complex<T2> d2)
 {
     typedef _bz_VecExprOp<VectorIterConst<P_numtype1>, 
@@ -1490,7 +1490,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExpr<P_expr1>, 
       VectorIterConst<P_numtype2>,
       _bz_Max<typename P_expr1::T_numtype, P_numtype2 > > >
-max(_bz_VecExpr<P_expr1> d1, 
+(max)(_bz_VecExpr<P_expr1> d1, 
       const Vector<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExpr<P_expr1>, 
@@ -1507,7 +1507,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExpr<P_expr1>, 
       _bz_VecExpr<P_expr2>,
       _bz_Max<typename P_expr1::T_numtype, typename P_expr2::T_numtype > > >
-max(_bz_VecExpr<P_expr1> d1, 
+(max)(_bz_VecExpr<P_expr1> d1, 
       _bz_VecExpr<P_expr2> d2)
 {
     typedef _bz_VecExprOp<_bz_VecExpr<P_expr1>, 
@@ -1524,7 +1524,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExpr<P_expr1>, 
       VectorPickIterConst<P_numtype2>,
       _bz_Max<typename P_expr1::T_numtype, P_numtype2 > > >
-max(_bz_VecExpr<P_expr1> d1, 
+(max)(_bz_VecExpr<P_expr1> d1, 
       const VectorPick<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExpr<P_expr1>, 
@@ -1541,7 +1541,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExpr<P_expr1>, 
       Range,
       _bz_Max<typename P_expr1::T_numtype, int > > >
-max(_bz_VecExpr<P_expr1> d1, 
+(max)(_bz_VecExpr<P_expr1> d1, 
       Range d2)
 {
     typedef _bz_VecExprOp<_bz_VecExpr<P_expr1>, 
@@ -1558,7 +1558,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExpr<P_expr1>, 
       TinyVectorIterConst<P_numtype2, N_length2>,
       _bz_Max<typename P_expr1::T_numtype, P_numtype2 > > >
-max(_bz_VecExpr<P_expr1> d1, 
+(max)(_bz_VecExpr<P_expr1> d1, 
       const TinyVector<P_numtype2, N_length2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExpr<P_expr1>, 
@@ -1575,7 +1575,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExpr<P_expr1>, 
       _bz_VecExprConstant<int>,
       _bz_Max<typename P_expr1::T_numtype, int > > >
-max(_bz_VecExpr<P_expr1> d1, 
+(max)(_bz_VecExpr<P_expr1> d1, 
       int d2)
 {
     typedef _bz_VecExprOp<_bz_VecExpr<P_expr1>, 
@@ -1592,7 +1592,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExpr<P_expr1>, 
       _bz_VecExprConstant<float>,
       _bz_Max<typename P_expr1::T_numtype, float > > >
-max(_bz_VecExpr<P_expr1> d1, 
+(max)(_bz_VecExpr<P_expr1> d1, 
       float d2)
 {
     typedef _bz_VecExprOp<_bz_VecExpr<P_expr1>, 
@@ -1609,7 +1609,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExpr<P_expr1>, 
       _bz_VecExprConstant<double>,
       _bz_Max<typename P_expr1::T_numtype, double > > >
-max(_bz_VecExpr<P_expr1> d1, 
+(max)(_bz_VecExpr<P_expr1> d1, 
       double d2)
 {
     typedef _bz_VecExprOp<_bz_VecExpr<P_expr1>, 
@@ -1626,7 +1626,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExpr<P_expr1>, 
       _bz_VecExprConstant<long double>,
       _bz_Max<typename P_expr1::T_numtype, long double > > >
-max(_bz_VecExpr<P_expr1> d1, 
+(max)(_bz_VecExpr<P_expr1> d1, 
       long double d2)
 {
     typedef _bz_VecExprOp<_bz_VecExpr<P_expr1>, 
@@ -1644,7 +1644,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExpr<P_expr1>, 
       _bz_VecExprConstant<complex<T2> > ,
       _bz_Max<typename P_expr1::T_numtype, complex<T2>  > > >
-max(_bz_VecExpr<P_expr1> d1, 
+(max)(_bz_VecExpr<P_expr1> d1, 
       complex<T2> d2)
 {
     typedef _bz_VecExprOp<_bz_VecExpr<P_expr1>, 
@@ -1663,7 +1663,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
       VectorIterConst<P_numtype2>,
       _bz_Max<P_numtype1, P_numtype2 > > >
-max(const VectorPick<P_numtype1>& d1, 
+(max)(const VectorPick<P_numtype1>& d1, 
       const Vector<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
@@ -1680,7 +1680,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
       _bz_VecExpr<P_expr2>,
       _bz_Max<P_numtype1, typename P_expr2::T_numtype > > >
-max(const VectorPick<P_numtype1>& d1, 
+(max)(const VectorPick<P_numtype1>& d1, 
       _bz_VecExpr<P_expr2> d2)
 {
     typedef _bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
@@ -1697,7 +1697,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
       VectorPickIterConst<P_numtype2>,
       _bz_Max<P_numtype1, P_numtype2 > > >
-max(const VectorPick<P_numtype1>& d1, 
+(max)(const VectorPick<P_numtype1>& d1, 
       const VectorPick<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
@@ -1714,7 +1714,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
       Range,
       _bz_Max<P_numtype1, int > > >
-max(const VectorPick<P_numtype1>& d1, 
+(max)(const VectorPick<P_numtype1>& d1, 
       Range d2)
 {
     typedef _bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
@@ -1731,7 +1731,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
       TinyVectorIterConst<P_numtype2, N_length2>,
       _bz_Max<P_numtype1, P_numtype2 > > >
-max(const VectorPick<P_numtype1>& d1, 
+(max)(const VectorPick<P_numtype1>& d1, 
       const TinyVector<P_numtype2, N_length2>& d2)
 {
     typedef _bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
@@ -1748,7 +1748,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
       _bz_VecExprConstant<int>,
       _bz_Max<P_numtype1, int > > >
-max(const VectorPick<P_numtype1>& d1, 
+(max)(const VectorPick<P_numtype1>& d1, 
       int d2)
 {
     typedef _bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
@@ -1765,7 +1765,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
       _bz_VecExprConstant<float>,
       _bz_Max<P_numtype1, float > > >
-max(const VectorPick<P_numtype1>& d1, 
+(max)(const VectorPick<P_numtype1>& d1, 
       float d2)
 {
     typedef _bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
@@ -1782,7 +1782,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
       _bz_VecExprConstant<double>,
       _bz_Max<P_numtype1, double > > >
-max(const VectorPick<P_numtype1>& d1, 
+(max)(const VectorPick<P_numtype1>& d1, 
       double d2)
 {
     typedef _bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
@@ -1799,7 +1799,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
       _bz_VecExprConstant<long double>,
       _bz_Max<P_numtype1, long double > > >
-max(const VectorPick<P_numtype1>& d1, 
+(max)(const VectorPick<P_numtype1>& d1, 
       long double d2)
 {
     typedef _bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
@@ -1817,7 +1817,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
       _bz_VecExprConstant<complex<T2> > ,
       _bz_Max<P_numtype1, complex<T2>  > > >
-max(const VectorPick<P_numtype1>& d1, 
+(max)(const VectorPick<P_numtype1>& d1, 
       complex<T2> d2)
 {
     typedef _bz_VecExprOp<VectorPickIterConst<P_numtype1>, 
@@ -1836,7 +1836,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<Range, 
       VectorIterConst<P_numtype2>,
       _bz_Max<int, P_numtype2 > > >
-max(Range d1, 
+(max)(Range d1, 
       const Vector<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<Range, 
@@ -1853,7 +1853,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<Range, 
       _bz_VecExpr<P_expr2>,
       _bz_Max<int, typename P_expr2::T_numtype > > >
-max(Range d1, 
+(max)(Range d1, 
       _bz_VecExpr<P_expr2> d2)
 {
     typedef _bz_VecExprOp<Range, 
@@ -1870,7 +1870,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<Range, 
       VectorPickIterConst<P_numtype2>,
       _bz_Max<int, P_numtype2 > > >
-max(Range d1, 
+(max)(Range d1, 
       const VectorPick<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<Range, 
@@ -1887,7 +1887,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<Range, 
       Range,
       _bz_Max<int, int > > >
-max(Range d1, 
+(max)(Range d1, 
       Range d2)
 {
     typedef _bz_VecExprOp<Range, 
@@ -1904,7 +1904,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<Range, 
       TinyVectorIterConst<P_numtype2, N_length2>,
       _bz_Max<int, P_numtype2 > > >
-max(Range d1, 
+(max)(Range d1, 
       const TinyVector<P_numtype2, N_length2>& d2)
 {
     typedef _bz_VecExprOp<Range, 
@@ -1921,7 +1921,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<Range, 
       _bz_VecExprConstant<float>,
       _bz_Max<int, float > > >
-max(Range d1, 
+(max)(Range d1, 
       float d2)
 {
     typedef _bz_VecExprOp<Range, 
@@ -1938,7 +1938,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<Range, 
       _bz_VecExprConstant<double>,
       _bz_Max<int, double > > >
-max(Range d1, 
+(max)(Range d1, 
       double d2)
 {
     typedef _bz_VecExprOp<Range, 
@@ -1955,7 +1955,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<Range, 
       _bz_VecExprConstant<long double>,
       _bz_Max<int, long double > > >
-max(Range d1, 
+(max)(Range d1, 
       long double d2)
 {
     typedef _bz_VecExprOp<Range, 
@@ -1973,7 +1973,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<Range, 
       _bz_VecExprConstant<complex<T2> > ,
       _bz_Max<int, complex<T2>  > > >
-max(Range d1, 
+(max)(Range d1, 
       complex<T2> d2)
 {
     typedef _bz_VecExprOp<Range, 
@@ -1992,7 +1992,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
       VectorIterConst<P_numtype2>,
       _bz_Max<P_numtype1, P_numtype2 > > >
-max(const TinyVector<P_numtype1, N_length1>& d1, 
+(max)(const TinyVector<P_numtype1, N_length1>& d1, 
       const Vector<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
@@ -2009,7 +2009,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
       _bz_VecExpr<P_expr2>,
       _bz_Max<P_numtype1, typename P_expr2::T_numtype > > >
-max(const TinyVector<P_numtype1, N_length1>& d1, 
+(max)(const TinyVector<P_numtype1, N_length1>& d1, 
       _bz_VecExpr<P_expr2> d2)
 {
     typedef _bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
@@ -2026,7 +2026,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
       VectorPickIterConst<P_numtype2>,
       _bz_Max<P_numtype1, P_numtype2 > > >
-max(const TinyVector<P_numtype1, N_length1>& d1, 
+(max)(const TinyVector<P_numtype1, N_length1>& d1, 
       const VectorPick<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
@@ -2043,7 +2043,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
       Range,
       _bz_Max<P_numtype1, int > > >
-max(const TinyVector<P_numtype1, N_length1>& d1, 
+(max)(const TinyVector<P_numtype1, N_length1>& d1, 
       Range d2)
 {
     typedef _bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
@@ -2060,7 +2060,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
       TinyVectorIterConst<P_numtype2, N_length2>,
       _bz_Max<P_numtype1, P_numtype2 > > >
-max(const TinyVector<P_numtype1, N_length1>& d1, 
+(max)(const TinyVector<P_numtype1, N_length1>& d1, 
       const TinyVector<P_numtype2, N_length2>& d2)
 {
     typedef _bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
@@ -2077,7 +2077,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
       _bz_VecExprConstant<int>,
       _bz_Max<P_numtype1, int > > >
-max(const TinyVector<P_numtype1, N_length1>& d1, 
+(max)(const TinyVector<P_numtype1, N_length1>& d1, 
       int d2)
 {
     typedef _bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
@@ -2094,7 +2094,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
       _bz_VecExprConstant<float>,
       _bz_Max<P_numtype1, float > > >
-max(const TinyVector<P_numtype1, N_length1>& d1, 
+(max)(const TinyVector<P_numtype1, N_length1>& d1, 
       float d2)
 {
     typedef _bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
@@ -2111,7 +2111,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
       _bz_VecExprConstant<double>,
       _bz_Max<P_numtype1, double > > >
-max(const TinyVector<P_numtype1, N_length1>& d1, 
+(max)(const TinyVector<P_numtype1, N_length1>& d1, 
       double d2)
 {
     typedef _bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
@@ -2128,7 +2128,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
       _bz_VecExprConstant<long double>,
       _bz_Max<P_numtype1, long double > > >
-max(const TinyVector<P_numtype1, N_length1>& d1, 
+(max)(const TinyVector<P_numtype1, N_length1>& d1, 
       long double d2)
 {
     typedef _bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
@@ -2146,7 +2146,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
       _bz_VecExprConstant<complex<T2> > ,
       _bz_Max<P_numtype1, complex<T2>  > > >
-max(const TinyVector<P_numtype1, N_length1>& d1, 
+(max)(const TinyVector<P_numtype1, N_length1>& d1, 
       complex<T2> d2)
 {
     typedef _bz_VecExprOp<TinyVectorIterConst<P_numtype1, N_length1>, 
@@ -2165,7 +2165,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<int>, 
       VectorIterConst<P_numtype2>,
       _bz_Max<int, P_numtype2 > > >
-max(int d1, 
+(max)(int d1, 
       const Vector<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<int>, 
@@ -2182,7 +2182,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<int>, 
       _bz_VecExpr<P_expr2>,
       _bz_Max<int, typename P_expr2::T_numtype > > >
-max(int d1, 
+(max)(int d1, 
       _bz_VecExpr<P_expr2> d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<int>, 
@@ -2199,7 +2199,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<int>, 
       VectorPickIterConst<P_numtype2>,
       _bz_Max<int, P_numtype2 > > >
-max(int d1, 
+(max)(int d1, 
       const VectorPick<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<int>, 
@@ -2216,7 +2216,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<int>, 
       TinyVectorIterConst<P_numtype2, N_length2>,
       _bz_Max<int, P_numtype2 > > >
-max(int d1, 
+(max)(int d1, 
       const TinyVector<P_numtype2, N_length2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<int>, 
@@ -2233,7 +2233,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<float>, 
       VectorIterConst<P_numtype2>,
       _bz_Max<float, P_numtype2 > > >
-max(float d1, 
+(max)(float d1, 
       const Vector<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<float>, 
@@ -2250,7 +2250,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<float>, 
       _bz_VecExpr<P_expr2>,
       _bz_Max<float, typename P_expr2::T_numtype > > >
-max(float d1, 
+(max)(float d1, 
       _bz_VecExpr<P_expr2> d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<float>, 
@@ -2267,7 +2267,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<float>, 
       VectorPickIterConst<P_numtype2>,
       _bz_Max<float, P_numtype2 > > >
-max(float d1, 
+(max)(float d1, 
       const VectorPick<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<float>, 
@@ -2284,7 +2284,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<float>, 
       Range,
       _bz_Max<float, int > > >
-max(float d1, 
+(max)(float d1, 
       Range d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<float>, 
@@ -2301,7 +2301,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<float>, 
       TinyVectorIterConst<P_numtype2, N_length2>,
       _bz_Max<float, P_numtype2 > > >
-max(float d1, 
+(max)(float d1, 
       const TinyVector<P_numtype2, N_length2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<float>, 
@@ -2318,7 +2318,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<double>, 
       VectorIterConst<P_numtype2>,
       _bz_Max<double, P_numtype2 > > >
-max(double d1, 
+(max)(double d1, 
       const Vector<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<double>, 
@@ -2335,7 +2335,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<double>, 
       _bz_VecExpr<P_expr2>,
       _bz_Max<double, typename P_expr2::T_numtype > > >
-max(double d1, 
+(max)(double d1, 
       _bz_VecExpr<P_expr2> d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<double>, 
@@ -2352,7 +2352,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<double>, 
       VectorPickIterConst<P_numtype2>,
       _bz_Max<double, P_numtype2 > > >
-max(double d1, 
+(max)(double d1, 
       const VectorPick<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<double>, 
@@ -2369,7 +2369,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<double>, 
       Range,
       _bz_Max<double, int > > >
-max(double d1, 
+(max)(double d1, 
       Range d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<double>, 
@@ -2386,7 +2386,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<double>, 
       TinyVectorIterConst<P_numtype2, N_length2>,
       _bz_Max<double, P_numtype2 > > >
-max(double d1, 
+(max)(double d1, 
       const TinyVector<P_numtype2, N_length2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<double>, 
@@ -2403,7 +2403,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<long double>, 
       VectorIterConst<P_numtype2>,
       _bz_Max<long double, P_numtype2 > > >
-max(long double d1, 
+(max)(long double d1, 
       const Vector<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<long double>, 
@@ -2420,7 +2420,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<long double>, 
       _bz_VecExpr<P_expr2>,
       _bz_Max<long double, typename P_expr2::T_numtype > > >
-max(long double d1, 
+(max)(long double d1, 
       _bz_VecExpr<P_expr2> d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<long double>, 
@@ -2437,7 +2437,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<long double>, 
       VectorPickIterConst<P_numtype2>,
       _bz_Max<long double, P_numtype2 > > >
-max(long double d1, 
+(max)(long double d1, 
       const VectorPick<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<long double>, 
@@ -2454,7 +2454,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<long double>, 
       Range,
       _bz_Max<long double, int > > >
-max(long double d1, 
+(max)(long double d1, 
       Range d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<long double>, 
@@ -2471,7 +2471,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<long double>, 
       TinyVectorIterConst<P_numtype2, N_length2>,
       _bz_Max<long double, P_numtype2 > > >
-max(long double d1, 
+(max)(long double d1, 
       const TinyVector<P_numtype2, N_length2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<long double>, 
@@ -2489,7 +2489,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<complex<T1> > , 
       VectorIterConst<P_numtype2>,
       _bz_Max<complex<T1> , P_numtype2 > > >
-max(complex<T1> d1, 
+(max)(complex<T1> d1, 
       const Vector<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<complex<T1> > , 
@@ -2509,7 +2509,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<complex<T1> > , 
       _bz_VecExpr<P_expr2>,
       _bz_Max<complex<T1> , typename P_expr2::T_numtype > > >
-max(complex<T1> d1, 
+(max)(complex<T1> d1, 
       _bz_VecExpr<P_expr2> d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<complex<T1> > , 
@@ -2529,7 +2529,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<complex<T1> > , 
       VectorPickIterConst<P_numtype2>,
       _bz_Max<complex<T1> , P_numtype2 > > >
-max(complex<T1> d1, 
+(max)(complex<T1> d1, 
       const VectorPick<P_numtype2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<complex<T1> > , 
@@ -2549,7 +2549,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<complex<T1> > , 
       Range,
       _bz_Max<complex<T1> , int > > >
-max(complex<T1> d1, 
+(max)(complex<T1> d1, 
       Range d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<complex<T1> > , 
@@ -2569,7 +2569,7 @@ inline
 _bz_VecExpr<_bz_VecExprOp<_bz_VecExprConstant<complex<T1> > , 
       TinyVectorIterConst<P_numtype2, N_length2>,
       _bz_Max<complex<T1> , P_numtype2 > > >
-max(complex<T1> d1, 
+(max)(complex<T1> d1, 
       const TinyVector<P_numtype2, N_length2>& d2)
 {
     typedef _bz_VecExprOp<_bz_VecExprConstant<complex<T1> > , 
