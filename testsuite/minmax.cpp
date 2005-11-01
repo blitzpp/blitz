@@ -1,11 +1,15 @@
 // Check blitz/minmax.h, which provides a templated, type-promoting
 // version of min(a,b) and max(a,b).
 
+// Some MS Windows and boost header files provide macro definitions of min/max
+// that can conflict with our templated functions in the blitz::minmax 
+// namespace.  Placing these macros here as a test that we can work around
+// this problem by enclosing our min/max invocations in a set of parentheses.
+#define min(a,b) (a < b ? a : b)
+#define max(a,b) (a > b ? a : b)
+
 #include "testsuite.h"
 #include <blitz/minmax.h>
-
-BZ_USING_NAMESPACE(blitz)
-BZ_USING_NAMESPACE(blitz::minmax)
 
 int main()
 {
@@ -13,12 +17,12 @@ int main()
     float b = 2.0;
     int c = 3;
 
-    BZTEST(int(min(a,b)) == 1);
-    BZTEST(int(max(a,b)) == 2);
-    BZTEST(int(min(a,c)) == 1);
-    BZTEST(int(min(b,c)) == 2);
-    BZTEST(int(max(b,c)) == 3);
-    BZTEST(int(max(a,c)) == 3);
+    BZTEST(static_cast<int>((blitz::minmax::min)(a,b)) == 1);
+    BZTEST(static_cast<int>((blitz::minmax::max)(a,b)) == 2);
+    BZTEST(static_cast<int>((blitz::minmax::min)(a,c)) == 1);
+    BZTEST(static_cast<int>((blitz::minmax::min)(b,c)) == 2);
+    BZTEST(static_cast<int>((blitz::minmax::max)(b,c)) == 3);
+    BZTEST(static_cast<int>((blitz::minmax::max)(a,c)) == 3);
 
     return 0;
 }
