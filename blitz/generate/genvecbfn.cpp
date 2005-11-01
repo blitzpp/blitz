@@ -88,7 +88,7 @@ int main()
         ofs << " > > >" << std::endl;
      
         // operator+(const Vector<T_numtype1>& d1, _bz_VecExpr<T_expr2> d2)
-        ofs << ops[i].opSymbol << "(";
+        ofs << "(" << ops[i].opSymbol << ")(";
         operands.printArgumentList(ofs, 1);
         ofs << ")" << std::endl << "{" << std::endl;
 

@@ -588,7 +588,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0)
 #endif
         if (numElements())
         {
-            Range overlap0 = Range(fromStart, minmax::min(B.ubound(0), 
+            Range overlap0 = Range(fromStart, (minmax::min)(B.ubound(0), 
               ubound(0)));
             B(overlap0) = (*this)(overlap0);
         }
@@ -608,9 +608,9 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1)
 
         if (numElements())
         {
-            Range overlap0 = Range(fromStart, minmax::min(B.ubound(0), 
+            Range overlap0 = Range(fromStart, (minmax::min)(B.ubound(0), 
                 ubound(0)));
-            Range overlap1 = Range(fromStart, minmax::min(B.ubound(1), 
+            Range overlap1 = Range(fromStart, (minmax::min)(B.ubound(1), 
                 ubound(1)));
             B(overlap0, overlap1) = (*this)(overlap0, overlap1);
         }
@@ -632,11 +632,11 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
             storage_);
         if (numElements())
         {
-            Range overlap0 = Range(fromStart, minmax::min(B.ubound(0), 
+            Range overlap0 = Range(fromStart, (minmax::min)(B.ubound(0), 
                 ubound(0)));
-            Range overlap1 = Range(fromStart, minmax::min(B.ubound(1), 
+            Range overlap1 = Range(fromStart, (minmax::min)(B.ubound(1), 
                 ubound(1)));
-            Range overlap2 = Range(fromStart, minmax::min(B.ubound(2), 
+            Range overlap2 = Range(fromStart, (minmax::min)(B.ubound(2), 
                 ubound(2)));
             B(overlap0, overlap1, overlap2) = (*this)(overlap0, overlap1, 
                 overlap2);
@@ -661,10 +661,10 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 
         if (numElements())
         {
-            Range overlap0 = Range(fromStart, minmax::min(B.ubound(0), ubound(0)));
-            Range overlap1 = Range(fromStart, minmax::min(B.ubound(1), ubound(1)));
-            Range overlap2 = Range(fromStart, minmax::min(B.ubound(2), ubound(2)));
-            Range overlap3 = Range(fromStart, minmax::min(B.ubound(3), ubound(3)));
+            Range overlap0 = Range(fromStart, (minmax::min)(B.ubound(0), ubound(0)));
+            Range overlap1 = Range(fromStart, (minmax::min)(B.ubound(1), ubound(1)));
+            Range overlap2 = Range(fromStart, (minmax::min)(B.ubound(2), ubound(2)));
+            Range overlap3 = Range(fromStart, (minmax::min)(B.ubound(3), ubound(3)));
             B(overlap0, overlap1, overlap2, overlap3) = (*this)(overlap0,
                 overlap1, overlap2, overlap3);
         }
@@ -689,11 +689,11 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 
         if (numElements())
         {
-            Range overlap0 = Range(fromStart, minmax::min(B.ubound(0), ubound(0)));
-            Range overlap1 = Range(fromStart, minmax::min(B.ubound(1), ubound(1)));
-            Range overlap2 = Range(fromStart, minmax::min(B.ubound(2), ubound(2)));
-            Range overlap3 = Range(fromStart, minmax::min(B.ubound(3), ubound(3)));
-            Range overlap4 = Range(fromStart, minmax::min(B.ubound(4), ubound(4)));
+            Range overlap0 = Range(fromStart, (minmax::min)(B.ubound(0), ubound(0)));
+            Range overlap1 = Range(fromStart, (minmax::min)(B.ubound(1), ubound(1)));
+            Range overlap2 = Range(fromStart, (minmax::min)(B.ubound(2), ubound(2)));
+            Range overlap3 = Range(fromStart, (minmax::min)(B.ubound(3), ubound(3)));
+            Range overlap4 = Range(fromStart, (minmax::min)(B.ubound(4), ubound(4)));
             B(overlap0, overlap1, overlap2, overlap3, overlap4) = (*this)
                 (overlap0, overlap1, overlap2, overlap3, overlap4);
         }
@@ -718,12 +718,12 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 
         if (numElements())
         {
-            Range overlap0 = Range(fromStart, minmax::min(B.ubound(0), ubound(0)));
-            Range overlap1 = Range(fromStart, minmax::min(B.ubound(1), ubound(1)));
-            Range overlap2 = Range(fromStart, minmax::min(B.ubound(2), ubound(2)));
-            Range overlap3 = Range(fromStart, minmax::min(B.ubound(3), ubound(3)));
-            Range overlap4 = Range(fromStart, minmax::min(B.ubound(4), ubound(4)));
-            Range overlap5 = Range(fromStart, minmax::min(B.ubound(5), ubound(5)));
+            Range overlap0 = Range(fromStart, (minmax::min)(B.ubound(0), ubound(0)));
+            Range overlap1 = Range(fromStart, (minmax::min)(B.ubound(1), ubound(1)));
+            Range overlap2 = Range(fromStart, (minmax::min)(B.ubound(2), ubound(2)));
+            Range overlap3 = Range(fromStart, (minmax::min)(B.ubound(3), ubound(3)));
+            Range overlap4 = Range(fromStart, (minmax::min)(B.ubound(4), ubound(4)));
+            Range overlap5 = Range(fromStart, (minmax::min)(B.ubound(5), ubound(5)));
             B(overlap0, overlap1, overlap2, overlap3, overlap4, overlap5)
                 = (*this)(overlap0, overlap1, overlap2, overlap3, overlap4,
                 overlap5);
@@ -751,19 +751,19 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 
         if (numElements())
         {
-            Range overlap0 = Range(fromStart, minmax::min(B.ubound(0), 
+            Range overlap0 = Range(fromStart, (minmax::min)(B.ubound(0), 
                ubound(0)));
-            Range overlap1 = Range(fromStart, minmax::min(B.ubound(1), 
+            Range overlap1 = Range(fromStart, (minmax::min)(B.ubound(1), 
                ubound(1)));
-            Range overlap2 = Range(fromStart, minmax::min(B.ubound(2), 
+            Range overlap2 = Range(fromStart, (minmax::min)(B.ubound(2), 
                ubound(2)));
-            Range overlap3 = Range(fromStart, minmax::min(B.ubound(3), 
+            Range overlap3 = Range(fromStart, (minmax::min)(B.ubound(3), 
                ubound(3)));
-            Range overlap4 = Range(fromStart, minmax::min(B.ubound(4), 
+            Range overlap4 = Range(fromStart, (minmax::min)(B.ubound(4), 
                ubound(4)));
-            Range overlap5 = Range(fromStart, minmax::min(B.ubound(5), 
+            Range overlap5 = Range(fromStart, (minmax::min)(B.ubound(5), 
                ubound(5)));
-            Range overlap6 = Range(fromStart, minmax::min(B.ubound(6), 
+            Range overlap6 = Range(fromStart, (minmax::min)(B.ubound(6), 
                ubound(6)));
             B(overlap0, overlap1, overlap2, overlap3, overlap4, overlap5,
               overlap6)
@@ -795,21 +795,21 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 
         if (numElements())
         {
-            Range overlap0 = Range(fromStart, minmax::min(B.ubound(0), 
+            Range overlap0 = Range(fromStart, (minmax::min)(B.ubound(0), 
                ubound(0)));
-            Range overlap1 = Range(fromStart, minmax::min(B.ubound(1), 
+            Range overlap1 = Range(fromStart, (minmax::min)(B.ubound(1), 
                ubound(1)));
-            Range overlap2 = Range(fromStart, minmax::min(B.ubound(2), 
+            Range overlap2 = Range(fromStart, (minmax::min)(B.ubound(2), 
                ubound(2)));
-            Range overlap3 = Range(fromStart, minmax::min(B.ubound(3), 
+            Range overlap3 = Range(fromStart, (minmax::min)(B.ubound(3), 
                ubound(3)));
-            Range overlap4 = Range(fromStart, minmax::min(B.ubound(4), 
+            Range overlap4 = Range(fromStart, (minmax::min)(B.ubound(4), 
                ubound(4)));
-            Range overlap5 = Range(fromStart, minmax::min(B.ubound(5), 
+            Range overlap5 = Range(fromStart, (minmax::min)(B.ubound(5), 
                ubound(5)));
-            Range overlap6 = Range(fromStart, minmax::min(B.ubound(6), 
+            Range overlap6 = Range(fromStart, (minmax::min)(B.ubound(6), 
                ubound(6)));
-            Range overlap7 = Range(fromStart, minmax::min(B.ubound(7), 
+            Range overlap7 = Range(fromStart, (minmax::min)(B.ubound(7), 
                ubound(7)));
             B(overlap0, overlap1, overlap2, overlap3, overlap4, overlap5,
               overlap6, overlap7)
@@ -842,23 +842,23 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 
         if (numElements())
         {
-            Range overlap0 = Range(fromStart, minmax::min(B.ubound(0), 
+            Range overlap0 = Range(fromStart, (minmax::min)(B.ubound(0), 
                ubound(0)));
-            Range overlap1 = Range(fromStart, minmax::min(B.ubound(1), 
+            Range overlap1 = Range(fromStart, (minmax::min)(B.ubound(1), 
                ubound(1)));
-            Range overlap2 = Range(fromStart, minmax::min(B.ubound(2), 
+            Range overlap2 = Range(fromStart, (minmax::min)(B.ubound(2), 
                ubound(2)));
-            Range overlap3 = Range(fromStart, minmax::min(B.ubound(3), 
+            Range overlap3 = Range(fromStart, (minmax::min)(B.ubound(3), 
                ubound(3)));
-            Range overlap4 = Range(fromStart, minmax::min(B.ubound(4), 
+            Range overlap4 = Range(fromStart, (minmax::min)(B.ubound(4), 
                ubound(4)));
-            Range overlap5 = Range(fromStart, minmax::min(B.ubound(5), 
+            Range overlap5 = Range(fromStart, (minmax::min)(B.ubound(5), 
                ubound(5)));
-            Range overlap6 = Range(fromStart, minmax::min(B.ubound(6), 
+            Range overlap6 = Range(fromStart, (minmax::min)(B.ubound(6), 
                ubound(6)));
-            Range overlap7 = Range(fromStart, minmax::min(B.ubound(7), 
+            Range overlap7 = Range(fromStart, (minmax::min)(B.ubound(7), 
                ubound(7)));
-            Range overlap8 = Range(fromStart, minmax::min(B.ubound(8), 
+            Range overlap8 = Range(fromStart, (minmax::min)(B.ubound(8), 
                ubound(8)));
             B(overlap0, overlap1, overlap2, overlap3, overlap4, overlap5,
               overlap6, overlap7, overlap8)
@@ -892,25 +892,25 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 
         if (numElements())
         {
-            Range overlap0 = Range(fromStart, minmax::min(B.ubound(0), 
+            Range overlap0 = Range(fromStart, (minmax::min)(B.ubound(0), 
                ubound(0)));
-            Range overlap1 = Range(fromStart, minmax::min(B.ubound(1), 
+            Range overlap1 = Range(fromStart, (minmax::min)(B.ubound(1), 
                ubound(1)));
-            Range overlap2 = Range(fromStart, minmax::min(B.ubound(2), 
+            Range overlap2 = Range(fromStart, (minmax::min)(B.ubound(2), 
                ubound(2)));
-            Range overlap3 = Range(fromStart, minmax::min(B.ubound(3), 
+            Range overlap3 = Range(fromStart, (minmax::min)(B.ubound(3), 
                ubound(3)));
-            Range overlap4 = Range(fromStart, minmax::min(B.ubound(4), 
+            Range overlap4 = Range(fromStart, (minmax::min)(B.ubound(4), 
                ubound(4)));
-            Range overlap5 = Range(fromStart, minmax::min(B.ubound(5), 
+            Range overlap5 = Range(fromStart, (minmax::min)(B.ubound(5), 
                ubound(5)));
-            Range overlap6 = Range(fromStart, minmax::min(B.ubound(6), 
+            Range overlap6 = Range(fromStart, (minmax::min)(B.ubound(6), 
                ubound(6)));
-            Range overlap7 = Range(fromStart, minmax::min(B.ubound(7), 
+            Range overlap7 = Range(fromStart, (minmax::min)(B.ubound(7), 
                ubound(7)));
-            Range overlap8 = Range(fromStart, minmax::min(B.ubound(8), 
+            Range overlap8 = Range(fromStart, (minmax::min)(B.ubound(8), 
                ubound(8)));
-            Range overlap9 = Range(fromStart, minmax::min(B.ubound(9), 
+            Range overlap9 = Range(fromStart, (minmax::min)(B.ubound(9), 
                ubound(9)));
             B(overlap0, overlap1, overlap2, overlap3, overlap4, overlap5,
               overlap6, overlap7, overlap8, overlap9)
@@ -945,27 +945,27 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 
         if (numElements())
         {
-            Range overlap0 = Range(fromStart, minmax::min(B.ubound(0), 
+            Range overlap0 = Range(fromStart, (minmax::min)(B.ubound(0), 
                ubound(0)));
-            Range overlap1 = Range(fromStart, minmax::min(B.ubound(1), 
+            Range overlap1 = Range(fromStart, (minmax::min)(B.ubound(1), 
                ubound(1)));
-            Range overlap2 = Range(fromStart, minmax::min(B.ubound(2), 
+            Range overlap2 = Range(fromStart, (minmax::min)(B.ubound(2), 
                ubound(2)));
-            Range overlap3 = Range(fromStart, minmax::min(B.ubound(3), 
+            Range overlap3 = Range(fromStart, (minmax::min)(B.ubound(3), 
                ubound(3)));
-            Range overlap4 = Range(fromStart, minmax::min(B.ubound(4), 
+            Range overlap4 = Range(fromStart, (minmax::min)(B.ubound(4), 
                ubound(4)));
-            Range overlap5 = Range(fromStart, minmax::min(B.ubound(5), 
+            Range overlap5 = Range(fromStart, (minmax::min)(B.ubound(5), 
                ubound(5)));
-            Range overlap6 = Range(fromStart, minmax::min(B.ubound(6), 
+            Range overlap6 = Range(fromStart, (minmax::min)(B.ubound(6), 
                ubound(6)));
-            Range overlap7 = Range(fromStart, minmax::min(B.ubound(7), 
+            Range overlap7 = Range(fromStart, (minmax::min)(B.ubound(7), 
                ubound(7)));
-            Range overlap8 = Range(fromStart, minmax::min(B.ubound(8), 
+            Range overlap8 = Range(fromStart, (minmax::min)(B.ubound(8), 
                ubound(8)));
-            Range overlap9 = Range(fromStart, minmax::min(B.ubound(9), 
+            Range overlap9 = Range(fromStart, (minmax::min)(B.ubound(9), 
                ubound(9)));
-            Range overlap10 = Range(fromStart, minmax::min(B.ubound(10), 
+            Range overlap10 = Range(fromStart, (minmax::min)(B.ubound(10), 
                ubound(10)));
         }
         reference(B);
@@ -999,7 +999,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(
         {
           TinyVector<int,N_rank> ub;
           for (int d=0; d < N_rank; ++d)
-            ub(d) = minmax::min(B.ubound(d),ubound(d));
+            ub(d) = (minmax::min)(B.ubound(d),ubound(d));
           RectDomain<N_rank> overlap(lbound(),ub);
           B(overlap) = (*this)(overlap);
         }

@@ -108,7 +108,7 @@ int main()
         ofs << " > > >" << std::endl;
      
         if (ops[i].opSymbol[0] == 'm')
-            ofs << ops[i].opSymbol << "(";
+            ofs << "(" << ops[i].opSymbol << ")(";
         else
             ofs << "operator" << ops[i].opSymbol << "(";
         operands.printArgumentList(ofs, 1);

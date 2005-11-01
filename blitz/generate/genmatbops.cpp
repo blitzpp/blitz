@@ -91,9 +91,9 @@ int main()
         ofs << " > > >" << std::endl;
      
         // operator+(const Matrix<T_numtype1>& d1, _bz_MatExpr<T_expr2> d2)
-				if (ops[i].opSymbol[0] == 'm') 
-					ofs << ops[i].opSymbol << "(";
-				else
+	if (ops[i].opSymbol[0] == 'm') 
+            ofs << "(" << ops[i].opSymbol << ")(";
+	else
         	ofs << "operator" << ops[i].opSymbol << "(";
         operands.printArgumentList(ofs, 1);
         ofs << ")" << std::endl << "{" << std::endl;
