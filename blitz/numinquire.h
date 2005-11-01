@@ -128,20 +128,20 @@ inline T epsilon(T) BZ_THROW
 template<typename T>
 inline T neghuge(T) BZ_THROW
 {
-    return numeric_limits<T>::is_integer ?    numeric_limits<T>::min()
-                                         : - numeric_limits<T>::max();
+    return numeric_limits<T>::is_integer ?    (numeric_limits<T>::min)()
+                                         : - (numeric_limits<T>::max)();
 }
 
 template<typename T>
 inline T huge(T) BZ_THROW
 {
-    return numeric_limits<T>::max();
+    return (numeric_limits<T>::max)();
 }
 
 template<typename T>
 inline T tiny(T) BZ_THROW
 {
-    return numeric_limits<T>::min();
+    return (numeric_limits<T>::min)();
 }
 
 template<typename T>
