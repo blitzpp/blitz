@@ -270,9 +270,9 @@ fn(const Array<T_numtype, N_rank>& array,                               \
 
 BZ_DECL_ARRAY_PARTIAL_REDUCE(sum,      ReduceSum)
 BZ_DECL_ARRAY_PARTIAL_REDUCE(mean,     ReduceMean)
-BZ_DECL_ARRAY_PARTIAL_REDUCE(min,      ReduceMin)
+BZ_DECL_ARRAY_PARTIAL_REDUCE((min),    ReduceMin)
 BZ_DECL_ARRAY_PARTIAL_REDUCE(minIndex, ReduceMinIndex)
-BZ_DECL_ARRAY_PARTIAL_REDUCE(max,      ReduceMax)
+BZ_DECL_ARRAY_PARTIAL_REDUCE((max),    ReduceMax)
 BZ_DECL_ARRAY_PARTIAL_REDUCE(maxIndex, ReduceMaxIndex)
 BZ_DECL_ARRAY_PARTIAL_REDUCE(product,  ReduceProduct)
 BZ_DECL_ARRAY_PARTIAL_REDUCE(count,    ReduceCount)
@@ -311,8 +311,8 @@ fn(const Array<T_numtype, N_rank>& array)                               \
 
 BZ_DECL_ARRAY_FULL_REDUCE(sum,      ReduceSum)
 BZ_DECL_ARRAY_FULL_REDUCE(mean,     ReduceMean)
-BZ_DECL_ARRAY_FULL_REDUCE(min,      ReduceMin)
-BZ_DECL_ARRAY_FULL_REDUCE(max,      ReduceMax)
+BZ_DECL_ARRAY_FULL_REDUCE((min),    ReduceMin)
+BZ_DECL_ARRAY_FULL_REDUCE((max),    ReduceMax)
 BZ_DECL_ARRAY_FULL_REDUCE(product,  ReduceProduct)
 BZ_DECL_ARRAY_FULL_REDUCE(count,    ReduceCount)
 BZ_DECL_ARRAY_FULL_REDUCE(any,      ReduceAny)

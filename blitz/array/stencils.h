@@ -267,8 +267,8 @@ public:
     {
         for (int i=0; i < N_rank; ++i)
         {
-            min_[i] = minmax::min(min_[i], x.min(i));
-            max_[i] = minmax::max(max_[i], x.max(i));
+            min_[i] = (minmax::min)(min_[i], (x.min)(i));
+            max_[i] = (minmax::max)(max_[i], (x.max)(i));
         }
     }
 
@@ -276,16 +276,16 @@ public:
     void combine(const dummy<T_numtype2>&)
     { }
 
-    int min(int i) const
+    int (min)(int i) const
     { return min_[i]; }
 
-    int max(int i) const
+    int (max)(int i) const
     { return max_[i]; }
 
-    const TinyVector<int,N_rank>& min() const
+    const TinyVector<int,N_rank>& (min)() const
     { return min_; }
 
-    const TinyVector<int,N_rank>& max() const
+    const TinyVector<int,N_rank>& (max)() const
     { return max_; }
 
     template<typename T>

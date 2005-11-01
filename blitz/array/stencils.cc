@@ -131,8 +131,8 @@ RectDomain<N_rank> interiorDomain(const T_stencil& stencil,
 
     // Shrink the domain according to the stencil size
     TinyVector<int,N_rank> lbound, ubound;
-    lbound = domain.lbound() - At.min();
-    ubound = domain.ubound() - At.max();
+    lbound = domain.lbound() - (At.min)();
+    ubound = domain.ubound() - (At.max)();
     return RectDomain<N_rank>(lbound,ubound);
 }
 
@@ -152,8 +152,8 @@ static void getStencilExtent(TinyVector<int,N_rank>& minb,
     // Interrogate the stencil to find out its extent
     stencilExtent<N_rank, T_numtype1> At;
     calcStencilExtent(At, stencil, A, B, C, D, E, F, G, H, I, J, K);
-    minb = At.min();
-    maxb = At.max();
+    minb = (At.min)();
+    maxb = (At.max)();
 }
 };
 
@@ -219,13 +219,13 @@ void applyStencil_imp(const T_stencil& stencil, Array<T_numtype1,3>& A,
     int stencil_ubound1 = maxb(1);
     int stencil_ubound2 = maxb(2);
 
-    int lbound0 = minmax::max(A.lbound(0), A.lbound(0) - stencil_lbound0);
-    int lbound1 = minmax::max(A.lbound(1), A.lbound(1) - stencil_lbound1);
-    int lbound2 = minmax::max(A.lbound(2), A.lbound(2) - stencil_lbound2);
+    int lbound0 = (minmax::max)(A.lbound(0), A.lbound(0) - stencil_lbound0);
+    int lbound1 = (minmax::max)(A.lbound(1), A.lbound(1) - stencil_lbound1);
+    int lbound2 = (minmax::max)(A.lbound(2), A.lbound(2) - stencil_lbound2);
 
-    int ubound0 = minmax::min(A.ubound(0), A.ubound(0) - stencil_ubound0);
-    int ubound1 = minmax::min(A.ubound(1), A.ubound(1) - stencil_ubound1);
-    int ubound2 = minmax::min(A.ubound(2), A.ubound(2) - stencil_ubound2);
+    int ubound0 = (minmax::min)(A.ubound(0), A.ubound(0) - stencil_ubound0);
+    int ubound1 = (minmax::min)(A.ubound(1), A.ubound(1) - stencil_ubound1);
+    int ubound2 = (minmax::min)(A.ubound(2), A.ubound(2) - stencil_ubound2);
 
 #if 0
     cout << "Stencil bounds are:" << endl
@@ -325,11 +325,11 @@ void applyStencil_imp(const T_stencil& stencil, Array<T_numtype1,2>& A,
     int stencil_ubound0 = maxb(0);
     int stencil_ubound1 = maxb(1);
 
-    int lbound0 = minmax::max(A.lbound(0), A.lbound(0) - stencil_lbound0);
-    int lbound1 = minmax::max(A.lbound(1), A.lbound(1) - stencil_lbound1);
+    int lbound0 = (minmax::max)(A.lbound(0), A.lbound(0) - stencil_lbound0);
+    int lbound1 = (minmax::max)(A.lbound(1), A.lbound(1) - stencil_lbound1);
 
-    int ubound0 = minmax::min(A.ubound(0), A.ubound(0) - stencil_ubound0);
-    int ubound1 = minmax::min(A.ubound(1), A.ubound(1) - stencil_ubound1);
+    int ubound0 = (minmax::min)(A.ubound(0), A.ubound(0) - stencil_ubound0);
+    int ubound1 = (minmax::min)(A.ubound(1), A.ubound(1) - stencil_ubound1);
 
 #if 0
     cout << "Stencil bounds are:" << endl
@@ -422,8 +422,8 @@ void applyStencil_imp(const T_stencil& stencil, Array<T_numtype1,1>& A,
     int stencil_lbound0 = minb(0);
     int stencil_ubound0 = maxb(0);
 
-    int lbound0 = minmax::max(A.lbound(0), A.lbound(0) - stencil_lbound0);
-    int ubound0 = minmax::min(A.ubound(0), A.ubound(0) - stencil_ubound0);
+    int lbound0 = (minmax::max)(A.lbound(0), A.lbound(0) - stencil_lbound0);
+    int ubound0 = (minmax::min)(A.ubound(0), A.ubound(0) - stencil_ubound0);
 
 #if 0
     cout << "Stencil bounds are:" << endl
