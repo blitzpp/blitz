@@ -44,8 +44,8 @@ class _Numeric_limits_base {
 public:
   static const bool is_specialized = false;
 
-  static __number min()  { return __number(); }
-  static __number max()  { return __number(); }
+  static __number (min)()  { return __number(); }
+  static __number (max)()  { return __number(); }
 
   static const int digits   = 0;
   static const int digits10 = 0;
@@ -123,8 +123,8 @@ class _Integer_limits : public _Numeric_limits_base<_Int> {
 public:
   static const bool is_specialized = true;
 
-  static _Int min()  { return __imin; }
-  static _Int max()  { return __imax; }
+  static _Int (min)()  { return __imin; }
+  static _Int (max)()  { return __imax; }
 
   static const int digits = 
     (__idigits < 0) ? sizeof(_Int) * CHAR_BIT - (__imin == 0 ? 0 : 1) 
@@ -341,9 +341,9 @@ template<> class numeric_limits<float>
                             round_to_nearest>
 {
 public:
-  static float min()  { return FLT_MIN; }
+  static float (min)()  { return FLT_MIN; }
   static float denorm_min()  { return FLT_MIN; }
-  static float max()  { return FLT_MAX; }
+  static float (max)()  { return FLT_MAX; }
   static float epsilon()  { return FLT_EPSILON; }
   static float round_error()  { return 0.5f; } // Units: ulps.
 };
@@ -363,9 +363,9 @@ template<> class numeric_limits<double>
                             round_to_nearest>
 {
 public:
-  static double min()  { return DBL_MIN; }
+  static double (min)()  { return DBL_MIN; }
   static double denorm_min()  { return DBL_MIN; }
-  static double max()  { return DBL_MAX; }
+  static double (max)()  { return DBL_MAX; }
   static double epsilon()  { return DBL_EPSILON; }
   static double round_error()  { return 0.5; } // Units: ulps.
 };
@@ -385,9 +385,9 @@ template<> class numeric_limits<long double>
                             round_to_nearest>
 {
 public:
-  static long double min()  { return LDBL_MIN; }
+  static long double (min)()  { return LDBL_MIN; }
   static long double denorm_min()  { return LDBL_MIN; }
-  static long double max()  { return LDBL_MAX; }
+  static long double (max)()  { return LDBL_MAX; }
   static long double epsilon()  { return LDBL_EPSILON; }
   static long double round_error()  { return 4; } // Units: ulps.
 };
