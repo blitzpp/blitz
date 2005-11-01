@@ -7,9 +7,9 @@
 
 #define BZ_TESTSUITE
 
-#include <assert.h>
+#include <stdlib.h>
 #include <blitz/blitz.h>
 
-#define BZTEST(x)    { if(!(x)) { cout << "Test failed: " << __FILE__ << " line " << __LINE__ << endl; exit(1); } }
+#define BZTEST(x)    { if(!(x)) { BZ_STD_SCOPE(cout) << "Test failed: " << __FILE__ << " line " << __LINE__ << BZ_STD_SCOPE(endl); exit(1); } }
  
 #endif // TESTSUITE_H
