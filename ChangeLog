@@ -1,3 +1,36 @@
+2005-10-31  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* blitz/limits-hack.h: Put enclosing parentheses around min and
+	max to avoid any cpp macro expansion.
+	* blitz/minmax.h: Put enclosing parentheses around min and max to
+	avoid any cpp macro expansion.
+	* blitz/numinquire.h: Put enclosing parentheses around min and max
+	to avoid any cpp macro expansion.
+	* blitz/generate/genmatbops.cpp: Put enclosing parentheses around
+	min and max to avoid any cpp macro expansion.
+	* blitz/generate/genvecbfn.cpp: Put enclosing parentheses around
+	min and max to avoid any cpp macro expansion.
+	* blitz/generate/genarrbops.cpp: Put enclosing parentheses around
+	min and max to avoid any cpp macro expansion.
+	* blitz/array/resize.cc: Put enclosing parentheses around min and
+	max to avoid any cpp macro expansion.
+	* blitz/array/stencils.cc: Put enclosing parentheses around min
+	and max to avoid any cpp macro expansion.
+	* blitz/array/stencils.h: Put enclosing parentheses around min and
+	max to avoid any cpp macro expansion.
+	* blitz/array/ops.h: Put enclosing parentheses around min and max
+	to avoid any cpp macro expansion.
+	* blitz/array/reduce.h: Put enclosing parentheses around min and
+	max to avoid any cpp macro expansion.
+	* testsuite/testsuite.h: Include stdlib.h header instead of
+	assert.h header for declaration of exit().  Added use of
+	BZ_STD_SCOPE macro around cout and endl, so that this header does
+	not require a using directive to work properly.
+	* testsuite/minmax.cpp: Modified test of blitz::minmax functions
+	to explicitly check that they still work in the presence of cpp
+	macros min and max.  In this case, you have to put an enclosing
+	set of parentheses around the min or max invocation to prevent the
+	cpp macro from being substituted.
 
 2005-10-21  Patrick Guio <patrick.guio@bccs.uib.no>
 
