@@ -18,7 +18,7 @@ int main()
   }
 
   {
-    Array<int, 2> A(7,11,fortranArray);
+    Array<int, 2> A(7,11,columnMajorArray);
     BZTEST(A.isStorageContiguous());
 
     BZTEST(!(A(Range(fromStart, toEnd, 2), 
