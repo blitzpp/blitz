@@ -225,6 +225,11 @@ public:
 
     // Experimental
 
+    void moveTo(int i)
+    {
+        data_ = &const_cast<T_array&>(array_)(i);
+    }
+
     void moveTo(int i, int j)
     {
         data_ = &const_cast<T_array&>(array_)(i,j);
