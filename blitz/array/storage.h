@@ -260,6 +260,55 @@ public:
     }
 };
 
+// This tag class can be used to provide a nicer notation for
+// constructing column major arrays: instead of
+//     Array<int,2> A(3, 3, ColumnMajorArray<2>());
+// one can simply write:
+//     Array<int,2> A(3, 3, columnMajorArray);
+// where columnMajorArray is an object of type _bz_columnMajorTag.
+
+class _bz_columnMajorTag {
+public:
+    operator GeneralArrayStorage<1>()
+    { return ColumnMajorArray<1>(); }
+
+    operator GeneralArrayStorage<2>()
+    { return ColumnMajorArray<2>(); }
+
+    operator GeneralArrayStorage<3>()
+    { return ColumnMajorArray<3>(); }
+
+    operator GeneralArrayStorage<4>()
+    { return ColumnMajorArray<4>(); }
+
+    operator GeneralArrayStorage<5>()
+    { return ColumnMajorArray<5>(); }
+
+    operator GeneralArrayStorage<6>()
+    { return ColumnMajorArray<6>(); }
+
+    operator GeneralArrayStorage<7>()
+    { return ColumnMajorArray<7>(); }
+
+    operator GeneralArrayStorage<8>()
+    { return ColumnMajorArray<8>(); }
+
+    operator GeneralArrayStorage<9>()
+    { return ColumnMajorArray<9>(); }
+
+    operator GeneralArrayStorage<10>()
+    { return ColumnMajorArray<10>(); }
+
+    operator GeneralArrayStorage<11>()
+    { return ColumnMajorArray<11>(); }
+};
+
+// A global instance of this class will be placed in
+// the blitz library (libblitz.a on unix machines).
+
+_bz_global _bz_columnMajorTag columnMajorArray;
+
+
 BZ_NAMESPACE_END
 
 #endif // BZ_ARRAY_STORAGE_H
