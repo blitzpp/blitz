@@ -1,3 +1,32 @@
+2005-11-21  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* testsuite/contiguous.cpp: Changed fortranArray tag to
+	columnMajorArray tag, in order to provide quick test of new global
+	tag for arrays with column major storage.  The fortranArray tag is
+	already exercised elsewhere in the testsuite.
+	* blitz/array/storage.h: Added a global tag columnMajorArray for
+	aid in creating Arrays with column major storage (but with base
+	index 0, rather than 1 as with FortranArray).  This addition was
+	suggested by Christian Fuchs (fuchs@lsm.iet.mavt.ethz.ch).
+	* examples/indirect.cpp: Added quick test of setting array values
+	to constant using container of ints.  Addresses problem noted by
+	Eddie Breeveld (Eddie.Breeveld@eu.watsonwyatt.com).
+	* blitz/array/fastiter.h: Added version of moveTo() method for
+	ArrayFastIterator that takes a single scalar int argument for
+	completeness, even though this case is presently handled by
+	implicit conversion of the int argument to a TinyVector<int,1>.
+	This version of moveTo() will be invoked by indirection or
+	stencils involving 1D Arrays.
+	* blitz/array/expr.h: Added a version of the moveTo() method that
+	takes a single scalar int argument to class _bz_ArrayExprConstant,
+	so that expressions like A[I]=0 will work, where A is a 1D Array
+	and I is a container of ints.  The templated version of moveTo()
+	that takes a TinyVector of ints with arbitrary rank N_rank will
+	not be instantiated through implicit argument conversion in this
+	case.  I have also modified the moveTo() methods for the other
+	array expression types (where the precise expression rank is
+	known) to be non-templated and to expect a TinyVector of ints with
+	the same rank as the array expression.
 2005-10-31  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* blitz/limits-hack.h: Put enclosing parentheses around min and
