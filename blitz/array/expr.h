@@ -215,8 +215,7 @@ public:
     bool shapeCheck(const T_shape& shape)
     { return iter_.shapeCheck(shape); }
 
-    template<int N_rank>
-    void moveTo(const TinyVector<int,N_rank>& i)
+    void moveTo(const TinyVector<int,_bz_ArrayExpr::rank>& i)
     {
         iter_.moveTo(i);
     }
@@ -410,8 +409,7 @@ public:
         iter_.advanceUnitStride();
     }
 
-    template<int N_rank>
-    void moveTo(const TinyVector<int,N_rank>& i)
+    void moveTo(const TinyVector<int,_bz_ArrayExprUnaryOp::rank>& i)
     {
         iter_.moveTo(i);
     }
@@ -580,8 +578,7 @@ public:
         return iter1_.isStride(rank,stride) && iter2_.isStride(rank,stride);
     }
 
-    template<int N_rank>
-    void moveTo(const TinyVector<int,N_rank>& i)
+    void moveTo(const TinyVector<int,_bz_ArrayExprBinaryOp::rank>& i)
     {
         iter1_.moveTo(i);
         iter2_.moveTo(i);
@@ -766,8 +763,7 @@ public:
             && iter3_.isStride(rank,stride);
     }
 
-    template<int N_rank>
-    void moveTo(const TinyVector<int,N_rank>& i)
+    void moveTo(const TinyVector<int,_bz_ArrayExprTernaryOp::rank>& i)
     {
         iter1_.moveTo(i);
         iter2_.moveTo(i);
@@ -877,10 +873,10 @@ public:
     bool isStride(int,int) const
     { return true; }
 
+    void moveTo(int) { }
+
     template<int N_rank>
-    void moveTo(const TinyVector<int,N_rank>&)
-    {
-    }
+    void moveTo(const TinyVector<int,N_rank>&) { }
 
     void prettyPrint(BZ_STD_SCOPE(string) &str, 
         prettyPrintFormat& format) const
