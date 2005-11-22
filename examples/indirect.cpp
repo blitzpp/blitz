@@ -94,6 +94,12 @@ void example3()
 
     // B = [          1         2         3         4         5 ]
     // A = [          0         2         3         0         5 ]
+
+    // Test setting indexed items back to zero.
+    A[I] = 0;
+    cout << "After reset:" << endl << "A = " << A << endl;
+
+    // A = [          0         0         0         0         0 ]
 }
 
 void example4()
