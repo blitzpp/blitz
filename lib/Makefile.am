@@ -8,6 +8,7 @@ AM_CPPFLAGS = -I$(top_srcdir) -I$(top_builddir)
 
 lib_LTLIBRARIES = libblitz.la
 libblitz_la_SOURCES = $(top_srcdir)/src/globals.cpp
+libblitz_la_LIBADD = $(LIBS) $(CXX_LIBS)
 
 
 clean-local:
