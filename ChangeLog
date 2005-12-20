@@ -1,3 +1,15 @@
+
+2005-12-20  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* m4/ac_check_blitz.m4 ac_cxx_lib_blitz.m4: 
+	Replaced macro AC_CXX_LIB_BLITZ by AC_CHECK_BLITZ.
+	Set AC_SUBST variables BLITZ_CPPFLAGS, BLITZ_LDFLAGS and BLITZ_LIBS
+	instead of appending to variables CPPFLAGS, LDFLAGS and LIBS.
+	Added arguments [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND].
+	* lib/Makefile.am:
+	Defined libtool variable _LIBADD for any extra libs that might
+	be necessary to compile with -lblitz (e.g. -lm).
+
 2005-11-21  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* testsuite/contiguous.cpp: Changed fortranArray tag to
