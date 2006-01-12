@@ -2,11 +2,11 @@
 #ifndef BZCONFIG_H
 #define BZCONFIG_H
 
-#if defined(__APPLE)
+#if defined(__APPLE__)
 /* IBM xlc compiler for Darwin */
 #include <blitz/apple/bzconfig.h>
 
-#elif defined(__ICC)
+#elif defined(__INTEL_COMPILER)
 /* Intel icc compiler */
 #include <blitz/intel/bzconfig.h>
 
@@ -14,7 +14,7 @@
 /* Microsoft VS.NET compiler */
 #include <blitz/ms/bzconfig.h>
 
-#elif defined(__IBM)
+#elif defined(__xlC__)
 /* IBM xlC compiler */
 #include <blitz/ibm/bzconfig.h>
 
@@ -50,7 +50,7 @@
 /* Fujitsu FCC compiler */
 #include <blitz/fujitsu/bzconfig.h>
 
-#elif defined(__PATHSCALE)
+#elif defined(__PATHSCALE__)
 /* Pathscale pathCC compiler */
 #include <blitz/pathscale/bzconfig.h>
 
