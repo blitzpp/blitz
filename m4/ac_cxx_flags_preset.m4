@@ -31,14 +31,14 @@ if test "$enableval" = yes ; then
 	case "$CXX" in
 	*xlc++*) dnl IBM C++ compiler for Darwin
 		CXX_VENDOR="IBM"
-		CXXFLAGS="-qrtti -D__APPLE"
+		CXXFLAGS="-qrtti"
 		CXX_OPTIMIZE_FLAGS="-O3 -qstrict -qstrict_induction -qinline -qmaxmem=8192 -qansialias -qhot -qunroll=yes"
 		CXX_DEBUG_FLAGS="-g -qcheck=all -DBZ_DEBUG"
 		CXX_PROFIL_FLAGS="-pg"
 	;;      
 	*xlC*)  dnl IBM Visual Age C++   http://www.ibm.com/
 		CXX_VENDOR="IBM"
-		CXXFLAGS="-qrtti=all -D__IBM"
+		CXXFLAGS="-qrtti=all"
 		CXX_OPTIMIZE_FLAGS="-O3 -qstrict -qstrict_induction -qinline -qmaxmem=8192 -qansialias -qhot -qunroll=yes"
 		CXX_DEBUG_FLAGS="-g -qcheck=all -DBZ_DEBUG"
 		CXX_PROFIL_FLAGS="-pg"
@@ -122,7 +122,7 @@ if test "$enableval" = yes ; then
 	;;
 	*pathCC*) dnl Pathscale pathCC compiler   http://www.pathscale.com
 		CXX_VENDOR="pathCC"
-		CXXFLAGS="-D__PATHSCALE -ansi"
+		CXXFLAGS="-ansi"
 		CXX_OPTIMIZE_FLAGS="-O3 -fstrict-aliasing -finline-functions"
 		CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
 		CXX_PROFIL_FLAGS="-pg"
@@ -149,6 +149,12 @@ if test "$enableval" = yes ; then
 			CXX_VENDOR="Cray"
 			CXXFLAGS="-h instantiate=used"
 			CXX_OPTIMIZE_FLAGS="-O3 -hpipeline3 -hunroll -haggress -hscalar2"
+			CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
+		;;
+		*fujitsu*) dnl Fujitsu C++ http://www.fujitsu.com
+			CXX_VENDOR="Fujitsu"
+			CXXFLAGS="-D__FUJITSU --stdlib"
+			CXX_OPTIMIZE_FLAGS="-K3"
 			CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
 		;;
 		esac
