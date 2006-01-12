@@ -1,4 +1,17 @@
+2006-01-12  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
+	* m4/ac_cxx_flags_preset.m4: Removed -D flags for defining special
+	preprocessor symbols when using XL C++ compiler on Mac OS X or AIX
+	systems or when using PathScale C++ compiler.  No longer needed,
+	since we now use predefined symbols to detect these compilers.
+
+	* blitz/bzconfig.h: Switched name of preprocessor symbol used to
+	detect Intel compiler from __ICC to __INTEL_COMPILER.  Some
+	installations of the Intel compiler still define __ECC instead of
+	__ICC, but using __INTEL_COMPILER appears to work for all Intel
+	compiler versions.  Also switched symbols for XL C++ on Mac OS X
+	and on AIX and for PathScale C++ compiler to more standard names
+	already predefined by the compiler.
 2005-12-20  Patrick Guio <patrick.guio@bccs.uib.no>
 
 	* m4/ac_check_blitz.m4 ac_cxx_lib_blitz.m4: 
