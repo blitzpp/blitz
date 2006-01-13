@@ -101,10 +101,9 @@ public:
 
     bool allRanksStoredAscending() const
     {
-        bool result = true;
         for (int i=0; i < N_rank; ++i)
-            result &= ascendingFlag_[i];
-        return result;
+            if (!ascendingFlag_[i]) return false;
+        return true;
     }
 
     bool isRankStoredAscending(int i) const
