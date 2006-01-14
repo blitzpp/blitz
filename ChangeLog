@@ -1,3 +1,10 @@
+2006-01-13  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* blitz/array/storage.h: Modified code for
+	allRanksStoredAscending() method as proposed by Eddie Breeveld
+	(Eddie.Breeveld@eu.watsonwyatt.com) to eliminate warnings from the
+	Microsoft compiler about converting bool to int.
+
 2006-01-12  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* m4/ac_cxx_flags_preset.m4: Removed -D flags for defining special
