@@ -135,6 +135,9 @@ BZ_DECLARE_ARRAY_ET_BINARY(scalb,     Fn_scalb)
 BZ_DECLARE_ARRAY_ET_BINARY(unordered, Fn_unordered)
 #endif
 
+BZ_DECLARE_ARRAY_ET_BINARY((min), Min)
+BZ_DECLARE_ARRAY_ET_BINARY((max), Max)
+
 #ifdef BZ_HAVE_SYSTEM_V_MATH
 
 #define BZ_DECLARE_ARRAY_ET_SCALAR_FUNCS(sca)                   \
