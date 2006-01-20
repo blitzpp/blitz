@@ -676,6 +676,46 @@ struct Cast {
     }
 };
 
+// Blitz min/max functions
+template<typename T_numtype1, typename T_numtype2>
+struct Min {
+    typedef BZ_PROMOTE(T_numtype1, T_numtype2) T_numtype;
+
+    static inline T_numtype
+    apply(T_numtype1 a, T_numtype2 b)
+    { return (a < b ? a : b); }
+
+    template<typename T1, typename T2>
+    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,
+        prettyPrintFormat& format, const T1& t1, const T2& t2)
+    {
+        str += "min(";
+        t1.prettyPrint(str, format);
+        str += ",";
+        t2.prettyPrint(str, format);
+        str += ")";
+    }
+};
+
+template<typename T_numtype1, typename T_numtype2>
+struct Max {
+    typedef BZ_PROMOTE(T_numtype1, T_numtype2) T_numtype;
+
+    static inline T_numtype
+    apply(T_numtype1 a, T_numtype2 b)
+    { return (a > b ? a : b); }
+
+    template<typename T1, typename T2>
+    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,
+        prettyPrintFormat& format, const T1& t1, const T2& t2)
+    {
+        str += "max(";
+        t1.prettyPrint(str, format);
+        str += ",";
+        t2.prettyPrint(str, format);
+        str += ")";
+    }
+};
 
 BZ_NAMESPACE_END
 
