@@ -1,3 +1,21 @@
+2006-01-20  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* blitz/array/funcs.h: Moved declaration of binary min/max
+	functions for blitz Arrays here.  Use newly defined Min and Max
+	applicator objects rather than the old _bz_Min and _bz_Max
+	applicators from blitz/applics.h.  These new applicators are
+	consistent with the "new" ET style and contain proper support for
+	the prettyPrint() function.
+	* blitz/array/ops.h: Moving declaration of binary min/max
+	functions for blitz Arrays to blitz/array/funcs.h, since these are
+	functions rather than operators.
+	* blitz/funcs.h: Added functors Min and Max to implement blitz
+	min/max binary functions within "new" ET style.  Somehow the
+	applicators for these two functions were never translated from the
+	"old" ET system over to the new one.  Using the old applicators
+	with BZ_DEBUG defined led to compilation errors with the
+	prettyPrint() function.
+
 2006-01-13  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* blitz/array/storage.h: Modified code for
