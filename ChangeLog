@@ -1,3 +1,10 @@
+
+2006-01-22  Patrick Guio <patrick.guio@bccs.uib.no>
+
+	* doc/arrays-storage.texi: Fixed a typo in section 2.9.1, 
+	ColumnMajor<> should read ColumnMajorArray<>. Reported by 
+	Christian Fuchs <fuchs@lsm.iet.mavt.ethz.ch>. 
+
 2006-01-20  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* blitz/array/funcs.h: Moved declaration of binary min/max
@@ -37,6 +44,7 @@
 	compiler versions.  Also switched symbols for XL C++ on Mac OS X
 	and on AIX and for PathScale C++ compiler to more standard names
 	already predefined by the compiler.
+
 2005-12-20  Patrick Guio <patrick.guio@bccs.uib.no>
 
 	* m4/ac_check_blitz.m4 ac_cxx_lib_blitz.m4: 
@@ -77,6 +85,7 @@
 	array expression types (where the precise expression rank is
 	known) to be non-templated and to expect a TinyVector of ints with
 	the same rank as the array expression.
+
 2005-10-31  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* blitz/limits-hack.h: Put enclosing parentheses around min and
