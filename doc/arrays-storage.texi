@@ -96,11 +96,11 @@ The third parameter, @code{FortranArray<2>()}, tells the @code{Array}
 constructor to use a storage format appropriate for two-dimensional Fortran
 arrays (base one, column major ordering).
 
-A similar object, @code{ColumnMajor<N>}, tells the @code{Array} constructor
+A similar object, @code{ColumnMajorArray<N>}, tells the @code{Array} constructor
 to use column major ordering, with base zero:
 
 @example
-Array<int,2> B(3, 3, ColumnMajor<2>());
+Array<int,2> B(3, 3, ColumnMajorArray<2>());
 @end example
 
 This creates a 3x3 array with indices i=0..2 and j=0..2.
