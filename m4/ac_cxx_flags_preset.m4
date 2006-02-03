@@ -147,8 +147,8 @@ if test "$enableval" = yes ; then
 		;;
 		*cray*) dnl Cray C++
 			CXX_VENDOR="Cray"
-			CXXFLAGS="-h instantiate=used"
-			CXX_OPTIMIZE_FLAGS="-O3 -hpipeline3 -hunroll -haggress -hscalar2"
+			CXXFLAGS="-h conform"
+			CXX_OPTIMIZE_FLAGS="-O3 -h unroll,aggress,scalar2"
 			CXX_DEBUG_FLAGS="-g -DBZ_DEBUG"
 		;;
 		*fujitsu*) dnl Fujitsu C++ http://www.fujitsu.com
