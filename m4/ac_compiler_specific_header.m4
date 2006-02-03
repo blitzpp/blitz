@@ -38,6 +38,8 @@ case "$CXX" in
                 COMPILER_SPECIFIC_HEADER="sun/bzconfig.h" ;;
     *cray*)     AX_PREFIX_CONFIG_H([blitz/cray/bzconfig.h],[BZ])
                 COMPILER_SPECIFIC_HEADER="cray/bzconfig.h" ;;
+    *fujitsu*)  AX_PREFIX_CONFIG_H([blitz/fujitsu/bzconfig.h],[BZ])
+                COMPILER_SPECIFIC_HEADER="fujitsu/bzconfig.h" ;;
     esac
   ;;
 esac
