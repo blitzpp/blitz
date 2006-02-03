@@ -1,3 +1,22 @@
+2006-02-03  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* m4/ac_compiler_specific_header.m4: Add support for recognition
+	of Fujitsu CC compiler.
+	* m4/ac_cxx_flags_preset.m4: Update Cray C++ compiler flag
+	presets.
+	* m4/ac_fortran_flags_preset.m4: Add flag presets for Fujitsu frt
+	compiler.  Rename Cray ftn compiler and update flag presets.
+	Allow for some additional compiler name variants with PathScale
+	and PGI Fortran compilers.
+	* configure.ac: Add Fujitsu compiler frt to the F77 and F90
+	compiler search lists. Replace old Cray fort77 compiler name with
+	new name ftn, which does both F77 and F90.  Rearrange search lists
+	to push older g77 compiler and other obsolete compilers towards
+	the end.  We prefer vendor-supplied compilers where available.  In
+	most cases, user will set the compiler names anyway.
+	* benchmarks/loop1.cpp: Make clear that first argument to
+	initializeRandomDouble function should be a data pointer (i.e., an
+	ordinary C array).
 
 2006-01-22  Patrick Guio <patrick.guio@bccs.uib.no>
 
