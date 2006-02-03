@@ -116,7 +116,7 @@ int main()
 }
 
 template<class T>
-void initializeRandomDouble(T data, int numElements, int stride = 1)
+void initializeRandomDouble(T* data, int numElements, int stride = 1)
 {
     static Random<Uniform> rnd;
 
