@@ -79,12 +79,12 @@ if test "$enableval" = yes ; then
 			F77_OPTIMIZE_FLAGS="-O3 -Zp16 -ip -pad -unroll -fno-alias -safe_cray_ptr"
 			CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
 		;;
-		*pgf77*) dnl PGI Fortran compiler
+		*pgf*) dnl PGI Fortran compiler
 			FFLAGS=""
 			F77_OPTIMIZE_FLAGS="-fastsse -O3 -Minline -Minfo"
 			CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
 		;;
-		*pathf90*)  dnl Pathscale Fortran compiler
+		*pathf*)  dnl Pathscale Fortran compiler
 			FFLAGS=""
 			F77_OPTIMIZE_FLAGS="-O3"
 			CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
@@ -163,9 +163,18 @@ if test "$enableval" = yes ; then
 	;;
 	*cray*)
 		case "$F77" in
-		*fort77*) dnl Cray Fortran compiler
+		*ftn*) dnl Cray Fortran compiler
 			FFLAGS=""
-			F77_OPTIMIZE_FLAGS="-O aggress -O 3 -O unroll2 -O pipeline3"
+			F77_OPTIMIZE_FLAGS="-O 3 -O aggress,unroll2"
+		;;
+		esac
+	;;
+	*fujitsu*)
+		case "$F77" in
+		*frt*)  dnl Fujitsu Fortran compiler
+			FFLAGS=""
+			F77_OPTIMIZE_FLAGS="-O3"
+			CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES -Wg,-f"
 		;;
 		esac
 	;;
@@ -215,12 +224,12 @@ if test "$enableval" = yes ; then
 			FC_OPTIMIZE_FLAGS="-O3 -Zp16 -ip -pad -unroll -fno-alias -safe_cray_ptr"
 			CXXFCFLAG="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
 		;;
-		*pgf90*) dnl PGI F90 compiler
+		*pgf9*) dnl PGI F90 compiler
 			FCFLAGS=""
 			FC_OPTIMIZE_FLAGS="-fastsse -O3 -Minline -Minfo"
 			CXXFCFLAG="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
 		;;
-		*pathf90*)  dnl Pathscale pathf90 compiler
+		*pathf9*)  dnl Pathscale pathf90 compiler
 			FCFLAGS=""
 			FC_OPTIMIZE_FLAGS="-O3"
 			CXXFCFLAG="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
@@ -272,13 +281,22 @@ if test "$enableval" = yes ; then
 	;;
 	*cray*)
 		case "$FC" in
-		*f90*)  dnl Cray F90 compiler
+		*ftn*)  dnl Cray Fortran compiler
 			FCFLAGS=""
-			FC_OPTIMIZE_FLAGS="-O 3 -O aggress -O unroll2 -O pipeline3"
+			FC_OPTIMIZE_FLAGS="-O 3 -O aggress,unroll2"
 			CXXFCFLAG="-DBZ_FORTRAN_SYMBOLS_CAPS"
 		;;
 		esac
 	;;
+	*fujitsu*)
+		case "$FC" in
+		*frt*)  dnl Fujitsu Fortran compiler
+			FCFLAGS=""
+			FC_OPTIMIZE_FLAGS="-O3"
+			CXXFCFLAG="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES -Wg,-f"
+		;;
+		esac
+        ;;
 	*) 
 		ac_fortran_flags_preset=no
 	;;
