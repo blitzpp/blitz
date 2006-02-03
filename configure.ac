@@ -29,7 +29,7 @@ Configuring $PACKAGE_STRING for $target
 ])
 
 # C++ compiler
-AC_PROG_CXX([xlc++ xlC icpc icc pathCC cxx aCC c++ CC g++ pgCC KCC FCC])
+AC_PROG_CXX([xlc++ xlC icpc pathCC pgCC cxx aCC c++ CC g++ KCC FCC])
 AC_LANG(C++)
 AC_CXX_FLAGS_PRESET
 
@@ -43,8 +43,8 @@ AM_CONDITIONAL(FORTRAN_ENABLED, [test $enable_fortran = yes])
 
 # Fortran compiler
 if test $enable_fortran = yes; then
-  AC_PROG_F77([xlf ifort ifc pathf90 f77 g77 g95 gfortran pgf77 fort77])
-  AC_PROG_FC([xlf90 ifort ifc pathf90 f90 g95 gfortran pgf90])
+  AC_PROG_F77([xlf ifort pathf90 pgf77 ftn frt gfortran f77 g77 g95])
+  AC_PROG_FC([xlf90 ifort pathf90 pgf90 ftn frt f90 gfortran g95])
   AC_FORTRAN_FLAGS_PRESET
 
   AC_LANG_PUSH(Fortran 77)
