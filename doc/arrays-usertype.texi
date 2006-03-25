@@ -1,5 +1,5 @@
 
-@node Array usertype
+@node Array usertype, , Array multi, Customized Arrays
 @section Creating arrays of a user type
 @cindex Array of your own types
 

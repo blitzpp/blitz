@@ -1,5 +1,5 @@
 
-@node Array storage
+@node Array storage, , Array I/O, Arrays
 @section Array storage orders
 @cindex Array storage formats
 @cindex storage of arrays

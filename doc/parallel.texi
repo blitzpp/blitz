@@ -4,6 +4,7 @@ primarily for this purpose.  For this reason, you may want to investigate
 some other available libraries, such as POOMA, before choosing to implement
 a parallel code using Blitz++.
 
+@node Thread safety, , , Parallel Computing
 @section Blitz++ and thread safety
 @cindex parallel computing
 

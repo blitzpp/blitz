@@ -1,4 +1,3 @@
-
 @cindex stencil objects
 @cindex Array stencils
 
@@ -34,6 +33,8 @@ BZ_END_STENCIL
 applyStencil(acoustic3D_stencil(), P1, P2, P3, c);
 @end example
 
+
+@node Stencil object, Stencil operator, , Stencils
 @section Declaring stencil objects
 @cindex stencil objects declaring
 
@@ -135,6 +136,7 @@ min indices  -1, -1
 max indices  +1, +1
 @end example
 
+@node Stencil operator, Stencil customize, Stencil object, Stencils
 @section Stencil operators
 @cindex stencil operators
 
@@ -490,6 +492,7 @@ These are available in normalized versions
 There are also normalized versions of the above, @code{mixed22n} and
 @code{mixed24n} which have factors @math{h^2}.
 
+@node Stencil customize, Stencil apply, Stencil operator, Stencils
 @section Declaring your own stencil operators
 @cindex stencil operators declaring your own
 
@@ -545,7 +548,8 @@ The method @code{shift(offset,dim)} retrieves the element at
 Stencil operator declarations cannot occur inside a function.  If
 declared inside a class, they are scoped by the class.
 
-@section Applying a stencil
+@node Stencil apply, , Stencil customize, Stencils
+@section Applying a stencil object
 @cindex stencil objects applying
 
 The syntax for applying a stencil is:

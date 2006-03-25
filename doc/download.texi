@@ -1,5 +1,5 @@
 
-@node download
+@node download, install, platforms, Introduction
 @section How to download Blitz++
 
 The Blitz++ project is now being served via SourceForge.

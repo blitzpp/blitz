@@ -1,5 +1,5 @@
 
-@node install
+@node install, compiling, download, Introduction
 @section Installation and porting
 
 @subsection Installation

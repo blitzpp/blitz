@@ -55,17 +55,17 @@
 
 @menu
 * Introduction::                  Introduction
-* Arrays::                        The Array class
+* Arrays::                        Arrays
 * Array Expressions::             Array Expressions
 * Stencils::                      Stencils
-* Customised Arrays::             Multicomponent, complex, and user type Arrays
-* Indirection::                   Indirect adressing
-* TinyVector::                    The TinyVector class
-* Parallel Computing::            Parallel Computing
+* Customized Arrays::             Multicomponent, complex, and user type Arrays
+* Indirection::                   Indirection
+* TinyVector::                    TinyVector
+* Parallel Computing::            Parallel Computing with Blitz++
 * Random Number Generators::      Random Number Generators
-* Numeric properties::            Numeric properties functions
-* FAQ::                           Frequently Asked Questions, with answers
-* Keyword Index::                 Keyword Index
+* Numeric properties::            Numeric properties
+* FAQ::                           Frequently Asked Questions
+* Keyword Index::                 Blitz Keyword Index
 * Concept Index::                 Concept Index
 
 @detailmenu
@@ -74,52 +74,94 @@
 General considerations
 
 * about::                         About this document
-* platforms::                     Supported platforms
-* download::                      Where to download Blitz++?
-* install::                       How to install Blitz++?
-* compiling::                     How to compile a program that uses Blitz++?
-* legal::                         License considerations
-* help::                          How to get help?
+* platforms::                     Platform/compiler notes
+* download::                      How to download Blitz++
+* install::                       Installation and porting
+* compiling::                     Compiling with Blitz++
+* legal::                         Licensing terms
+* help::                          Mailing lists and support
 
 The Blitz++ Array class
 
 * Array intro::                   Getting started
-* Array types::                   Public types declaration for Array
-* Array ctors::                   Array constructors
-* Array slicing::                 How to access the elements of an Array?
-* Slicing combo::                 The slicing machinery
-* Array debug::                   How to debug a program that uses Blitz++?
-* Array members::                 Array member functions
-* Array globals::                 Array global functions
-* Array I/O::                     Inputting and outputting Array's
-* Array storage::                 The storage of Array
+* Array types::                   Public types
+* Array ctors::                   Constructors
+* Array slicing::                 Indexing, subarrays, and slicing
+* Array debug::                   Debug mode
+* Array members::                 Member functions
+* Array globals::                 Global functions
+* Array I/O::                     Inputting and Outputting Arrays
+* Array storage::                 Array storage orders
 
-Writing code with the Blitz++ Array class
+Writing expressions with the Array class
 
-* Array expressions::             Creating expressions with Array's
-* Index placeholders::            Array indices functionality
-* Math functions 1::              Single-argument math functions on Array's
-* Math functions 2::              Two-argument math functions on Array's
-* User et::                       Creating your math functions on Array's
-* Where expr::                    The where statement 
+* Expression evaluation::         Expression evaluation order
+* Index placeholders::            Index placeholders
+* Math functions 1::              Single-argument math functions
+* Math functions 2::              Two-argument math functions
+* User et::                       Declaring your own math functions on arrays
+* Where expr::                    where statements
 
-More feaures of the Array class
+Array Stencils
 
-* Array multi::                   Multicomponent Array's
-* Array usertype::                Array's of your own type
+* Stencil object::                Declaring stencil objects
+* Stencil operator::              Stencil operators
+* Stencil customize::             Declaring your own stencil operators
+* Stencil apply::                 Applying a stencil object
+
+Customization of the Array class
+
+* Array multi::                   Multicomponent and complex arrays
+* Array usertype::                Creating arrays of a user type
+
+Array indirect addressing
+
+* Indirection position list::     Indirection using lists of array positions
+* Indirection Cartesian product:: Cartesian-product indirection
+* Indirection strip list::        Indirection with lists of strips
+
+The Blitz++ TinyVector class
+
+* TinyVec params::                Template parameters and types
+* TinyVec ctors::                 Constructors
+* TinyVec members::               Member functions
+* TinyVec assignment::            Assignment operators
+* TinyVec exprs::                 Expressions
+* TinyVec globals::               Global functions
+* TinyVec arrays::                Arrays of TinyVector
+* TinyVec io::                    Input/output
+
+Parallel Computing with Blitz++
+
+* Thread safety::                 Blitz++ and thread safety
+
+Random Number Generators in Blitz++
+
+* RNG overview::                  Overview
+* RNG seeding::                   Seeding a random number generator
+* RNG details::                   Detailed description of RNGs
+* RNG params::                    Template parameters
+* RNG members::                   Member functions
+* RNG listings::                  Detailed listing of RNGs
+
+Numeric properties functions in Blitz++
+
+* Numeric limits::                Introduction
+* Numeric functions::             Function descriptions
+
 @end detailmenu
 @end menu
 
-@node Introduction
+@node Introduction, Arrays, , Top
 @chapter Introduction
 @menu
 * about::                         About this document
-* platforms::                     Supported platforms
-* download::                      Where to download Blitz++?
-* install::                       How to install Blitz++?
-* compiling::                     How to compile a program that uses Blitz++
-* legal::                         License considerations
-* help::                          How to get help?
+* platforms::                     Platform/compiler notes
+* download::                      How to download Blitz++
+* install::                       Installation and porting
+* compiling::                     Compiling with Blitz++
+* legal::                         Licensing terms
+* help::                          Mailing lists and support
 @end menu
 @include about.texi
 @include platforms.texi
@@ -129,21 +171,20 @@ More feaures of the Array class
 @include legal.texi
 @include help.texi
     
-@node Arrays
+@node Arrays, Array Expressions, Introduction, Top
 @chapter Arrays
 @cindex Array
 @findex Array
 @menu
 * Array intro::                   Getting started
-* Array types::                   Public types declaration for Array
-* Array ctors::                   Array constructors
-* Array slicing::                 How to access the elements of an Array?
-* Slicing combo::                 The slicing machinery
-* Array debug::                   How to debug a program that uses Blitz++?
-* Array members::                 Array member functions
-* Array globals::                 Array global functions
-* Array I/O::                     Inputting and outputting Array's
-* Array storage::                 The storage of Array
+* Array types::                   Public types
+* Array ctors::                   Constructors
+* Array slicing::                 Indexing, subarrays, and slicing
+* Array debug::                   Debug mode
+* Array members::                 Member functions
+* Array globals::                 Global functions
+* Array I/O::                     Inputting and Outputting Arrays
+* Array storage::                 Array storage orders
 @end menu
 @include arrays-intro.texi
 @include arrays-types.texi
@@ -155,60 +196,96 @@ More feaures of the Array class
 @include arrays-io.texi
 @include arrays-storage.texi
 
-@node Array Expressions
+@node Array Expressions, Stencils, Arrays, Top
 @chapter Array Expressions
 @menu
-* Array expressions::             Creating expressions with Array's
-* Index placeholders::            Array indices functionality
-* Math functions 1::              Single-argument math functions on Array's
-* Math functions 2::              Two-argument math functions on Array's
-* User et::                       Creating your math functions on Array's
-* Where expr::                    The where statement
+* Expression evaluation::         Expression evaluation order
+* Index placeholders::            Index placeholders
+* Math functions 1::              Single-argument math functions
+* Math functions 2::              Two-argument math functions
+* User et::                       Declaring your own math functions on arrays
+* Where expr::                    where statements
 @end menu
 @include arrays-expr.texi
 
-@node Stencils
+@node Stencils, Customized Arrays, Array Expressions, Top
 @chapter Stencils
+@menu
+* Stencil object::                Declaring stencil objects
+* Stencil operator::              Stencil operators
+* Stencil customize::             Declaring your own stencil operators
+* Stencil apply::                 Applying a stencil object
+@end menu
 @include arrays-stencils.texi
 
-@node Customised Arrays
-@chapter Multicomponent, complex, and user type arrays
+@node Customized Arrays, Indirection, Stencils, Top
+@chapter Multicomponent, complex, and user type Arrays
 @menu
-* Array multi::                   Multicomponent Array's
-* Array usertype::                Array's of your own type
+* Array multi::                   Multicomponent and complex arrays
+* Array usertype::                Creating arrays of a user type
 @end menu
 @include arrays-multi.texi
 @include arrays-usertype.texi
 
-@node Indirection
+@node Indirection, TinyVector, Customized Arrays, Top
 @chapter Indirection
+@menu
+* Indirection position list::     Indirection using lists of array positions
+* Indirection Cartesian product:: Cartesian-product indirection
+* Indirection strip list::        Indirection with lists of strips
+@end menu
 @include arrays-indirect.texi
 
-@node TinyVector
+@node TinyVector, Parallel Computing, Indirection, Top
 @chapter TinyVector
+@menu
+* TinyVec params::                Template parameters and types
+* TinyVec ctors::                 Constructors
+* TinyVec members::               Member functions
+* TinyVec assignment::            Assignment operators
+* TinyVec exprs::                 Expressions
+* TinyVec globals::               Global functions
+* TinyVec arrays::                Arrays of TinyVector
+* TinyVec io::                    Input/output
+@end menu
 @include tinyvector.texi
 
-@node Parallel Computing
+@node Parallel Computing, Random Number Generators, TinyVector, Top
 @chapter Parallel Computing with Blitz++
+@menu
+* Thread safety::                 Blitz++ and thread safety
+@end menu
 @include parallel.texi
 
-@node Random Number Generators
+@node Random Number Generators, Numeric properties, Parallel Computing, Top
 @chapter Random Number Generators
+@menu
+* RNG overview::                  Overview
+* RNG seeding::                   Seeding a random number generator
+* RNG details::                   Detailed description of RNGs
+* RNG params::                    Template parameters
+* RNG members::                   Member functions
+* RNG listings::                  Detailed listing of RNGs
+@end menu
 @include random.texi
 
-@node Numeric properties
+@node Numeric properties, FAQ, Random Number Generators, Top
 @chapter Numeric properties
+@menu
+* Numeric limits::                Introduction
+* Numeric functions::             Function descriptions
+@end menu
 @include numinquire.texi
 
-@node FAQ
+@node FAQ, Keyword Index, Numeric properties, Top
 @chapter Frequently Asked Questions
 @include faq.texi
 
-@node Keyword Index
+@node Keyword Index, Concept Index, FAQ, Top
 @unnumbered Blitz Keyword Index
 @printindex fn
 
-@node Concept Index
+@node Concept Index, , Keyword Index, Top
 @unnumbered Concept Index
 @printindex cp
 

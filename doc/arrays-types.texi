@@ -1,5 +1,5 @@
 
-@node Array types
+@node Array types, Array ctors, Array intro, Arrays
 @section Public types
 
 The @code{Array} class declares these public types:

@@ -1,5 +1,5 @@
 
-@node help
+@node help, , legal, Introduction
 @section Mailing lists and support
 
 @subsection How to get help

@@ -1,6 +1,5 @@
-
+@node Numeric limits, Numeric functions, , Numeric properties
 @section Introduction
-
 @cindex numeric limits
 
 Blitz++ provides a set of functions to access numeric properties of
@@ -25,6 +24,7 @@ unavailable if your compiler is non-ANSI compliant.  If the preprocessor
 symbol @code{BZ_HAVE_NUMERIC_LIMITS} is false, then these functions are
 unavailable.
 
+@node Numeric functions, , Numeric limits, Numeric properties
 @section Function descriptions
 
 @table @code

@@ -1,5 +1,5 @@
 
-@node compiling
+@node compiling, legal, install, Introduction
 @section Compiling with Blitz++
 
 @subsection Header files

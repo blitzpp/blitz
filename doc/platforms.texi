@@ -1,5 +1,5 @@
 
-@node platforms
+@node platforms, download, about, Introduction
 @section Platform/compiler notes
 
 For up-to-date information on supported platforms, please consult
@@ -150,7 +150,7 @@ As of Version 0.2-alpha-02 of Blitz++, Version 3.0.0.0 of the Cray C++
 compiler is supported (well, tolerated anyway).  It seems to be based on an
 older version of the EDG front end, so some kludges are required.  It
 doesn't support partial ordering of member templates, so slicing arrays
-requires the workaround described in Section @ref{Slicing combo}.  Portions
+requires the workaround described in Section @ref{Array slicing}.  Portions
 of the standard library are missing, such as @code{<limits>},
 @code{<complex>}, and @code{<set>}.  This means you won't be able to use
 complex numbers (well, not the ISO/ANSI C++ versions anyway), numeric
