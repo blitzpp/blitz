@@ -1,5 +1,5 @@
 
-@node Array slicing, Slicing combo, Array ctors, Arrays
+@node Array slicing, Array debug, Array ctors, Arrays
 @section Indexing, subarrays, and slicing
 
 This section describes how to access the elements of an array.  There are
@@ -175,7 +175,6 @@ public:
 @};
 @end example
 
-@node Slicing combo, Array debug, Array slicing, Arrays
 @subsection Slicing
 @cindex Array slicing
 @cindex slicing arrays
@@ -191,7 +190,7 @@ Array<int,1> G = A(2,            7, Range::all());
 Range and integer operands can be used in any combination, for arrays
 up to rank 11.
 
-@strong{Note:} Using a combination of integer and Range operands requires a
+@strong{NOTE:} Using a combination of integer and Range operands requires a
 newer language feature (partial ordering of member templates) which not all
 compilers support.  If your compiler does provide this feature,
 @code{BZ_PARTIAL_ORDERING} will be defined in @code{<blitz/config.h>}.  If
