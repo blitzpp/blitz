@@ -1,5 +1,5 @@
 
-@node Array members
+@node Array members, Array globals, Array debug, Arrays
 @section Member functions
 
 @subsection A note about dimension parameters

@@ -1,5 +1,5 @@
 
-@node Array multi
+@node Array multi, Array usertype, , Customized Arrays
 @section Multicomponent and complex arrays
 @cindex Array multicomponent
 @cindex multicomponent arrays
