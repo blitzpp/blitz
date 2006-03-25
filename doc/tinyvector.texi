@@ -15,6 +15,7 @@ include @code{<blitz/array.h>}, the @code{TinyVector} header is automatically
 included.  However, to use @code{TinyVector} expressions, you will
 need to include @code{<blitz/tinyvec-et.h>}.
 
+@node TinyVec params, TinyVec ctors, , TinyVector
 @section Template parameters and types
 
 The @code{TinyVector<T,N>} class has two template parameters:
@@ -44,6 +45,7 @@ is an STL-style iterator.
 is an STL-style const iterator.
 @end table
 
+@node TinyVec ctors, TinyVec members, TinyVec params, TinyVector
 @section Constructors
 
 @example
@@ -67,6 +69,7 @@ TinyVector(T value1, T value2, ...);
 The vector is initialized with the list of values given.
 These constructors are provided for up to N=11.
 
+@node TinyVec members, TinyVec assignment, TinyVec ctors, TinyVector
 @section Member functions
 
 @example
@@ -103,6 +106,7 @@ T_numtype&                                  operator[](int i);
 Returns the @code{i}th element of the vector.  If the code is compiled with
 debugging enabled (@code{-DBZ_DEBUG}), bounds checking is performed.
 
+@node TinyVec assignment, TinyVec exprs, TinyVec members, TinyVector
 @section Assignment operators
 
 The assignment operators =, +=, -=, *=, /=, %=, ^=, &=, |=, >>= and <<= are
@@ -110,6 +114,7 @@ all provided.  The right hand side of an assignment may be a scalar of type
 @code{T_numtype}, a @code{TinyVector} of any type but the same size, or a
 vector expression.
 
+@node TinyVec exprs, TinyVec globals, TinyVec assignment, TinyVector
 @section Expressions
 
 Expressions involving tiny vectors may contain any combination
@@ -121,8 +126,10 @@ of the operators
 
 with operands of type TinyVector, scalar, or vector expressions.
 The usual math functions (see the Array documentation) are supported
-on TinyVector.
+on TinyVector.  Please note that to use @code{TinyVector} expressions, 
+you will need to include header @code{<blitz/tinyvec-et.h>} in your code.
 
+@node TinyVec globals, TinyVec arrays, TinyVec exprs, TinyVector
 @section Global functions
 
 @example
@@ -150,8 +157,16 @@ TinyVector<T,3> cross(TinyVector<T,3> x, TinyVector<T,3> y);
 @end example
 Returns the cross product of @code{x} and @code{y}.
 
-@section Arrays of @code{TinyVector}
+@node TinyVec arrays, TinyVec io, TinyVec globals, TinyVector
+@section Arrays of TinyVector
 
+TinyVectors may be used as an Array element type, just like any other concrete
+numerical data type such as the built-in type @code{double}.  Such an Array
+of TinyVector elements constitutes a multicomponent Array, with the number of
+Array components being equal to the length of the TinyVectors.  Please see
+@ref{Array multi} for further information.
+
+@node TinyVec io, , TinyVec arrays, TinyVector
 @section Input/output
 
 @example
