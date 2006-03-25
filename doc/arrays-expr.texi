@@ -22,7 +22,7 @@ for (int i=A.lbound(firstDim); i <= A.ubound(firstDim); ++i)
     A[i] = B[i] + C[i] + D[i];
 @end example
 
-@node Array expressions
+@node Expression evaluation, Index placeholders, , Array Expressions
 @section Expression evaluation order
 @cindex Array expression evaluation order
 @cindex expression evaluation order
@@ -146,7 +146,7 @@ These binary operators are supported:
 + - * / % > < >= <= == != && || ^ & | 
 @end example
 
-Note: operator @code{<<} and @code{>>} are reserved for use in input/output.
+@strong{NOTE:} operator @code{<<} and @code{>>} are reserved for use in input/output.
 If you need a bit-shift operation on arrays, you may define one yourself;
 see @ref{User et}.
 
@@ -240,7 +240,7 @@ side can be:
 
 @end itemize
 
-@node Index placeholders
+@node Index placeholders, Math functions 1, Expression evaluation, Array Expressions
 @section Index placeholders
 @cindex Array index placeholders
 @cindex index placeholders
@@ -479,7 +479,7 @@ C = A / cast<float>(B);
 
 But this is not yet supported.
 
-@node Math functions 1
+@node Math functions 1, Math functions 2, Index placeholders, Array Expressions
 @section Single-argument math functions
 
 All of the functions described in this section are @emph{element-wise}.  For
@@ -825,7 +825,7 @@ Bessel function of the second kind, order 1.
 There may be better descriptions of these functions in your
 system man pages.
 
-@node Math functions 2
+@node Math functions 2, User et, Math functions 1, Array Expressions
 @section Two-argument math functions
 
 The math functions described in this section take two arguments.
@@ -916,7 +916,7 @@ Returns a nonzero value if a floating-point comparison between x and y would
 be unordered.  Otherwise, it returns zero.
 @end table
 
-@node User et
+@node User et, Where expr, Math functions 2, Array Expressions
 @section Declaring your own math functions on arrays
 
 @cindex math functions declaring your own
@@ -1478,7 +1478,7 @@ You cannot reduce an array to zero dimensions!  Instead, use one of the
 global functions described in the previous section.
 
 
-@node Where expr
+@node Where expr, , User et, Array Expressions
 @section where statements
 @cindex @code{where} statements
 @cindex functional if (@code{where})
