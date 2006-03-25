@@ -1,5 +1,5 @@
 
-@node Array debug
+@node Array debug, Array members, Array slicing, Arrays
 @section Debug mode
 @cindex debugging mode
 @cindex bounds checking

@@ -1,5 +1,5 @@
 
-@node about
+@node about, platforms, , Introduction
 @section About this document
 
 To use the Blitz++ library, you will need a compiler with near-ISO/ANSI C++

@@ -1,5 +1,5 @@
 
-@node Array ctors
+@node Array ctors, Array slicing, Array types, Arrays
 @section Constructors
 
 @subsection Default constructor
@@ -144,7 +144,7 @@ array.  If you want to make a duplicate copy of an array, use the
 @subsection Constructing an array from an expression
 
 Arrays may be constructed from expressions, which are described in
-@ref{Array expressions}.  The syntax is:
+@ref{Array Expressions}.  The syntax is:
 
 @example
 Array(...array expression...);
