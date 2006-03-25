@@ -56,6 +56,7 @@ of an assignment statement).
 The examples in the next sections are available in the Blitz++ distribution
 in @file{<examples/indirect.cpp>}.
 
+@node Indirection position list, Indirection Cartesian product, , Indirection
 @section Indirection using lists of array positions
 
 @cindex Array indirection list of positions
@@ -112,6 +113,7 @@ After this code, the array A contains:
 (The @code{tensor::i} notation is explained in the section on index
 placeholders @ref{Index placeholders}).
 
+@node Indirection Cartesian product, Indirection strip list, Indirection position list, Indirection
 @section Cartesian-product indirection
 
 @cindex Array indirection Cartesian-product
@@ -170,6 +172,7 @@ all @code{vector<int>} or all @code{set<TinyVector<int,2> >}), but they may
 be different sizes.  Singleton containers (containers containing a single
 value) are fine.
 
+@node Indirection strip list, , Indirection Cartesian product, Indirection
 @section Indirection with lists of strips
 
 @cindex Array indirection list of strips

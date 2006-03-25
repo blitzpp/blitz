@@ -1,5 +1,5 @@
 
-@node Array intro
+@node Array intro, Array types, , Arrays
 @section Getting started
 @cindex Array overview
 

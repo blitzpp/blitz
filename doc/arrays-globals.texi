@@ -1,5 +1,5 @@
 
-@node Array globals
+@node Array globals, Array I/O, Array members, Arrays
 @section Global functions
 
 @example
