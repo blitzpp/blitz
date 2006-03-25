@@ -1,4 +1,4 @@
-
+@node RNG overview, RNG seeding, , Random Number Generators
 @section Overview
 
 These are the basic random number generators (RNGs):
@@ -92,6 +92,7 @@ The generators which Blitz++ provides are not suitable for parallel
 programs.  If you need parallel RNGs, you may find
 @uref{http://www.ncsa.uiuc.edu/Apps/SPRNG} useful.
 
+@node RNG seeding, RNG details, RNG overview, Random Number Generators
 @section Seeding a random number generator
 
 @cindex Random Number Generators seeding
@@ -133,8 +134,8 @@ Hence, you may seed the RNG before its constructor is invoked, in which case
 your program will crash.  If you don't know what a static initializer is,
 don't worry -- you're safe!
 
+@node RNG details, RNG params, RNG seeding, Random Number Generators
 @section Detailed description of RNGs
-
 @cindex Random Number Generators details
 
 There are really two types of RNGs:
@@ -170,6 +171,7 @@ statistical tests (including the
 @uref{http://stat.fsu.edu/~geo/diehard.html} tests), and has speed
 comparable to other modern generators.
 
+@node RNG params, RNG members, RNG details, Random Number Generators
 @section Template parameters
 
 RNGs take three template parameters, all of which have default values.
@@ -196,8 +198,8 @@ is either @code{sharedState} or @code{independentState}.  If
 sharedState.  
 @end table
 
+@node RNG members, RNG listings, RNG params, Random Number Generators
 @section Member functions
-
 @cindex Random Number Generators member functions
 
 RNGs have these methods:
@@ -215,6 +217,7 @@ void seed(unsigned int);
 Seeds the underlying IRNG.  See above for an example of seeding
 with the system timer.
 
+@node RNG listings, , RNG members, Random Number Generators
 @section Detailed listing of RNGs
 @cindex Random Number Generators list of
 
