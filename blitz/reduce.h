@@ -144,7 +144,7 @@ public:
     typedef P_sourcetype T_resulttype;
     typedef T_resulttype T_numtype;
 
-    static const bool needIndex = false, canProvideInitialValue = false;
+    static const bool needIndex = false, canProvideInitialValue = true;
 
     ReduceMin()
     { reset(); }
