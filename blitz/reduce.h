@@ -240,14 +240,14 @@ public:
     typedef int          T_resulttype;
     typedef T_resulttype T_numtype;
 
-    static const bool needIndex = true, canProvideInitialValue = false;
+    static const bool needIndex = true, canProvideInitialValue = true;
 
     ReduceMinIndex()
     { reset(); }
 
-    ReduceMinIndex(T_resulttype min)
+    ReduceMinIndex(T_resulttype index)
     {
-        reset(min);
+        reset(index);
     }
 
     bool operator()(T_sourcetype x)
@@ -256,7 +256,7 @@ public:
         return false;
     }
 
-    bool operator()(T_sourcetype x, int index)
+    bool operator()(T_sourcetype x, T_resulttype index)
     {
         if (x < min_)
         {
@@ -275,10 +275,10 @@ public:
         index_ = tiny(int());        
     }
 
-    void reset(T_resulttype)
+    void reset(T_resulttype index)
     { 
-        BZPRECHECK(0, "Provided initial value for ReduceMinIndex");
-        reset();
+        min_ = huge(T_sourcetype());
+        index_ = index;        
     }
 
     static const char* name()
@@ -286,7 +286,7 @@ public:
 
 protected:
     T_sourcetype min_;
-    int index_;
+    T_resulttype index_;
 };
 
 template<typename P_sourcetype, int N>
@@ -297,12 +297,12 @@ public:
     typedef TinyVector<int,N> T_resulttype;
     typedef T_resulttype T_numtype;
 
-    static const bool canProvideInitialValue = false;
+    static const bool needIndex = true, canProvideInitialValue = true;
 
     ReduceMinIndexVector()
     { reset(); }
 
-    ReduceMinIndexVector(T_resulttype min)
+    ReduceMinIndexVector(const T_resulttype& index)
     {
         reset(min);
     }
@@ -319,7 +319,7 @@ public:
         return false;
     }
    
-    bool operator()(T_sourcetype x, const TinyVector<int,N>& index)
+    bool operator()(T_sourcetype x, const T_resulttype& index)
     {
         if (x < min_)
         {
@@ -338,18 +338,18 @@ public:
         index_ = tiny(int());
     }
 
-    void reset(T_resulttype)
+    void reset(const T_resulttype& index)
     {
-        BZPRECHECK(0, "Provided initial value for ReduceMinIndex");
-        reset();
+        min_ = huge(T_sourcetype());
+        index_ = index;
     }
 
     static const char* name()
-    { return "minIndex"; }
+    { return "minIndexVector"; }
 
 protected:
     T_sourcetype min_;
-    TinyVector<int,N> index_;
+    T_resulttype index_;
 };
 
 template<typename P_sourcetype>
@@ -360,14 +360,14 @@ public:
     typedef int          T_resulttype;
     typedef T_resulttype T_numtype;
 
-    static const bool needIndex = true, canProvideInitialValue = false;
+    static const bool needIndex = true, canProvideInitialValue = true;
 
     ReduceMaxIndex()
     { reset(); }
 
-    ReduceMaxIndex(T_resulttype max)
+    ReduceMaxIndex(T_resulttype index)
     {
-        reset(max);
+        reset(index);
     }
 
     bool operator()(T_sourcetype x)
@@ -376,7 +376,7 @@ public:
         return false;
     }
 
-    bool operator()(T_sourcetype x, int index)
+    bool operator()(T_sourcetype x, T_resulttype index)
     {
         if (x > max_)
         {
@@ -395,10 +395,10 @@ public:
         index_ = tiny(int());
     }
 
-    void reset(T_resulttype)
+    void reset(T_resulttype index)
     {
-        BZPRECHECK(0, "Provided initial value for ReduceMaxIndex");
-        reset();
+        max_ = neghuge(T_sourcetype());
+        index_ = index;
     }
 
     static const char* name()
@@ -406,7 +406,7 @@ public:
 
 protected:
     T_sourcetype max_;
-    int index_;
+    T_resulttype index_;
 };
 
 template<typename P_sourcetype, int N_rank>
@@ -417,14 +417,14 @@ public:
     typedef TinyVector<int,N_rank> T_resulttype;
     typedef T_resulttype T_numtype;
 
-    static const bool canProvideInitialValue = false;
+    static const bool needIndex = true, canProvideInitialValue = true;
 
     ReduceMaxIndexVector()
     { reset(); }
 
-    ReduceMaxIndexVector(T_resulttype max)
+    ReduceMaxIndexVector(const T_resulttype& index)
     {
-        reset(max);
+        reset(index);
     }
 
     bool operator()(T_sourcetype x)
@@ -433,7 +433,7 @@ public:
         return false;
     }
 
-    bool operator()(T_sourcetype x, const TinyVector<int,N_rank>& index)
+    bool operator()(T_sourcetype x, const T_resulttype& index)
     {
         if (x > max_)
         {
@@ -452,18 +452,18 @@ public:
         index_ = tiny(int());
     }
 
-    void reset(T_resulttype)
+    void reset(const T_resulttype& index)
     {
-        BZPRECHECK(0, "Provided initial value for ReduceMaxIndex");
-        reset();
+        max_ = neghuge(T_sourcetype());
+        index_ = index;
     }
 
     static const char* name()
-    { return "maxIndex"; }
+    { return "maxIndexVector"; }
 
 protected:
     T_sourcetype max_;
-    TinyVector<int,N_rank> index_;
+    T_resulttype index_;
 };
 
 template<typename P_sourcetype>
@@ -490,7 +490,7 @@ public:
         return false;
     }
 
-    bool operator()(T_sourcetype x, int index)
+    bool operator()(T_sourcetype x, T_resulttype index)
     {
         if (x)
         {
@@ -519,7 +519,7 @@ public:
     { return "first"; }
 
 protected:
-    int index_;
+    T_resulttype index_;
 };
 
 template<typename P_sourcetype>
@@ -546,7 +546,7 @@ public:
         return false;
     }
 
-    bool operator()(T_sourcetype x, int index)
+    bool operator()(T_sourcetype x, T_resulttype index)
     {
         if (x)
         {
@@ -575,7 +575,7 @@ public:
     { return "last"; }
 
 protected:
-    int index_;
+    T_resulttype index_;
 };
 
 template<typename P_sourcetype, typename P_resulttype = BZ_SUMTYPE(P_sourcetype)>
