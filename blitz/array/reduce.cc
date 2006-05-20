@@ -28,14 +28,6 @@ BZ_NAMESPACE(blitz)
 
 template<typename T_expr, typename T_reduction>
 _bz_typename T_reduction::T_resulttype
-_bz_reduceWithIndexTraversal(T_expr expr, T_reduction reduction);
-
-template<typename T_expr, typename T_reduction>
-_bz_typename T_reduction::T_resulttype
-_bz_reduceWithStackTraversal(T_expr expr, T_reduction reduction);
-
-template<typename T_expr, typename T_reduction>
-_bz_typename T_reduction::T_resulttype
 _bz_ArrayExprFullReduce(T_expr expr, T_reduction reduction)
 {
 #ifdef BZ_TAU_PROFILING
@@ -75,8 +67,6 @@ _bz_reduceWithIndexTraversal(T_expr expr, T_reduction reduction)
 {
     // This is optimized assuming C-style arrays.
 
-    reduction.reset();
-
     const int rank = T_expr::rank;
 
     TinyVector<int,T_expr::rank> index, first, last;
@@ -85,9 +75,9 @@ _bz_reduceWithIndexTraversal(T_expr expr, T_reduction reduction)
 
     for (int i=0; i < rank; ++i)
     {
-        index(i) = expr.lbound(i);
-        first(i) = index(i);
+        first(i) = expr.lbound(i);
         last(i) = expr.ubound(i) + 1;
+        index(i) = first(i);
         count *= last(i) - first(i);
     }
 
@@ -96,6 +86,8 @@ _bz_reduceWithIndexTraversal(T_expr expr, T_reduction reduction)
     int lastubound = expr.ubound(maxRank);
 
     int lastIndex = lastubound + 1;
+
+    reduction.reset();
 
     bool loopFlag = true;
 
@@ -129,8 +121,6 @@ _bz_reduceWithIndexVectorTraversal(T_expr expr, T_reduction reduction)
     // This version is for reductions that require a vector
     // of index positions.
 
-    reduction.reset();
-
     const int rank = T_expr::rank;
 
     TinyVector<int,T_expr::rank> index, first, last;
@@ -139,9 +129,9 @@ _bz_reduceWithIndexVectorTraversal(T_expr expr, T_reduction reduction)
 
     for (int i=0; i < rank; ++i)
     {
-        index(i) = expr.lbound(i);
-        first(i) = index(i);
+        first(i) = expr.lbound(i);
         last(i) = expr.ubound(i) + 1;
+        index(i) = first(i);
         count *= last(i) - first(i);
     }
 
@@ -150,6 +140,9 @@ _bz_reduceWithIndexVectorTraversal(T_expr expr, T_reduction reduction)
     int lastubound = expr.ubound(maxRank);
 
     int lastIndex = lastubound + 1;
+
+// we are doing minIndex/maxIndex, so initialize with lower bound
+    reduction.reset(first);
 
     bool loopFlag = true;
 
