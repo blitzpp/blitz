@@ -34,6 +34,26 @@
 
 BZ_NAMESPACE(blitz)
 
+template<bool initIndex>
+struct _bz_ReduceReset;
+
+template<>
+struct _bz_ReduceReset<true> {
+    template<typename T_reduction>
+    void operator()(T_reduction& reduce, int index) {
+        reduce.reset(index);
+    }
+};
+
+template<>
+struct _bz_ReduceReset<false> {
+    template<typename T_reduction>
+    void operator()(T_reduction& reduce, int) {
+        reduce.reset();
+    }
+};
+
+
 template<typename T_expr, int N_index, typename T_reduction>
 class _bz_ArrayExprReduce {
 
@@ -90,18 +110,18 @@ public:
         int lbound = iter_.lbound(N_index);
         int ubound = iter_.ubound(N_index);
 
-        // NEEDS_WORK: replace with tiny(int()) and huge(int()) once
-        // <limits> widely available
-        BZPRECHECK((lbound != INT_MIN) && (ubound != INT_MAX),
+        BZPRECHECK((lbound != tiny(int())) && (ubound != huge(int())),
            "Array reduction performed over rank " << N_index
            << " is unbounded." << endl 
            << "There must be an array object in the expression being reduced"
            << endl << "which provides a bound in rank " << N_index << ".");
 
-        reduce_.reset();
+// If we are doing minIndex/maxIndex, initialize with lower bound
+        _bz_ReduceReset<(T_reduction::needIndex && 
+                         T_reduction::canProvideInitialValue)> reset;
+        reset(reduce_,lbound);
 
-        for (index[N_index] = iter_.lbound(N_index);
-            index[N_index] <= ubound; ++index[N_index])
+        for (index[N_index]=lbound; index[N_index]<=ubound; ++index[N_index])
         {
             if (!reduce_(iter_(index), index[N_index]))
                 break;
@@ -223,7 +243,7 @@ private:
         for (int i=0; i<rank; ++i)
         {
             int orderingj = iter_.ordering(i);
-            if (orderingj != INT_MIN && orderingj < rank &&
+            if (orderingj != tiny(int()) && orderingj < rank &&
                 !in_ordering(orderingj)) { // unique value in ordering array
                 in_ordering(orderingj) = true;
                 ordering_(j++) = orderingj;
@@ -285,10 +305,18 @@ BZ_DECL_ARRAY_PARTIAL_REDUCE(last,     ReduceLast)
  * Complete reductions
  */
 
-// Prototype of reduction function
+// Prototype of reduction functions
 template<typename T_expr, typename T_reduction>
 _bz_typename T_reduction::T_resulttype
 _bz_ArrayExprFullReduce(T_expr expr, T_reduction reduction);
+
+template<typename T_expr, typename T_reduction>
+_bz_typename T_reduction::T_resulttype
+_bz_reduceWithIndexTraversal(T_expr expr, T_reduction reduction);
+
+template<typename T_expr, typename T_reduction>
+_bz_typename T_reduction::T_resulttype
+_bz_reduceWithIndexVectorTraversal(T_expr expr, T_reduction reduction);
 
 #define BZ_DECL_ARRAY_FULL_REDUCE(fn,reduction)                         \
 template<typename T_expr>                                               \
@@ -339,7 +367,7 @@ inline                                                                  \
 _bz_typename reduction<T_numtype,N_rank>::T_resulttype                  \
 fn(const Array<T_numtype, N_rank>& array)                               \
 {                                                                       \
-    return _bz_reduceWithIndexVectorTraversal( array.beginFast(),       \
+    return _bz_reduceWithIndexVectorTraversal(array.beginFast(),        \
         reduction<T_numtype,N_rank>());                                 \
 }
 
