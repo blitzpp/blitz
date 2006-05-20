@@ -1,3 +1,27 @@
+2006-05-19  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* blitz/array/reduce.cc: In the implementation of the full array
+	reduction, set the initial value to the lower bound of the valid
+	index range in the case of minIndex() or maxIndex().  This will
+	correct a problem in the case where all elements are equal to the
+	min or max value as reported by numeric_limits.
+	* blitz/array/reduce.h: Added a functor _bz_ReduceReset that
+	passes an initial index value to the reset() method of the
+	reduction operator if it will accept one.  This functor is used in
+	the implementation of the partial array reduction to set the
+	initial value to the lower bound of the valid index range in the
+	case of minIndex() or maxIndex().  This will correct a problem in
+	the case where all elements are equal to the min or max value as
+	reported by numeric_limits.
+	* blitz/reduce.h: Modified ReduceMinIndex and ReduceMaxIndex (and
+	the Vector versions of these) to accept an initial value for the
+	result index.  This allows us to set the default result to
+	something reasonable in the event that no minimum or maximum value
+	is found.
+2006-05-17  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* blitz/reduce.h: Corrected setting of canProvideInitialValue in
+	ReduceMin operator.
 2006-02-03  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* m4/ac_compiler_specific_header.m4: Add support for recognition
