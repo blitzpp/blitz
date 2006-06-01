@@ -2458,9 +2458,6 @@ const int eleventhDim = 10;
 template<typename T_numtype>
 ostream& operator<<(ostream&, const Array<T_numtype,1>&);
 
-template<typename T_numtype>
-ostream& operator<<(ostream&, const Array<T_numtype,2>&);
-
 template<typename T_numtype, int N_rank>
 ostream& operator<<(ostream&, const Array<T_numtype,N_rank>&);
 
