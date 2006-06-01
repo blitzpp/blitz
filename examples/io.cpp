@@ -48,7 +48,7 @@ int main()
 
     ifs >> A >> B >> C;
 
-    cout << "Arrays restored from file: " << A << B << C << endl;
+    cout << "Arrays restored from file: " << endl << A << B << C << endl;
 
     return 0;
 }
