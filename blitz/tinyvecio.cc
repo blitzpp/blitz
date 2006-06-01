@@ -16,43 +16,49 @@
 
 BZ_NAMESPACE(blitz)
 
-// NEEDS_WORK
+// NEEDS_WORK???
+// This version of operator<< is updated on August 2005 
+// by Sergei Mingaleev <mingaleev@gmail.com>. The output 
+// format for 2D TinyVector is the same as for complex 
+// numbers - so that one can read Array of complex numbers 
+// into Array of TinyVectors for speed-up of calculations. 
+// Also, the corresponding operator>> is updated. 
 
 template<typename P_numtype, int N_length>
 ostream& operator<<(ostream& os, const TinyVector<P_numtype, N_length>& x)
 {
-    os << N_length << " [ ";
-    for (int i=0; i < N_length; ++i)
+    os << "(" << x[0];
+    for (int i=1; i < N_length; ++i)
     {
-        os << setw(10) << x[i];
-        if (!((i+1)%7))
-            os << endl << "  ";
+        os << "," << x[i];
     }
-    os << " ]";
+    os << ")";
     return os;
 }
 
 // Input of tinyvec contribute by Adam Levar <adaml@mcneilhouse.com>
+// and updated by Sergei Mingaleev <mingaleev@gmail.com>
 template <typename T_numtype, int N_length>
 istream& operator>>(istream& is, TinyVector<T_numtype, N_length>& x)
 {
-    int length;
     char sep;
              
-    is >> length;
     is >> sep;
-    BZPRECHECK(sep == '[', "Format error while scanning input array"
-        << endl << " (expected '[' before beginning of array data)");
+    BZPRECHECK(sep == '(', "Format error while scanning input TinyVector"
+        << endl << " (expected '(' opening TinyVector)");
 
-    BZPRECHECK(length == N_length, "Size mismatch");                    
-    for (int i = 0; i < N_length; ++i)
+    is >> x(0);
+    for (int i = 1; i < N_length; ++i)
     {
-        BZPRECHECK(!is.bad(), "Premature end of input while scanning array");
+        is >> sep;
+        BZPRECHECK(sep == ',', "Format error while scanning input TinyVector"
+             << endl << " (expected ',' between TinyVector components)");
+        BZPRECHECK(!is.bad(), "Premature end of input while scanning TinyVector");
         is >> x(i);
     }
     is >> sep;
-    BZPRECHECK(sep == ']', "Format error while scanning input array"
-       << endl << " (expected ']' after end of array data)");
+    BZPRECHECK(sep == ')', "Format error while scanning input TinyVector"
+       << endl << " (expected ')' closing TinyVector)");
     
     return is;
 }
