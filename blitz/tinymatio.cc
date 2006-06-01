@@ -14,22 +14,31 @@
 
 BZ_NAMESPACE(blitz)
 
+// NEEDS_WORK???
+// This version of operator<< is updated on August 2005
+// by Sergei Mingaleev <mingaleev@gmail.com>. 
+// Also, the corresponding operator>> is updated.
+
 template <typename P_numtype, int N_rows, int N_columns>
 ostream& operator<<(ostream& os,
     const TinyMatrix<P_numtype, N_rows, N_columns>& x)
 {
-    os << "(" << N_rows << "," << N_columns << "): " << endl;
-    for (int i=0; i < N_rows; ++i)
+    os << "(";
+    for (int i=0; i < N_rows-1; ++i) 
     {
-        os << " [ ";
-        for (int j=0; j < N_columns; ++j)
+        os << x(i,0);
+        for (int j=1; j < N_columns; ++j)
         {
-            os << setw(10) << x(i,j);
-            if (!((j+1)%7))
-                os << endl << "  ";
+            os << "," << x(i,j);
         }
-        os << " ]" << endl;
+        os << "; ";
     }
+    os << x(N_rows-1,0);
+    for (int j=1; j < N_columns; ++j) 
+    {
+       os << "," << x(N_rows-1,j);
+    }
+    os << ")";
     return os;
 }
 
@@ -37,28 +46,33 @@ template <typename P_numtype, int N_rows, int N_columns>
 istream& operator>>(istream& is, 
     TinyMatrix<P_numtype, N_rows, N_columns>& x)
 {
-    int rows, columns;
     char sep;
-             
-    is >> rows >> columns;
+    is >> sep;
+    BZPRECHECK(sep == '(', "Format error while scanning input TinyMatrix"
+      << endl << " (expected '(' opening TinyMatrix)");
 
-    BZPRECHECK(rows == N_rows, "Size mismatch in number of rows");
-    BZPRECHECK(columns == N_columns, "Size mismatch in number of columns");
-
-    for (int i=0; i < N_rows; ++i) 
-    {
+    for (int i=0; i<N_rows-1; i++) {
+      is >> x(i,0);
+      for (int j=1; j<N_columns; j++) {
         is >> sep;
-        BZPRECHECK(sep == '[', "Format error while scanning input matrix"
-            << endl << " (expected '[' before beginning of row data)");
-        for (int j = 0; j < N_columns; ++j)
-        {
-            BZPRECHECK(!is.bad(), "Premature end of input while scanning matrix");
-            is >> x(i,j);
-        }
-        is >> sep;
-        BZPRECHECK(sep == ']', "Format error while scanning input matrix"
-            << endl << " (expected ']' after end of row data)");
+        BZPRECHECK(sep == ',', "Format error while scanning input TinyMatrix" 
+	  << endl << " (expected ',' between TinyMatrix components)");
+        is >> x(i,j);
+      }
+      is >> sep;
+      BZPRECHECK(sep == ';', "Format error while scanning input TinyMatrix"
+        << endl << " (expected ';' between TinyMatrix rows)");
     }
+    is >> x(N_rows-1,0);
+    for (int j=1; j<N_columns; j++) {
+      is >> sep;
+      BZPRECHECK(sep == ',', "Format error while scanning input TinyMatrix"
+        << endl << " (expected ',' between TinyMatrix components)");
+      is >> x(N_rows-1,j);
+    }
+    is >> sep;
+    BZPRECHECK(sep == ')', "Format error while scanning input TinyMatrix"
+      << endl << " (expected ')' closing TinyMatrix)");
 
     return is;
 }
