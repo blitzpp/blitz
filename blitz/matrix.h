@@ -196,6 +196,9 @@ private:
 template<typename P_numtype, typename P_structure>
 ostream& operator<<(ostream& os, const Matrix<P_numtype, P_structure>& matrix);
 
+template<typename P_numtype, typename P_structure>
+istream& operator>>(istream& is, Matrix<P_numtype, P_structure>& matrix);
+
 // Global operators
 // +,-,*,/ with all possible combinations of:
 //    - scalar
