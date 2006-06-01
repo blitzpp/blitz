@@ -38,20 +38,50 @@ Matrix<P_numtype, P_structure>::operator=(_bz_MatExpr<P_expr> expr)
 template<typename P_numtype, typename P_structure>
 ostream& operator<<(ostream& os, const Matrix<P_numtype, P_structure>& matrix)
 {
+    os << matrix.rows() << " x " << matrix.columns() << endl;
     os << "[ ";
     for (int i=0; i < matrix.rows(); ++i)
     {
         for (int j=0; j < matrix.columns(); ++j)
         {
-            os << setw(10) << matrix(i,j);
-            if ((!((j+1)%7)) && (j < matrix.cols()-1))
-                os << endl << "         ...";
+            os << matrix(i,j) << " ";
         }
         if (i != matrix.rows() - 1)
-            os << endl  << "  ";
+            os << endl << "  ";
     }
-    os << " ]";
+    os << "]";
     return os;
+}
+
+template<typename P_numtype, typename P_structure>
+istream& operator>>(istream& is, Matrix<P_numtype, P_structure>& matrix)
+{
+    unsigned rows, columns;
+    char sep;
+
+    is >> rows;
+    BZPRECHECK(!is.bad(), "Premature end of input while scanning Matrix");
+    is >> sep;
+    BZPRECHECK(sep == 'x', "Format error while scanning input \
+Matrix \n (expected 'x' between Matrix extents)");
+    is >> columns;
+    BZPRECHECK(!is.bad(), "Premature end of input while scanning Matrix");
+    matrix.resize(rows,columns);
+
+    is >> sep;
+    BZPRECHECK(sep == '[', "Format error while scanning input \
+Matrix \n (expected '[' before beginning of Matrix data)");
+    for (int i=0; i < matrix.rows(); ++i) {
+        for (int j=0; j < matrix.columns(); ++j) {
+            BZPRECHECK(!is.bad(), "Premature end of input while scanning Matrix");
+            is >> matrix(i,j);
+        }
+    }
+
+    is >> sep;
+    BZPRECHECK(sep == ']', "Format error while scanning input \
+Matrix \n (expected ']' after end of Matrix data)");
+    return is;
 }
 
 BZ_NAMESPACE_END
