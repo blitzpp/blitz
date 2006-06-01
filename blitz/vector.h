@@ -443,6 +443,9 @@ ostream& operator<<(ostream& os, const Vector<P_numtype>& x);
 template<typename P_expr>
 ostream& operator<<(ostream& os, _bz_VecExpr<P_expr> expr);
 
+template<typename P_numtype>
+istream& operator>>(istream& is, Vector<P_numtype>& x);
+
 BZ_NAMESPACE_END
 
 #include <blitz/veciter.h>          // Iterators
