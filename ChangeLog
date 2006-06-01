@@ -1,3 +1,43 @@
+2006-05-31  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* examples/io.cpp: Minor change to format of program output to
+	enhance readability.
+	* blitz/matrix.cc: Make Matrix output format similar to that of 2D
+	Array.  We output the extents of the Matrix first, followed by a
+	space-delimited list of elements enclosed in brackets.  There is a
+	newline at the end of each row of elements.  Added a compatible
+	input operator as well.
+	* blitz/matrix.h: Added declaration of operator>> for inputting
+	Matrix from an istream.
+	* blitz/vecio.cc: Make Vector output format similar to 1D Array.
+	We write out the Vector length, followed by a space-delimited list
+	of elements enclosed in brackets.  Added a compatible input
+	operator.
+	* blitz/vector.h: Added declaration of operator>> for inputting a
+	Vector from an istream.
+	* blitz/array/io.cc: Array i/o format updates from Sergei
+	Mingaleev (mingaleev@gmail.com).  We now print the complete Array
+	bounds (not just the extents) before the Array data, so that an
+	Array being read in can reset its indices to match the bounds
+	rather than assuming zero-based indexing.  The Array data is given
+	in a space- delimited list enclosed in brackets, with a newline at
+	the end of each row of elements.  This format is more compact and
+	hopefully more readable.
+	* blitz/array-impl.h: Removed the declaration of the operator<<
+	specialization for N_rank=2.
+	* blitz/tinymatio.cc: TinyMatrix i/o updates from Sergei Mingaleev
+	(mingaleev@gmail.com) to output TinyMatrix as a comma-separated
+	list of elements enclosed in parentheses.  The rows are separated
+	by a semicolon.  The number of rows and columns are no longer
+	written out, since you cannot resize a TinyMatrix dynamically
+	anyway.
+	* blitz/tinyvecio.cc: TinyVector i/o updates from Sergei Mingaleev
+	(mingaleev@gmail.com) to output TinyVector as a comma-separated
+	list of elements enclosed in parentheses.  The vector length is no
+	longer written out, since you cannot resize a TinyVector
+	dynamically anyway.  This format makes a 2D TinyVector of doubles
+	look the same as a complex<double>, which can be useful in some
+	situations.
 2006-05-19  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* blitz/array/reduce.cc: In the implementation of the full array
