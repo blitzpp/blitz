@@ -29,72 +29,83 @@
 
 BZ_NAMESPACE(blitz)
 
+// NEEDS_WORK???
+// This version of operator<< is updated on August 2005
+// by Sergei Mingaleev <mingaleev@gmail.com>.
+// Also, the corresponding operator>> is updated.
+
 template<typename T_numtype>
 ostream& operator<<(ostream& os, const Array<T_numtype,1>& x)
 {
-    os << x.extent(firstRank) << endl;
-    os << " [ ";
-    for (int i=x.lbound(firstRank); i <= x.ubound(firstRank); ++i)
-    {
-        os << setw(9) << x(i) << " ";
-        if (!((i+1-x.lbound(firstRank))%7))
-            os << endl << "  ";
-    }
-    os << " ]";
-    return os;
-}
+  // Write the extent vector: e.g., (-4, 4)
 
-template<typename T_numtype>
-ostream& operator<<(ostream& os, const Array<T_numtype,2>& x)
-{
-    os << x.rows() << " x " << x.columns() << endl;
-    os << "[ ";
-    for (int i=x.lbound(firstRank); i <= x.ubound(firstRank); ++i)
-    {
-        for (int j=x.lbound(secondRank); j <= x.ubound(secondRank); ++j)
-        {
-            os << setw(9) << x(i,j) << " ";
-            if (!((j+1-x.lbound(secondRank)) % 7))
-                os << endl << "  ";
-        }
+  os << "(" << x.lbound(0) << "," << x.ubound(0) << ")";
+  os << endl << "[ ";
 
-        if (i != x.ubound(firstRank))
-           os << endl << "  ";
-    }
-
-    os << "]" << endl;
-
-    return os;
+  for (int i1=x.lbound(0); i1<=x.ubound(0); i1++) {
+    os << x(i1) << " ";
+  }
+  os << "]" << endl;
+  return os;
 }
 
 template<typename T_numtype, int N_rank>
 ostream& operator<<(ostream& os, const Array<T_numtype,N_rank>& x)
 {
-    for (int i=0; i < N_rank; ++i)
-    {
-        os << x.extent(i);
-        if (i != N_rank - 1)
-            os << " x ";
-    }
+  // Write the extent vector: this is separated by 'x's, e.g.
+  // (1, 10) x (-4, 4) x (-5, 5) 
 
-    os << endl << "[ ";
-    
-    _bz_typename Array<T_numtype, N_rank>::const_iterator iter = x.begin();
-    _bz_typename Array<T_numtype, N_rank>::const_iterator end = x.end();
-    int p = 0;
+  for (int i=0; i < N_rank; ++i) {
+    os << "(";
+    os << x.lbound(i); 
+    os << ",";
+    os << x.ubound(i); 
+    os << ")";
+    if (i != N_rank-1) os << " x ";
+  }
+  os << endl << "[ ";
 
-    while (iter != end) {
-        os << setw(9) << (*iter) << " ";
-        ++iter;
+  switch (N_rank) {
+    case 2:  
+      for (int i1=x.lbound(0); i1<=x.ubound(0); i1++) {
+        for (int i2=x.lbound(1); i2<=x.ubound(1); i2++) {
+          os << x(i1,i2) << " ";
+        }
+        if (i1 != x.ubound(0)) os << endl << "  ";
+      }
+      break;
+    case 3:
+      for (int i1=x.lbound(0); i1<=x.ubound(0); i1++) {
+	for (int i2=x.lbound(1); i2<=x.ubound(1); i2++) {
+          for (int i3=x.lbound(2); i3<=x.ubound(2); i3++) {
+              os << x(i1,i2,i3) << " ";
+	  }
+	  if (i1 != x.ubound(0) || i2 != x.ubound(1)) os << endl << "  ";
+	}
+      }
+      break;
+    case 4:
+      for (int i1=x.lbound(0); i1<=x.ubound(0); i1++) {
+	for (int i2=x.lbound(1); i2<=x.ubound(1); i2++) {
+          for (int i3=x.lbound(2); i3<=x.ubound(2); i3++) {
+            for (int i4=x.lbound(3); i4<=x.ubound(3); i4++) {
+                os << x(i1,i2,i3,i4) << " ";
+	    }
+	    if (i1 != x.ubound(0) || i2 != x.ubound(1) || i3 != x.ubound(2)) 
+              os << endl << "  ";
+	  }
+	}
+      }
+      break;
+    default:
+      cout << "Error: operator<< for " << N_rank
+           << "D Array is not supported!" << endl;
+      BZASSERT("ERROR!");
+      break;
+  };
 
-        // See if we need a linefeed
-        ++p;
-        if (!(p % 7))
-            os << endl << "  ";
-    }
-
-    os << "]" << endl;
-    return os;
+  os << "]" << endl;
+  return os;
 }
 
 /*
@@ -104,47 +115,92 @@ ostream& operator<<(ostream& os, const Array<T_numtype,N_rank>& x)
 template<typename T_numtype, int N_rank>
 istream& operator>>(istream& is, Array<T_numtype,N_rank>& x)
 {
-    TinyVector<int,N_rank> extent;
-    char sep;
- 
-    // Read the extent vector: this is separated by 'x's, e.g.
-    // 3 x 4 x 5
+  TinyVector<int,N_rank> lower_bounds, upper_bounds, extent;
+  char sep;
 
-    for (int i=0; i < N_rank; ++i)
-    {
-        is >> extent(i);
+  // Read the extent vector: this is separated by 'x's, e.g.
+  // (1, 10) x (-4, 4) x (-5, 5) 
 
-        BZPRECHECK(!is.bad(), "Premature end of input while scanning array");
-
-        if (i != N_rank - 1)
-        {
-            is >> sep;
-            BZPRECHECK(sep == 'x', "Format error while scanning input array"
-                << endl << " (expected 'x' between array extents)");
-        }
-    }
-
+  for (int i=0; i < N_rank; ++i) {
     is >> sep;
-    BZPRECHECK(sep == '[', "Format error while scanning input array"
-        << endl << " (expected '[' before beginning of array data)");
+    BZPRECHECK(!is.bad(), "Premature end of input while scanning Array");
+    BZPRECHECK(sep == '(', "Format error while scanning input \
+Array \n -- expected '(' opening Array extents");
 
-    x.resize(extent);
+    is >> lower_bounds(i); 
+    is >> sep; 
+    BZPRECHECK(sep == ',', "Format error while scanning input \
+Array \n -- expected ',' between Array extents");
+    is >> upper_bounds(i);
 
-    _bz_typename Array<T_numtype,N_rank>::iterator iter = x.begin();
-    _bz_typename Array<T_numtype,N_rank>::iterator end = x.end();
+    is >> sep; 
+    BZPRECHECK(sep == ')', "Format error while scanning input \
+Array \n -- expected ',' closing Array extents");
 
-    while (iter != end) {
-        BZPRECHECK(!is.bad(), "Premature end of input while scanning array");
-
-        is >> (*iter);
-        ++iter;
+    if (i != N_rank-1) {
+      is >> sep;
+      BZPRECHECK(sep == 'x', "Format error while scanning input \
+Array \n (expected 'x' between Array extents)");
     }
+  }
 
-    is >> sep;
-    BZPRECHECK(sep == ']', "Format error while scanning input array"
-       << endl << " (expected ']' after end of array data)");
+  is >> sep;
+  BZPRECHECK(sep == '[', "Format error while scanning input \
+Array \n (expected '[' before beginning of Array data)");
 
-    return is;
+  for (int i=0; i < N_rank; ++i)
+      extent(i) = upper_bounds(i) - lower_bounds(i) + 1;
+  x.resize(extent);
+  x.reindexSelf(lower_bounds);
+
+  switch (N_rank) {
+    case 1:
+      for (int i1=x.lbound(0); i1<=x.ubound(0); i1++) {
+        BZPRECHECK(!is.bad(), "Premature end of input while scanning Array");
+	is >> x(i1);
+      }
+      break;
+    case 2:
+      for (int i1=x.lbound(0); i1<=x.ubound(0); i1++) {
+        for (int i2=x.lbound(1); i2<=x.ubound(1); i2++) {
+          BZPRECHECK(!is.bad(), "Premature end of input while scanning Array");
+	  is >> x(i1,i2);
+	}
+      }
+      break;
+    case 3:
+      for (int i1=x.lbound(0); i1<=x.ubound(0); i1++) {
+	for (int i2=x.lbound(1); i2<=x.ubound(1); i2++) {
+          for (int i3=x.lbound(2); i3<=x.ubound(2); i3++) {
+            BZPRECHECK(!is.bad(), "Premature end of input while scanning Array");
+	    is >> x(i1,i2,i3);
+	  }
+	}
+      }
+      break;
+    case 4:
+      for (int i1=x.lbound(0); i1<=x.ubound(0); i1++) {
+	for (int i2=x.lbound(1); i2<=x.ubound(1); i2++) {
+          for (int i3=x.lbound(2); i3<=x.ubound(2); i3++) {
+            for (int i4=x.lbound(3); i4<=x.ubound(3); i4++) {
+              BZPRECHECK(!is.bad(), "Premature end of input while scanning Array");
+  	      is >> x(i1,i2,i3,i4);
+	    }
+	  }
+	}
+      }
+      break;
+    default:
+      cout << "Error: read() for " << N_rank 
+           << "D Array is not supported!" << endl;
+      BZASSERT("ERROR!");
+      break;
+  };
+
+  is >> sep;
+  BZPRECHECK(sep == ']', "Format error while scanning input \
+Array \n (expected ']' after end of Array data)");
+  return is;
 }
 
 BZ_NAMESPACE_END
