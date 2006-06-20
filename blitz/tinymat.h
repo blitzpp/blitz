@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/tinymat.h       Declaration of TinyMatrix<T, N, M>
  *
@@ -92,12 +93,26 @@ public:
     const T_numtype* restrict dataFirst() const
     { return data_; }
 
-    // NEEDS_WORK -- precondition checks
+    bool indexCheck(int i, int j) const
+    {
+        BZPRECHECK(i < N_rows && j < N_columns, 
+            "TinyMatrix<" << BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_numtype) 
+            << "," << N_rows << "," << N_columns << "> index out of bounds: "
+            << i << "," << j);
+        return true;
+    }
+    
     T_numtype& restrict operator()(int i, int j)
-    { return data_[i*N_columns + j]; }
+    {
+        BZPRECONDITION(indexCheck(i,j));
+        return data_[i*N_columns + j];
+    }
 
-    T_numtype operator()(int i, int j) const
-    { return data_[i*N_columns + j]; }
+    const T_numtype& operator()(int i, int j) const
+    {
+        BZPRECONDITION(indexCheck(i,j));
+        return data_[i*N_columns + j];
+    }
 
     T_reference getRef()
     { return T_reference((T_numtype*)data_); }
