@@ -102,7 +102,7 @@ _bz_reduceWithIndexTraversal(T_expr expr, T_reduction reduction)
         for (; j >= 0; --j) {
             index(j+1) = first(j+1);
             ++index(j);
-            if (index(j) != last(j))
+            if (index(j) < last(j))
                 break;
         }
 
@@ -157,7 +157,7 @@ _bz_reduceWithIndexVectorTraversal(T_expr expr, T_reduction reduction)
         for (; j >= 0; --j) {
             index(j+1) = first(j+1);
             ++index(j);
-            if (index(j) != last(j))
+            if (index(j) < last(j))
                 break;
         }
 
