@@ -119,135 +119,250 @@ protected:
     FastArrayIterator<T_ArrayNumtype,N_rank> iter_;
 };
 
-#define BZ_ET_STENCIL(name,result) \
-template<typename P_numtype, int N_rank> \
-class name ## _et : public StencilExpr<P_numtype,N_rank,result>, \
-  public ETBase<name ## _et<P_numtype,N_rank> > \
- { \
-private: \
-    typedef StencilExpr<P_numtype,N_rank,result> T_base; \
-    using T_base::iter_; \
-public: \
-    name ## _et(const Array<P_numtype,N_rank>& A) \
-        : StencilExpr<P_numtype,N_rank,result>(A) \
-    { } \
-    result operator*() \
-    { return name(iter_); } \
-    result operator()(const TinyVector<int,N_rank>& a) \
-    { iter_.moveTo(a); return name(iter_); } \
-    result fastRead(int i) \
-    { \
-      const P_numtype* tmp = iter_.data(); \
-      iter_._bz_setData(tmp + i); \
-      P_numtype r = name(iter_); \
-      iter_._bz_setData(tmp); \
-      return r; \
-    } \
-}; \
-template<typename P_numtype, int N_rank> \
-inline _bz_ArrayExpr<name ## _et<P_numtype, N_rank> > \
-name(Array<P_numtype,N_rank>& A) \
-{ \
-    return _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >(A); \
+#define BZ_ET_STENCIL(name,result)                                            \
+template<typename P_numtype, int N_rank>                                      \
+class name ## _et : public StencilExpr<P_numtype,N_rank,result>,              \
+  public ETBase<name ## _et<P_numtype,N_rank> >                               \
+ {                                                                            \
+private:                                                                      \
+    typedef StencilExpr<P_numtype,N_rank,result> T_base;                      \
+    using T_base::iter_;                                                      \
+public:                                                                       \
+    name ## _et(const Array<P_numtype,N_rank>& A)                             \
+        : StencilExpr<P_numtype,N_rank,result>(A)                             \
+    { }                                                                       \
+    result operator*()                                                        \
+    { return name(iter_); }                                                   \
+    result operator()(const TinyVector<int,N_rank>& a)                        \
+    { iter_.moveTo(a); return name(iter_); }                                  \
+    result fastRead(int i)                                                    \
+    {                                                                         \
+      const P_numtype* tmp = iter_.data();                                    \
+      iter_._bz_setData(tmp + i);                                             \
+      P_numtype r = name(iter_);                                              \
+      iter_._bz_setData(tmp);                                                 \
+      return r;                                                               \
+    }                                                                         \
+};                                                                            \
+template<typename P_numtype, int N_rank>                                      \
+inline _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >                         \
+name(const Array<P_numtype,N_rank>& A)                                        \
+{                                                                             \
+    return _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >(A);                 \
+}                                                                             \
+template<typename P_numtype, int N_rank>                                      \
+inline _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >                         \
+name(Array<P_numtype,N_rank>& A)                                              \
+{                                                                             \
+    return _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >(A);                 \
 }
 
-#define BZ_ET_STENCILV(name,rank) \
-template<typename P_numtype, int N_rank> \
-class name ## _et : public StencilExpr<P_numtype,N_rank, \
-    TinyVector<P_numtype,rank> >, \
-  public ETBase<name ## _et<P_numtype,N_rank> > \
- { \
-private: \
+#define BZ_ET_STENCILM(name,rank)                                             \
+template<typename P_numtype, int N_rank>                                      \
+class name ## _et : public StencilExpr<P_numtype,N_rank,                      \
+    TinyMatrix<_bz_typename multicomponent_traits<P_numtype>::T_element,      \
+               rank, rank> >,                                                 \
+  public ETBase<name ## _et<P_numtype,N_rank> >                               \
+ {                                                                            \
+private:                                                                      \
+    typedef StencilExpr<P_numtype,N_rank,                                     \
+        TinyMatrix<_bz_typename multicomponent_traits<P_numtype>::T_element,  \
+                   rank, rank> > T_base;                                      \
+    using T_base::iter_;                                                      \
+public:                                                                       \
+    typedef                                                                   \
+        TinyMatrix<_bz_typename multicomponent_traits<P_numtype>::T_element,  \
+                   rank, rank> result;                                        \
+    name ## _et(const Array<P_numtype,N_rank>& A)                             \
+        : StencilExpr<P_numtype,N_rank,result>(A)                             \
+    { }                                                                       \
+    result operator*()                                                        \
+    { return name(iter_); }                                                   \
+    result operator()(const TinyVector<int,N_rank>& a)                        \
+    { iter_.moveTo(a); return name(iter_); }                                  \
+    result fastRead(int i)                                                    \
+    {                                                                         \
+      const P_numtype* tmp = iter_.data();                                    \
+      iter_._bz_setData(tmp + i);                                             \
+      P_numtype r = name(iter_);                                              \
+      iter_._bz_setData(tmp);                                                 \
+      return r;                                                               \
+    }                                                                         \
+};                                                                            \
+template<typename P_numtype, int N_rank>                                      \
+inline _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >                         \
+name(const Array<P_numtype,N_rank>& A)                                        \
+{                                                                             \
+    return _bz_ArrayExpr< name ## _et<P_numtype, N_rank> >(A);                \
+}                                                                             \
+template<typename P_numtype, int N_rank>                                      \
+inline _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >                         \
+name(Array<P_numtype,N_rank>& A)                                              \
+{                                                                             \
+    return _bz_ArrayExpr< name ## _et<P_numtype, N_rank> >(A);                \
+}
+
+#define BZ_ET_STENCILV(name,rank)                                             \
+template<typename P_numtype, int N_rank>                                      \
+class name ## _et : public StencilExpr<P_numtype,N_rank,                      \
+    TinyVector<P_numtype,rank> >,                                             \
+  public ETBase<name ## _et<P_numtype,N_rank> >                               \
+ {                                                                            \
+private:                                                                      \
     typedef StencilExpr<P_numtype,N_rank,TinyVector<P_numtype,rank> > T_base; \
-    using T_base::iter_; \
-public: \
-    typedef TinyVector<P_numtype,rank> result; \
-    name ## _et(const Array<P_numtype,N_rank>& A) \
-        : StencilExpr<P_numtype,N_rank,result>(A) \
-    { } \
-    result operator*() \
-    { return name(iter_); } \
-    result operator()(const TinyVector<int,N_rank>& a) \
-    { iter_.moveTo(a); return name(iter_); } \
-    result fastRead(int i) \
-    { \
-      const P_numtype* tmp = iter_.data(); \
-      iter_._bz_setData(tmp + i); \
-      P_numtype r = name(iter_); \
-      iter_._bz_setData(tmp); \
-      return r; \
-    } \
-}; \
-template<typename P_numtype, int N_rank> \
-inline _bz_ArrayExpr<name ## _et<P_numtype, N_rank> > \
-name(Array<P_numtype,N_rank>& A) \
-{ \
-    return _bz_ArrayExpr< name ## _et<P_numtype, N_rank> >(A); \
+    using T_base::iter_;                                                      \
+public:                                                                       \
+    typedef TinyVector<P_numtype,rank> result;                                \
+    name ## _et(const Array<P_numtype,N_rank>& A)                             \
+        : StencilExpr<P_numtype,N_rank,result>(A)                             \
+    { }                                                                       \
+    result operator*()                                                        \
+    { return name(iter_); }                                                   \
+    result operator()(const TinyVector<int,N_rank>& a)                        \
+    { iter_.moveTo(a); return name(iter_); }                                  \
+    result fastRead(int i)                                                    \
+    {                                                                         \
+      const P_numtype* tmp = iter_.data();                                    \
+      iter_._bz_setData(tmp + i);                                             \
+      P_numtype r = name(iter_);                                              \
+      iter_._bz_setData(tmp);                                                 \
+      return r;                                                               \
+    }                                                                         \
+};                                                                            \
+template<typename P_numtype, int N_rank>                                      \
+inline _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >                         \
+name(const Array<P_numtype,N_rank>& A)                                        \
+{                                                                             \
+    return _bz_ArrayExpr< name ## _et<P_numtype, N_rank> >(A);                \
+}                                                                             \
+template<typename P_numtype, int N_rank>                                      \
+inline _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >                         \
+name(Array<P_numtype,N_rank>& A)                                              \
+{                                                                             \
+    return _bz_ArrayExpr< name ## _et<P_numtype, N_rank> >(A);                \
 }
 
-#define BZ_ET_STENCIL_DIFF(name) \
-template<typename P_numtype, int N_rank> \
-class name ## _et : public StencilExpr<P_numtype,N_rank,P_numtype>, \
-  public ETBase<name ## _et<P_numtype,N_rank> > \
- { \
-private: \
-    typedef StencilExpr<P_numtype,N_rank,P_numtype> T_base; \
-    using T_base::iter_; \
-public: \
-    name ## _et(const Array<P_numtype,N_rank>& A, int dim) \
-        : StencilExpr<P_numtype,N_rank,P_numtype>(A), dim_(dim) \
-    { } \
-    P_numtype operator*() \
-    { return name(iter_); } \
-    P_numtype operator()(const TinyVector<int,N_rank>& a) \
-    { iter_.moveTo(a); return name(iter_,dim_); } \
-    P_numtype fastRead(int i) \
-    { \
-      const P_numtype* tmp = iter_.data(); \
-      iter_._bz_setData(tmp + i); \
-      P_numtype r = name(iter_,dim_); \
-      iter_._bz_setData(tmp); \
-      return r; \
-    } \
-private: \
-    int dim_; \
-}; \
-template<typename P_numtype, int N_rank> \
-inline _bz_ArrayExpr<name ## _et<P_numtype, N_rank> > \
-name(Array<P_numtype,N_rank>& A, int dim) \
-{ \
-    return _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >(A,dim); \
+#define BZ_ET_STENCIL_SCA(name)                                               \
+template<typename P_numtype, int N_rank>                                      \
+class name ## _et : public StencilExpr<P_numtype,N_rank,                      \
+    _bz_typename multicomponent_traits<P_numtype>::T_element>,                \
+  public ETBase<name ## _et<P_numtype,N_rank> >                               \
+ {                                                                            \
+private:                                                                      \
+    typedef StencilExpr<P_numtype,N_rank,                                     \
+        _bz_typename multicomponent_traits<P_numtype>::T_element> T_base;     \
+    using T_base::iter_;                                                      \
+public:                                                                       \
+    typedef _bz_typename multicomponent_traits<P_numtype>::T_element result;  \
+    name ## _et(const Array<P_numtype,N_rank>& A)                             \
+        : StencilExpr<P_numtype,N_rank,result>(A)                             \
+    { }                                                                       \
+    result operator*()                                                        \
+    { return name(iter_); }                                                   \
+    result operator()(const TinyVector<int,N_rank>& a)                        \
+    { iter_.moveTo(a); return name(iter_); }                                  \
+    result fastRead(int i)                                                    \
+    {                                                                         \
+      const P_numtype* tmp = iter_.data();                                    \
+      iter_._bz_setData(tmp + i);                                             \
+      P_numtype r = name(iter_);                                              \
+      iter_._bz_setData(tmp);                                                 \
+      return r;                                                               \
+    }                                                                         \
+};                                                                            \
+template<typename P_numtype, int N_rank>                                      \
+inline _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >                         \
+name(const Array<P_numtype,N_rank>& A)                                        \
+{                                                                             \
+    return _bz_ArrayExpr< name ## _et<P_numtype, N_rank> >(A);                \
+}                                                                             \
+template<typename P_numtype, int N_rank>                                      \
+inline _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >                         \
+name(Array<P_numtype,N_rank>& A)                                              \
+{                                                                             \
+    return _bz_ArrayExpr< name ## _et<P_numtype, N_rank> >(A);                \
 }
 
+#define BZ_ET_STENCIL_DIFF(name)                                              \
+template<typename P_numtype, int N_rank>                                      \
+class name ## _et : public StencilExpr<P_numtype,N_rank,P_numtype>,           \
+  public ETBase<name ## _et<P_numtype,N_rank> >                               \
+ {                                                                            \
+private:                                                                      \
+    typedef StencilExpr<P_numtype,N_rank,P_numtype> T_base;                   \
+    using T_base::iter_;                                                      \
+public:                                                                       \
+    name ## _et(const Array<P_numtype,N_rank>& A, int dim)                    \
+        : StencilExpr<P_numtype,N_rank,P_numtype>(A), dim_(dim)               \
+    { }                                                                       \
+    P_numtype operator*()                                                     \
+    { return name(iter_,dim_); }                                              \
+    P_numtype operator()(const TinyVector<int,N_rank>& a)                     \
+    { iter_.moveTo(a); return name(iter_,dim_); }                             \
+    P_numtype fastRead(int i)                                                 \
+    {                                                                         \
+      const P_numtype* tmp = iter_.data();                                    \
+      iter_._bz_setData(tmp + i);                                             \
+      P_numtype r = name(iter_,dim_);                                         \
+      iter_._bz_setData(tmp);                                                 \
+      return r;                                                               \
+    }                                                                         \
+private:                                                                      \
+    int dim_;                                                                 \
+};                                                                            \
+template<typename P_numtype, int N_rank>                                      \
+inline _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >                         \
+name(const Array<P_numtype,N_rank>& A, int dim)                               \
+{                                                                             \
+    return _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >(A,dim);             \
+}                                                                             \
+template<typename P_numtype, int N_rank>                                      \
+inline _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >                         \
+name(Array<P_numtype,N_rank>& A, int dim)                                     \
+{                                                                             \
+    return _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >(A,dim);             \
+}
 
-BZ_ET_STENCIL(Laplacian2D, P_numtype)
-BZ_ET_STENCIL(Laplacian3D, P_numtype)
-BZ_ET_STENCIL(Laplacian2D4, P_numtype)
-BZ_ET_STENCIL(Laplacian2D4n, P_numtype)
-BZ_ET_STENCIL(Laplacian3D4, P_numtype)
-BZ_ET_STENCIL(Laplacian3D4n, P_numtype)
-BZ_ET_STENCILV(grad2D, 2)
-BZ_ET_STENCILV(grad2D4, 2)
-BZ_ET_STENCILV(grad3D, 3)
-BZ_ET_STENCILV(grad3D4, 3)
-BZ_ET_STENCILV(grad2Dn, 2)
-BZ_ET_STENCILV(grad2D4n, 2)
-BZ_ET_STENCILV(grad3Dn, 3)
-BZ_ET_STENCILV(grad3D4n, 3)
-BZ_ET_STENCILV(gradSqr2D, 2)
-BZ_ET_STENCILV(gradSqr2D4, 2)
-BZ_ET_STENCILV(gradSqr3D, 3)
-BZ_ET_STENCILV(gradSqr3D4, 3)
-BZ_ET_STENCILV(gradSqr2Dn, 2)
-BZ_ET_STENCILV(gradSqr2D4n, 2)
-BZ_ET_STENCILV(gradSqr3Dn, 3)
-BZ_ET_STENCILV(gradSqr3D4n, 3)
+#define BZ_ET_STENCIL_DIFF2(name)                                             \
+template<typename P_numtype, int N_rank>                                      \
+class name ## _et : public StencilExpr<P_numtype,N_rank,P_numtype>,           \
+  public ETBase<name ## _et<P_numtype,N_rank> >                               \
+ {                                                                            \
+private:                                                                      \
+    typedef StencilExpr<P_numtype,N_rank,P_numtype> T_base;                   \
+    using T_base::iter_;                                                      \
+public:                                                                       \
+    name ## _et(const Array<P_numtype,N_rank>& A, int dim1, int dim2)         \
+        : StencilExpr<P_numtype,N_rank,P_numtype>(A),dim1_(dim1),dim2_(dim2)  \
+    { }                                                                       \
+    P_numtype operator*()                                                     \
+    { return name(iter_,dim1_,dim2_); }                                       \
+    P_numtype operator()(const TinyVector<int,N_rank>& a)                     \
+    { iter_.moveTo(a); return name(iter_,dim1_,dim2_); }                      \
+    P_numtype fastRead(int i)                                                 \
+    {                                                                         \
+      const P_numtype* tmp = iter_.data();                                    \
+      iter_._bz_setData(tmp + i);                                             \
+      P_numtype r = name(iter_,dim1_,dim2_);                                  \
+      iter_._bz_setData(tmp);                                                 \
+      return r;                                                               \
+    }                                                                         \
+private:                                                                      \
+    int dim1_,dim2_;                                                          \
+};                                                                            \
+template<typename P_numtype, int N_rank>                                      \
+inline _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >                         \
+name(const Array<P_numtype,N_rank>& A, int dim1, int dim2)                    \
+{                                                                             \
+    return _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >(A,dim1,dim2);       \
+}                                                                             \
+template<typename P_numtype, int N_rank>                                      \
+inline _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >                         \
+name(Array<P_numtype,N_rank>& A, int dim1, int dim2)                          \
+{                                                                             \
+    return _bz_ArrayExpr<name ## _et<P_numtype, N_rank> >(A,dim1,dim2);       \
+}
 
-// NEEDS_WORK:
-// Jacobian
-// Curl
-// Div
-// mixed
 
 BZ_ET_STENCIL_DIFF(central12)
 BZ_ET_STENCIL_DIFF(central22)
@@ -300,6 +415,57 @@ BZ_ET_STENCIL_DIFF(forward22n)
 BZ_ET_STENCIL_DIFF(forward32n)
 BZ_ET_STENCIL_DIFF(forward42n)
 
+BZ_ET_STENCIL(Laplacian2D, P_numtype)
+BZ_ET_STENCIL(Laplacian3D, P_numtype)
+BZ_ET_STENCIL(Laplacian2D4, P_numtype)
+BZ_ET_STENCIL(Laplacian2D4n, P_numtype)
+BZ_ET_STENCIL(Laplacian3D4, P_numtype)
+BZ_ET_STENCIL(Laplacian3D4n, P_numtype)
+
+BZ_ET_STENCILV(grad2D, 2)
+BZ_ET_STENCILV(grad2D4, 2)
+BZ_ET_STENCILV(grad3D, 3)
+BZ_ET_STENCILV(grad3D4, 3)
+BZ_ET_STENCILV(grad2Dn, 2)
+BZ_ET_STENCILV(grad2D4n, 2)
+BZ_ET_STENCILV(grad3Dn, 3)
+BZ_ET_STENCILV(grad3D4n, 3)
+BZ_ET_STENCILV(gradSqr2D, 2)
+BZ_ET_STENCILV(gradSqr2D4, 2)
+BZ_ET_STENCILV(gradSqr3D, 3)
+BZ_ET_STENCILV(gradSqr3D4, 3)
+BZ_ET_STENCILV(gradSqr2Dn, 2)
+BZ_ET_STENCILV(gradSqr2D4n, 2)
+BZ_ET_STENCILV(gradSqr3Dn, 3)
+BZ_ET_STENCILV(gradSqr3D4n, 3)
+
+BZ_ET_STENCILM(Jacobian3D, 3)
+BZ_ET_STENCILM(Jacobian3Dn, 3)
+BZ_ET_STENCILM(Jacobian3D4, 3)
+BZ_ET_STENCILM(Jacobian3D4n, 3)
+
+BZ_ET_STENCIL(curl3D, P_numtype)
+BZ_ET_STENCIL(curl3Dn, P_numtype)
+BZ_ET_STENCIL(curl3D4, P_numtype)
+BZ_ET_STENCIL(curl3D4n, P_numtype)
+BZ_ET_STENCIL(curl2D, P_numtype)
+BZ_ET_STENCIL(curl2Dn, P_numtype)
+BZ_ET_STENCIL(curl2D4, P_numtype)
+BZ_ET_STENCIL(curl2D4n, P_numtype)
+
+BZ_ET_STENCIL_SCA(div2D)
+BZ_ET_STENCIL_SCA(div2Dn)
+BZ_ET_STENCIL_SCA(div2D4)
+BZ_ET_STENCIL_SCA(div2D4n)
+BZ_ET_STENCIL_SCA(div3D)
+BZ_ET_STENCIL_SCA(div3Dn)
+BZ_ET_STENCIL_SCA(div3D4)
+BZ_ET_STENCIL_SCA(div3D4n)
+
+BZ_ET_STENCIL_DIFF2(mixed22)
+BZ_ET_STENCIL_DIFF2(mixed22n)
+BZ_ET_STENCIL_DIFF2(mixed24)
+BZ_ET_STENCIL_DIFF2(mixed24n)
 
 BZ_NAMESPACE_END
 
