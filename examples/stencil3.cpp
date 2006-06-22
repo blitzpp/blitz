@@ -29,8 +29,12 @@ int main()
     // of 2 around the interior.  We can just make Fi an
     // alias for the interior of F, etc.
     Range Di(-N+2,N-2);
-    Array2D Fi = F(Di,Di), Lapl2i = Lapl2(Di,Di),
-      Lapl4i = Lapl4(Di,Di), LaplExacti = LaplExact(Di,Di);
+    // Reset index base of interior arrays to make output more sensible
+    TinyVector<int,2> iBase = Di.first();
+    Array2D Fi = F(Di,Di).reindex(iBase), 
+      Lapl2i = Lapl2(Di,Di).reindex(iBase),
+      Lapl4i = Lapl4(Di,Di).reindex(iBase), 
+      LaplExacti = LaplExact(Di,Di).reindex(iBase);
 
     // Now we can apply the Laplacian2D4n stencil, which 
     // is a 4th-order accurate approximation to the Laplacian.
