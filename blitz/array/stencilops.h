@@ -41,21 +41,21 @@
 
 BZ_NAMESPACE(blitz)
 
-#define BZ_DECLARE_STENCIL_OPERATOR1(name,A)     \
-  template<typename T>                              \
-  inline _bz_typename T::T_numtype name(T& A)    \
+#define BZ_DECLARE_STENCIL_OPERATOR1(name,A)                                  \
+  template<typename T>                                                        \
+  inline _bz_typename T::T_numtype name(T& A)                                 \
   {
 
 #define BZ_END_STENCIL_OPERATOR   }
 
-#define BZ_DECLARE_STENCIL_OPERATOR2(name,A,B)       \
-  template<typename T>                                  \
-  inline _bz_typename T::T_numtype name(T& A, T& B)  \
+#define BZ_DECLARE_STENCIL_OPERATOR2(name,A,B)                                \
+  template<typename T>                                                        \
+  inline _bz_typename T::T_numtype name(T& A, T& B)                           \
   {
 
-#define BZ_DECLARE_STENCIL_OPERATOR3(name,A,B,C) \
-  template<typename T>                              \
-  inline _bz_typename T::T_numtype name(T& A, T& B, T& C)    \
+#define BZ_DECLARE_STENCIL_OPERATOR3(name,A,B,C)                              \
+  template<typename T>                                                        \
+  inline _bz_typename T::T_numtype name(T& A, T& B, T& C)                     \
   {
 
 // These constants are accurate to 45 decimal places = 149 bits of mantissa
@@ -109,13 +109,13 @@ BZ_END_STENCIL_OPERATOR
  * Derivatives
  ****************************************************************************/
 
-#define BZ_DECLARE_DIFF(name)  \
-  template<typename T> \
+#define BZ_DECLARE_DIFF(name)                                                 \
+  template<typename T>                                                        \
   inline _bz_typename T::T_numtype name(T& A, int dim = firstDim)
 
-#define BZ_DECLARE_MULTIDIFF(name) \
-  template<typename T> \
-  inline _bz_typename multicomponent_traits<_bz_typename     \
+#define BZ_DECLARE_MULTIDIFF(name)                                            \
+  template<typename T>                                                        \
+  inline _bz_typename multicomponent_traits<_bz_typename                      \
      T::T_numtype>::T_element name(T& A, int comp, int dim)
 
 /****************************************************************************
@@ -816,7 +816,7 @@ curln(T& vx, T& vy, T& vz) {
 
 // Multicomponent curl
 template<typename T>
-inline _bz_typename T::T_numtype curl(T& A) {
+inline _bz_typename T::T_numtype curl3D(T& A) {
   const int x = firstDim, y = secondDim, z = thirdDim;
 
   return _bz_typename T::T_numtype(
@@ -827,7 +827,7 @@ inline _bz_typename T::T_numtype curl(T& A) {
 
 // Normalized multicomponent curl
 template<typename T>
-inline _bz_typename T::T_numtype curln(T& A) {
+inline _bz_typename T::T_numtype curl3Dn(T& A) {
   const int x = firstDim, y = secondDim, z = thirdDim;
 
   return _bz_typename T::T_numtype(
@@ -848,18 +848,6 @@ curl4(T& vx, T& vy, T& vz) {
     central14(vy,x)-central14(vx,y));
 }
 
-// O(h^4) curl, using 4th order central difference (multicomponent version)
-template<typename T>
-inline _bz_typename T::T_numtype
-curl4(T& A) {
-  const int x = firstDim, y = secondDim, z = thirdDim;
-
-  return _bz_typename T::T_numtype(
-    central14(A,z,y)-central14(A,y,z),
-    central14(A,x,z)-central14(A,z,x),
-    central14(A,y,x)-central14(A,x,y));
-}
-
 // Normalized O(h^4) curl, using 4th order central difference
 template<typename T>
 inline TinyVector<_bz_typename T::T_numtype,3>
@@ -872,10 +860,22 @@ curl4n(T& vx, T& vy, T& vz) {
     (central14(vy,x)-central14(vx,y)) * recip_2);
 }
 
+// O(h^4) curl, using 4th order central difference (multicomponent version)
+template<typename T>
+inline _bz_typename T::T_numtype
+curl3D4(T& A) {
+  const int x = firstDim, y = secondDim, z = thirdDim;
+
+  return _bz_typename T::T_numtype(
+    central14(A,z,y)-central14(A,y,z),
+    central14(A,x,z)-central14(A,z,x),
+    central14(A,y,x)-central14(A,x,y));
+}
+
 // O(h^4) curl, using 4th order central difference (normalized multicomponent)
 template<typename T>
 inline _bz_typename T::T_numtype
-curl4n(T& A) {
+curl3D4n(T& A) {
   const int x = firstDim, y = secondDim, z = thirdDim;
 
   return _bz_typename T::T_numtype(
@@ -1002,18 +1002,18 @@ div2D(T& A)
 
 template<typename T>
 inline _bz_typename T::T_numtype::T_numtype
-div2D4(T& A)
-{
-    const int x = firstDim, y = secondDim;
-    return central14(A,x,x) + central14(A,y,y);
-}
-
-template<typename T>
-inline _bz_typename T::T_numtype::T_numtype
 div2Dn(T& A)
 {
     const int x = firstDim, y = secondDim;
     return (central12(A,x,x) + central12(A,y,y)) * recip_2;
+}
+
+template<typename T>
+inline _bz_typename T::T_numtype::T_numtype
+div2D4(T& A)
+{
+    const int x = firstDim, y = secondDim;
+    return central14(A,x,x) + central14(A,y,y);
 }
 
 template<typename T>
@@ -1034,18 +1034,18 @@ div3D(T& A)
 
 template<typename T>
 inline _bz_typename T::T_numtype::T_numtype
-div3D4(T& A)
-{
-    const int x = firstDim, y = secondDim, z = thirdDim;
-    return central14(A,x,x) + central14(A,y,y) + central14(A,z,z);
-}
-
-template<typename T>
-inline _bz_typename T::T_numtype::T_numtype
 div3Dn(T& A)
 {
     const int x = firstDim, y = secondDim, z = thirdDim;
     return (central12(A,x,x) + central12(A,y,y) + central12(A,z,z)) * recip_2;
+}
+
+template<typename T>
+inline _bz_typename T::T_numtype::T_numtype
+div3D4(T& A)
+{
+    const int x = firstDim, y = secondDim, z = thirdDim;
+    return central14(A,x,x) + central14(A,y,y) + central14(A,z,z);
 }
 
 template<typename T>
