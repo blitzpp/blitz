@@ -1,3 +1,15 @@
+
+2006-08-22  Patrick Guio <patrick.guio@matnat.uio.no>
+
+	* m4/ac_compiler_specific_header.m4: Commented temporarly 
+	redundant following statements for $CXX=*CC* and
+	$target=*fujitsu*:
+	AX_PREFIX_CONFIG_H([blitz/fujitsu/bzconfig.h],[BZ])
+	COMPILER_SPECIFIC_HEADER="fujitsu/bzconfig.h"
+	that triggered an error when rebuilding configure with 
+	autoreconf ver 2.60.
+
+
 2006-05-31  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* examples/io.cpp: Minor change to format of program output to
