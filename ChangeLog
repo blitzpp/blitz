@@ -1,9 +1,19 @@
 
-2006-08-22  Patrick Guio <patrick.guio@matnat.uio.no>
 
-	* m4/ac_compiler_specific_header.m4: Commented temporarly 
-	redundant following statements for $CXX=*CC* and
-	$target=*fujitsu*:
+2006-08-22  Patrick Guio  <patrick.guio@matnat.uio.no>
+
+	* m4/ac_compiler_specific_header.m4: Revived Fujitsu 
+	compiler case $CXX==*CC* and $target==*fujitsu*
+	and deactivated the other case $CXX==*FCC* (which implies 
+	that the Fujitsu compiler FCC running on a non-Fujitsu
+	target marchines would not be recognised).
+
+
+2006-08-22  Patrick Guio  <patrick.guio@matnat.uio.no>
+
+	* m4/ac_compiler_specific_header.m4: Deactivated temporarly 
+	redundant following statements for $CXX==*CC* and
+	$target==*fujitsu*:
 	AX_PREFIX_CONFIG_H([blitz/fujitsu/bzconfig.h],[BZ])
 	COMPILER_SPECIFIC_HEADER="fujitsu/bzconfig.h"
 	that triggered an error when rebuilding configure with 
