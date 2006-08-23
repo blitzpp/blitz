@@ -26,8 +26,8 @@ case "$CXX" in
                 COMPILER_SPECIFIC_HEADER="kai/bzconfig.h" ;;
   *pgCC*)       AX_PREFIX_CONFIG_H([blitz/pgi/bzconfig.h],[BZ])
                 COMPILER_SPECIFIC_HEADER="pgi/bzconfig.h" ;;
-  *FCC*)        AX_PREFIX_CONFIG_H([blitz/fujitsu/bzconfig.h],[BZ])
-                COMPILER_SPECIFIC_HEADER="fujitsu/bzconfig.h" ;;
+dnl  *FCC*)        AX_PREFIX_CONFIG_H([blitz/fujitsu/bzconfig.h],[BZ])
+dnl                COMPILER_SPECIFIC_HEADER="fujitsu/bzconfig.h" ;;
   *pathCC*)     AX_PREFIX_CONFIG_H([blitz/pathscale/bzconfig.h],[BZ])
                 COMPILER_SPECIFIC_HEADER="pathscale/bzconfig.h" ;;
   *CC*)
@@ -38,8 +38,8 @@ case "$CXX" in
                 COMPILER_SPECIFIC_HEADER="sun/bzconfig.h" ;;
     *cray*)     AX_PREFIX_CONFIG_H([blitz/cray/bzconfig.h],[BZ])
                 COMPILER_SPECIFIC_HEADER="cray/bzconfig.h" ;;
-dnl    *fujitsu*)  AX_PREFIX_CONFIG_H([blitz/fujitsu/bzconfig.h],[BZ])
-dnl                COMPILER_SPECIFIC_HEADER="fujitsu/bzconfig.h" ;;
+    *fujitsu*)  AX_PREFIX_CONFIG_H([blitz/fujitsu/bzconfig.h],[BZ])
+                COMPILER_SPECIFIC_HEADER="fujitsu/bzconfig.h" ;;
     esac
   ;;
 esac
