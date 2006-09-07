@@ -29,9 +29,8 @@ void check1DArrays()
     const int N = 10;
     A.resize(N);
     checkFull1DArray(A, N);
-//    NEEDS_WORK
-//    B.resizeAndPreserve(N);
-//    checkFull1DArray(B);
+    B.resizeAndPreserve(2*N);
+    checkFull1DArray(B,2*N);
     Array<int,1> D(N);
     checkFull1DArray(D, N);
 }
@@ -108,12 +107,12 @@ void checkFull3DArray(Array<int,3>& A, int L, int M, int N)
     BZTEST(A.extent(1) == M);
     BZTEST(A.extent(2) == N);
     beginCheckAssert(); A.extent(3); endCheckAssert();    
-    BZTEST(!A.isMajorRank(0));
+    BZTEST(A.isMajorRank(0));
     BZTEST(!A.isMajorRank(1));
-    BZTEST(A.isMajorRank(2));
-    BZTEST(A.isMinorRank(0));
+    BZTEST(!A.isMajorRank(2));
+    BZTEST(!A.isMinorRank(0));
     BZTEST(A.isMinorRank(1));
-    BZTEST(!A.isMinorRank(2));
+    BZTEST(A.isMinorRank(2));
     BZTEST(A.isRankStoredAscending(0));
     BZTEST(A.isRankStoredAscending(1));
     BZTEST(A.isRankStoredAscending(2));
@@ -149,12 +148,12 @@ void checkFull3DFortranArray(Array<int,3>& A, int L, int M, int N)
     BZTEST(A.extent(1) == M);
     BZTEST(A.extent(2) == N);
     beginCheckAssert(); A.extent(3); endCheckAssert();
-    BZTEST(A.isMajorRank(0));
+    BZTEST(!A.isMajorRank(0));
     BZTEST(!A.isMajorRank(1));
-    BZTEST(!A.isMajorRank(2));
-    BZTEST(!A.isMinorRank(0));
+    BZTEST(A.isMajorRank(2));
+    BZTEST(A.isMinorRank(0));
     BZTEST(A.isMinorRank(1));
-    BZTEST(A.isMinorRank(2));
+    BZTEST(!A.isMinorRank(2));
     BZTEST(A.isRankStoredAscending(0));
     BZTEST(A.isRankStoredAscending(1));
     BZTEST(A.isRankStoredAscending(2));
