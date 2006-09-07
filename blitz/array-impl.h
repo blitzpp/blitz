@@ -954,8 +954,12 @@ public:
         length_ = 0;
     }
  
-    bool isMajorRank(int rank) const { return storage_.ordering(rank) == 0; }
-    bool isMinorRank(int rank) const { return storage_.ordering(rank) != 0; }
+    bool isMajorRank(int rank) const { 
+        return storage_.ordering(rank) == N_rank-1; 
+    }
+    bool isMinorRank(int rank) const { 
+        return storage_.ordering(rank) != N_rank-1; 
+    }
     bool isRankStoredAscending(int rank) const {
         return storage_.isRankStoredAscending(rank);
     }
