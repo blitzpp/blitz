@@ -1,5 +1,13 @@
+2006-09-13  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
-
+	* m4/ac_fortran_flags_preset.m4: Add -fno-second-underscore flag
+	for PathScale Fortran compilers so that the Fortran external
+	symbol translation is in the expected form.  This allows the blitz
+	benchmark codes to compile properly under PathScale.
+	* blitz/bzconfig.h: Changed PathScale compiler test to look for
+	__PATHCC__ instead of __PATHSCALE__ and move this test above the
+	test for GCC, so that the compiler is properly identified.
+	Changes suggested by Patrik Jonsson (patrik@ucolick.org).
 2006-08-22  Patrick Guio  <patrick.guio@matnat.uio.no>
 
 	* m4/ac_compiler_specific_header.m4: Revived Fujitsu 
