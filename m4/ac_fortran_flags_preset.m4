@@ -85,7 +85,7 @@ if test "$enableval" = yes ; then
 			CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
 		;;
 		*pathf*)  dnl Pathscale Fortran compiler
-			FFLAGS=""
+			FFLAGS="-fno-second-underscore"
 			F77_OPTIMIZE_FLAGS="-O3"
 			CXXFFLAGS="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
 		;;
@@ -230,7 +230,7 @@ if test "$enableval" = yes ; then
 			CXXFCFLAG="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
 		;;
 		*pathf9*)  dnl Pathscale pathf90 compiler
-			FCFLAGS=""
+			FCFLAGS="-fno-second-underscore"
 			FC_OPTIMIZE_FLAGS="-O3"
 			CXXFCFLAG="-DBZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES"
 		;;
