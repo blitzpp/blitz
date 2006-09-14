@@ -34,6 +34,10 @@
 /* SunPRO CC compiler */
 #include <blitz/sun/bzconfig.h>
 
+#elif defined(__PATHCC__)
+/* Pathscale pathCC compiler */
+#include <blitz/pathscale/bzconfig.h>
+
 #elif defined(__GNUC__)
 /* GNU gcc compiler */
 #include <blitz/gnu/bzconfig.h>
@@ -49,10 +53,6 @@
 #elif defined(__FUJITSU)
 /* Fujitsu FCC compiler */
 #include <blitz/fujitsu/bzconfig.h>
-
-#elif defined(__PATHSCALE__)
-/* Pathscale pathCC compiler */
-#include <blitz/pathscale/bzconfig.h>
 
 /* Add other compilers here */
 
