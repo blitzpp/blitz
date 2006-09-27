@@ -287,6 +287,10 @@ public:
 
     int ordering(int rank)
     {
+        // JCC: ignore ordering result from 1d Array
+        if (N_rank == 1)
+            return INT_MIN;  // tiny(int());
+
         if (N_map0 == rank)
             return array_.ordering(0);
         else if ((N_map1 == rank) && (N_rank > 1))
