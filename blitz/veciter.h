@@ -145,6 +145,10 @@ public:
         length_ = x.length();
     }
 
+    VectorIterConst(P_numtype* restrict data, int stride, int length)
+        : data_(data), stride_(stride), length_(length)
+    { }
+
 #ifdef BZ_MANUAL_VECEXPR_COPY_CONSTRUCTOR
     VectorIterConst(const VectorIterConst<P_numtype>& x)
     {
