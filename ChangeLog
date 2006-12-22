@@ -1,3 +1,24 @@
+2006-12-22  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* blitz/veciter.h: Forgot to add constructor for VecIterConst that
+	takes data pointer, stride, and length parameters.  This is needed
+	by operator+().
+
+	* blitz/veciter.h: Added precondition check for operator+ in
+	VecIter class and added this operator to VecIterConst class as
+	well.
+2006-09-27  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* blitz/array/map.h: Modified ordering() method for
+	ArrayIndexMapping class to ignore ordering result from a 1d source
+	Array.  A 1d Array will always report an ordering of 0 for
+	whichever rank matches the index mapping, but this is not relevant
+	to the ordering of the final array expression, which may be
+	multidimensional.  Basically, you cannot have a unique ordering
+	unless you have more than one dimension in the Array, so we ignore
+	the arbitrary ordering value of 0 and return INT_MIN as a flag
+	instead.
+
 2006-09-13  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* m4/ac_fortran_flags_preset.m4: Add -fno-second-underscore flag
