@@ -90,9 +90,9 @@ public:
     P_numtype& operator*()
     { return *data_; }
 
-    VectorIter<P_numtype> operator+(int i)
+    VectorIter<P_numtype> operator+(int i) const
     {
-        // NEEDS_WORK -- precondition checking?
+        BZPRECONDITION(i < length_);
         return VectorIter<P_numtype>(data_+i*stride_, stride_, length_-i);
     }
 
@@ -164,6 +164,15 @@ public:
     {
         BZPRECONDITION(i < length_);
         return data_[i*stride_];
+    }
+
+    P_numtype operator*() const
+    { return *data_; }
+
+    VectorIterConst<P_numtype> operator+(int i) const
+    {
+        BZPRECONDITION(i < length_);
+        return VectorIterConst<P_numtype>(data_+i*stride_, stride_, length_-i);
     }
 
     int length(int) const
