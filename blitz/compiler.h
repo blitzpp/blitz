@@ -71,7 +71,7 @@
 #ifdef BZ_HAVE_DEFAULT_TEMPLATE_PARAMETERS
     #define BZ_TEMPLATE_DEFAULT(X)   = X
 #else
-    #define BZ_TEMPLATE_DEFAULT
+    #define BZ_TEMPLATE_DEFAULT(X) 
 #endif
 
 #ifndef BZ_HAVE_EXPLICIT
