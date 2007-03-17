@@ -92,7 +92,7 @@ public:
 
     VectorIter<P_numtype> operator+(int i) const
     {
-        BZPRECONDITION(i < length_);
+        BZPRECONDITION(i <= length_); // JCC: Allow creation of "end" iterator
         return VectorIter<P_numtype>(data_+i*stride_, stride_, length_-i);
     }
 
@@ -175,7 +175,7 @@ public:
 
     VectorIterConst<P_numtype> operator+(int i) const
     {
-        BZPRECONDITION(i < length_);
+        BZPRECONDITION(i <= length_); // JCC: Allow creation of "end" iterator
         return VectorIterConst<P_numtype>(data_+i*stride_, stride_, length_-i);
     }
 
