@@ -1,3 +1,15 @@
+2007-05-29  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+    * m4/ac_cxx_math_absint_in_namespace_std.m4: New test that verifies
+    whether abs(integer_type) requires the use of cstdlib and namespace
+    qualification.
+    * m4/ac_cxx_have_cstring.m4: New test that checks the availability
+    of cstring.
+    * m4/ac_cxx_standard_library.m4: Added calls to the two new tests.
+    * blitz/tinyvec.h: Include cstring if available (needed for memcpy).
+    * blitz/compiler.h: Added macros for accessing the abs(int) functions.
+    * blitz/funcs.h: Use the new macros of compiler.h.
+    * blitz/mathfunc.h: Use the new macros of compiler.h.
+
 2006-12-22  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* blitz/veciter.h: Forgot to add constructor for VecIterConst that

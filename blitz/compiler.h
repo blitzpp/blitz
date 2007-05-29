@@ -122,6 +122,20 @@
   #define BZ_MATHFN_SCOPE(x) x
 #endif
 
+#if defined(BZ_MATH_ABSINT_IN_NAMESPACE_STD)
+#include <cstdlib>
+#else
+#include <stdlib.h>
+#endif
+
+#if defined(BZ_MATH_ABSINT_IN_NAMESPACE_STD)
+  #define BZ_MATHABSINT_SCOPE(x) std::x
+#elif defined(BZ_HAVE_NAMESPACES)
+  #define BZ_MATHABSINT_SCOPE(x) ::x
+#else
+  #define BZ_MATHABSINT_SCOPE(x) x
+#endif
+
 #if defined(BZ_HAVE_COMPLEX_MATH_IN_NAMESPACE_STD)
   #define BZ_CMATHFN_SCOPE(x) std::x
 #elif defined(BZ_HAVE_NAMESPACES)

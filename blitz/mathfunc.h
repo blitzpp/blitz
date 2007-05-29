@@ -34,6 +34,26 @@ public:
     }
 };
 
+// abs(int)
+template<>
+class _bz_abs<int> : public OneOperandApplicativeTemplatesBase {
+public:
+    typedef int T_numtype1;
+    typedef int T_numtype;
+
+    static inline T_numtype apply(T_numtype1 x)
+    { return BZ_MATHABSINT_SCOPE(abs)((int)x); }
+
+    template<typename T1>
+    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,
+        const T1& a)
+    {
+        str += "abs(";
+        a.prettyPrint(str,format);
+        str += ")";
+    }
+};
+
 // abs(long)
 template<>
 class _bz_abs<long> : public OneOperandApplicativeTemplatesBase {
@@ -42,7 +62,7 @@ public:
     typedef long T_numtype;
 
     static inline T_numtype apply(T_numtype1 x)
-    { return BZ_MATHFN_SCOPE(labs)((long)x); }
+    { return BZ_MATHABSINT_SCOPE(labs)((long)x); }
 
     template<typename T1>
     static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,

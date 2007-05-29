@@ -506,7 +506,7 @@ struct Fn_abs< int > {
     
     static inline T_numtype
     apply(T_numtype1 a)
-    { return BZ_MATHFN_SCOPE(abs)(a); }
+    { return BZ_MATHABSINT_SCOPE(abs)(a); }
     
     template<typename T1>
     static inline void prettyPrint(BZ_STD_SCOPE(string) &str,
@@ -527,7 +527,7 @@ struct Fn_abs< long int > {
     
     static inline T_numtype
     apply(T_numtype1 a)
-    { return BZ_MATHFN_SCOPE(labs)(a); }
+    { return BZ_MATHABSINT_SCOPE(labs)(a); }
     
     template<typename T1>
     static inline void prettyPrint(BZ_STD_SCOPE(string) &str,
