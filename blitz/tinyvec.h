@@ -32,6 +32,10 @@
 #include <blitz/listinit.h>
 #include <blitz/tiny.h>
 
+#ifdef BZ_HAVE_CSTRING
+#include <cstring> // For memcpy
+#endif
+
 BZ_NAMESPACE(blitz)
 
 /*****************************************************************************
