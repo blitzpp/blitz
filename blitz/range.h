@@ -35,7 +35,7 @@
  #include <blitz/vecexprwrap.h>      // _bz_VecExpr wrapper
 #endif
 
-#include <blitz/wrap-climits.h>                  // for INT_MIN
+#include <blitz/wrap-climits.h>                  // for INT_MIN,INT_MAX
 
 BZ_NAMESPACE(blitz)
 
@@ -47,7 +47,7 @@ BZ_NAMESPACE(blitz)
 // Range(Range::fromStart,3)       [0,1,2,3]
 // Range(1,5,2);                   [1,3,5]
 
-enum { fromStart = INT_MIN, toEnd = INT_MIN };
+enum { fromStart = INT_MIN, toEnd = INT_MAX };
 
 // Class Range
 class Range {
@@ -55,11 +55,11 @@ class Range {
 public:
     // This declaration not yet supported by all compilers
     // const int fromStart = INT_MIN;
-    // const int toEnd = INT_MIN;
+    // const int toEnd = INT_MAX;
 
     typedef int T_numtype;
 
-    enum { fromStart = INT_MIN, toEnd = INT_MIN };
+    enum { fromStart = INT_MIN, toEnd = INT_MAX };
 
     Range()
     {
