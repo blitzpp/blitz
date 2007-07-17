@@ -92,7 +92,8 @@ public:
                        (first < last) && (stride > 0) ||
                        (first > last) && (stride < 0) ||
                        (first == last), (*this) << " is an invalid range.");
-        BZPRECHECK((last-first) % stride == 0,
+        BZPRECHECK((first == fromStart) || (last == toEnd) ||
+            (last-first) % stride == 0,
             (*this) << ": the stride must evenly divide the range");
     }
 
