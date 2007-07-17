@@ -1,3 +1,31 @@
+2007-07-16  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* blitz/bzdebug.h: Clean up standard header file includes and use
+	std qualifier on items from standard C++ library such as cerr and
+	endl.
+	* blitz/blitz.h: Clean up standard header file includes a bit.
+	* testsuite/testsuite.h: Move include of stdlib.h header to
+	blitz/bzdebug.h. Include std qualifier on exit() function call.
+	* testsuite/theodore-papadopoulo-1.cpp: Correct expected return
+	type for call to max() function.
+	* blitz/range.h: Add an exception to the check for stride evenly
+	dividing into the range, if the range is open-ended (i.e., if
+	first_==fromStart or last_==toEnd).
+	* examples/complex-test.cpp: Use double-precision floating-point
+	math consistently.
+	* examples/matmult.cpp: Use single-precision floating-point math
+	consistently.
+	* blitz/array/map.h: Change return type of operator* from int to
+	T_numtype to eliminate compiler warning about type
+	conversion. Note that this method should never be called in
+	practice, so the return type is not important.
+
+2007-05-31  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* blitz/range.h: Set Range tag toEnd to the value INT_MAX rather
+	than INT_MIN, so that it is distinct from the value of the tag
+	fromStart.
+
 2007-05-29  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
     * m4/ac_cxx_math_absint_in_namespace_std.m4: New test that verifies
     whether abs(integer_type) requires the use of cstdlib and namespace
@@ -9,6 +37,18 @@
     * blitz/compiler.h: Added macros for accessing the abs(int) functions.
     * blitz/funcs.h: Use the new macros of compiler.h.
     * blitz/mathfunc.h: Use the new macros of compiler.h.
+
+2007-03-16  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* blitz/veciter.h: Correct minor logic bug in operator+(int)
+	method for VectorIter and VectorIterConst to allow return of an
+	"end" iterator with zero length.  This fixes a reported failure
+	with the blitz testsuite code initialize.cpp.
+
+2007-03-12  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* blitz/compiler.h: Corrected minor error in definition of
+	BZ_TEMPLATE_DEFAULT macro.
 
 2006-12-22  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
