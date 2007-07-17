@@ -22,8 +22,8 @@ int main()
 {
     const int N = 16;
 
-    Array<complex<float>,1> A(N);
-    Array<float,1> theta(N);
+    Array<complex<double>,1> A(N);
+    Array<double,1> theta(N);
 
     BZ_USING_NAMESPACE(blitz::tensor);
 
@@ -31,7 +31,7 @@ int main()
     theta = (2 * pi * i) / N;
 
     // Set A[i] = cos(theta[i]) + _I * sin(theta[i])
-    A = zip(cos(theta), sin(theta), complex<float>());
+    A = zip(cos(theta), sin(theta), complex<double>());
 
     cout << A << endl;
 
@@ -39,7 +39,7 @@ int main()
     // Here's another way of doing it, which eliminates the need for
     // the theta array:
     // Set A[i] = exp(Pi i _I / N)
-    A = exp(zip(0, (2 * pi * i) / N, complex<float>()));
+    A = exp(zip(0.0, (2 * pi * i) / N, complex<double>()));
 
     cout << A << endl;
 #endif
