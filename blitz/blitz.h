@@ -48,20 +48,19 @@
 #include <blitz/tuning.h>            // Performance tuning
 #include <blitz/tau.h>               // Profiling
 
-#include <string>
-#include <stdio.h>                   // sprintf, etc.
+#ifdef BZ_HAVE_STL
+  #include <string>
+#endif
 
 #ifdef BZ_HAVE_STD
   #include <iostream>
   #include <iomanip>
+  #include <cstdio>                    // sprintf, etc.
+  #include <cmath>
 #else
   #include <iostream.h>
   #include <iomanip.h>
-#endif
-
-#ifdef BZ_MATH_FN_IN_NAMESPACE_STD 
-  #include <cmath>
-#else
+  #include <stdio.h>                   // sprintf, etc.
   #include <math.h>
 #endif
 
