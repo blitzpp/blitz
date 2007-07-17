@@ -117,10 +117,10 @@ int main()
 
     int N = 64;                   // Size of array: N x N
     Array<float,2> F(N,N);
-    float midpoint = (N-1)/2.;
+    float midpoint = (N-1)/2.0f;
     int cycles = 3;
-    float omega = 2.0 * M_PI * cycles / double(N);
-    float tau = - 10.0 / N;
+    float omega = 2.0f * float(M_PI) * cycles / float(N);
+    float tau = - 10.0f / N;
 
     F = cos(omega * sqrt(pow2(i-midpoint) + pow2(j-midpoint)))
         * exp(tau * sqrt(pow2(i-midpoint) + pow2(j-midpoint)));
