@@ -377,10 +377,10 @@ public:
     // you are trying to use stack iteration mode on an expression
     // which contains an index placeholder.  You must use index
     // iteration mode instead.
-    int operator*()
+    T_numtype operator*()
     {
         BZPRECONDITION(0);
-        return 0;
+        return T_numtype();
     }
 
     // See operator*() note
