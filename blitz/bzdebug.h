@@ -26,10 +26,13 @@
 #ifndef BZ_DEBUG_H
 #define BZ_DEBUG_H
 
-#ifdef BZ_HAVE_STDLIB_H
- #include <stdlib.h>
+#ifdef BZ_HAVE_STD
+  #include <cstdlib>
+  #include <cassert>
+#else
+  #include <stdlib.h>
+  #include <assert.h>
 #endif
-#include <assert.h>
 
 #ifdef BZ_HAVE_RTTI
  #include <typeinfo>
@@ -81,10 +84,10 @@ _bz_global int  assertSuccessCount BZ_GLOBAL_INIT(0);
     else {
       if (!condition)
       {
-        cerr << "Unexpected assert failure!" << endl;
+        BZ_STD_SCOPE(cerr) << "Unexpected assert failure!" << BZ_STD_SCOPE(endl);
         if (where)
-            cerr << where << ":" << line << endl;
-        cerr.flush();
+            BZ_STD_SCOPE(cerr) << where << ":" << line << BZ_STD_SCOPE(endl);
+        BZ_STD_SCOPE(cerr).flush();
         assert(0);
       }
     }
@@ -103,7 +106,7 @@ _bz_global int  assertSuccessCount BZ_GLOBAL_INIT(0);
     assertFailMode = false;
     if (assertFailCount == 0)
     {
-      cerr << "Assert check failed!" << endl;
+      BZ_STD_SCOPE(cerr) << "Assert check failed!" << BZ_STD_SCOPE(endl);
       assert(0);
     }
   }
@@ -114,16 +117,17 @@ _bz_global int  assertSuccessCount BZ_GLOBAL_INIT(0);
     #define BZSTATECHECK(X,Y)  checkAssert(X == Y, __FILE__, __LINE__)
     #define BZPRECHECK(X,Y)                                    \
         {                                                      \
-            if ((assertFailMode == false) && (!(X)))       \
-                cerr << Y << endl;                             \
+            if ((assertFailMode == false) && (!(X)))           \
+                BZ_STD_SCOPE(cerr) << Y << BZ_STD_SCOPE(endl); \
             checkAssert(X, __FILE__, __LINE__);                \
         }
 
     #define BZ_DEBUG_MESSAGE(X)                                          \
         {                                                                \
-            if (assertFailMode == false)                             \
+            if (assertFailMode == false)                                 \
             {                                                            \
-                cout << __FILE__ << ":" << __LINE__ << " " << X << endl; \
+                BZ_STD_SCOPE(cout) << __FILE__ << ":" << __LINE__ << " " \
+                                   << X << BZ_STD_SCOPE(endl);           \
             }                                                            \
         }
 
@@ -139,16 +143,18 @@ _bz_global int  assertSuccessCount BZ_GLOBAL_INIT(0);
     #define BZSTATECHECK(X,Y)  assert(X == Y)
     #define BZPRECHECK(X,Y)                                                 \
         { if (!(X))                                                         \
-          { cerr << "[Blitz++] Precondition failure: Module " << __FILE__   \
-               << " line " << __LINE__ << endl                              \
-               << Y << endl;                                                \
-            cerr.flush();                                                   \
+          { BZ_STD_SCOPE(cerr) << "[Blitz++] Precondition failure: Module " \
+                               << __FILE__                                  \
+               << " line " << __LINE__ << BZ_STD_SCOPE(endl)                \
+               << Y << BZ_STD_SCOPE(endl);                                  \
+            BZ_STD_SCOPE(cerr).flush();                                     \
             assert(0);                                                      \
           }                                                                 \
         }
 
-    #define BZ_DEBUG_MESSAGE(X) \
-        { cout << __FILE__ << ":" << __LINE__ << " " << X << endl; }
+    #define BZ_DEBUG_MESSAGE(X)                                    \
+        { BZ_STD_SCOPE(cout) << __FILE__ << ":" << __LINE__ << " " \
+                             << X << BZ_STD_SCOPE(endl); }
 
     #define BZ_DEBUG_PARAM(X) X
     #define BZ_PRE_FAIL      assert(0)
@@ -172,12 +178,13 @@ _bz_global int  assertSuccessCount BZ_GLOBAL_INIT(0);
 
 #endif  // !BZ_TESTSUITE && !BZ_DEBUG
 
-#define BZ_NOT_IMPLEMENTED()   { cerr << "[Blitz++] Not implemented: module " \
-    << __FILE__ << " line " << __LINE__ << endl;                \
-    exit(1); }
+#define BZ_NOT_IMPLEMENTED()                                     \
+    { BZ_STD_SCOPE(cerr) << "[Blitz++] Not implemented: module " \
+    << __FILE__ << " line " << __LINE__ << BZ_STD_SCOPE(endl);   \
+    BZ_STD_SCOPE(exit)(1); }
 
 #ifdef BZ_HAVE_RTTI
-#define BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(X)  typeid(X).name()
+#define BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(X) typeid(X).name()
 #else
 
 template<typename T>
