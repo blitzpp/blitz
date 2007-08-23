@@ -90,7 +90,8 @@ void foo()
 
 The generators which Blitz++ provides are not suitable for parallel
 programs.  If you need parallel RNGs, you may find
-@uref{http://www.ncsa.uiuc.edu/Apps/SPRNG} useful.
+@uref{http://sprng.cs.fsu.edu} (the Scalable Parallel Random
+Number Generators Library) useful.
 
 @node RNG seeding, RNG details, RNG overview, Random Number Generators
 @section Seeding a random number generator
@@ -154,7 +155,7 @@ By default, the Integer RNG used is a faithful adaptation of the Mersenne
 Twister @code{MT19937} @cindex MersenneTwister due to Matsumoto and
 Nishimura (see @cite{ACM Transactions on Modeling and Computer Simulation,
 @w{Vol. 8}, @w{No. 1}, @w{January 1998}, @w{pp 3-30}},
-@uref{http://www.math.keio.ac.jp/~matumoto/emt.html},
+@uref{http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html},
 @uref{http://www.acm.org/pubs/citations/journals/tomacs/1998-8-1/p3-matsumoto/}).
 This generator has a period of 
 @iftex
