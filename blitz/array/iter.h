@@ -34,28 +34,6 @@
 
 BZ_NAMESPACE(blitz)
 
-// helper class ConstPointerStack
-template<typename P_numtype, int N_rank>
-class ConstPointerStack {
-public:
-    typedef P_numtype                T_numtype;
-
-    void operator=(const ConstPointerStack<P_numtype,N_rank>& rhs) 
-    {
-        for (int i=0; i<N_rank; ++i)
-            stack_[i] = rhs.stack_[i];
-    }
-
-    const T_numtype*& operator[](int position)
-    {
-        return stack_[position];
-    }
-      
-private:
-    const T_numtype *                stack_[N_rank];
-};
-
-
 template<typename T, int N>
 class ConstArrayIterator {
 public:
@@ -65,19 +43,16 @@ public:
     {
         // Making internal copies of these avoids keeping
         // a pointer to the array and doing indirection.
-        strides_ = array.stride();
         lbound_ = array.lbound();
-        extent_ = array.extent();
         order_ = array.ordering();
         data_ = const_cast<T*>(array.dataFirst());
-
-        maxRank_ = order_(0);
-        stride_ = strides_(maxRank_);
-
-        for (int i=0; i < N; ++i)
-        {
-            stack_[i] = data_;
-            last_[i] = data_ + extent_(order_(i)) * strides_(order_(i));
+        
+        ubound_(0) = array.ubound(0)+1;
+        dataincr_(order_(0)) = array.stride(order_(0));
+        for (int i=1,r,s=order_(0);i<N;s=r,++i) {
+            r = order_(i);
+            ubound_(i) = array.ubound(i)+1;
+            dataincr_(r) = array.stride(r)-array.extent(s)*array.stride(s);
         }
 
         pos_ = lbound_;
@@ -125,11 +100,7 @@ public:
     }
    
 private:
-    TinyVector<int,N> strides_, lbound_, extent_, order_;
-    ConstPointerStack<T,N> stack_;
-    ConstPointerStack<T,N> last_;
-    int stride_;
-    int maxRank_;
+    TinyVector<int,N> dataincr_, lbound_, ubound_, order_;
 
 protected:
     TinyVector<int,N> pos_;
@@ -176,59 +147,48 @@ public:
     }
 };
 
-
 template<typename T, int N>
 ConstArrayIterator<T,N>& ConstArrayIterator<T,N>::operator++()
 {
     BZPRECHECK(data_ != 0, "Attempted to iterate past the end of an array.");
 
-    data_ += stride_;
+    //   The first loop iteration is peeled as it increases performance.
+    //   The same improvement can be obtained by telling the compiler that
+    //   the test is likely to be true, but this has too many portability issues
+    //   for now.
 
-    if (data_ != last_[0])
-    {
-        // We hit this case almost all the time.
-        ++pos_[maxRank_];
+    // With a compiler peeling loops correctly (or with an effective BZ_LIKELY
+    // macro, this could be simply written as:
+    //
+    // for (int i=0;i<N;++i) {
+    //     const int r = order_(i);
+    //     data_ += dataincr_[r];
+    //     if (BZ_LIKELY(++pos_(r)!=ubound_(r)))
+    //         return *this;
+    //     pos_(r) = lbound_(r);
+    // }
+
+
+    const int r = order_(0);
+    data_ += dataincr_[r];
+    if (BZ_LIKELY(++pos_(r)!=ubound_(r)))
         return *this;
+    pos_(r) = lbound_(r);
+
+    for (int i=1;i<N;++i) {
+        const int r = order_(i);
+        data_ += dataincr_[r];
+        if (BZ_LIKELY(++pos_(r)!=ubound_(r)))
+            return *this;
+        pos_(r) = lbound_(r);
     }
 
-    // We've hit the end of a row/column/whatever.  Need to
-    // increment one of the loops over another dimension.
-
-    int j = 1;
-    for (; j < N; ++j)
-    {
-        int r = order_(j);
-        data_ = const_cast<T*>(stack_[j]);
-        data_ += strides_[r];
-        ++pos_(r);
-
-        if (data_ != last_[j])
-            break;
-    }
-
-    // All done?
-    if (j == N)
-    {
-        // Setting data_ to 0 indicates the end of the array has
-        // been reached, and will match the end iterator.
-        data_ = 0;
-        return *this;
-    }
-
-    stack_[j] = data_;
-
-    // Now reset all the last pointers
-    for (--j; j >= 0; --j)
-    {
-        int r2 = order_(j);
-        stack_[j] = data_;
-        last_[j] = data_ + extent_(r2) * strides_(r2);
-        pos_(r2) = lbound_(r2);
-    }
-
+    // Setting data_ to 0 indicates the end of the array has
+    // been reached, and will match the end iterator.
+    //
+    data_ = 0;
     return *this;
 }
-
 
 BZ_NAMESPACE_END
 
