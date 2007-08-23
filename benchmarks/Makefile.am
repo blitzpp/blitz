@@ -9,7 +9,7 @@ ctime3v.cpp ctime4.cpp ctime4v.cpp ctime5.cpp ctime5c.cpp ctime5v.cpp \
 daxpy2.cpp daxpyf90-2.f90 dot.cpp dot2.cpp echof2-back.f echotune.cpp \
 echotune.m echotunef.f frek.m hao-he-mark.cpp kepler.cpp loop1-bug.cpp \
 loop4.cpp loop4f.f loop4f90.f90 loopstruct.cpp looptest.cpp makelogo.cpp \
-makeloops.cpp qcd.txt quinlan.cpp stenciln.cpp tiny3.cpp
+makeloops.cpp qcd.txt quinlan.cpp stenciln.cpp tiny3.cpp iter.cpp
 
 
 AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir) -I$(top_builddir)
@@ -25,7 +25,7 @@ LOOP_KERNELS = loop1 loop2 loop3 loop5 loop6 loop8 loop9 loop10 loop11 \
 loop12 loop13 loop14 loop15 loop16 loop17 loop18 loop19 loop21 loop22 \
 loop23 loop24 loop25 loop36
 
-OTHER_BENCH = daxpy haney qcd stencil tinydaxpy acoustic acou3d hao-he
+OTHER_BENCH = daxpy haney qcd stencil tinydaxpy acoustic acou3d hao-he iter
 
 BENCHMARKS = $(LOOP_KERNELS) $(OTHER_BENCH)
 
@@ -58,30 +58,28 @@ check-benchmarks: run run-loops ctime
 
 ############################################################################
 
+haney_SOURCES = haney.cpp haneyf.f
+qcd_SOURCES = qcd.cpp qcdf.f
+tinydaxpy_SOURCES = tinydaxpy.cpp
+hao_he_SOURCES = hao-he.cpp
+iter_SOURCES= iter.cpp
+
 if F90_COMPILER
 
-haney_SOURCES = haney.cpp haneyf.f
 daxpy_SOURCES = daxpy.cpp fdaxpy.f fidaxpy.f daxpyf90.f90
-qcd_SOURCES = qcd.cpp qcdf.f
 stencil_SOURCES = stencil.cpp stencilf.f stencilf2.f stencilf90.f90
 acoustic_SOURCES = acoustic.cpp acousticf.f acousticf2.f acousticf90.f90 \
 acousticf902.f90
 acou3d_SOURCES = acou3db1.cpp acou3db2.cpp acou3db3.cpp acou3db4.cpp \
 acou3d.cpp acou3df90.f90 acou3df.f acou3df2.f acou3df902.f90
-tinydaxpy_SOURCES = tinydaxpy.cpp
-hao_he_SOURCES = hao-he.cpp
 
 else
 
-haney_SOURCES = haney.cpp haneyf.f
 daxpy_SOURCES = daxpy.cpp fdaxpy.f fidaxpy.f
-qcd_SOURCES = qcd.cpp qcdf.f
 stencil_SOURCES = stencil.cpp stencilf.f stencilf2.f
 acoustic_SOURCES = acoustic.cpp acousticf.f acousticf2.f
 acou3d_SOURCES = acou3db1.cpp acou3db2.cpp acou3db3.cpp acou3db4.cpp \
 acou3d.cpp acou3df.f acou3df2.f 
-tinydaxpy_SOURCES = tinydaxpy.cpp
-hao_he_SOURCES = hao-he.cpp
 
 endif
 
