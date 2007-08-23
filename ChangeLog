@@ -1,3 +1,19 @@
+2007-05-29  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+
+	* benchmarks/iter.cpp: Added.
+	* benchmarks/Makefile.am: Added the test iter.cpp. Simplify the
+	Makefile.
+	* blitz/compiler.h: New macros BZ_LIKELY and BZ_UNLIKELY. These
+	are currently nops and are just used as markers indicating tests
+	for which giving hints to the compiler improves the speed and/or
+	code simplification.
+	* blitz/array/iter.h: Change the iterator algorithm. This removes
+	the need for ConstPointerStack which is moved to fastiter.h and
+	gives an iterator class that is smaller, simpler and has a small
+	speed advantage.
+	* blitz/array/fastiter.h: Moved the helper class ConstPointerStack
+	to here as its sole use is now in this file.
+
 2007-07-16  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* blitz/bzdebug.h: Clean up standard header file includes and use
