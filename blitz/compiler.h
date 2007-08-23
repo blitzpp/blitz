@@ -162,5 +162,12 @@
   #define BZ_STD_SCOPE(x) ::x
 #endif
 
+//  These macros are just markers to document the code in the places
+//  where playing with the processor branch prediction scheme might
+//  help. For now these are just nops.
+
+#define BZ_LIKELY(x)   (x)
+#define BZ_UNLIKELY(x) (x)
+
 #endif // BZ_COMPILER_H
 
