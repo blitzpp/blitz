@@ -37,6 +37,7 @@ Array<T,1> convolve(const Array<T,1>& B, const Array<T,1>& C)
     
     Array<T,1> A(Range(lbound,ubound));
 
+    T result;
     for (int i=lbound; i <= ubound; ++i)
     {
         int jl = i - Ch;
@@ -47,7 +48,7 @@ Array<T,1> convolve(const Array<T,1>& B, const Array<T,1>& C)
         if (jh > Bh)
             jh = Bh;
 
-        T result = 0;
+        result = 0;
         for (int j=jl; j <= jh; ++j)
             result += B(j) * C(i-j);
 
