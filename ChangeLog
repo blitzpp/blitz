@@ -1,5 +1,21 @@
-2007-05-29  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+2007-09-05  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
+	* testsuite/tinyvec.cpp: Added some testing of dot(), product(),
+	and sum() functions for tinyvector.
+	* blitz/Makefile.am: Add new header file vecproduct.cc to Makefile
+	list.
+	* blitz/vecglobs.cc: Include new file blitz/vecproduct.cc for
+	definitions of product() function.
+	* blitz/tvecglobs.h: Use BZ_SUMTYPE macro to obtain the proper
+	return type for tinyvector sum.
+	* blitz/meta/sum.h: Use BZ_SUMTYPE macro to obtain the return type
+	for tinyvector sum.
+	* blitz/array/convolve.cc: Simple fix suggested by William
+	Gallafent (william@gallaf.net) to allow convolution code to work
+	when elements are multicomponent types.
+	
+
+2007-05-29  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
 	* benchmarks/iter.cpp: Added.
 	* benchmarks/Makefile.am: Added the test iter.cpp. Simplify the
 	Makefile.
