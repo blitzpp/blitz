@@ -39,7 +39,7 @@ public:
     static const int loopFlag = (I < N-1) ? 1 : 0;
 
     template<typename T_expr1>
-    static inline _bz_typename T_expr1::T_numtype
+    static inline BZ_SUMTYPE(_bz_typename T_expr1::T_numtype)
     f(const T_expr1& a)
     {
         return a[I] +
