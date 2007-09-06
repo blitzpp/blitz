@@ -69,7 +69,7 @@ product(const TinyVector<T_numtype1, N_length>& a)
 }
 
 template<typename T_numtype, int N_length>
-inline T_numtype
+inline BZ_SUMTYPE(T_numtype)
 sum(const TinyVector<T_numtype, N_length>& a)
 {
     return _bz_meta_vectorSum<N_length, 0>::f(a);
