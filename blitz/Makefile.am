@@ -22,8 +22,9 @@ tinyvecio.cc tinyveciter.h traversal.cc traversal.h tuning.h tvcross.h \
 tvecglobs.h update.h vecaccum.cc vecall.cc vecany.cc vecbfn.cc \
 veccount.cc vecdelta.cc vecdot.cc vecexpr.h vecexprwrap.h vecglobs.cc \
 vecglobs.h vecio.cc veciter.h vecmax.cc vecmin.cc vecnorm.cc vecnorm1.cc \
-vecpick.cc vecpick.h vecpickio.cc vecpickiter.h vecsum.cc vector-et.h \
-vector.cc vector.h vecwhere.h wrap-climits.h zero.cc zero.h $(genheaders)
+vecpick.cc vecpick.h vecpickio.cc vecpickiter.h vecproduct.cc vecsum.cc \
+vector-et.h vector.cc vector.h vecwhere.h wrap-climits.h zero.cc zero.h \
+$(genheaders)
 
 EXTRA_HEADERS = apple/bzconfig.h intel/bzconfig.h ibm/bzconfig.h \
 compaq/bzconfig.h hp/bzconfig.h sgi/bzconfig.h gnu/bzconfig.h \
