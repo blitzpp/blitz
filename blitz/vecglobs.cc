@@ -19,6 +19,7 @@
 #include <blitz/vecmin.cc>      // min(), minValue(), minIndex()
 #include <blitz/vecmax.cc>      // max(), maxValue(), maxIndex()
 #include <blitz/vecsum.cc>      // sum(), mean()
+#include <blitz/vecproduct.cc>  // product()
 #include <blitz/vecdot.cc>      // dot()
 #include <blitz/vecnorm.cc>     // norm()
 #include <blitz/vecnorm1.cc>    // norm1()
