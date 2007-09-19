@@ -42,10 +42,10 @@ public:
 
     RectDomain() { }
     RectDomain(const Bounds& lbound,const Bounds& ubound): lbound_(lbound),ubound_(ubound) { }
-    RectDomain(const TinyVector<Range,N_rank>& bounds): lbound_(),ubound_() {
+    RectDomain(const TinyVector<Range,N_rank>& bndrange): lbound_(),ubound_() {
         for (int i=0;i<N_rank;++i) {
-            lbound_(i) = bounds(i).first();
-            ubound_(i) = bounds(i).last();
+            lbound_(i) = bndrange(i).first();
+            ubound_(i) = bndrange(i).last();
         }
     }
 
