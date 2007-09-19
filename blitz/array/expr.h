@@ -133,8 +133,8 @@ public:
     { }
 
     template<typename T1, typename T2>
-    _bz_ArrayExpr(const _bz_ExprPair<T1,T2>& pair)
-        : iter_(pair.first(), pair.second())
+    _bz_ArrayExpr(const _bz_ExprPair<T1,T2>& exprpair)
+        : iter_(exprpair.first(), exprpair.second())
     { }
 
     T_numtype operator*()
