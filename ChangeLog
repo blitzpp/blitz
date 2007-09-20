@@ -1,5 +1,20 @@
-2007-09-05  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+2007-09-19  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
+	* blitz/memblock.h: Remove include of pthread.h header here.
+	Thread support is now handled only in the blitz.h header.
+	* blitz/blitz.h: Added patch from David Blankenship to provide
+	blitz mutex support and thread safety with OpenMP or Windows
+	threads, in addition to the original support for pthreads.  Define
+	_OPENMP to use OpenMP support.
+	* blitz/array/domain.h: Rename function argument "bounds" to avoid
+	conflict with type blitz::bounds, which is defined in
+	blitz/array/expr.h.
+	* blitz/array/expr.h: Rename function argument "pair" to avoid a
+	conflict with type std::pair, which is imported into the blitz
+	namespace.
+	
+
+2007-09-05  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 	* testsuite/tinyvec.cpp: Added some testing of dot(), product(),
 	and sum() functions for tinyvector.
 	* blitz/Makefile.am: Add new header file vecproduct.cc to Makefile
