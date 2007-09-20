@@ -31,10 +31,6 @@
 
 #include <stddef.h>     // ptrdiff_t
 
-#ifdef BZ_THREADSAFE
- #include <pthread.h>
-#endif
-
 BZ_NAMESPACE(blitz)
 
 enum preexistingMemoryPolicy { 
