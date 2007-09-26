@@ -86,6 +86,16 @@ AC_LIB_BLAS
 AC_CXX_ENABLE_OPTIMIZE
 AC_CXX_ENABLE_DEBUG
 
+# Option to enable thread-safety (requires thread support or OpenMP)
+AC_MSG_CHECKING([whether to enable Blitz thread-safety features])
+AC_ARG_ENABLE(threadsafe,
+  AS_HELP_STRING([--enable-threadsafe],[Enable thread-safety features]),,[
+  enable_threadsafe="no"])
+AC_MSG_RESULT([$enable_threadsafe])
+if test "$enable_threadsafe" = yes; then
+  AC_DEFINE([THREADSAFE],[1],[Enable Blitz thread-safety features])
+fi
+
 # autoconf replacement of bzconfig
 AC_CHECK_CXX_FEATURES
 
