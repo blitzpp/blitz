@@ -1,5 +1,19 @@
-2007-09-19  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+2007-09-25  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
+	* blitz/blitz.h: Remove implicit definition of BZ_THREADSAFE.
+	This is now handled by the configure script (or equivalently by
+	defining BZ_THREADSAFE explicitly in the compiler-specific
+	config.h header or on the compile command line).  Also fixed
+	inconsistent line endings in this file.
+	* configure.ac: Add configure option --enable-threadsafe to turn
+	on Blitz thread-safety features by defining the BZ_THREADSAFE
+	macro.  If enabled, code will look for pthreads, OpenMP or Windows
+	thread support to implement mutex locking of sensitive variables.
+	VS.NET users must define BZ_THREADSAFE manually in the
+	blitz/ms/config.h file.
+	
+
+2007-09-19  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 	* blitz/memblock.h: Remove include of pthread.h header here.
 	Thread support is now handled only in the blitz.h header.
 	* blitz/blitz.h: Added patch from David Blankenship to provide
