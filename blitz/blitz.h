@@ -89,15 +89,10 @@ BZ_NAMESPACE_END
 /*
  * Thread safety issues.
  * Compiling with -pthread under gcc, or -mt under solaris,
- * should automatically turn on BZ_THREADSAFE. Also have support
- * for OpenMP or Windows thread implementation.
+ * should automatically define _REENTRANT. Also have support
+ * for OpenMP (which defines _OPENMP) or Windows thread implementation.
+ * The --enable-threadsafe configure option now defines BZ_THREADSAFE.
  */
-#if defined(_REENTRANT) || defined(_OPENMP) || defined(_WIN32)
- #ifndef BZ_THREADSAFE
-  #define BZ_THREADSAFE
- #endif
-#endif
-
 
 /*
  * Which mutex implementation should be used for synchronizing
@@ -106,11 +101,11 @@ BZ_NAMESPACE_END
 #ifdef BZ_THREADSAFE
  #if defined(_REENTRANT)
   #define BZ_THREADSAFE_USE_PTHREADS
- #elif defined (_OPENMP) 
-  #define BZ_THREADSAFE_USE_OPENMP 
+ #elif defined (_OPENMP)
+  #define BZ_THREADSAFE_USE_OPENMP
  #elif defined(_WIN32)
   #define BZ_THREADSAFE_USE_WINDOWS
- #endif 
+ #endif
 #endif
 
 #ifdef BZ_THREADSAFE_USE_PTHREADS
@@ -121,27 +116,25 @@ BZ_NAMESPACE_END
  #define BZ_MUTEX_LOCK(name)      pthread_mutex_lock(&name);
  #define BZ_MUTEX_UNLOCK(name)    pthread_mutex_unlock(&name);
  #define BZ_MUTEX_DESTROY(name)   pthread_mutex_destroy(&name);
-#elif defined (BZ_THREADSAFE_USE_WINDOWS) 
+#elif defined (BZ_THREADSAFE_USE_WINDOWS)
  // Include Windows.h header in case user has not already done so.
+ // Disable Windows min/max macro definitions
+ #define NOMINMAX
  #include <Windows.h>
- // Undefine min and max macros from Windows.h file.
- #undef min
- #undef max 
 
- #define BZ_MUTEX_DECLARE(name)   mutable CRITICAL_SECTION name; 
- #define BZ_MUTEX_INIT(name)      ::InitializeCriticalSection(&name); 
- #define BZ_MUTEX_LOCK(name)      ::EnterCriticalSection(&name); 
- #define BZ_MUTEX_UNLOCK(name)    ::LeaveCriticalSection(&name); 
- #define BZ_MUTEX_DESTROY(name)   ::DeleteCriticalSection(&name); 
-#elif defined (BZ_THREADSAFE_USE_OPENMP) 
- #include <omp.h> 
+ #define BZ_MUTEX_DECLARE(name)   mutable CRITICAL_SECTION name;
+ #define BZ_MUTEX_INIT(name)      ::InitializeCriticalSection(&name);
+ #define BZ_MUTEX_LOCK(name)      ::EnterCriticalSection(&name);
+ #define BZ_MUTEX_UNLOCK(name)    ::LeaveCriticalSection(&name);
+ #define BZ_MUTEX_DESTROY(name)   ::DeleteCriticalSection(&name);
+#elif defined (BZ_THREADSAFE_USE_OPENMP)
+ #include <omp.h>
 
- #define BZ_MUTEX_DECLARE(name)   mutable omp_lock_t name; 
- #define BZ_MUTEX_INIT(name)      omp_init_lock(&name); 
- #define BZ_MUTEX_LOCK(name)      omp_set_lock(&name); 
- #define BZ_MUTEX_UNLOCK(name)    omp_unset_lock(&name); 
- #define BZ_MUTEX_DESTROY(name)   omp_destroy_lock(&name); 
-
+ #define BZ_MUTEX_DECLARE(name)   mutable omp_lock_t name;
+ #define BZ_MUTEX_INIT(name)      omp_init_lock(&name);
+ #define BZ_MUTEX_LOCK(name)      omp_set_lock(&name);
+ #define BZ_MUTEX_UNLOCK(name)    omp_unset_lock(&name);
+ #define BZ_MUTEX_DESTROY(name)   omp_destroy_lock(&name);
 #else
  #define BZ_MUTEX_DECLARE(name)
  #define BZ_MUTEX_INIT(name)
