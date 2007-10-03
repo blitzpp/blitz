@@ -1,5 +1,16 @@
-2007-09-25  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+2007-10-02  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
+	* benchmarks/iter.cpp: Call end() method only once per loop.
+	* testsuite/iter.cpp: Added code to test operator--().
+	* blitz/array-impl.h: Call the new constructor for end iterator,
+	which has an extra dummy int argument.  Also made some format
+	changes for consistency.
+	* blitz/array/iter.h: Added decrement operator-- as suggested by
+	Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr> and
+	improved debugging code.
+	
+
+2007-09-25  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 	* blitz/blitz.h: Remove implicit definition of BZ_THREADSAFE.
 	This is now handled by the configure script (or equivalently by
 	defining BZ_THREADSAFE explicitly in the compiler-specific
