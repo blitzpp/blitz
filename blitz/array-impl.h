@@ -850,7 +850,7 @@ public:
     // Deprecated: now extractComponent(...)
     template<typename P_numtype2>
     Array<P_numtype2,N_rank>          chopComponent(P_numtype2 a, int compNum,
-                                          int numComponents) const
+                                                    int numComponents) const
     { return extractComponent(a, compNum, numComponents); }
 
     int                               cols() const
@@ -868,23 +868,21 @@ public:
     // stored first in memory if some ranks are stored descending).
 
     int                               dataOffset() const
-    {
-        return dot(storage_.base(), stride_);
-    }
+    { return dot(storage_.base(), stride_); }
 
-    const T_numtype* restrict     data() const
+    const T_numtype* restrict         data() const
     { return data_ + dataOffset(); }
 
-    T_numtype* restrict           data() 
+    T_numtype* restrict               data() 
     { return data_ + dataOffset(); }
 
     // These dataZero() routines refer to the point (0,0,...,0)
     // which may not be in the array if the bases are nonzero.
     
-    const T_numtype* restrict     dataZero() const
+    const T_numtype* restrict         dataZero() const
     { return data_; }
 
-    T_numtype* restrict           dataZero()
+    T_numtype* restrict               dataZero()
     { return data_; }
 
     // These dataFirst() routines refer to the element in the
@@ -905,15 +903,11 @@ public:
         return pos;
     }
     
-    const T_numtype* restrict     dataFirst() const
-    {
-        return data_ + dataFirstOffset();
-    }
+    const T_numtype* restrict         dataFirst() const
+    { return data_ + dataFirstOffset(); }
 
-    T_numtype* restrict           dataFirst()
-    {
-        return data_ + dataFirstOffset();
-    }
+    T_numtype* restrict               dataFirst()
+    { return data_ + dataFirstOffset(); }
 
     int                               depth() const
     { return length_[2]; }
@@ -922,21 +916,15 @@ public:
     { return N_rank; }
 
     RectDomain<N_rank>                domain() const
-    {
-        return RectDomain<N_rank>(lbound(), ubound());
-    }
+    { return RectDomain<N_rank>(lbound(), ubound()); }
 
     void dumpStructureInformation(ostream& os = cout) const;
 
     iterator                          end()
-    {
-        return iterator();
-    }
+    { return iterator(*this,0); }
 
     const_iterator                    end() const
-    {
-        return const_iterator();
-    }
+    { return const_iterator(*this,0); }
 
     int                               extent(int rank) const
     { return length_[rank]; }
@@ -946,7 +934,7 @@ public:
 
     template<typename P_numtype2>
     Array<P_numtype2,N_rank>          extractComponent(P_numtype2, int compNum,
-                                          int numComponents) const;
+                                                       int numComponents) const;
 
     void                              free() 
     {
@@ -954,27 +942,29 @@ public:
         length_ = 0;
     }
  
-    bool isMajorRank(int rank) const { 
-        return storage_.ordering(rank) == N_rank-1; 
-    }
-    bool isMinorRank(int rank) const { 
-        return storage_.ordering(rank) != N_rank-1; 
-    }
-    bool isRankStoredAscending(int rank) const {
-        return storage_.isRankStoredAscending(rank);
-    }
+    bool                              isMajorRank(int rank) const 
+    { return storage_.ordering(rank) == N_rank-1; }
+    bool                              isMinorRank(int rank) const 
+    { return storage_.ordering(rank) != N_rank-1; }
+    bool                              isRankStoredAscending(int rank) const 
+    { return storage_.isRankStoredAscending(rank); }
 
-    bool isStorageContiguous() const;
+    bool                              isStorageContiguous() const;
 
-    int                    lbound(int rank) const { return base(rank); }
-    TinyVector<int,N_rank> lbound()         const { return base(); }
+    int                               lbound(int rank) const 
+    { return base(rank); }
+    TinyVector<int,N_rank>            lbound() const 
+    { return base(); }
 
-    int                            length(int rank) const { return length_[rank]; }
-    const TinyVector<int, N_rank>& length()         const { return length_; }
+    int                               length(int rank) const 
+    { return length_[rank]; }
+    const TinyVector<int, N_rank>&    length() const 
+    { return length_; }
 
-    void makeUnique();
+    void                              makeUnique();
 
-    int numElements() const { return product(length_); }
+    int                               numElements() const 
+    { return product(length_); }
 
     // NEEDS_WORK -- Expose the numReferences() method
     // MemoryBlockReference<T_numtype>::numReferences;
@@ -1004,8 +994,8 @@ public:
 
     // Added by Derrick Bass
     T_array                           reindex(const TinyVector<int,N_rank>&);
-    void                              reindexSelf(const 
-                                                TinyVector<int,N_rank>&);
+    void                              reindexSelf(
+                                        const TinyVector<int,N_rank>&);
 
     void                              resize(int extent);
     void                              resize(int extent1, int extent2);
