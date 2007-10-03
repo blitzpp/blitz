@@ -12,7 +12,7 @@ int main() {
     A = 0.0;
     timer.start();
     for (unsigned j=0;j<10;++j) {
-        for (Image::iterator i=A.begin();i!=A.end();++i) {
+        for (Image::iterator i=A.begin(),end=A.end();i!=end;++i) {
             const TinyVector<int,3> pos = i.position();
             *i += pos(0)+pos(1)+pos(2);
         }
