@@ -12,13 +12,18 @@ BZ_USING_NAMESPACE(blitz)
 void check(const Array<int,2>& A, const Array<int,1>& b)
 {
     int i = 0;
-    Array<int,2>::const_iterator iter = A.begin(), end = A.end();
-    while (iter != end)
-    {
-        BZTEST((*iter) == b(i++));
-        ++iter;
+    Array<int,2>::const_iterator beg = A.begin(), end = A.end();
+    Array<int,2>::const_iterator iter = beg;
+
+    while (iter != end) {
+        BZTEST((*iter++) == b(i++));
     }
     BZTEST(i == A.numElements());
+
+    while (iter!=beg) {
+        BZTEST((*--iter) == b(--i));
+    }
+    BZTEST(i == 0);
 }
 
 #ifdef BZ_HAVE_STL
