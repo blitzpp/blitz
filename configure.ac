@@ -66,6 +66,9 @@ AM_CONDITIONAL(F90_COMPILER, [test -n "$FC"])
 # Prefix config macros with BZ_ and create compiler-specific bzconfig.h
 AC_SET_COMPILER_SPECIFIC_HEADER
 
+# texinfo documentation
+AC_CHECK_PROG(TEXI2HTML, [texi2html], [texi2html])
+AM_CONDITIONAL(TEXI2HTML_DOC, [test -n "$TEXI2HTML"])
 # Doxygen documentation
 AC_PROG_DOXYGEN
 
