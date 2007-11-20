@@ -1,3 +1,15 @@
+
+2007-11-20  Patrick Guio <p.guio@ucl.ac.uk>
+	* doc/arrays-expr.texi: Fixed code that triggered errors with
+	makeinfo --html.
+	* configure.ac: Test availability of texi2html and set up an 
+	automake conditional.
+	* doc/Makefile.am: Removed html ps and pdf files from install 
+	target. Instead use the targets install-html, install-ps and
+	install-pdf as described in automake doc. Removed generated 
+	files from the EXTRA_DIST variable. Use texi2html only when
+	available, otherwise makeinfo --html (if available).
+
 2007-10-02  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* benchmarks/iter.cpp: Call end() method only once per loop.
