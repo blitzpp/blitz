@@ -26,7 +26,10 @@ This is a minimal build of just the Blitz++ library.  You can also do:
         make check-testsuite  Build and check the testsuite
         make check-examples   Build and check the examples
         make check-benchmarks Build and check the benchmarks (long)
-	make install          Install Blitz++
+        make install          Install Blitz++
+        make install-ps       Install Blitz++ ps documentation
+        make install-pdf      Install Blitz++ pdf documentation
+        make install-html     Install Blitz++ html documentation
 
 1.2 From cvs repository 
 
