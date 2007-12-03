@@ -146,7 +146,7 @@ These binary operators are supported:
 + - * / % > < >= <= == != && || ^ & | 
 @end example
 
-@strong{NOTE:} operator @code{<<} and @code{>>} are reserved for use in input/output.
+@strong{Caution:} operator @code{<<} and @code{>>} are reserved for use in input/output.
 If you need a bit-shift operation on arrays, you may define one yourself;
 see @ref{User et}.
 
@@ -1288,7 +1288,7 @@ True if the expression is true anywhere (@code{bool})
 True if the expression is true everywhere (@code{bool})
 @end table
 
-@strong{Note:} @code{minIndex()} and @code{maxIndex()} return TinyVectors, 
+@strong{Caution:} @code{minIndex()} and @code{maxIndex()} return TinyVectors, 
 even when the rank of the array (or array expression) is 1.
 
 Reductions can be combined with @code{where} expressions (@ref{Where expr})
