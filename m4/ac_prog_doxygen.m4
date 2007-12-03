@@ -27,7 +27,7 @@ else
   doxy_ver=`doxygen --version`
   doxy_major=`expr "$doxy_ver" : '\(@<:@0-9@:>@\)\..*'`
   doxy_minor=`expr "$doxy_ver" : '@<:@0-9@:>@\.\(@<:@0-9@:>@\).*'`
-  if test $doxy_major -eq "1" -a $doxy_minor -ge "3" ; then
+  if test $doxy_major -eq "1" -a $doxy_minor -ge "5" ; then
    enable_doc=yes
    AC_CHECK_PROG(DOT, dot, dot)
   else
