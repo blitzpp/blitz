@@ -1,4 +1,22 @@
 
+2007-12-03  Patrick Guio <p.guio@ucl.ac.uk>
+
+	* doc/arrays-expr.texi doc/arrays-io.texi doc/arrays-slicing.texi:
+	Replaced statement @strong{Note:} by @strong{Caution:} as it is
+	mentionned in the texinfo documentation: "Do not use @strong with
+	the word ‘Note’; Info will mistake the combination for a cross
+	reference".
+	* doc/examples/Makefile.am doc/stencils/Makefile.am: Removed .texi
+	and .out files from the default all-am target. Those are generated
+	only if a documentation is requested using one of the targets for
+	document (info, dvi, html, ps, pdf and install-* forms).
+	* doc/doxygen/Makefile.am: Added dvi target.
+	* configure.ac: Set automake option no-installinfo to prevent 
+	default build and install of doc/blitz.info target as 
+	makeinfo might no be installed. In order to build/install 
+	doc/blitz.info use make targets info/install-info.
+
+
 2007-11-20  Patrick Guio <p.guio@ucl.ac.uk>
 	* doc/arrays-expr.texi: Fixed code that triggered errors with
 	makeinfo --html.
