@@ -14,8 +14,19 @@ html/index.html: Doxyfile
 
 # Document Targets
 html: html/index.html
+dvi: $(PACKAGE).dvi
 pdf: $(PACKAGE).pdf
 ps: $(PACKAGE).ps
+
+$(PACKAGE).dvi: html/index.html
+	@if test -d ./latex; then \
+	echo "Making DVI manual"; \
+	if test -f $@; then \
+		$(RM) $@; \
+	fi; \
+		$(MAKE) -C ./latex refman.dvi; \
+		$(LN_S) ./latex/refman.dvi $@; \
+	fi
 
 $(PACKAGE).pdf: html/index.html
 	@if test -d ./latex; then \
