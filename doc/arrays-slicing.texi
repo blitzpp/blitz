@@ -190,7 +190,7 @@ Array<int,1> G = A(2,            7, Range::all());
 Range and integer operands can be used in any combination, for arrays
 up to rank 11.
 
-@strong{NOTE:} Using a combination of integer and Range operands requires a
+@strong{Caution:} Using a combination of integer and Range operands requires a
 newer language feature (partial ordering of member templates) which not all
 compilers support.  If your compiler does provide this feature,
 @code{BZ_PARTIAL_ORDERING} will be defined in @code{<blitz/config.h>}.  If
