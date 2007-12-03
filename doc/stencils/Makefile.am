@@ -66,8 +66,6 @@ forward32.texi forward42.texi backward11.texi backward21.texi \
 backward31.texi backward41.texi backward12.texi backward22.texi \
 backward32.texi backward42.texi Laplacian2D.texi Laplacian2D4.texi
 
-all-am:
-	$(MAKE) $(AM_MAKEFLAGS) stencils
 
 clean-local:
 	-rm -rf *.ii *.ti cxx_repository Template.dir ii_files ti_files dump-stencil *.texi

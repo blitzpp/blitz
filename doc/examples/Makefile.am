@@ -70,9 +70,6 @@ fixed.texi fixed-point.texi
 out: simple.out storage.out outer.out strideslice.out slicing.out \
 debug.out output.out io.out dump.out xor.out cast.out range.out fixed.out
 
-all-am:
-	$(MAKE) $(AM_MAKEFLAGS) -i texi
-	$(MAKE) $(AM_MAKEFLAGS) -i out
 
 clean-local:
 	-rm -rf *.ii *.ti cxx_repository Template.dir ii_files ti_files $(EXTRA_PROGRAMS) *.texi *.out core.[0-9]*
