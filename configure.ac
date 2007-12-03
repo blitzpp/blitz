@@ -10,7 +10,7 @@ AC_CONFIG_HEADERS(blitz/config.h)
 
 AC_CANONICAL_TARGET
 
-AM_INIT_AUTOMAKE([foreign 1.9 dist-bzip2 nostdinc])
+AM_INIT_AUTOMAKE([foreign 1.9 dist-bzip2 nostdinc no-installinfo])
 
 # Avoid generating makefile rules to rebuild maintainer-only files by
 # default.  Maintainers may override this default and generate these
