@@ -15,6 +15,8 @@
 	default build and install of doc/blitz.info target as 
 	makeinfo might no be installed. In order to build/install 
 	doc/blitz.info use make targets info/install-info.
+	* doc/doxygen/Doxyfile.in: Updated to doxygen version 1.5.
+	* m4/ac_prog_doxygen.m4: Required doxygen version 1.5.
 
 
 2007-11-20  Patrick Guio <p.guio@ucl.ac.uk>
