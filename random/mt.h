@@ -60,15 +60,15 @@
 
 BZ_NAMESPACE(ranlib)
 
-class MersenneTwister
-{
-public:
-
 #if UINT_MAX < 4294967295U
   typedef unsigned long twist_int;  // must be at least 32 bits
 #else
   typedef unsigned int twist_int;
 #endif
+
+class MersenneTwister
+{
+public:
 
 private:
 
@@ -80,24 +80,42 @@ private:
 
   typedef State::iterator Iter;
 
+  // Implements Step 2 and half of Step 3 in the MN98 description
   struct BitMixer {
-    enum { K = 0x9908b0df };
-    BitMixer() : s0(0) {}
+    BitMixer() : s0(0), K(0x9908b0df) {};
+    BitMixer(twist_int k) : s0(0), K(k) {};
+
+    // Return 0 if lsb of s1=0, a if lsb of s1=1.
     inline twist_int low_mask (twist_int s1) const {
+      // This does not actually result in a branch because it's
+      // equivalent to ( -(s1 & 1u) ) & K
       return (s1&1u) ? K : 0u;
     }
+    
+    // Return y>>1 in MN98 (step 2 + part of 3).
+    // y = (x[i] AND u) OR (x[i+1 mod n] AND ll), where s0=x[i] and
+    // s1=x[i+1 mod n]
     inline twist_int high_mask (twist_int s1) const {
-      return ((s0&0x80000000)|(s1&0x7fffffff))>>1;
+      return ( (s0&0x80000000) | (s1&0x7fffffff) ) >>1;
     }
+
+    // Calculate (half of) step 3 in MN98.
     inline twist_int operator() (twist_int s1) {
+      // (y>>1) XOR (0 if lsb of s1=0, a if lsb of s1=1)
+      // x[i+m] is XORed in reload
+      // (Note that it is OK to call low_mask with s1 (x[i+1]) and not
+      // with y, like MN98 does, because s1&1 == y&1 by construction.
       twist_int r = high_mask(s1) ^ low_mask(s1);
       s0 = s1;
       return r;
     }
-    twist_int s0;
+    twist_int s0; // this is "x[i]" in the MN98 description
+    const twist_int K; // MN98 "a" vector
   };
 
-enum { N = 624, PF = 397, reference_seed = 4357 }; 
+enum { N = 624, 
+       PF = 397, // MN98 "m"
+       reference_seed = 4357 }; 
  
   void initialize()
   {
@@ -106,7 +124,7 @@ enum { N = 624, PF = 397, reference_seed = 4357 };
   }
  
 public: 
-  MersenneTwister()
+  MersenneTwister() : b_(0x9D2C5680), c_(0xEFC60000)
   {
     initialize();
     seed();
@@ -125,32 +143,76 @@ public:
     // fix.
   }
 
-  MersenneTwister(twist_int initial_seed)
+  MersenneTwister(twist_int aa, twist_int bb, twist_int cc) : 
+    twist_(aa), b_(bb), c_(cc)
+  {
+    initialize();
+    seed();
+  }
+
+  MersenneTwister(twist_int initial_seed) : b_(0x9D2C5680), c_(0xEFC60000)
   {
     initialize();
     seed(initial_seed);
   }
 
+  MersenneTwister(twist_int aa, twist_int bb, twist_int cc, 
+		  twist_int initial_seed) : twist_(aa), b_(bb), c_(cc)
+  {
+    initialize();
+    seed(initial_seed);
+  }
+
+  // Seed. Uses updated seed algorithm from mt19937ar. The old
+  // algorithm would yield sequences that were close from seeds that
+  // were close.
   void seed (twist_int seed = reference_seed)
   {
     // seed cannot equal 0
     if (seed == 0)
       seed = reference_seed;
 
-    enum { Knuth_A = 69069 }; 
-    twist_int x = seed & 0xFFFFFFFF;
-    Iter s = S.begin();
-    twist_int mask = (seed == reference_seed) ? 0 : 0xFFFFFFFF;
-    for (int j = 0; j < N; ++j) {
-      // adding j here avoids the risk of all zeros 
-      // we suppress this term in "compatibility" mode  
-      *s++ = (x + (mask & j)) & 0xFFFFFFFF; 
-      x *= Knuth_A;
+    S[0] = seed & 0xFFFFFFFF;
+    for (int mti=1; mti<S.size(); ++mti) {
+      S[mti] = (1812433253U * (S[mti-1] ^ (S[mti-1] >> 30)) + mti); 
+      S[mti] &= 0xffffffffU;
     }
 
     reload();
   }
 
+  // Seed by array, swiped directly from mt19937ar. Gives a larger
+  // initial seed space.
+  void seed (std::vector<twist_int> seed_vector)
+  {
+    int i, j, k;
+    seed(19650218U);
+    i=1; j=0;
+    const int N=S.size();
+    const int n=seed_vector.size();
+    k = (N>n ? N : n);
+    for (; k; k--) {
+      S[i] = (S[i] ^ ((S[i-1] ^ (S[i-1] >> 30)) * 1664525U))
+	+ seed_vector[j] + j; /* non linear */
+      S[i] &= 0xffffffffU; /* for WORDSIZE > 32 machines */
+      i++; j++;
+      if (i>=N) { S[0] = S[N-1]; i=1; }
+      if (j>=n) j=0;
+    }
+    for (k=N-1; k; k--) {
+      S[i] = (S[i] ^ ((S[i-1] ^ (S[i-1] >> 30)) * 1566083941UL))
+	- i; /* non linear */
+      S[i] &= 0xffffffffU; /* for WORDSIZE > 32 machines */
+      i++;
+      if (i>=N) { S[0] = S[N-1]; i=1; }
+    }
+
+    S[0] = 0x80000000U; /* MSB is 1; assuring non-zero initial array */ 
+
+    reload();
+  }
+
+  // generate a full new x array
   void reload (void)
   {
     // This check is required because it is possible to call random()
@@ -159,14 +221,17 @@ public:
 
     Iter p0 = S.begin();
     Iter pM = p0 + PF;
-    BitMixer twist;
-    twist (S[0]); // prime the pump
+    twist_ (S[0]); // set x[i]=x[0] in the twister (prime the pump)
     for (Iter pf_end = S.begin()+(N-PF); p0 != pf_end; ++p0, ++pM)
-      *p0 = *pM ^ twist (p0[1]);
+      // mt[kk] = mt[kk+m] XOR ((y>>1)XOR(mag01), as calc by BitMixer)
+      *p0 = *pM ^ twist_ (p0[1]);
+
+    // This is the "modulo part" where kk+m rolls over
     pM = S.begin();
     for (Iter s_end = S.begin()+(N-1); p0 != s_end; ++p0, ++pM)
-      *p0 = *pM ^ twist (p0[1]);
-    *p0 = *pM ^ twist (S[0]);
+      *p0 = *pM ^ twist_ (p0[1]);
+    // and final element where kk+1 rolls over
+    *p0 = *pM ^ twist_ (S[0]);
 
     I = S.begin();
   }
@@ -174,10 +239,12 @@ public:
   inline twist_int random (void)
   {
     if (I >= S.end()) reload();
+    // get next word from array
     twist_int y = *I++;
+    // Step 4+5 in MN98, multiply by tempering matrix
     y ^= (y >> 11);
-    y ^= (y <<  7) & 0x9D2C5680;
-    y ^= (y << 15) & 0xEFC60000;
+    y ^= (y <<  7) & b_; 
+    y ^= (y << 15) & c_; 
     y ^= (y >> 18);
     return y;
   }
@@ -230,10 +297,31 @@ public:
   }
   
 private:
+  BitMixer twist_;
+  const twist_int b_,c_;
+
   State   S;
   Iter    I;
 };
 
+
+/** This class creates MersenneTwisters with different parameters
+    indexed by and ID number. */
+class MersenneTwisterCreator
+{
+public:
+  static MersenneTwister create(unsigned int i) {
+    // We only have n different parameter sets
+    i = i % n;
+    return MersenneTwister(a_[i], b_[i], c_[i]);
+  };
+
+private:
+  static const unsigned int n=48;
+  static const twist_int a_[n];
+  static const twist_int b_[n];
+  static const twist_int c_[n];
+};
 
 BZ_NAMESPACE_END
 
