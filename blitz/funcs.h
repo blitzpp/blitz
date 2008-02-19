@@ -31,6 +31,8 @@
 #include <blitz/promote.h>
 #include <blitz/prettyprint.h>
 
+#include <cstdlib>
+
 BZ_NAMESPACE(blitz)
     
 /* Helper functions */
