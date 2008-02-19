@@ -55,11 +55,12 @@ public:
 
     Beta(T a, T b)
     {
-      aa = a;
-      bb = b;
-      infnty = 0.3 * huge(T());
-      minlog = 0.085 * tiny(T());
-      expmax = log(infnty);
+      setParameters(a, b);
+    }
+
+  Beta(T a, T b, unsigned int i) : UniformOpen<T, IRNG, stateTag>(i)
+    {
+      setParameters(a, b);
     }
 
     T random();
@@ -68,6 +69,9 @@ public:
     {
       aa = a;
       bb = b;
+      infnty = 0.3 * huge(T());
+      minlog = 0.085 * tiny(T());
+      expmax = log(infnty);
     }
 
 protected:

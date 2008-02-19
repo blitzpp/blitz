@@ -33,6 +33,13 @@ public:
         mindenom = 0.085 * tiny(T());
     }
 
+  F(T numeratorDF, T denominatorDF, unsigned int i) :
+    ngamma(i), dgamma(i)
+    {
+        setDF(numeratorDF, denominatorDF);
+        mindenom = 0.085 * tiny(T());
+    }
+
     void setDF(T _dfn, T _dfd)
     {
         BZPRECONDITION(_dfn > 0.0);
@@ -59,14 +66,17 @@ public:
         return xnum / xden;
     }
 
-    void seed(IRNG_int s)
+  void seed(IRNG_int s, IRNG_int r)
     {
         // This is such a bad idea if independentState is used. Ugh.
         // If sharedState is used, it is merely inefficient (the
         // same RNG is seeded twice).
 
+      // yes it's unacceptable -- changed to using two seeds / Patrik
+      // in fact should probably be two uncorrelated IRNGs...
+
         ngamma.seed(s);
-        dgamma.seed(s);
+        dgamma.seed(r);
     }
 
 protected:
