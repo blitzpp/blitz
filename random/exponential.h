@@ -32,6 +32,9 @@ class ExponentialUnit : public UniformOpen<T,IRNG,stateTag>
 public:
     typedef T T_numtype;
 
+  explicit ExponentialUnit(unsigned int i) :
+    UniformOpen<T,IRNG,stateTag>(i) {};
+
     T random()
     {
         return - log(UniformOpen<T,IRNG,stateTag>::random());
@@ -50,6 +53,12 @@ public:
         mean_ = mean;
     }
 
+  Exponential(T mean, unsigned int i) :
+    UniformOpen<T,IRNG,stateTag>(i) 
+  {
+        mean_ = mean;
+  };
+  
     T random()
     {
         return mean_ * ExponentialUnit<T,IRNG,stateTag>::random();
