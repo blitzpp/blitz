@@ -12,6 +12,7 @@
 #include <blitz/bzdebug.h>        // Test suite globals
 #include <blitz/array.h>          // Dummy array object (_dummyArray)
 #include <blitz/zero.cc>          // static ZeroElement data instances
+#include <random/mtparam.cc>      // MT19937 parameter sets
 
 // NEEDS_WORK: after switch from RCS to CVS, get a version identifier.
 char _blitz_id[] = "@(#) Blitz++ class library";
