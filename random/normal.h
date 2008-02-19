@@ -34,6 +34,9 @@ class NormalUnit : public UniformOpen<T,IRNG,stateTag>
 public:
     typedef T T_numtype;
 
+  explicit NormalUnit(unsigned int i) :
+    UniformOpen<T,IRNG,stateTag>(i) {};
+
     T random()
     {
         const T s = 0.449871, t = -0.386595, a = 0.19600, b = 0.25472;
@@ -89,6 +92,13 @@ public:
         standardDeviation_ = standardDeviation;
     }
 
+  Normal(T mean, T standardDeviation, unsigned int i) :
+    NormalUnit<T,IRNG,stateTag>(i) 
+  {
+        mean_ = mean;
+        standardDeviation_ = standardDeviation;
+  };
+  
     T random()
     {
         return mean_ + standardDeviation_ 

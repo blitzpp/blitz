@@ -32,6 +32,10 @@ class UniformClosedOpen<float,IRNG,stateTag>
 public:
     typedef float T_numtype;
 
+  UniformClosedOpen() {};
+  UniformClosedOpen(unsigned int i) : 
+    IRNGWrapper<IRNG,stateTag>::IRNGWrapper(i) {};
+
     float random()
     {
 #if FLT_MANT_DIG > 96
@@ -69,6 +73,10 @@ class UniformClosedOpen<double,IRNG,stateTag>
 {
 public:
     typedef double T_numtype;
+
+  UniformClosedOpen() {};
+  UniformClosedOpen(unsigned int i) : 
+    IRNGWrapper<IRNG,stateTag>::IRNGWrapper(i) {};
 
     double random()
     {    
@@ -109,6 +117,10 @@ class UniformClosedOpen<long double,IRNG,stateTag>
 public:
     typedef long double T_numtype;
 
+  UniformClosedOpen() {};
+  UniformClosedOpen(unsigned int i) : 
+    IRNGWrapper<IRNG,stateTag>::IRNGWrapper(i) {};
+
     long double random()
     {
 #if LDBL_MANT_DIG > 96
@@ -146,7 +158,12 @@ public:
 template<class T, typename IRNG = defaultIRNG, 
     typename stateTag = defaultState>
 class Uniform : public UniformClosedOpen<T,IRNG,stateTag> 
-{ };
+{
+public:
+  Uniform() {};
+  Uniform(unsigned int i) : 
+    UniformClosedOpen<T,IRNG,stateTag>::UniformClosedOpen(i) {}
+ };
 
 /*****************************************************************************
  * UniformClosed generator: uniform random numbers in [0,1].
@@ -186,6 +203,10 @@ class UniformClosed<float,IRNG,stateTag> : public IRNGWrapper<IRNG,stateTag> {
 
 public:
     typedef float T_numtype;
+
+  UniformClosed() {};
+  UniformClosed(unsigned int i) : 
+    IRNGWrapper<IRNG,stateTag>::IRNGWrapper(i) {};
 
     float random()
     {
@@ -229,6 +250,10 @@ class UniformClosed<double,IRNG,stateTag> : public IRNGWrapper<IRNG,stateTag> {
 public:
     typedef double T_numtype;
 
+  UniformClosed() {};
+  UniformClosed(unsigned int i) : 
+    IRNGWrapper<IRNG,stateTag>::IRNGWrapper(i) {};
+
     double random()
     {
 #if DBL_MANT_DIG > 96
@@ -271,6 +296,10 @@ class UniformClosed<long double,IRNG,stateTag>
 
 public:
     typedef long double T_numtype;
+
+  UniformClosed() {};
+  UniformClosed(unsigned int i) : 
+    IRNGWrapper<IRNG,stateTag>::IRNGWrapper(i) {};
 
     long double random()
     {
@@ -318,6 +347,10 @@ class UniformOpen : public UniformClosedOpen<T,IRNG,stateTag> {
   public:
     typedef T T_numtype;
 
+  UniformOpen() {};
+  UniformOpen(unsigned int i) : 
+    UniformClosedOpen<T,IRNG,stateTag>(i) {};
+
     T random()
     {
         // Turn a [0,1) into a (0,1) interval by weeding out
@@ -345,6 +378,11 @@ class UniformOpenClosed : public UniformClosedOpen<T,IRNG,stateTag> {
 
 public:
     typedef T T_numtype;
+
+  UniformOpenClosed() {};
+  UniformOpenClosed(unsigned int i) : 
+    UniformClosedOpen<T,IRNG,stateTag>(i) {};
+
 
     T random()
     {
