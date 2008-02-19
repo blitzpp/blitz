@@ -49,10 +49,22 @@ public:
         setMean(1.0);
     }
 
+  explicit Gamma(unsigned int i) : 
+    UniformOpen<T,IRNG,stateTag>(i) 
+  {
+    setMean(1.0);
+  };
+  
     Gamma(T mean)
     {
         setMean(mean);
     }
+
+  Gamma(T mean, unsigned int i) : 
+    UniformOpen<T,IRNG,stateTag>(i) 
+  {
+    setMean(mean);
+  };
 
     T random();
 
