@@ -25,7 +25,13 @@ public:
     typedef T T_numtype;
 
     ChiSquare(T df)
-      : Gamma<T,IRNG,stateTag>(df/2.0)
+      : Gamma<T,IRNG,stateTag>(df/2.0) // isn't this redundant with setDF call?
+    {
+        setDF(df);
+    }
+
+  ChiSquare(T df, unsigned int i)
+    : Gamma<T,IRNG,stateTag>(df/2.0, i)
     {
         setDF(df);
     }

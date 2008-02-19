@@ -44,6 +44,9 @@ public:
     void seed(IRNG_int x)
     { irng_.seed(x); }
 
+  void seed(std::vector<IRNG_int> x)
+    { irng_.seed(x); }
+
     typedef typename IRNG::T_state T_state;
     T_state getState() const { return irng_.getState(); }
     std::string getStateString() const { return irng_.getStateString(); }
@@ -61,7 +64,13 @@ template<typename IRNG>
 class IRNGWrapper<IRNG,independentState> {
 
 public:
+  IRNGWrapper() {};
+  IRNGWrapper(unsigned int i) : irng_(MersenneTwisterCreator::create(i)) {};
+
     void seed(IRNG_int x)
+    { irng_.seed(x); }
+
+  void seed(std::vector<IRNG_int> x)
     { irng_.seed(x); }
 
     typedef typename IRNG::T_state T_state;
