@@ -19,7 +19,7 @@ public:
     }
 
   DiscreteUniform(T n, unsigned int i) :
-    IRNGWrapper<IRNG,stateTag>::IRNGWrapper(i) {};
+    IRNGWrapper<IRNG,stateTag>::IRNGWrapper(i)
     {
         BZPRECONDITION(n < 4294967295U);
         n_ = n;
