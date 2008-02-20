@@ -34,6 +34,8 @@ class NormalUnit : public UniformOpen<T,IRNG,stateTag>
 public:
     typedef T T_numtype;
 
+  NormalUnit() {}
+
   explicit NormalUnit(unsigned int i) :
     UniformOpen<T,IRNG,stateTag>(i) {};
 

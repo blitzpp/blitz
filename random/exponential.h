@@ -32,6 +32,8 @@ class ExponentialUnit : public UniformOpen<T,IRNG,stateTag>
 public:
     typedef T T_numtype;
 
+	ExponentialUnit() {}
+
   explicit ExponentialUnit(unsigned int i) :
     UniformOpen<T,IRNG,stateTag>(i) {};
 
