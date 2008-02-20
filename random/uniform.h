@@ -74,7 +74,7 @@ class UniformClosedOpen<double,IRNG,stateTag>
 public:
     typedef double T_numtype;
 
-  UniformClosedOpen() {};
+  UniformClosedOpen() {}
   UniformClosedOpen(unsigned int i) : 
     IRNGWrapper<IRNG,stateTag>::IRNGWrapper(i) {};
 
