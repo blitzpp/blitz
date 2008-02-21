@@ -102,8 +102,6 @@ class Array : public MemoryBlockReference<P_numtype>
 private:
     typedef MemoryBlockReference<P_numtype> T_base;
     using T_base::data_;
-    using T_base::changeToNullBlock;
-    using T_base::numReferences;
 
 public:
     //////////////////////////////////////////////
@@ -938,7 +936,7 @@ public:
 
     void                              free() 
     {
-        changeToNullBlock();
+        T_base::changeToNullBlock();
         length_ = 0;
     }
  
@@ -991,6 +989,7 @@ public:
     { return N_rank; }
 
     void                              reference(const T_array&);
+    void                              weakReference(const T_array&);
 
     // Added by Derrick Bass
     T_array                           reindex(const TinyVector<int,N_rank>&);
@@ -1120,6 +1119,9 @@ public:
 
     int                               stride(int rank) const
     { return stride_[rank]; }
+
+    bool                              threadLocal(bool disableLock = true) const
+        { return T_base::lockReferenceCount(!disableLock); }
 
     int                               ubound(int rank) const
     { return base(rank) + length_(rank) - 1; }
