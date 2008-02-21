@@ -12,10 +12,6 @@
 
 BZ_NAMESPACE(blitz)
 
-// Null memory block for each (template) instantiation of MemoryBlockReference
-template<typename P_type> 
-NullMemoryBlock<P_type> MemoryBlockReference<P_type>::nullBlock_;
-
 template<typename P_type>
 void MemoryBlock<P_type>::deallocate()
 {
