@@ -206,7 +206,20 @@ void Array<P_numtype, N_rank>::reference(const Array<P_numtype, N_rank>& array)
     stride_ = array.stride_;
     zeroOffset_ = array.zeroOffset_;
 
-    MemoryBlockReference<P_numtype>::changeBlock(array.noConst());
+    T_base::changeBlock(array.noConst());
+}
+
+/* This method makes the array reference another, but it does it as a
+   "weak" reference that is not counted. If you can guarantee that the
+   array memory block containing the data is persistent, this will 
+   allow reference counting to be bypassed for this array, which if 
+   mutex-locking is involved is a significant overhead. */
+template<typename P_numtype, int N_rank>
+void 
+Array<P_numtype, N_rank>::weakReference(const Array<P_numtype, N_rank>& array)
+{
+    reference(Array<P_numtype, N_rank>(array.noConst().data(),
+                                       array.shape(),neverDeleteData));
 }
 
 /*
@@ -253,9 +266,9 @@ _bz_inline2 void Array<P_numtype, N_rank>::setupStorage(int lastRankInitialized)
     // Allocate a block of memory
     int numElem = numElements();
     if (numElem==0)
-        MemoryBlockReference<P_numtype>::changeToNullBlock();
+        T_base::changeToNullBlock();
     else
-        MemoryBlockReference<P_numtype>::newBlock(numElem);
+        T_base::newBlock(numElem);
 
     // Adjust the base of the array to account for non-zero base
     // indices and reversals
@@ -280,7 +293,7 @@ Array<P_numtype, N_rank> Array<P_numtype, N_rank>::copy() const
 template<typename P_numtype, int N_rank>
 void Array<P_numtype, N_rank>::makeUnique()
 {
-    if (numReferences() > 1)
+    if (T_base::numReferences() > 1)
     {
         T_array tmp = copy();
         reference(tmp);
