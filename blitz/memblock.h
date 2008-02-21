@@ -63,6 +63,7 @@ protected:
         references_ = 0;
 
         BZ_MUTEX_INIT(mutex)
+        mutexLocking_ = true;    
     }
 
     explicit MemoryBlock(size_t items)
@@ -80,6 +81,7 @@ protected:
         references_ = 0;
 
         BZ_MUTEX_INIT(mutex)
+        mutexLocking_ = true;    
     }
 
     MemoryBlock(size_t length, T_type* data)
@@ -89,6 +91,7 @@ protected:
         dataBlockAddress_ = data;
         references_ = 0;
         BZ_MUTEX_INIT(mutex)
+        mutexLocking_ = true;    
     }
 
     virtual ~MemoryBlock()
@@ -107,9 +110,24 @@ protected:
         BZ_MUTEX_DESTROY(mutex)
     }
 
+    // set mutex locking policy and return true if successful
+    bool doLock(bool lockingPolicy) 
+    { 
+        if (mutexLocking_ == lockingPolicy) { // already set
+            return true;
+        }
+        else if (references_ <= 1) { // no multiple references, safe to change
+            mutexLocking_ = lockingPolicy; 
+            return true;
+        }
+        return false; // unsafe to change
+    }
+
     void          addReference()
     { 
-        BZ_MUTEX_LOCK(mutex)
+        if (mutexLocking_) {
+            BZ_MUTEX_LOCK(mutex)
+        }
         ++references_; 
 
 #ifdef BZ_DEBUG_LOG_REFERENCES
@@ -117,8 +135,9 @@ protected:
          << " at " << ((void *)dataBlockAddress_) << " (r=" 
          << (int)references_ << ")" << endl;
 #endif
-        BZ_MUTEX_UNLOCK(mutex)
-
+        if (mutexLocking_) {
+            BZ_MUTEX_UNLOCK(mutex)
+        }
     }
 
     T_type* restrict      data() 
@@ -144,7 +163,9 @@ protected:
     int           removeReference()
     {
 
-        BZ_MUTEX_LOCK(mutex)
+        if (mutexLocking_) {
+            BZ_MUTEX_LOCK(mutex)
+        }
         int refcount = --references_;
 
 #ifdef BZ_DEBUG_LOG_REFERENCES
@@ -152,15 +173,21 @@ protected:
          << " at " << ((void *)dataBlockAddress_) << " (r=" << (int)references_ 
          << ")" << endl;
 #endif
-        BZ_MUTEX_UNLOCK(mutex)
+        if (mutexLocking_) {
+            BZ_MUTEX_UNLOCK(mutex)
+        }
         return refcount;
     }
 
     int references() const
     {
-        BZ_MUTEX_LOCK(mutex)
+        if (mutexLocking_) {
+            BZ_MUTEX_LOCK(mutex)
+        }
         int refcount = references_;
-        BZ_MUTEX_UNLOCK(mutex)
+        if (mutexLocking_) {
+            BZ_MUTEX_UNLOCK(mutex)
+        }
 
         return refcount;
     }
@@ -187,37 +214,8 @@ private:   // Data members
 #endif
 
     BZ_MUTEX_DECLARE(mutex)
+    bool    mutexLocking_;
     size_t  length_;
-};
-
-template<typename P_type>
-class UnownedMemoryBlock : public MemoryBlock<P_type> {
-public:
-    UnownedMemoryBlock(size_t length, P_type* data)
-        : MemoryBlock<P_type>(length,data)
-    {
-        // This ensures that MemoryBlock destructor will not 
-        // attempt to delete data
-        MemoryBlock<P_type>::dataBlockAddress() = 0;
-    }
-
-    virtual ~UnownedMemoryBlock()
-    {
-    }
-};
-
-template<typename P_type>
-class NullMemoryBlock : public MemoryBlock<P_type> {
-public:
-    NullMemoryBlock()
-    { 
-        // This ensures that the delete operator will not be invoked
-        // on an instance of NullMemoryBlock in removeReference().
-        MemoryBlock<P_type>::addReference();        
-    }
-
-    virtual ~NullMemoryBlock()  
-    { }
 };
 
 template<typename P_type>
@@ -231,21 +229,20 @@ protected:
 
 private:
     MemoryBlock<T_type>* block_;
-    static NullMemoryBlock<T_type> nullBlock_;
 
 public:
 
     MemoryBlockReference()
     {
-        block_ = &nullBlock_;
-        block_->addReference();
+        block_ = 0;
+        addReference();
         data_ = 0;
     }
 
     MemoryBlockReference(MemoryBlockReference<T_type>& ref, size_t offset=0)
     {
         block_ = ref.block_;
-        block_->addReference();
+        addReference();
         data_ = ref.data_ + offset;
     }
 
@@ -260,16 +257,19 @@ public:
         // must duplicate the data.
 
         if ((deletionPolicy == neverDeleteData) 
-          || (deletionPolicy == duplicateData))
-            block_ = new UnownedMemoryBlock<T_type>(length, data);
-        else if (deletionPolicy == deleteDataWhenDone)
+            || (deletionPolicy == duplicateData)) {
+// in this case, we do not need a MemoryBlock to ref-count the data
+            block_ = 0;
+        }
+        else if (deletionPolicy == deleteDataWhenDone) {
             block_ = new MemoryBlock<T_type>(length, data);
-        block_->addReference();
 
 #ifdef BZ_DEBUG_LOG_ALLOCATIONS
-    cout << "MemoryBlockReference: created MemoryBlock at "
-         << ((void*)block_) << endl;
+            cout << "MemoryBlockReference: created MemoryBlock at "
+                 << ((void*)block_) << endl;
 #endif
+        }
+        addReference();
 
         data_ = data;
     }
@@ -277,7 +277,7 @@ public:
     explicit MemoryBlockReference(size_t items)
     {
         block_ = new MemoryBlock<T_type>(items);
-        block_->addReference();
+        addReference();
         data_ = block_->data();
 
 #ifdef BZ_DEBUG_LOG_ALLOCATIONS
@@ -287,10 +287,68 @@ public:
 
     }
 
+   ~MemoryBlockReference()
+    {
+        blockRemoveReference();
+    }
+
+protected:
+
+    int numReferences() const
+    {
+        if (block_) 
+            return block_->references();
+#ifdef BZ_DEBUG_LOG_REFERENCES
+        cout << "Invalid reference count for data at "<< data_ << endl;
+#endif
+        return -1;      
+    }
+
+    bool lockReferenceCount(bool lockingPolicy) const
+    {
+        if (block_)
+            return block_->doLock(lockingPolicy);
+        // if we have no block, consider request successful
+#ifdef BZ_DEBUG_LOG_REFERENCES
+        cout << "No reference count locking for data at "<< data_ << endl;
+#endif
+        return true;    
+    }
+
+    void changeToNullBlock()
+    {
+        blockRemoveReference();
+        block_ = 0;
+        addReference();
+        data_ = 0;
+    }
+
+    void changeBlock(MemoryBlockReference<T_type>& ref, size_t offset=0)
+    {
+        blockRemoveReference();
+        block_ = ref.block_;
+        addReference();
+        data_ = ref.data_ + offset;
+    }
+
+    void newBlock(size_t items)
+    {
+        blockRemoveReference();
+        block_ = new MemoryBlock<T_type>(items);
+        addReference();
+        data_ = block_->data();
+
+#ifdef BZ_DEBUG_LOG_ALLOCATIONS
+    cout << "MemoryBlockReference: created MemoryBlock at "
+         << ((void*)block_) << endl;
+#endif
+    }
+
+private:
     void blockRemoveReference()
     {
-        int refcount = block_->removeReference();
-        if ((refcount == 0) && (block_ != &nullBlock_))
+        int refcount = removeReference();
+        if (refcount == 0)
         {
 #ifdef BZ_DEBUG_LOG_ALLOCATIONS
     cout << "MemoryBlock: no more refs, delete MemoryBlock object at "
@@ -301,49 +359,28 @@ public:
         }
     }
 
-   ~MemoryBlockReference()
+    void addReference() const 
     {
-        blockRemoveReference();
-    }
-
-    int numReferences() const
-    {
-        return block_->references();
-    }
-
-
-protected:
-
-    void changeToNullBlock()
-    {
-        blockRemoveReference();
-        block_ = &nullBlock_;
-        block_->addReference();
-        data_ = 0;
-    }
-
-    void changeBlock(MemoryBlockReference<T_type>& ref, size_t offset=0)
-    {
-        blockRemoveReference();
-        block_ = ref.block_;
-        block_->addReference();
-        data_ = ref.data_ + offset;
-    }
-
-    void newBlock(size_t items)
-    {
-        blockRemoveReference();
-        block_ = new MemoryBlock<T_type>(items);
-        block_->addReference();
-        data_ = block_->data();
-
-#ifdef BZ_DEBUG_LOG_ALLOCATIONS
-    cout << "MemoryBlockReference: created MemoryBlock at "
-         << ((void*)block_) << endl;
+        if (block_) {
+            block_->addReference();
+        }
+        else {
+#ifdef BZ_DEBUG_LOG_REFERENCES
+            cout << "Skipping reference count for data at "<< data_ << endl;
 #endif
-    }
+        }
+    };
 
-private:
+    int removeReference() const 
+    {
+        if (block_)
+            return block_->removeReference();
+#ifdef BZ_DEBUG_LOG_REFERENCES
+        cout << "Skipping reference count for data at "<< data_ << endl;
+#endif
+        return -1;      
+    };
+  
     void operator=(const MemoryBlockReference<T_type>&)
     { }
 };
