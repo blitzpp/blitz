@@ -1,3 +1,49 @@
+2008-02-20  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* blitz/array/methods.cc: Optimizations for reference counting and
+	mutex locking as suggested by Patrik Jonsson <patrik@ucolick.org>.
+	Add weakReference() method that makes the Array reference another
+	Array, but without any refernce counting.  This is meant for cases
+	in which the Array reference is local to a thread and the
+	referenced Array is global and persists beyond the lifetime of the
+	thread.  Also replaced MemoryBlockReference<P_numtype> with the
+	T_base typedef in a few places.
+	* blitz/array-impl.h: Optimizations for reference counting and
+	mutex locking as suggested by Patrik Jonsson <patrik@ucolick.org>.
+	Add threadLocal() method that allows the user to declare an Array
+	as being local to this thread, meaning that there is no need to
+	perform mutex locking on the reference count for the Array's
+	memory block.  Also replaced MemoryBlockReference<P_numtype> with
+	the T_base typedef in a few places.
+	* blitz/memblock.cc: Removed declaration of static
+	NullMemoryBlock.
+	* blitz/memblock.h: Optimizations for reference counting and mutex
+	locking as suggested by Patrik Jonsson <patrik@ucolick.org>.
+	Eliminate use of static NullMemoryBlock and UnownedMemoryBlock
+	entirely.  These cases are handled by not allocating the block_
+	pointer.  Introduce a locking policy boolean flag that the user
+	can modify that enables or disables mutex locking of the block's
+	reference count, which can speed up cases in which an Array is
+	local to a thread.  Also moved several MemoryBlockReference
+	methods into the protected and private areas to prevent unwanted
+	use from outside the Array class.
+	
+
+2008-02-19  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+	* random/Makefile.am: Add new file mtparam.cc to list of random
+	headers.
+	* random/discrete-uniform.h: Correct a glitch from previous
+	commit.
+	* src/globals.cpp: Patch for parallel random number generator
+	implementation and updated seed routines from Patrik Jonsson
+	<patrik@ucolick.org>.  The parameter sets in random/mtparam.cc
+	were calculated by members of the CUDA GPU programming forum using
+	the dcmt0.4 library.
+	* blitz/mathfunc.h: Include cstdlib header file for gcc 4.3
+	compatibility to get declaration of std::abs(int) function.
+	* blitz/funcs.h: Include cstdlib header file for gcc 4.3
+	compatibility to get declaration of std::abs(int) function.
+	
 
 2008-02-20  Patrick Guio <p.guio@ucl.ac.uk>
 
@@ -9,7 +55,6 @@
 	the inlined default constructor of UniformClosedOpen class.
 
 2007-12-03  Patrick Guio <p.guio@ucl.ac.uk>
-
 	* doc/arrays-expr.texi doc/arrays-io.texi doc/arrays-slicing.texi:
 	Replaced statement @strong{Note:} by @strong{Caution:} as it is
 	mentionned in the texinfo documentation: "Do not use @strong with
