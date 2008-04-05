@@ -41,7 +41,7 @@ int main3()
 int main()
 {
     F<long double> rng(2.0,3.0);
-    rng.seed((unsigned int)time(0)); 
+    rng.seed((unsigned int)time(0),(unsigned int)time(0)); 
 
     long double sum1 = 0, sum2 = 0, sum3 = 0, sum4 = 0;
 
