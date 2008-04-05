@@ -1,5 +1,11 @@
 2008-04-06  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
 
+	* blitz/array/iter.h: Update the iterator_category to be 
+	of type bidirectional_iterator_tag since this is implemented
+	since 2007-10-02.
+
+2008-04-06  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+
 	* examples/rand2.cpp: Correct the call to seed that was wrong
 	since the 2008-02-19 modification.
 
