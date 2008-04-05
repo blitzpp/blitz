@@ -1,3 +1,8 @@
+2008-04-06  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+
+	* examples/rand2.cpp: Correct the call to seed that was wrong
+	since the 2008-02-19 modification.
+
 2008-02-20  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* blitz/array/methods.cc: Optimizations for reference counting and
