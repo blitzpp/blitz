@@ -77,7 +77,7 @@ private:
 #else
   typedef vector<twist_int> State;
 #endif
-
+  typedef State::size_type SizeType;
   typedef State::iterator Iter;
 
   // Implements Step 2 and half of Step 3 in the MN98 description
@@ -173,7 +173,7 @@ public:
       seed = reference_seed;
 
     S[0] = seed & 0xFFFFFFFF;
-    for (int mti=1; mti<S.size(); ++mti) {
+    for (SizeType mti=1; mti<S.size(); ++mti) {
       S[mti] = (1812433253U * (S[mti-1] ^ (S[mti-1] >> 30)) + mti); 
       S[mti] &= 0xffffffffU;
     }
@@ -183,13 +183,13 @@ public:
 
   // Seed by array, swiped directly from mt19937ar. Gives a larger
   // initial seed space.
-  void seed (std::vector<twist_int> seed_vector)
+  void seed (State seed_vector)
   {
-    int i, j, k;
+    SizeType i, j, k;
     seed(19650218U);
     i=1; j=0;
-    const int N=S.size();
-    const int n=seed_vector.size();
+    const SizeType N=S.size();
+	const SizeType n=seed_vector.size();
     k = (N>n ? N : n);
     for (; k; k--) {
       S[i] = (S[i] ^ ((S[i-1] ^ (S[i-1] >> 30)) * 1664525U))
@@ -254,10 +254,10 @@ public:
     friend class MersenneTwister;
   private:
     State S;
-    int I;
+	State::difference_type I;
   public: 
     mt_state() { }
-    mt_state(State s, int i) : S(s), I(i) { }
+	mt_state(State s, State::difference_type i) : S(s), I(i) { }
     mt_state(const std::string& s) {
       std::istringstream is(s);
       is >> I;
