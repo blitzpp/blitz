@@ -30,14 +30,14 @@ public:
     F(T numeratorDF, T denominatorDF)
     {
         setDF(numeratorDF, denominatorDF);
-        mindenom = 0.085 * tiny(T());
+        mindenom = 0.085 * blitz::tiny(T());
     }
 
   F(T numeratorDF, T denominatorDF, unsigned int i) :
     ngamma(i), dgamma(i)
     {
         setDF(numeratorDF, denominatorDF);
-        mindenom = 0.085 * tiny(T());
+        mindenom = 0.085 * blitz::tiny(T());
     }
 
     void setDF(T _dfn, T _dfd)
@@ -60,7 +60,7 @@ public:
         if (xden <= mindenom)
         {
             // Yes, just return huge(T())
-            return huge(T());
+            return blitz::huge(T());
         }
 
         return xnum / xden;

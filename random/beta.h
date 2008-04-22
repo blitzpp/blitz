@@ -69,8 +69,8 @@ public:
     {
       aa = a;
       bb = b;
-      infnty = 0.3 * huge(T());
-      minlog = 0.085 * tiny(T());
+      infnty = 0.3 * blitz::huge(T());
+      minlog = 0.085 * blitz::tiny(T());
       expmax = log(infnty);
     }
 
