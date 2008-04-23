@@ -1,3 +1,22 @@
+2008-04-22  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* blitz/range.h: Convert enum for bounds values fromStart and
+	toEnd to standard integral constant type, so that we can be more
+	flexible for 64-bit support.  Eliminate the superfluous copy of
+	fromStart and toEnd defined within the Range class.  Use
+	standardized integral types throughout the Range class.
+	* random/F.h: Add missing blitz:: namespace qualifier to huge()
+	and tiny().
+	* random/beta.h: Add missing blitz:: namespace qualifier to huge()
+	and tiny().
+	
+
+2008-04-09  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+
+	* random/mt.h: Eliminate warnings about signed/unsigned 
+	comparisons by using size_type and difference_type as defined 
+	by the std::vector class.
+	
 2008-04-06  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
 
 	* blitz/array/iter.h: Update the iterator_category to be 
