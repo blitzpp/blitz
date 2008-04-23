@@ -35,31 +35,31 @@
  #include <blitz/vecexprwrap.h>      // _bz_VecExpr wrapper
 #endif
 
-#include <blitz/wrap-climits.h>                  // for INT_MIN,INT_MAX
+#include <climits>                  // for INT_MIN, INT_MAX
+#include <cstddef>                  // for std::size_t
 
 BZ_NAMESPACE(blitz)
 
 // Examples: 
-// Vector<double> x(7);
-// Range::all()                    [0,1,2,3,4,5,6]
-// Range(3,5)                      [3,4,5]
-// Range(3,Range::toEnd)           [3,4,5,6]
-// Range(Range::fromStart,3)       [0,1,2,3]
-// Range(1,5,2);                   [1,3,5]
+// Array<int,1> A(7);
+// A = 0,1,2,3,4,5,6;
+// A(Range::all());                   [0,1,2,3,4,5,6]
+// A(Range(3,5));                     [3,4,5]
+// A(Range(3,toEnd));                 [3,4,5,6]
+// A(Range(fromStart,3));             [0,1,2,3]
+// A(Range(1,5,2));                   [1,3,5]
+// A(Range(5,1,-2));                  [5,3,1]
+// A(Range(fromStart,toEnd,2));       [0,2,4,6]
 
-enum { fromStart = INT_MIN, toEnd = INT_MAX };
+
+const int fromStart = INT_MIN;
+const int toEnd = INT_MAX;
 
 // Class Range
 class Range {
 
 public:
-    // This declaration not yet supported by all compilers
-    // const int fromStart = INT_MIN;
-    // const int toEnd = INT_MAX;
-
     typedef int T_numtype;
-
-    enum { fromStart = INT_MIN, toEnd = INT_MAX };
 
     Range()
     {
@@ -78,14 +78,14 @@ public:
     }
 #endif
 
-    explicit Range(int slicePosition)
+    explicit Range(T_numtype slicePosition)
     {
         first_ = slicePosition;
         last_ = slicePosition;
         stride_ = 1;
     }
 
-    Range(int first, int last, int stride=1)
+    Range(T_numtype first, T_numtype last, T_numtype stride=1)
         : first_(first), last_(last), stride_(stride)
     { 
         BZPRECHECK((first == fromStart) || (last == toEnd) ||
@@ -97,21 +97,21 @@ public:
             (*this) << ": the stride must evenly divide the range");
     }
 
-    int first(int lowRange = 0) const
+    T_numtype first(T_numtype lowRange = 0) const
     { 
         if (first_ == fromStart)
             return lowRange;
         return first_; 
     }
 
-    int last(int highRange = 0) const
+    T_numtype last(T_numtype highRange = 0) const
     {
         if (last_ == toEnd)
             return highRange;
         return last_;
     }
 
-    unsigned length(int =0) const
+    std::size_t length(int =0) const
     {
         BZPRECONDITION(first_ != fromStart);
         BZPRECONDITION(last_ != toEnd);
@@ -119,7 +119,7 @@ public:
         return (last_ - first_) / stride_ + 1;
     }
 
-    int stride() const
+    T_numtype stride() const
     { return stride_; }
 
     bool isAscendingContiguous() const
@@ -127,7 +127,7 @@ public:
         return ((first_ < last_) && (stride_ == 1) || (first_ == last_));
     }
 
-    void setRange(int first, int last, int stride=1)
+    void setRange(T_numtype first, T_numtype last, T_numtype stride=1)
     {
         BZPRECONDITION((first < last) && (stride > 0) ||
                        (first > last) && (stride < 0) ||
@@ -145,26 +145,26 @@ public:
     { return stride_ == 1; }
 
     // Operators
-    Range operator-(int shift) const
+    Range operator-(T_numtype shift) const
     { 
         BZPRECONDITION(first_ != fromStart);
         BZPRECONDITION(last_ != toEnd);
         return Range(first_ - shift, last_ - shift, stride_); 
     }
 
-    Range operator+(int shift) const
+    Range operator+(T_numtype shift) const
     { 
         BZPRECONDITION(first_ != fromStart);
         BZPRECONDITION(last_ != toEnd);
         return Range(first_ + shift, last_ + shift, stride_); 
     }
 
-    int operator[](unsigned i) const
+    T_numtype operator[](std::size_t i) const
     {
         return first_ + i * stride_;
     }
 
-    int operator()(unsigned i) const
+    T_numtype operator()(std::size_t i) const
     {
         return first_ + i * stride_;
     }
@@ -203,7 +203,7 @@ public:
     { return _bz_VecExpr<Range>(*this); }
 
 private:
-    int first_, last_, stride_;
+    T_numtype first_, last_, stride_;
 };
 
 BZ_NAMESPACE_END
