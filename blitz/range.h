@@ -36,7 +36,6 @@
 #endif
 
 #include <climits>                  // for INT_MIN, INT_MAX
-#include <cstddef>                  // for std::size_t
 
 BZ_NAMESPACE(blitz)
 
@@ -60,6 +59,7 @@ class Range {
 
 public:
     typedef int T_numtype;
+	typedef unsigned int T_sizetype;
 
     Range()
     {
@@ -111,7 +111,7 @@ public:
         return last_;
     }
 
-    std::size_t length(int =0) const
+    T_sizetype length(int =0) const
     {
         BZPRECONDITION(first_ != fromStart);
         BZPRECONDITION(last_ != toEnd);
@@ -159,12 +159,12 @@ public:
         return Range(first_ + shift, last_ + shift, stride_); 
     }
 
-    T_numtype operator[](std::size_t i) const
+    T_numtype operator[](T_sizetype i) const
     {
         return first_ + i * stride_;
     }
 
-    T_numtype operator()(std::size_t i) const
+    T_numtype operator()(T_sizetype i) const
     {
         return first_ + i * stride_;
     }
@@ -191,10 +191,10 @@ public:
     bool _bz_hasFastAccess() const
     { return stride_ == 1; }
 
-    T_numtype _bz_fastAccess(unsigned i) const
+    int _bz_fastAccess(unsigned int i) const
     { return first_ + i; }
 
-    unsigned _bz_suggestLength() const
+    unsigned int _bz_suggestLength() const
     { 
         return length();
     }
