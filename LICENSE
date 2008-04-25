@@ -1,44 +1,44 @@
-Blitz++ is distributed under both a Perl-like ``artistic license'' (below)
-and/or the GNU GPL (see COPYING).  Choose whichever license suites
-your needs.
+Blitz++ is distributed under a Perl-like "artistic license" (see below),
+the simplified BSD license (see COPYRIGHT), or the GNU LGPL (see COPYING).  
+Please choose whichever license best suites your needs.
 --
-The `Blitz++ Artistic License'
+The "Blitz++ Artistic License"
 (with thanks and apologies to authors of the Perl Artistic License)
 
 Preamble
 
 The intent of this document is to state the conditions under which 
-Blitz++ may be copied, such that the authors maintains some
-semblance of artistic control over the development of the package,
-while giving the users of the package the right to use and
+Blitz++ may be copied, such that the author maintains some
+semblance of artistic control over the development of Blitz++,
+while giving the users of Blitz++ the right to use and
 distribute Blitz++ in a more-or-less customary fashion, plus the
 right to make reasonable modifications.
 
 Definitions
 
-`Library' refers to the collection of files distributed by the
+"Library" refers to the collection of files distributed by the
 Copyright Holder, and derivatives of that collection of files
 created through textual modification.
 
-`Standard Version' refers to such a Library if it has not been
+"Standard Version" refers to such a Library if it has not been
 modified, or has been modified in accordance with the wishes of the
 Copyright Holder as specified below.
 
-Copyright Holder' is whoever is named in the copyright or
+"Copyright Holder" is whoever is named in the copyright or
 copyrights for the package.
 
-`You' is you, if you're thinking about copying, modifying or
+"You" is you, if you're thinking about copying, modifying or
 distributing this Library.
 
-`Freely Available' means that no fee is charged for the item.
-It also means that recipients of the item may redistribute it 
-under the same conditions they received it.
-
-``Reasonable copying fee'' is whatever you can justify on the basis
+"Reasonable copying fee" is whatever you can justify on the basis
 of media cost, duplication charges, time of people involved, and so
 on. (You will not be required to justify it to the Copyright Holder,
 but only to the computing community at large as a market that must
 bear the fee.)
+
+"Freely Available" means that no fee is charged for the item.
+It also means that recipients of the item may redistribute it 
+under the same conditions they received it.
 
 1. You may make and give away verbatim copies of the 
 Standard Version of this Library without restriction, provided that
