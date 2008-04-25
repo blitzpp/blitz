@@ -11,8 +11,8 @@ endif
 SUBDIRS = bin blitz random lib testsuite \
 	examples $(FORTRAN_DIRS) doc
 
-EXTRA_DIST = LEGAL LICENSE README.binutils README-VS.NET.txt Blitz-VS.NET.zip \
-	ChangeLog.1 
+EXTRA_DIST = COPYRIGHT LEGAL LICENSE README.binutils README-VS.NET.txt \
+	Blitz-VS.NET.zip Blitz-VS2005.NET.zip ChangeLog.1 
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = blitz.pc blitz-uninstalled.pc
