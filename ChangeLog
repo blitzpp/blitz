@@ -1,3 +1,6 @@
+2008-05-01  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+	* blitz/funcs.h: Constification.
+
 2008-04-22  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
 	* blitz/range.h: Convert enum for bounds values fromStart and
