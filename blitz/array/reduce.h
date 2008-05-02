@@ -34,25 +34,39 @@
 
 BZ_NAMESPACE(blitz)
 
-template<bool initIndex>
-struct _bz_ReduceReset;
+template<bool needIndex,bool needInit> struct _bz_ReduceReset;
 
 template<>
-struct _bz_ReduceReset<true> {
-    template<typename T_reduction>
-    void operator()(T_reduction& reduce, int index) {
+struct _bz_ReduceReset<true,true> {
+    template<typename T_reduction,typename T_index,typename T_expr>
+    void operator()(T_reduction& reduce,const T_index& index,const T_expr& expr) {
+        reduce.reset(index,expr.first_value());
+    }
+};
+
+template<>
+struct _bz_ReduceReset<false,true> {
+    template<typename T_reduction,typename T_index,typename T_expr>
+    void operator()(T_reduction& reduce,const T_index&,const T_expr& expr) {
+        reduce.reset(expr.first_value());
+    }
+};
+
+template<>
+struct _bz_ReduceReset<true,false> {
+    template<typename T_reduction,typename T_index,typename T_expr>
+    void operator()(T_reduction& reduce,const T_index& index,const T_expr&) {
         reduce.reset(index);
     }
 };
 
 template<>
-struct _bz_ReduceReset<false> {
-    template<typename T_reduction>
-    void operator()(T_reduction& reduce, int) {
+struct _bz_ReduceReset<false,false> {
+    template<typename T_reduction,typename T_index,typename T_expr>
+    void operator()(T_reduction& reduce,const T_index&,const T_expr&) {
         reduce.reset();
     }
 };
-
 
 template<typename T_expr, int N_index, typename T_reduction>
 class _bz_ArrayExprReduce {
@@ -67,31 +81,23 @@ public:
         numIndexPlaceholders = T_expr::numIndexPlaceholders + 1,
         rank = T_expr::rank - 1;
 
-    _bz_ArrayExprReduce(const _bz_ArrayExprReduce<T_expr,N_index,T_reduction>&
-        reduce)
-        : reduce_(reduce.reduce_), iter_(reduce.iter_), ordering_(reduce.ordering_)
-    {
-    }
+    _bz_ArrayExprReduce(const _bz_ArrayExprReduce& reduce)
+        : reduce_(reduce.reduce_), iter_(reduce.iter_), ordering_(reduce.ordering_) { }
 
     _bz_ArrayExprReduce(T_expr expr)
         : iter_(expr)
     { computeOrdering(); }
 
+#if 0
     _bz_ArrayExprReduce(T_expr expr, T_reduction reduce)
         : iter_(expr), reduce_(reduce)
     { computeOrdering(); }
+#endif
 
-    int ascending(int r)
-    { return iter_.ascending(r); }
-
-    int ordering(int r)
-    { return ordering_[r]; }
-
-    int lbound(int r)
-    { return iter_.lbound(r); }
-
-    int ubound(int r)
-    { return iter_.ubound(r); }
+    int ascending(const int r) const { return iter_.ascending(r); }
+    int ordering(const int r)  const { return ordering_[r];       }
+    int lbound(const int r)    const { return iter_.lbound(r);    }
+    int ubound(const int r)    const { return iter_.ubound(r);    }
 
     template<int N_destRank>
     T_numtype operator()(const TinyVector<int, N_destRank>& destIndex)
@@ -116,13 +122,12 @@ public:
            << "There must be an array object in the expression being reduced"
            << endl << "which provides a bound in rank " << N_index << ".");
 
-// If we are doing minIndex/maxIndex, initialize with lower bound
-        _bz_ReduceReset<(T_reduction::needIndex && 
-                         T_reduction::canProvideInitialValue)> reset;
-        reset(reduce_,lbound);
+        // If we are doing minIndex/maxIndex, initialize with lower bound
 
-        for (index[N_index]=lbound; index[N_index]<=ubound; ++index[N_index])
-        {
+        _bz_ReduceReset<T_reduction::needIndex,T_reduction::needInit> reset;
+        reset(reduce_,lbound,iter_);
+
+        for (index[N_index]=lbound; index[N_index]<=ubound; ++index[N_index]) {
             if (!reduce_(iter_(index), index[N_index]))
                 break;
         }
@@ -130,93 +135,32 @@ public:
         return reduce_.result(ubound-lbound+1);
     }
 
-    // If you have a precondition failure on this routine, it means
+    // If you have a precondition failure on these routines, it means
     // you are trying to use stack iteration mode on an expression
     // which contains an index placeholder.  You must use index
     // iteration mode instead.
-    int operator*()
-    {
-        BZPRECONDITION(0);
-        return 0;
-    }
 
-    // See operator*() note
-    void push(int)
-    {
-        BZPRECONDITION(0);
-    }
+    int operator*()        const { BZPRECONDITION(0); return 0; }
+    int suggestStride(int) const { BZPRECONDITION(0); return 0; }
 
-    // See operator*() note
-    void pop(int)
-    {
-        BZPRECONDITION(0);
-    }
-
-    // See operator*() note
-    void advance()
-    {
-        BZPRECONDITION(0);
-    }
-
-    // See operator*() note
-    void advance(int)
-    {
-        BZPRECONDITION(0);
-    }
-
-    // See operator*() note
-    void loadStride(int)
-    {
-        BZPRECONDITION(0);
-    }
-
-    bool isUnitStride(int) const
-    {
-        BZPRECONDITION(0);
-        return false;
-    }
-
-    void advanceUnitStride()
-    {
-        BZPRECONDITION(0);
-    }
-
-    bool canCollapse(int,int) const
-    {   BZPRECONDITION(0); return false; }
-
-    T_numtype operator[](int)
-    {
-        BZPRECONDITION(0);
-        return T_numtype();
-    }
-
-    T_numtype fastRead(int)
-    {
-        BZPRECONDITION(0);
-        return T_numtype();
-    }
-
-    int suggestStride(int) const
-    {
-        BZPRECONDITION(0);
-        return 0;
-    }
-
-    bool isStride(int,int) const
-    {
-        BZPRECONDITION(0);
-        return true;
-    }
+    void push(int)           const { BZPRECONDITION(0); }
+    void pop(int)            const { BZPRECONDITION(0); }
+    void advance()           const { BZPRECONDITION(0); }
+    void advance(int)        const { BZPRECONDITION(0); }
+    void loadStride(int)     const { BZPRECONDITION(0); }
+    void advanceUnitStride() const { BZPRECONDITION(0); }
 
     template<int N_rank>
-    void moveTo(const TinyVector<int,N_rank>&)
-    {
-        BZPRECONDITION(0);
-        return;
-    }
+    void moveTo(const TinyVector<int,N_rank>&) const { BZPRECONDITION(0); }
 
-    void prettyPrint(BZ_STD_SCOPE(string) &str, 
-        prettyPrintFormat& format) const
+    bool isUnitStride(int)    const { BZPRECONDITION(0); return false; }
+    bool canCollapse(int,int) const { BZPRECONDITION(0); return false; }
+    bool isStride(int,int)    const { BZPRECONDITION(0); return true;  }
+
+    T_numtype operator[](int) const { BZPRECONDITION(0); return T_numtype(); }
+    T_numtype fastRead(int)   const { BZPRECONDITION(0); return T_numtype(); }
+
+    void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format) const
     {
         // NEEDS_WORK-- do real formatting for reductions
         str += "reduce[NEEDS_WORK](";
@@ -240,24 +184,21 @@ private:
         in_ordering = false;
 
         int j = 0;
-        for (int i=0; i<rank; ++i)
-        {
-            int orderingj = iter_.ordering(i);
-            if (orderingj != tiny(int()) && orderingj < rank &&
-                !in_ordering(orderingj)) { // unique value in ordering array
+        for (int i=0; i<rank; ++i) {
+            const int orderingj = iter_.ordering(i);
+            if (orderingj != tiny(int()) && orderingj < rank && !in_ordering(orderingj)) {
+                // unique value in ordering array
                 in_ordering(orderingj) = true;
                 ordering_(j++) = orderingj;
             }
-
         }
 
         // It is possible that ordering is not a permutation of 0,...,rank-1.
         // In that case j will be less than rank. We fill in ordering with
         // the unused values in decreasing order.
         for (int i = rank-1; j < rank; ++j) {
-            while (in_ordering(i))
-                --i;
-            ordering_(j) = i--;
+            while (in_ordering(i--));
+            ordering_(j) = i;
         }
     }
 
@@ -341,6 +282,7 @@ BZ_DECL_ARRAY_FULL_REDUCE(sum,      ReduceSum)
 BZ_DECL_ARRAY_FULL_REDUCE(mean,     ReduceMean)
 BZ_DECL_ARRAY_FULL_REDUCE((min),    ReduceMin)
 BZ_DECL_ARRAY_FULL_REDUCE((max),    ReduceMax)
+BZ_DECL_ARRAY_FULL_REDUCE((minmax), ReduceMinMax)
 BZ_DECL_ARRAY_FULL_REDUCE(product,  ReduceProduct)
 BZ_DECL_ARRAY_FULL_REDUCE(count,    ReduceCount)
 BZ_DECL_ARRAY_FULL_REDUCE(any,      ReduceAny)
