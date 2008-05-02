@@ -174,7 +174,6 @@ public:
         int stride2 = iter2_.suggestStride(rank);
         int stride3 = iter3_.suggestStride(rank);
         return stride1>(stride2=(stride2>stride3?stride2:stride3))?stride1:stride2;
-        //return minmax::max(minmax::max(stride1,stride2),stride3);
     }
 
     bool isStride(int rank, int stride) const

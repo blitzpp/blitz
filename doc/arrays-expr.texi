@@ -1267,6 +1267,10 @@ Minimum value
 @cindex @code{max()} reduction
 Maximum value 
 
+@item minmax()
+@cindex @code{minmax()} reduction
+Simultaneous minimum and maximum value (returns a value of type MinMaxValue<T>)
+
 @item minIndex()
 @cindex @code{minIndex()} reduction
 Index of the minimum value (@code{TinyVector<int,N_rank>})
