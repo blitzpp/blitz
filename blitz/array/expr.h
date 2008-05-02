@@ -137,30 +137,22 @@ public:
         : iter_(exprpair.first(), exprpair.second())
     { }
 
-    T_numtype operator*()
-    { return *iter_; }
+    T_numtype operator*() { return *iter_; }
+
+    T_numtype first_value() const { return iter_(iter_.lbound()); }
 
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     template<int N_rank>
-    T_numtype operator()(TinyVector<int, N_rank> i)
-    { return iter_(i); }
+    T_numtype operator()(const TinyVector<int, N_rank> i) { return iter_(i); }
 #else
     template<int N_rank>
-    T_numtype operator()(const TinyVector<int, N_rank>& i)
-    { return iter_(i); }
+    T_numtype operator()(const TinyVector<int, N_rank>& i) { return iter_(i); }
 #endif
 
-    int ascending(int rank)
-    { return iter_.ascending(rank); }
-
-    int ordering(int rank)
-    { return iter_.ordering(rank); }
-
-    int lbound(int rank)
-    { return iter_.lbound(rank); }
-
-    int ubound(int rank)
-    { return iter_.ubound(rank); }
+    int ascending(const int rank) const { return iter_.ascending(rank); }
+    int ordering(const int rank)  const { return iter_.ordering(rank);  }
+    int lbound(const int rank)    const { return iter_.lbound(rank);    }
+    int ubound(const int rank)    const { return iter_.ubound(rank);    }
 
     void push(int position)
     { iter_.push(position); }
@@ -189,7 +181,7 @@ public:
         return iter_.canCollapse(outerLoopRank, innerLoopRank); 
     }
 
-    T_numtype operator[](int i)
+    T_numtype operator[](int i) const
     { return iter_[i]; }
 
     T_numtype fastRead(int i)
@@ -351,24 +343,18 @@ public:
     { }
 #endif
 
-    int ascending(int rank)
-    { return iter_.ascending(rank); }
+    int ascending(const int rank) const { return iter_.ascending(rank); }
+    int ordering(const int rank)  const { return iter_.ordering(rank);  }
+    int lbound(const int rank)    const { return iter_.lbound(rank);    }
+    int ubound(const int rank)    const { return iter_.ubound(rank);    }
 
-    int ordering(int rank)
-    { return iter_.ordering(rank); }
+    T_numtype operator*() { return T_op::apply(*iter_); }
 
-    int lbound(int rank)
-    { return iter_.lbound(rank); }
-
-    int ubound(int rank)
-    { return iter_.ubound(rank); }
-
-    T_numtype operator*()
-    { return T_op::apply(*iter_); }
+    T_numtype first_value() const { return iter_(iter_.lbound()); }
 
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     template<int N_rank>
-    T_numtype operator()(TinyVector<int, N_rank> i)
+    T_numtype operator()(const TinyVector<int, N_rank> i)
     { return T_op::apply(iter_(i)); }
 #else
     template<int N_rank>
@@ -482,36 +468,26 @@ public:
 
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     template<int N_rank>
-    T_numtype operator()(TinyVector<int, N_rank> i)
-    { return T_op::apply(iter1_(i), iter2_(i)); }
+    T_numtype operator()(const TinyVector<int, N_rank> i) { return T_op::apply(iter1_(i), iter2_(i)); }
 #else
     template<int N_rank>
-    T_numtype operator()(const TinyVector<int, N_rank>& i)
-    { return T_op::apply(iter1_(i), iter2_(i)); }
+    T_numtype operator()(const TinyVector<int, N_rank>& i) { return T_op::apply(iter1_(i), iter2_(i)); }
 #endif
 
-    int ascending(int rank)
-    {
-        return bounds::compute_ascending(rank, iter1_.ascending(rank),
-            iter2_.ascending(rank));
+    int ascending(const int rank) const {
+        return bounds::compute_ascending(rank, iter1_.ascending(rank), iter2_.ascending(rank));
     }
 
-    int ordering(int rank)
-    {
-        return bounds::compute_ordering(rank, iter1_.ordering(rank),
-            iter2_.ordering(rank));
+    int ordering(const int rank) const {
+        return bounds::compute_ordering(rank, iter1_.ordering(rank), iter2_.ordering(rank));
     }
 
-    int lbound(int rank)
-    { 
-        return bounds::compute_lbound(rank, iter1_.lbound(rank),
-            iter2_.lbound(rank));
+    int lbound(const int rank) const { 
+        return bounds::compute_lbound(rank, iter1_.lbound(rank), iter2_.lbound(rank));
     }
 
-    int ubound(int rank)
-    {
-        return bounds::compute_ubound(rank, iter1_.ubound(rank),
-            iter2_.ubound(rank));
+    int ubound(const int rank) const {
+        return bounds::compute_ubound(rank, iter1_.ubound(rank), iter2_.ubound(rank));
     }
 
     void push(int position)
@@ -644,7 +620,7 @@ public:
 
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     template<int N_rank>
-    T_numtype operator()(TinyVector<int, N_rank> i)
+    T_numtype operator()(const TinyVector<int, N_rank> i)
     { return T_op::apply(iter1_(i), iter2_(i), iter3_(i)); }
 #else
     template<int N_rank>
@@ -652,29 +628,25 @@ public:
     { return T_op::apply(iter1_(i), iter2_(i), iter3_(i)); }
 #endif
 
-    int ascending(int rank)
-    {
+    int ascending(const int rank) const {
         return bounds::compute_ascending(rank, bounds::compute_ascending(
             rank, iter1_.ascending(rank), iter2_.ascending(rank)),
             iter3_.ascending(rank));
     }
 
-    int ordering(int rank)
-    {
+    int ordering(const int rank) const {
         return bounds::compute_ordering(rank, bounds::compute_ordering(
             rank, iter1_.ordering(rank), iter2_.ordering(rank)),
             iter3_.ordering(rank));
     }
 
-    int lbound(int rank)
-    { 
+    int lbound(const int rank) const { 
         return bounds::compute_lbound(rank, bounds::compute_lbound(
             rank, iter1_.lbound(rank), iter2_.lbound(rank)), 
             iter3_.lbound(rank));
     }
 
-    int ubound(int rank)
-    {
+    int ubound(const int rank) const {
         return bounds::compute_ubound(rank, bounds::compute_ubound(
             rank, iter1_.ubound(rank), iter2_.ubound(rank)), 
             iter3_.ubound(rank));
@@ -819,26 +791,20 @@ public:
     // NEEDS_WORK: use tiny(int()) once numeric_limits<T> available on
     // all platforms
 
-    int ascending(int)
-    { return INT_MIN; }
+    int ascending(const int) const { return INT_MIN; }
+    int ordering(const int)  const { return INT_MIN; }
+    int lbound(const int)    const { return INT_MIN; }
+    int ubound(const int)    const { return INT_MAX; }
 
-    int ordering(int)
-    { return INT_MIN; }
-
-    int lbound(int)
-    { return INT_MIN; }
-
-    int ubound(int)
-    { return INT_MAX; }
     // NEEDS_WORK: use huge(int()) once numeric_limits<T> available on
     // all platforms
 
-    T_numtype operator*()
-    { return value_; }
+    T_numtype operator*()   const { return value_; }
+    T_numtype first_value() const { return value_; }
 
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     template<int N_rank>
-    T_numtype operator()(TinyVector<int,N_rank>)
+    T_numtype operator()(const TinyVector<int,N_rank>)
     { return value_; }
 #else
     template<int N_rank>

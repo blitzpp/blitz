@@ -1,3 +1,36 @@
+2008-04-06  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+
+	* blitz/minmax.h blitz/array/resize.cc blitz/array/stencils.cc
+	blitz/array/stencils.h testsuite/minmax.cpp:
+	Renamed the namespace from minmax to extrema to keep the name minmax
+	for a function name.
+	* blitz/reduce.h: Simplify and constify the file. Introduced
+	a new type MinMaxValue and the mechanic to have a minmax reduce
+	function. Changed the canProvideInitialValue into needInit and clarified
+	its use. Simplified drastically the design by removing unused contructors
+	and methods (reset). This potentially makes compilation errors instead of
+	run time ones, which is preferable.
+	* blitz/array/where.h: Remove commented out line.
+	* blitz/array/reduce.h: Introduce the minmax reduce function. Generalized
+	the _bz_ReduceReset to really take into account the new needInit attribute
+	which formerly was sketched by canProvideInitialValue, but was not really
+	used. Constification of the ascending, ordering, lbound and ubound methods.
+	Simplified drastically the design by removing unused contructors and
+	methods (reset). This potentially makes compilation errors instead of
+	run time ones, which is preferable.
+	* blitz/array/expr.h: Constification of the ascending, ordering, lbound
+	and ubound methods. Added the first_value method used with the needInit
+	attribute (see blitz/array/reduce.h).
+	* blitz/array/map.h: Constification of the ascending, ordering, lbound
+	and ubound methods.
+	* blitz/array/reduce.cc: Commonize the code of _bz_reduceWithIndexTraversal
+	and _bz_reduceWithIndexVectorTraversal by the introduction of 
+	_bz_reduceWithIndexTraversalGeneric, of the adapter _bz_IndexingVariant
+	and the use of _bz_ReduceReset. Simplified slightly the code by using
+	returns, which allows for the suppression of the loopFlag variable.
+	* doc/arrays-expr.texi: Update documentation.
+	* testsuite/reduce.cpp: Add a test for minmax.
+
 2008-05-01  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
 	* blitz/funcs.h: Constification.
 
