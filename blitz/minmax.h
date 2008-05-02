@@ -35,7 +35,7 @@ BZ_NAMESPACE(blitz)
  * conflicts with the array reduction operations min and max.
  */
 
-BZ_NAMESPACE(minmax)
+BZ_NAMESPACE(extrema)
 
 template<typename T1, typename T2>
 BZ_PROMOTE(T1,T2) (min)(const T1& a, const T2& b)

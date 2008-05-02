@@ -61,9 +61,26 @@ _bz_ArrayExprFullReduce(T_expr expr, T_reduction reduction)
 #endif
 }
 
-template<typename T_expr, typename T_reduction>
+template <typename T_index> struct _bz_IndexingVariant;
+
+template <>
+struct _bz_IndexingVariant<int> {
+    template <int N>
+    static int index(const TinyVector<int,N>& ind,const int i) {
+        return ind[i];
+    }
+};
+
+template <int N>
+struct _bz_IndexingVariant<TinyVector<int,N> > {
+    static const TinyVector<int,N>& index(const TinyVector<int,N>& ind,const int) {
+        return ind;
+    }
+};
+
+template<typename T_index, typename T_expr, typename T_reduction>
 _bz_typename T_reduction::T_resulttype
-_bz_reduceWithIndexTraversal(T_expr expr, T_reduction reduction)
+_bz_reduceWithIndexTraversalGeneric(T_expr expr, T_reduction reduction)
 {
     // This is optimized assuming C-style arrays.
 
@@ -73,8 +90,7 @@ _bz_reduceWithIndexTraversal(T_expr expr, T_reduction reduction)
 
     unsigned long count = 1;
 
-    for (int i=0; i < rank; ++i)
-    {
+    for (int i=0; i < rank; ++i) {
         first(i) = expr.lbound(i);
         last(i) = expr.ubound(i) + 1;
         index(i) = first(i);
@@ -82,90 +98,49 @@ _bz_reduceWithIndexTraversal(T_expr expr, T_reduction reduction)
     }
 
     const int maxRank = rank - 1;
-    int lastlbound = expr.lbound(maxRank);
-    int lastubound = expr.ubound(maxRank);
+    const int lastlbound = expr.lbound(maxRank);
+    const int lastubound = expr.ubound(maxRank);
 
-    int lastIndex = lastubound + 1;
+    const int lastIndex = lastubound + 1;
 
-    reduction.reset();
+    typedef _bz_IndexingVariant<T_index> adapter;
 
-    bool loopFlag = true;
+    _bz_ReduceReset<T_reduction::needIndex,T_reduction::needInit> reset;
+    reset(reduction,first,expr);
 
-    while(loopFlag) {
+    while(true) {
         for (index[maxRank]=lastlbound;index[maxRank]<lastIndex;++index[maxRank])
-            if (!reduction(expr(index), index[maxRank])) {
-                loopFlag = false;
-                break;
-            }
+            if (!reduction(expr(index),adapter::index(index,maxRank)))
+                return reduction.result(count);
 
         int j = rank-2;
-        for (; j >= 0; --j) {
+        for (;j>=0;--j) {
             index(j+1) = first(j+1);
             ++index(j);
             if (index(j) < last(j))
                 break;
         }
 
-        if (j < 0)
-            break;
+        if (j<0)
+            return reduction.result(count);
     }
-
-    return reduction.result(count);
 }
 
+template<typename T_expr, typename T_reduction>
+_bz_typename T_reduction::T_resulttype
+_bz_reduceWithIndexTraversal(T_expr expr, T_reduction reduction)
+{
+    return _bz_reduceWithIndexTraversalGeneric<int>(expr,reduction);
+}
+
+// This version is for reductions that require a vector of index positions.
 
 template<typename T_expr, typename T_reduction>
 _bz_typename T_reduction::T_resulttype
 _bz_reduceWithIndexVectorTraversal(T_expr expr, T_reduction reduction)
 {
-    // This version is for reductions that require a vector
-    // of index positions.
-
-    const int rank = T_expr::rank;
-
-    TinyVector<int,T_expr::rank> index, first, last;
-
-    unsigned long count = 1;
-
-    for (int i=0; i < rank; ++i)
-    {
-        first(i) = expr.lbound(i);
-        last(i) = expr.ubound(i) + 1;
-        index(i) = first(i);
-        count *= last(i) - first(i);
-    }
-
-    const int maxRank = rank - 1;
-    int lastlbound = expr.lbound(maxRank);
-    int lastubound = expr.ubound(maxRank);
-
-    int lastIndex = lastubound + 1;
-
-// we are doing minIndex/maxIndex, so initialize with lower bound
-    reduction.reset(first);
-
-    bool loopFlag = true;
-
-    while(loopFlag) {
-        for (index[maxRank]=lastlbound;index[maxRank]<lastIndex;++index[maxRank])
-            if (!reduction(expr(index),index)) {
-                loopFlag = false;
-                break;
-            }
-
-        int j = rank-2;
-        for (; j >= 0; --j) {
-            index(j+1) = first(j+1);
-            ++index(j);
-            if (index(j) < last(j))
-                break;
-        }
-
-        if (j < 0)
-            break;
-    }
-
-    return reduction.result(count);
+    // We are doing minIndex/maxIndex, so initialize with lower bound
+    return _bz_reduceWithIndexTraversalGeneric<TinyVector<int,T_expr::rank> >(expr,reduction);
 }
 
 BZ_NAMESPACE_END

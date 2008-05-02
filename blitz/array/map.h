@@ -257,7 +257,7 @@ public:
     }
 #endif
 
-    int ascending(int rank)
+    int ascending(const int rank) const
     {
         if (N_map0 == rank)
             return array_.isRankStoredAscending(0);
@@ -285,7 +285,7 @@ public:
             return INT_MIN;   // tiny(int());
     }
 
-    int ordering(int rank)
+    int ordering(const int rank) const
     {
         // JCC: ignore ordering result from 1d Array
         if (N_rank == 1)
@@ -317,7 +317,7 @@ public:
             return INT_MIN;   // tiny(int());
     }
 
-    int lbound(int rank)
+    int lbound(const int rank) const
     { 
         if (N_map0 == rank)    
             return array_.lbound(0);
@@ -345,7 +345,7 @@ public:
             return INT_MIN;   // tiny(int());
     }
 
-    int ubound(int rank)
+    int ubound(const int rank) const
     {   
         if (N_map0 == rank)
             return array_.ubound(0);

@@ -102,7 +102,7 @@ public:
     { return array_(i); }
 #endif
 
-    int ascending(int rank)
+    int ascending(const int rank) const
     {
         if (rank < N_rank)
             return array_.isRankStoredAscending(rank);
@@ -110,7 +110,7 @@ public:
             return INT_MIN;   // tiny(int());
     }
 
-    int ordering(int rank)
+    int ordering(const int rank) const
     {
         if (rank < N_rank)
             return array_.ordering(rank);
@@ -118,7 +118,7 @@ public:
             return INT_MIN;   // tiny(int());
     }
 
-    int lbound(int rank)
+    int lbound(const int rank) const
     { 
         if (rank < N_rank)
             return array_.lbound(rank); 
@@ -126,13 +126,15 @@ public:
             return INT_MIN;   // tiny(int());
     }
 
-    int ubound(int rank)
+    int ubound(const int rank) const
     { 
         if (rank < N_rank)
             return array_.ubound(rank); 
         else
             return INT_MAX;   // huge(int());
     }
+    
+    T_numtype first_value() const { return *data_; }
 
     T_numtype operator*()
     { return *data_; }
