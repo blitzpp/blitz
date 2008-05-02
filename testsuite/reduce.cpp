@@ -16,6 +16,11 @@ int main()
     BZTEST(min(A) == 0);
     BZTEST(max(A) == 11);
 
+    const MinMaxValue<int> mm = minmax(A);
+    std::cerr << mm.min << ' ' << mm.max << std::endl;
+    BZTEST(mm.min == 0);
+    BZTEST(mm.max == 11);
+
     BZTEST(product(A) == 0);
     BZTEST(all(A >= 0));
     BZTEST(any(A == 7));
