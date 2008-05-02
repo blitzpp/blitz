@@ -267,8 +267,8 @@ public:
     {
         for (int i=0; i < N_rank; ++i)
         {
-            min_[i] = (minmax::min)(min_[i], (x.min)(i));
-            max_[i] = (minmax::max)(max_[i], (x.max)(i));
+            min_[i] = (extrema::min)(min_[i], (x.min)(i));
+            max_[i] = (extrema::max)(max_[i], (x.max)(i));
         }
     }
 

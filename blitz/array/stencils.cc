@@ -219,13 +219,13 @@ void applyStencil_imp(const T_stencil& stencil, Array<T_numtype1,3>& A,
     int stencil_ubound1 = maxb(1);
     int stencil_ubound2 = maxb(2);
 
-    int lbound0 = (minmax::max)(A.lbound(0), A.lbound(0) - stencil_lbound0);
-    int lbound1 = (minmax::max)(A.lbound(1), A.lbound(1) - stencil_lbound1);
-    int lbound2 = (minmax::max)(A.lbound(2), A.lbound(2) - stencil_lbound2);
+    int lbound0 = (extrema::max)(A.lbound(0), A.lbound(0) - stencil_lbound0);
+    int lbound1 = (extrema::max)(A.lbound(1), A.lbound(1) - stencil_lbound1);
+    int lbound2 = (extrema::max)(A.lbound(2), A.lbound(2) - stencil_lbound2);
 
-    int ubound0 = (minmax::min)(A.ubound(0), A.ubound(0) - stencil_ubound0);
-    int ubound1 = (minmax::min)(A.ubound(1), A.ubound(1) - stencil_ubound1);
-    int ubound2 = (minmax::min)(A.ubound(2), A.ubound(2) - stencil_ubound2);
+    int ubound0 = (extrema::min)(A.ubound(0), A.ubound(0) - stencil_ubound0);
+    int ubound1 = (extrema::min)(A.ubound(1), A.ubound(1) - stencil_ubound1);
+    int ubound2 = (extrema::min)(A.ubound(2), A.ubound(2) - stencil_ubound2);
 
 #if 0
     cout << "Stencil bounds are:" << endl
@@ -325,11 +325,11 @@ void applyStencil_imp(const T_stencil& stencil, Array<T_numtype1,2>& A,
     int stencil_ubound0 = maxb(0);
     int stencil_ubound1 = maxb(1);
 
-    int lbound0 = (minmax::max)(A.lbound(0), A.lbound(0) - stencil_lbound0);
-    int lbound1 = (minmax::max)(A.lbound(1), A.lbound(1) - stencil_lbound1);
+    int lbound0 = (extrema::max)(A.lbound(0), A.lbound(0) - stencil_lbound0);
+    int lbound1 = (extrema::max)(A.lbound(1), A.lbound(1) - stencil_lbound1);
 
-    int ubound0 = (minmax::min)(A.ubound(0), A.ubound(0) - stencil_ubound0);
-    int ubound1 = (minmax::min)(A.ubound(1), A.ubound(1) - stencil_ubound1);
+    int ubound0 = (extrema::min)(A.ubound(0), A.ubound(0) - stencil_ubound0);
+    int ubound1 = (extrema::min)(A.ubound(1), A.ubound(1) - stencil_ubound1);
 
 #if 0
     cout << "Stencil bounds are:" << endl
@@ -422,8 +422,8 @@ void applyStencil_imp(const T_stencil& stencil, Array<T_numtype1,1>& A,
     int stencil_lbound0 = minb(0);
     int stencil_ubound0 = maxb(0);
 
-    int lbound0 = (minmax::max)(A.lbound(0), A.lbound(0) - stencil_lbound0);
-    int ubound0 = (minmax::min)(A.ubound(0), A.ubound(0) - stencil_ubound0);
+    int lbound0 = (extrema::max)(A.lbound(0), A.lbound(0) - stencil_lbound0);
+    int ubound0 = (extrema::min)(A.ubound(0), A.ubound(0) - stencil_ubound0);
 
 #if 0
     cout << "Stencil bounds are:" << endl
