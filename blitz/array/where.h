@@ -70,28 +70,28 @@ public:
     T_numtype operator()(const TinyVector<int, N_rank>& i)
     { return iter1_(i) ? iter2_(i) : iter3_(i); }
 
-    int ascending(int rank)
+    int ascending(const int rank) const
     {
         return bounds::compute_ascending(rank, bounds::compute_ascending(
           rank, iter1_.ascending(rank), iter2_.ascending(rank)),
           iter3_.ascending(rank));
     }
 
-    int ordering(int rank)
+    int ordering(const int rank) const
     {
         return bounds::compute_ordering(rank, bounds::compute_ordering(
           rank, iter1_.ordering(rank), iter2_.ordering(rank)),
           iter3_.ordering(rank));
     }
 
-    int lbound(int rank)
+    int lbound(const int rank) const
     {
         return bounds::compute_lbound(rank, bounds::compute_lbound(
           rank, iter1_.lbound(rank), iter2_.lbound(rank)), 
           iter3_.lbound(rank));
     }
    
-    int ubound(int rank)
+    int ubound(const int rank) const
     {
         return bounds::compute_ubound(rank, bounds::compute_ubound(
           rank, iter1_.ubound(rank), iter2_.ubound(rank)), 

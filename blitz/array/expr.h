@@ -219,8 +219,8 @@ protected:
 };
 
 struct bounds {
-    static int compute_ascending(int BZ_DEBUG_PARAM(rank),
-                                 int ascending1, int ascending2)
+    static int compute_ascending(const int BZ_DEBUG_PARAM(rank),
+                                 const int ascending1, const int ascending2)
     {
         // The value INT_MIN indicates that there are no arrays
         // in a subtree of the expression.  This logic returns
@@ -242,8 +242,8 @@ struct bounds {
         return 0;
     }
 
-    static int compute_ordering(int BZ_DEBUG_PARAM(rank),
-                                int order1, int order2)
+    static int compute_ordering(const int BZ_DEBUG_PARAM(rank),
+                                const int order1, const int order2)
     {
         // The value INT_MIN indicates that there are no arrays
         // in a subtree of the expression.  This logic returns
@@ -264,8 +264,8 @@ struct bounds {
         return 0;
     }
 
-    static int compute_lbound(int BZ_DEBUG_PARAM(rank),
-                              int lbound1, int lbound2)
+    static int compute_lbound(const int BZ_DEBUG_PARAM(rank),
+                              const int lbound1, const int lbound2)
     {
         // The value INT_MIN indicates that there are no arrays
         // in a subtree of the expression.  This logic returns
@@ -286,8 +286,8 @@ struct bounds {
         return 0;
     }
 
-    static int compute_ubound(int BZ_DEBUG_PARAM(rank),
-                              int ubound1, int ubound2)
+    static int compute_ubound(const int BZ_DEBUG_PARAM(rank),
+                              const int ubound1, const int ubound2)
     {
         // The value INT_MAX indicates that there are no arrays
         // in a subtree of the expression.  This logic returns
