@@ -1,4 +1,12 @@
-2008-04-06  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+2008-05-03  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+
+	* blitz/array/expr.h: Some more constification.
+	* blitz/array/where.h: Constification of the ascending, ordering, lbound
+	and ubound methods that had been overlooked with the previous patch.
+	* testsuite/where.cpp: Added a test to trigger the problem detected
+	by Patrick Guio that is corrected with this patch.
+
+2008-05-02  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
 
 	* blitz/minmax.h blitz/array/resize.cc blitz/array/stencils.cc
 	blitz/array/stencils.h testsuite/minmax.cpp:
