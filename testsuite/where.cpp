@@ -23,6 +23,9 @@ int main()
 
     BZTEST(count(D == E) == N);
 
+    Array<int,1> F ( where(A > 0, pow2(B), pow2(C)) ); 
+    BZTEST(count(D == E) == N);
+
     return 0;
 }
 
