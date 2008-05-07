@@ -49,41 +49,25 @@ public:
 
     // operator* must be declared by subclass
   
-    int ascending(int rank)
-    { return iter_.ascending(rank); }
- 
-    int ordering(int rank)
-    { return iter_.ordering(rank); }
- 
-    int lbound(int rank)
-    { return iter_.lbound(rank); }
+    int ascending(const int rank) const { return iter_.ascending(rank); }
+    int ordering(const int rank)  const { return iter_.ordering(rank);  }
+    int lbound(const int rank)    const { return iter_.lbound(rank);    }
+    int ubound(const int rank)    const { return iter_.ubound(rank);    }
 
-    int ubound(int rank)
-    { return iter_.ubound(rank); }
+    void push(const int position) { iter_.push(position); }
+    void pop(const int position)  { iter_.pop(position);  }
 
-    void push(int position)
-    { iter_.push(position); }
+    void advance() { iter_.advance(); }
 
-    void pop(int position)
-    { iter_.pop(position); }
+    void advance(const int n) { iter_.advance(n); }
 
-    void advance()
-    { iter_.advance(); }
+    void loadStride(const int rank) { iter_.loadStride(rank); }
 
-    void advance(int n)
-    { iter_.advance(n); }
+    bool isUnitStride(const int rank) const { return iter_.isUnitStride(rank); }
 
-    void loadStride(int rank)
-    { iter_.loadStride(rank); }
+    void advanceUnitStride() { iter_.advanceUnitStride(); }
 
-    bool isUnitStride(int rank) const
-    { return iter_.isUnitStride(rank); }
-
-    void advanceUnitStride()
-    { iter_.advanceUnitStride(); }
-
-    bool canCollapse(int outerLoopRank, int innerLoopRank) const
-    {
+    bool canCollapse(const int outerLoopRank,const int innerLoopRank) const {
         // BZ_DEBUG_MESSAGE("_bz_ArrayExpr<>::canCollapse()");
         return iter_.canCollapse(outerLoopRank, innerLoopRank);
     }
@@ -92,11 +76,9 @@ public:
 
     // T_numtype fastRead(int i)     -- ditto
 
-    int suggestStride(int rank) const
-    { return iter_.suggestStride(rank); }
+    int suggestStride(const int rank) const { return iter_.suggestStride(rank); }
 
-    bool isStride(int rank, int stride) const
-    { return iter_.isStride(rank,stride); }
+    bool isStride(const int rank,const int stride) const { return iter_.isStride(rank,stride); }
 
     void prettyPrint(BZ_STD_SCOPE(string) &str) const
     {

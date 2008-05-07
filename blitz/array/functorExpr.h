@@ -146,54 +146,40 @@ public:
     { return f_(iter_(i)); }
 #endif
 
-    int ascending(int rank)
-    { return iter_.ascending(rank); }
-
-    int ordering(int rank)
-    { return iter_.ordering(rank); }
-
-    int lbound(int rank)
-    { return iter_.lbound(rank); }
-
-    int ubound(int rank)
-    { return iter_.ubound(rank); }
+    int ascending(const int rank) const { return iter_.ascending(rank); }
+    int ordering(const int rank)  const { return iter_.ordering(rank);  }
+    int lbound(const int rank)    const { return iter_.lbound(rank);    }
+    int ubound(const int rank)    const { return iter_.ubound(rank);    }
   
-    void push(int position)
-    { iter_.push(position); }
+    void push(const int position) { iter_.push(position); }
 
-    void pop(int position)
-    { iter_.pop(position); }
+    void pop(const int position)  { iter_.pop(position); }
 
-    void advance()
-    { iter_.advance(); }
+    void advance() { iter_.advance(); }
 
-    void advance(int n)
-    { iter_.advance(n); }
+    void advance(const int n) { iter_.advance(n); }
 
-    void loadStride(int rank)
-    { iter_.loadStride(rank); }
+    void loadStride(const int rank) { iter_.loadStride(rank); }
 
-    bool isUnitStride(int rank) const
-    { return iter_.isUnitStride(rank); }
+    bool isUnitStride(const int rank) const { return iter_.isUnitStride(rank); }
 
-    void advanceUnitStride()
-    { iter_.advanceUnitStride(); }
+    void advanceUnitStride() { iter_.advanceUnitStride(); }
   
-    bool canCollapse(int outerLoopRank, int innerLoopRank) const
+    bool canCollapse(const int outerLoopRank, const int innerLoopRank) const
     { 
         return iter_.canCollapse(outerLoopRank, innerLoopRank); 
     }
 
-    T_numtype operator[](int i)
+    T_numtype operator[](const int i)
     { return f_(iter_[i]); }
 
-    T_numtype fastRead(int i)
+    T_numtype fastRead(const int i)
     { return f_(iter_.fastRead(i)); }
 
-    int suggestStride(int rank) const
+    int suggestStride(const int rank) const
     { return iter_.suggestStride(rank); }
 
-    bool isStride(int rank, int stride) const
+    bool isStride(const int rank,const int stride) const
     { return iter_.isStride(rank,stride); }
 
     void prettyPrint(BZ_STD_SCOPE(string) &str, 
@@ -272,89 +258,79 @@ public:
     { return f_(iter1_(i), iter2_(i)); }
 #endif
 
-    int ascending(int rank)
-    {
+    int ascending(const int rank) const {
         return bounds::compute_ascending(rank, iter1_.ascending(rank),
             iter2_.ascending(rank));
     }
 
-    int ordering(int rank)
-    {
+    int ordering(const int rank) const {
         return bounds::compute_ordering(rank, iter1_.ordering(rank),
             iter2_.ordering(rank));
     }
   
-    int lbound(int rank)
-    { 
+    int lbound(const int rank) const { 
         return bounds::compute_lbound(rank, iter1_.lbound(rank),
             iter2_.lbound(rank));
     }
   
-    int ubound(int rank)
-    {
+    int ubound(const int rank) const {
         return bounds::compute_ubound(rank, iter1_.ubound(rank),
             iter2_.ubound(rank));
     }
   
-    void push(int position)
-    { 
+    void push(const int position) { 
         iter1_.push(position); 
         iter2_.push(position);
     }
   
-    void pop(int position)
-    { 
+    void pop(const int position) { 
         iter1_.pop(position); 
         iter2_.pop(position);
     }
   
-    void advance()
-    { 
+    void advance() { 
         iter1_.advance(); 
         iter2_.advance();
     }
   
-    void advance(int n)
-    {
+    void advance(const int n) {
         iter1_.advance(n);
         iter2_.advance(n);
     }
   
-    void loadStride(int rank)
-    {
+    void loadStride(const int rank) {
         iter1_.loadStride(rank); 
         iter2_.loadStride(rank);
     }
   
-    bool isUnitStride(int rank) const
+    bool isUnitStride(const int rank) const
     { return iter1_.isUnitStride(rank) && iter2_.isUnitStride(rank); }
   
-    void advanceUnitStride()
-    { 
+    void advanceUnitStride() { 
         iter1_.advanceUnitStride(); 
         iter2_.advanceUnitStride();
     }
   
-    bool canCollapse(int outerLoopRank, int innerLoopRank) const
+    bool canCollapse(const int outerLoopRank,const int innerLoopRank) const
     { 
         return iter1_.canCollapse(outerLoopRank, innerLoopRank)
             && iter2_.canCollapse(outerLoopRank, innerLoopRank);
     } 
 
-    T_numtype operator[](int i)
+    T_numtype operator[](const int i)
     { return f_(iter1_[i], iter2_[i]); }
 
-    T_numtype fastRead(int i)
+    T_numtype fastRead(const int i)
     { return f_(iter1_.fastRead(i), iter2_.fastRead(i)); }
 
-    int suggestStride(int rank) const
+    int suggestStride(const int rank) const
     {
         int stride1 = iter1_.suggestStride(rank);
         int stride2 = iter2_.suggestStride(rank);
         return ( stride1>stride2 ? stride1 : stride2 );
     }
   
-    bool isStride(int rank, int stride) const
+    bool isStride(const int rank,const int stride) const
     {
         return iter1_.isStride(rank,stride) && iter2_.isStride(rank,stride);
     }
@@ -446,97 +422,84 @@ public:
     { return f_(iter1_(i), iter2_(i), iter3_(i)); }
 #endif
 
-    int ascending(int rank)
-    {
+    int ascending(const int rank) const {
         return bounds::compute_ascending(rank, iter1_.ascending(rank),
             bounds::compute_ascending(rank, iter2_.ascending(rank),
             iter3_.ascending(rank)));
     }
 
-    int ordering(int rank)
-    {
+    int ordering(const int rank) const {
         return bounds::compute_ordering(rank, iter1_.ordering(rank),
             bounds::compute_ordering(rank, iter2_.ordering(rank),
 	    iter3_.ordering(rank)));
     }
   
-    int lbound(int rank)
-    { 
+    int lbound(const int rank) const {
         return bounds::compute_lbound(rank, iter1_.lbound(rank),
             bounds::compute_lbound(rank, iter2_.lbound(rank),
 	    iter3_.lbound(rank)));
     }
   
-    int ubound(int rank)
-    {
+    int ubound(const int rank) const {
         return bounds::compute_ubound(rank, iter1_.ubound(rank),
             bounds::compute_ubound(rank, iter2_.ubound(rank),
 	    iter3_.ubound(rank)));
     }
   
-    void push(int position)
-    { 
+    void push(const int position) { 
         iter1_.push(position); 
         iter2_.push(position);
         iter3_.push(position);
     }
   
-    void pop(int position)
-    { 
+    void pop(const int position) { 
         iter1_.pop(position); 
         iter2_.pop(position);
         iter3_.pop(position);
     }
   
-    void advance()
-    { 
+    void advance() { 
         iter1_.advance(); 
         iter2_.advance();
         iter3_.advance();
     }
   
-    void advance(int n)
-    {
+    void advance(const int n) {
         iter1_.advance(n);
         iter2_.advance(n);
         iter3_.advance(n);
     }
   
-    void loadStride(int rank)
-    { 
+    void loadStride(const int rank) { 
         iter1_.loadStride(rank); 
         iter2_.loadStride(rank);
         iter3_.loadStride(rank);
     }
   
-    bool isUnitStride(int rank) const
-    {
+    bool isUnitStride(const int rank) const {
         return iter1_.isUnitStride(rank) && iter2_.isUnitStride(rank)
             && iter3_.isUnitStride(rank);
     }
   
-    void advanceUnitStride()
-    { 
+    void advanceUnitStride() { 
         iter1_.advanceUnitStride(); 
         iter2_.advanceUnitStride();
         iter3_.advanceUnitStride();
     }
   
-    bool canCollapse(int outerLoopRank, int innerLoopRank) const
-    { 
+    bool canCollapse(const int outerLoopRank,const int innerLoopRank) const { 
         return iter1_.canCollapse(outerLoopRank, innerLoopRank)
             && iter2_.canCollapse(outerLoopRank, innerLoopRank)
             && iter3_.canCollapse(outerLoopRank, innerLoopRank);
     } 
 
-    T_numtype operator[](int i)
+    T_numtype operator[](const int i)
     { return f_(iter1_[i], iter2_[i], iter3_[i]); }
 
-    T_numtype fastRead(int i)
+    T_numtype fastRead(const int i)
     { return f_(iter1_.fastRead(i), iter2_.fastRead(i), iter3_.fastRead(i)); }
 
-    int suggestStride(int rank) const
-    {
+    int suggestStride(const int rank) const {
         int stride1 = iter1_.suggestStride(rank);
         int stride2 = iter2_.suggestStride(rank);
         int stride3 = iter3_.suggestStride(rank);
@@ -544,8 +507,7 @@ public:
             stride1 : stride2 );
     }
   
-    bool isStride(int rank, int stride) const
-    {
+    bool isStride(const int rank,const int stride) const {
         return iter1_.isStride(rank,stride) && iter2_.isStride(rank,stride)
             && iter3_.isStride(rank,stride);
     }
