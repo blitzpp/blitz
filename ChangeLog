@@ -1,3 +1,8 @@
+2008-05-07  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+    * array/functorExpr.h array/stencil-et.h: Yet some more constification
+	that were missed.
+	* testsuite/patrik-jonsson.cpp: Added a new test contributed by
+	Patrik Jonsson to exercise array functors.
 
 2008-05-07  Patrick Guio <p.guio@ucl.ac.uk>
 
