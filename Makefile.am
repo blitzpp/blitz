@@ -15,7 +15,7 @@ EXTRA_DIST = COPYRIGHT LEGAL LICENSE README.binutils README-VS.NET.txt \
 	Blitz-VS.NET.zip Blitz-VS2005.NET.zip ChangeLog.1 
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = blitz.pc blitz-uninstalled.pc
+pkgconfig_DATA = blitz.pc
 
 DISTCLEANFILES = blitz.pc blitz.pc.in blitz-uninstalled.pc
 
