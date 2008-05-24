@@ -1,3 +1,11 @@
+2008-05-24  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+	* blitz/array/reduce.h: Removed an off by one bug introduced with
+	my previous patch of 2008/05/02.
+	* testsuite/patrik-jonsson.cpp: Changed to patrik-jonsson-1.cpp.
+	* testsuite/patrik-jonsson-2.cpp: New test contributed by
+	Patrik Jonsson.
+	* testsuite/Makefile.am: Updated correspondingly.
+
 2008-05-07  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
     * array/functorExpr.h array/stencil-et.h: Yet some more constification
 	that were missed.
