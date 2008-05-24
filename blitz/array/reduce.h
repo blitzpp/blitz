@@ -196,8 +196,8 @@ private:
         // It is possible that ordering is not a permutation of 0,...,rank-1.
         // In that case j will be less than rank. We fill in ordering with
         // the unused values in decreasing order.
-        for (int i = rank-1; j < rank; ++j) {
-            while (in_ordering(i--));
+        for (int i = rank; j < rank; ++j) {
+            while (in_ordering(--i)); // find an unused index
             ordering_(j) = i;
         }
     }
