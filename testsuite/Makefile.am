@@ -15,7 +15,7 @@ chris-jeffery-1 chris-jeffery-2 chris-jeffery-3 complex-test constarray \
 contiguous copy ctors derrick-bass-1 derrick-bass-3 exprctor extract free \
 gary-huber-1 initialize interlace iter Josef-Wagenhuber loop1 \
 matthias-troyer-1 matthias-troyer-2 mattias-lindstroem-1 minmax minsumpow \
-module newet Olaf-Ronneberger-1 patrik-jonsson peter-bienstman-1 \
+module newet Olaf-Ronneberger-1 patrik-jonsson-1 patrik-jonsson-2 peter-bienstman-1 \
 peter-bienstman-2 peter-bienstman-3 peter-bienstman-4 peter-bienstman-5 \
 peter-nordlund-1  peter-nordlund-2 peter-nordlund-3 promote qcd reduce \
 reindex reverse shapecheck shape storage stub theodore-papadopoulo-1 tinymat \
@@ -51,7 +51,8 @@ minsumpow_SOURCES = minsumpow.cpp
 module_SOURCES = module1.cpp module2.cpp
 newet_SOURCES = newet.cpp
 Olaf_Ronneberger_1_SOURCES = Olaf-Ronneberger-1.cpp
-patrik_jonsson_SOURCES = patrik-jonsson.cpp
+patrik_jonsson_1_SOURCES = patrik-jonsson-1.cpp
+patrik_jonsson_2_SOURCES = patrik-jonsson-2.cpp
 peter_bienstman_1_SOURCES = peter-bienstman-1.cpp
 peter_bienstman_2_SOURCES = peter-bienstman-2.cpp
 peter_bienstman_3_SOURCES = peter-bienstman-3.cpp
