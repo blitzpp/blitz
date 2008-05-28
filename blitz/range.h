@@ -89,9 +89,9 @@ public:
         : first_(first), last_(last), stride_(stride)
     { 
         BZPRECHECK((first == fromStart) || (last == toEnd) ||
-                       (first < last) && (stride > 0) ||
-                       (first > last) && (stride < 0) ||
-                       (first == last), (*this) << " is an invalid range.");
+            ((first < last) && (stride > 0)) ||
+            ((first > last) && (stride < 0)) ||
+            (first == last), (*this) << " is an invalid range.");
         BZPRECHECK((first == fromStart) || (last == toEnd) ||
             (last-first) % stride == 0,
             (*this) << ": the stride must evenly divide the range");
@@ -124,14 +124,14 @@ public:
 
     bool isAscendingContiguous() const
     {
-        return ((first_ < last_) && (stride_ == 1) || (first_ == last_));
+        return (((first_ < last_) && (stride_ == 1)) || (first_ == last_));
     }
 
     void setRange(T_numtype first, T_numtype last, T_numtype stride=1)
     {
-        BZPRECONDITION((first < last) && (stride > 0) ||
-                       (first > last) && (stride < 0) ||
-                       (first == last));
+        BZPRECONDITION(((first < last) && (stride > 0)) ||
+            ((first > last) && (stride < 0)) ||
+            (first == last));
         BZPRECONDITION((last-first) % stride == 0);
         first_ = first;
         last_ = last;
