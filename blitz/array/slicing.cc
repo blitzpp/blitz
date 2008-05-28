@@ -319,16 +319,15 @@ void Array<P_numtype, N_rank>::slice(int rank, Range r)
     int stride = r.stride();
 
 #ifdef BZ_DEBUG_SLICE
-cout << "slice(" << rank << ", Range):" << endl
-     << "first = " << first << " last = " << last << "stride = " << stride
-     << endl << "length_[rank] = " << length_[rank] << endl;
+    cout << "slice(" << rank << ", Range):" << endl
+         << "first = " << first << " last = " << last << "stride = " << stride
+         << endl << "length_[rank] = " << length_[rank] << endl;
 #endif
 
-    BZPRECHECK(
-        ((first <= last) && (stride > 0)
-         || (first >= last) && (stride < 0))
-        && (first >= base(rank) && (first - base(rank)) < length_[rank])
-        && (last >= base(rank) && (last - base(rank)) < length_[rank]),
+    BZPRECHECK((((first <= last) && (stride > 0)) || 
+        ((first >= last) && (stride < 0))) && 
+        (first >= base(rank) && (first - base(rank)) < length_[rank]) && 
+        (last >= base(rank) && (last - base(rank)) < length_[rank]),
         "Bad array slice: Range(" << first << ", " << last << ", "
         << stride << ").  Array is Range(" << lbound(rank) << ", "
         << ubound(rank) << ")");
