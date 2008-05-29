@@ -1,3 +1,18 @@
+2008-05-28  Julian Cummings  <cummings@cacr.caltech.edu>
+
+	* blitz/array/slicing.cc: Add extra parentheses around
+	conditionals involving && operator to eliminate warnings from gcc
+	4.3 compiler about ambiguities.  Patch provided by Volker Braun
+	<vbraun@physics.upenn.edu>.
+	* blitz/range.h: Add extra parentheses around conditionals
+	involving && operator to eliminate warnings from gcc 4.3 compiler
+	about ambiguities.  Patch provided by Volker Braun
+	<vbraun@physics.upenn.edu>.
+	* testsuite/Makefile.am: Replace patrik-jonsson-2 test with the
+	zeek-1 test from Eric Zeek.  It tests the same Array construction
+	from a partial reduction, but checks the results.
+	
+
 2008-05-24  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
 	* blitz/array/reduce.h: Removed an off by one bug introduced with
 	my previous patch of 2008/05/02.
@@ -61,8 +76,15 @@
 2008-05-01  Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
 	* blitz/funcs.h: Constification.
 
-2008-04-22  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
+2008-04-25  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 
+	* Makefile.am: Add new COPYRIGHT document containing the BSD
+	copyright language to the list of distribution files.  Also add
+	the zip file of VS2005.NET support files (should have done this a
+	while ago).
+	
+
+2008-04-22  Julian Cummings  <cummings@valhalla.cacr.caltech.edu>
 	* blitz/range.h: Convert enum for bounds values fromStart and
 	toEnd to standard integral constant type, so that we can be more
 	flexible for 64-bit support.  Eliminate the superfluous copy of
