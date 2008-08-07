@@ -81,8 +81,8 @@ using namespace ranlib;
 
 void foo()
 @{
-    Normal<double> normalGen;
-    double x = normalGen.random();    // x is a normal random number
+    Normal<double> normalGen(0.5,0.25); // mean = 0.5, std dev = 0.25
+    double x = normalGen.random();      // x is a normal random number
 @}
 @end example
 
