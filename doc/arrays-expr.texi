@@ -1413,7 +1413,7 @@ A =  3,   8,   0,   1,
      2,  -5,  -1,   1,
      4,   3,   4,   2;
 
-Array<float, 1> z;
+Array<float, 1> z(4);
 firstIndex i;
 secondIndex j;
 
