@@ -1,5 +1,23 @@
-2008-05-28  Julian Cummings  <cummings@cacr.caltech.edu>
+2009-03-10  Julian Cummings  <cummings@cacr.caltech.edu>
 
+	* blitz/applics.h: Clean up applicator typedefs and standardize
+	usage with apply method.  All applicator types now return the type
+	T_numtype.  Removed all typedefs of T_promote here, as only
+	T_numtype is needed.
+	* blitz/vecexpr.h: Extract return type T_numtype for _bz_VecExprOp
+	from T_op type.
+	* testsuite/where.cpp: Add a quick test of where operation on
+	TinyVector.
+	* blitz/vector.h: Added include of vecwhere.h header file for
+	where operation on vector types.
+	
+
+2008-08-06  Julian Cummings  <cummings@cacr.caltech.edu>
+	* doc/random.texi: Corrected example code in manual illustrating
+	use of Normal RNG.
+	
+
+2008-05-28  Julian Cummings  <cummings@cacr.caltech.edu>
 	* blitz/array/slicing.cc: Add extra parentheses around
 	conditionals involving && operator to eliminate warnings from gcc
 	4.3 compiler about ambiguities.  Patch provided by Volker Braun
