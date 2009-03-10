@@ -1,5 +1,6 @@
 #include "testsuite.h"
 #include <blitz/array.h>
+#include <blitz/tinyvec-et.h>
 
 BZ_USING_NAMESPACE(blitz)
 
@@ -25,6 +26,12 @@ int main()
 
     Array<int,1> F ( where(A > 0, pow2(B), pow2(C)) ); 
     BZTEST(count(D == E) == N);
+
+    TinyVector<int,3> a(1,2,3);
+    TinyVector<int,3> b(3,2,1);
+    TinyVector<int,3> c(0,0,0);
+    a = where(a <= b, c, a);
+    BZTEST(sum(a) == 3);
 
     return 0;
 }
