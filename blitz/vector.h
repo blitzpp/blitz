@@ -451,6 +451,7 @@ BZ_NAMESPACE_END
 #include <blitz/veciter.h>          // Iterators
 #include <blitz/vecpick.h>          // VectorPick
 #include <blitz/vecexpr.h>          // Expression template classes
+#include <blitz/vecwhere.h>         // Vector where function
 #include <blitz/vecglobs.h>         // Global functions
 #include <blitz/vector.cc>          // Member functions
 #include <blitz/vecio.cc>           // IO functions
