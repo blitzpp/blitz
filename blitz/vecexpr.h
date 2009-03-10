@@ -43,8 +43,8 @@ public:
     typedef P_expr2 T_expr2;
     typedef _bz_typename T_expr1::T_numtype T_numtype1;
     typedef _bz_typename T_expr2::T_numtype T_numtype2;
-    typedef BZ_PROMOTE(T_numtype1, T_numtype2) T_numtype;
     typedef P_op    T_op;
+    typedef _bz_typename T_op::T_numtype T_numtype;
 
 #ifdef BZ_PASS_EXPR_BY_VALUE
     _bz_VecExprOp(T_expr1 a, T_expr2 b)
