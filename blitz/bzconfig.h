@@ -3,8 +3,13 @@
 #define BZCONFIG_H
 
 #if defined(__APPLE__)
+#if defined(__GNUC__)
+/* GNU gcc compiler for newer Mac OS X Darwin */
+#include <blitz/gnu/bzconfig.h>
+#else
 /* IBM xlc compiler for Darwin */
 #include <blitz/apple/bzconfig.h>
+#endif
 
 #elif defined(__INTEL_COMPILER)
 /* Intel icc compiler */
