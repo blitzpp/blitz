@@ -144,12 +144,16 @@ void one(const char* applicName, const char* specialization, const char* funcNam
     {
         ofs << std::endl << "    static inline T_numtype apply(T_numtype1 x)"
             << std::endl << "    {" << std::endl;
-        ofs << "#ifdef isnan" << std::endl;
+        ofs << "#if defined(isnan)" << std::endl;
         ofs << "        "
             << "// Some platforms define isnan as a macro, which causes the"
             << std::endl << "        "
             << "// BZ_IEEEMATHFN_SCOPE macro to break." << std::endl;
         ofs << "        return isnan(x);" << std::endl;
+        ofs << "#elif defined(BZ_ISNAN_IN_NAMESPACE_STD)" << std::endl 
+            << "// on Mac OS X Darwin, isnan is only in namespace std"
+            << std::endl;
+        ofs << "        return BZ_STD_SCOPE(isnan)(x);" << std::endl;
         ofs << "#else" << std::endl;
         ofs << "        return BZ_IEEEMATHFN_SCOPE(isnan)(x);" << std::endl;
         ofs << "#endif" << std::endl << "    }" << std::endl;
