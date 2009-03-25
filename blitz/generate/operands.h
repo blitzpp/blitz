@@ -1,6 +1,5 @@
 #include <cstring>
 #include <iostream>
-#include <string>
 #include <fstream>
 
 class operand {
