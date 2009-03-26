@@ -6,7 +6,7 @@ int main()
     std::cout << "Generating <vecwhere.cc>" << std::endl;
 
     bzofstream ofs("../vecwhere.cc", "where(X,Y,Z) function for vectors",
-        __FILE__, "BZ_VECWHERE_CC");
+        __FILE__, "$Revision$", "BZ_VECWHERE_CC");
 
     ofs.beginNamespace();
 
