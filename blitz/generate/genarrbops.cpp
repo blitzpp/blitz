@@ -17,7 +17,7 @@ int main()
     OperandTuple operands(2);
 
     bzofstream ofs("../array/bops.cc", "Array expression templates (2 operands)",
-        __FILE__, "BZ_ARRAYBOPS_CC");
+        __FILE__, "$Revision$", "BZ_ARRAYBOPS_CC");
 
     ofs << "#ifndef BZ_ARRAYEXPR_H" << std::endl
         << " #error <blitz/array/bops.cc> must be included after <blitz/arrayexpr.h>" 

@@ -60,7 +60,7 @@ void generate()
 " ***************************************************************************\n"
 " */\n"
 "\n"
-        << "// Generated: " << __FILE__ << " " << __DATE__ << " " << __TIME__ << std::endl;
+        << "// Generated: " << __FILE__ << " $Revision$ " << __DATE__ << " " << __TIME__ << std::endl;
 
 ofs <<
 "template<typename A, typename B>\n"

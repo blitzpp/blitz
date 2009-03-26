@@ -17,7 +17,7 @@ int main()
     OperandTuple operands(2);
 
     bzofstream ofs("../vecbops.cc", "Vector expression templates (2 operands)",
-        __FILE__, "BZ_VECBOPS_CC");
+        __FILE__, "$Revision$", "BZ_VECBOPS_CC");
 
     ofs << "#ifndef BZ_VECEXPR_H" << std::endl
         << " #error <blitz/vecbops.cc> must be included via <blitz/vecexpr.h>" 

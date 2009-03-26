@@ -108,7 +108,7 @@ int main()
     std::cout << "Generating <matuops.h>" << std::endl;
 
     ofs << "// Generated source file.  Do not edit." << std::endl;
-    ofs << "// Created by: " << __FILE__ << " " << __DATE__ 
+    ofs << "// Created by: " << __FILE__ << " $Revision$ " << __DATE__ 
         << " " << __TIME__ << std::endl << std::endl;
 
     ofs << "#ifndef BZ_MATUOPS_H" << std::endl

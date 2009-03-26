@@ -2,7 +2,7 @@
 #include "arroptuple.h"
 
 bzofstream ofs("../array/uops.cc", 
-    "Expression templates for arrays, unary functions", __FILE__,
+    "Expression templates for arrays, unary functions", __FILE__,"$Revision$",
     "BZ_ARRAYUOPS_CC");
 
 const int ieeeflag = 1, bsdflag = 2;

@@ -11,7 +11,7 @@ int main()
 
     std::ofstream ofs("../matbops.h");
     ofs << "// Generated source file.  Do not edit." << std::endl;
-    ofs << "// Created by: " << __FILE__ << " " << __DATE__ 
+    ofs << "// Created by: " << __FILE__ << " $Revision$ " << __DATE__ 
         << " " << __TIME__ << std::endl << std::endl;
 
     ofs << "#ifndef BZ_MATBOPS_H" << std::endl

@@ -329,7 +329,7 @@ int main()
     ofs.open("../mathfunc.h");
 
     ofs <<  
-"// Generated: " << __FILE__ << " " << __DATE__ << " " << __TIME__ 
+"// Generated: " << __FILE__ << " $Revision$ " << __DATE__ << " " << __TIME__ 
                  << std::endl << std::endl <<
 "#ifndef BZ_MATHFUNC_H\n"
 "#define BZ_MATHFUNC_H\n"

@@ -32,7 +32,7 @@ class bzofstream : public std::ofstream {
 
 public:
     bzofstream(const char* filename, const char* description,
-        const char* sourceFile, const char* mnemonic)
+        const char* sourceFile, const char* revision, const char* mnemonic)
         : std::ofstream(filename)
     {
         (*this) << 
@@ -60,7 +60,7 @@ public:
 " */ " 
        << std::endl << std::endl
        << "// Generated source file.  Do not edit. " << std::endl
-       << "// " << sourceFile << " " << __DATE__ << " " << __TIME__ 
+       << "// " << sourceFile << " " << revision << " " << __DATE__ << " " << __TIME__ 
        << std::endl << std::endl
        << "#ifndef " << mnemonic << std::endl
        << "#define " << mnemonic << std::endl << std::endl;

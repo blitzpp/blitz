@@ -17,7 +17,7 @@ int main()
     OperandTuple operands(2);
 
     bzofstream ofs("../vecbfn.cc", "Vector expression binary functions (2 operands)",
-        __FILE__, "BZ_VECBFN_CC");
+        __FILE__, "$Revision$", "BZ_VECBFN_CC");
 
     ofs << "#ifndef BZ_VECEXPR_H" << std::endl
         << " #error <blitz/vecbfn.cc> must be included via <blitz/vecexpr.h>" 
