@@ -172,7 +172,11 @@ void one(const char* applicName, const char* specialization, const char* funcNam
             ofs << "BZ_CMATHFN_SCOPE(";
         else if ((flag == ieeeflag) || (flag == bsdflag))
             ofs << "BZ_IEEEMATHFN_SCOPE(";
-        else 
+        else if (strcmp(applicName,"abs") == 0 &&
+                 specialization && (strcmp(specialization,"int") == 0 || 
+                                    strcmp(specialization,"long") == 0))
+            ofs << "BZ_MATHABSINT_SCOPE(";
+        else
             ofs << "BZ_MATHFN_SCOPE(";
     
         ofs << funcName << ")(";
@@ -340,6 +344,7 @@ int main()
 "BZ_NAMESPACE(blitz)\n\n";
 
     one("abs", 0, "abs", 0, "Absolute value");
+    one("abs","int", "abs", "int", 0);
     one("abs","long","labs","long", 0);
     one("abs","float"       ,"fabs",    "float",       0);
 
