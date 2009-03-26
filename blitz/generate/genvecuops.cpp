@@ -8,7 +8,7 @@ const int ieeeflag = 1, bsdflag = 2, cmplxflag = 3;
 
 bzofstream ofs("../vecuops.cc", 
     "Expression templates for vectors, unary functions",
-    __FILE__, "$Revision", 
+    __FILE__, "$Revision$", 
     "BZ_VECUOPS_CC");
 
 void one(const char* fname, int flag=0, const char* apname = 0)
