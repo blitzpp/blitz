@@ -9,6 +9,7 @@ matbops.h
 mathfunc.h
 promote-old.h
 matuops.h
+vecbfn.cc
 vecbops.cc
 vecuops.cc
 vecwhere.cc
