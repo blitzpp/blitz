@@ -22,7 +22,7 @@
  */ 
 
 // Generated source file.  Do not edit. 
-// genarrbops.cpp Oct 31 2005 18:04:53
+// genarrbops.cpp $Revision$ Mar 26 2009 16:31:36
 
 #ifndef BZ_ARRAYBOPS_CC
 #define BZ_ARRAYBOPS_CC

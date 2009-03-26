@@ -23,7 +23,7 @@
  ***************************************************************************
  */
 
-// Generated: genpromote.cpp Dec 10 2003 17:58:28
+// Generated: genpromote.cpp $Revision$ Mar 26 2009 16:31:39
 template<typename A, typename B>
 class promote_trait {
 public:

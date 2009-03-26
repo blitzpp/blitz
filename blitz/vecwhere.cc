@@ -22,7 +22,7 @@
  */ 
 
 // Generated source file.  Do not edit. 
-// genvecwhere.cpp Oct  6 2005 15:58:49
+// genvecwhere.cpp $Revision$ Mar 26 2009 16:31:41
 
 #ifndef BZ_VECWHERE_CC
 #define BZ_VECWHERE_CC

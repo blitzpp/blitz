@@ -22,7 +22,7 @@
  */ 
 
 // Generated source file.  Do not edit. 
-// genarruops.cpp Dec 30 2003 16:49:07
+// genarruops.cpp $Revision$ Mar 26 2009 16:31:37
 
 #ifndef BZ_ARRAYUOPS_CC
 #define BZ_ARRAYUOPS_CC

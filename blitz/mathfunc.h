@@ -1,4 +1,4 @@
-// Generated: genmathfunc.cpp Jan 28 2005 12:04:32
+// Generated: genmathfunc.cpp $Revision$ Mar 26 2009 16:31:38
 
 #ifndef BZ_MATHFUNC_H
 #define BZ_MATHFUNC_H
@@ -11,8 +11,6 @@
 #ifndef BZ_PRETTYPRINT_H
  #include <blitz/prettyprint.h>
 #endif
-
-#include <cstdlib>
 
 BZ_NAMESPACE(blitz)
 
@@ -1569,7 +1567,12 @@ public:
 
     static inline T_numtype apply(T_numtype1 x)
     {
-#ifdef BZ_ISNAN_IN_NAMESPACE_STD
+#if defined(isnan)
+        // Some platforms define isnan as a macro, which causes the
+        // BZ_IEEEMATHFN_SCOPE macro to break.
+        return isnan(x);
+#elif defined(BZ_ISNAN_IN_NAMESPACE_STD)
+// on Mac OS X Darwin, isnan is only in namespace std
         return BZ_STD_SCOPE(isnan)(x);
 #else
         return BZ_IEEEMATHFN_SCOPE(isnan)(x);
