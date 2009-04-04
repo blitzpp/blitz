@@ -33,10 +33,10 @@
 #endif
 
 #if defined(BZ_DEBUG)
-#define CheckIteratorValidity(X,Y)                                 \
-        BZPRECHECK(data_!=0, X " invalid iterator (empty array)"); \
-        BZPRECHECK((data_>beg_+Y && data_<end_+Y), ((data_<beg_) ? \
-            X " invalid iterator (before beginning of array)" :    \
+#define CheckIteratorValidity(X,Y)                                     \
+        BZPRECHECK(data_!=0, X " invalid iterator (empty array)");     \
+        BZPRECHECK((data_>=beg_+Y && data_<=end_+Y), ((data_<beg_+Y) ? \
+            X " invalid iterator (before beginning of array)" :        \
             X " invalid iterator (past end of array)")); 
 #else
 #define CheckIteratorValidity(X,Y)
@@ -63,8 +63,10 @@ private:
             dataincr_(r) = array.stride(r)-array.extent(s)*array.stride(s);
         }
 #if defined(BZ_DEBUG)
-        beg_ = array.dataFirst()-1;
-        end_ = end_value(array);
+        beg_ = array.data();
+        end_ = end_value(array)-1;
+        if (beg_>end_)
+            std::swap(beg_,end_);
 #endif
     }
 
@@ -72,7 +74,7 @@ public:
     ConstArrayIterator() : data_(0) { }
 
     ConstArrayIterator(const Array<T,N>& array) : 
-        data_(const_cast<T*>(array.dataFirst())) {
+        data_(const_cast<T*>(array.data())) {
         Init(array);
         pos_ = lbound_;
     }
@@ -125,7 +127,7 @@ private:
     TinyVector<int,N> dataincr_, lbound_, ubound_, order_;
 
     static T* end_value(const Array<T,N>& array) {
-        T* endval = const_cast<T*>(array.dataFirst()) +
+        T* endval = const_cast<T*>(array.data()) +
                                    array.stride(array.ordering(0));
         for (int i=0;i<N;++i)
             endval +=  array.stride(i)*(array.extent(i)-1);

@@ -18,8 +18,9 @@ matthias-troyer-1 matthias-troyer-2 mattias-lindstroem-1 minmax minsumpow \
 module newet Olaf-Ronneberger-1 patrik-jonsson-1 peter-bienstman-1 \
 peter-bienstman-2 peter-bienstman-3 peter-bienstman-4 peter-bienstman-5 \
 peter-nordlund-1  peter-nordlund-2 peter-nordlund-3 promote qcd reduce \
-reindex reverse shapecheck shape storage stub theodore-papadopoulo-1 tinymat \
-tinyvec transpose troyer-genilloud Ulisses-Mello-1 wei-ku-1 where zeek-1
+reindex reverse shapecheck shape slice-iterators storage stub \
+theodore-papadopoulo-1 tinymat tinyvec transpose troyer-genilloud \
+Ulisses-Mello-1 wei-ku-1 where zeek-1
 
 Adnene_Ben_Abdallah_1_SOURCES = Adnene-Ben-Abdallah-1.cpp
 Adnene_Ben_Abdallah_2_SOURCES = Adnene-Ben-Abdallah-2.cpp
@@ -67,6 +68,7 @@ reindex_SOURCES = reindex.cpp
 reverse_SOURCES = reverse.cpp
 shapecheck_SOURCES = shapecheck.cpp
 shape_SOURCES = shape.cpp
+slice_iterators_SOURCES = slice-iterators.cpp
 storage_SOURCES = storage.cpp
 stub_SOURCES = stub.cpp
 theodore_papadopoulo_1_SOURCES = theodore-papadopoulo-1.cpp
