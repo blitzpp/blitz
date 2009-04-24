@@ -1,3 +1,7 @@
+2009-04-24 Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+  * blitz: array-impl.h array/methods.cc: add const qualifier to the
+  transpose method.
+
 2009-03-30 Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
   * blitz/array/iter.h: Replace uses of dataFirst() by data() to remove
   iteration errors on eg reversed arrays. Corrected checks for this case.
