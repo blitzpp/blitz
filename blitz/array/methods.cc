@@ -302,7 +302,7 @@ void Array<P_numtype, N_rank>::makeUnique()
 
 template<typename P_numtype, int N_rank>
 Array<P_numtype, N_rank> Array<P_numtype, N_rank>::transpose(int r0, int r1, 
-    int r2, int r3, int r4, int r5, int r6, int r7, int r8, int r9, int r10)
+    int r2, int r3, int r4, int r5, int r6, int r7, int r8, int r9, int r10) const
 {
     T_array B(*this);
     B.transposeSelf(r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10);
