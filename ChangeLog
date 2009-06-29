@@ -1,6 +1,10 @@
 
 2009-06-29 Patrick Guio <p.guio@ucl.ac.uk>
 
+  * configure.ac: Added call to set up directory `m4' as an additional
+	local Autoconf macro directory. 
+	Test availability of `makeinfo' and set up an automake conditional.
+	* doc/Makefile.am: Set up `makeinfo' targets only when command available.
   * doc/examples/slicing.cpp: fixed use of toEnd (fromStart and
 	toEnd are not defined within the Range class any longer).
 
