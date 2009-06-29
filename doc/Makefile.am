@@ -33,8 +33,12 @@ examples/fixed.out examples/io.out examples/outer.out examples/output.out \
 examples/range.out examples/simple.out examples/slicing.out \
 examples/storage.out examples/strideslice.out examples/xor.out
 
-info_TEXINFOS = blitz.texi
-blitz_TEXINFOS = about.texi arrays-ctors.texi arrays-debug.texi \
+# if program makeinfo available 
+# setup _TEXINFOS target
+if MAKEINFO_DOC
+
+INFO_SRC = blitz.texi
+BLITZ_SRC = about.texi arrays-ctors.texi arrays-debug.texi \
 arrays-expr.texi arrays-globals.texi arrays-indirect.texi arrays-intro.texi \
 arrays-io.texi arrays-members.texi arrays-multi.texi arrays-slicing.texi \
 arrays-stencils.texi arrays-storage.texi arrays-types.texi \
@@ -42,6 +46,16 @@ arrays-usertype.texi compiling.texi constants.texi download.texi \
 faq.texi help.texi install.texi legal.texi numinquire.texi parallel.texi \
 platforms.texi random.texi tau.texi tinymatrix.texi tinyvector.texi \
 tuning.texi copyright.texi $(STENCILS) $(EXAMPLES) $(OUTPUT)
+
+else
+
+INFO_SRC = 
+BLITZ_SRC = 
+
+endif
+
+info_TEXINFOS = $(INFO_SRC) 
+blitz_TEXINFOS = $(BLITZ_SRC)
 
 EXTRA_DIST = blitz.info blitz.dvi blitz.ps blitz.pdf blitz.gif blitztiny.jpg \
 	indirect.eps indirect.fig indirect.pdf indirect.gif indirect.txt \
