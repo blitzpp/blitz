@@ -19,7 +19,7 @@ int main()
     A(3, Range::all()) = 1;
 
     // Set the last two rows to 0
-    A(Range(4, Range::toEnd), Range::all()) = 0;
+    A(Range(4, toEnd), Range::all()) = 0;
 
     // Set the bottom right element to 8
     A(5,5) = 8;
