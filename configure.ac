@@ -5,6 +5,7 @@ AC_PREREQ(2.59)
 AC_INIT(blitz, 0.9, blitz-bugs@oonumerics.org)
 
 AC_CONFIG_AUX_DIR(config)
+AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR(blitz/blitz.h)
 AC_CONFIG_HEADERS(blitz/config.h)
 
@@ -66,6 +67,9 @@ AM_CONDITIONAL(F90_COMPILER, [test -n "$FC"])
 # Prefix config macros with BZ_ and create compiler-specific bzconfig.h
 AC_SET_COMPILER_SPECIFIC_HEADER
 
+# makeinfo documentation
+AC_CHECK_PROG(MAKEINFO, [makeinfo], [makeinfo], [""])
+AM_CONDITIONAL(MAKEINFO_DOC, [test -n "$MAKEINFO"])
 # texinfo documentation
 AC_CHECK_PROG(TEXI2HTML, [texi2html], [texi2html])
 AM_CONDITIONAL(TEXI2HTML_DOC, [test -n "$TEXI2HTML"])
