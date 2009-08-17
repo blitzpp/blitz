@@ -44,7 +44,7 @@ $(top_srcdir)/blitz/promote-old.h $(top_srcdir)/blitz/vecbops.cc \
 $(top_srcdir)/blitz/vecuops.cc $(top_srcdir)/blitz/vecwhere.cc \
  $(top_srcdir)/blitz/vecbfn.cc
 
-all-am:
+all-am: $(EXTRA_PROGRAMS)
 	$(MAKE) $(AM_MAKEFLAGS) generate-headers
 
 clean-local:
