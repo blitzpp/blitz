@@ -37,4 +37,4 @@ compaq/bzconfig.h hp/bzconfig.h sgi/bzconfig.h gnu/bzconfig.h \
 pgi/bzconfig.h pathscale/bzconfig.h kai/bzconfig.h fujitsu/bzconfig.h
 
 clean-local:
-	-rm -rf config.h 
+	-rm -rf config.h $(genheaders)
