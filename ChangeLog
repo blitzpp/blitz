@@ -1,4 +1,8 @@
 
+2009-08-21 Patrick Guio <p.guio@ucl.ac.uk>
+
+  * blitz/generate/Makefile.am: Cleaned targets, rules and dependencies.
+
 2009-08-17 Patrick Guio <p.guio@ucl.ac.uk>
 
   * blitz/Makefile.am blitz/array/Makefile.am: Added generated headers
