@@ -21,7 +21,8 @@ DISTCLEANFILES = blitz.pc blitz.pc.in blitz-uninstalled.pc
 
 lib: blitz-library
 
-blitz-library:
+blitz-library: 
+	@(cd blitz && $(MAKE) $(AM_MAKEFLAGS)) || exit 1;
 	@(cd lib && $(MAKE) $(AM_MAKEFLAGS)) || exit 1;
 
 check-testsuite: lib
