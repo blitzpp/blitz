@@ -29,7 +29,7 @@
 
 #include <blitz/blitz.h>
 
-#include <stddef.h>     // ptrdiff_t
+#include <stddef.h>     // diffType
 
 BZ_NAMESPACE(blitz)
 
@@ -66,7 +66,7 @@ protected:
         mutexLocking_ = true;    
     }
 
-    explicit MemoryBlock(size_t items)
+    explicit MemoryBlock(sizeType items)
     {
         length_ = items;
         allocate(length_);
@@ -84,7 +84,7 @@ protected:
         mutexLocking_ = true;    
     }
 
-    MemoryBlock(size_t length, T_type* data)
+    MemoryBlock(sizeType length, T_type* data)
     {
         length_ = length;
         data_ = data;
@@ -155,7 +155,7 @@ protected:
         return dataBlockAddress_; 
     }
 
-    size_t        length()    const
+    sizeType        length()    const
     { 
         return length_; 
     }
@@ -193,7 +193,7 @@ protected:
     }
 
 protected:
-    inline void allocate(size_t length);
+    inline void allocate(sizeType length);
     void deallocate();
 
 private:   // Disabled member functions
@@ -215,7 +215,7 @@ private:   // Data members
 
     BZ_MUTEX_DECLARE(mutex)
     bool    mutexLocking_;
-    size_t  length_;
+    sizeType  length_;
 };
 
 template<typename P_type>
@@ -239,14 +239,14 @@ public:
         data_ = 0;
     }
 
-    MemoryBlockReference(MemoryBlockReference<T_type>& ref, size_t offset=0)
+    MemoryBlockReference(MemoryBlockReference<T_type>& ref, sizeType offset=0)
     {
         block_ = ref.block_;
         addReference();
         data_ = ref.data_ + offset;
     }
 
-    MemoryBlockReference(size_t length, T_type* data, 
+    MemoryBlockReference(sizeType length, T_type* data, 
         preexistingMemoryPolicy deletionPolicy)
     {
         // Create a memory block using already allocated memory. 
@@ -274,7 +274,7 @@ public:
         data_ = data;
     }
 
-    explicit MemoryBlockReference(size_t items)
+    explicit MemoryBlockReference(sizeType items)
     {
         block_ = new MemoryBlock<T_type>(items);
         addReference();
@@ -323,7 +323,7 @@ protected:
         data_ = 0;
     }
 
-    void changeBlock(MemoryBlockReference<T_type>& ref, size_t offset=0)
+    void changeBlock(MemoryBlockReference<T_type>& ref, sizeType offset=0)
     {
         blockRemoveReference();
         block_ = ref.block_;
@@ -331,7 +331,7 @@ protected:
         data_ = ref.data_ + offset;
     }
 
-    void newBlock(size_t items)
+    void newBlock(sizeType items)
     {
         blockRemoveReference();
         block_ = new MemoryBlock<T_type>(items);

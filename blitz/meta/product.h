@@ -59,6 +59,28 @@ public:
     { return _bz_meta_nullOperand(); }
 };
 
+template<int N, int I, typename T_ret>
+class _bz_meta_vectorProductRet {
+public:
+    static const int loopFlag = (I < N-1) ? 1 : 0;
+
+    template<typename T_expr1>
+    static inline T_ret
+    f(const T_expr1& a)
+    {
+      return static_cast<T_ret>(a[I]) * _bz_meta_vectorProductRet<loopFlag * N, 
+	loopFlag * (I+1), T_ret>::f(a);
+    }
+};
+
+template<typename T_ret>
+class _bz_meta_vectorProductRet<0,0, T_ret> {
+public:
+    template<typename T_expr1>
+    static inline _bz_meta_nullOperand f(const T_expr1&)
+    { return _bz_meta_nullOperand(); }
+};
+
 BZ_NAMESPACE_END
 
 #endif // BZ_META_PRODUCT_H

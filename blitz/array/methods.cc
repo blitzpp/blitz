@@ -84,7 +84,7 @@ _bz_inline2 void Array<P_numtype, N_rank>::computeStrides()
 {
     if (N_rank > 1)
     {
-      int stride = 1;
+      diffType stride = 1;
 
       // This flag simplifies the code in the loop, encouraging
       // compile-time computation of strides through constant folding.
@@ -158,11 +158,11 @@ bool Array<P_numtype, N_rank>::isStorageContiguous() const
 
     for (int i=0; i < N_rank; ++i)
     {
-        int stride = BZ_MATHFN_SCOPE(abs)(stride_[i]);
+      diffType stride = BZ_MATHFN_SCOPE(abs)(stride_[i]);
         if (stride == 1)
             haveUnitStride = true;
 
-        int vi = stride * length_[i];
+        diffType vi = stride * length_[i];
 
         int j = 0;
         for (j=0; j < N_rank; ++j)
@@ -264,7 +264,7 @@ _bz_inline2 void Array<P_numtype, N_rank>::setupStorage(int lastRankInitialized)
     computeStrides();
 
     // Allocate a block of memory
-    int numElem = numElements();
+    sizeType numElem = numElements();
     if (numElem==0)
         T_base::changeToNullBlock();
     else
@@ -370,7 +370,7 @@ void Array<P_numtype, N_rank>::reverseSelf(int rank)
 
     storage_.setAscendingFlag(rank, !isRankStoredAscending(rank));
 
-    int adjustment = stride_[rank] * (lbound(rank) + ubound(rank));
+    diffType adjustment = static_cast<ptrdiff_t>(stride_[rank]) * (lbound(rank) + ubound(rank));
     zeroOffset_ += adjustment;
     data_ += adjustment;
     stride_[rank] *= -1;
@@ -391,7 +391,7 @@ Array<P_numtype2,N_rank> Array<P_numtype,N_rank>::extractComponent(P_numtype2,
     BZPRECONDITION((componentNumber >= 0) 
         && (componentNumber < numComponents));
 
-    TinyVector<int,N_rank> stride2;
+    TinyVector<diffType, N_rank> stride2;
     for (int i=0; i < N_rank; ++i)
       stride2(i) = stride_(i) * numComponents;
     const P_numtype2* dataFirst2 = 
@@ -410,7 +410,7 @@ template<typename P_numtype, int N_rank>
 _bz_inline2 void Array<P_numtype, N_rank>::reindexSelf(const 
     TinyVector<int, N_rank>& newBase) 
 {
-    int delta = 0;
+  diffType delta = 0;
     for (int i=0; i < N_rank; ++i)
       delta += (base(i) - newBase(i)) * stride_(i);
 

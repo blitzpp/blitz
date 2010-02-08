@@ -103,6 +103,14 @@ if test "$enable_threadsafe" = yes; then
   AC_DEFINE([THREADSAFE],[1],[Enable Blitz thread-safety features])
 fi
 
+AC_ARG_ENABLE(64-bit-dimensions,
+  AS_HELP_STRING([--enable-64-bit-dimensions],[Enable dimensions with > 2^31 elements]),,[
+  enable_64-bit-dimensions="no"])
+AC_MSG_RESULT([$enable_64_bit_dimensions])
+if test "$enable_64_bit_dimensions" = yes; then
+  AC_DEFINE([BZ_FULLY64BIT],[1],[Enable dimensions with > 2^31 elements (NOT IMPLEMENTED)])
+fi
+
 # autoconf replacement of bzconfig
 AC_CHECK_CXX_FEATURES
 

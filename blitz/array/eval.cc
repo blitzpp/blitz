@@ -241,7 +241,7 @@ Array<T_numtype, N_rank>::evaluateWithStackTraversal1(
           && expr.isUnitStride(firstRank);
 
 #ifdef BZ_ARRAY_EXPR_USE_COMMON_STRIDE
-    int commonStride = expr.suggestStride(firstRank);
+    diffType commonStride = expr.suggestStride(firstRank);
     if (iter.suggestStride(firstRank) > commonStride)
         commonStride = iter.suggestStride(firstRank);
     bool useCommonStride = iter.isStride(firstRank,commonStride)
@@ -253,7 +253,7 @@ Array<T_numtype, N_rank>::evaluateWithStackTraversal1(
         << useCommonStride);
  #endif
 #else
-    int commonStride = 1;
+    diffType commonStride = 1;
     bool useCommonStride = false;
 #endif
 
@@ -267,7 +267,7 @@ Array<T_numtype, N_rank>::evaluateWithStackTraversal1(
 #ifdef BZ_DEBUG_TRAVERSE
     BZ_DEBUG_MESSAGE("BZ_USE_FAST_READ_ARRAY_EXPR with commonStride");
 #endif
-        int ubound = length(firstRank) * commonStride;
+        diffType ubound = length(firstRank) * commonStride;
         T_numtype* restrict data = const_cast<T_numtype*>(iter.data());
 
         if (commonStride == 1)
@@ -276,8 +276,8 @@ Array<T_numtype, N_rank>::evaluateWithStackTraversal1(
             for (int i=0; i < ubound; ++i)
                 T_update::update(*data++, expr.fastRead(i));
  #else
-            int n1 = ubound & 3;
-            int i = 0;
+            diffType n1 = ubound & 3;
+            diffType i = 0;
             for (; i < n1; ++i)
                 T_update::update(*data++, expr.fastRead(i));
            
@@ -289,9 +289,9 @@ Array<T_numtype, N_rank>::evaluateWithStackTraversal1(
                 T_update::update(*data++, expr.fastRead(i+2));
                 T_update::update(*data++, expr.fastRead(i+3));
 #else
-                const int t1 = i+1;
-                const int t2 = i+2;
-                const int t3 = i+3;
+                const diffType t1 = i+1;
+                const diffType t2 = i+2;
+                const diffType t3 = i+3;
 
                 _bz_typename T_expr::T_numtype tmp1, tmp2, tmp3, tmp4;
 
@@ -313,24 +313,24 @@ Array<T_numtype, N_rank>::evaluateWithStackTraversal1(
         else {
 
   #ifndef BZ_ARRAY_STACK_TRAVERSAL_UNROLL
-            for (int i=0; i != ubound; i += commonStride)
+            for (diffType i=0; i != ubound; i += commonStride)
                 T_update::update(data[i], expr.fastRead(i));
   #else
-            int n1 = (length(firstRank) & 3) * commonStride;
+            diffType n1 = (length(firstRank) & 3) * commonStride;
 
-            int i = 0;
+            diffType i = 0;
             for (; i != n1; i += commonStride)
                 T_update::update(data[i], expr.fastRead(i));
 
-            int strideInc = 4 * commonStride;
+            diffType strideInc = 4 * commonStride;
             for (; i != ubound; i += strideInc)
             {
                 T_update::update(data[i], expr.fastRead(i));
-                int i2 = i + commonStride;
+                diffType i2 = i + commonStride;
                 T_update::update(data[i2], expr.fastRead(i2));
-                int i3 = i + 2 * commonStride;
+                diffType i3 = i + 2 * commonStride;
                 T_update::update(data[i3], expr.fastRead(i3));
-                int i4 = i + 3 * commonStride;
+                diffType i4 = i + 3 * commonStride;
                 T_update::update(data[i4], expr.fastRead(i4));
             }
   #endif  // BZ_ARRAY_STACK_TRAVERSAL_UNROLL
@@ -437,7 +437,7 @@ Array<T_numtype, N_rank>::evaluateWithStackTraversalN(
      * if this optimization has been enabled).
      */
 #ifdef BZ_ARRAY_EXPR_USE_COMMON_STRIDE
-    int commonStride = expr.suggestStride(maxRank);
+    diffType commonStride = expr.suggestStride(maxRank);
     if (iter.suggestStride(maxRank) > commonStride)
         commonStride = iter.suggestStride(maxRank);
     bool useCommonStride = iter.isStride(maxRank,commonStride)
@@ -450,7 +450,7 @@ Array<T_numtype, N_rank>::evaluateWithStackTraversalN(
 #endif
 
 #else
-    int commonStride = 1;
+    diffType commonStride = 1;
     bool useCommonStride = false;
 #endif
 
@@ -537,7 +537,7 @@ Array<T_numtype, N_rank>::evaluateWithStackTraversalN(
              */
 
             // Calculate the end of the innermost loop
-            int ubound = lastLength * commonStride;
+            diffType ubound = lastLength * commonStride;
 
             /*
              * This is a real kludge.  I didn't want to have to write
@@ -554,12 +554,12 @@ Array<T_numtype, N_rank>::evaluateWithStackTraversalN(
              */
             if (commonStride == 1)
             {
-                for (int i=0; i < ubound; ++i)
+                for (diffType i=0; i < ubound; ++i)
                     T_update::update(*data++, expr.fastRead(i));
             }
 #ifdef BZ_ARRAY_EXPR_USE_COMMON_STRIDE
             else {
-                for (int i=0; i != ubound; i += commonStride)
+                for (diffType i=0; i != ubound; i += commonStride)
                     T_update::update(data[i], expr.fastRead(i));
             }
 #endif
@@ -791,13 +791,13 @@ Array<T_numtype, N_rank>::evaluateWithFastTraversal(
                           && expr.isUnitStride(maxRank);
 
 #ifdef BZ_ARRAY_EXPR_USE_COMMON_STRIDE
-    int commonStride = expr.suggestStride(maxRank);
+    diffType commonStride = expr.suggestStride(maxRank);
     if (iter.suggestStride(maxRank) > commonStride)
         commonStride = iter.suggestStride(maxRank);
     bool useCommonStride = iter.isStride(maxRank,commonStride)
         && expr.isStride(maxRank,commonStride);
 #else
-    int commonStride = 1;
+    diffType commonStride = 1;
     bool useCommonStride = false;
 #endif
 
@@ -830,17 +830,17 @@ Array<T_numtype, N_rank>::evaluateWithFastTraversal(
         if ((useUnitStride) || (useCommonStride))
         {
 #ifdef BZ_USE_FAST_READ_ARRAY_EXPR
-            int ubound = lastLength * commonStride;
+            diffType ubound = lastLength * commonStride;
             T_numtype* restrict data = const_cast<T_numtype*>(iter.data());
 
             if (commonStride == 1)
             {            
  #ifndef BZ_ARRAY_FAST_TRAVERSAL_UNROLL
-                for (int i=0; i < ubound; ++i)
+                for (diffType i=0; i < ubound; ++i)
                     T_update::update(*data++, expr.fastRead(i));
  #else
-                int n1 = ubound & 3;
-                int i=0;
+                diffType n1 = ubound & 3;
+                diffType i=0;
                 for (; i < n1; ++i)
                     T_update::update(*data++, expr.fastRead(i));
 
@@ -855,7 +855,7 @@ Array<T_numtype, N_rank>::evaluateWithFastTraversal(
             }
  #ifdef BZ_ARRAY_EXPR_USE_COMMON_STRIDE
             else {
-                for (int i=0; i < ubound; i += commonStride)
+                for (diffType i=0; i < ubound; i += commonStride)
                     T_update::update(data[i], expr.fastRead(i));
             }
  #endif // BZ_ARRAY_EXPR_USE_COMMON_STRIDE
@@ -920,18 +920,18 @@ Array<T_numtype, N_rank>::evaluateWithTiled2DTraversal(
                           && expr.isUnitStride(minorRank);
 
 #ifdef BZ_ARRAY_EXPR_USE_COMMON_STRIDE
-    int commonStride = expr.suggestStride(minorRank);
+    diffType commonStride = expr.suggestStride(minorRank);
     if (iter.suggestStride(minorRank) > commonStride)
         commonStride = iter.suggestStride(minorRank);
     bool useCommonStride = iter.isStride(minorRank,commonStride)
         && expr.isStride(minorRank,commonStride);
 #else
-    int commonStride = 1;
+    diffType commonStride = 1;
     bool useCommonStride = false;
 #endif
 
     // Determine if a common major stride exists
-    int commonMajorStride = expr.suggestStride(majorRank);
+    diffType commonMajorStride = expr.suggestStride(majorRank);
     if (iter.suggestStride(majorRank) > commonMajorStride)
         commonMajorStride = iter.suggestStride(majorRank);
     bool haveCommonMajorStride = iter.isStride(majorRank,commonMajorStride)
@@ -982,7 +982,7 @@ Array<T_numtype, N_rank>::evaluateWithTiled2DTraversal(
 
                 if ((useUnitStride) && (haveCommonMajorStride))
                 {
-                    int offset = 0;
+                    diffType offset = 0;
                     T_numtype* restrict data = const_cast<T_numtype*>
                         (iter.data());
 
@@ -992,8 +992,8 @@ Array<T_numtype, N_rank>::evaluateWithTiled2DTraversal(
 
                         // Common subexpression elimination -- compilers
                         // won't necessarily do this on their own.
-                        int t1 = offset+1;
-                        int t2 = offset+2;
+                        diffType t1 = offset+1;
+                        diffType t2 = offset+2;
 
                         tmp1 = expr.fastRead(offset);
                         tmp2 = expr.fastRead(t1);
@@ -1117,13 +1117,13 @@ Array<T_numtype, N_rank>::evaluateWithTiled2DTraversal(
                           && expr.isUnitStride(minorRank);
 
 #ifdef BZ_ARRAY_EXPR_USE_COMMON_STRIDE
-    int commonStride = expr.suggestStride(minorRank);
+    diffType commonStride = expr.suggestStride(minorRank);
     if (iter.suggestStride(minorRank) > commonStride)
         commonStride = iter.suggestStride(minorRank);
     bool useCommonStride = iter.isStride(minorRank,commonStride)
         && expr.isStride(minorRank,commonStride);
 #else
-    int commonStride = 1;
+    diffType commonStride = 1;
     bool useCommonStride = false;
 #endif
 

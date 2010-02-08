@@ -75,6 +75,50 @@ sum(const TinyVector<T_numtype, N_length>& a)
     return _bz_meta_vectorSum<N_length, 0>::f(a);
 }
 
+// explicit returntype functions follow
+
+template<typename T_ret>
+class _bz_returntype {
+public:
+
+  template<typename T_numtype1, typename T_numtype2, int N_length>
+static inline T_ret
+dot(const TinyVector<T_numtype1, N_length>& a, 
+    const TinyVector<T_numtype2, N_length>& b)
+{
+  return _bz_meta_vectorDotRet<N_length, 0, T_ret>::f(a,b);
+};
+
+template<typename T_expr1, typename T_numtype2, int N_length>
+static inline T_ret
+dot(_bz_VecExpr<T_expr1> a, const TinyVector<T_numtype2, N_length>& b)
+{
+    return _bz_meta_vectorDotRet<N_length, 0, T_ret>::f_value_ref(a,b);
+};
+
+template<typename T_numtype1, typename T_expr2, int N_length>
+static inline T_ret
+dot(const TinyVector<T_numtype1, N_length>& a, _bz_VecExpr<T_expr2> b)
+{
+    return _bz_meta_vectorDotRet<N_length, 0, T_ret>::f_ref_value(a,b);
+};
+
+template<typename T_numtype1, int N_length>
+static inline T_ret
+product(const TinyVector<T_numtype1, N_length>& a)
+{
+    return _bz_meta_vectorProductRet<N_length, 0, T_ret>::f(a);
+};
+
+template<typename T_numtype, int N_length>
+static inline T_ret
+sum(const TinyVector<T_numtype, N_length>& a)
+{
+    return _bz_meta_vectorSumRet<N_length, 0, T_ret>::f(a);
+};
+
+};
+
 BZ_NAMESPACE_END
 
 #endif // BZ_TVECGLOBS_H

@@ -176,10 +176,10 @@ public:
     T_numtype fastRead(const int i)
     { return f_(iter_.fastRead(i)); }
 
-    int suggestStride(const int rank) const
+  diffType suggestStride(const int rank) const
     { return iter_.suggestStride(rank); }
 
-    bool isStride(const int rank,const int stride) const
+    bool isStride(const int rank,const diffType stride) const
     { return iter_.isStride(rank,stride); }
 
     void prettyPrint(BZ_STD_SCOPE(string) &str, 
@@ -323,14 +323,14 @@ public:
     T_numtype fastRead(const int i)
     { return f_(iter1_.fastRead(i), iter2_.fastRead(i)); }
 
-    int suggestStride(const int rank) const
+  diffType suggestStride(const int rank) const
     {
-        int stride1 = iter1_.suggestStride(rank);
-        int stride2 = iter2_.suggestStride(rank);
+        diffType stride1 = iter1_.suggestStride(rank);
+        diffType stride2 = iter2_.suggestStride(rank);
         return ( stride1>stride2 ? stride1 : stride2 );
     }
   
-    bool isStride(const int rank,const int stride) const
+    bool isStride(const int rank,const diffType stride) const
     {
         return iter1_.isStride(rank,stride) && iter2_.isStride(rank,stride);
     }
@@ -499,15 +499,15 @@ public:
     T_numtype fastRead(const int i)
     { return f_(iter1_.fastRead(i), iter2_.fastRead(i), iter3_.fastRead(i)); }
 
-    int suggestStride(const int rank) const {
-        int stride1 = iter1_.suggestStride(rank);
-        int stride2 = iter2_.suggestStride(rank);
-        int stride3 = iter3_.suggestStride(rank);
+    diffType suggestStride(const int rank) const {
+        diffType stride1 = iter1_.suggestStride(rank);
+        diffType stride2 = iter2_.suggestStride(rank);
+        diffType stride3 = iter3_.suggestStride(rank);
 	return ( stride1 > (stride2 = (stride2>stride3 ? stride2 : stride3)) ?
             stride1 : stride2 );
     }
   
-    bool isStride(const int rank,const int stride) const {
+    bool isStride(const int rank,const diffType stride) const {
         return iter1_.isStride(rank,stride) && iter2_.isStride(rank,stride)
             && iter3_.isStride(rank,stride);
     }

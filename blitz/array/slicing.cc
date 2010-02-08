@@ -316,7 +316,7 @@ void Array<P_numtype, N_rank>::slice(int rank, Range r)
 
     int first = r.first(lbound(rank));
     int last  = r.last(ubound(rank));
-    int stride = r.stride();
+    diffType stride = r.stride();
 
 #ifdef BZ_DEBUG_SLICE
     cout << "slice(" << rank << ", Range):" << endl
@@ -340,7 +340,7 @@ void Array<P_numtype, N_rank>::slice(int rank, Range r)
     length_[rank] = (last - first) / stride + 1;
 
     // TV 20000312: added second term here, for testsuite/Josef-Wagenhuber
-    int offset = (first - base(rank) * stride) * stride_[rank];
+    diffType offset = (first - base(rank) * stride) * stride_[rank];
 
     data_ += offset;
     zeroOffset_ += offset;

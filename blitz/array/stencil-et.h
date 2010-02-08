@@ -76,9 +76,9 @@ public:
 
     // T_numtype fastRead(int i)     -- ditto
 
-    int suggestStride(const int rank) const { return iter_.suggestStride(rank); }
+  diffType suggestStride(const int rank) const { return iter_.suggestStride(rank); }
 
-    bool isStride(const int rank,const int stride) const { return iter_.isStride(rank,stride); }
+    bool isStride(const int rank,const diffType stride) const { return iter_.isStride(rank,stride); }
 
     void prettyPrint(BZ_STD_SCOPE(string) &str) const
     {

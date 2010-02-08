@@ -43,8 +43,6 @@ public:
     typedef T_tuple& reference;
     typedef const T_tuple& const_reference;
     typedef CartesianProductIterator<T_tuple,T_container,N_containers> iterator;
-    typedef int difference_type;
-    typedef int size_type;
 
     iterator begin()
     { return iterator(*this); }

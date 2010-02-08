@@ -295,7 +295,7 @@ template <typename T, int N>
 struct iterator_traits< BZ_BLITZ_SCOPE(ConstArrayIterator)<T,N> > {
     typedef bidirectional_iterator_tag         iterator_category;
     typedef T                                  value_type;
-    typedef ptrdiff_t                          difference_type;
+    typedef blitz::diffType                    difference_type;
     typedef const T*                           pointer;
     typedef const T&                           reference;
 };
@@ -304,7 +304,7 @@ template <typename T, int N>
 struct iterator_traits< BZ_BLITZ_SCOPE(ArrayIterator)<T,N> > {
     typedef bidirectional_iterator_tag         iterator_category;
     typedef T                                  value_type;
-    typedef ptrdiff_t                          difference_type;
+    typedef blitz::diffType                    difference_type;
     typedef T*                                 pointer;
     typedef T&                                 reference;
 };

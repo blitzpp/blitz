@@ -168,15 +168,15 @@ public:
     T_numtype fastRead(int i)
     { return iter1_.fastRead(i) ? iter2_.fastRead(i) : iter3_.fastRead(i); }
 
-    int suggestStride(int rank) const
+diffType suggestStride(int rank) const
     {
-        int stride1 = iter1_.suggestStride(rank);
-        int stride2 = iter2_.suggestStride(rank);
-        int stride3 = iter3_.suggestStride(rank);
+        diffType stride1 = iter1_.suggestStride(rank);
+        diffType stride2 = iter2_.suggestStride(rank);
+        diffType stride3 = iter3_.suggestStride(rank);
         return stride1>(stride2=(stride2>stride3?stride2:stride3))?stride1:stride2;
     }
 
-    bool isStride(int rank, int stride) const
+    bool isStride(int rank, diffType stride) const
     {
         return iter1_.isStride(rank,stride) 
             && iter2_.isStride(rank,stride)

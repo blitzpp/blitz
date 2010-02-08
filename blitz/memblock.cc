@@ -30,7 +30,7 @@ void MemoryBlock<P_type>::deallocate()
 }
 
 template<typename P_type>
-inline void MemoryBlock<P_type>::allocate(size_t length)
+inline void MemoryBlock<P_type>::allocate(sizeType length)
 {
     TAU_TYPE_STRING(p1, "MemoryBlock<T>::allocate() [T="
         + CT(P_type) + "]");
@@ -40,7 +40,7 @@ inline void MemoryBlock<P_type>::allocate(size_t length)
     dataBlockAddress_ = new T_type[length];
     data_ = dataBlockAddress_;
 #else
-    size_t numBytes = length * sizeof(T_type);
+    sizeType numBytes = length * sizeof(T_type);
 
     if (numBytes < 1024)
     {
@@ -65,8 +65,8 @@ inline void MemoryBlock<P_type>::allocate(size_t length)
 
         // Shift to the next cache line boundary
 
-        ptrdiff_t offset = ptrdiff_t(dataBlockAddress_) % cacheBlockSize;
-        ptrdiff_t shift = (offset == 0) ? 0 : (cacheBlockSize - offset);
+        diffType offset = ptrdiff_t(dataBlockAddress_) % cacheBlockSize;
+        diffType shift = (offset == 0) ? 0 : (cacheBlockSize - offset);
         data_ = reinterpret_cast<T_type*>
                 (reinterpret_cast<char*>(dataBlockAddress_) + shift);
 

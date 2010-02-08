@@ -99,7 +99,7 @@ template<int N_rank>
 class StridedDomain {
 
     typedef TinyVector<int,N_rank> Bounds;
-    typedef TinyVector<int,N_rank> Strides;
+    typedef TinyVector<diffType,N_rank> Strides;
 
 public:
 
@@ -116,7 +116,7 @@ public:
 
     int lbound(const int i) const { return lbound_(i); }
     int ubound(const int i) const { return ubound_(i); }
-    int stride(const int i) const { return stride_(i); }
+  diffType stride(const int i) const { return stride_(i); }
 
     Range operator[](const int rank) const { return Range(lbound_(rank),ubound_(rank),stride_(rank)); }
 

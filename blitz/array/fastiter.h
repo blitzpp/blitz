@@ -140,15 +140,15 @@ public:
     { return *data_; }
 
     T_numtype operator[](int i)
-    { return data_[i * stride_]; }
+  { return data_[i * stride_]; }
 
-    T_numtype fastRead(int i)
+    T_numtype fastRead(sizeType i)
     { return data_[i]; }
 
     int suggestStride(int rank) const
     { return array_.stride(rank); }
 
-    bool isStride(int rank, int stride) const
+    bool isStride(int rank, diffType stride) const
     { return array_.stride(rank) == stride; }
 
     void push(int position)
@@ -163,12 +163,12 @@ public:
 
     void advance()
     {
-        data_ += stride_;
+      data_ += stride_;
     }
 
     void advance(int n)
     {
-        data_ += n * stride_;
+      data_ += n * stride_;
     }
 
     void loadStride(int rank)
@@ -230,20 +230,21 @@ public:
     // Experimental
     T_numtype& operator()(int i)
     {
-        return (T_numtype&)data_[i*array_.stride(0)];
+      return (T_numtype&)data_[i*array_.stride(0)];
     }
 
     // Experimental
     T_numtype& operator()(int i, int j)
     {
-        return (T_numtype&)data_[i*array_.stride(0) + j*array_.stride(1)];
+      return (T_numtype&)data_[i*array_.stride(0) + j*array_.stride(1)];
     }
 
     // Experimental
     T_numtype& operator()(int i, int j, int k)
     {
-        return (T_numtype&)data_[i*array_.stride(0) + j*array_.stride(1)
-          + k*array_.stride(2)];
+      return (T_numtype&)data_[i*array_.stride(0)
+			       + j*array_.stride(1)
+			       + k*array_.stride(2)];
     }
 
     // Experimental
@@ -291,21 +292,21 @@ public:
     // Experimental
     T_numtype shift(int offset, int dim)
     {
-        return data_[offset*array_.stride(dim)];
+      return data_[offset*array_.stride(dim)];
     }
 
     // Experimental
     T_numtype shift(int offset1, int dim1, int offset2, int dim2)
     {
-        return data_[offset1*array_.stride(dim1) 
-            + offset2*array_.stride(dim2)];
+      return data_[offset1*array_.stride(dim1) 
+		   + offset2*array_.stride(dim2)];
     }
 
 private:
     const T_numtype * restrict          data_;
     const T_array&                          array_;
     ConstPointerStack<T_numtype,N_rank>     stack_;
-    int                                     stride_;
+  diffType                                     stride_;
 };
 
 BZ_NAMESPACE_END

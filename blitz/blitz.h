@@ -84,6 +84,22 @@ BZ_NAMESPACE(blitz)
  #define BZ_GLOBAL_INIT(X) 
 #endif
 
+/* Define types for indexing, depending on whether 64- or 32-bit
+   indices are desired. There are separate typedefs for sizeType and
+   indexType, because it might be useful to have possibility of arrays
+   with 64-bit numbers of elements without paying the size overhead of
+   making all dimensional indexes 64-bit.
+ */
+// Used for dimensional indexes (not implemented yet).
+#ifdef BZ_FULLY64BIT
+#warning 64-bit array dimensions not yet implemented
+typedef ptrdiff_t indexType; 
+#else
+typedef int indexType; 
+#endif
+typedef size_t sizeType; // Used for memory indexing
+typedef ptrdiff_t diffType; // Used for memory index differences, ie strides
+
 BZ_NAMESPACE_END
 
 /*

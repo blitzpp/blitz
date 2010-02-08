@@ -100,6 +100,66 @@ public:
 
 };
 
+
+template<int N, int I, typename T_ret>
+class _bz_meta_vectorDotRet {
+public:
+    static const int loopFlag = (I < N-1) ? 1 : 0;
+
+    template<typename T_expr1, typename T_expr2>
+    static inline T_ret
+    f(const T_expr1& a, const T_expr2& b)
+    {
+      return static_cast<T_ret>(a[I]) * static_cast<T_ret>(b[I])
+	+ _bz_meta_vectorDotRet<loopFlag * N, loopFlag * (I+1), T_ret>::f(a,b);
+    }
+
+    template<typename T_expr1, typename T_expr2>
+    static inline T_ret
+    f_value_ref(T_expr1 a, const T_expr2& b)
+    {
+      return static_cast<T_ret>(a[I]) * static_cast<T_ret>(b[I])
+	+ _bz_meta_vectorDotRet<loopFlag * N, loopFlag * (I+1), T_ret>::f(a,b);
+    }
+
+    template<typename T_expr1, typename T_expr2>
+    static inline T_ret
+    f_ref_value(const T_expr1& a, T_expr2 b)
+    {
+      return static_cast<T_ret>(a[I]) * static_cast<T_ret>(b[I])
+	+ _bz_meta_vectorDotRet<loopFlag * N, loopFlag * (I+1), T_ret>::f(a,b);
+    }
+
+    template<typename T_expr1, typename P_numtype2>
+    static inline T_ret
+    dotWithArgs(const T_expr1& a, P_numtype2 i1, P_numtype2 i2=0,
+        P_numtype2 i3=0, P_numtype2 i4=0, P_numtype2 i5=0, P_numtype2 i6=0,
+        P_numtype2 i7=0, P_numtype2 i8=0, P_numtype2 i9=0, P_numtype2 i10=0)
+    {
+      return static_cast<T_ret>(a[I]) * static_cast<T_ret>(i1)  
+	+ _bz_meta_vectorDotRet<loopFlag * N, loopFlag * (I+1), T_ret>::dotWithArgs
+                 (a, i2, i3, i4, i5, i6, i7, i8, i9);
+    }
+};
+
+template<typename T_ret>
+class _bz_meta_vectorDotRet<0,0, T_ret> {
+public:
+    template<typename T_expr1, typename T_expr2>
+    static inline _bz_meta_nullOperand f(const T_expr1&, const T_expr2&)
+    { return _bz_meta_nullOperand(); }
+
+    template<typename T_expr1, typename P_numtype2>
+    static inline _bz_meta_nullOperand 
+    dotWithArgs(const T_expr1& a, P_numtype2 i1, P_numtype2 i2=0,
+        P_numtype2 i3=0, P_numtype2 i4=0, P_numtype2 i5=0, P_numtype2 i6=0,
+        P_numtype2 i7=0, P_numtype2 i8=0, P_numtype2 i9=0, P_numtype2 i10=0)
+    {
+        return _bz_meta_nullOperand(); 
+    }
+
+};
+
 BZ_NAMESPACE_END
 
 #endif // BZ_META_DOT_H
