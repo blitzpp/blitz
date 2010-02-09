@@ -1,11 +1,220 @@
 
+2010-02-08  Patrik Jonsson <code@familjenjonsson.org>
+
+	* configure.ac, blitz/array-impl.h, blitz/blitz.h,
+	  blitz/indexexpr.h, blitz/memblock.cc, blitz/memblock.h,
+	  blitz/range.h, blitz/tvecglobs.h, blitz/array/cartesian.h,
+	  blitz/array/domain.h, blitz/array/eval.cc,
+	  blitz/array/fastiter.h, blitz/array/functorExpr.h,
+	  blitz/array/iter.h, blitz/array/methods.cc,
+	  blitz/array/slicing.cc, blitz/array/stencil-et.h,
+	  blitz/array/where.h, blitz/meta/dot.h, blitz/meta/product.h,
+	  blitz/meta/sum.h, config/mdate-sh, testsuite/64bit.cpp,
+	  testsuite/Makefile.am: Merged compat-64bit branch to the trunk.
+
+2010-02-08  Patrik Jonsson <code@familjenjonsson.org>
+
+	* configure.ac, blitz/blitz.h, testsuite/64bit.cpp,
+	  testsuite/Makefile.am: Added 64-bit testcase (takes a very long
+	  time to run) and prepended BZ_ to the FULLY64BIT define.
+
+2010-02-05  Patrik Jonsson <code@familjenjonsson.org>
+
+	* blitz/blitz.h: Changed indexType to be ptrdiff_t instead of
+	  size_t for 64-bit dimensions.
+
+2010-02-05  Patrik Jonsson <code@familjenjonsson.org>
+
+	* configure.ac, blitz/array-impl.h, blitz/blitz.h,
+	  blitz/indexexpr.h, blitz/memblock.cc, blitz/memblock.h,
+	  blitz/range.h, blitz/array/cartesian.h, blitz/array/domain.h,
+	  blitz/array/eval.cc, blitz/array/fastiter.h,
+	  blitz/array/functorExpr.h, blitz/array/iter.h,
+	  blitz/array/methods.cc, blitz/array/slicing.cc,
+	  blitz/array/stencil-et.h, blitz/array/where.h: Changed size_t and
+	  ptrdiff_t to sizeType and diffType, defined in blitz.h. Also
+	  added indexType, to be used for array indexing if dimensions >
+	  2^31 are needed, but it needs to be tracked down and changed in
+	  the code.
+
+2010-01-21  Patrik Jonsson <code@familjenjonsson.org>
+
+	* blitz/array/stencil-et.h: Made _bz_makeRange(nilArraySection)
+	  inline.
+
+2010-01-21  Patrik Jonsson <code@familjenjonsson.org>
+
+	* src/globals.cpp: Reordered the include files so blitz/array.h is
+	  first, otherwise there are errors.
+
+2010-01-21  Patrik Jonsson <code@familjenjonsson.org>
+
+	* blitz/indexexpr.h, blitz/array/expr.h, blitz/array/fastiter.h,
+	  blitz/array/functorExpr.h, blitz/array/map.h,
+	  blitz/array/reduce.h, blitz/array/slice.h,
+	  blitz/array/stencil-et.h, blitz/array/where.h,
+	  testsuite/Makefile.am, testsuite/expression-slicing.cpp: Added
+	  ability to slice expressions. This required adding a number of
+	  operator()s to _bz_ArrayExpr, since it is the 'top level'
+	  expression class, and the remaining expression classes only need
+	  the 11-argument operator() template. All expression classes also
+	  have a SliceInfo class that gives the return type of a slice,
+	  completely analogously to the SliceInfo class for Arrays. It is
+	  not possible to slice reductions, index remappings or index
+	  placeholder expressions, which require nontrivial operations on
+	  the slice arguments. Added a testcase expression-slicing.
+
+2010-01-19  Patrik Jonsson <code@familjenjonsson.org>
+
+	* blitz/indexexpr.h, blitz/reduce.h, blitz/array/expr.h,
+	  blitz/array/fastiter.h, blitz/array/functorExpr.h,
+	  blitz/array/map.h, blitz/array/reduce.h,
+	  blitz/array/stencil-et.h, blitz/array/where.h: Declared access
+	  member functions of the expression template classes (like
+	  operator*(), operator(), fastRead, shift, and shapeCheck as
+	  const. This required making 'conceptually const' members like the
+	  stencil class iterators and the reduction variables mutable. This
+	  change is necessary to not run into trouble passing expressions
+	  to functions, as you can't pass a non-const reference to a
+	  temporary.
+
+2010-01-19  Patrik Jonsson <code@familjenjonsson.org>
+
+	* testsuite/stencil-et.cpp: Added tests of reductions of stencil
+	  results.
+
+2010-01-19  Patrik Jonsson <code@familjenjonsson.org>
+
+	* testsuite/arrayresize.cpp: Added note about expected valgrind
+	  error in this test.
+
+2010-01-19  Patrik Jonsson <code@familjenjonsson.org>
+
+	* configure.ac, testsuite/Makefile.am: Added support for Mike
+	  Teschs valgrind tests if valgrind is in the path.
+
+2010-01-13  Patrik Jonsson <code@familjenjonsson.org>
+
+	* blitz/bench.cc, blitz/bench.h, blitz/benchext.cc,
+	  blitz/benchext.h: Added a method savePylabGraph to the Benchmark
+	  class, which is called whenever saveMatlabGraph is called.
+
+2010-01-13  Patrik Jonsson <code@familjenjonsson.org>
+
+	* benchmarks/stencil.cpp: Added versions of the stencil benchmark
+	  that test the new stencil operator expressions.
+
+2010-01-12  Patrik Jonsson <code@familjenjonsson.org>
+
+	* blitz/array/fastiter.h, testsuite/safeToReturn.cpp: Added a
+	  wrapper safeToReturn() that can be used to safely return
+	  expressions from functions even if they reference arrays that
+	  will go out of scope. There's also a testcase testing it.
+
+2010-01-12  Patrik Jonsson <code@familjenjonsson.org>
+
+	* blitz/array-impl.h, blitz/array/expr.h, blitz/array/fastiter.h,
+	  blitz/array/map.h, blitz/array/stencil-et.h, config/mdate-sh,
+	  testsuite/stencil-et.cpp: Updated the ArrayIndexMapping class so
+	  it can be passed as an operand to stencils. To accomplish this it
+	  was made to contain a FastArrayIterator, instead of an Array, so
+	  that the moveTo and shift_ members work. The Array operator()
+	  that take index placeholders were modified to work with new
+	  ArrayIndexMapping. Also had to make the moveTo and operator()
+	  members of the classes in expr.h be templated on number of
+	  dimensions. Added testcases of applying stencils to expressions
+	  involving remapped dimensions in stencil-et.cpp
+
+2010-01-09  Patrik Jonsson <code@familjenjonsson.org>
+
+	* testsuite/Makefile.am, testsuite/stencil-et.cpp: Added testcase
+	  for stencil expressions.
+
+2010-01-09  Patrik Jonsson <code@familjenjonsson.org>
+
+	* blitz/array/stencil-et.h: Added comment explaining what
+	  operations don't work with stencil expressions.
+
+2010-01-09  Patrik Jonsson <code@familjenjonsson.org>
+
+	* blitz/array/expr.h, blitz/array/functorExpr.h: Added versions of
+	  _bz_offsetData taking dimension arguments.
+
+2010-01-08  Patrik Jonsson <code@familjenjonsson.org>
+
+	* blitz/array/stencil-et.h: Added support for BZ_ET_STENCIL2. Added
+	  shift methods to ET classes. Improved code implementing the
+	  stencil calls for expressions and arrays to be more concise,
+	  though the requirement to have exact matches for all calls using
+	  Arrays necessitates a lot of code duplication. Result type
+	  declarations of BZ_ET_STENCIL2 needs work.
+
+2010-01-08  Patrik Jonsson <code@familjenjonsson.org>
+
+	* blitz/array/fastiter.h: Added domain() and _bz_offsetData()
+	  methods to FastArrayIteratorBase.
+
+2010-01-08  Patrik Jonsson <code@familjenjonsson.org>
+
+	* blitz/array/stencilops.h: Updated BZ_DECLARE_STENCIL_OPERATOR2/3
+	  to not require all types be the same, as this makes them useless
+	  for expressions.
+
+2010-01-08  Patrik Jonsson <code@familjenjonsson.org>
+
+	* blitz/etbase.h: Added wrap() methods to explicitly convert ET
+	  objects to ETBase. This is needed for the stencil operator
+	  functions to match correctly.
+
+2010-01-07  Patrik Jonsson <code@familjenjonsson.org>
+
+	* blitz/indexexpr.h, blitz/array/expr.h, blitz/array/functorExpr.h,
+	  blitz/array/map.h, blitz/array/reduce.h, blitz/array/where.h:
+	  Added methods and typedefs necessary to support stencil
+	  expressions. Code now passes all test cases.
+
+2010-01-07  Patrik Jonsson <code@familjenjonsson.org>
+
+	* blitz/array/stencil-et.h: Big cleanup. Removed the duplicate
+	  classes name_et and name_etExpr, all expressions are now handled
+	  by one class called name_et, derived from _bz_StencilExpr.
+	  Improved prettyPrint. Made typedefs more consistent across
+	  classes.
+
+2010-01-07  Patrik Jonsson <code@familjenjonsson.org>
+
+	* blitz/array/fastiter.h: Fixed a bug where operator= is the base
+	  class was hidden.
+
+2010-01-06  Patrik Jonsson <code@familjenjonsson.org>
+
+	* blitz/funcs.h, blitz/indexexpr.h, blitz/array/asexpr.h,
+	  blitz/array/expr.h, blitz/array/fastiter.h, blitz/array/map.h,
+	  blitz/array/newet-macros.h, blitz/array/reduce.h,
+	  blitz/array/stencil-et.h: Updated stencil operators in
+	  stencil-et.h so they work with expressions, instead of just
+	  arrays, and only applies themselves to the interior domain to
+	  avoid overrunning the bounds. This necessitated adding some
+	  methods to the classes in expr.h, and cloning FastArrayIterator
+	  to FastArrayCopyIterator which keeps a copy of the array it
+	  iterates over. stencil-et.h needs cleaning up.
+
+2009-11-23  Patrik Jonsson <code@familjenjonsson.org>
+
+	* blitz/array-impl.h, blitz/indexexpr.h, blitz/range.h,
+	  blitz/tvecglobs.h, blitz/array/domain.h, blitz/array/eval.cc,
+	  blitz/array/fastiter.h, blitz/array/functorExpr.h,
+	  blitz/array/methods.cc, blitz/array/slicing.cc,
+	  blitz/array/stencil-et.h, blitz/array/where.h, blitz/meta/dot.h,
+	  blitz/meta/product.h, blitz/meta/sum.h, config/mdate-sh: Check-in
+	  of the previously posted 64-bit patch to allow >2^31 elements in
+	  an array.
+
 
 2009-10-20 Patrick Guio <p.guio@ucl.ac.uk>
   * Makefile.am: Force to run a make in the blitz directory before
 	make in the lib directory to ensure that the all targets in blitz
 	subdirectories (like blitz/generate are up-to-date).
-
-
 
 2009-08-21 Patrick Guio <p.guio@ucl.ac.uk>
 
