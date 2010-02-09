@@ -35,6 +35,8 @@ int main()
         3, 4, 5,
         6, 7, 8;
     C.resizeAndPreserve(2,4);
+    // valgrind here correctly complains about use of uninitialized
+    // values, because the (i,4) elements are uninitialized. harmless.
     BZTEST(all(C(Range(1,2),Range(1,4)) == C(Range(1,2),Range(1,4))));
     BZTEST(C.lbound(0) == 1);
     BZTEST(C.lbound(1) == 1);
