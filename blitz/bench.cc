@@ -13,9 +13,11 @@
 #endif
 
 #ifdef BZ_HAVE_STD
- #include <fstream>
+#include <fstream>
+#include <string>
 #else
  #include <fstream.h>
+ #include <string.h>
 #endif
 
 BZ_NAMESPACE(blitz)
@@ -129,6 +131,13 @@ void Benchmark<P_parameter>::saveMatlabGraph(const char* filename) const
 {
     BZPRECONDITION(state_ == done);
 
+    {
+      //ugly but saveMatlabGraph is coded into all benchmarks
+      std::string pyfn(filename);
+      pyfn=pyfn.replace(pyfn.find(".m"),2,std::string(".py"),0,3);
+      savePylabGraph(pyfn.c_str());
+    }
+
     ofstream ofs(filename);
      
     assert(ofs.good());
@@ -170,6 +179,57 @@ void Benchmark<P_parameter>::saveMatlabGraph(const char* filename) const
     } 
 
     ofs << ")" << endl;
+}
+
+
+template<typename P_parameter>
+void Benchmark<P_parameter>::savePylabGraph(const char* filename) const
+{
+    BZPRECONDITION(state_ == done);
+
+    ofstream ofs(filename);
+     
+    assert(ofs.good());
+
+    ofs << "# This python file generated automatically by class Benchmark\n"
+        << "# of the Blitz++ class library.\n"
+	<< "from pylab import *\nfrom numpy import *\n"
+	<< "clf()\n";
+
+    ofs.setf(ios::scientific);
+
+    ofs << "parm = array([ ";
+    int i;
+    for (i=0; i < numParameterSettings(); ++i)
+        ofs << setprecision(12) << double(getParameterSetting(i)) << ", ";
+    ofs << "])\n\n";
+
+    ofs << "Mf = array([[ ";
+    for (i=0; i < numParameterSettings(); ++i)
+    {
+        if(i>0) ofs << ", [ ";
+        for (int j=0; j < numImplementations_; ++j)
+        {
+            ofs << setprecision(12) << getMflops(j,i) << ", ";
+        }
+      ofs << "]";
+    }
+    ofs << "])" << endl << endl;
+
+    ofs << "semilogx(parm,Mf)\ntitle('" << description() << "')\n"
+        << "xlabel('" << parameterDescription() << "')\n" 
+        << "ylabel('Mflops')\n";
+        << "legend([";
+    
+    for (int j=0; j < numImplementations_; ++j)
+    {
+        ofs << "'" << implementations_[j]->implementationName()
+            << "'";
+        if (j != numImplementations_ - 1)
+            ofs << ", ";
+    } 
+
+    ofs << "])\n";
 }
 
 BZ_NAMESPACE_END

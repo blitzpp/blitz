@@ -41,6 +41,10 @@ public:
     T& unwrap() { return static_cast<T&>(*this); }
     
     const T& unwrap() const { return static_cast<const T&>(*this); }
+
+    ETBase<T>& wrap() { return static_cast<ETBase<T>&>(*this); }
+
+    const ETBase<T>& wrap() const { return static_cast<const ETBase<T>&>(*this); }
 };
 
 BZ_NAMESPACE_END

@@ -30,6 +30,8 @@
 #include <blitz/tinyvec.h>
 #include <blitz/prettyprint.h>
 #include <blitz/etbase.h>
+#include <blitz/array/domain.h>
+#include <blitz/array/slice.h>
 
 BZ_NAMESPACE(blitz)
 
@@ -61,6 +63,7 @@ public:
     typedef int T_numtype;
     typedef int T_ctorArg1;     // Dummy; not used
     typedef int T_ctorArg2;     // Ditto
+  typedef int T_range_result; // dummy
 
     static const int 
         numArrayOperands = 0, 
@@ -71,23 +74,29 @@ public:
     // you are trying to use stack iteration mode on an expression
     // which contains an index placeholder.  You must use index 
     // iteration mode instead.
-    int operator*() { 
+    int operator*() const { 
         BZPRECONDITION(0); 
         return 0;
     }
 
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     template<int N_rank>
-    T_numtype operator()(TinyVector<int, N_rank> i) { return i[N]; }
+    T_numtype operator()(TinyVector<int, N_rank> i) const { return i[N]; }
 #else
     template<int N_rank>
-    T_numtype operator()(const TinyVector<int, N_rank>& i) { return i[N]; }
+    T_numtype operator()(const TinyVector<int, N_rank>& i) const { return i[N]; }
 #endif
 
     int ascending(int) const { return INT_MIN; }
     int ordering(int)  const { return INT_MIN; }
     int lbound(int)    const { return INT_MIN; }  // tiny(int());
     int ubound(int)    const { return INT_MAX; }  // huge(int()); 
+
+  RectDomain<rank> domain() const 
+  { 
+    const TinyVector<int, rank> lb(lbound(0)), ub(ubound(0));
+    return RectDomain<rank>(lb,ub);
+  }
 
     // See operator*() note
 
@@ -96,6 +105,8 @@ public:
     void advance()       { BZPRECONDITION(0); }
     void advance(int)    { BZPRECONDITION(0); }
     void loadStride(int) { BZPRECONDITION(0); }
+    template<int N_rank>
+    void moveTo(const TinyVector<int,N_rank>& i) { BZPRECONDITION(0); }
 
     bool isUnitStride(int) const { 
         BZPRECONDITION(0);
@@ -109,12 +120,12 @@ public:
         return false; 
     }
 
-    T_numtype operator[](int) {
+    T_numtype operator[](int) const {
         BZPRECONDITION(0);
         return T_numtype();
     }
 
-    T_numtype fastRead(int) {
+    T_numtype fastRead(int) const {
         BZPRECONDITION(0);
         return T_numtype();
     }
@@ -129,6 +140,18 @@ public:
         return true;
     }
 
+  // don't know how to define shift, as it relies on having an
+  // implicit position. thus stencils won't work
+  T_numtype shift(int offset, int dim) const
+  { BZPRECONDITION(0); return T_numtype(); }
+  T_numtype shift(int offset1, int dim1,int offset2, int dim2) const {
+    BZPRECONDITION(0); return T_numtype(); }
+  void _bz_offsetData(sizeType i) { BZPRECONDITION(0); }
+
+  // Unclear how to define this, and stencils don't work anyway
+  T_range_result operator()(RectDomain<rank> d) const
+  { BZPRECONDITION(0); }
+
     void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat&) const {
         // NEEDS_WORK-- do real formatting for reductions
         str += "index-expr[NEEDS_WORK]";
@@ -136,6 +159,42 @@ public:
 
     template<typename T_shape>
     bool shapeCheck(const T_shape&) const { return true; }
+
+  // sliceinfo for index placeholder does nothing
+  template<typename T1, typename T2 = nilArraySection, 
+	   class T3 = nilArraySection, typename T4 = nilArraySection, 
+	   class T5 = nilArraySection, typename T6 = nilArraySection, 
+	   class T7 = nilArraySection, typename T8 = nilArraySection, 
+	   class T9 = nilArraySection, typename T10 = nilArraySection, 
+	   class T11 = nilArraySection>
+  class SliceInfo {
+  public:
+    static const int new_rank = (N>0) ? ArraySectionInfo<T1>::rank : 0
+      + (N>1) ? ArraySectionInfo<T2>::rank : 0
+      + (N>2) ? ArraySectionInfo<T3>::rank : 0
+      + (N>4) ? ArraySectionInfo<T4>::rank : 0
+      + (N>5) ? ArraySectionInfo<T5>::rank : 0
+      + (N>6) ? ArraySectionInfo<T6>::rank : 0
+      + (N>7) ? ArraySectionInfo<T7>::rank : 0
+      + (N>8) ? ArraySectionInfo<T8>::rank : 0
+      + (N>9) ? ArraySectionInfo<T9>::rank : 0
+      + (N>10) ? ArraySectionInfo<T10>::rank : 0
+      + (N>11) ? ArraySectionInfo<T11>::rank : 0;
+    typedef IndexPlaceholder<new_rank> T_slice;
+  };
+
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
+        typename T7, typename T8, typename T9, typename T10, typename T11>
+    typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice
+    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9, T10 r10, T11 r11) const
+    {
+      // slicing of index placeholders is not implemented. there are
+      // two problems: First, if you slice the dimension of the index
+      // placeholder, it should be replaced with a constant. Second,
+      // if you restrict the range of that dimension, the index
+      // placeholder should start from a nonzero value.
+      BZPRECONDITION(0);
+    }
 };
 
 typedef IndexPlaceholder<0> firstIndex;

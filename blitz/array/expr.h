@@ -43,9 +43,15 @@
  * _bz_ArrayExprBinaryOp              "
  * _bz_ArrayExprTernaryOp             "
  * _bz_ArrayExprConstant              "
- * _bz_ArrayMap               <blitz/array/map.h>
+ * ArrayIndexMapping          <blitz/array/map.h>
  * _bz_ArrayExprReduce        <blitz/array/reduce.h>
+ * _bz_StencilExpr            <blitz/array/stencil-et.h>
+ *   ... and derived types            "
  * IndexPlaceholder           <blitz/indexexpr.h>
+ * _bz_ArrayWhere             <blitz/array/where.h>
+ * _bz_FunctorExpr            <blitz/array/functorExpr.h>
+ * _bz_FunctorExpr2                   "
+ * _bz_FunctorExpr3                   "
  */
 
 BZ_NAMESPACE(blitz)
@@ -86,6 +92,7 @@ public:
     typedef _bz_typename T_expr::T_numtype T_numtype;
     typedef T_expr T_ctorArg1;
     typedef int    T_ctorArg2;    // dummy
+  typedef _bz_ArrayExpr<_bz_typename P_expr::T_range_result> T_range_result;
 
     static const int 
         numArrayOperands = T_expr::numArrayOperands,
@@ -137,22 +144,29 @@ public:
         : iter_(exprpair.first(), exprpair.second())
     { }
 
-    T_numtype operator*() { return *iter_; }
+    T_numtype operator*() const { return *iter_; }
 
     T_numtype first_value() const { return iter_(iter_.lbound()); }
 
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     template<int N_rank>
-    T_numtype operator()(const TinyVector<int, N_rank> i) { return iter_(i); }
+    T_numtype operator()(const TinyVector<int, N_rank> i) const { return iter_(i); }
 #else
     template<int N_rank>
-    T_numtype operator()(const TinyVector<int, N_rank>& i) { return iter_(i); }
+    T_numtype operator()(const TinyVector<int, N_rank>& i) const { return iter_(i); }
 #endif
+
+  template<int N>
+  T_range_result operator()(const RectDomain<N>& d) const
+  {
+    return T_range_result(iter_(d));
+  }
 
     int ascending(const int rank) const { return iter_.ascending(rank); }
     int ordering(const int rank)  const { return iter_.ordering(rank);  }
     int lbound(const int rank)    const { return iter_.lbound(rank);    }
     int ubound(const int rank)    const { return iter_.ubound(rank);    }
+    RectDomain<rank> domain() const { return iter_.domain(); }
 
     void push(int position)
     { iter_.push(position); }
@@ -184,13 +198,24 @@ public:
     T_numtype operator[](int i) const
     { return iter_[i]; }
 
-    T_numtype fastRead(int i)
+    T_numtype fastRead(int i) const
     { return iter_.fastRead(i); }
 
-    int suggestStride(int rank) const
+    // this is needed for the stencil expression fastRead to work
+    void _bz_offsetData(sizeType i)
+    { iter_._bz_offsetData(i); }
+
+    // and these are needed for stencil expression shift to work
+    void _bz_offsetData(sizeType offset, int dim)
+    { iter_._bz_offsetData(offset, dim);}
+  
+    void _bz_offsetData(sizeType offset1, int dim1, sizeType offset2, int dim2)
+    { iter_._bz_offsetData(offset1, dim1, offset2, dim2);}
+
+    diffType suggestStride(int rank) const
     { return iter_.suggestStride(rank); }
 
-    bool isStride(int rank, int stride) const
+    bool isStride(int rank, diffType stride) const
     { return iter_.isStride(rank,stride); }
 
     void prettyPrint(BZ_STD_SCOPE(string) &str) const
@@ -204,12 +229,217 @@ public:
     { iter_.prettyPrint(str, format); }
 
     template<typename T_shape>
-    bool shapeCheck(const T_shape& shape)
+    bool shapeCheck(const T_shape& shape) const
     { return iter_.shapeCheck(shape); }
 
-    void moveTo(const TinyVector<int,_bz_ArrayExpr::rank>& i)
+    template<int N>
+    void moveTo(const TinyVector<int, N>& i)
     {
         iter_.moveTo(i);
+    }
+
+    T_numtype shift(int offset, int dim) const
+    {
+      return iter_.shift(offset, dim);
+    }
+
+    T_numtype shift(int offset1, int dim1,int offset2, int dim2) const
+    {
+      return iter_.shift(offset1, dim1, offset2, dim2);
+    }
+
+  // sliceinfo for expressions
+  template<typename T1, typename T2 = nilArraySection, 
+	   class T3 = nilArraySection, typename T4 = nilArraySection, 
+	   class T5 = nilArraySection, typename T6 = nilArraySection, 
+	   class T7 = nilArraySection, typename T8 = nilArraySection, 
+	   class T9 = nilArraySection, typename T10 = nilArraySection, 
+	   class T11 = nilArraySection>
+  class SliceInfo {
+  public:
+    typedef typename T_expr::template SliceInfo<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::T_slice T_subexpr;
+    typedef _bz_ArrayExpr<T_subexpr> T_slice;
+};
+
+  // slicing (experimental)
+
+  // because _bz_ArrayExpr is the "top-level" expression class, it has
+  // the burden of supplying enough variants of the operator to make
+  // it user-friendly. Hence the large numbers that follow
+  template<typename T1>
+  typename SliceInfo<T1>::T_slice
+  operator()(T1 r1) const
+  {
+    return typename SliceInfo<T1>::T_slice
+      (iter_
+       (r1, 
+	nilArraySection(), nilArraySection(), nilArraySection(), nilArraySection(),
+	nilArraySection(), nilArraySection(), nilArraySection(),
+	nilArraySection(), nilArraySection(), nilArraySection()));
+  }
+
+  template<typename T1, typename T2>
+  typename SliceInfo<T1,T2>::T_slice
+  operator()(T1 r1, T2 r2) const
+  {
+    typedef typename SliceInfo<T1,T2>::T_slice slice;
+    return slice(iter_
+		 (r1, r2, nilArraySection(), nilArraySection(), nilArraySection(),
+		  nilArraySection(), nilArraySection(), nilArraySection(),
+		  nilArraySection(), nilArraySection(), nilArraySection()));
+  }
+
+
+    template<typename T1, typename T2, typename T3>
+    typename SliceInfo<T1,T2,T3>::T_slice 
+    operator()(T1 r1, T2 r2, T3 r3) const
+    {
+        typedef typename SliceInfo<T1,T2,T3>::T_slice slice;
+        return slice(iter_(r1, r2, r3, nilArraySection(), nilArraySection(), 
+			   nilArraySection(), nilArraySection(), nilArraySection(), 
+			   nilArraySection(), nilArraySection(), nilArraySection()));
+    }
+
+    template<typename T1, typename T2, typename T3, typename T4>
+    typename SliceInfo<T1,T2,T3,T4>::T_slice
+    operator()(T1 r1, T2 r2, T3 r3, T4 r4) const
+    {
+        typedef typename SliceInfo<T1,T2,T3,T4>::T_slice slice;
+        return slice(iter_(r1, r2, r3, r4, nilArraySection(), nilArraySection(),
+			   nilArraySection(), nilArraySection(), nilArraySection(),
+			   nilArraySection(), nilArraySection()));
+    }
+
+    template<typename T1, typename T2, typename T3, typename T4, typename T5>
+    typename SliceInfo<T1,T2,T3,T4,T5>::T_slice
+    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5) const
+    {
+        typedef typename SliceInfo<T1,T2,T3,T4,T5>::T_slice slice;
+        return slice(iter_(r1, r2, r3, r4, r5, nilArraySection(),
+			   nilArraySection(), nilArraySection(), nilArraySection(),
+			   nilArraySection(), nilArraySection()));
+    }
+
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+    typename SliceInfo<T1,T2,T3,T4,T5,T6>::T_slice
+    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6) const
+    {
+        typedef typename SliceInfo<T1,T2,T3,T4,T5,T6>::T_slice slice;
+        return slice(iter_(r1, r2, r3, r4, r5, r6, nilArraySection(), 
+			   nilArraySection(), nilArraySection(),
+			   nilArraySection(), nilArraySection()));
+    }
+
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
+        typename T7>
+    typename SliceInfo<T1,T2,T3,T4,T5,T6,T7>::T_slice
+    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7) const
+    {
+        typedef typename SliceInfo<T1,T2,T3,T4,T5,T6,T7>::T_slice slice;
+        return slice(iter_(r1, r2, r3, r4, r5, r6, r7, 
+			   nilArraySection(), nilArraySection(),
+			   nilArraySection(), nilArraySection()));
+    }
+
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
+        typename T7, typename T8>
+    typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8>::T_slice
+    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8) const
+    {
+        typedef typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8>::T_slice slice;
+        return slice(iter_(r1, r2, r3, r4, r5, r6, r7, r8,
+			   nilArraySection(), nilArraySection(), nilArraySection()));
+    }
+
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
+        typename T7, typename T8, typename T9>
+    typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9>::T_slice
+    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9) const
+    {
+        typedef typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9>::T_slice slice;
+        return slice(iter_(r1, r2, r3, r4, r5, r6, r7, r8, r9, 
+			   nilArraySection(), nilArraySection()));
+    }
+
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
+        typename T7, typename T8, typename T9, typename T10>
+    typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>::T_slice
+    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9, T10 r10) const
+    {
+        typedef typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>::T_slice slice;
+        return slice(iter_(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, 
+			   nilArraySection()));
+    }
+
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
+        typename T7, typename T8, typename T9, typename T10, typename T11>
+    typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice
+    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9, T10 r10, T11 r11) const
+    {
+        typedef typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice slice;
+        return slice(iter_(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11));
+    }
+
+  // now complete slicings to a scalar, which can't be expressed with the above
+  // unlike for arrays, these expressions are rvalues so we return by value
+    T_numtype operator()(int i0) const
+    { 
+	return iter_(TinyVector<int, 1>(i0));
+    }
+
+  T_numtype operator()(int i0, int i1) const
+    { 
+	return iter_(TinyVector<int, 2>(i0, i1));
+    }
+
+  T_numtype operator()(int i0, int i1, int i2) const
+    { 
+      return iter_(TinyVector<int, 3>(i0, i1, i2));
+    }
+
+  T_numtype operator()(int i0, int i1, int i2, int i3) const
+    { 
+      return iter_(TinyVector<int, 4>(i0, i1, i2, i3));
+    }
+
+  T_numtype operator()(int i0, int i1, int i2, int i3, int i4) const
+    { 
+      return iter_(TinyVector<int, 5>(i0, i1, i2, i3, i4));
+    }
+
+  T_numtype operator()(int i0, int i1, int i2, int i3, int i4, int i5) const
+    { 
+      return iter_(TinyVector<int, 6>(i0, i1, i2, i3, i4, i5));
+    }
+
+  T_numtype operator()(int i0, int i1, int i2, int i3, int i4, int i5,
+		       int i6) const
+    { 
+      return iter_(TinyVector<int, 7>(i0, i1, i2, i3, i4, i5, i6));
+    }
+
+  T_numtype operator()(int i0, int i1, int i2, int i3, int i4, int i5,
+		       int i6, int i7) const
+    { 
+      return iter_(TinyVector<int, 8>(i0, i1, i2, i3, i4, i5, i6, i7));
+    }
+
+  T_numtype operator()(int i0, int i1, int i2, int i3, int i4, int i5,
+		       int i6, int i7, int i8) const
+    { 
+      return iter_(TinyVector<int, 9>(i0, i1, i2, i3, i4, i5, i6, i7, i8));
+    }
+
+  T_numtype operator()(int i0, int i1, int i2, int i3, int i4, int i5,
+		       int i6, int i7, int i8, int i9) const
+    { 
+      return iter_(TinyVector<int, 10>(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9));
+    }
+
+  T_numtype operator()(int i0, int i1, int i2, int i3, int i4, int i5,
+		       int i6, int i7, int i8, int i9, int i10) const
+    { 
+      return iter_(TinyVector<int, 11>(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10));
     }
 
 protected:
@@ -318,6 +548,8 @@ public:
     typedef _bz_typename T_op::T_numtype T_numtype;
     typedef T_expr T_ctorArg1;
     typedef int    T_ctorArg2;    // dummy
+  typedef _bz_ArrayExprUnaryOp<_bz_typename P_expr::T_range_result,
+			       P_op> T_range_result;
 
     static const int 
         numArrayOperands = T_expr::numArrayOperands,
@@ -347,20 +579,27 @@ public:
     int ordering(const int rank)  const { return iter_.ordering(rank);  }
     int lbound(const int rank)    const { return iter_.lbound(rank);    }
     int ubound(const int rank)    const { return iter_.ubound(rank);    }
+    RectDomain<rank> domain() const { return iter_.domain(); }
 
-    T_numtype operator*() { return T_op::apply(*iter_); }
+    T_numtype operator*() const { return T_op::apply(*iter_); }
 
     T_numtype first_value() const { return iter_(iter_.lbound()); }
 
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     template<int N_rank>
-    T_numtype operator()(const TinyVector<int, N_rank> i)
+    T_numtype operator()(const TinyVector<int, N_rank> i) const
     { return T_op::apply(iter_(i)); }
 #else
     template<int N_rank>
-    T_numtype operator()(const TinyVector<int, N_rank>& i)
+    T_numtype operator()(const TinyVector<int, N_rank>& i) const
     { return T_op::apply(iter_(i)); }
 #endif
+
+  template<int N>
+  T_range_result operator()(const RectDomain<N>& d) const
+  {
+    return T_range_result(iter_(d));
+  }
 
     void push(int position)
     {
@@ -395,9 +634,20 @@ public:
         iter_.advanceUnitStride();
     }
 
-    void moveTo(const TinyVector<int,_bz_ArrayExprUnaryOp::rank>& i)
+  template<int N>
+  void moveTo(const TinyVector<int,N>& i)
     {
         iter_.moveTo(i);
+    }
+
+    T_numtype shift(int offset, int dim) const
+    {
+      return T_op::apply(iter_.shift(offset, dim));
+    }
+
+    T_numtype shift(int offset1, int dim1,int offset2, int dim2) const
+    {
+      return T_op::apply(iter_.shift(offset1, dim1, offset2, dim2));
     }
 
     bool canCollapse(int outerLoopRank, int innerLoopRank) const
@@ -406,16 +656,29 @@ public:
         return iter_.canCollapse(outerLoopRank, innerLoopRank); 
     }
 
-    T_numtype operator[](int i)
+    T_numtype operator[](int i) const
     { return T_op::apply(iter_[i]); }
 
-    T_numtype fastRead(int i)
+    T_numtype fastRead(int i) const
     { return T_op::apply(iter_.fastRead(i)); }
 
-    int suggestStride(int rank) const
+  // this is needed for the stencil expression fastRead to work
+  void _bz_offsetData(sizeType i)
+  {
+    iter_._bz_offsetData(i);
+  }
+
+    // and these are needed for stencil expression shift to work
+    void _bz_offsetData(sizeType offset, int dim)
+    { iter_._bz_offsetData(offset, dim);}
+  
+    void _bz_offsetData(sizeType offset1, int dim1, sizeType offset2, int dim2)
+    { iter_._bz_offsetData(offset1, dim1, offset2, dim2);}
+
+    diffType suggestStride(int rank) const
     { return iter_.suggestStride(rank); }
 
-    bool isStride(int rank, int stride) const
+    bool isStride(int rank, diffType stride) const
     { return iter_.isStride(rank,stride); }
 
     void prettyPrint(BZ_STD_SCOPE(string) &str, 
@@ -423,8 +686,31 @@ public:
     { T_op::prettyPrint(str, format, iter_); }
 
     template<typename T_shape>
-    bool shapeCheck(const T_shape& shape)
+    bool shapeCheck(const T_shape& shape) const
     { return iter_.shapeCheck(shape); }
+
+
+  // sliceinfo for expressions
+  template<typename T1, typename T2 = nilArraySection, 
+	   class T3 = nilArraySection, typename T4 = nilArraySection, 
+	   class T5 = nilArraySection, typename T6 = nilArraySection, 
+	   class T7 = nilArraySection, typename T8 = nilArraySection, 
+	   class T9 = nilArraySection, typename T10 = nilArraySection, 
+	   class T11 = nilArraySection>
+  class SliceInfo {
+  public:
+    typedef typename T_expr::template SliceInfo<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::T_slice T_slice1;
+    typedef _bz_ArrayExprUnaryOp<T_slice1, T_op> T_slice;
+};
+
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
+        typename T7, typename T8, typename T9, typename T10, typename T11>
+    typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice
+    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9, T10 r10, T11 r11) const
+    {
+      return typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice
+	(iter_(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11));
+    }
 
 protected:
     _bz_ArrayExprUnaryOp() { }
@@ -434,6 +720,7 @@ protected:
 
 
 template<typename P_expr1, typename P_expr2, typename P_op>
+
 class _bz_ArrayExprBinaryOp {
 public:
     typedef P_expr1 T_expr1;
@@ -444,6 +731,9 @@ public:
     typedef _bz_typename T_op::T_numtype T_numtype;
     typedef T_expr1 T_ctorArg1;
     typedef T_expr2 T_ctorArg2;
+  typedef _bz_ArrayExprBinaryOp<_bz_typename P_expr1::T_range_result, 
+				_bz_typename P_expr2::T_range_result, 
+				P_op> T_range_result;
 
     static const int 
         numArrayOperands = T_expr1::numArrayOperands
@@ -463,16 +753,24 @@ public:
         : iter1_(a), iter2_(b)
     { }
 
-    T_numtype operator*()
+    T_numtype operator*() const
     { return T_op::apply(*iter1_, *iter2_); }
 
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     template<int N_rank>
-    T_numtype operator()(const TinyVector<int, N_rank> i) { return T_op::apply(iter1_(i), iter2_(i)); }
+    T_numtype operator()(const TinyVector<int, N_rank> i) const
+  { return T_op::apply(iter1_(i), iter2_(i)); }
 #else
     template<int N_rank>
-    T_numtype operator()(const TinyVector<int, N_rank>& i) { return T_op::apply(iter1_(i), iter2_(i)); }
+    T_numtype operator()(const TinyVector<int, N_rank>& i) const
+  { return T_op::apply(iter1_(i), iter2_(i)); }
 #endif
+
+  template<int N>
+  T_range_result operator()(const RectDomain<N>& d) const
+  {
+    return T_range_result(iter1_(d), iter2_(d));
+  }
 
     int ascending(const int rank) const {
         return bounds::compute_ascending(rank, iter1_.ascending(rank), iter2_.ascending(rank));
@@ -489,6 +787,16 @@ public:
     int ubound(const int rank) const {
         return bounds::compute_ubound(rank, iter1_.ubound(rank), iter2_.ubound(rank));
     }
+
+  // defer calculation to lbound/ubound
+  RectDomain<rank> domain() const 
+  { 
+    TinyVector<int, rank> lb, ub;
+    for(int r=0; r<rank; ++r) {
+      lb[r]=lbound(r); ub[r]=ubound(r); 
+    }
+    return RectDomain<rank>(lb,ub);
+  }
 
     void push(int position)
     { 
@@ -536,28 +844,60 @@ public:
             && iter2_.canCollapse(outerLoopRank, innerLoopRank);
     } 
 
-    T_numtype operator[](int i)
+    T_numtype operator[](int i) const
     { return T_op::apply(iter1_[i], iter2_[i]); }
 
-    T_numtype fastRead(int i)
+    T_numtype fastRead(int i) const
     { return T_op::apply(iter1_.fastRead(i), iter2_.fastRead(i)); }
 
-    int suggestStride(int rank) const
+    // this is needed for the stencil expression fastRead to work
+    void _bz_offsetData(sizeType i)
+  {
+    iter1_._bz_offsetData(i);
+    iter2_._bz_offsetData(i);
+  }
+
+    // and these are needed for stencil expression shift to work
+    void _bz_offsetData(sizeType offset, int dim)
+    { 
+      iter1_._bz_offsetData(offset, dim);
+      iter2_._bz_offsetData(offset, dim);
+    }
+  
+    void _bz_offsetData(sizeType offset1, int dim1, sizeType offset2, int dim2)
+    { 
+      iter1_._bz_offsetData(offset1, dim1, offset2, dim2);
+      iter2_._bz_offsetData(offset1, dim1, offset2, dim2);
+    }
+
+    diffType suggestStride(int rank) const
     {
-        int stride1 = iter1_.suggestStride(rank);
-        int stride2 = iter2_.suggestStride(rank);
+        diffType stride1 = iter1_.suggestStride(rank);
+        diffType stride2 = iter2_.suggestStride(rank);
         return (stride1 > stride2) ? stride1 : stride2;
     }
 
-    bool isStride(int rank, int stride) const
+    bool isStride(int rank, diffType stride) const
     {
         return iter1_.isStride(rank,stride) && iter2_.isStride(rank,stride);
     }
 
-    void moveTo(const TinyVector<int,_bz_ArrayExprBinaryOp::rank>& i)
+  template<int N>
+  void moveTo(const TinyVector<int,N>& i)
     {
         iter1_.moveTo(i);
         iter2_.moveTo(i);
+    }
+
+    T_numtype shift(int offset, int dim) const
+    {
+      return T_op::apply(iter1_.shift(offset, dim),iter2_.shift(offset, dim));
+    }
+
+    T_numtype shift(int offset1, int dim1,int offset2, int dim2) const
+    {
+      return T_op::apply(iter1_.shift(offset1, dim1, offset2, dim2),
+			 iter2_.shift(offset1, dim1, offset2, dim2));
     }
 
     void prettyPrint(BZ_STD_SCOPE(string) &str, 
@@ -567,8 +907,33 @@ public:
     }
 
     template<typename T_shape>
-    bool shapeCheck(const T_shape& shape)
+    bool shapeCheck(const T_shape& shape) const
     { return iter1_.shapeCheck(shape) && iter2_.shapeCheck(shape); }
+
+
+  // sliceinfo for expressions
+  template<typename T1, typename T2 = nilArraySection, 
+	   class T3 = nilArraySection, typename T4 = nilArraySection, 
+	   class T5 = nilArraySection, typename T6 = nilArraySection, 
+	   class T7 = nilArraySection, typename T8 = nilArraySection, 
+	   class T9 = nilArraySection, typename T10 = nilArraySection, 
+	   class T11 = nilArraySection>
+  class SliceInfo {
+  public:
+    typedef typename T_expr1::template SliceInfo<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::T_slice T_slice1;
+    typedef typename T_expr2::template SliceInfo<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::T_slice T_slice2;
+    typedef _bz_ArrayExprBinaryOp<T_slice1, T_slice2, T_op> T_slice;
+};
+
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
+        typename T7, typename T8, typename T9, typename T10, typename T11>
+    typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice
+    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9, T10 r10, T11 r11) const
+    {
+      return typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice
+	(iter1_(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11),
+	 iter2_(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11));
+    }
 
 protected:
     _bz_ArrayExprBinaryOp() { }
@@ -591,6 +956,9 @@ public:
     typedef T_expr1 T_ctorArg1;
     typedef T_expr2 T_ctorArg2;
     typedef T_expr3 T_ctorArg3;
+  typedef _bz_ArrayExprTernaryOp<_bz_typename P_expr1::T_range_result, 
+				 _bz_typename P_expr2::T_range_result, 
+				 _bz_typename P_expr3::T_range_result, P_op> T_range_result;
 
     static const int 
         numArrayOperands = T_expr1::numArrayOperands
@@ -615,18 +983,24 @@ public:
         : iter1_(a), iter2_(b), iter3_(c)
     { }
 
-    T_numtype operator*()
+    T_numtype operator*() const
     { return T_op::apply(*iter1_, *iter2_, *iter3_); }
 
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     template<int N_rank>
-    T_numtype operator()(const TinyVector<int, N_rank> i)
+    T_numtype operator()(const TinyVector<int, N_rank> i) const
     { return T_op::apply(iter1_(i), iter2_(i), iter3_(i)); }
 #else
     template<int N_rank>
-    T_numtype operator()(const TinyVector<int, N_rank>& i)
+    T_numtype operator()(const TinyVector<int, N_rank>& i) const
     { return T_op::apply(iter1_(i), iter2_(i), iter3_(i)); }
 #endif
+
+  template<int N>
+  T_range_result operator()(const RectDomain<N>& d) const
+  {
+    return T_range_result(iter1_(d), iter2_(d), iter3_(d));
+  }
 
     int ascending(const int rank) const {
         return bounds::compute_ascending(rank, bounds::compute_ascending(
@@ -651,6 +1025,16 @@ public:
             rank, iter1_.ubound(rank), iter2_.ubound(rank)), 
             iter3_.ubound(rank));
     }
+
+  // defer calculation to lbound/ubound
+  RectDomain<rank> domain() const 
+  { 
+    TinyVector<int, rank> lb, ub;
+    for(int r=0; r<rank; ++r) {
+      lb[r]=lbound(r); ub[r]=ubound(r); 
+    }
+    return RectDomain<rank>(lb,ub);
+  }
 
     void push(int position)
     { 
@@ -709,33 +1093,57 @@ public:
             && iter3_.canCollapse(outerLoopRank, innerLoopRank);
     } 
 
-    T_numtype operator[](int i)
+    T_numtype operator[](int i) const
     { return T_op::apply(iter1_[i], iter2_[i], iter3_[i]); }
 
-    T_numtype fastRead(int i)
+    T_numtype fastRead(int i) const
     {
         return T_op::apply(iter1_.fastRead(i),
                            iter2_.fastRead(i),
                            iter3_.fastRead(i));
     }
 
-    int suggestStride(int rank) const
+    // this is needed for the stencil expression fastRead to work
+    void _bz_offsetData(sizeType i)
     {
-        int stride1 = iter1_.suggestStride(rank);
-        int stride2 = iter2_.suggestStride(rank);
-        int stride3 = iter3_.suggestStride(rank);
+      iter1_._bz_offsetData(i);
+      iter2_._bz_offsetData(i);
+      iter3_._bz_offsetData(i);
+    }
+
+    // and these are needed for stencil expression shift to work
+    void _bz_offsetData(sizeType offset, int dim)
+    { 
+      iter1_._bz_offsetData(offset, dim);
+      iter2_._bz_offsetData(offset, dim);
+      iter3_._bz_offsetData(offset, dim);
+    }
+  
+    void _bz_offsetData(sizeType offset1, int dim1, sizeType offset2, int dim2)
+    {
+      iter1_._bz_offsetData(offset1, dim1, offset2, dim2);
+      iter2_._bz_offsetData(offset1, dim1, offset2, dim2);
+      iter3_._bz_offsetData(offset1, dim1, offset2, dim2);
+    }
+
+    diffType suggestStride(int rank) const
+    {
+        diffType stride1 = iter1_.suggestStride(rank);
+        diffType stride2 = iter2_.suggestStride(rank);
+        diffType stride3 = iter3_.suggestStride(rank);
         return stride1 > ( stride2 = (stride2>stride3 ? stride2 : stride3) ) ?
             stride1 : stride2;
     }
 
-    bool isStride(int rank, int stride) const
+    bool isStride(int rank, diffType stride) const
     {
         return iter1_.isStride(rank,stride)
             && iter2_.isStride(rank,stride)
             && iter3_.isStride(rank,stride);
     }
 
-    void moveTo(const TinyVector<int,_bz_ArrayExprTernaryOp::rank>& i)
+    template<int N>
+    void moveTo(const TinyVector<int,N>& i)
     {
         iter1_.moveTo(i);
         iter2_.moveTo(i);
@@ -749,11 +1157,38 @@ public:
     }
 
     template<typename T_shape>
-    bool shapeCheck(const T_shape& shape)
+    bool shapeCheck(const T_shape& shape) const
     {
         return iter1_.shapeCheck(shape)
             && iter2_.shapeCheck(shape)
             && iter3_.shapeCheck(shape);
+    }
+
+
+  // sliceinfo for expressions
+  template<typename T1, typename T2 = nilArraySection, 
+	   class T3 = nilArraySection, typename T4 = nilArraySection, 
+	   class T5 = nilArraySection, typename T6 = nilArraySection, 
+	   class T7 = nilArraySection, typename T8 = nilArraySection, 
+	   class T9 = nilArraySection, typename T10 = nilArraySection, 
+	   class T11 = nilArraySection>
+  class SliceInfo {
+  public:
+    typedef typename T_expr1::template SliceInfo<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::T_slice T_slice1;
+    typedef typename T_expr2::template SliceInfo<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::T_slice T_slice2;
+    typedef typename T_expr3::template SliceInfo<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::T_slice T_slice3;
+    typedef _bz_ArrayExprTernaryOp<T_slice1, T_slice2, T_slice3, T_op> T_slice;
+};
+
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
+        typename T7, typename T8, typename T9, typename T10, typename T11>
+    typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice
+    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9, T10 r10, T11 r11) const
+    {
+      return typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice
+	(iter1_(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11),
+	 iter2_(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11),
+	 iter3_(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11));
     }
 
 protected:
@@ -764,6 +1199,310 @@ protected:
     T_expr3 iter3_; 
 };
 
+#define BZ_MAX(a,b) (a)>(b) ? (a) : (b)
+
+template<typename P_expr1, typename P_expr2, typename P_expr3,
+	 typename P_expr4, typename P_op>
+class _bz_ArrayExprQuaternaryOp {
+public:
+    typedef P_expr1 T_expr1;
+    typedef P_expr2 T_expr2;
+    typedef P_expr3 T_expr3;
+    typedef P_expr4 T_expr4;
+    typedef P_op T_op;
+    typedef _bz_typename T_expr1::T_numtype T_numtype1;
+    typedef _bz_typename T_expr2::T_numtype T_numtype2;
+    typedef _bz_typename T_expr3::T_numtype T_numtype3;
+    typedef _bz_typename T_expr4::T_numtype T_numtype4;
+    typedef _bz_typename T_op::T_numtype T_numtype;
+    typedef T_expr1 T_ctorArg1;
+    typedef T_expr2 T_ctorArg2;
+    typedef T_expr3 T_ctorArg3;
+    typedef T_expr4 T_ctorArg4;
+  typedef _bz_ArrayExprQuaternaryOp<_bz_typename P_expr1::T_range_result, 
+				    _bz_typename P_expr2::T_range_result, 
+				    _bz_typename P_expr3::T_range_result, 
+				    _bz_typename P_expr4::T_range_result, 
+				    P_op> T_range_result;
+
+  static const int 
+  numArrayOperands = T_expr1::numArrayOperands
+    + T_expr2::numArrayOperands
+    + T_expr3::numArrayOperands
+    + T_expr4::numArrayOperands,
+
+    numIndexPlaceholders = T_expr1::numIndexPlaceholders
+    + T_expr2::numIndexPlaceholders
+    + T_expr3::numIndexPlaceholders
+    + T_expr4::numIndexPlaceholders,
+
+    rank = BZ_MAX(BZ_MAX(T_expr1::rank, T_expr2::rank),
+		  BZ_MAX(T_expr3::rank, T_expr4::rank));
+
+    _bz_ArrayExprQuaternaryOp(
+        const _bz_ArrayExprQuaternaryOp<T_expr1, T_expr2, T_expr3, T_expr4, T_op>& a)
+        : iter1_(a.iter1_), iter2_(a.iter2_), iter3_(a.iter3_), iter4_(a.iter4_)
+    { }
+
+    template<typename T1, typename T2, typename T3, typename T4>
+    _bz_ArrayExprQuaternaryOp(BZ_ETPARM(T1) a, BZ_ETPARM(T2) b, 
+			      BZ_ETPARM(T3) c, BZ_ETPARM(T4) d)
+        : iter1_(a), iter2_(b), iter3_(c), iter4_(d)
+    { }
+
+    T_numtype operator*() const
+    { return T_op::apply(*iter1_, *iter2_, *iter3_, *iter4_); }
+
+#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
+    template<int N_rank>
+    T_numtype operator()(const TinyVector<int, N_rank> i) const
+    { return T_op::apply(iter1_(i), iter2_(i), iter3_(i), iter4_(i)); }
+#else
+    template<int N_rank>
+    T_numtype operator()(const TinyVector<int, N_rank>& i) const
+    { return T_op::apply(iter1_(i), iter2_(i), iter3_(i), iter4_(i)); }
+#endif
+
+  template<int N>
+  T_range_result operator()(const RectDomain<rank>& d) const
+  {
+    return T_range_result(iter1_(d), iter2_(d), iter3_(d), iter4_(d));
+  }
+
+    int ascending(const int rank) const {
+        return bounds::compute_ascending(rank, 
+					 bounds::compute_ascending(rank, 
+								   iter1_.ascending(rank), 
+								   iter2_.ascending(rank)),
+					 bounds::compute_ascending(rank, 
+								   iter3_.ascending(rank),
+								   iter4_.ascending(rank)));
+    }
+
+    int ordering(const int rank) const {
+        return bounds::compute_ordering(rank, 
+					bounds::compute_ordering(rank, 
+								 iter1_.ordering(rank), 
+								 iter2_.ordering(rank)),
+					bounds::compute_ordering(rank, 
+								 iter3_.ordering(rank),
+								 iter4_.ordering(rank)));
+    }
+
+    int lbound(const int rank) const { 
+        return bounds::compute_lbound(rank, 
+				      bounds::compute_lbound(rank, 
+							     iter1_.lbound(rank), 
+							     iter2_.lbound(rank)),
+				      bounds::compute_lbound(rank, 
+							     iter3_.lbound(rank),
+							     iter4_.lbound(rank)));
+    }
+
+    int ubound(const int rank) const {
+        return bounds::compute_ubound(rank, 
+				      bounds::compute_ubound(rank, 
+							     iter1_.ubound(rank), 
+							     iter2_.ubound(rank)),
+				      bounds::compute_ubound(rank, 
+							     iter3_.ubound(rank),
+							     iter4_.ubound(rank)));
+    }
+
+  // defer calculation to lbound/ubound
+  RectDomain<rank> domain() const 
+  { 
+    TinyVector<int, rank> lb, ub;
+    for(int r=0; r<rank; ++r) {
+      lb[r]=lbound(r); ub[r]=ubound(r); 
+    }
+    return RectDomain<rank>(lb,ub);
+  }
+
+    void push(int position)
+    { 
+        iter1_.push(position); 
+        iter2_.push(position);
+        iter3_.push(position);
+        iter4_.push(position);
+    }
+
+    void pop(int position)
+    { 
+        iter1_.pop(position); 
+        iter2_.pop(position);
+        iter3_.pop(position);
+        iter4_.pop(position);
+    }
+
+    void advance()
+    { 
+        iter1_.advance(); 
+        iter2_.advance();
+        iter3_.advance();
+        iter4_.advance();
+    }
+
+    void advance(int n)
+    {
+        iter1_.advance(n);
+        iter2_.advance(n);
+        iter3_.advance(n);
+        iter4_.advance(n);
+    }
+
+    void loadStride(int rank)
+    { 
+        iter1_.loadStride(rank); 
+        iter2_.loadStride(rank);
+        iter3_.loadStride(rank);
+        iter4_.loadStride(rank);
+    }
+    
+    bool isUnitStride(int rank) const
+    {
+        return iter1_.isUnitStride(rank)
+            && iter2_.isUnitStride(rank)
+            && iter3_.isUnitStride(rank)
+            && iter4_.isUnitStride(rank);
+    }
+
+    void advanceUnitStride()
+    { 
+        iter1_.advanceUnitStride(); 
+        iter2_.advanceUnitStride();
+        iter3_.advanceUnitStride();
+        iter4_.advanceUnitStride();
+    }
+
+    bool canCollapse(int outerLoopRank, int innerLoopRank) const
+    { 
+        // BZ_DEBUG_MESSAGE("_bz_ArrayExprQuaternaryOp<>::canCollapse");
+        return iter1_.canCollapse(outerLoopRank, innerLoopRank)
+            && iter2_.canCollapse(outerLoopRank, innerLoopRank)
+            && iter3_.canCollapse(outerLoopRank, innerLoopRank)
+            && iter4_.canCollapse(outerLoopRank, innerLoopRank);
+    } 
+
+    T_numtype operator[](int i)
+    { return T_op::apply(iter1_[i], iter2_[i], iter3_[i], iter4_[i]); }
+
+    T_numtype fastRead(int i) const
+    {
+        return T_op::apply(iter1_.fastRead(i),
+                           iter2_.fastRead(i),
+                           iter3_.fastRead(i),
+                           iter4_.fastRead(i));
+    }
+
+  // this is needed for the stencil expression fastRead to work
+  void _bz_offsetData(sizeType i)
+  {
+    iter1_._bz_offsetData(i);
+    iter2_._bz_offsetData(i);
+    iter3_._bz_offsetData(i);
+    iter4_._bz_offsetData(i);
+  }
+
+    // and these are needed for stencil expression shift to work
+    void _bz_offsetData(sizeType offset, int dim)
+    { 
+      iter1_._bz_offsetData(offset, dim);
+      iter2_._bz_offsetData(offset, dim);
+      iter3_._bz_offsetData(offset, dim);
+      iter4_._bz_offsetData(offset, dim);
+    }
+  
+    void _bz_offsetData(sizeType offset1, int dim1, sizeType offset2, int dim2)
+    {
+      iter1_._bz_offsetData(offset1, dim1, offset2, dim2);
+      iter2_._bz_offsetData(offset1, dim1, offset2, dim2);
+      iter3_._bz_offsetData(offset1, dim1, offset2, dim2);
+      iter4_._bz_offsetData(offset1, dim1, offset2, dim2);
+    }
+
+    diffType suggestStride(int rank) const
+    {
+        diffType stride1 = iter1_.suggestStride(rank);
+        diffType stride2 = iter2_.suggestStride(rank);
+        diffType stride3 = iter3_.suggestStride(rank);
+        diffType stride4 = iter4_.suggestStride(rank);
+
+        //return stride1 > ( stride2 = (stride2>stride3 ? stride2 : stride3) ) ?
+	//  stride1 : stride2;
+	return std::max(std::max(stride1, stride2),
+			std::max(stride3, stride4));
+    }
+
+    bool isStride(int rank, diffType stride) const
+    {
+        return iter1_.isStride(rank,stride)
+            && iter2_.isStride(rank,stride)
+            && iter3_.isStride(rank,stride)
+            && iter4_.isStride(rank,stride);
+    }
+
+    template<int N>
+    void moveTo(const TinyVector<int,N>& i)
+    {
+        iter1_.moveTo(i);
+        iter2_.moveTo(i);
+        iter3_.moveTo(i);
+        iter4_.moveTo(i);
+    }
+
+    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+        prettyPrintFormat& format) const
+    {
+        T_op::prettyPrint(str, format, iter1_, iter2_, iter3_, iter4_);
+    }
+
+    template<typename T_shape>
+    bool shapeCheck(const T_shape& shape) const
+    {
+        return iter1_.shapeCheck(shape)
+            && iter2_.shapeCheck(shape)
+            && iter3_.shapeCheck(shape)
+            && iter4_.shapeCheck(shape);
+    }
+
+
+  // sliceinfo for expressions
+  template<typename T1, typename T2 = nilArraySection, 
+	   class T3 = nilArraySection, typename T4 = nilArraySection, 
+	   class T5 = nilArraySection, typename T6 = nilArraySection, 
+	   class T7 = nilArraySection, typename T8 = nilArraySection, 
+	   class T9 = nilArraySection, typename T10 = nilArraySection, 
+	   class T11 = nilArraySection>
+  class SliceInfo {
+  public:
+    typedef typename T_expr1::template SliceInfo<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::T_slice T_slice1;
+    typedef typename T_expr2::template SliceInfo<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::T_slice T_slice2;
+    typedef typename T_expr3::template SliceInfo<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::T_slice T_slice3;
+    typedef typename T_expr4::template SliceInfo<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::T_slice T_slice4;
+    typedef _bz_ArrayExprQuaternaryOp<T_slice1, T_slice2, T_slice3, T_slice4, T_op> T_slice;
+};
+
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
+        typename T7, typename T8, typename T9, typename T10, typename T11>
+    typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice
+    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9, T10 r10, T11 r11) const
+    {
+      return typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice
+	(iter1_(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11),
+	 iter2_(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11),
+	 iter3_(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11),
+	 iter4_(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11));
+    }
+
+protected:
+    _bz_ArrayExprQuaternaryOp() { }
+
+    T_expr1 iter1_;
+    T_expr2 iter2_; 
+    T_expr3 iter3_; 
+    T_expr4 iter4_; 
+};
 
 template<typename P_numtype>
 class _bz_ArrayExprConstant {
@@ -771,7 +1510,7 @@ public:
     typedef P_numtype T_numtype;
     typedef T_numtype T_ctorArg1;
     typedef int       T_ctorArg2;    // dummy
-
+  typedef _bz_ArrayExprConstant<P_numtype> T_range_result;
     static const int 
         numArrayOperands = 0, 
         numIndexPlaceholders = 0, 
@@ -796,6 +1535,14 @@ public:
     int lbound(const int)    const { return INT_MIN; }
     int ubound(const int)    const { return INT_MAX; }
 
+  // there is no rank...
+  RectDomain<10> domain() const 
+  { 
+    TinyVector<int, 10> lb(lbound(0)), ub(ubound(0));
+    return RectDomain<rank>(lb,ub);
+  }
+
+
     // NEEDS_WORK: use huge(int()) once numeric_limits<T> available on
     // all platforms
 
@@ -804,13 +1551,19 @@ public:
 
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     template<int N_rank>
-    T_numtype operator()(const TinyVector<int,N_rank>)
+    T_numtype operator()(const TinyVector<int,N_rank>) const
     { return value_; }
 #else
     template<int N_rank>
-    T_numtype operator()(const TinyVector<int,N_rank>&)
+    T_numtype operator()(const TinyVector<int,N_rank>&) const
     { return value_; }
 #endif
+
+  template<int N_rank>
+  const _bz_ArrayExprConstant& operator()(const RectDomain<N_rank>& d) const
+  {
+    return *this;
+  }
 
     void push(int) { }
     void pop(int) { }
@@ -827,22 +1580,35 @@ public:
     bool canCollapse(int,int) const 
     { return true; }
 
-    T_numtype operator[](int)
+    T_numtype operator[](int) const
     { return value_; }
 
-    T_numtype fastRead(int)
+    T_numtype fastRead(int) const
     { return value_; }
 
-    int suggestStride(int) const
+  // this is needed for the stencil expression fastRead to work
+  void _bz_offsetData(sizeType i) const{};
+
+    // and these are needed for stencil expression shift to work
+  void _bz_offsetData(sizeType offset, int dim) const {};
+  
+  void _bz_offsetData(sizeType offset1, int dim1, sizeType offset2, int dim2) const {};
+
+    diffType suggestStride(int) const
     { return 1; }
 
-    bool isStride(int,int) const
+    bool isStride(int,diffType) const
     { return true; }
 
-    void moveTo(int) { }
+    void moveTo(int) const { }
+
+    T_numtype shift(int offset, int dim) const {return value_;}
+
+    T_numtype shift(int offset1, int dim1,int offset2, int dim2) const 
+    { return value_;}
 
     template<int N_rank>
-    void moveTo(const TinyVector<int,N_rank>&) { }
+    void moveTo(const TinyVector<int,N_rank>&) const { }
 
     void prettyPrint(BZ_STD_SCOPE(string) &str, 
         prettyPrintFormat& format) const
@@ -854,8 +1620,29 @@ public:
     }
 
     template<typename T_shape>
-    bool shapeCheck(const T_shape&)
+    bool shapeCheck(const T_shape&) const
     { return true; }
+
+
+  // sliceinfo for expressions
+  template<typename T1, typename T2 = nilArraySection, 
+	   class T3 = nilArraySection, typename T4 = nilArraySection, 
+	   class T5 = nilArraySection, typename T6 = nilArraySection, 
+	   class T7 = nilArraySection, typename T8 = nilArraySection, 
+	   class T9 = nilArraySection, typename T10 = nilArraySection, 
+	   class T11 = nilArraySection>
+  class SliceInfo {
+  public:
+    typedef _bz_ArrayExprConstant<T_numtype> T_slice;
+};
+
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
+        typename T7, typename T8, typename T9, typename T10, typename T11>
+    typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice
+    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9, T10 r10, T11 r11) const
+    {
+      return *this;
+    }
 
 protected:
     _bz_ArrayExprConstant() { }

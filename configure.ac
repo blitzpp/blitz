@@ -144,6 +144,10 @@ AC_CONFIG_FILES([
 	])
 fi
 
+# check for valgrind for extra tests
+AC_CHECK_PROG([valgrind],[valgrind],[yes],)
+AM_CONDITIONAL([HAVE_VALGRIND],[test x$valgrind = xyes])
+
 #	Obsolete makefiles
 #
 #	demos/Makefile

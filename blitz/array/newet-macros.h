@@ -146,7 +146,36 @@ name(const BZ_BLITZ_SCOPE(ETBase)<T1>& d1,                                 \
                   BZ_BLITZ_SCOPE(asExpr)<T2>::getExpr(d2.unwrap()),        \
                   BZ_BLITZ_SCOPE(asExpr)<T3>::getExpr(d3.unwrap()));       \
 }
-    
+
+
+/*
+ * Array expression templates: the macro BZ_DECLARE_ARRAY_ET_QUATERNARY(X,Y)
+ * declares a function or operator which takes four operands.
+ * X is the function name (or operator), and Y is the functor object
+ * which implements the operation.
+ */
+
+#define BZ_DECLARE_ARRAY_ET_QUATERNARY(name, applic)			\
+  									\
+  template <typename T1, typename T2, typename T3, typename T4>		\
+  _bz_inline_et								\
+  typename BZ_BLITZ_SCOPE(BzQuaternaryExprResult)<applic, T1, T2, T3, T4>::T_result \
+    name(const BZ_BLITZ_SCOPE(ETBase)<T1>& d1,				\
+     const BZ_BLITZ_SCOPE(ETBase)<T2>& d2,				\
+     const BZ_BLITZ_SCOPE(ETBase)<T3>& d3,				\
+     const BZ_BLITZ_SCOPE(ETBase)<T4>& d4)				\
+  {									\
+  typedef typename							\
+      BZ_BLITZ_SCOPE(BzQuaternaryExprResult)<applic,T1,T2,T3, T4>::T_result \
+      result;								\
+    return result(BZ_BLITZ_SCOPE(asExpr)<T1>::getExpr(d1.unwrap()),	\
+                  BZ_BLITZ_SCOPE(asExpr)<T2>::getExpr(d2.unwrap()),	\
+                  BZ_BLITZ_SCOPE(asExpr)<T3>::getExpr(d3.unwrap()),	\
+                  BZ_BLITZ_SCOPE(asExpr)<T4>::getExpr(d4.unwrap()));	\
+}
+   
+
+ 
 #else /* !BZ_HAVE_TEMPLATES_AS_TEMPLATE_ARGUMENTS */
 
 /*
@@ -317,6 +346,59 @@ name(const BZ_BLITZ_SCOPE(ETBase)<T1>& d1,                                 \
         BZ_BLITZ_SCOPE(asExpr)<T3>::getExpr(d3.unwrap()));                 \
 }
 
+
+/*
+ * Array expression templates: the macro BZ_DECLARE_ARRAY_ET_BINARY(X,Y)
+ * declares a function or operator which takes two operands.
+ * X is the function name (or operator), and Y is the functor object
+ * which implements the operation.
+ */
+
+#define BZ_DECLARE_ARRAY_ET_QUATERNARY(name, functor)			\
+  									\
+  template<typename T1, typename T2, typename T3,typename T4>		\
+  _bz_inline_et								\
+  BZ_BLITZ_SCOPE(_bz_ArrayExpr)						\
+    <									\
+    BZ_BLITZ_SCOPE(_bz_ArrayExprQuaternaryOp)				\
+    <									\
+    _bz_typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr,			\
+    _bz_typename BZ_BLITZ_SCOPE(asExpr)<T2>::T_expr,			\
+    _bz_typename BZ_BLITZ_SCOPE(asExpr)<T3>::T_expr,			\
+    _bz_typename BZ_BLITZ_SCOPE(asExpr)<T4>::T_expr,			\
+    functor<								\
+    _bz_typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_numtype,		\
+    _bz_typename BZ_BLITZ_SCOPE(asExpr)<T2>::T_expr::T_numtype,		\
+    _bz_typename BZ_BLITZ_SCOPE(asExpr)<T3>::T_expr::T_numtype,		\
+    _bz_typename BZ_BLITZ_SCOPE(asExpr)<T4>::T_expr::T_numtype		\
+    > > >								\
+									\
+    name(const BZ_BLITZ_SCOPE(ETBase)<T1>& d1,				\
+	 const BZ_BLITZ_SCOPE(ETBase)<T2>& d2,				\
+	 const BZ_BLITZ_SCOPE(ETBase)<T3>& d3,				\
+	 const BZ_BLITZ_SCOPE(ETBase)<T4>& d4)				\
+  {									\
+    return BZ_BLITZ_SCOPE(_bz_ArrayExpr)				\
+      <									\
+      BZ_BLITZ_SCOPE(_bz_ArrayExprBinaryOp)				\
+      <									\
+      _bz_typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr,			\
+      _bz_typename BZ_BLITZ_SCOPE(asExpr)<T2>::T_expr,			\
+      functor								\
+      <									\
+      _bz_typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_numtype,	\
+      _bz_typename BZ_BLITZ_SCOPE(asExpr)<T2>::T_expr::T_numtype,	\
+      _bz_typename BZ_BLITZ_SCOPE(asExpr)<T3>::T_expr::T_numtype,	\
+      _bz_typename BZ_BLITZ_SCOPE(asExpr)<T4>::T_expr::T_numtype	\
+      > > >								\
+      (									\
+       BZ_BLITZ_SCOPE(asExpr)<T1>::getExpr(d1.unwrap()),		\
+       BZ_BLITZ_SCOPE(asExpr)<T2>::getExpr(d2.unwrap()),		\
+       BZ_BLITZ_SCOPE(asExpr)<T2>::getExpr(d3.unwrap()),		\
+       BZ_BLITZ_SCOPE(asExpr)<T2>::getExpr(d4.unwrap()));		\
+}
+
+
 #endif /* BZ_HAVE_TEMPLATES_AS_TEMPLATE_ARGUMENTS */
 
 /*
@@ -349,6 +431,11 @@ BZ_DECLARE_ARRAY_ET_TERNARY(name, name ## _impl)
 #define BZ_DECLARE_FUNCTION3_RET(name,return_type)                         \
 BZ_DEFINE_TERNARY_FUNC_RET(name ## _impl,name,return_type)                 \
 BZ_DECLARE_ARRAY_ET_TERNARY(name, name ## _impl)
+
+#define BZ_DECLARE_FUNCTION4(name)					\
+  BZ_DEFINE_QUATERNARY_FUNC(name ## _impl,name)				\
+  BZ_DECLARE_ARRAY_ET_QUATERNARY(name, name ## _impl)
+    
 
 BZ_NAMESPACE_END
 

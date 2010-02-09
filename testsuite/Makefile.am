@@ -10,17 +10,19 @@ AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir) -I$(top_builddir)
 AM_CXXFLAGS = @CXX_DEBUG_FLAGS@
 LDADD = -L$(top_builddir)/lib -lblitz
 
-EXTRA_PROGRAMS = 64bit Adnene-Ben-Abdallah-1 Adnene-Ben-Abdallah-2 arrayresize \
-chris-jeffery-1 chris-jeffery-2 chris-jeffery-3 complex-test constarray \
-contiguous copy ctors derrick-bass-1 derrick-bass-3 exprctor extract free \
-gary-huber-1 initialize interlace iter Josef-Wagenhuber loop1 \
-matthias-troyer-1 matthias-troyer-2 mattias-lindstroem-1 minmax minsumpow \
-module newet Olaf-Ronneberger-1 patrik-jonsson-1 peter-bienstman-1 \
-peter-bienstman-2 peter-bienstman-3 peter-bienstman-4 peter-bienstman-5 \
-peter-nordlund-1  peter-nordlund-2 peter-nordlund-3 promote qcd reduce \
-reindex reverse shapecheck shape slice-iterators storage stub \
-theodore-papadopoulo-1 tinymat tinyvec transpose troyer-genilloud \
-Ulisses-Mello-1 wei-ku-1 where zeek-1
+EXTRA_PROGRAMS = 64bit Adnene-Ben-Abdallah-1 Adnene-Ben-Abdallah-2	\
+arrayresize chris-jeffery-1 chris-jeffery-2 chris-jeffery-3		\
+complex-test constarray contiguous copy ctors derrick-bass-1		\
+derrick-bass-3 exprctor expression-slicing extract free gary-huber-1	\
+initialize interlace iter Josef-Wagenhuber loop1 matthias-troyer-1	\
+matthias-troyer-2 mattias-lindstroem-1 minmax minsumpow module newet	\
+Olaf-Ronneberger-1 patrik-jonsson-1 peter-bienstman-1			\
+peter-bienstman-2 peter-bienstman-3 peter-bienstman-4			\
+peter-bienstman-5 peter-nordlund-1 peter-nordlund-2 peter-nordlund-3	\
+promote qcd reduce reindex reverse safeToReturn shapecheck shape	\
+slice-iterators stencil-et storage stub theodore-papadopoulo-1 tinymat	\
+tinyvec transpose troyer-genilloud Ulisses-Mello-1 wei-ku-1 where	\
+zeek-1
 
 64bit_SOURCES = 64bit.cpp
 Adnene_Ben_Abdallah_1_SOURCES = Adnene-Ben-Abdallah-1.cpp
@@ -37,6 +39,7 @@ ctors_SOURCES = ctors.cpp
 derrick_bass_1_SOURCES = derrick-bass-1.cpp
 derrick_bass_3_SOURCES = derrick-bass-3.cpp
 exprctor_SOURCES = exprctor.cpp
+expression_slicing_SOURCES = expression-slicing.cpp
 extract_SOURCES = extract.cpp
 free_SOURCES = free.cpp
 gary_huber_1_SOURCES = gary-huber-1.cpp
@@ -67,9 +70,11 @@ qcd_SOURCES = qcd.cpp
 reduce_SOURCES = reduce.cpp
 reindex_SOURCES = reindex.cpp
 reverse_SOURCES = reverse.cpp
+safeToReturn_SOURCES = safeToReturn.cpp
 shapecheck_SOURCES = shapecheck.cpp
 shape_SOURCES = shape.cpp
 slice_iterators_SOURCES = slice-iterators.cpp
+stencil_et_SOURCES = stencil-et.cpp
 storage_SOURCES = storage.cpp
 stub_SOURCES = stub.cpp
 theodore_papadopoulo_1_SOURCES = theodore-papadopoulo-1.cpp
@@ -88,6 +93,16 @@ check-testsuite:  $(EXTRA_PROGRAMS)
 		echo $$prog && (./$$prog > /dev/null 2>&1) || exit 1; \
 		done
 	@echo All tests passed.
+
+if HAVE_VALGRIND
+valgrind-testsuite:  $(EXTRA_PROGRAMS)
+	@echo Running test suite through valgrind...
+	@for prog in $(EXTRA_PROGRAMS) ; do \
+		echo -en "$$prog\t" && (valgrind --log-file-exactly=$$prog.val ./$$prog > /dev/null 2>&1 ;\
+                grep "ERROR SUMMARY" $$prog.val) || exit 1; \
+	done
+	@echo All tests run.
+endif
 
 clean-local:
 	-rm -rf *.ii *.ti cxx_repository Template.dir ii_files ti_files $(EXTRA_PROGRAMS)

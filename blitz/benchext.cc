@@ -16,8 +16,10 @@
 
 #ifdef BZ_HAVE_STD
  #include <fstream>
+ #include <string>
 #else
  #include <fstream.h>
+ #include <string.h>
 #endif
 
 BZ_NAMESPACE(blitz)
@@ -246,6 +248,13 @@ void BenchmarkExt<P_parameter>::saveMatlabGraph(const char* filename, const char
 {
     BZPRECONDITION(state_ == done);
 
+    {
+      //ugly but saveMatlabGraph is coded into all benchmarks
+      std::string pyfn(filename);
+      pyfn=pyfn.replace(pyfn.find(".m"),2,std::string(".py"),0,3);
+      savePylabGraph(pyfn.c_str());
+    }
+
     ofstream ofs(filename);
      
     assert(ofs.good());
@@ -291,6 +300,62 @@ void BenchmarkExt<P_parameter>::saveMatlabGraph(const char* filename, const char
     } 
 
     ofs << ")" << endl;
+}
+
+
+template<typename P_parameter>
+void BenchmarkExt<P_parameter>::savePylabGraph(const char* filename, const char* graphType) const
+{
+    BZPRECONDITION(state_ == done);
+
+    ofstream ofs(filename);
+     
+    assert(ofs.good());
+
+    ofs << "# This python file generated automatically by class Benchmark\n"
+        << "# of the Blitz++ class library.\n"
+	<< "from pylab import *\nfrom numpy import *\n"
+	<< "clf()\n";
+
+    ofs.setf(ios::scientific);
+
+    // This will be a lot simpler once Matlab-style output formatting
+    // of vectors & matrices is finished.
+
+    // ofs << "parm = " << parameters_ << ";" << endl << endl;
+
+    ofs << "parm = array([ ";
+    unsigned i;
+    for (i=0; i < numParameters_; ++i)
+        ofs << setprecision(12) << double(parameters_[i]) << ", ";
+    ofs << "])\n\n";
+
+    ofs << "Mf = array([[ ";
+    for (i=0; i < numParameters_; ++i)
+    {
+        if(i>0) ofs << ", [ ";
+        for (unsigned j=0; j < numImplementations_; ++j)
+        {
+	  ofs << setprecision(12) << getMflops(j,i);
+	  if(j<numImplementations_-1) ofs << ", ";
+        }
+	ofs << "]";
+    }
+    ofs << "])" << endl << endl;
+
+    ofs << graphType << "(parm,Mf)\ntitle('" << description_ << "')\n"
+        << "xlabel('" << parameterDescription_ << "')\n"
+        << "ylabel('" << rateDescription_ << "')\n"
+        << "legend([";
+    
+    for (unsigned j=0; j < numImplementations_; ++j)
+    {
+        ofs << "'" << implementationDescriptions_(j) << "'";
+        if (j != numImplementations_ - 1)
+            ofs << ", ";
+    } 
+
+    ofs << "])\n";
 }
 
 BZ_NAMESPACE_END

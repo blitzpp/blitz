@@ -75,6 +75,7 @@ public:
     typedef _bz_typename T_reduction::T_numtype T_numtype;
     typedef T_expr      T_ctorArg1;
     typedef T_reduction T_ctorArg2;
+  typedef int  T_range_result; // dummy
 
     static const int 
         numArrayOperands = T_expr::numArrayOperands,
@@ -98,9 +99,10 @@ public:
     int ordering(const int r)  const { return ordering_[r];       }
     int lbound(const int r)    const { return iter_.lbound(r);    }
     int ubound(const int r)    const { return iter_.ubound(r);    }
+    RectDomain<rank> domain() const { return iter_.domain(); }
 
     template<int N_destRank>
-    T_numtype operator()(const TinyVector<int, N_destRank>& destIndex)
+    T_numtype operator()(const TinyVector<int, N_destRank>& destIndex) const
     {
         BZPRECHECK(N_destRank == N_index,  
             "Array reduction performed over rank " << N_index 
@@ -160,6 +162,17 @@ public:
     T_numtype operator[](int) const { BZPRECONDITION(0); return T_numtype(); }
     T_numtype fastRead(int)   const { BZPRECONDITION(0); return T_numtype(); }
 
+    // don't know how to define these, so stencil expressions won't work
+    T_numtype shift(int offset, int dim) const
+  { BZPRECONDITION(0); return T_numtype(); }
+    T_numtype shift(int offset1, int dim1,int offset2, int dim2) const 
+  { BZPRECONDITION(0); return T_numtype(); }
+    void _bz_offsetData(sizeType i) { BZPRECONDITION(0); }
+
+  // Unclear how to define this, and stencils don't work anyway
+  T_range_result operator()(RectDomain<rank> d) const
+  { BZPRECONDITION(0); }
+
     void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format) const
     {
         // NEEDS_WORK-- do real formatting for reductions
@@ -173,6 +186,30 @@ public:
     { 
         // NEEDS_WORK-- do a real shape check (tricky)
         return true; 
+    }
+
+  // sliceinfo for expressions
+  template<typename T1, typename T2 = nilArraySection, 
+	   class T3 = nilArraySection, typename T4 = nilArraySection, 
+	   class T5 = nilArraySection, typename T6 = nilArraySection, 
+	   class T7 = nilArraySection, typename T8 = nilArraySection, 
+	   class T9 = nilArraySection, typename T10 = nilArraySection, 
+	   class T11 = nilArraySection>
+  class SliceInfo {
+  public:
+    typedef typename T_expr::template SliceInfo<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::T_slice T_slice1;
+    typedef _bz_ArrayExprReduce<T_slice1, N_index, T_reduction> T_slice;
+};
+
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
+        typename T7, typename T8, typename T9, typename T10, typename T11>
+    typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice
+    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9, T10 r10, T11 r11) const
+    {
+      // for slicing reduction results, we would need to set the
+      // dimension reduced over to Range::all(). That's not easy to do
+      // because it requires us to change the type of one of the rn's.
+      BZPRECONDITION(0);
     }
 
 private: 

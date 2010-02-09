@@ -493,6 +493,39 @@ struct name {                                                        \
     }                                                                \
 };
 
+/* Quaternary functions that return type based on type promotion */
+
+#define BZ_DEFINE_QUATERNARY_FUNC(name,fun)				\
+  template<typename T_numtype1, typename T_numtype2,			\
+	   typename T_numtype3, typename T_numtype4>			\
+  struct name {								\
+    typedef BZ_PROMOTE(BZ_PROMOTE(T_numtype1, T_numtype2),		\
+		       BZ_PROMOTE(T_numtype3, T_numtype4)) T_numtype;	\
+									\
+    static inline T_numtype						\
+    apply(const T_numtype1 a, const T_numtype2 b,			\
+	  const T_numtype3 c, const T_numtype4 d)			\
+  { return fun(a,b,c,d); }						\
+									\
+    template<typename T1, typename T2,					\
+	     typename T3, typename T4>					\
+    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,		\
+				   BZ_BLITZ_SCOPE(prettyPrintFormat) &format, \
+				   const T1& t1,const T2& t2, const T3& t3, const T4& t4) \
+    {									\
+      str += #fun;							\
+      str += "(";							\
+      t1.prettyPrint(str, format);					\
+      str += ",";							\
+      t2.prettyPrint(str, format);					\
+      str += ",";							\
+      t3.prettyPrint(str, format);					\
+      str += ",";							\
+      t4.prettyPrint(str, format);					\
+      str += ")";							\
+    }									\
+  };
+
     
 /* These functions don't quite fit the usual patterns */
     

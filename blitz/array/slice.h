@@ -30,11 +30,9 @@
 
 BZ_NAMESPACE(blitz)
 
-// Forward declaration
+// Forward declarations
 template<typename T, int N>
 class Array;
-
-
 
 class nilArraySection { };
 
@@ -110,6 +108,7 @@ public:
     typedef Array<T_numtype,numValidTypes> T_array;
     typedef Array<T_numtype,rank> T_slice;
 };
+
 
 BZ_NAMESPACE_END
 

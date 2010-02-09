@@ -58,20 +58,20 @@ public:
 
     ReduceSum() { }
 
-    bool operator()(const T_sourcetype& x,const int=0) { 
+    bool operator()(const T_sourcetype& x,const int=0) const { 
         sum_ += x; 
         return true;
     }
 
     T_resulttype result(const int) const { return sum_; }
 
-    void reset() { sum_ = zero(T_resulttype()); }
+    void reset() const { sum_ = zero(T_resulttype()); }
  
     static const char* name() { return "sum"; }
  
 protected:
 
-    T_resulttype sum_;
+    mutable T_resulttype sum_;
 };
 
 template<typename P_sourcetype, typename P_resulttype = BZ_FLOATTYPE(P_sourcetype)>
@@ -86,20 +86,20 @@ public:
 
     ReduceMean() { }
 
-    bool operator()(const T_sourcetype& x,const int=0) { 
+    bool operator()(const T_sourcetype& x,const int=0) const { 
         sum_ += x; 
         return true;
     }
 
     T_resulttype result(const int count) const { return sum_ / count; }
 
-    void reset() { sum_ = zero(T_resulttype()); }
+    void reset() const { sum_ = zero(T_resulttype()); }
 
     static const char* name() { return "mean"; }
 
 protected:
 
-    T_resulttype sum_;
+    mutable T_resulttype sum_;
 };
 
 template<typename P_sourcetype>
@@ -114,7 +114,7 @@ public:
 
     ReduceMin() { }
 
-    bool operator()(const T_sourcetype& x,const int=0) {
+    bool operator()(const T_sourcetype& x,const int=0) const {
         if (x < min_)
             min_ = x;
         return true;
@@ -122,13 +122,13 @@ public:
 
     T_resulttype result(const int) const { return min_; }
 
-    void reset() { min_ = huge(P_sourcetype()); }
+    void reset() const { min_ = huge(P_sourcetype()); }
 
     static const char* name() { return "min"; }
 
 protected:
 
-    T_resulttype min_;
+    mutable T_resulttype min_;
 };
 
 template<typename P_sourcetype>
@@ -143,7 +143,7 @@ public:
 
     ReduceMax() { }
 
-    bool operator()(const T_sourcetype& x,const int=0) {
+    bool operator()(const T_sourcetype& x,const int=0) const {
         if (x > max_)
             max_ = x;
         return true;
@@ -151,13 +151,13 @@ public:
 
     T_resulttype result(const int) const { return max_; }
 
-    void reset() { max_ = neghuge(P_sourcetype()); }
+    void reset() const { max_ = neghuge(P_sourcetype()); }
 
     static const char* name() { return "max"; }
 
 protected:
 
-    T_resulttype max_;
+    mutable T_resulttype max_;
 };
 
 template <typename T>
@@ -179,7 +179,7 @@ public:
 
     ReduceMinMax() { }
 
-    bool operator()(T_sourcetype x,const int=0) {
+    bool operator()(T_sourcetype x,const int=0) const {
         if (x > minmax_.max)
             minmax_.max = x;
         else if (x < minmax_.min)
@@ -195,7 +195,7 @@ public:
 
 protected:
 
-    T_resulttype minmax_;
+    mutable T_resulttype minmax_;
 };
 
 template<typename P_sourcetype>
@@ -210,7 +210,7 @@ public:
 
     ReduceMinIndex() { }
 
-    bool operator()(const T_sourcetype& x,const T_resulttype& index) {
+    bool operator()(const T_sourcetype& x,const T_resulttype& index) const {
         if (x < min_) {
             min_ = x;
             index_ = index;
@@ -229,8 +229,8 @@ public:
 
 protected:
 
-    T_sourcetype min_;
-    T_resulttype index_;
+    mutable T_sourcetype min_;
+    mutable T_resulttype index_;
 };
 
 template<typename P_sourcetype, int N>
@@ -245,7 +245,7 @@ public:
 
     ReduceMinIndexVector() { }
 
-    bool operator()(const T_sourcetype& x, const T_resulttype& index) {
+    bool operator()(const T_sourcetype& x, const T_resulttype& index) const {
         if (x < min_) {
             min_ = x;
             index_ = index;
@@ -264,8 +264,8 @@ public:
 
 protected:
 
-    T_sourcetype min_;
-    T_resulttype index_;
+    mutable T_sourcetype min_;
+    mutable T_resulttype index_;
 };
 
 template<typename P_sourcetype>
@@ -280,7 +280,7 @@ public:
 
     ReduceMaxIndex() { }
 
-    bool operator()(const T_sourcetype& x,const T_resulttype& index) {
+    bool operator()(const T_sourcetype& x,const T_resulttype& index) const {
         if (x > max_) {
             max_ = x;
             index_ = index;
@@ -299,8 +299,8 @@ public:
 
 protected:
 
-    T_sourcetype max_;
-    T_resulttype index_;
+    mutable T_sourcetype max_;
+    mutable T_resulttype index_;
 };
 
 template<typename P_sourcetype, int N_rank>
@@ -315,7 +315,7 @@ public:
 
     ReduceMaxIndexVector() { }
 
-    bool operator()(const T_sourcetype& x, const T_resulttype& index) {
+    bool operator()(const T_sourcetype& x, const T_resulttype& index) const {
         if (x > max_) {
             max_ = x;
             index_ = index;
@@ -334,8 +334,8 @@ public:
 
 protected:
 
-    T_sourcetype max_;
-    T_resulttype index_;
+    mutable T_sourcetype max_;
+    mutable T_resulttype index_;
 };
 
 template<typename P_sourcetype>
@@ -350,7 +350,7 @@ public:
 
     ReduceFirst() { }
 
-    bool operator()(const T_sourcetype& x,const T_resulttype& index) {
+    bool operator()(const T_sourcetype& x,const T_resulttype& index) const {
         if (x) {
             index_ = index;
             return false;
@@ -360,13 +360,13 @@ public:
 
     T_resulttype result(const int) const { return index_; }
 
-    void reset() { index_ = tiny(int()); }
+    void reset() const { index_ = tiny(int()); }
 
     static const char* name() { return "first"; }
 
 protected:
 
-    T_resulttype index_;
+    mutable T_resulttype index_;
 };
 
 template<typename P_sourcetype>
@@ -381,7 +381,7 @@ public:
 
     ReduceLast() { }
 
-    bool operator()(const T_sourcetype& x,const T_resulttype& index) {
+    bool operator()(const T_sourcetype& x,const T_resulttype& index) const {
         if (x) {
             index_ = index;
             return true;
@@ -391,13 +391,13 @@ public:
 
     T_resulttype result(const int) const { return index_; }
 
-    void reset() { index_ = huge(int()); }
+    void reset() const { index_ = huge(int()); }
 
     static const char* name() { return "last"; }
 
 protected:
 
-    T_resulttype index_;
+    mutable T_resulttype index_;
 };
 
 template<typename P_sourcetype, typename P_resulttype = BZ_SUMTYPE(P_sourcetype)>
@@ -412,20 +412,20 @@ public:
 
     ReduceProduct() { }
 
-    bool operator()(const T_sourcetype& x,const int=0) { 
+    bool operator()(const T_sourcetype& x,const int=0) const { 
         product_ *= x; 
         return true;
     }
 
     T_resulttype result(const int) const { return product_; }
 
-    void reset() { product_ = one(T_resulttype()); }
+    void reset() const { product_ = one(T_resulttype()); }
 
     static const char* name() { return "product"; }
 
 protected:
 
-    T_resulttype product_;
+    mutable T_resulttype product_;
 };
 
 template<typename P_sourcetype>
@@ -440,7 +440,7 @@ public:
 
     ReduceCount() { }
 
-    bool operator()(const T_sourcetype& x,const int=0) {
+    bool operator()(const T_sourcetype& x,const int=0) const {
         if (bool(x))
             ++count_;
         return true;
@@ -448,13 +448,13 @@ public:
 
     T_resulttype result(const int) const { return count_; }
 
-    void reset() { count_ = zero(T_resulttype()); }
+    void reset() const { count_ = zero(T_resulttype()); }
 
     static const char* name() { return "count"; }
 
 protected:
 
-    T_resulttype count_;
+    mutable T_resulttype count_;
 };
 
 template<typename P_sourcetype>
@@ -469,7 +469,7 @@ public:
 
     ReduceAny() { }
 
-    bool operator()(const T_sourcetype& x,const int=0) {
+    bool operator()(const T_sourcetype& x,const int=0) const {
         if (bool(x)) {
             any_ = true;
             return false;
@@ -480,13 +480,13 @@ public:
 
     T_resulttype result(const int) const { return any_; }
 
-    void reset() { any_ = false; }
+    void reset() const { any_ = false; }
 
     static const char* name() { return "any"; }
 
 protected:
 
-    T_resulttype any_;
+    mutable T_resulttype any_;
 };
 
 template<typename P_sourcetype>
@@ -501,7 +501,7 @@ public:
 
     ReduceAll() { }
 
-    bool operator()(const T_sourcetype& x,const int=0) {
+    bool operator()(const T_sourcetype& x,const int=0) const {
         if (!bool(x)) {
             all_ = false;
             return false;
@@ -511,13 +511,13 @@ public:
 
     T_resulttype result(const int) const { return all_; }
 
-    void reset() { all_ = true; }
+    void reset() const { all_ = true; }
 
     static const char* name() { return "all"; }
 
 protected:
 
-    T_resulttype all_;
+    mutable T_resulttype all_;
 }; 
 
 BZ_NAMESPACE_END

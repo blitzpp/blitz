@@ -66,6 +66,7 @@ public:
     double getRate(unsigned implementation, unsigned setting) const;
 
     void saveMatlabGraph(const char* filename) const;
+    void savePylabGraph(const char* filename) const;
 
 public:
     // Virtual functions

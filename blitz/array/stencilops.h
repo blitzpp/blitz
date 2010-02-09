@@ -48,14 +48,17 @@ BZ_NAMESPACE(blitz)
 
 #define BZ_END_STENCIL_OPERATOR   }
 
-#define BZ_DECLARE_STENCIL_OPERATOR2(name,A,B)                                \
-  template<typename T>                                                        \
-  inline _bz_typename T::T_numtype name(T& A, T& B)                           \
+#define BZ_DECLARE_STENCIL_OPERATOR2(name,A,B)				\
+  template<typename T1, typename T2>					\
+  inline BZ_PROMOTE(_bz_typename T1::T_numtype,				\
+		    _bz_typename T2::T_numtype) name(T1& A, T2& B)	\
   {
 
-#define BZ_DECLARE_STENCIL_OPERATOR3(name,A,B,C)                              \
-  template<typename T>                                                        \
-  inline _bz_typename T::T_numtype name(T& A, T& B, T& C)                     \
+#define BZ_DECLARE_STENCIL_OPERATOR3(name,A,B,C)			\
+  template<typename T1, typename T2, typename T3>			\
+  inline BZ_PROMOTE(BZ_PROMOTE(_bz_typename T1::T_numtype,		\
+			       _bz_typename T2::T_numtype),		\
+		    _bz_typename T3::T_numtype) name(T1& A, T2& B, T3& C) \
   {
 
 // These constants are accurate to 45 decimal places = 149 bits of mantissa
