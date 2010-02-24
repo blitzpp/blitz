@@ -189,7 +189,7 @@ public:
 
     T_resulttype result(int) { return minmax_; }
 
-    void reset(P_sourcetype initialValue) { minmax_ = initialValue; }
+    void reset(P_sourcetype initialValue) const { minmax_ = initialValue; }
 
     static const char* name() { return "minmax"; }
 
@@ -220,7 +220,7 @@ public:
 
     T_resulttype result(const int) const { return index_; }
 
-    void reset(const T_resulttype& index) { 
+    void reset(const T_resulttype& index) const { 
         min_ = huge(T_sourcetype());
         index_ = index;        
     }
@@ -255,7 +255,7 @@ public:
 
     T_resulttype result(const int) const { return index_; }
 
-    void reset(const T_resulttype& index) {
+    void reset(const T_resulttype& index) const {
         min_ = huge(T_sourcetype());
         index_ = index;
     }
@@ -290,7 +290,7 @@ public:
 
     T_resulttype result(int) const { return index_; }
 
-    void reset(const T_resulttype& index) {
+    void reset(const T_resulttype& index) const {
         max_ = neghuge(T_sourcetype());
         index_ = index;
     }
@@ -325,7 +325,7 @@ public:
 
     T_resulttype result(const int) const { return index_; }
 
-    void reset(const T_resulttype& index) {
+    void reset(const T_resulttype& index) const {
         max_ = neghuge(T_sourcetype());
         index_ = index;
     }
