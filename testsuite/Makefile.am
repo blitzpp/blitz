@@ -21,8 +21,8 @@ peter-bienstman-2 peter-bienstman-3 peter-bienstman-4			\
 peter-bienstman-5 peter-nordlund-1 peter-nordlund-2 peter-nordlund-3	\
 promote qcd reduce reindex reverse safeToReturn shapecheck shape	\
 slice-iterators stencil-et storage stub theodore-papadopoulo-1 tinymat	\
-tinyvec transpose troyer-genilloud Ulisses-Mello-1 wei-ku-1 where	\
-zeek-1
+tinyvec transpose troyer-genilloud Ulisses-Mello-1 weakref wei-ku-1	\
+where zeek-1
 
 64bit_SOURCES = 64bit.cpp
 Adnene_Ben_Abdallah_1_SOURCES = Adnene-Ben-Abdallah-1.cpp
@@ -83,6 +83,7 @@ tinyvec_SOURCES = tinyvec.cpp
 transpose_SOURCES = transpose.cpp
 troyer_genilloud_SOURCES = troyer-genilloud.cpp
 Ulisses_Mello_1_SOURCES = Ulisses-Mello-1.cpp
+weakref_SOURCES = weakref.cpp
 wei_ku_1_SOURCES = wei-ku-1.cpp
 where_SOURCES = where.cpp
 zeek_1_SOURCES = zeek-1.cpp

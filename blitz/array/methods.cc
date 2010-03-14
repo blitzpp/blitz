@@ -218,8 +218,13 @@ template<typename P_numtype, int N_rank>
 void 
 Array<P_numtype, N_rank>::weakReference(const Array<P_numtype, N_rank>& array)
 {
-    reference(Array<P_numtype, N_rank>(array.noConst().data(),
-                                       array.shape(),neverDeleteData));
+    storage_ = array.storage_;
+    length_ = array.length_;
+    stride_ = array.stride_;
+    zeroOffset_ = array.zeroOffset_;
+
+    T_base::changeToNullBlock();
+    data_ = array.data_;
 }
 
 /*
