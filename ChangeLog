@@ -1,3 +1,5 @@
+2010-05-26 Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+	* configure.ac: Correct a typo on the FULLY64BIT define.
 
 2010-02-09  Patrik Jonsson <code@familjenjonsson.org>
 
