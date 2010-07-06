@@ -81,7 +81,9 @@ int main()
 
 #else
 
-#include <iostream.h>
+#include <iostream>
+
+BZ_USING_NAMESPACE(std)
 
 int main()
 {

@@ -238,7 +238,9 @@ __L740:                                 # 0x00000740 (H.10.NO_SYMBOL+0x740)
 
 #else // BZ_HAVE_COMPLEX
 
-#include <iostream.h>
+#include <iostream>
+
+BZ_USING_NAMESPACE(std)
 
 int main()
 {
