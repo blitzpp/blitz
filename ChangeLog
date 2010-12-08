@@ -1,8 +1,10 @@
-
 2010-07-06 Patrick Guio <p.guio@ucl.ac.uk>
 
   * examples/erf.cpp, examples/qcd.cpp: Fixed header declaration to ISO
 	standard C++ and added missing using namespace declaration.
+
+2010-06-21 Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
+	* doc/doxygen/Doxyfile.in: Use pdflatex.
 
 2010-05-26 Theodore Papadopoulo <Theodore.Papadopoulo@sophia.inria.fr>
 	* configure.ac: Correct a typo on the FULLY64BIT define.
