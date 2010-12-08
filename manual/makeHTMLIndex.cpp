@@ -1,6 +1,7 @@
-#include <iostream.h>
-#include <fstream.h>
-#include <strings.h>
+#include <iostream>
+#include <fstream>
+#include <strings>
+
 #include <string.h>
 #include <stdio.h>
 
@@ -11,8 +12,7 @@ void makeEntry(char* entry, char* index)
     entry[0] = 0;
 
     char* bang = index;
-    while ((bang = strstr(index, "!")) != 0)
-    {
+    while ((bang = strstr(index, "!")) != 0) {
         strcat(entry, "<spacer size=10>");
         index = bang+1;
     }
@@ -20,8 +20,8 @@ void makeEntry(char* entry, char* index)
     strcat(entry, index);
 }
 
-void process(const char* filename, istream& ifs, ostream& ofs, 
-    ostream& indexfs)
+void process(const char* filename, std::istream& ifs, std::ostream& ofs, 
+    std::ostream& indexfs)
 {
     int n = 1024;
     char tmpbuf[1024];
@@ -30,14 +30,13 @@ void process(const char* filename, istream& ifs, ostream& ofs,
 
     while (!ifs.eof())
     {
-        ifs.getline(tmpbuf, n);
+        ifs.getline(tmpbuf,n);
         if (ifs.eof())
             break;
         ofs << tmpbuf;
 
         char* index;
-        if ((index = strstr(tmpbuf, "BZINDEX")) != 0)
-        {
+        if ((index = strstr(tmpbuf, "BZINDEX")) != 0) {
             char* index2 = strstr(index, "-->");
             if (index2 != 0)
                 index2[-1] = 0;
@@ -49,32 +48,27 @@ void process(const char* filename, istream& ifs, ostream& ofs,
             makeEntry(entry, index);
             indexfs << index << " |"
                     << entry << "|"
-                    << filename << "#" << tag << endl;
+                    << filename << "#" << tag << std::endl;
 
-//            cout << "Found tag: \"" << index << "\"" << endl;
+//            std::cout << "Found tag: \"" << index << "\"" << std::endl;
         }
 
-        ofs << endl;
+        ofs << std::endl;
     }
 }
 
-int main(int argc, char* argv[])
-{
-    cout << "Building HTML index:" << endl;
+int main(const int argc,const char* argv[]) {
+    std::cout << "Building HTML index:" << std::endl;
 
-    ofstream indexfs("index.data");
+    std::ofstream indexfs("index.data");
 
-    for (int i=1; i < argc; ++i)
-    {
-        cout << argv[i] << endl;
-        cout.flush();
+    for (int i=1; i < argc; ++i) {
+        std::cout << argv[i] << std::endl;
+        std::cout.flush();
 
-        ifstream ifs(argv[i]);
-        char tmpbuf[128];
-        sprintf(tmpbuf, "%s.new", argv[i]);
-        ofstream ofs(tmpbuf);
+        std::ifstream ifs(argv[i]);
+        std::ofstream ofs((std::string(argv[i])+".new").c_str());
 
         process(argv[i], ifs, ofs, indexfs);
     }
 }
-
