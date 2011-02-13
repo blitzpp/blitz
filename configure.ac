@@ -103,9 +103,10 @@ if test "$enable_threadsafe" = yes; then
   AC_DEFINE([THREADSAFE],[1],[Enable Blitz thread-safety features])
 fi
 
+AC_MSG_CHECKING([whether to enable Blitz 64-bit dimensions])
 AC_ARG_ENABLE(64-bit-dimensions,
   AS_HELP_STRING([--enable-64-bit-dimensions],[Enable dimensions with > 2^31 elements]),,[
-  enable_64-bit-dimensions="no"])
+  enable_64_bit_dimensions="no"])
 AC_MSG_RESULT([$enable_64_bit_dimensions])
 if test "$enable_64_bit_dimensions" = yes; then
   AC_DEFINE([FULLY64BIT],[1],[Enable dimensions with > 2^31 elements (NOT IMPLEMENTED)])
