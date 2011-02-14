@@ -4,6 +4,7 @@
 	* benchmarks/cfd.cpp: Added missing tinyVector expression template
 	header.
 	* benchmarks/Makefile.am: Added cfd as part of the OTHER_BENCH targets.
+	* config/mdate-sh: Removed as it is installed by `autoreconf -vif'.
 
 2111-02-13 Patrick Guio <p.guio@ucl.ac.uk>
 	* configure.ac: Added report message for 64-bit dimensions.
