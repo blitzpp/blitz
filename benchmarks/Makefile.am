@@ -25,7 +25,7 @@ LOOP_KERNELS = loop1 loop2 loop3 loop5 loop6 loop8 loop9 loop10 loop11 \
 loop12 loop13 loop14 loop15 loop16 loop17 loop18 loop19 loop21 loop22 \
 loop23 loop24 loop25 loop36
 
-OTHER_BENCH = daxpy haney qcd stencil tinydaxpy acoustic acou3d hao-he iter
+OTHER_BENCH = daxpy haney qcd stencil tinydaxpy acoustic acou3d hao-he iter cfd
 
 BENCHMARKS = $(LOOP_KERNELS) $(OTHER_BENCH)
 
@@ -63,6 +63,7 @@ qcd_SOURCES = qcd.cpp qcdf.f
 tinydaxpy_SOURCES = tinydaxpy.cpp
 hao_he_SOURCES = hao-he.cpp
 iter_SOURCES= iter.cpp
+cfd_SOURCES= cfd.cpp
 
 if F90_COMPILER
 
