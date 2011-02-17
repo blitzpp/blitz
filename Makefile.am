@@ -25,14 +25,8 @@ blitz-library:
 	@(cd blitz && $(MAKE) $(AM_MAKEFLAGS)) || exit 1;
 	@(cd lib && $(MAKE) $(AM_MAKEFLAGS)) || exit 1;
 
-check-testsuite: lib
-	@(cd testsuite && $(MAKE) $(AM_MAKEFLAGS) $@) || exit 1;
-
-check-examples: lib
-	@(cd examples && $(MAKE) $(AM_MAKEFLAGS) $@) || exit 1;
-
-check-benchmarks: lib
-	@(cd benchmarks && $(MAKE) $(AM_MAKEFLAGS) $@) || exit 1;
+check-testsuite check-examples check-benchmarks: lib
+	@(cd $(subst check-,,$@) && $(MAKE) $(AM_MAKEFLAGS) $@) || exit 1;
 
 clean-local:
 	-rm -rf *.ii *.ti cxx_repository Template.dir ii_files ti_files
