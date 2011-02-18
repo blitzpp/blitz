@@ -2,7 +2,7 @@
 
 AC_PREREQ(2.59)
 
-AC_INIT(blitz, 0.9, blitz-bugs@oonumerics.org)
+AC_INIT(blitz, 0.10, blitz-bugs@oonumerics.org)
 
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_MACRO_DIR([m4])
