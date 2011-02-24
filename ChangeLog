@@ -1,3 +1,7 @@
+2011-02-23  Julian Cummings  <cummings@cacr.caltech.edu>
+
+	* LICENSE: Fixed typo in LICENSE file. (testing cvs syncmail)
+
 2011-02-18  Julian Cummings  <cummings@cacr.caltech.edu>
 
 	* configure.ac, doc/stamp-vti, doc/version.texi: Update version
