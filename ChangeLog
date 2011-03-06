@@ -1,3 +1,9 @@
+2011-03-04  Julian Cummings  <cummings@cacr.caltech.edu>
+
+	* LICENSE, COPYING, COPYING.LESSER: Update license file to
+	  reference LGPL v3.  Version 3 of GPL is in COPYING and LGPL is in
+	  COPYING.LESSER file.
+
 2011-02-23  Julian Cummings  <cummings@cacr.caltech.edu>
 
 	* LICENSE: Fixed typo in LICENSE file. (testing cvs syncmail)
