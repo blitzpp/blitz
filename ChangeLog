@@ -1,4 +1,77 @@
-2011-03-04  Julian Cummings  <cummings@cacr.caltech.edu>
+2011-03-25  Julian Cummings  <cummings@cacr.caltech.edu>
+
+	* src/globals.cpp: Use BZ_PACKAGE_STRING macro defined by configure
+	  script to obtain library name and version number.
+
+2011-03-25  Julian Cummings  <cummings@cacr.caltech.edu>
+
+	* blitz/tiny.h: Update header file copyright info. This header file
+	  is apparently still needed for template metaprogramming loops in
+	  blitz/meta.
+
+2011-03-25  Julian Cummings  <cummings@cacr.caltech.edu>
+
+	* configure.ac: Update name of email list for blitz bug reports.
+
+2011-03-25  Julian Cummings  <cummings@cacr.caltech.edu>
+
+	* blitz/applics.h, blitz/array-impl.h, blitz/array-old.h,
+	  blitz/array.h, blitz/bench.cc, blitz/bench.h, blitz/benchext.cc,
+	  blitz/benchext.h, blitz/blitz.h, blitz/bzconfig.h,
+	  blitz/bzdebug.h, blitz/compiler.h, blitz/etbase.h,
+	  blitz/extremum.h, blitz/funcs.h, blitz/indexexpr.h,
+	  blitz/limits-hack.h, blitz/listinit.h, blitz/matdiag.h,
+	  blitz/matexpr.h, blitz/matgen.h, blitz/mathf2.h, blitz/matltri.h,
+	  blitz/matref.h, blitz/matrix.cc, blitz/matrix.h, blitz/matsymm.h,
+	  blitz/mattoep.h, blitz/matutri.h, blitz/memblock.cc,
+	  blitz/memblock.h, blitz/minmax.h, blitz/mstruct.h,
+	  blitz/numinquire.h, blitz/numtrait.h, blitz/ops.h,
+	  blitz/prettyprint.h, blitz/promote.h, blitz/rand-dunif.h,
+	  blitz/rand-mt.h, blitz/rand-normal.h, blitz/rand-tt800.h,
+	  blitz/rand-uniform.h, blitz/random.h, blitz/randref.h,
+	  blitz/range.h, blitz/reduce.h, blitz/shapecheck.h, blitz/tau.h,
+	  blitz/timer.h, blitz/tinymat.h, blitz/tinymatexpr.h,
+	  blitz/tinymatio.cc, blitz/tinyvec-et.h, blitz/tinyvec.cc,
+	  blitz/tinyvec.h, blitz/tinyvecio.cc, blitz/tinyveciter.h,
+	  blitz/traversal.cc, blitz/traversal.h, blitz/tuning.h,
+	  blitz/tvcross.h, blitz/tvecglobs.h, blitz/update.h,
+	  blitz/vecaccum.cc, blitz/vecall.cc, blitz/vecany.cc,
+	  blitz/veccount.cc, blitz/vecdelta.cc, blitz/vecdot.cc,
+	  blitz/vecexpr.h, blitz/vecexprwrap.h, blitz/vecglobs.cc,
+	  blitz/vecglobs.h, blitz/vecio.cc, blitz/veciter.h,
+	  blitz/vecmax.cc, blitz/vecmin.cc, blitz/vecnorm.cc,
+	  blitz/vecnorm1.cc, blitz/vecpick.cc, blitz/vecpick.h,
+	  blitz/vecpickio.cc, blitz/vecpickiter.h, blitz/vecproduct.cc,
+	  blitz/vecsum.cc, blitz/vector-et.h, blitz/vector.cc,
+	  blitz/vector.h, blitz/vecwhere.h, blitz/zero.cc, blitz/zero.h,
+	  blitz/array/asexpr.h, blitz/array/cartesian.h,
+	  blitz/array/cgsolve.h, blitz/array/complex.cc,
+	  blitz/array/convolve.cc, blitz/array/convolve.h,
+	  blitz/array/cycle.cc, blitz/array/domain.h, blitz/array/et.h,
+	  blitz/array/eval.cc, blitz/array/expr.h, blitz/array/fastiter.h,
+	  blitz/array/funcs.h, blitz/array/functorExpr.h,
+	  blitz/array/geometry.h, blitz/array/indirect.h,
+	  blitz/array/interlace.cc, blitz/array/io.cc, blitz/array/iter.h,
+	  blitz/array/map.h, blitz/array/methods.cc, blitz/array/misc.cc,
+	  blitz/array/multi.h, blitz/array/newet-macros.h,
+	  blitz/array/newet.h, blitz/array/ops.cc, blitz/array/ops.h,
+	  blitz/array/reduce.cc, blitz/array/reduce.h,
+	  blitz/array/resize.cc, blitz/array/shape.h, blitz/array/slice.h,
+	  blitz/array/slicing.cc, blitz/array/stencil-et.h,
+	  blitz/array/stencilops.h, blitz/array/stencils.cc,
+	  blitz/array/stencils.h, blitz/array/storage.h,
+	  blitz/array/where.h, blitz/array/zip.h, blitz/meta/dot.h,
+	  blitz/meta/matassign.h, blitz/meta/matmat.h, blitz/meta/matvec.h,
+	  blitz/meta/metaprog.h, blitz/meta/product.h, blitz/meta/sum.h,
+	  blitz/meta/vecassign.h, random/F.h, random/beta.h,
+	  random/chisquare.h, random/default.h, random/discrete-uniform.h,
+	  random/exponential.h, random/gamma.h, random/mt.h,
+	  random/mtparam.cc, random/normal.h, random/uniform.h: Updating
+	  file header information to include current copyright info. Ensure
+	  that each file has a CVS Id string and that each header file has
+	  a C++ tag for Emacs.
+
+2011-03-03  Julian Cummings  <cummings@cacr.caltech.edu>
 
 	* LICENSE, COPYING, COPYING.LESSER: Update license file to
 	  reference LGPL v3.  Version 3 of GPL is in COPYING and LGPL is in
@@ -8,7 +81,7 @@
 
 	* LICENSE: Fixed typo in LICENSE file. (testing cvs syncmail)
 
-2011-02-18  Julian Cummings  <cummings@cacr.caltech.edu>
+2011-02-17  Julian Cummings  <cummings@cacr.caltech.edu>
 
 	* configure.ac, doc/stamp-vti, doc/version.texi: Update version
 	  number from 0.9 to 0.10 in preparation for new Blitz maintenance
@@ -231,17 +304,17 @@
 	  dimensions. Added testcases of applying stencils to expressions
 	  involving remapped dimensions in stencil-et.cpp
 
-2010-01-09  Patrik Jonsson <code@familjenjonsson.org>
+2010-01-08  Patrik Jonsson <code@familjenjonsson.org>
 
 	* testsuite/Makefile.am, testsuite/stencil-et.cpp: Added testcase
 	  for stencil expressions.
 
-2010-01-09  Patrik Jonsson <code@familjenjonsson.org>
+2010-01-08  Patrik Jonsson <code@familjenjonsson.org>
 
 	* blitz/array/stencil-et.h: Added comment explaining what
 	  operations don't work with stencil expressions.
 
-2010-01-09  Patrik Jonsson <code@familjenjonsson.org>
+2010-01-08  Patrik Jonsson <code@familjenjonsson.org>
 
 	* blitz/array/expr.h, blitz/array/functorExpr.h: Added versions of
 	  _bz_offsetData taking dimension arguments.
