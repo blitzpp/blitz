@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 /*
  * Copyright (c) 1997
  * Silicon Graphics Computer Systems, Inc.
