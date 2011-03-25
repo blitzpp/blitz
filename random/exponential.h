@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 /*
  * This generator uses the straightforward transformation
  *  x = - log(y) * m

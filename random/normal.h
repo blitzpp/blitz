@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 /*
  * This is a modification of the Kinderman + Monahan algorithm for
  * generating normal random numbers, due to Leva:

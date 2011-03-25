@@ -1,3 +1,4 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/rand-tt800.h      Matsumoto and Kurita's TT800 uniform random 
  *                         number generator.

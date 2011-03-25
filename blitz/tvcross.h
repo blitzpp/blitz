@@ -1,25 +1,31 @@
+// -*- C++ -*-
 /***************************************************************************
  * blitz/tvcross.h      Cross product of TinyVector<N,3>'s
  *
  * $Id$
  *
- * Copyright (C) 1997-2001 Todd Veldhuizen <tveldhui@oonumerics.org>
+ * Copyright (C) 1997-2011 Todd Veldhuizen <tveldhui@acm.org>
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
+ * This file is a part of Blitz.
+ *
+ * Blitz is free software: you can redistribute it and/or modify 
+ * it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation, either version 3
  * of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * Blitz is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GNU Lesser General Public License for more details.
  *
- * Suggestions:          blitz-dev@oonumerics.org
- * Bugs:                 blitz-bugs@oonumerics.org
+ * You should have received a copy of the GNU Lesser General Public 
+ * License along with Blitz.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * Suggestions:          blitz-devel@lists.sourceforge.net
+ * Bugs:                 blitz-support@lists.sourceforge.net    
  *
  * For more information, please see the Blitz++ Home Page:
- *    http://oonumerics.org/blitz/
+ *    https://sourceforge.net/projects/blitz/
  *
  ***************************************************************************/
 

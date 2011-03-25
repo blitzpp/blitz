@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 /*
  * Chi^2 distribution
  *

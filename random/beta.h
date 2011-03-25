@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 /*
  * Generate Beta random deviate
  *

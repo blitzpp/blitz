@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 /* A C-program for MT19937: Integer version (1998/4/6)            */
 /*  genrand() generates one pseudorandom unsigned integer (32bit) */
 /* which is uniformly distributed among 0 to 2^32-1  for each     */
