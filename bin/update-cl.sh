@@ -20,7 +20,7 @@ grifgrif:'Patrik Jonsson <code@familjenjonsson.org>'
 EOF
 
 
-cvs2cl --prune --no-times --no-common-dir \
+cvs2cl --prune --no-times --no-common-dir --utc \
 	-f ChangeLog -U $userfile -l "-d>2009-12-31"
 
 echo removing temporary usermap $userfile
