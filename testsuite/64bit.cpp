@@ -20,12 +20,13 @@ int main()
       return 0;
     }
 
-    cout << "Testing 64-bit compatibility. Be patient, large operations in progress...\n";
     // these things take forever in debug mode without optimization,
-    // so we only do one thing
-    test=tensor::i;
-    test=1*test;
-    BZTEST(all(test==tensor::i));
+    // so we only test that the upper range has been assigned correctly.
+    Range r(240,255);
+    test(Range::all(),r,r,r)=tensor::i;
+    test(Range::all(),r,r,r)=1*test(Range::all(),r,r,r);
+    BZTEST(all(test(Range::all(),r,r,r)==tensor::i));
+    BZTEST(test(255,255,255,255)==255);
     test.free();
 
 #ifdef BZ_FULLY64BIT
