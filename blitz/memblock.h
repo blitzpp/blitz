@@ -44,6 +44,17 @@ enum preexistingMemoryPolicy {
   neverDeleteData 
 };
 
+// This function makes it possible for users to make sure threadsafety
+// is enabled.
+inline bool isThreadsafe() {
+#ifdef BZ_THREADSAFE
+  return true;
+#else
+  return false;
+#endif
+};
+
+
 // Forward declaration of MemoryBlockReference
 template<typename T_type> class MemoryBlockReference;
 
@@ -60,16 +71,7 @@ public:
     typedef P_type T_type;
 
 protected:
-    MemoryBlock()
-    {
-        length_ = 0;
-        data_ = 0;
-        dataBlockAddress_ = 0;
-        references_ = 0;
-
-        BZ_MUTEX_INIT(mutex)
-        mutexLocking_ = true;    
-    }
+    // default constructor removed, unused
 
     explicit MemoryBlock(sizeType items)
     {
@@ -83,7 +85,7 @@ protected:
 
         BZASSERT(dataBlockAddress_ != 0);
 
-        references_ = 0;
+        references_ = 1;
 
         BZ_MUTEX_INIT(mutex)
         mutexLocking_ = true;    
@@ -94,7 +96,7 @@ protected:
         length_ = length;
         data_ = data;
         dataBlockAddress_ = data;
-        references_ = 0;
+        references_ = 1;
         BZ_MUTEX_INIT(mutex)
         mutexLocking_ = true;    
     }
@@ -128,6 +130,10 @@ protected:
         return false; // unsafe to change
     }
 
+    /* Note that the the MemoryBlock will be created with reference
+       count 1, so there is no need to call addReference immediately
+       upon creating it. (The creator obviously does have to call
+       removeReference, though.) This avoids the initial mutex lock. */
     void          addReference()
     { 
         if (mutexLocking_) {
@@ -223,6 +229,9 @@ private:   // Data members
     sizeType  length_;
 };
 
+
+
+
 template<typename P_type>
 class MemoryBlockReference {
 
@@ -240,7 +249,7 @@ public:
     MemoryBlockReference()
     {
         block_ = 0;
-        addReference();
+	// no block, so nothing to add reference to
         data_ = 0;
     }
 
@@ -274,7 +283,9 @@ public:
                  << ((void*)block_) << endl;
 #endif
         }
-        addReference();
+	// creating a MemoryBlock automatically sets it to one
+	// reference, so we do no longer need to add a reference in
+	// the constructor.
 
         data_ = data;
     }
@@ -282,14 +293,15 @@ public:
     explicit MemoryBlockReference(sizeType items)
     {
         block_ = new MemoryBlock<T_type>(items);
-        addReference();
+	// creating a MemoryBlock automatically sets it to one
+	// reference, so we do no longer need to add a reference in
+	// the constructor.
         data_ = block_->data();
 
 #ifdef BZ_DEBUG_LOG_ALLOCATIONS
     cout << "MemoryBlockReference: created MemoryBlock at "
          << ((void*)block_) << endl;
 #endif
-
     }
 
    ~MemoryBlockReference()
@@ -324,7 +336,7 @@ protected:
     {
         blockRemoveReference();
         block_ = 0;
-        addReference();
+	// no block, so nothing to add reference to
         data_ = 0;
     }
 
@@ -340,7 +352,7 @@ protected:
     {
         blockRemoveReference();
         block_ = new MemoryBlock<T_type>(items);
-        addReference();
+	// creating a memory block automatically sets it to one reference
         data_ = block_->data();
 
 #ifdef BZ_DEBUG_LOG_ALLOCATIONS
