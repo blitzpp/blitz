@@ -108,34 +108,51 @@ typedef ptrdiff_t diffType; // Used for memory index differences, ie strides
 BZ_NAMESPACE_END
 
 /*
- * Thread safety issues.
- * Compiling with -pthread under gcc, or -mt under solaris,
- * should automatically define _REENTRANT. Also have support
- * for OpenMP (which defines _OPENMP) or Windows thread implementation.
- * The --enable-threadsafe configure option now defines BZ_THREADSAFE.
+ * Thread safety issues.  Compiling with -pthread under gcc, or -mt
+ * under solaris, should automatically define _REENTRANT. Also have
+ * support for OpenMP (which defines _OPENMP) or Windows thread
+ * implementation.  The --enable-threadsafe configure option now
+ * defines BZ_THREADSAFE. If this is defined but no thread support is
+ * detected when compiling, we call #error below.
  */
 
 /*
  * Which mutex implementation should be used for synchronizing
- * reference counts.  Options are pthreads, OpenMP, or Windows threads.
+ * reference counts.  Options are Thread Building Block Atomics (which
+ * is preferred over the others), pthreads, OpenMP, or Windows
+ * threads. If we use TBB, the mutex macros are empty since it
+ * requires no locking.
  */
 #ifdef BZ_THREADSAFE
- #if defined(_REENTRANT)
-  #define BZ_THREADSAFE_USE_PTHREADS
- #elif defined (_OPENMP)
-  #define BZ_THREADSAFE_USE_OPENMP
- #elif defined(_WIN32)
-  #define BZ_THREADSAFE_USE_WINDOWS
+ #ifdef BZ_THREADSAFE_USE_TBB
+  #include "tbb/atomic.h"
+  #define BZ_THREADSAFE_USE_ATOMIC
+  #define BZ_REFCOUNT_DECLARE(name) tbb::atomic<int> name;
+ #else
+  #define BZ_REFCOUNT_DECLARE(name) volatile int name;
+  #if defined(_REENTRANT)
+   #define BZ_THREADSAFE_USE_PTHREADS
+  #elif defined (_OPENMP)
+   #define BZ_THREADSAFE_USE_OPENMP
+  #elif defined(_WIN32)
+   #define BZ_THREADSAFE_USE_WINDOWS
+  #else
+   #error Blitz is configured with --enable-threadsafe, but no compiler thread support is found. Did you forget, e.g., "--pthread"?
+  #endif
  #endif
+#else
+ #define BZ_REFCOUNT_DECLARE(name) int name;
 #endif
+
 
 #ifdef BZ_THREADSAFE_USE_PTHREADS
  #include <pthread.h>
 
  #define BZ_MUTEX_DECLARE(name)   mutable pthread_mutex_t name;
- #define BZ_MUTEX_INIT(name)      pthread_mutex_init(&name,NULL);
- #define BZ_MUTEX_LOCK(name)      pthread_mutex_lock(&name);
- #define BZ_MUTEX_UNLOCK(name)    pthread_mutex_unlock(&name);
+ #define BZ_MUTEX_INIT(name)      pthread_mutex_init(&name,NULL); mutexLocking_ = true;    
+
+ #define BZ_MUTEX_LOCK(name)      if (mutexLocking_) pthread_mutex_lock(&name);
+ #define BZ_MUTEX_UNLOCK(name)    if (mutexLocking_) pthread_mutex_unlock(&name);
  #define BZ_MUTEX_DESTROY(name)   pthread_mutex_destroy(&name);
 #elif defined (BZ_THREADSAFE_USE_WINDOWS)
  // Include Windows.h header in case user has not already done so.
@@ -144,17 +161,17 @@ BZ_NAMESPACE_END
  #include <Windows.h>
 
  #define BZ_MUTEX_DECLARE(name)   mutable CRITICAL_SECTION name;
- #define BZ_MUTEX_INIT(name)      ::InitializeCriticalSection(&name);
- #define BZ_MUTEX_LOCK(name)      ::EnterCriticalSection(&name);
- #define BZ_MUTEX_UNLOCK(name)    ::LeaveCriticalSection(&name);
+ #define BZ_MUTEX_INIT(name)      ::InitializeCriticalSection(&name);  mutexLocking_ = true;
+ #define BZ_MUTEX_LOCK(name)      if (mutexLocking_) ::EnterCriticalSection(&name);
+ #define BZ_MUTEX_UNLOCK(name)    if (mutexLocking_) ::LeaveCriticalSection(&name);
  #define BZ_MUTEX_DESTROY(name)   ::DeleteCriticalSection(&name);
 #elif defined (BZ_THREADSAFE_USE_OPENMP)
  #include <omp.h>
 
  #define BZ_MUTEX_DECLARE(name)   mutable omp_lock_t name;
- #define BZ_MUTEX_INIT(name)      omp_init_lock(&name);
- #define BZ_MUTEX_LOCK(name)      omp_set_lock(&name);
- #define BZ_MUTEX_UNLOCK(name)    omp_unset_lock(&name);
+ #define BZ_MUTEX_INIT(name)      omp_init_lock(&name); mutexLocking_ = true;
+ #define BZ_MUTEX_LOCK(name)      if (mutexLocking_) omp_set_lock(&name);
+ #define BZ_MUTEX_UNLOCK(name)    if (mutexLocking_) omp_unset_lock(&name);
  #define BZ_MUTEX_DESTROY(name)   omp_destroy_lock(&name);
 #else
  #define BZ_MUTEX_DECLARE(name)

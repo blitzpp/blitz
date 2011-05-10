@@ -88,7 +88,6 @@ protected:
         references_ = 1;
 
         BZ_MUTEX_INIT(mutex)
-        mutexLocking_ = true;    
     }
 
     MemoryBlock(sizeType length, T_type* data)
@@ -98,14 +97,12 @@ protected:
         dataBlockAddress_ = data;
         references_ = 1;
         BZ_MUTEX_INIT(mutex)
-        mutexLocking_ = true;    
     }
 
     virtual ~MemoryBlock()
     {
         if (dataBlockAddress_) 
         {
-
 #ifdef BZ_DEBUG_LOG_ALLOCATIONS
     cout << "MemoryBlock:     freed " << setw(8) << length_
          << " at " << ((void *)dataBlockAddress_) << endl;
@@ -120,6 +117,7 @@ protected:
     // set mutex locking policy and return true if successful
     bool doLock(bool lockingPolicy) 
     { 
+#if defined(BZ_THREADSAFE) && !defined(BZ_THREADSAFE_USE_ATOMIC)
         if (mutexLocking_ == lockingPolicy) { // already set
             return true;
         }
@@ -128,6 +126,13 @@ protected:
             return true;
         }
         return false; // unsafe to change
+#elif defined(BZ_THREADSAFE_USE_ATOMIC)
+	// with locking we consider the request successful
+	return true; 
+#else
+	// without threadsafety we return false if user wants to enable locking
+	return !lockingPolicy;
+#endif
     }
 
     /* Note that the the MemoryBlock will be created with reference
@@ -136,19 +141,15 @@ protected:
        removeReference, though.) This avoids the initial mutex lock. */
     void          addReference()
     { 
-        if (mutexLocking_) {
-            BZ_MUTEX_LOCK(mutex)
-        }
-        ++references_; 
+        BZ_MUTEX_LOCK(mutex)
+        const int refcount = ++references_; 
+	BZ_MUTEX_UNLOCK(mutex)
 
 #ifdef BZ_DEBUG_LOG_REFERENCES
-    cout << "MemoryBlock:    reffed " << setw(8) << length_ 
-         << " at " << ((void *)dataBlockAddress_) << " (r=" 
-         << (int)references_ << ")" << endl;
+	  cout << "MemoryBlock:    reffed " << setw(8) << length_ 
+	       << " at " << ((void *)dataBlockAddress_) << " (r=" 
+	       << refcount << ")" << endl;
 #endif
-        if (mutexLocking_) {
-            BZ_MUTEX_UNLOCK(mutex)
-        }
     }
 
     T_type* restrict      data() 
@@ -174,31 +175,23 @@ protected:
     int           removeReference()
     {
 
-        if (mutexLocking_) {
-            BZ_MUTEX_LOCK(mutex)
-        }
-        int refcount = --references_;
+        BZ_MUTEX_LOCK(mutex)
+        const int refcount = --references_;
+        BZ_MUTEX_UNLOCK(mutex)
 
 #ifdef BZ_DEBUG_LOG_REFERENCES
-    cout << "MemoryBlock: dereffed  " << setw(8) << length_
-         << " at " << ((void *)dataBlockAddress_) << " (r=" << (int)references_ 
-         << ")" << endl;
+	  cout << "MemoryBlock: dereffed  " << setw(8) << length_
+	       << " at " << ((void *)dataBlockAddress_) << " (r=" << refcount
+	       << ")" << endl;
 #endif
-        if (mutexLocking_) {
-            BZ_MUTEX_UNLOCK(mutex)
-        }
         return refcount;
     }
 
     int references() const
-    {
-        if (mutexLocking_) {
-            BZ_MUTEX_LOCK(mutex)
-        }
-        int refcount = references_;
-        if (mutexLocking_) {
-            BZ_MUTEX_UNLOCK(mutex)
-        }
+  { 
+        BZ_MUTEX_LOCK(mutex)
+        const int refcount = references_;
+	BZ_MUTEX_UNLOCK(mutex)
 
         return refcount;
     }
@@ -217,16 +210,14 @@ private:   // Disabled member functions
 private:   // Data members
     T_type * restrict     data_;
     T_type *              dataBlockAddress_;
+    sizeType              length_;
 
-#ifdef BZ_DEBUG_REFERENCE_ROLLOVER
-    volatile unsigned char references_;
-#else
-    volatile int references_;
-#endif
-
-    BZ_MUTEX_DECLARE(mutex)
+#if defined(BZ_THREADSAFE) && !defined(BZ_THREADSAFE_USE_ATOMIC)
+    // with atomic reference counts, there is no locking
     bool    mutexLocking_;
-    sizeType  length_;
+#endif
+    BZ_REFCOUNT_DECLARE(references_)
+    BZ_MUTEX_DECLARE(mutex)
 };
 
 
@@ -272,7 +263,7 @@ public:
 
         if ((deletionPolicy == neverDeleteData) 
             || (deletionPolicy == duplicateData)) {
-// in this case, we do not need a MemoryBlock to ref-count the data
+	    // in this case, we do not need a MemoryBlock to ref-count the data
             block_ = 0;
         }
         else if (deletionPolicy == deleteDataWhenDone) {
@@ -299,8 +290,8 @@ public:
         data_ = block_->data();
 
 #ifdef BZ_DEBUG_LOG_ALLOCATIONS
-    cout << "MemoryBlockReference: created MemoryBlock at "
-         << ((void*)block_) << endl;
+	cout << "MemoryBlockReference: created MemoryBlock at "
+	     << ((void*)block_) << endl;
 #endif
     }
 
@@ -310,7 +301,9 @@ public:
     }
 
 protected:
-
+#ifdef BZ_TESTSUITE
+public:
+#endif
     int numReferences() const
     {
         if (block_) 
@@ -356,20 +349,20 @@ protected:
         data_ = block_->data();
 
 #ifdef BZ_DEBUG_LOG_ALLOCATIONS
-    cout << "MemoryBlockReference: created MemoryBlock at "
-         << ((void*)block_) << endl;
+	cout << "MemoryBlockReference: created MemoryBlock at "
+	     << ((void*)block_) << endl;
 #endif
     }
 
 private:
     void blockRemoveReference()
     {
-        int refcount = removeReference();
+        const int refcount = removeReference();
         if (refcount == 0)
         {
 #ifdef BZ_DEBUG_LOG_ALLOCATIONS
-    cout << "MemoryBlock: no more refs, delete MemoryBlock object at "
-         << ((void*)block_) << endl;
+	  cout << "MemoryBlock: no more refs, delete MemoryBlock object at "
+	       << ((void*)block_) << endl;
 #endif
 
             delete block_;

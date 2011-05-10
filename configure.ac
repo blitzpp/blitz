@@ -103,14 +103,20 @@ if test "$enable_threadsafe" = yes; then
   AC_DEFINE([THREADSAFE],[1],[Enable Blitz thread-safety features])
 fi
 
+AC_MSG_CHECKING([if we are using Intel Threading Building Blocks])
+AC_ARG_WITH([tbb],
+  AS_HELP_STRING([--with-tbb],[Use Intel Threading Building Blocks atomic types]),
+    [
+    AC_MSG_RESULT([yes])
+    AC_CHECK_HEADERS([tbb/atomic.h],,AC_MSG_ERROR([tbb/atomic.h not found]))
+    AC_DEFINE([THREADSAFE_USE_TBB],1,[Use TBB atomic types])
+    ])
+
 AC_MSG_CHECKING([whether to enable Blitz 64-bit dimensions])
 AC_ARG_ENABLE(64-bit-dimensions,
-  AS_HELP_STRING([--enable-64-bit-dimensions],[Enable dimensions with > 2^31 elements]),,[
-  enable_64_bit_dimensions="no"])
-AC_MSG_RESULT([$enable_64_bit_dimensions])
-if test "$enable_64_bit_dimensions" = yes; then
-  AC_DEFINE([FULLY64BIT],[1],[Enable dimensions with > 2^31 elements (NOT IMPLEMENTED)])
-fi
+  AS_HELP_STRING([--enable-64-bit-dimensions],[Enable dimensions with > 2^31 elements (not yet implemented)]),
+  AC_MSG_WARN([Dimensions with > 2^31 elements are not yet implemented])
+  AC_DEFINE([FULLY64BIT],[1],[Enable dimensions with > 2^31 elements (NOT IMPLEMENTED)]),)
 
 # autoconf replacement of bzconfig
 AC_CHECK_CXX_FEATURES

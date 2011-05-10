@@ -7,7 +7,7 @@
 EXTRA_DIST = testsuite.h
 
 AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir) -I$(top_builddir)
-AM_CXXFLAGS = @CXX_DEBUG_FLAGS@
+AM_CXXFLAGS = @CXX_DEBUG_FLAGS@ -DBZ_DEBUG
 LDADD = -L$(top_builddir)/lib -lblitz
 
 EXTRA_PROGRAMS = 64bit Adnene-Ben-Abdallah-1 Adnene-Ben-Abdallah-2	\
@@ -19,7 +19,7 @@ matthias-troyer-2 mattias-lindstroem-1 minmax minsumpow module newet	\
 Olaf-Ronneberger-1 patrik-jonsson-1 peter-bienstman-1			\
 peter-bienstman-2 peter-bienstman-3 peter-bienstman-4			\
 peter-bienstman-5 peter-nordlund-1 peter-nordlund-2 peter-nordlund-3	\
-promote qcd reduce reindex reverse safeToReturn shapecheck shape	\
+promote pthread qcd reduce reindex reverse safeToReturn shapecheck shape	\
 slice-iterators stencil-et storage stub theodore-papadopoulo-1 tinymat	\
 tinyvec transpose troyer-genilloud Ulisses-Mello-1 weakref wei-ku-1	\
 where zeek-1
@@ -66,6 +66,7 @@ peter_nordlund_1_SOURCES = peter-nordlund-1.cpp
 peter_nordlund_2_SOURCES = peter-nordlund-2.cpp
 peter_nordlund_3_SOURCES = peter-nordlund-3.cpp
 promote_SOURCES = promote.cpp
+pthread_SOURCES = pthread.cpp
 qcd_SOURCES = qcd.cpp
 reduce_SOURCES = reduce.cpp
 reindex_SOURCES = reindex.cpp
