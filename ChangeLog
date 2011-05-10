@@ -1,3 +1,30 @@
+2011-05-10  Patrik Jonsson <code@familjenjonsson.org>
+
+	* configure.ac, blitz/blitz.h, blitz/memblock.h,
+	  testsuite/Makefile.am, testsuite/pthread.cpp: Added support for
+	  lock-free, thread-safe reference counting with Intel Threading
+	  Building Blocks atomic types. This is enabled with '--with-tbb'.
+	  If Blitz is configured with --enable-threadsafe, it will now give
+	  an error if the compiler threading support isn't enabled rather
+	  than silently disabling thread support. Added test 'pthread',
+	  enabled if the compiler supports pthreads. (Consequently, this
+	  only works with --disable-cxx-flags-preset, so -DBZ_DEBUG was
+	  hardcoded for the test suite.) It would be good to have tests for
+	  the Windows and OpenMP threads, too.
+
+2011-05-09  Patrik Jonsson <code@familjenjonsson.org>
+
+	* blitz/memblock.h: MemoryBlocks now are created with reference
+	  count =1, so the MemoryBlockReference that creates it does not
+	  have to call addReference. This saves an unnecessary mutex lock.
+	  Added function isThreadsafe that returns true if blitz was
+	  configured with --enable-threadsafe.
+
+2011-05-09  Patrik Jonsson <code@familjenjonsson.org>
+
+	* testsuite/64bit.cpp: Updated 64-bit test so it only tries the
+	  upper end of the range, in the interest of time.
+
 2011-03-26  Patrick Guio <p.guio@ucl.ac.uk>
 
 	* bin/update-cl.sh:
