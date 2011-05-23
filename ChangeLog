@@ -1,3 +1,14 @@
+2011-05-20  Patrik Jonsson <code@familjenjonsson.org>
+
+	* configure.ac, blitz/numtrait.h, blitz/tinyvec.cc,
+	  blitz/tinyvec.h, blitz/array/methods.cc, blitz/array/reduce.h,
+	  blitz/meta/vecassign.h, m4/ac_cxx_alignment_directive.m4,
+	  m4/ax_prefix_config_h.m4: Tweaked TinyVector assignment to
+	  facilitate vectorization with icpc. Added an autoconf macro which
+	  tests for the gcc and icpc ways of specifying structure
+	  alignment, and used it to set alignment for the TinyVector data_
+	  member to 16, which is required by SSE.
+
 2011-05-10  Patrik Jonsson <code@familjenjonsson.org>
 
 	* configure.ac, blitz/blitz.h, blitz/memblock.h,
