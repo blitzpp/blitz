@@ -1,3 +1,9 @@
+2011-05-23  Patrik Jonsson <code@familjenjonsson.org>
+
+	* configure.ac, blitz/tinyvec.h, blitz/meta/vecassign.h: Created
+	  configure option --enable-simd-width=<n>, which sets the loop
+	  size and alignment to facilitate compiler vectorization.
+
 2011-05-20  Patrik Jonsson <code@familjenjonsson.org>
 
 	* configure.ac, blitz/numtrait.h, blitz/tinyvec.cc,
