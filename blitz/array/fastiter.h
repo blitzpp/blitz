@@ -44,6 +44,7 @@ BZ_NAMESPACE(blitz)
 #endif
 
 #include <blitz/array/slice.h>
+#include <blitz/constpointerstack.h>
 
 // Wrapper to turn expressions with FAIs to FACIs so they can be
 // returned from a function.
@@ -53,26 +54,26 @@ typename T::T_range_result safeToReturn(const T& expr) {
 }
 
 
-// helper class ConstPointerStack
-template<typename P_numtype, int N_rank>
-class ConstPointerStack {
-public:
-    typedef P_numtype                T_numtype;
+// // helper class ConstPointerStack
+// template<typename P_numtype, int N_rank>
+// class ConstPointerStack {
+// public:
+//     typedef P_numtype                T_numtype;
 
-    void operator=(const ConstPointerStack<P_numtype,N_rank>& rhs) 
-    {
-        for (int i=0; i<N_rank; ++i)
-            stack_[i] = rhs.stack_[i];
-    }
+//     void operator=(const ConstPointerStack<P_numtype,N_rank>& rhs) 
+//     {
+//         for (int i=0; i<N_rank; ++i)
+//             stack_[i] = rhs.stack_[i];
+//     }
 
-    const T_numtype*& operator[](int position)
-    {
-        return stack_[position];
-    }
+//     const T_numtype*& operator[](int position)
+//     {
+//         return stack_[position];
+//     }
       
-private:
-    const T_numtype *                stack_[N_rank];
-};
+// private:
+//     const T_numtype *                stack_[N_rank];
+// };
 
 
 // forward declaration
