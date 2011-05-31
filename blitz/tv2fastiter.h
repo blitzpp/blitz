@@ -91,6 +91,12 @@ public:
     T_numtype operator()(int i) const
     { return array_[i]; }
 
+  T_numtype operator()(TinyVector<int,1> i) const
+    {
+        BZPRECONDITION(array_.lengthCheck(i[0]));
+        return array_[i[0]];
+    }
+
     int ascending(const int r) const
     {
       BZPRECONDITION(r==0);
@@ -156,7 +162,7 @@ public:
 
     void loadStride(int r)
     {
-      BZPRECONDITION(r==0); stride_ = 1;
+      BZPRECONDITION(r==0); //stride_ = 1;
     }
 
     const T_numtype * restrict data() const
@@ -189,8 +195,12 @@ public:
     void advanceUnitStride()
     { ++data_; }
 
-    // bool canCollapse(int outerLoopRank, int innerLoopRank) const
-    // { return array_.canCollapse(outerLoopRank, innerLoopRank); }
+  bool canCollapse(int outerLoopRank, int innerLoopRank) const
+  {
+    BZPRECONDITION(outerLoopRank==0);
+    BZPRECONDITION(innerLoopRank==0);
+    return true;
+  }
 
 //     void prettyPrint(BZ_STD_SCOPE(string) &str, 
 //         prettyPrintFormat& format) const
@@ -302,8 +312,7 @@ public:
     // 		   + offset2*array_.stride(dim2)];
     // }
 
-  /*
-  // sliceinfo for expressions
+  // vectors can't be sliced
   template<typename T1, typename T2 = nilArraySection, 
 	   class T3 = nilArraySection, typename T4 = nilArraySection, 
 	   class T5 = nilArraySection, typename T6 = nilArraySection, 
@@ -312,9 +321,8 @@ public:
 	   class T11 = nilArraySection>
   class SliceInfo {
   public:    
-    typedef FastArrayCopyIterator<T_numtype, blitz::SliceInfo<T_numtype, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::rank> T_slice;
+    typedef void T_slice;
 };
-  */
 
 protected:
   const T_numtype * restrict           data_;

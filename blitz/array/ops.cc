@@ -35,6 +35,7 @@
 #endif
 
 #include <blitz/update.h>
+#include <blitz/globeval.cc>
 
 BZ_NAMESPACE(blitz)
 
@@ -51,22 +52,23 @@ Array<P_numtype, N_rank>& Array<P_numtype,N_rank>::initialize(T_numtype x)
 
 #ifdef BZ_NEW_EXPRESSION_TEMPLATES
 
-template<typename P_numtype, int N_rank> template<typename T_expr>
-inline Array<P_numtype,N_rank>&
-Array<P_numtype,N_rank>::operator=(const ETBase<T_expr>& expr)
-{
-    evaluate(expr.unwrap(), 
-        _bz_update<T_numtype, _bz_typename T_expr::T_numtype>());
-    return *this;
-}
+// template<typename P_numtype, int N_rank> template<typename T_expr>
+// inline Array<P_numtype,N_rank>&
+// Array<P_numtype,N_rank>::operator=(const ETBase<T_expr>& expr)
+// {
+//   evaluate(asExpr<T_expr>::getExpr(expr.unwrap()), 
+//         _bz_update<T_numtype, _bz_typename T_expr::T_numtype>());
+//     return *this;
+// }
 
 template<typename P_numtype, int N_rank>
 inline Array<P_numtype, N_rank>&
 Array<P_numtype, N_rank>::operator=(const Array<T_numtype,N_rank>& x)
 {
-    (*this) = _bz_ArrayExpr<FastArrayIterator<T_numtype, N_rank> >
-        (x.beginFast());
-    return *this;
+  typedef Array<T_numtype,N_rank> T;
+  _bz_evaluate(*this, _bz_typename asExpr<T>::T_expr(x),			\
+	     _bz_update<T_numtype, _bz_typename asExpr<T>::T_expr::T_numtype>()); \
+    return *this; \
 }
 
 #define BZ_ARRAY_UPDATE(op,name) \
@@ -75,11 +77,12 @@ template<typename T> \
 inline Array<P_numtype,N_rank>& \
 Array<P_numtype,N_rank>::operator op(const T& expr) \
 { \
-    evaluate(_bz_typename asExpr<T>::T_expr(expr), \
+  _bz_evaluate(*this, _bz_typename asExpr<T>::T_expr(expr),  \
       name<T_numtype, _bz_typename asExpr<T>::T_expr::T_numtype>()); \
     return *this; \
 }
 
+BZ_ARRAY_UPDATE(=, _bz_update)
 BZ_ARRAY_UPDATE(+=, _bz_plus_update)
 BZ_ARRAY_UPDATE(-=, _bz_minus_update)
 BZ_ARRAY_UPDATE(*=, _bz_multiply_update)

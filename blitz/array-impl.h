@@ -132,7 +132,7 @@ public:
     typedef ArrayIterator<T_numtype,N_rank> iterator;
     typedef ConstArrayIterator<T_numtype,N_rank> const_iterator;
 
-    static const int _bz_rank = N_rank;
+    static const int rank_ = N_rank;
 
     //////////////////////////////////////////////
     // Constructors                             //
@@ -990,8 +990,8 @@ public:
         int r3=0, int r4=0, int r5=0, int r6=0, int r7=0, int r8=0, int
         r9=0, int r10=0) const;
 
-    int                               rank() const
-    { return N_rank; }
+  static const int                               rank()
+    { return rank_; }
 
     void                              reference(const T_array&);
     void                              weakReference(const T_array&);
@@ -2219,10 +2219,12 @@ public:
     // T_array& operator=(T_numtype);
 
 #ifdef BZ_NEW_EXPRESSION_TEMPLATES
-    template<typename T_expr>
-    T_array& operator=(const ETBase<T_expr>&);
-    T_array& operator=(const Array<T_numtype,N_rank>&);
 
+  // we need this because we can't use default assignment op so it
+  // must be overridden
+  T_array& operator=(const Array<T_numtype,N_rank>&);
+
+  template<typename T> T_array& operator=(const T&);
     template<typename T> T_array& operator+=(const T&);
     template<typename T> T_array& operator-=(const T&);
     template<typename T> T_array& operator*=(const T&);

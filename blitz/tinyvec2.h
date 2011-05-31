@@ -91,7 +91,12 @@ public:
   //typedef TinyVector2IterConst<T_numtype,N_length,1>    T_constIterator;
     typedef T_numtype*                                   iterator;
     typedef const T_numtype*                             const_iterator;
-    enum { numElements = N_length };
+  //enum { numElements = N_length };
+
+    static const int 
+        numArrayOperands = 1, 
+        numIndexPlaceholders = 0,
+        rank_ = 1;
 
     TinyVector2()  { }
     ~TinyVector2() { }
@@ -228,6 +233,13 @@ public:
     // template<typename P_expr>
     // inline TinyVector2(_bz_VecExpr<P_expr> expr);
 
+  static int base() 
+  { return 0; }
+
+  static int                               base(int rank) 
+  { return 0; }
+
+
     T_iterator      beginFast() const       { return T_iterator(*this);      }
   //T_constIterator beginFast() const { return T_constIterator(*this); }
 
@@ -249,8 +261,39 @@ public:
     const T_numtype * restrict dataFirst() const
     { return data_; }
 
-    unsigned length() const
-    { return N_length; }
+  static int                               lbound(int rank) 
+  { return 0; }
+  static int            lbound() 
+  { return 0; }
+
+  static int                               length(int rank) 
+  { return N_length; }
+  static int    length() 
+  { return N_length; }
+
+  static int                               ordering(int storageRankIndex) 
+  { return 0; }
+
+  static int    ordering() 
+  { return 0; }
+
+  static  int                               rank()
+    { return rank_; }
+
+    static sizeType                               numElements() 
+  { return length(); }
+
+    static diffType    stride() 
+    { return 1; }
+
+  static diffType                               stride(int rank) 
+    { return 1; }
+
+  static int                               ubound(int rank) 
+  { return length()-1; }
+
+  static int           ubound() 
+  { return length()-1; }
 
     /////////////////////////////////////////////
     // Library-internal member functions
