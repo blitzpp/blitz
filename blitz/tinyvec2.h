@@ -50,6 +50,8 @@ BZ_NAMESPACE(blitz)
 
 template<typename P_numtype, int N_length>
 class FastTV2Iterator;
+template<typename P_numtype, int N_length>
+class FastTV2CopyIterator;
 
 // template<typename P_numtype, int N_length, int N_stride BZ_TEMPLATE_DEFAULT(1) >
 // class TinyVector2IterConst;
@@ -92,6 +94,7 @@ public:
     typedef T_numtype*                                   iterator;
     typedef const T_numtype*                             const_iterator;
   //enum { numElements = N_length };
+  typedef FastTV2CopyIterator<P_numtype, N_length> T_range_result;
 
     static const int 
         numArrayOperands = 1, 
@@ -319,6 +322,9 @@ public:
     // _bz_VecExpr<T_constIterator> _bz_asVecExpr() const
     // { return _bz_VecExpr<T_constIterator>(beginFast()); }
    
+    T_numtype operator*() const
+    { return *data_; }
+
     //////////////////////////////////////////////
     // Subscripting operators
     //////////////////////////////////////////////
@@ -355,6 +361,63 @@ public:
         return data_[i];
     }
 
+    T_numtype operator()(int i) const
+    { return data_[i]; }
+
+  T_numtype operator()(TinyVector<int,1> i) const
+    {
+        BZPRECONDITION(lengthCheck(i[0]));
+        return data_[i[0]];
+    }
+
+    T_numtype fastRead(sizeType i) const
+    { return data_[i]; }
+
+    void push(int position)
+    {
+      BZPRECONDITION(0);
+    }
+  
+    void pop(int position)
+    { 
+      BZPRECONDITION(0);
+    }
+
+
+    void advance()
+    {
+      BZPRECONDITION(0);
+    }
+
+    void advance(int n)
+    {
+      BZPRECONDITION(0);
+    }
+
+    void loadStride(int r)
+    {
+      BZPRECONDITION(0);
+    }
+
+  bool isUnitStride(int r) const
+  { BZPRECONDITION(r==0); return true; }
+
+    void advanceUnitStride()
+    { BZPRECONDITION(0); }
+
+    int suggestStride(int r) const
+  { BZPRECONDITION(r==0); return 1; }
+
+    bool isStride(int r, diffType stride) const
+  { BZPRECONDITION(r==0); return stride==1; }
+
+  bool canCollapse(int outerLoopRank, int innerLoopRank) const
+  {
+    BZPRECONDITION(outerLoopRank==0);
+    BZPRECONDITION(innerLoopRank==0);
+    return true;
+  }
+
     //////////////////////////////////////////////
     // Assignment operators
     //////////////////////////////////////////////
@@ -385,6 +448,18 @@ public:
     T_numtype* restrict getInitializationIterator()
     { return dataFirst(); }
 
+  // vectors can't be sliced
+  template<typename T1, typename T2 = nilArraySection, 
+	   class T3 = nilArraySection, typename T4 = nilArraySection, 
+	   class T5 = nilArraySection, typename T6 = nilArraySection, 
+	   class T7 = nilArraySection, typename T8 = nilArraySection, 
+	   class T9 = nilArraySection, typename T10 = nilArraySection, 
+	   class T11 = nilArraySection>
+  class SliceInfo {
+  public:    
+    typedef void T_slice;
+  };
+
 private:
     T_numtype data_[N_length];
 };
@@ -399,10 +474,16 @@ class TinyVector2<T,0> {
 
 //  A tinyvector operand
 
+// template <typename T,int N>
+// struct asExpr<TinyVector2<T,N> > {
+//     typedef FastTV2Iterator<T,N> T_expr;
+//     static T_expr getExpr(const TinyVector2<T,N>& x) { return x.beginFast(); }
+// };
+
 template <typename T,int N>
 struct asExpr<TinyVector2<T,N> > {
-    typedef FastTV2Iterator<T,N> T_expr;
-    static T_expr getExpr(const TinyVector2<T,N>& x) { return x.beginFast(); }
+    typedef TinyVector2<T,N> T_expr;
+    static T_expr getExpr(const TinyVector2<T,N>& x) { return x; }
 };
 
 BZ_NAMESPACE_END

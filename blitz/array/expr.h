@@ -104,7 +104,7 @@ public:
     static const int 
         numArrayOperands = T_expr::numArrayOperands,
         numIndexPlaceholders = T_expr::numIndexPlaceholders,
-        rank = T_expr::rank;
+        rank_ = T_expr::rank_;
 
     _bz_ArrayExpr(const _bz_ArrayExpr<T_expr>& a)
 #ifdef BZ_NEW_EXPRESSION_TEMPLATES
@@ -173,7 +173,7 @@ public:
     int ordering(const int rank)  const { return iter_.ordering(rank);  }
     int lbound(const int rank)    const { return iter_.lbound(rank);    }
     int ubound(const int rank)    const { return iter_.ubound(rank);    }
-    RectDomain<rank> domain() const { return iter_.domain(); }
+    RectDomain<rank_> domain() const { return iter_.domain(); }
 
     void push(int position)
     { iter_.push(position); }
@@ -561,7 +561,7 @@ public:
     static const int 
         numArrayOperands = T_expr::numArrayOperands,
         numIndexPlaceholders = T_expr::numIndexPlaceholders,
-        rank = T_expr::rank;
+        rank_ = T_expr::rank_;
 
     _bz_ArrayExprUnaryOp(const _bz_ArrayExprUnaryOp<T_expr, T_op>& a)
         : iter_(a.iter_)
@@ -586,7 +586,7 @@ public:
     int ordering(const int rank)  const { return iter_.ordering(rank);  }
     int lbound(const int rank)    const { return iter_.lbound(rank);    }
     int ubound(const int rank)    const { return iter_.ubound(rank);    }
-    RectDomain<rank> domain() const { return iter_.domain(); }
+    RectDomain<rank_> domain() const { return iter_.domain(); }
 
     T_numtype operator*() const { return T_op::apply(*iter_); }
 
@@ -747,8 +747,8 @@ public:
                          + T_expr2::numArrayOperands,
         numIndexPlaceholders = T_expr1::numIndexPlaceholders
                              + T_expr2::numIndexPlaceholders,
-        rank = (T_expr1::rank > T_expr2::rank) 
-             ? T_expr1::rank : T_expr2::rank;
+        rank_ = (T_expr1::rank_ > T_expr2::rank_) 
+             ? T_expr1::rank_ : T_expr2::rank_;
 
     _bz_ArrayExprBinaryOp(
         const _bz_ArrayExprBinaryOp<T_expr1, T_expr2, T_op>& a)
@@ -796,13 +796,13 @@ public:
     }
 
   // defer calculation to lbound/ubound
-  RectDomain<rank> domain() const 
+  RectDomain<rank_> domain() const 
   { 
     TinyVector<int, rank> lb, ub;
-    for(int r=0; r<rank; ++r) {
+    for(int r=0; r<rank_; ++r) {
       lb[r]=lbound(r); ub[r]=ubound(r); 
     }
-    return RectDomain<rank>(lb,ub);
+    return RectDomain<rank_>(lb,ub);
   }
 
     void push(int position)
@@ -974,11 +974,11 @@ public:
         numIndexPlaceholders = T_expr1::numIndexPlaceholders
                              + T_expr2::numIndexPlaceholders
                              + T_expr3::numIndexPlaceholders,
-        rank = (T_expr1::rank > T_expr2::rank) 
-             ? ((T_expr1::rank > T_expr3::rank)
-                ? T_expr1::rank : T_expr3::rank)
-             : ((T_expr2::rank > T_expr3::rank) 
-                ? T_expr2::rank : T_expr3::rank);
+        rank_ = (T_expr1::rank_ > T_expr2::rank_) 
+             ? ((T_expr1::rank_ > T_expr3::rank_)
+                ? T_expr1::rank_ : T_expr3::rank_)
+             : ((T_expr2::rank_ > T_expr3::rank_) 
+                ? T_expr2::rank_ : T_expr3::rank_);
 
     _bz_ArrayExprTernaryOp(
         const _bz_ArrayExprTernaryOp<T_expr1, T_expr2, T_expr3, T_op>& a)
@@ -1034,13 +1034,13 @@ public:
     }
 
   // defer calculation to lbound/ubound
-  RectDomain<rank> domain() const 
+  RectDomain<rank_> domain() const 
   { 
-    TinyVector<int, rank> lb, ub;
-    for(int r=0; r<rank; ++r) {
+    TinyVector<int, rank_> lb, ub;
+    for(int r=0; r<rank_; ++r) {
       lb[r]=lbound(r); ub[r]=ubound(r); 
     }
-    return RectDomain<rank>(lb,ub);
+    return RectDomain<rank_>(lb,ub);
   }
 
     void push(int position)
@@ -1243,8 +1243,8 @@ public:
     + T_expr3::numIndexPlaceholders
     + T_expr4::numIndexPlaceholders,
 
-    rank = BZ_MAX(BZ_MAX(T_expr1::rank, T_expr2::rank),
-		  BZ_MAX(T_expr3::rank, T_expr4::rank));
+    rank_ = BZ_MAX(BZ_MAX(T_expr1::rank_, T_expr2::rank_),
+		  BZ_MAX(T_expr3::rank_, T_expr4::rank_));
 
     _bz_ArrayExprQuaternaryOp(
         const _bz_ArrayExprQuaternaryOp<T_expr1, T_expr2, T_expr3, T_expr4, T_op>& a)
@@ -1271,7 +1271,7 @@ public:
 #endif
 
   template<int N>
-  T_range_result operator()(const RectDomain<rank>& d) const
+  T_range_result operator()(const RectDomain<rank_>& d) const
   {
     return T_range_result(iter1_(d), iter2_(d), iter3_(d), iter4_(d));
   }
@@ -1317,13 +1317,13 @@ public:
     }
 
   // defer calculation to lbound/ubound
-  RectDomain<rank> domain() const 
+  RectDomain<rank_> domain() const 
   { 
-    TinyVector<int, rank> lb, ub;
-    for(int r=0; r<rank; ++r) {
+    TinyVector<int, rank_> lb, ub;
+    for(int r=0; r<rank_; ++r) {
       lb[r]=lbound(r); ub[r]=ubound(r); 
     }
-    return RectDomain<rank>(lb,ub);
+    return RectDomain<rank_>(lb,ub);
   }
 
     void push(int position)
@@ -1521,7 +1521,7 @@ public:
     static const int 
         numArrayOperands = 0, 
         numIndexPlaceholders = 0, 
-        rank = 0;
+        rank_ = 0;
 
     _bz_ArrayExprConstant(const _bz_ArrayExprConstant<T_numtype>& a)
         : value_(a.value_)

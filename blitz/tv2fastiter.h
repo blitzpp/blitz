@@ -132,7 +132,8 @@ public:
     { return data_[i * stride_]; }
 
     T_numtype fastRead(sizeType i) const
-    { return data_[i]; }
+    //{ return data_[i]; }
+    { return array_.data_[i]; }
 
     int suggestStride(int r) const
   { BZPRECONDITION(r==0); return stride_; }
@@ -326,7 +327,7 @@ public:
 
 protected:
   const T_numtype * restrict           data_;
-  P_arraytype                          array_;
+  P_arraytype&                          array_;
   ConstPointerStack<T_numtype,rank>  stack_;
   static const diffType                             stride_=1;
 };

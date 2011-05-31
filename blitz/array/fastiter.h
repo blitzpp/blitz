@@ -94,7 +94,7 @@ public:
     static const int 
         numArrayOperands = 1, 
         numIndexPlaceholders = 0,
-        rank = N_rank;
+        rank_ = N_rank;
 
     // NB: this ctor does NOT preserve stack and stride
     // parameters.  This is for speed purposes.
@@ -161,7 +161,7 @@ public:
             return INT_MAX;   // huge(int());
     }
     
-    RectDomain<rank> domain() const { return array_.domain(); };
+    RectDomain<rank_> domain() const { return array_.domain(); };
 
     T_numtype first_value() const { return *data_; }
 
