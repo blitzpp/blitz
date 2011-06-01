@@ -46,7 +46,7 @@
 #include <blitz/blitz.h>
 #include <blitz/memblock.h>
 #include <blitz/range.h>
-#include <blitz/tinyvec.h>
+#include <blitz/tinyvec2.h>
 #include <blitz/tvecglobs.h>
 
 #ifdef BZ_ARRAY_SPACE_FILLING_TRAVERSAL

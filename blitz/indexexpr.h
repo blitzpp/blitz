@@ -32,7 +32,7 @@
 #ifndef BZ_INDEXEXPR_H
 #define BZ_INDEXEXPR_H
 
-#include <blitz/tinyvec.h>
+#include <blitz/tinyvec2.h>
 #include <blitz/prettyprint.h>
 #include <blitz/etbase.h>
 #include <blitz/array/domain.h>

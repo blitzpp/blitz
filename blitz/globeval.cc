@@ -353,7 +353,7 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
 	     for (diffType i=0; i != ubound; i += commonStride)
 		 T_update::update(data[i], expr.fastRead(i));
    #else
-	     diffType n1 = (length(firstRank) & 3) * commonStride;
+	     diffType n1 = (dest.length(firstRank) & 3) * commonStride;
 
 	     diffType i = 0;
 	     for (; i != n1; i += commonStride)

@@ -445,5 +445,7 @@ class TinyVector<T,0> {
 
 BZ_NAMESPACE_END
 
+#include <blitz/tinyvec2.cc>
+
 #endif // BZ_TINYVEC_H
 

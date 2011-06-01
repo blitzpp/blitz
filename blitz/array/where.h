@@ -63,8 +63,8 @@ public:
         numIndexPlaceholders = P_expr1::numIndexPlaceholders
                              + P_expr2::numIndexPlaceholders
                              + P_expr3::numIndexPlaceholders,
-        rank = _bz_meta_max<_bz_meta_max<P_expr1::rank,P_expr2::rank>::max,
-                            P_expr3::rank>::max;
+        rank_ = _bz_meta_max<_bz_meta_max<P_expr1::rank_,P_expr2::rank_>::max,
+                            P_expr3::rank_>::max;
 
     _bz_ArrayWhere(const _bz_ArrayWhere<T_expr1,T_expr2,T_expr3>& a)
       : iter1_(a.iter1_), iter2_(a.iter2_), iter3_(a.iter3_)
@@ -82,7 +82,7 @@ public:
     T_numtype operator()(const TinyVector<int, N_rank>& i) const
     { return iter1_(i) ? iter2_(i) : iter3_(i); }
 
-    T_range_result operator()(const RectDomain<rank>& d) const
+    T_range_result operator()(const RectDomain<rank_>& d) const
   { return T_range_result(iter1_(d), iter2_(d), iter3_(d)); }
 
     int ascending(const int rank) const
@@ -114,13 +114,13 @@ public:
     } 
 
   // defer calculation to lbound/ubound
-  RectDomain<rank> domain() const 
+  RectDomain<rank_> domain() const 
   { 
-    TinyVector<int, rank> lb, ub;
-    for(int r=0; r<rank; ++r) {
+    TinyVector<int, rank_> lb, ub;
+    for(int r=0; r<rank_; ++r) {
       lb[r]=lbound(r); ub[r]=ubound(r); 
     }
-    return RectDomain<rank>(lb,ub);
+    return RectDomain<rank_>(lb,ub);
   }
 
     void push(int position)

@@ -88,7 +88,7 @@ public:
     static const int 
         numArrayOperands = T_expr::numArrayOperands,
         numIndexPlaceholders = T_expr::numIndexPlaceholders + 1,
-        rank_ = T_expr::rank - 1;
+        rank_ = T_expr::rank_ - 1;
 
     _bz_ArrayExprReduce(const _bz_ArrayExprReduce& reduce)
         : reduce_(reduce.reduce_), iter_(reduce.iter_), ordering_(reduce.ordering_) { }

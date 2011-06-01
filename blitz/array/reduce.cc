@@ -91,9 +91,9 @@ _bz_reduceWithIndexTraversalGeneric(T_expr expr, T_reduction reduction)
 {
     // This is optimized assuming C-style arrays.
 
-    const int rank = T_expr::rank;
+    const int rank = T_expr::rank_;
 
-    TinyVector<int,T_expr::rank> index, first, last;
+    TinyVector<int,T_expr::rank_> index, first, last;
 
     unsigned long count = 1;
 
@@ -147,7 +147,7 @@ _bz_typename T_reduction::T_resulttype
 _bz_reduceWithIndexVectorTraversal(T_expr expr, T_reduction reduction)
 {
     // We are doing minIndex/maxIndex, so initialize with lower bound
-    return _bz_reduceWithIndexTraversalGeneric<TinyVector<int,T_expr::rank> >(expr,reduction);
+    return _bz_reduceWithIndexTraversalGeneric<TinyVector<int,T_expr::rank_> >(expr,reduction);
 }
 
 BZ_NAMESPACE_END

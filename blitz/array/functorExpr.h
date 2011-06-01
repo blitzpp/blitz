@@ -99,7 +99,7 @@
 
 #include <blitz/prettyprint.h>
 #include <blitz/shapecheck.h>
-#include <blitz/tinyvec.h>
+#include <blitz/tinyvec2.h>
 
 BZ_NAMESPACE(blitz)
 
@@ -119,7 +119,7 @@ public:
     static const int 
         numArrayOperands = T_expr::numArrayOperands,
 	numIndexPlaceholders = T_expr::numIndexPlaceholders,
-	rank = T_expr::rank;
+	rank_ = T_expr::rank_;
     
     _bz_FunctorExpr(const _bz_FunctorExpr<P_functor,P_expr,P_result>& a)
         : f_(a.f_), iter_(a.iter_)
@@ -153,7 +153,7 @@ public:
     { return f_(iter_(i)); }
 #endif
 
-  T_range_result operator()(RectDomain<rank> d) const
+  T_range_result operator()(RectDomain<rank_> d) const
   {
     return T_range_result(f_, iter_(d));
   }
@@ -162,7 +162,7 @@ public:
     int ordering(const int rank)  const { return iter_.ordering(rank);  }
     int lbound(const int rank)    const { return iter_.lbound(rank);    }
     int ubound(const int rank)    const { return iter_.ubound(rank);    }
-    RectDomain<rank> domain() const { return iter_.domain(); }
+    RectDomain<rank_> domain() const { return iter_.domain(); }
 
     void push(const int position) { iter_.push(position); }
 
@@ -287,8 +287,8 @@ public:
                          + T_expr2::numArrayOperands,
 	numIndexPlaceholders = T_expr1::numIndexPlaceholders
 	                     + T_expr2::numIndexPlaceholders,
-	rank = T_expr1::rank > T_expr2::rank
-             ? T_expr1::rank : T_expr2::rank;
+	rank_ = T_expr1::rank_ > T_expr2::rank_
+             ? T_expr1::rank_ : T_expr2::rank_;
   
     _bz_FunctorExpr2(const _bz_FunctorExpr2<P_functor, P_expr1, P_expr2,
         P_result>& a) 
@@ -318,7 +318,7 @@ public:
     { return f_(iter1_(i), iter2_(i)); }
 #endif
 
-  T_range_result operator()(RectDomain<rank> d) const
+  T_range_result operator()(RectDomain<rank_> d) const
   {
     return T_range_result(f_, iter1_(d), iter2_(d));
   }
@@ -344,13 +344,13 @@ public:
     }
 
   // defer calculation to lbound/ubound
-  RectDomain<rank> domain() const 
+  RectDomain<rank_> domain() const 
   { 
-    TinyVector<int, rank> lb, ub;
-    for(int r=0; r<rank; ++r) {
+    TinyVector<int, rank_> lb, ub;
+    for(int r=0; r<rank_; ++r) {
       lb[r]=lbound(r); ub[r]=ubound(r); 
     }
-    return RectDomain<rank>(lb,ub);
+    return RectDomain<rank_>(lb,ub);
   }
   
     void push(const int position) { 
@@ -521,9 +521,9 @@ public:
 	numIndexPlaceholders = T_expr1::numIndexPlaceholders
 	                     + T_expr2::numIndexPlaceholders
 	                     + T_expr3::numIndexPlaceholders,
-	rank12 = T_expr1::rank > T_expr2::rank
-	       ? T_expr1::rank : T_expr2::rank,
-	rank = rank12 > T_expr3::rank ? rank12 : T_expr3::rank;
+	rank12 = T_expr1::rank_ > T_expr2::rank_
+	       ? T_expr1::rank_ : T_expr2::rank_,
+	rank_ = rank12 > T_expr3::rank_ ? rank12 : T_expr3::rank_;
   
     _bz_FunctorExpr3(const _bz_FunctorExpr3<P_functor, P_expr1, P_expr2,
         P_expr3, P_result>& a) 
@@ -554,7 +554,7 @@ public:
     { return f_(iter1_(i), iter2_(i), iter3_(i)); }
 #endif
 
-  T_range_result operator()(RectDomain<rank> d) const
+  T_range_result operator()(RectDomain<rank_> d) const
   {
     return T_range_result(f_, iter1_(d), iter2_(d), iter3_(d));
   }
@@ -584,13 +584,13 @@ public:
     }
   
   // defer calculation to lbound/ubound
-  RectDomain<rank> domain() const 
+  RectDomain<rank_> domain() const 
   { 
-    TinyVector<int, rank> lb, ub;
-    for(int r=0; r<rank; ++r) {
+    TinyVector<int, rank_> lb, ub;
+    for(int r=0; r<rank_; ++r) {
       lb[r]=lbound(r); ub[r]=ubound(r); 
     }
-    return RectDomain<rank>(lb,ub);
+    return RectDomain<rank_>(lb,ub);
   }
   
     void push(const int position) { 
