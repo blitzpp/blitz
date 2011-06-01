@@ -33,10 +33,12 @@
 #define BZ_TINYVEC2_H
 
 #include <blitz/blitz.h>
-//#include <blitz/range.h>
 #include <blitz/listinit.h>
-//#include <blitz/tiny.h>
 #include <blitz/etbase.h>
+#include <blitz/tinyvec.h>
+#include <blitz/array/slice.h>
+#include <blitz/indexmap-forward.h>
+
 
 #ifdef BZ_HAVE_CSTRING
 #include <cstring> // For memcpy
@@ -53,26 +55,11 @@ class FastTV2Iterator;
 template<typename P_numtype, int N_length>
 class FastTV2CopyIterator;
 
-// template<typename P_numtype, int N_length, int N_stride BZ_TEMPLATE_DEFAULT(1) >
-// class TinyVector2IterConst;
+template<typename P_expr>
+class _bz_ArrayExpr;
 
-// template<typename P_numtype>
-// class Vector;
-
-// template<typename P_expr>
-// class _bz_VecExpr;
-
-// template<typename P_distribution>
-// class Random;
-
-// template<typename P_numtype>
-// class VectorPick;
-
-// template<typename T_numtype1, typename T_numtype2, int N_rows, int N_columns,
-//     int N_vecStride>
-// class _bz_matrixVectorProduct;
-
-
+template<int N0>
+class IndexPlaceholder;
 
 /*****************************************************************************
  * Declaration of class TinyVector2
@@ -90,10 +77,8 @@ public:
     typedef P_numtype                                    T_numtype;
     typedef TinyVector2<T_numtype,N_length>               T_vector;
     typedef FastTV2Iterator<T_numtype,N_length>         T_iterator;
-  //typedef TinyVector2IterConst<T_numtype,N_length,1>    T_constIterator;
     typedef T_numtype*                                   iterator;
     typedef const T_numtype*                             const_iterator;
-  //enum { numElements = N_length };
   typedef FastTV2CopyIterator<P_numtype, N_length> T_range_result;
 
     static const int 
@@ -232,10 +217,6 @@ public:
         data_[10] = x10;
     }
 
-    // // Constructor added by Peter Nordlund
-    // template<typename P_expr>
-    // inline TinyVector2(_bz_VecExpr<P_expr> expr);
-
   static int base() 
   { return 0; }
 
@@ -244,7 +225,6 @@ public:
 
 
     T_iterator      beginFast() const       { return T_iterator(*this);      }
-  //T_constIterator beginFast() const { return T_constIterator(*this); }
 
     iterator       begin()       { return data_; }
     const_iterator begin() const { return data_; }
@@ -263,6 +243,9 @@ public:
 
     const T_numtype * restrict dataFirst() const
     { return data_; }
+
+    const TinyVector<int, rank_>    shape() const
+    { return N_length; }
 
   static int                               lbound(int rank) 
   { return 0; }
@@ -298,36 +281,18 @@ public:
   static int           ubound() 
   { return length()-1; }
 
-    /////////////////////////////////////////////
-    // Library-internal member functions
-    // These are undocumented and may change or
-    // disappear in future releases.
-    /////////////////////////////////////////////
-
-    // unsigned _bz_suggestLength() const
-    // { return N_length; }
-
-    // bool _bz_hasFastAccess() const
-    // { return true; }
-
-    // T_numtype& restrict _bz_fastAccess(unsigned i)
-    // { return data_[i]; }
-
-    // T_numtype _bz_fastAccess(unsigned i) const
-    // { return data_[i]; }
-
      template<typename P_expr, typename P_updater>
      void _bz_assign(P_expr, P_updater);
 
-    // _bz_VecExpr<T_constIterator> _bz_asVecExpr() const
-    // { return _bz_VecExpr<T_constIterator>(beginFast()); }
-   
     T_numtype operator*() const
     { return *data_; }
 
     //////////////////////////////////////////////
     // Subscripting operators
     //////////////////////////////////////////////
+
+    T_vector& noConst() const
+    { return const_cast<T_vector&>(*this); }
 
     bool lengthCheck(unsigned i) const
     {
@@ -369,6 +334,10 @@ public:
         BZPRECONDITION(lengthCheck(i[0]));
         return data_[i[0]];
     }
+
+    template<int N0>
+    _bz_ArrayExpr<ArrayIndexMapping<FastTV2Iterator<T_numtype, N_length>, N0> >
+    operator()(IndexPlaceholder<N0>) const;
 
     T_numtype fastRead(sizeType i) const
     { return data_[i]; }
@@ -472,26 +441,14 @@ template<typename T>
 class TinyVector2<T,0> {
 };
 
-//  A tinyvector operand
 
 // template <typename T,int N>
 // struct asExpr<TinyVector2<T,N> > {
-//     typedef FastTV2Iterator<T,N> T_expr;
-//     static T_expr getExpr(const TinyVector2<T,N>& x) { return x.beginFast(); }
+//     typedef TinyVector2<T,N> T_expr;
+//     static T_expr getExpr(const TinyVector2<T,N>& x) { return x; }
 // };
 
-template <typename T,int N>
-struct asExpr<TinyVector2<T,N> > {
-    typedef TinyVector2<T,N> T_expr;
-    static T_expr getExpr(const TinyVector2<T,N>& x) { return x; }
-};
-
 BZ_NAMESPACE_END
-
-#include <blitz/tv2fastiter.h>  // Iterators
-#include <blitz/tv2ops.cc>
-#include <blitz/tinyvec2.cc>
-#include <blitz/tinyvec2io.cc>
 
 #endif // BZ_TINYVEC_H
 

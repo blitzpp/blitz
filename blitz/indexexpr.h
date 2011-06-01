@@ -73,7 +73,7 @@ public:
     static const int 
         numArrayOperands = 0, 
         numIndexPlaceholders = 1,
-        rank = N+1;
+        rank_ = N+1;
 
     // If you have a precondition failure on this routine, it means
     // you are trying to use stack iteration mode on an expression
@@ -97,10 +97,10 @@ public:
     int lbound(int)    const { return INT_MIN; }  // tiny(int());
     int ubound(int)    const { return INT_MAX; }  // huge(int()); 
 
-  RectDomain<rank> domain() const 
+  RectDomain<rank_> domain() const 
   { 
-    const TinyVector<int, rank> lb(lbound(0)), ub(ubound(0));
-    return RectDomain<rank>(lb,ub);
+    const TinyVector<int, rank_> lb(lbound(0)), ub(ubound(0));
+    return RectDomain<rank_>(lb,ub);
   }
 
     // See operator*() note
@@ -154,7 +154,7 @@ public:
   void _bz_offsetData(sizeType i) { BZPRECONDITION(0); }
 
   // Unclear how to define this, and stencils don't work anyway
-  T_range_result operator()(RectDomain<rank> d) const
+  T_range_result operator()(RectDomain<rank_> d) const
   { BZPRECONDITION(0); }
 
     void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat&) const {

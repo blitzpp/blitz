@@ -52,6 +52,8 @@
 #endif
 
 #include <blitz/array/fastiter.h>
+#include <blitz/indexmap-forward.h>
+#include <blitz/tinyvec2.h>
 
 BZ_NAMESPACE(blitz)
 
@@ -79,8 +81,16 @@ struct _bz_doArrayIndexMapping {
 template<>
 struct _bz_doArrayIndexMapping<1> {
   static const int rank=1;
-    template<typename T_numtype, int N_inputRank>
+  template<typename T_numtype, int N_inputRank>
     static T_numtype map(const Array<T_numtype, rank>& array,
+        const TinyVector<int,N_inputRank>& index, int i0, int, int, int, int, 
+        int, int, int, int, int, int)
+    {
+        return array(index[i0]);
+    }
+
+  template<typename T_numtype, int N_length, int N_inputRank>
+    static T_numtype map(const TinyVector2<T_numtype, N_length>& array,
         const TinyVector<int,N_inputRank>& index, int i0, int, int, int, int, 
         int, int, int, int, int, int)
     {
@@ -333,9 +343,10 @@ struct _bz_doArrayIndexMapping<11> {
 };
 
 
-template<typename P_expr, int N_map0, int N_map1=0, int N_map2=0,
-    int N_map3=0, int N_map4=0, int N_map5=0, int N_map6=0, int N_map7=0, 
-    int N_map8=0, int N_map9=0, int N_map10=0>
+// default arguments are defined in the fwd header
+template<typename P_expr, int N_map0, int N_map1, int N_map2,
+    int N_map3, int N_map4, int N_map5, int N_map6, int N_map7, 
+    int N_map8, int N_map9, int N_map10>
 class ArrayIndexMapping {
 public:
   typedef P_expr T_expr;
@@ -365,8 +376,8 @@ public:
     static const int 
         numArrayOperands = 1, 
         numIndexPlaceholders = 1,
-        rank = maxRank10 + 1,
-        exprRank = T_expr::rank;
+        rank_ = maxRank10 + 1,
+        exprRank = T_expr::rank_;
 
   /*
     ArrayIndexMapping(const Array<T_numtype, rank>& array)
@@ -486,13 +497,13 @@ public:
   }
 
   // defer calculation to lbound/ubound
-  RectDomain<rank> domain() const 
+  RectDomain<rank_> domain() const 
   { 
-    TinyVector<int, rank> lb, ub;
-    for(int r=0; r<rank; ++r) {
+    TinyVector<int, rank_> lb, ub;
+    for(int r=0; r<rank_; ++r) {
       lb[r]=lbound(r); ub[r]=ubound(r); 
     }
-    return RectDomain<rank>(lb,ub);
+    return RectDomain<rank_>(lb,ub);
   }
 
     // If you have a precondition failure on this routine, it means

@@ -31,9 +31,9 @@
 #ifndef BZ_ARRAYSLICE_H
 #define BZ_ARRAYSLICE_H
 
-#ifndef BZ_ARRAY_H
- #error <blitz/array/slice.h> must be included via <blitz/array.h>
-#endif
+// #ifndef BZ_ARRAY_H
+//  #error <blitz/array/slice.h> must be included via <blitz/array.h>
+// #endif
 
 BZ_NAMESPACE(blitz)
 

@@ -151,10 +151,10 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
     BZPRECHECK(expr.shapeCheck(dest.shape()),
         "Shape check failed." << endl << "Expression:");
 
-    BZPRECHECK((T_expr::rank == T_dest::rank) || 
+    BZPRECHECK((T_expr::rank_ == T_dest::rank_) || 
 	       (T_expr::numArrayOperands == 0), 
-	       "Assigned rank " << T_expr::rank << " expression to rank " 
-	       << T_dest::rank << " array.");
+	       "Assigned rank " << T_expr::rank_ << " expression to rank " 
+	       << T_dest::rank_ << " array.");
 
     /*
      * Check that the arrays are not empty (e.g. length 0 arrays)

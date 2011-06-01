@@ -61,16 +61,15 @@ public:
     static const int 
         numArrayOperands = 1, 
         numIndexPlaceholders = 0,
-        rank = 1;
+        rank_ = 1;
 
-    // NB: this ctor does NOT preserve stack and stride
-    // parameters.  This is for speed purposes.
-    FastTV2IteratorBase(const T_iterator& x)
+  FastTV2IteratorBase(const T_iterator& x)
         : data_(x.data_), array_(x.array_)
     { }
 
     void operator=(const T_iterator& x)
     {
+      BZPRECONDITION(0);
       // doesn't this copy the data in x.array_ and then make data_
       // point to x's array? doesn't seem right
         array_ = x.array_;
@@ -121,7 +120,7 @@ public:
       return N_length-1;
     }
     
-  //RectDomain<rank> domain() const { return array_.domain(); };
+  //RectDomain<rank_> domain() const { return array_.domain(); };
 
     T_numtype first_value() const { return *data_; }
 
@@ -132,8 +131,7 @@ public:
     { return data_[i * stride_]; }
 
     T_numtype fastRead(sizeType i) const
-    //{ return data_[i]; }
-    { return array_.data_[i]; }
+  { return array_.fastRead(i); }
 
     int suggestStride(int r) const
   { BZPRECONDITION(r==0); return stride_; }
@@ -169,6 +167,9 @@ public:
     const T_numtype * restrict data() const
     { return data_; }
 
+  const T_vector& array() const 
+  {return array_; }
+
   // const TinyVector2<T_numtype, N_length>& array() const
   // { return array_; }
 
@@ -203,37 +204,9 @@ public:
     return true;
   }
 
-//     void prettyPrint(BZ_STD_SCOPE(string) &str, 
-//         prettyPrintFormat& format) const
-//     {
-//         if (format.tersePrintingSelected())
-//             str += format.nextArrayOperandSymbol();
-//         else if (format.dumpArrayShapesMode())
-//         {
-// #ifdef BZ_HAVE_STD
-// 	    BZ_STD_SCOPE(ostringstream) ostr;
-// #else
-//             ostrstream ostr;
-// #endif
-//             ostr << array_.shape();
-//             str += ostr.str();
-//         }
-//         else {
-//             str += "Array<";
-//             str += BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_numtype);
-//             str += ",";
-
-//             char tmpBuf[10];
-//             sprintf(tmpBuf, "%d", N_length);
-
-//             str += tmpBuf;
-//             str += ">";
-//         }
-//     }
-
     template<typename T_shape>
     bool shapeCheck(const T_shape& s) const
-  { return areShapesConformable(s, N_length); }
+  { return areShapesConformable(s, TinyVector<int, rank_>(N_length)); }
 
   /*
     // Experimental
@@ -313,6 +286,34 @@ public:
     // 		   + offset2*array_.stride(dim2)];
     // }
 
+    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+        prettyPrintFormat& format) const
+    {
+        if (format.tersePrintingSelected())
+            str += format.nextArrayOperandSymbol();
+        else if (format.dumpArrayShapesMode())
+        {
+#ifdef BZ_HAVE_STD
+	    BZ_STD_SCOPE(ostringstream) ostr;
+#else
+            ostrstream ostr;
+#endif
+            ostr << array_.shape();
+            str += ostr.str();
+        }
+        else {
+            str += "TinyVector2<";
+            str += BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_numtype);
+            str += ",";
+
+            char tmpBuf[10];
+            sprintf(tmpBuf, "%d", N_length);
+
+            str += tmpBuf;
+            str += ">";
+        }
+    }
+
   // vectors can't be sliced
   template<typename T1, typename T2 = nilArraySection, 
 	   class T3 = nilArraySection, typename T4 = nilArraySection, 
@@ -328,7 +329,7 @@ public:
 protected:
   const T_numtype * restrict           data_;
   P_arraytype&                          array_;
-  ConstPointerStack<T_numtype,rank>  stack_;
+  ConstPointerStack<T_numtype,rank_>  stack_;
   static const diffType                             stride_=1;
 };
 
@@ -349,7 +350,7 @@ public:
   typedef typename T_base::T_ctorArg2 T_ctorArg2;
   typedef typename T_base::T_range_result T_range_result;
   
-  using T_base::rank;
+  using T_base::rank_;
   using T_base::numArrayOperands;
   using T_base::numIndexPlaceholders;
 
@@ -404,7 +405,7 @@ public:
   typedef typename T_base::T_ctorArg2 T_ctorArg2;
   typedef typename T_base::T_range_result T_range_result;
 
-  using T_base::rank;
+  using T_base::rank_;
   using T_base::numArrayOperands;
   using T_base::numIndexPlaceholders;
 

@@ -37,14 +37,14 @@
  #include <strstream.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+#include <blitz/array/slice.h>
+#include <blitz/constpointerstack.h>
 
 #ifndef BZ_ARRAY_H
  #error <blitz/array/iter.h> must be included via <blitz/array.h>
 #endif
 
-#include <blitz/array/slice.h>
-#include <blitz/constpointerstack.h>
+BZ_NAMESPACE(blitz)
 
 // Wrapper to turn expressions with FAIs to FACIs so they can be
 // returned from a function.
@@ -52,28 +52,6 @@ template<typename T>
 typename T::T_range_result safeToReturn(const T& expr) {
   return expr(expr.domain());
 }
-
-
-// // helper class ConstPointerStack
-// template<typename P_numtype, int N_rank>
-// class ConstPointerStack {
-// public:
-//     typedef P_numtype                T_numtype;
-
-//     void operator=(const ConstPointerStack<P_numtype,N_rank>& rhs) 
-//     {
-//         for (int i=0; i<N_rank; ++i)
-//             stack_[i] = rhs.stack_[i];
-//     }
-
-//     const T_numtype*& operator[](int position)
-//     {
-//         return stack_[position];
-//     }
-      
-// private:
-//     const T_numtype *                stack_[N_rank];
-// };
 
 
 // forward declaration
@@ -357,7 +335,7 @@ public:
   class SliceInfo {
   public:    
     typedef FastArrayCopyIterator<T_numtype, blitz::SliceInfo<T_numtype, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::rank> T_slice;
-};
+  };
 
 protected:
   const T_numtype * restrict           data_;
@@ -383,7 +361,7 @@ public:
   typedef typename T_base::T_ctorArg2 T_ctorArg2;
   typedef typename T_base::T_range_result T_range_result;
   
-  using T_base::rank;
+  using T_base::rank_;
   using T_base::numArrayOperands;
   using T_base::numIndexPlaceholders;
 
@@ -438,7 +416,7 @@ public:
   typedef typename T_base::T_ctorArg2 T_ctorArg2;
   typedef typename T_base::T_range_result T_range_result;
 
-  using T_base::rank;
+  using T_base::rank_;
   using T_base::numArrayOperands;
   using T_base::numIndexPlaceholders;
 
