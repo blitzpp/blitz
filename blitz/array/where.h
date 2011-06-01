@@ -35,6 +35,8 @@
  #error <blitz/array/where.h> must be included via <blitz/array/expr.h>
 #endif
 
+#include <blitz/meta/metaprog.h>
+
 BZ_NAMESPACE(blitz)
 
 template<typename P_expr1, typename P_expr2, typename P_expr3>

@@ -1,6 +1,6 @@
 // -*- C++ -*-
 /***************************************************************************
- * blitz/tinyvec.h      Declaration of the TinyVector2<T, N> class
+ * blitz/tinyvec.h      Declaration of the TinyVector<T, N> class
  *
  * $Id$
  *
@@ -29,15 +29,17 @@
  *
  ***************************************************************************/
 
-#ifndef BZ_TINYVEC2_H
-#define BZ_TINYVEC2_H
+#ifndef BZ_TINYVEC_H
+#define BZ_TINYVEC_H
 
 #include <blitz/blitz.h>
 #include <blitz/listinit.h>
 #include <blitz/etbase.h>
-#include <blitz/tinyvec.h>
+//#include <blitz/tinyvec.h>
 #include <blitz/array/slice.h>
 #include <blitz/indexmap-forward.h>
+#include <blitz/meta/vecassign.h>
+#include <blitz/update.h>
 
 
 #ifdef BZ_HAVE_CSTRING
@@ -62,11 +64,11 @@ template<int N0>
 class IndexPlaceholder;
 
 /*****************************************************************************
- * Declaration of class TinyVector2
+ * Declaration of class TinyVector
  */
 
 template<typename P_numtype, int N_length>
-class TinyVector2 : public ETBase<TinyVector2<P_numtype, N_length> >
+class TinyVector : public ETBase<TinyVector<P_numtype, N_length> >
 {
 public:
 
@@ -75,7 +77,7 @@ public:
     //////////////////////////////////////////////
 
     typedef P_numtype                                    T_numtype;
-    typedef TinyVector2<T_numtype,N_length>               T_vector;
+    typedef TinyVector<T_numtype,N_length>               T_vector;
     typedef FastTV2Iterator<T_numtype,N_length>         T_iterator;
     typedef T_numtype*                                   iterator;
     typedef const T_numtype*                             const_iterator;
@@ -86,34 +88,34 @@ public:
         numIndexPlaceholders = 0,
         rank_ = 1;
 
-    TinyVector2()  { }
-    ~TinyVector2() { }
+    TinyVector()  { }
+    ~TinyVector() { }
 
-    inline TinyVector2(const TinyVector2<T_numtype,N_length>& x);
+    inline TinyVector(const TinyVector<T_numtype,N_length>& x);
 
     template <typename T_numtype2>
-    inline TinyVector2(const TinyVector2<T_numtype2,N_length>& x);
+    inline TinyVector(const TinyVector<T_numtype2,N_length>& x);
 
-    inline TinyVector2(const T_numtype initValue);
+    inline TinyVector(const T_numtype initValue);
 
-    inline TinyVector2(const T_numtype x[]) {
+    inline TinyVector(const T_numtype x[]) {
         memcpy(data_,x,N_length*sizeof(T_numtype));
     }
 
-    TinyVector2(T_numtype x0, T_numtype x1)
+    TinyVector(T_numtype x0, T_numtype x1)
     {
         data_[0] = x0;
         data_[1] = x1;
     }
 
-    TinyVector2(T_numtype x0, T_numtype x1, T_numtype x2)
+    TinyVector(T_numtype x0, T_numtype x1, T_numtype x2)
     {
         data_[0] = x0;
         data_[1] = x1;
         data_[2] = x2;
     }
 
-    TinyVector2(T_numtype x0, T_numtype x1, T_numtype x2,
+    TinyVector(T_numtype x0, T_numtype x1, T_numtype x2,
         T_numtype x3)
     {
         data_[0] = x0;
@@ -122,7 +124,7 @@ public:
         data_[3] = x3;
     }
 
-    TinyVector2(T_numtype x0, T_numtype x1, T_numtype x2,
+    TinyVector(T_numtype x0, T_numtype x1, T_numtype x2,
         T_numtype x3, T_numtype x4)
     {
         data_[0] = x0;
@@ -132,7 +134,7 @@ public:
         data_[4] = x4;
     }
 
-    TinyVector2(T_numtype x0, T_numtype x1, T_numtype x2,
+    TinyVector(T_numtype x0, T_numtype x1, T_numtype x2,
         T_numtype x3, T_numtype x4, T_numtype x5)
     {
         data_[0] = x0;
@@ -143,7 +145,7 @@ public:
         data_[5] = x5;
     }
 
-    TinyVector2(T_numtype x0, T_numtype x1, T_numtype x2,
+    TinyVector(T_numtype x0, T_numtype x1, T_numtype x2,
         T_numtype x3, T_numtype x4, T_numtype x5, T_numtype x6)
     {
         data_[0] = x0;
@@ -155,7 +157,7 @@ public:
         data_[6] = x6;
     }
 
-    TinyVector2(T_numtype x0, T_numtype x1, T_numtype x2,
+    TinyVector(T_numtype x0, T_numtype x1, T_numtype x2,
         T_numtype x3, T_numtype x4, T_numtype x5, T_numtype x6,
         T_numtype x7)
     {
@@ -169,7 +171,7 @@ public:
         data_[7] = x7;
     }
 
-    TinyVector2(T_numtype x0, T_numtype x1, T_numtype x2,
+    TinyVector(T_numtype x0, T_numtype x1, T_numtype x2,
         T_numtype x3, T_numtype x4, T_numtype x5, T_numtype x6,
         T_numtype x7, T_numtype x8)
     {
@@ -184,7 +186,7 @@ public:
         data_[8] = x8;
     }
 
-    TinyVector2(T_numtype x0, T_numtype x1, T_numtype x2,
+    TinyVector(T_numtype x0, T_numtype x1, T_numtype x2,
         T_numtype x3, T_numtype x4, T_numtype x5, T_numtype x6,
         T_numtype x7, T_numtype x8, T_numtype x9)
     {
@@ -200,7 +202,7 @@ public:
         data_[9] = x9;
     }
 
-    TinyVector2(T_numtype x0, T_numtype x1, T_numtype x2,
+    TinyVector(T_numtype x0, T_numtype x1, T_numtype x2,
         T_numtype x3, T_numtype x4, T_numtype x5, T_numtype x6,
         T_numtype x7, T_numtype x8, T_numtype x9, T_numtype x10)
     {
@@ -297,7 +299,7 @@ public:
     bool lengthCheck(unsigned i) const
     {
         BZPRECHECK(i < N_length, 
-            "TinyVector2<" << BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_numtype) 
+            "TinyVector<" << BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_numtype) 
             << "," << N_length << "> index out of bounds: " << i);
         return true;
     }
@@ -314,6 +316,15 @@ public:
         return data_[i];
     }
 
+  T_numtype operator()(TinyVector<int,1> i) const
+    {
+        BZPRECONDITION(lengthCheck(i[0]));
+        return data_[i[0]];
+    }
+
+    template<int N0>
+    _bz_ArrayExpr<ArrayIndexMapping<FastTV2Iterator<T_numtype, N_length>, N0> >
+    operator()(IndexPlaceholder<N0>) const;
     const T_numtype& operator[](unsigned i) const
     {
         BZPRECONDITION(lengthCheck(i));
@@ -325,19 +336,6 @@ public:
         BZPRECONDITION(lengthCheck(i));
         return data_[i];
     }
-
-    T_numtype operator()(int i) const
-    { return data_[i]; }
-
-  T_numtype operator()(TinyVector<int,1> i) const
-    {
-        BZPRECONDITION(lengthCheck(i[0]));
-        return data_[i[0]];
-    }
-
-    template<int N0>
-    _bz_ArrayExpr<ArrayIndexMapping<FastTV2Iterator<T_numtype, N_length>, N0> >
-    operator()(IndexPlaceholder<N0>) const;
 
     T_numtype fastRead(sizeType i) const
     { return data_[i]; }
@@ -399,9 +397,12 @@ public:
 
   T_vector& initialize(T_numtype);
 
+  T_vector& operator=(const TinyVector<T_numtype,N_length>& rhs) {
+        _bz_meta_vecAssign<N_length, 0>::
+	  assign(data_, rhs.data_, _bz_update<T_numtype,T_numtype>()); }
+
     template<typename T_expr>
     T_vector& operator=(const ETBase<T_expr>&);
-    T_vector& operator=(const TinyVector2<T_numtype,N_length>&);
 
     template<typename T> T_vector& operator+=(const T&);
     template<typename T> T_vector& operator-=(const T&);
@@ -438,15 +439,9 @@ private:
 // peculiar errors, perhaps this will fix.
 
 template<typename T>
-class TinyVector2<T,0> {
+class TinyVector<T,0> {
 };
 
-
-// template <typename T,int N>
-// struct asExpr<TinyVector2<T,N> > {
-//     typedef TinyVector2<T,N> T_expr;
-//     static T_expr getExpr(const TinyVector2<T,N>& x) { return x; }
-// };
 
 BZ_NAMESPACE_END
 

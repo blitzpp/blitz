@@ -35,6 +35,8 @@
 //  #error <blitz/array/slice.h> must be included via <blitz/array.h>
 // #endif
 
+#include <blitz/range.h>
+
 BZ_NAMESPACE(blitz)
 
 // Forward declarations

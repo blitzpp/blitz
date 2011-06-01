@@ -31,14 +31,19 @@
 #ifndef BZ_ARRAYASEXPR_H
 #define BZ_ARRAYASEXPR_H
 
-#ifndef BZ_ARRAY_H
- #error <blitz/array/asexpr.h> must be included via <blitz/array.h>
-#endif
+// #ifndef BZ_ARRAY_H
+//  #error <blitz/array/asexpr.h> must be included via <blitz/array.h>
+// #endif
+
+#include <blitz/array/expr.h>
 
 BZ_NAMESPACE(blitz)
 
 // The traits class asExpr converts arbitrary things to
 // expression templatable operands.
+
+// specific classes (Array, TinyVector, etc.) define a specialization
+// of this class for their purpose
 
 //  Default to scalar.
 
@@ -54,14 +59,6 @@ template <typename T>
 struct asExpr<_bz_ArrayExpr<T> > {
     typedef _bz_ArrayExpr<T> T_expr;
     static const T_expr& getExpr(const T_expr& x) { return x; }
-};
-
-//  An array operand
-
-template <typename T,int N>
-struct asExpr<Array<T,N> > {
-    typedef FastArrayIterator<T,N> T_expr;
-    static T_expr getExpr(const Array<T,N>& x) { return x.beginFast(); }
 };
 
 //  Index placeholder

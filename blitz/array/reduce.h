@@ -38,6 +38,7 @@
 #endif
 
 #include <blitz/reduce.h>
+#include <blitz/meta/vecassign.h>
 
 BZ_NAMESPACE(blitz)
 
@@ -87,7 +88,7 @@ public:
     static const int 
         numArrayOperands = T_expr::numArrayOperands,
         numIndexPlaceholders = T_expr::numIndexPlaceholders + 1,
-        rank = T_expr::rank - 1;
+        rank_ = T_expr::rank - 1;
 
     _bz_ArrayExprReduce(const _bz_ArrayExprReduce& reduce)
         : reduce_(reduce.reduce_), iter_(reduce.iter_), ordering_(reduce.ordering_) { }
@@ -106,7 +107,7 @@ public:
     int ordering(const int r)  const { return ordering_[r];       }
     int lbound(const int r)    const { return iter_.lbound(r);    }
     int ubound(const int r)    const { return iter_.ubound(r);    }
-    RectDomain<rank> domain() const { return iter_.domain(); }
+    RectDomain<rank_> domain() const { return iter_.domain(); }
 
     template<int N_destRank>
     T_numtype operator()(const TinyVector<int, N_destRank>& destIndex) const
@@ -177,7 +178,7 @@ public:
     void _bz_offsetData(sizeType i) { BZPRECONDITION(0); }
 
   // Unclear how to define this, and stencils don't work anyway
-  T_range_result operator()(RectDomain<rank> d) const
+  T_range_result operator()(RectDomain<rank_> d) const
   { BZPRECONDITION(0); }
 
     void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format) const
@@ -224,13 +225,13 @@ private:
 // method for properly initializing the ordering values
     void computeOrdering()
     {
-        TinyVector<bool,rank> in_ordering;
+        TinyVector<bool,rank_> in_ordering;
         in_ordering = false;
 
         int j = 0;
-        for (int i=0; i<rank; ++i) {
+        for (int i=0; i<rank_; ++i) {
             const int orderingj = iter_.ordering(i);
-            if (orderingj != tiny(int()) && orderingj < rank && !in_ordering(orderingj)) {
+            if (orderingj != tiny(int()) && orderingj < rank_ && !in_ordering(orderingj)) {
                 // unique value in ordering array
                 in_ordering(orderingj) = true;
                 ordering_(j++) = orderingj;
@@ -240,7 +241,7 @@ private:
         // It is possible that ordering is not a permutation of 0,...,rank-1.
         // In that case j will be less than rank. We fill in ordering with
         // the unused values in decreasing order.
-        for (int i = rank; j < rank; ++j) {
+        for (int i = rank_; j < rank_; ++j) {
             while (in_ordering(--i)); // find an unused index
             ordering_(j) = i;
         }
@@ -248,7 +249,7 @@ private:
 
     T_reduction reduce_;
     T_expr iter_;
-    TinyVector<int,rank> ordering_;
+    TinyVector<int,rank_> ordering_;
 };
 
 #define BZ_DECL_ARRAY_PARTIAL_REDUCE(fn,reduction)                      \

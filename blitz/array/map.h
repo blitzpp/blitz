@@ -90,7 +90,7 @@ struct _bz_doArrayIndexMapping<1> {
     }
 
   template<typename T_numtype, int N_length, int N_inputRank>
-    static T_numtype map(const TinyVector2<T_numtype, N_length>& array,
+    static T_numtype map(const TinyVector<T_numtype, N_length>& array,
         const TinyVector<int,N_inputRank>& index, int i0, int, int, int, int, 
         int, int, int, int, int, int)
     {

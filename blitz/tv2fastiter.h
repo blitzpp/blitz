@@ -37,11 +37,12 @@
  #include <strstream.h>
 #endif
 
-BZ_NAMESPACE(blitz)
-
 #include <blitz/constpointerstack.h>
 #include <blitz/bzdebug.h>
 #include <blitz/shapecheck.h>
+#include <blitz/prettyprint.h>
+
+BZ_NAMESPACE(blitz)
 
 // forward declaration
 template<typename, int> class FastTV2Iterator;
@@ -52,7 +53,7 @@ template<typename P_numtype, int N_length, typename P_arraytype>
 class FastTV2IteratorBase {
 public:
     typedef P_numtype                T_numtype;
-    typedef TinyVector2<T_numtype, N_length> T_vector;
+    typedef TinyVector<T_numtype, N_length> T_vector;
   typedef FastTV2IteratorBase<P_numtype, N_length, P_arraytype> T_iterator;
     typedef const T_vector& T_ctorArg1;
     typedef int            T_ctorArg2;    // dummy
@@ -170,7 +171,7 @@ public:
   const T_vector& array() const 
   {return array_; }
 
-  // const TinyVector2<T_numtype, N_length>& array() const
+  // const TinyVector<T_numtype, N_length>& array() const
   // { return array_; }
 
     // void _bz_setData(const T_numtype* ptr)
@@ -302,7 +303,7 @@ public:
             str += ostr.str();
         }
         else {
-            str += "TinyVector2<";
+            str += "TinyVector<";
             str += BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_numtype);
             str += ",";
 
@@ -328,7 +329,7 @@ public:
 
 protected:
   const T_numtype * restrict           data_;
-  P_arraytype&                          array_;
+  P_arraytype                          array_;
   ConstPointerStack<T_numtype,rank_>  stack_;
   static const diffType                             stride_=1;
 };
@@ -338,11 +339,11 @@ template<typename P_numtype, int N_length> class FastTV2CopyIterator;
 
 template<typename P_numtype, int N_length>
 class FastTV2Iterator : 
-  public FastTV2IteratorBase<P_numtype, N_length, const TinyVector2<P_numtype, N_length>&> 
+  public FastTV2IteratorBase<P_numtype, N_length, const TinyVector<P_numtype, N_length>&> 
 {
 public:
   typedef FastTV2IteratorBase<P_numtype, N_length, 
-				const TinyVector2<P_numtype, N_length>&> T_base;
+				const TinyVector<P_numtype, N_length>&> T_base;
   typedef typename T_base::T_numtype T_numtype;
   typedef typename T_base::T_vector T_vector;
   typedef typename T_base::T_iterator T_iterator;
@@ -393,11 +394,11 @@ public:
    arrays that have gone out of scope, or to slice expressions. */
 template<typename P_numtype, int N_length>
 class FastTV2CopyIterator : 
-  public FastTV2IteratorBase<P_numtype, N_length, const TinyVector2<P_numtype, N_length> >
+  public FastTV2IteratorBase<P_numtype, N_length, const TinyVector<P_numtype, N_length> >
 {
 public:
   typedef FastTV2IteratorBase<P_numtype, N_length, 
-				const TinyVector2<P_numtype, N_length> > T_base;
+				const TinyVector<P_numtype, N_length> > T_base;
   typedef typename T_base::T_numtype T_numtype;
   typedef typename T_base::T_vector T_vector;
   typedef typename T_base::T_iterator T_iterator;

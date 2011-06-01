@@ -30,6 +30,8 @@
 #ifndef BZ_GLOBEVAL_CC
 #define BZ_GLOBEVAL_CC
 
+#include <blitz/ranks.h>
+
 BZ_NAMESPACE(blitz)
 
 /*

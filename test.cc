@@ -1,12 +1,13 @@
 #include <blitz/tinyvec2.h>
 #include <blitz/array.h>
 #include <blitz/tinyvec2.cc>
+#include <blitz/array/ops.h>
 
 using namespace blitz;
 
 int main(int, char**)
 {
-   TinyVector2<float,4> a,b,c;
+   TinyVector<float,4> a,b,c;
    a=1,2,3,4;
    b=2,3,4,5;
 
@@ -18,8 +19,10 @@ int main(int, char**)
    m=tensor::i+10*tensor::j;
    l=2*tensor::i;
 
+   c=a;
    c=a*b;
    cout << c << endl;
+
    d=a*b;
    cout << d << endl;
    d=a*e;
@@ -37,4 +40,5 @@ int main(int, char**)
    cout << a << endl;
    m=a(tensor::j);
    cout << m << endl;
+
 }

@@ -31,14 +31,15 @@
 #ifndef BZ_ARRAYEXPR_H
 #define BZ_ARRAYEXPR_H
 
-#ifndef BZ_ARRAY_H
- #error <blitz/array/expr.h> must be included via <blitz/array.h>
-#endif
+//#ifndef BZ_ARRAY_H
+// #error <blitz/array/expr.h> must be included via <blitz/array.h>
+//#endif
 
 #include <blitz/ops.h>
 #include <blitz/prettyprint.h>
 #include <blitz/shapecheck.h>
 #include <blitz/numinquire.h>
+#include <blitz/array/domain.h>
 
 /*
  * The array expression templates iterator interface is followed by
@@ -798,7 +799,7 @@ public:
   // defer calculation to lbound/ubound
   RectDomain<rank_> domain() const 
   { 
-    TinyVector<int, rank> lb, ub;
+    TinyVector<int, rank_> lb, ub;
     for(int r=0; r<rank_; ++r) {
       lb[r]=lbound(r); ub[r]=ubound(r); 
     }
@@ -1546,7 +1547,7 @@ public:
   RectDomain<10> domain() const 
   { 
     TinyVector<int, 10> lb(lbound(0)), ub(ubound(0));
-    return RectDomain<rank>(lb,ub);
+    return RectDomain<10>(lb,ub);
   }
 
 

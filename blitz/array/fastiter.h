@@ -39,6 +39,7 @@
 
 #include <blitz/array/slice.h>
 #include <blitz/constpointerstack.h>
+#include <blitz/array/asexpr.h>
 
 #ifndef BZ_ARRAY_H
  #error <blitz/array/iter.h> must be included via <blitz/array.h>
@@ -454,6 +455,12 @@ public:
   }
 };
 
+//  Define specialization of asExpr for array operands
+template <typename T,int N>
+struct asExpr<Array<T,N> > {
+    typedef FastArrayIterator<T,N> T_expr;
+    static T_expr getExpr(const Array<T,N>& x) { return x.beginFast(); }
+};
 
 BZ_NAMESPACE_END
 

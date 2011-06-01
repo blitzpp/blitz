@@ -45,7 +45,7 @@ BZ_NAMESPACE(blitz)
 // Also, the corresponding operator>> is updated. 
 
 template<typename P_numtype, int N_length>
-ostream& operator<<(ostream& os, const TinyVector2<P_numtype, N_length>& x)
+ostream& operator<<(ostream& os, const TinyVector<P_numtype, N_length>& x)
 {
     os << "(" << x[0];
     for (int i=1; i < N_length; ++i)
@@ -59,26 +59,26 @@ ostream& operator<<(ostream& os, const TinyVector2<P_numtype, N_length>& x)
 // Input of tinyvec contribute by Adam Levar <adaml@mcneilhouse.com>
 // and updated by Sergei Mingaleev <mingaleev@gmail.com>
 template <typename T_numtype, int N_length>
-istream& operator>>(istream& is, TinyVector2<T_numtype, N_length>& x)
+istream& operator>>(istream& is, TinyVector<T_numtype, N_length>& x)
 {
     char sep;
              
     is >> sep;
-    BZPRECHECK(sep == '(', "Format error while scanning input TinyVector2"
-        << endl << " (expected '(' opening TinyVector2)");
+    BZPRECHECK(sep == '(', "Format error while scanning input TinyVector"
+        << endl << " (expected '(' opening TinyVector)");
 
     is >> x(0);
     for (int i = 1; i < N_length; ++i)
     {
         is >> sep;
-        BZPRECHECK(sep == ',', "Format error while scanning input TinyVector2"
-             << endl << " (expected ',' between TinyVector2 components)");
-        BZPRECHECK(!is.bad(), "Premature end of input while scanning TinyVector2");
+        BZPRECHECK(sep == ',', "Format error while scanning input TinyVector"
+             << endl << " (expected ',' between TinyVector components)");
+        BZPRECHECK(!is.bad(), "Premature end of input while scanning TinyVector");
         is >> x(i);
     }
     is >> sep;
-    BZPRECHECK(sep == ')', "Format error while scanning input TinyVector2"
-       << endl << " (expected ')' closing TinyVector2)");
+    BZPRECHECK(sep == ')', "Format error while scanning input TinyVector"
+       << endl << " (expected ')' closing TinyVector)");
     
     return is;
 }

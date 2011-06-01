@@ -39,31 +39,31 @@
 BZ_NAMESPACE(blitz)
 
 template<typename P_numtype, int N_length>
-inline TinyVector2<P_numtype, N_length>::TinyVector2(const T_numtype initValue) {
+inline TinyVector<P_numtype, N_length>::TinyVector(const T_numtype initValue) {
     for (int i=0; i < N_length; ++i)
         data_[i] = initValue;
 }
 
 template<typename P_numtype, int N_length>
-inline TinyVector2<P_numtype, N_length>::TinyVector2(const TinyVector2<T_numtype, N_length>& x) {
+inline TinyVector<P_numtype, N_length>::TinyVector(const TinyVector<T_numtype, N_length>& x) {
     for (int i=0; i < N_length; ++i)
         data_[i] = x.data_[i];
 }
 
 template<typename P_numtype, int N_length>
 template<typename P_numtype2>
-inline TinyVector2<P_numtype, N_length>::TinyVector2(const TinyVector2<P_numtype2, N_length>& x) {
+inline TinyVector<P_numtype, N_length>::TinyVector(const TinyVector<P_numtype2, N_length>& x) {
     for (int i=0; i < N_length; ++i)
         data_[i] = static_cast<P_numtype>(x[i]);
 }
 
 template<typename P_numtype, int N_length>
 template<typename P_expr, typename P_updater>
-inline void TinyVector2<P_numtype, N_length>::_bz_assign(P_expr expr, P_updater up) {
+inline void TinyVector<P_numtype, N_length>::_bz_assign(P_expr expr, P_updater up) {
     BZPRECHECK(expr.shapeCheck(N_length),
         "Shape check failed." << endl << "Expression:");
 
-    BZPRECHECK((P_expr::rank == N_rank) || (P_expr::numArrayOperands == 0), 
+    BZPRECHECK((P_expr::rank == rank_) || (P_expr::numArrayOperands == 0), 
         "Assigned rank " << P_expr::rank << " expression to TinyVector");
 
     const bool useUnitStride = expr.isUnitStride(0);
@@ -79,7 +79,7 @@ inline void TinyVector2<P_numtype, N_length>::_bz_assign(P_expr expr, P_updater 
 template<typename P_numtype, int N_length>
 template<int N0>
 _bz_ArrayExpr<ArrayIndexMapping<FastTV2Iterator<P_numtype, N_length>, N0> >
-TinyVector2<P_numtype, N_length>::operator()(IndexPlaceholder<N0>) const
+TinyVector<P_numtype, N_length>::operator()(IndexPlaceholder<N0>) const
 { 
         return _bz_ArrayExpr<ArrayIndexMapping<FastTV2Iterator<T_numtype, N_length>, N0> >
             (noConst());
@@ -89,9 +89,9 @@ TinyVector2<P_numtype, N_length>::operator()(IndexPlaceholder<N0>) const
 //  A tinyvector operand
 
 template <typename T,int N>
-struct asExpr<TinyVector2<T,N> > {
+struct asExpr<TinyVector<T,N> > {
     typedef FastTV2Iterator<T,N> T_expr;
-    static T_expr getExpr(const TinyVector2<T,N>& x) { return x.beginFast(); }
+    static T_expr getExpr(const TinyVector<T,N>& x) { return x.beginFast(); }
 };
 
 BZ_NAMESPACE_END

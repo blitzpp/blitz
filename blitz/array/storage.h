@@ -261,7 +261,7 @@ public:
     ColumnMajorArray()
         : GeneralArrayStorage<N_rank>(noInitializeFlag())
     {
-        ordering_ = Range(0, N_rank - 1);
+      ordering_ = tensor::i;//Range(0, N_rank - 1);
         ascendingFlag_ = true;
         base_ = 0;
     }

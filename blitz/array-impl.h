@@ -47,6 +47,7 @@
 #include <blitz/memblock.h>
 #include <blitz/range.h>
 #include <blitz/tinyvec.h>
+#include <blitz/tvecglobs.h>
 
 #ifdef BZ_ARRAY_SPACE_FILLING_TRAVERSAL
 #include <blitz/traversal.h>
@@ -2438,41 +2439,6 @@ protected:
     diffType zeroOffset_;
 };
 
-/*
- * Rank numbers start with zero, which may be confusing to users coming
- * from Fortran.  To make code more readable, the following constants
- * may help.  Example: instead of
- * 
- * int firstRankExtent = A.extent(0);
- *
- * One can write:
- *
- * int firstRankExtent = A.extent(firstRank);
- */
-
-const int firstRank    = 0;
-const int secondRank   = 1;
-const int thirdRank    = 2;
-const int fourthRank   = 3;
-const int fifthRank    = 4;
-const int sixthRank    = 5;
-const int seventhRank  = 6;
-const int eighthRank   = 7;
-const int ninthRank    = 8;
-const int tenthRank    = 9;
-const int eleventhRank = 10;
-
-const int firstDim    = 0;
-const int secondDim   = 1;
-const int thirdDim    = 2;
-const int fourthDim   = 3;
-const int fifthDim    = 4;
-const int sixthDim    = 5;
-const int seventhDim  = 6;
-const int eighthDim   = 7;
-const int ninthDim    = 8;
-const int tenthDim    = 9;
-const int eleventhDim = 10;
 
 /*
  * Global Functions
@@ -2529,7 +2495,6 @@ BZ_NAMESPACE_END
 #include <blitz/array/fastiter.h>   // Fast Array iterators (for et)
 #include <blitz/array/expr.h>       // Array expression objects
 #include <blitz/array/methods.cc>   // Member functions
-#include <blitz/array/eval.cc>      // Array expression evaluation
 #include <blitz/array/ops.cc>       // Assignment operators
 #include <blitz/array/io.cc>        // Output formatting
 #include <blitz/array/et.h>         // Expression templates
@@ -2542,6 +2507,6 @@ BZ_NAMESPACE_END
 #include <blitz/array/zip.h>        // Zipping multicomponent types
 #include <blitz/array/where.h>      // where(X,Y,Z)
 #include <blitz/array/indirect.h>   // Indirection
-#include <blitz/array/stencils.h>   // Stencil objects
+// needs tinymat #include <blitz/array/stencils.h>   // Stencil objects
 
 #endif // BZ_ARRAY_H

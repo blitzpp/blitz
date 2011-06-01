@@ -63,7 +63,7 @@ dot(_bz_VecExpr<T_expr1> a, const TinyVector<T_numtype2, N_length>& b)
 }
 
 template<typename T_numtype1, typename T_expr2, int N_length>
-inline BZ_PROMOTE(T_numtype1, _bz_typename T_expr2::T_numtype)
+inline BZ_PROMOTE(T_numtype1, _bz_typename T_expr2::T_numtqype)
 dot(const TinyVector<T_numtype1, N_length>& a, _bz_VecExpr<T_expr2> b)
 {
     return _bz_meta_vectorDot<N_length, 0>::f_ref_value(a,b);

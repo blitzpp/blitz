@@ -32,6 +32,7 @@
 
 #include <blitz/update.h>
 #include <blitz/array/expr.h>
+#include <blitz/globeval.cc>
 
 BZ_NAMESPACE(blitz)
 
@@ -40,15 +41,15 @@ BZ_NAMESPACE(blitz)
  */
 
 template<typename P_numtype, int N_length>
-TinyVector2<P_numtype, N_length>& TinyVector2<P_numtype,N_length>::initialize(T_numtype x)
+TinyVector<P_numtype, N_length>& TinyVector<P_numtype,N_length>::initialize(T_numtype x)
 {
     (*this) = _bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
     return *this;
 }
 
 template<typename P_numtype, int N_length> template<typename T_expr>
-inline TinyVector2<P_numtype,N_length>&
-TinyVector2<P_numtype,N_length>::operator=(const ETBase<T_expr>& expr)
+inline TinyVector<P_numtype,N_length>&
+TinyVector<P_numtype,N_length>::operator=(const ETBase<T_expr>& expr)
 {
   _bz_evaluate(*this, expr.unwrap(),
         _bz_update<T_numtype, _bz_typename T_expr::T_numtype>());
@@ -56,8 +57,8 @@ TinyVector2<P_numtype,N_length>::operator=(const ETBase<T_expr>& expr)
 }
 
 // template<typename P_numtype, int N_length>
-// inline TinyVector2<P_numtype, N_length>&
-// TinyVector2<P_numtype, N_length>::operator=(const TinyVector2<T_numtype,N_length>& x)
+// inline TinyVector<P_numtype, N_length>&
+// TinyVector<P_numtype, N_length>::operator=(const TinyVector<T_numtype,N_length>& x)
 // {
 //     (*this) = _bz_ArrayExpr<FastTV2Iterator<T_numtype, N_length> >
 //         (x.beginFast());
@@ -67,8 +68,8 @@ TinyVector2<P_numtype,N_length>::operator=(const ETBase<T_expr>& expr)
 #define BZ_TV2_UPDATE(op,name) \
 template<typename P_numtype, int N_length> \
 template<typename T> \
-inline TinyVector2<P_numtype,N_length>& \
-TinyVector2<P_numtype,N_length>::operator op(const T& expr) \
+inline TinyVector<P_numtype,N_length>& \
+TinyVector<P_numtype,N_length>::operator op(const T& expr) \
 { \
  _bz_evaluate(*this, _bz_typename asExpr<T>::T_expr(expr), \
       name<T_numtype, _bz_typename asExpr<T>::T_expr::T_numtype>()); \

@@ -32,6 +32,7 @@
 #define BZ_ARRAY_OPS_H
 
 #include <blitz/ops.h>
+#include <blitz/funcs.h>
 #include <blitz/array/newet-macros.h>
 
 BZ_NAMESPACE(blitz)
@@ -68,7 +69,8 @@ BZ_DECLARE_ARRAY_ET_BINARY(operator!=, NotEqual)
 BZ_DECLARE_ARRAY_ET_BINARY(operator&&, LogicalAnd)
 BZ_DECLARE_ARRAY_ET_BINARY(operator||, LogicalOr)
 
-
+// \todo are these for Arrays of TinyVectors? How do we distinguish these from element-wise operations?
+/*
 // Declare binary ops between Array and "scalar-like" TinyVector 
 BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator+,  Add)
 BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator-,  Subtract)
@@ -86,9 +88,9 @@ BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator==, Equal)
 BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator!=, NotEqual)
 BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator&&, LogicalAnd)
 BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator||, LogicalOr)
-BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC((min), _bz_Min)
-BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC((max), _bz_Max)
-
+BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC((min), Min)
+BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC((max), Max)
+*/
 
 #define BZ_DECLARE_ARRAY_ET_SCALAR_OPS(sca)                            \
 BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator+,  Add, sca)                \
@@ -107,8 +109,8 @@ BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator==, Equal, sca)              \
 BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator!=, NotEqual, sca)           \
 BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator&&, LogicalAnd, sca)         \
 BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator||, LogicalOr, sca)          \
-BZ_DECLARE_ARRAY_ET_BINARY_SCALAR((min), _bz_Min, sca)                 \
-BZ_DECLARE_ARRAY_ET_BINARY_SCALAR((max), _bz_Max, sca)
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR((min), Min, sca)		       \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR((max), Max, sca)
 
 BZ_DECLARE_ARRAY_ET_SCALAR_OPS(char)
 BZ_DECLARE_ARRAY_ET_SCALAR_OPS(unsigned char)

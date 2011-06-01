@@ -185,7 +185,32 @@ BZ_DEFINE_BINARY_OP_RET(NotEqual,!=,bool)
 BZ_DEFINE_BINARY_OP_RET(LogicalAnd,&&,bool)
 BZ_DEFINE_BINARY_OP_RET(LogicalOr,||,bool)
     
-    
+/* already defined in funcs
+// We define these explicitly since they don't fit a pattern
+template<typename P_numtype1, typename P_numtype2>
+struct Min {
+public:
+    typedef P_numtype1 T_numtype1;
+    typedef P_numtype2 T_numtype2;
+    typedef bool T_numtype;
+
+    static inline T_numtype apply(T_numtype1 x, T_numtype2 y)
+    { return (x < y ? x : y); }
+};
+
+template<typename P_numtype1, typename P_numtype2>
+class Max {
+public:
+    typedef P_numtype1 T_numtype1;
+    typedef P_numtype2 T_numtype2;
+    typedef bool T_numtype;
+
+    static inline T_numtype apply(T_numtype1 x, T_numtype2 y)
+    { return (x > y ? x : y); }
+};
+*/
+
+
 BZ_NAMESPACE_END
 
 #endif // BZ_OPS_H
