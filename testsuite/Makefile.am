@@ -11,22 +11,23 @@ AM_CXXFLAGS = @CXX_DEBUG_FLAGS@ -DBZ_DEBUG
 LDADD = -L$(top_builddir)/lib -lblitz
 
 EXTRA_PROGRAMS = 64bit Adnene-Ben-Abdallah-1 Adnene-Ben-Abdallah-2	\
-arrayresize chris-jeffery-1 chris-jeffery-2 chris-jeffery-3		\
-complex-test constarray contiguous copy ctors derrick-bass-1		\
-derrick-bass-3 exprctor expression-slicing extract free gary-huber-1	\
-initialize interlace iter Josef-Wagenhuber loop1 matthias-troyer-1	\
-matthias-troyer-2 mattias-lindstroem-1 minmax minsumpow module newet	\
-Olaf-Ronneberger-1 patrik-jonsson-1 peter-bienstman-1			\
-peter-bienstman-2 peter-bienstman-3 peter-bienstman-4			\
-peter-bienstman-5 peter-nordlund-1 peter-nordlund-2 peter-nordlund-3	\
-promote pthread qcd reduce reindex reverse safeToReturn shapecheck shape	\
-slice-iterators stencil-et storage stub theodore-papadopoulo-1 tinymat	\
-tinyvec transpose troyer-genilloud Ulisses-Mello-1 weakref wei-ku-1	\
-where zeek-1
+arrayresize arrayinitialize chris-jeffery-1 chris-jeffery-2		\
+chris-jeffery-3 complex-test constarray contiguous copy ctors		\
+derrick-bass-1 derrick-bass-3 exprctor expression-slicing extract free	\
+gary-huber-1 initialize interlace iter Josef-Wagenhuber loop1		\
+matthias-troyer-1 matthias-troyer-2 mattias-lindstroem-1 minmax		\
+minsumpow module newet Olaf-Ronneberger-1 patrik-jonsson-1		\
+peter-bienstman-1 peter-bienstman-2 peter-bienstman-3			\
+peter-bienstman-4 peter-bienstman-5 peter-nordlund-1 peter-nordlund-2	\
+peter-nordlund-3 promote pthread qcd reduce reindex reverse		\
+safeToReturn shapecheck shape slice-iterators stencil-et storage stub	\
+theodore-papadopoulo-1 tinymat tinyvec transpose troyer-genilloud tvinitialize	\
+Ulisses-Mello-1 weakref wei-ku-1 where zeek-1
 
 64bit_SOURCES = 64bit.cpp
 Adnene_Ben_Abdallah_1_SOURCES = Adnene-Ben-Abdallah-1.cpp
 Adnene_Ben_Abdallah_2_SOURCES = Adnene-Ben-Abdallah-2.cpp
+arrayinitialize_SOURCES = arrayinitialize.cpp
 arrayresize_SOURCES = arrayresize.cpp
 chris_jeffery_1_SOURCES = chris-jeffery-1.cpp
 chris_jeffery_2_SOURCES = chris-jeffery-2.cpp
@@ -83,6 +84,7 @@ tinymat_SOURCES = tinymat.cpp
 tinyvec_SOURCES = tinyvec.cpp
 transpose_SOURCES = transpose.cpp
 troyer_genilloud_SOURCES = troyer-genilloud.cpp
+tvinitialize_SOURCES = tvinitialize.cpp
 Ulisses_Mello_1_SOURCES = Ulisses-Mello-1.cpp
 weakref_SOURCES = weakref.cpp
 wei_ku_1_SOURCES = wei-ku-1.cpp

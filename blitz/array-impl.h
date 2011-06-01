@@ -2220,12 +2220,18 @@ public:
     // T_array& operator=(T_numtype);
 
 #ifdef BZ_NEW_EXPRESSION_TEMPLATES
-
+  
   // we need this because we can't use default assignment op so it
   // must be overridden
   T_array& operator=(const Array<T_numtype,N_rank>&);
 
-  template<typename T> T_array& operator=(const T&);
+  // we can't define a generic template for the assignment operator
+  // because it will cause the list initialization assignment above to
+  // not work when implict conversions to T_numtype are necessary.
+
+  //template<typename T> T_array& operator=(const T&);
+  template<typename T_expr> T_array& operator=(const ETBase<T_expr>&);
+
     template<typename T> T_array& operator+=(const T&);
     template<typename T> T_array& operator-=(const T&);
     template<typename T> T_array& operator*=(const T&);
@@ -2493,6 +2499,7 @@ BZ_NAMESPACE_END
 
 #include <blitz/array/iter.h>       // Array iterators
 #include <blitz/array/fastiter.h>   // Fast Array iterators (for et)
+#include <blitz/array/asexpr.h>       // ET type functions
 #include <blitz/array/expr.h>       // Array expression objects
 #include <blitz/array/methods.cc>   // Member functions
 #include <blitz/array/ops.cc>       // Assignment operators
@@ -2508,5 +2515,6 @@ BZ_NAMESPACE_END
 #include <blitz/array/where.h>      // where(X,Y,Z)
 #include <blitz/array/indirect.h>   // Indirection
 // needs tinymat #include <blitz/array/stencils.h>   // Stencil objects
+
 
 #endif // BZ_ARRAY_H

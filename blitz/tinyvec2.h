@@ -35,7 +35,6 @@
 #include <blitz/blitz.h>
 #include <blitz/listinit.h>
 #include <blitz/etbase.h>
-//#include <blitz/tinyvec.h>
 #include <blitz/array/slice.h>
 #include <blitz/indexmap-forward.h>
 #include <blitz/meta/vecassign.h>
@@ -442,9 +441,9 @@ template<typename T>
 class TinyVector<T,0> {
 };
 
-
 BZ_NAMESPACE_END
 
+#include <blitz/tv2fastiter.h>  // Iterators
 #include <blitz/tinyvec2.cc>
 
 #endif // BZ_TINYVEC_H

@@ -1,5 +1,5 @@
 #include "testsuite.h"
-#include <blitz/tinyvec-et.h>
+#include <blitz/array.h>
 
 using namespace blitz;
 

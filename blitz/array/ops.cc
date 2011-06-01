@@ -46,29 +46,33 @@ BZ_NAMESPACE(blitz)
 template<typename P_numtype, int N_rank>
 Array<P_numtype, N_rank>& Array<P_numtype,N_rank>::initialize(T_numtype x)
 {
-    (*this) = _bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
+  (*this) = _bz_typename asExpr<T_numtype>::T_expr(x); // should expand to constant
+  //_bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
     return *this;
 }
 
 #ifdef BZ_NEW_EXPRESSION_TEMPLATES
 
-// template<typename P_numtype, int N_rank> template<typename T_expr>
-// inline Array<P_numtype,N_rank>&
-// Array<P_numtype,N_rank>::operator=(const ETBase<T_expr>& expr)
-// {
-//   evaluate(asExpr<T_expr>::getExpr(expr.unwrap()), 
-//         _bz_update<T_numtype, _bz_typename T_expr::T_numtype>());
-//     return *this;
-// }
+// need to do operator= separately from the generic templates below so
+// that operator=(T_numtype) will be the best match for list
+// initializations.
+template<typename P_numtype, int N_rank> template<typename T_expr>
+inline Array<P_numtype,N_rank>&
+Array<P_numtype,N_rank>::operator=(const ETBase<T_expr>& expr)
+{
+  _bz_evaluate(*this, _bz_typename asExpr<T_expr>::T_expr(expr.unwrap()), 
+	       _bz_update<T_numtype, _bz_typename T_expr::T_numtype>());
+    return *this;
+}
 
 template<typename P_numtype, int N_rank>
 inline Array<P_numtype, N_rank>&
 Array<P_numtype, N_rank>::operator=(const Array<T_numtype,N_rank>& x)
 {
   typedef Array<T_numtype,N_rank> T;
-  _bz_evaluate(*this, _bz_typename asExpr<T>::T_expr(x),			\
-	     _bz_update<T_numtype, _bz_typename asExpr<T>::T_expr::T_numtype>()); \
-    return *this; \
+  _bz_evaluate(*this, _bz_typename asExpr<T>::T_expr(x),
+	     _bz_update<T_numtype, _bz_typename asExpr<T>::T_expr::T_numtype>());
+    return *this;
 }
 
 #define BZ_ARRAY_UPDATE(op,name) \
@@ -82,7 +86,6 @@ Array<P_numtype,N_rank>::operator op(const T& expr) \
     return *this; \
 }
 
-BZ_ARRAY_UPDATE(=, _bz_update)
 BZ_ARRAY_UPDATE(+=, _bz_plus_update)
 BZ_ARRAY_UPDATE(-=, _bz_minus_update)
 BZ_ARRAY_UPDATE(*=, _bz_multiply_update)

@@ -51,19 +51,10 @@ template<typename P_numtype, int N_length> template<typename T_expr>
 inline TinyVector<P_numtype,N_length>&
 TinyVector<P_numtype,N_length>::operator=(const ETBase<T_expr>& expr)
 {
-  _bz_evaluate(*this, expr.unwrap(),
+  _bz_evaluate(*this, _bz_typename asExpr<T_expr>::T_expr(expr.unwrap()), 
         _bz_update<T_numtype, _bz_typename T_expr::T_numtype>());
     return *this;
 }
-
-// template<typename P_numtype, int N_length>
-// inline TinyVector<P_numtype, N_length>&
-// TinyVector<P_numtype, N_length>::operator=(const TinyVector<T_numtype,N_length>& x)
-// {
-//     (*this) = _bz_ArrayExpr<FastTV2Iterator<T_numtype, N_length> >
-//         (x.beginFast());
-//     return *this;
-// }
 
 #define BZ_TV2_UPDATE(op,name) \
 template<typename P_numtype, int N_length> \

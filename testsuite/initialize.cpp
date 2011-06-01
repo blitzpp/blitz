@@ -1,5 +1,6 @@
 #include "testsuite.h"
 #include <blitz/vector.h>
+#include <blitz/array.h>
 
 BZ_USING_NAMESPACE(blitz)
 
@@ -42,6 +43,15 @@ int main()
     BZTEST(a(4) == 7);
     BZTEST(a(5) == 8);
 
+    Array<int,1> d(5);
+    d=1,-1,2,-2,0;
+    BZTEST(d(0) == 1);
+    BZTEST(d(1) == -1);
+    BZTEST(d(2) == 2);
+    BZTEST(d(3) == -2);
+    BZTEST(d(4) == 0);
+
+    
     return 0;
 }
 

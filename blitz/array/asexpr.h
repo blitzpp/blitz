@@ -36,6 +36,10 @@
 // #endif
 
 #include <blitz/array/expr.h>
+#include <blitz/array.h>
+#include <blitz/array/fastiter.h>
+#include <blitz/tinyvec2.h>
+#include <blitz/tv2fastiter.h>
 
 BZ_NAMESPACE(blitz)
 
@@ -49,7 +53,8 @@ BZ_NAMESPACE(blitz)
 
 template <typename T>
 struct asExpr {
-    typedef _bz_ArrayExprConstant<T> T_expr;
+  //typedef _bz_ArrayExprConstant<T> T_expr;
+  typedef _bz_ArrayExpr<_bz_ArrayExprConstant<T> > T_expr;
     static T_expr getExpr(const T& x) { return T_expr(x); }
 };
 
@@ -59,6 +64,20 @@ template <typename T>
 struct asExpr<_bz_ArrayExpr<T> > {
     typedef _bz_ArrayExpr<T> T_expr;
     static const T_expr& getExpr(const T_expr& x) { return x; }
+};
+
+//  Specialization of asExpr for array operands
+template <typename T,int N>
+struct asExpr<Array<T,N> > {
+    typedef FastArrayIterator<T,N> T_expr;
+    static T_expr getExpr(const Array<T,N>& x) { return x.beginFast(); }
+};
+
+//  Specialization of asExpr for tinyvector operands
+template <typename T,int N>
+struct asExpr<TinyVector<T,N> > {
+    typedef FastTV2Iterator<T,N> T_expr;
+    static T_expr getExpr(const TinyVector<T,N>& x) { return x.beginFast(); }
 };
 
 //  Index placeholder

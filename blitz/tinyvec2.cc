@@ -32,7 +32,6 @@
 #define BZ_TINYVEC2_CC
 
 #include <blitz/tv2assign.h>
-#include <blitz/tv2fastiter.h>  // Iterators
 #include <blitz/tv2ops.cc>
 #include <blitz/tinyvec2io.cc>
 
@@ -86,13 +85,6 @@ TinyVector<P_numtype, N_length>::operator()(IndexPlaceholder<N0>) const
 }
 
 
-//  A tinyvector operand
-
-template <typename T,int N>
-struct asExpr<TinyVector<T,N> > {
-    typedef FastTV2Iterator<T,N> T_expr;
-    static T_expr getExpr(const TinyVector<T,N>& x) { return x.beginFast(); }
-};
 
 BZ_NAMESPACE_END
 
