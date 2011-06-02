@@ -230,6 +230,9 @@ public:
     iterator       begin()       { return data_; }
     const_iterator begin() const { return data_; }
 
+  static int                               dimensions()
+    { return 1; }
+
     iterator       end()       { return data_ + N_length; }
     const_iterator end() const { return data_ + N_length; }
 
@@ -295,7 +298,7 @@ public:
     T_vector& noConst() const
     { return const_cast<T_vector&>(*this); }
 
-    bool lengthCheck(unsigned i) const
+  static bool lengthCheck(unsigned i) 
     {
         BZPRECHECK(i < N_length, 
             "TinyVector<" << BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_numtype) 
@@ -324,6 +327,7 @@ public:
     template<int N0>
     _bz_ArrayExpr<ArrayIndexMapping<FastTV2Iterator<T_numtype, N_length>, N0> >
     operator()(IndexPlaceholder<N0>) const;
+
     const T_numtype& operator[](unsigned i) const
     {
         BZPRECONDITION(lengthCheck(i));
@@ -338,44 +342,6 @@ public:
 
     T_numtype fastRead(sizeType i) const
     { return data_[i]; }
-
-    void push(int position)
-    {
-      BZPRECONDITION(0);
-    }
-  
-    void pop(int position)
-    { 
-      BZPRECONDITION(0);
-    }
-
-
-    void advance()
-    {
-      BZPRECONDITION(0);
-    }
-
-    void advance(int n)
-    {
-      BZPRECONDITION(0);
-    }
-
-    void loadStride(int r)
-    {
-      BZPRECONDITION(0);
-    }
-
-  bool isUnitStride(int r) const
-  { BZPRECONDITION(r==0); return true; }
-
-    void advanceUnitStride()
-    { BZPRECONDITION(0); }
-
-    int suggestStride(int r) const
-  { BZPRECONDITION(r==0); return 1; }
-
-    bool isStride(int r, diffType stride) const
-  { BZPRECONDITION(r==0); return stride==1; }
 
   bool canCollapse(int outerLoopRank, int innerLoopRank) const
   {
@@ -417,17 +383,17 @@ public:
     T_numtype* restrict getInitializationIterator()
     { return dataFirst(); }
 
-  // vectors can't be sliced
-  template<typename T1, typename T2 = nilArraySection, 
-	   class T3 = nilArraySection, typename T4 = nilArraySection, 
-	   class T5 = nilArraySection, typename T6 = nilArraySection, 
-	   class T7 = nilArraySection, typename T8 = nilArraySection, 
-	   class T9 = nilArraySection, typename T10 = nilArraySection, 
-	   class T11 = nilArraySection>
-  class SliceInfo {
-  public:    
-    typedef void T_slice;
-  };
+  // // vectors can't be sliced
+  // template<typename T1, typename T2 = nilArraySection, 
+  // 	   class T3 = nilArraySection, typename T4 = nilArraySection, 
+  // 	   class T5 = nilArraySection, typename T6 = nilArraySection, 
+  // 	   class T7 = nilArraySection, typename T8 = nilArraySection, 
+  // 	   class T9 = nilArraySection, typename T10 = nilArraySection, 
+  // 	   class T11 = nilArraySection>
+  // class SliceInfo {
+  // public:    
+  //   typedef void T_slice;
+  // };
 
 private:
     T_numtype data_[N_length];
@@ -445,6 +411,9 @@ BZ_NAMESPACE_END
 
 #include <blitz/tv2fastiter.h>  // Iterators
 #include <blitz/tinyvec2.cc>
+#include <blitz/tv2assign.h>
+#include <blitz/tv2ops.cc>
+#include <blitz/tinyvec2io.cc>
 
 #endif // BZ_TINYVEC_H
 

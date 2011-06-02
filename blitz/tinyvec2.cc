@@ -31,10 +31,6 @@
 #ifndef BZ_TINYVEC2_CC
 #define BZ_TINYVEC2_CC
 
-#include <blitz/tv2assign.h>
-#include <blitz/tv2ops.cc>
-#include <blitz/tinyvec2io.cc>
-
 BZ_NAMESPACE(blitz)
 
 template<typename P_numtype, int N_length>
@@ -54,24 +50,6 @@ template<typename P_numtype2>
 inline TinyVector<P_numtype, N_length>::TinyVector(const TinyVector<P_numtype2, N_length>& x) {
     for (int i=0; i < N_length; ++i)
         data_[i] = static_cast<P_numtype>(x[i]);
-}
-
-template<typename P_numtype, int N_length>
-template<typename P_expr, typename P_updater>
-inline void TinyVector<P_numtype, N_length>::_bz_assign(P_expr expr, P_updater up) {
-    BZPRECHECK(expr.shapeCheck(N_length),
-        "Shape check failed." << endl << "Expression:");
-
-    BZPRECHECK((P_expr::rank == rank_) || (P_expr::numArrayOperands == 0), 
-        "Assigned rank " << P_expr::rank << " expression to TinyVector");
-
-    const bool useUnitStride = expr.isUnitStride(0);
-
-    if (useUnitStride) {
-        _bz_meta_tv2Assign<N_length, 0>::fastAssign(*this, expr, up);
-    } else {
-        _bz_meta_tv2Assign<N_length, 0>::assign(*this, expr, up);
-    }
 }
 
 

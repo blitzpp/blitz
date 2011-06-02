@@ -30,9 +30,7 @@
 #ifndef BZ_TINYVEC2IO_CC
 #define BZ_TINYVEC2IO_CC
 
-#ifndef BZ_TINYVEC_H
 #include <blitz/tinyvec2.h>
-#endif
 
 BZ_NAMESPACE(blitz)
 
