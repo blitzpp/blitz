@@ -29,8 +29,8 @@
  *
  ***************************************************************************/
 
-#ifndef BZ_TINYMAT2_H
-#define BZ_TINYMAT2_H
+#ifndef BZ_TINYMAT_H
+#define BZ_TINYMAT_H
 
 #include <blitz/blitz.h>
 #include <blitz/tinyvec2.h>

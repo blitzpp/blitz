@@ -29,8 +29,13 @@ $(top_srcdir)/blitz/vecwhere.cc: genvecwhere.cpp
 $(top_srcdir)/blitz/vecbfn.cc: genvecbfn.cpp
 $(top_srcdir)/blitz/promote-old.h: genpromote.cpp
 
+$(top_srcdir)/blitz/array/stencil-classes.cc: genstencils.py
+	python $< $@
+
 generate-headers: $(top_srcdir)/blitz/array/bops.cc \
-$(top_srcdir)/blitz/array/uops.cc $(top_srcdir)/blitz/matbops.h \
+$(top_srcdir)/blitz/array/uops.cc \
+$(top_srcdir)/blitz/array/stencil-classes.cc \
+$(top_srcdir)/blitz/matbops.h \
 $(top_srcdir)/blitz/matuops.h $(top_srcdir)/blitz/mathfunc.h \
 $(top_srcdir)/blitz/vecuops.cc $(top_srcdir)/blitz/vecbops.cc \
 $(top_srcdir)/blitz/vecwhere.cc $(top_srcdir)/blitz/vecbfn.cc \

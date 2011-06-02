@@ -2514,7 +2514,7 @@ BZ_NAMESPACE_END
 #include <blitz/array/zip.h>        // Zipping multicomponent types
 #include <blitz/array/where.h>      // where(X,Y,Z)
 #include <blitz/array/indirect.h>   // Indirection
-// needs tinymat #include <blitz/array/stencils.h>   // Stencil objects
+#include <blitz/array/stencils.h>   // Stencil objects
 
 
 #endif // BZ_ARRAY_H

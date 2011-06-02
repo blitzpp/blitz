@@ -146,6 +146,12 @@ public:
     T_numtype operator*() const
     { return *data_; }
 
+  template<int N>
+  T_range_result operator()(const RectDomain<N>& d) const
+  {
+    return T_range_result(array_(d));
+  }
+
     T_numtype operator[](int i) const
     { return data_[i * stride_]; }
 
@@ -337,6 +343,14 @@ public:
     typedef FastArrayCopyIterator<T_numtype, blitz::SliceInfo<T_numtype, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::rank> T_slice;
   };
 
+  template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
+	   typename T7, typename T8, typename T9, typename T10, typename T11>
+  typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice
+  operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9, T10 r10, T11 r11) const
+  {
+    return typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice(array_(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11));
+  }
+
 protected:
   const T_numtype * restrict           data_;
   P_arraytype                          array_;
@@ -380,23 +394,6 @@ public:
   }
   
   using T_base::operator();
-
-  template<int N>
-  T_range_result operator()(const RectDomain<N>& d) const
-  {
-    return T_range_result(T_base::array_(d));
-  }
-
-  template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
-	   typename T7, typename T8, typename T9, typename T10, typename T11>
-  FastArrayCopyIterator<T_numtype, T_base::template SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice::rank>
-  operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9, T10 r10, T11 r11) const
-  {
-    typedef FastArrayCopyIterator<T_numtype, T_base::template SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice::rank> slice;
-
-    return slice(array_(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11));
-  }
-  
 };
 
 /* This version of the FastArrayIterator makes a COPY of the array
@@ -437,21 +434,6 @@ public:
   
   using T_base::operator();
 
-  template<int N>
-  T_range_result operator()(const RectDomain<N>& d) const
-  {
-    return T_range_result(T_base::array_(d));
-  }
-
-  template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
-	   typename T7, typename T8, typename T9, typename T10, typename T11>
-  FastArrayCopyIterator<T_numtype, T_base::template SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice::rank>
-  operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9, T10 r10, T11 r11) const
-  {
-    typedef FastArrayCopyIterator<T_numtype, T_base::template SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice::rank> slice;
-
-    return slice(array_(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11));
-  }
 };
 
 
