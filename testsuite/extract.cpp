@@ -42,7 +42,7 @@ BZ_DECLARE_ARRAY_ET_SCALAR_OPS(RGB24)
 int main()
 {
     Array<TinyVector<int,3>,2> A(8,8);
-    A = 0;
+    A = TinyVector<int,3>(0);
     Array<int,2> B = A(Range(2,5),Range(2,5)).extractComponent(int(),1,3);
     B = 1;
     Array<int,2> C = A.extractComponent(int(),2,3);

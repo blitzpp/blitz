@@ -968,40 +968,40 @@ inline _bz_typename T::T_numtype::T_numtype curl2D4n_stencilop(T& A) {
  ****************************************************************************/
 
 
-BZ_DECLARE_STENCIL_OPERATOR2(div_stencilop,vx,vy)
+BZ_DECLARE_STENCIL_OPERATOR2(div,vx,vy)
   return central12_stencilop(vx,firstDim) + central12_stencilop(vy,secondDim);
 BZ_END_STENCIL_OPERATOR
 
-BZ_DECLARE_STENCIL_OPERATOR2(divn_stencilop,vx,vy)
+BZ_DECLARE_STENCIL_OPERATOR2(divn,vx,vy)
   return (central12_stencilop(vx,firstDim) + central12_stencilop(vy,secondDim))
      * recip_2;
 BZ_END_STENCIL_OPERATOR
 
-BZ_DECLARE_STENCIL_OPERATOR2(div4_stencilop,vx,vy)
+BZ_DECLARE_STENCIL_OPERATOR2(div4,vx,vy)
   return central14_stencilop(vx,firstDim) + central14_stencilop(vy,secondDim);
 BZ_END_STENCIL_OPERATOR
 
-BZ_DECLARE_STENCIL_OPERATOR2(div4n_stencilop,vx,vy)
+BZ_DECLARE_STENCIL_OPERATOR2(div4n,vx,vy)
   return (central14_stencilop(vx,firstDim) + central14_stencilop(vy,secondDim))
     * recip_12;
 BZ_END_STENCIL_OPERATOR
 
-BZ_DECLARE_STENCIL_OPERATOR3(div_stencilop,vx,vy,vz)
+BZ_DECLARE_STENCIL_OPERATOR3(div,vx,vy,vz)
   return central12_stencilop(vx,firstDim) + central12_stencilop(vy,secondDim) 
     + central12_stencilop(vz,thirdDim);
 BZ_END_STENCIL_OPERATOR
 
-BZ_DECLARE_STENCIL_OPERATOR3(divn_stencilop,vx,vy,vz)
+BZ_DECLARE_STENCIL_OPERATOR3(divn,vx,vy,vz)
   return (central12_stencilop(vx,firstDim) + central12_stencilop(vy,secondDim) 
     + central12_stencilop(vz,thirdDim)) * recip_2;
 BZ_END_STENCIL_OPERATOR
 
-BZ_DECLARE_STENCIL_OPERATOR3(div4_stencilop,vx,vy,vz)
+BZ_DECLARE_STENCIL_OPERATOR3(div4,vx,vy,vz)
   return central14_stencilop(vx,firstDim) + central14_stencilop(vy,secondDim) 
     + central14_stencilop(vz,thirdDim);
 BZ_END_STENCIL_OPERATOR
 
-BZ_DECLARE_STENCIL_OPERATOR3(div4n_stencilop,vx,vy,vz)
+BZ_DECLARE_STENCIL_OPERATOR3(div4n,vx,vy,vz)
   return (central14_stencilop(vx,firstDim) + central14_stencilop(vy,secondDim)
     + central14_stencilop(vz,thirdDim)) * recip_12;
 BZ_END_STENCIL_OPERATOR

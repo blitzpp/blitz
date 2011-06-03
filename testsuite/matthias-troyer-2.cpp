@@ -4,7 +4,7 @@ BZ_USING_NAMESPACE(blitz)
 
 //declaration of the stencil kinEnergy
 BZ_DECLARE_STENCIL2(kinEnergy,A,B)
-B=Laplacian3D(A);
+B=Laplacian3D_stencilop(A);
 BZ_END_STENCIL_WITH_SHAPE(shape(-1,-1,-1),shape(+1,+1,+1))
 
 typedef Array<complex<double>,3> array3d;

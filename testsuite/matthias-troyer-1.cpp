@@ -5,7 +5,7 @@ BZ_USING_NAMESPACE(blitz)
 #if 0
 
 BZ_DECLARE_STENCIL2(kinEnergy,A,B)
-    B=Laplacian3D(A);
+    B=Laplacian3D_stencilop(A);
 BZ_END_STENCIL_WITH_SHAPE(shape(-1,-1,-1),shape(1,1,1))
 
 typedef complex<double> T_num;
@@ -35,7 +35,7 @@ cout << out_view;
 #endif
 
 BZ_DECLARE_STENCIL2(footprint,A,B)
-    B = Laplacian2D4(A);
+    B = Laplacian2D4_stencilop(A);
 BZ_END_STENCIL_WITH_SHAPE(shape(-2,-2),shape(+2,+2))
 
 int main()
