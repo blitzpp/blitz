@@ -3,29 +3,39 @@
 
 using namespace blitz;
 
+typedef TinyVector<int,3> tv3;
+
 int main()
 {
-    TinyVector<int,3> A, B;
+  tv3 A, B;
     A = 1, 2, 3;
     B = 0, 1, 2;
 
-    A += B*B;
-//  A = 1, 3, 7
+    BZTEST(A[0]==1);
+    BZTEST(A[1]==2);
+    BZTEST(A[2]==3);
+    BZTEST(B[0]==0);
+    BZTEST(B[1]==1);
+    BZTEST(B[2]==2);
 
-    cout << A << endl;
+    A += B*B;
+    BZTEST(all(A==tv3(1,3,7)));
+
+    //cout << A << endl;
 
     A *= 10;
-//  A = 10, 30, 70
+    BZTEST(all(A==tv3(10,30,70)));
 
-    cout << A << endl;
+    //cout << A << endl;
 
-    TinyVector<int,3>::iterator it=B.begin(), end=B.end();
+    tv3::iterator it=B.begin(), end=B.end();
     cout << "(" << *it;
     for (it++; it != end; ++it) 
         cout << "," << *it;
     cout << ")" << endl;
 
 // test tinyvector dot(), product(), and sum() functions
+
     int dotAB = dot(A,B); 
     BZTEST(dotAB==170);
     int dotAB2 = dot(A,B+B);
@@ -42,5 +52,9 @@ int main()
     BZTEST(sum1==110);
     int sum2 = sum(A-B);
     BZTEST(sum2==sum1-sum(B));
+
+    // (cross product is tested in levicivita.cpp)
+
+    return 0;
 }
 

@@ -42,6 +42,7 @@
 #include <blitz/tv2fastiter.h>
 #include <blitz/tinymat2.h>
 #include <blitz/tm2fastiter.h>
+#include <blitz/levicivita.h>
 
 BZ_NAMESPACE(blitz)
 
@@ -93,6 +94,14 @@ struct asExpr<TinyMatrix<T,Nr, Nc> > {
 template <int N>
 struct asExpr<IndexPlaceholder<N> > {
     typedef IndexPlaceholder<N> T_expr;
+    static T_expr getExpr(T_expr x) { return x; }
+};
+
+//  the levi-civita symbol
+
+template <>
+struct asExpr<LeviCivita> {
+  typedef _bz_ArrayExpr<LeviCivita> T_expr;
     static T_expr getExpr(T_expr x) { return x; }
 };
 

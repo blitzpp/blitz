@@ -310,8 +310,7 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
   #ifndef BZ_ARRAY_STACK_TRAVERSAL_UNROLL
 #pragma ivdep
 	     for (int i=0; i < ubound; ++i)
-	       //T_update::update(data[i], expr.fastRead(i));
-	       data[i]=expr.fastRead(i);
+	       T_update::update(data[i], expr.fastRead(i));
   #else
 	     diffType n1 = ubound & 3;
 	     diffType i = 0;

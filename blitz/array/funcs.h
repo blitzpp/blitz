@@ -33,6 +33,8 @@
 
 #include <blitz/funcs.h>
 #include <blitz/array/newet-macros.h>
+#include <blitz/array/reduce.h>
+#include <blitz/levicivita.h>
 
 BZ_NAMESPACE(blitz)
     
@@ -193,6 +195,65 @@ pow(const complex<T1> d1, const ETBase<T2>& d2)
         (asExpr<complex<T1> >::getExpr(d1),
          asExpr<T2>::getExpr(d2.unwrap()));
 }
+
+
+// global functions that don't fit anywhere else
+
+// we define a generalized dot product for all classes as sum(a*b)
+template<typename T1, typename T2>
+inline
+_bz_typename ReduceSum<_bz_typename BZ_BLITZ_SCOPE(BzBinaryExprResult)<Multiply,T1,T2>::T_result::T_numtype
+>::T_resulttype
+dot(const ETBase<T1>& d1, const ETBase<T2>& d2)
+{
+  return sum(d1 * d2);
+}
+
+#define bzCC(...) __VA_ARGS__
+
+// we define a generalized cross product for all classes using the
+// Levi-Civita symbol. Return type is nice (ever heard of "write-once
+// code")... it took 10 times longer to figure out how to write the
+// return type than to do everything else...
+
+template<typename T1, typename T2>
+inline
+_bz_ArrayExpr<
+  _bz_ArrayExprReduce<
+    _bz_ArrayExpr<
+      _bz_ArrayExprReduce<
+	_bz_typename BzBinaryExprResult<
+	  Multiply,
+	  _bz_typename BzBinaryExprResult<
+	    Multiply,
+	    LeviCivita,
+	    _bz_ArrayExpr<
+	      ArrayIndexMapping<
+		_bz_typename asExpr<T1>::T_expr, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
+	      >
+	    >::T_result,
+	  _bz_ArrayExpr<
+	    ArrayIndexMapping<
+	      _bz_typename asExpr<T2>::T_expr, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
+	    >
+	  >::T_result,
+	2,
+	ReduceSum<
+	  _bz_typename BzBinaryExprResult<Multiply,_bz_typename BzBinaryExprResult<Multiply,LeviCivita,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T1>::T_expr, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > >::T_result,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T2>::T_expr, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > > ::T_result::T_numtype,
+	  BZ_SUMTYPE(bzCC(_bz_typename BzBinaryExprResult<Multiply,_bz_typename BzBinaryExprResult<Multiply,LeviCivita,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T1>::T_expr, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > >::T_result,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T2>::T_expr, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > > ::T_result::T_numtype))>
+	> 
+      >,
+    1, 
+    ReduceSum<BZ_SUMTYPE(bzCC(_bz_typename BzBinaryExprResult<Multiply,_bz_typename BzBinaryExprResult<Multiply,LeviCivita,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T1>::T_expr, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > >::T_result,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T2>::T_expr, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > > ::T_result::T_numtype))>
+    > 
+  >
+cross(const ETBase<T1>& d1, const ETBase<T2>& d2)
+{
+  return sum(sum(LeviCivita()*d1.unwrap()(tensor::j)*d2.unwrap()(tensor::k),
+		 tensor::k),
+	     tensor::j);
+}
+
 
 #endif
     

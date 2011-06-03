@@ -56,16 +56,16 @@ TinyVector<P_numtype,N_length>::operator=(const ETBase<T_expr>& expr)
     return *this;
 }
 
-#define BZ_TV2_UPDATE(op,name) \
-template<typename P_numtype, int N_length> \
-template<typename T> \
-inline TinyVector<P_numtype,N_length>& \
-TinyVector<P_numtype,N_length>::operator op(const T& expr) \
-{ \
- _bz_evaluate(*this, _bz_typename asExpr<T>::T_expr(expr), \
-      name<T_numtype, _bz_typename asExpr<T>::T_expr::T_numtype>()); \
-    return *this; \
-}
+#define BZ_TV2_UPDATE(op,name)						\
+  template<typename P_numtype, int N_length>				\
+  template<typename T>							\
+  inline TinyVector<P_numtype,N_length>&				\
+  TinyVector<P_numtype,N_length>::operator op(const T& expr)		\
+  {									\
+    _bz_evaluate(*this, _bz_typename asExpr<T>::T_expr(expr),		\
+		 name<T_numtype, _bz_typename asExpr<T>::T_expr::T_numtype>()); \
+    return *this;							\
+  }
 
 BZ_TV2_UPDATE(+=, _bz_plus_update)
 BZ_TV2_UPDATE(-=, _bz_minus_update)
