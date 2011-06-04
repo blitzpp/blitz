@@ -1,9 +1,10 @@
 #include "testsuite.h"
 #include <blitz/array.h>
 #include <blitz/array/stencil-et.h>
-#include <blitz/tinyvec-et.h>
-#include <blitz/matrix.h>
-#include <blitz/tinymatexpr.h>
+#include <blitz/array/stencil-et-macros.h>
+//#include <blitz/tinyvec-et.h>
+//#include <blitz/matrix.h>
+//#include <blitz/tinymatexpr.h>
 #include <random/uniform.h>
 
 BZ_USING_NAMESPACE(blitz)
@@ -48,8 +49,8 @@ void test_expr(const T1& d1, const T2& d2)
 template<typename T1, typename T2>
 void test_vexpr(const T1& d1, const T2& d2)
 {
-  Array<typename T1::T_numtype, T1::rank> a(d1),b(d2);
-  for(int i=0; i<T1::T_numtype::numElements; ++i)
+  Array<typename T1::T_numtype, T1::rank_> a(d1),b(d2);
+  for(int i=0; i<T1::T_numtype::numElements(); ++i)
     BZTEST(all(a[i]==b[i]));
 }
 
@@ -241,6 +242,8 @@ int main()
   // defined with BZ_ET_STENCIL_MULTIDIFF
   test_expr(central12(vfield3, firstDim, secondDim),
 	    central12(const_cast<const array_3v&>(vfield3), firstDim, secondDim));
+
+  array_3v ee(1.0*vfield3);
   test_expr(central12(vfield3, firstDim, secondDim),
 	    central12(1.0*vfield3, firstDim, secondDim));
   test_expr(where(central12(vfield2, firstDim, secondDim)>0.5, 

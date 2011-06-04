@@ -34,11 +34,11 @@
 
 #include <blitz/blitz.h>
 #include <blitz/listinit.h>
+#include <blitz/et-forward.h>
 #include <blitz/etbase.h>
 #include <blitz/array/slice.h>
-#include <blitz/indexmap-forward.h>
 #include <blitz/meta/vecassign.h>
-#include <blitz/update.h>
+//#include <blitz/update.h>
 
 
 #ifdef BZ_HAVE_CSTRING
@@ -362,9 +362,9 @@ public:
 
   T_vector& initialize(T_numtype);
 
-  T_vector& operator=(const TinyVector<T_numtype,N_length>& rhs) {
-        _bz_meta_vecAssign<N_length, 0>::
-	  assign(data_, rhs.data_, _bz_update<T_numtype,T_numtype>()); }
+  // T_vector& operator=(const TinyVector<T_numtype,N_length>& rhs) {
+  //       _bz_meta_vecAssign<N_length, 0>::
+  // 	  assign(data_, rhs.data_, _bz_update<T_numtype,T_numtype>()); }
 
     template<typename T_expr>
     T_vector& operator=(const ETBase<T_expr>&);
@@ -409,11 +409,11 @@ class TinyVector<T,0> {
 
 BZ_NAMESPACE_END
 
-#include <blitz/tv2fastiter.h>  // Iterators
-#include <blitz/tinyvec2.cc>
-#include <blitz/tv2assign.h>
-#include <blitz/tv2ops.cc>
-#include <blitz/tinyvec2io.cc>
+// #include <blitz/tv2fastiter.h>  // Iterators
+// #include <blitz/tinyvec2.cc>
+// #include <blitz/tv2assign.h>
+// #include <blitz/tv2ops.cc>
+// #include <blitz/tinyvec2io.cc>
 
 #endif // BZ_TINYVEC_H
 

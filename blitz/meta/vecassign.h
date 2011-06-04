@@ -32,6 +32,8 @@
 #ifndef BZ_META_VECASSIGN_H
 #define BZ_META_VECASSIGN_H
 
+#include <blitz/blitz.h>
+
 BZ_NAMESPACE(blitz)
 
 template<int N, int I> 

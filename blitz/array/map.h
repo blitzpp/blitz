@@ -47,13 +47,11 @@
 #ifndef BZ_ARRAYMAP_H
 #define BZ_ARRAYMAP_H
 
-#ifndef BZ_ARRAY_H
- #error <blitz/array/map.h> must be included via <blitz/array.h>
-#endif
-
-#include <blitz/array/fastiter.h>
-#include <blitz/indexmap-forward.h>
+#include <blitz/blitz.h>
+#include <blitz/prettyprint.h>
+#include <blitz/et-forward.h>
 #include <blitz/tinyvec2.h>
+#include <blitz/array/domain.h>
 
 BZ_NAMESPACE(blitz)
 

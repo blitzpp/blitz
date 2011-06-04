@@ -33,17 +33,11 @@
 #ifndef BZ_REDUCE_H
 #define BZ_REDUCE_H
 
-#ifndef BZ_BLITZ_H
- #include <blitz/blitz.h>
-#endif
+#include <blitz/blitz.h>
+#include <blitz/numtrait.h>
+#include <blitz/numinquire.h>
+#include <blitz/tinyvec2.h>
 
-#ifndef BZ_NUMTRAIT_H
- #include <blitz/numtrait.h>
-#endif
-
-#ifndef BZ_NUMINQUIRE_H
- #include <blitz/numinquire.h>
-#endif
 
 //  The various reduce classes.
 //  The prototype of the reset method is mandated by the class _bz_ReduceReset

@@ -69,7 +69,7 @@ BZ_DECLARE_ARRAY_ET_BINARY(operator!=, NotEqual)
 BZ_DECLARE_ARRAY_ET_BINARY(operator&&, LogicalAnd)
 BZ_DECLARE_ARRAY_ET_BINARY(operator||, LogicalOr)
 
-// \todo are these for Arrays of TinyVectors? How do we distinguish these from element-wise operations?
+// \todo are these for Arrays of TinyVectors? How do we distinguish these from element-wise operations? they must now be done using the scalar() function
 /*
 // Declare binary ops between Array and "scalar-like" TinyVector 
 BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator+,  Add)

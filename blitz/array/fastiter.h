@@ -31,17 +31,17 @@
 #ifndef BZ_ARRAY_FASTITER_H
 #define BZ_ARRAY_FASTITER_H
 
+#include <blitz/blitz.h>
+#include <blitz/array/slice.h>
+#include <blitz/constpointerstack.h>
+#include <blitz/prettyprint.h>
+#include <blitz/et-forward.h>
+#include <blitz/array/domain.h>
+
 #ifdef BZ_HAVE_STD
  #include <sstream>
 #else
  #include <strstream.h>
-#endif
-
-#include <blitz/array/slice.h>
-#include <blitz/constpointerstack.h>
-
-#ifndef BZ_ARRAY_H
- #error <blitz/array/iter.h> must be included via <blitz/array.h>
 #endif
 
 BZ_NAMESPACE(blitz)

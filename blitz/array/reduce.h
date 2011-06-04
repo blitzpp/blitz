@@ -33,10 +33,6 @@
 #ifndef BZ_ARRAYREDUCE_H
 #define BZ_ARRAYREDUCE_H
 
-#ifndef BZ_ARRAYEXPR_H
- #error <blitz/array/reduce.h> must be included after <blitz/array/expr.h>
-#endif
-
 #include <blitz/reduce.h>
 #include <blitz/meta/vecassign.h>
 

@@ -31,6 +31,11 @@
 #ifndef BZ_ARRAY_STENCIL_ET_H
 #define BZ_ARRAY_STENCIL_ET_H
 
+#include <blitz/blitz.h>
+#include <blitz/tinyvec2.h>
+#include <blitz/prettyprint.h>
+#include <blitz/array/domain.h>
+
 BZ_NAMESPACE(blitz)
 
 /* Stencils as currently implemented rely on being able to give an

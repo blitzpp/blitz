@@ -28,32 +28,17 @@
  *    https://sourceforge.net/projects/blitz/
  *
  ***************************************************************************/
-#ifndef BZ_ARRAYASEXPR_H
-#define BZ_ARRAYASEXPR_H
+#ifndef BZ_ASEXPR_H
+#define BZ_ASEXPR_H
 
-// #ifndef BZ_ARRAY_H
-//  #error <blitz/array/asexpr.h> must be included via <blitz/array.h>
-// #endif
-
-#include <blitz/array/expr.h>
-#include <blitz/array.h>
-#include <blitz/array/fastiter.h>
-#include <blitz/tinyvec2.h>
-#include <blitz/tv2fastiter.h>
-#include <blitz/tinymat2.h>
-#include <blitz/tm2fastiter.h>
-#include <blitz/levicivita.h>
+#include <blitz/et-forward.h>
 
 BZ_NAMESPACE(blitz)
 
 // The traits class asExpr converts arbitrary things to
 // expression templatable operands.
 
-// specific classes (Array, TinyVector, etc.) define a specialization
-// of this class for their purpose
-
 //  Default to scalar.
-
 template <typename T>
 struct asExpr {
   typedef _bz_ArrayExpr<_bz_ArrayExprConstant<T> > T_expr;
@@ -61,53 +46,50 @@ struct asExpr {
 };
 
 //  Already an expression template term
-
 template <typename T>
 struct asExpr<_bz_ArrayExpr<T> > {
     typedef _bz_ArrayExpr<T> T_expr;
-    static const T_expr& getExpr(const T_expr& x) { return x; }
+  static const T_expr& getExpr(const T_expr& x);
 };
 
 //  Specialization of asExpr for array operands
 template <typename T,int N>
 struct asExpr<Array<T,N> > {
     typedef FastArrayIterator<T,N> T_expr;
-    static T_expr getExpr(const Array<T,N>& x) { return x.beginFast(); }
+  static T_expr getExpr(const Array<T,N>& x);
 };
 
 //  Specialization of asExpr for tinyvector operands
 template <typename T,int N>
 struct asExpr<TinyVector<T,N> > {
     typedef FastTV2Iterator<T,N> T_expr;
-    static T_expr getExpr(const TinyVector<T,N>& x) { return x.beginFast(); }
+  static T_expr getExpr(const TinyVector<T,N>& x);
 };
 
 //  Specialization of asExpr for tinymatrix operands
 template <typename T,int Nr, int Nc>
 struct asExpr<TinyMatrix<T,Nr, Nc> > {
   typedef FastTM2Iterator<T,Nr, Nc> T_expr;
-  static T_expr getExpr(const TinyMatrix<T,Nr,Nc>& x) { return x.beginFast(); }
+  static T_expr getExpr(const TinyMatrix<T,Nr,Nc>& x);
 };
 
 //  Index placeholder
-
 template <int N>
 struct asExpr<IndexPlaceholder<N> > {
     typedef IndexPlaceholder<N> T_expr;
-    static T_expr getExpr(T_expr x) { return x; }
+  static T_expr getExpr(T_expr x);
 };
 
 //  the levi-civita symbol
-
 template <>
 struct asExpr<LeviCivita> {
   typedef _bz_ArrayExpr<LeviCivita> T_expr;
-    static T_expr getExpr(T_expr x) { return x; }
+  static T_expr getExpr(T_expr x);
 };
 
 #ifdef BZ_HAVE_TEMPLATES_AS_TEMPLATE_ARGUMENTS
 
-//  A traits class that provides the return type of a binary operation.
+//  traits classes that provide the return type of operations
 
 template <template <typename T1> class OP, typename O1>
 struct BzUnaryExprResult {

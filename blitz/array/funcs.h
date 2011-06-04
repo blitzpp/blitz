@@ -255,6 +255,17 @@ cross(const ETBase<T1>& d1, const ETBase<T2>& d2)
 }
 
 
+// "scalar" function converts something into a scalar expression. this
+// is used to prevent parsing of multicomponent expressions as bitwise
+// expressions between dissimilar containers.
+
+template <typename T>
+inline
+_bz_ArrayExpr<_bz_ArrayExprConstant<T> >
+scalar(const T& x) {
+  return _bz_ArrayExpr<_bz_ArrayExprConstant<T> >(x);
+}
+
 #endif
     
 BZ_NAMESPACE_END

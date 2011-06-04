@@ -31,7 +31,8 @@
 #ifndef BZ_DOMAIN_H
 #define BZ_DOMAIN_H
 
-#include <blitz/tinyvec2.h>
+#include <blitz/blitz.h>
+#include <blitz/et-forward.h>
 #include <blitz/range.h>
 
 /*

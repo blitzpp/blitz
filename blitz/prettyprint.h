@@ -33,6 +33,8 @@
 #ifndef BZ_PRETTYPRINT_H
 #define BZ_PRETTYPRINT_H
 
+#include <blitz/blitz.h>
+
 BZ_NAMESPACE(blitz)
 
 class prettyPrintFormat {

@@ -28,18 +28,14 @@
  *    https://sourceforge.net/projects/blitz/
  *
  ****************************************************************************/
-#ifndef BZ_ARRAYEXPR_H
-#define BZ_ARRAYEXPR_H
+#ifndef BZ_EXPR_H
+#define BZ_EXPR_H
 
-//#ifndef BZ_ARRAY_H
-// #error <blitz/array/expr.h> must be included via <blitz/array.h>
-//#endif
-
-#include <blitz/ops.h>
 #include <blitz/prettyprint.h>
 #include <blitz/shapecheck.h>
 #include <blitz/numinquire.h>
 #include <blitz/array/domain.h>
+#include <blitz/array/slice.h>
 
 /*
  * The array expression templates iterator interface is followed by
@@ -728,7 +724,6 @@ protected:
 
 
 template<typename P_expr1, typename P_expr2, typename P_op>
-
 class _bz_ArrayExprBinaryOp {
 public:
     typedef P_expr1 T_expr1;
@@ -1543,13 +1538,8 @@ public:
     int lbound(const int)    const { return INT_MIN; }
     int ubound(const int)    const { return INT_MAX; }
 
-  // there is no rank...
-  RectDomain<10> domain() const 
-  { 
-    TinyVector<int, 10> lb(lbound(0)), ub(ubound(0));
-    return RectDomain<10>(lb,ub);
-  }
-
+  // there is no rank so we use highest possible
+  RectDomain<12> domain() const;
 
     // NEEDS_WORK: use huge(int()) once numeric_limits<T> available on
     // all platforms
