@@ -37,8 +37,7 @@
 #include <blitz/et-forward.h>
 #include <blitz/etbase.h>
 #include <blitz/array/slice.h>
-#include <blitz/meta/vecassign.h>
-//#include <blitz/update.h>
+//#include <blitz/meta/vecassign.h>
 
 
 #ifdef BZ_HAVE_CSTRING
@@ -408,12 +407,6 @@ class TinyVector<T,0> {
 };
 
 BZ_NAMESPACE_END
-
-// #include <blitz/tv2fastiter.h>  // Iterators
-// #include <blitz/tinyvec2.cc>
-// #include <blitz/tv2assign.h>
-// #include <blitz/tv2ops.cc>
-// #include <blitz/tinyvec2io.cc>
 
 #endif // BZ_TINYVEC_H
 

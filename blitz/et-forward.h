@@ -63,6 +63,8 @@ template<typename P_functor, typename P_expr1,
 
 class LeviCivita;
 
+class Range;
+
 BZ_NAMESPACE_END
 
 

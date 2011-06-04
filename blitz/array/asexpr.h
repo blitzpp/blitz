@@ -87,6 +87,13 @@ struct asExpr<LeviCivita> {
   static T_expr getExpr(T_expr x);
 };
 
+//  Range
+template <>
+struct asExpr<Range> {
+  typedef _bz_ArrayExpr<Range> T_expr;
+  static T_expr getExpr(T_expr x);
+};
+
 #ifdef BZ_HAVE_TEMPLATES_AS_TEMPLATE_ARGUMENTS
 
 //  traits classes that provide the return type of operations

@@ -38,13 +38,8 @@
  #error <blitz/array/stencilops.h> must be included via <blitz/array/stencils.h>
 #endif
 
-#ifndef BZ_GEOMETRY_H
- #include <blitz/array/geometry.h>
-#endif
-
-#ifndef BZ_TINYMAT_H
- #include <blitz/tinymat.h>
-#endif
+#include <blitz/array/geometry.h>
+#include <blitz/tinymat2.h>
 
 BZ_NAMESPACE(blitz)
 

@@ -31,7 +31,15 @@
 #ifndef BZ_TINYVEC2_CC
 #define BZ_TINYVEC2_CC
 
+#include <blitz/tinyvec2.h>
+#include <blitz/update.h>
+#include <blitz/array/asexpr.h>
+
 BZ_NAMESPACE(blitz)
+
+/*
+ * Constructors
+ */
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>::TinyVector(const T_numtype initValue) {
@@ -53,6 +61,53 @@ inline TinyVector<P_numtype, N_length>::TinyVector(const TinyVector<P_numtype2, 
 }
 
 
+/*
+ * Assignment-type operators
+ */
+
+template<typename P_numtype, int N_length>
+TinyVector<P_numtype, N_length>& TinyVector<P_numtype,N_length>::initialize(T_numtype x)
+{
+    (*this) = _bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
+    return *this;
+}
+
+template<typename P_numtype, int N_length> template<typename T_expr>
+inline TinyVector<P_numtype,N_length>&
+TinyVector<P_numtype,N_length>::operator=(const ETBase<T_expr>& expr)
+{
+  _bz_evaluate(*this, _bz_typename asExpr<T_expr>::T_expr(expr.unwrap()), 
+        _bz_update<T_numtype, _bz_typename T_expr::T_numtype>());
+    return *this;
+}
+
+#define BZ_TV2_UPDATE(op,name)						\
+  template<typename P_numtype, int N_length>				\
+  template<typename T>							\
+  inline TinyVector<P_numtype,N_length>&				\
+  TinyVector<P_numtype,N_length>::operator op(const T& expr)		\
+  {									\
+    _bz_evaluate(*this, _bz_typename asExpr<T>::T_expr(expr),		\
+		 name<T_numtype, _bz_typename asExpr<T>::T_expr::T_numtype>()); \
+    return *this;							\
+  }
+
+
+BZ_TV2_UPDATE(+=, _bz_plus_update)
+BZ_TV2_UPDATE(-=, _bz_minus_update)
+BZ_TV2_UPDATE(*=, _bz_multiply_update)
+BZ_TV2_UPDATE(/=, _bz_divide_update)
+BZ_TV2_UPDATE(%=, _bz_mod_update)
+BZ_TV2_UPDATE(^=, _bz_xor_update)
+BZ_TV2_UPDATE(&=, _bz_bitand_update)
+BZ_TV2_UPDATE(|=, _bz_bitor_update)
+BZ_TV2_UPDATE(<<=, _bz_shiftl_update)
+BZ_TV2_UPDATE(>>=, _bz_shiftr_update)
+
+/*
+ * Other member functions
+ */
+
 template<typename P_numtype, int N_length>
 template<int N0>
 _bz_ArrayExpr<ArrayIndexMapping<FastTV2Iterator<P_numtype, N_length>, N0> >
@@ -63,7 +118,10 @@ TinyVector<P_numtype, N_length>::operator()(IndexPlaceholder<N0>) const
 }
 
 
-
 BZ_NAMESPACE_END
+
+#include <blitz/tv2fastiter.h>  // Iterators
+//#include <blitz/tv2assign.h> unused now?
+#include <blitz/tinyvec2io.cc>
 
 #endif // BZ_TINYVEC_CC

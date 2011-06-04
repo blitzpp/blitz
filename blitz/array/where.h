@@ -31,11 +31,14 @@
 #ifndef BZ_ARRAYWHERE_H
 #define BZ_ARRAYWHERE_H
 
-#ifndef BZ_ARRAYEXPR_H
- #error <blitz/array/where.h> must be included via <blitz/array/expr.h>
-#endif
-
+#include <blitz/blitz.h>
+#include <blitz/promote.h>
+#include <blitz/prettyprint.h>
+#include <blitz/bounds.h>
 #include <blitz/meta/metaprog.h>
+#include <blitz/tinyvec2.h>
+#include <blitz/array/domain.h>
+#include <blitz/array/asexpr.h>
 
 BZ_NAMESPACE(blitz)
 

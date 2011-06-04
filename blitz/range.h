@@ -32,17 +32,16 @@
 #ifndef BZ_RANGE_H
 #define BZ_RANGE_H
 
-#ifndef BZ_BLITZ_H
- #include <blitz/blitz.h>
-#endif
 
-#ifndef BZ_VECEXPRWRAP_H
- #include <blitz/vecexprwrap.h>      // _bz_VecExpr wrapper
-#endif
-
+#include <blitz/blitz.h>
+#include <blitz/etbase.h>
+#include <blitz/prettyprint.h>
+#include <blitz/tinyvec2.h>
 #include <climits>                  // for INT_MIN, INT_MAX
 
 BZ_NAMESPACE(blitz)
+
+// A Range object is an ET that generates the specified sequence.
 
 // Examples: 
 // Array<int,1> A(7);
@@ -55,16 +54,23 @@ BZ_NAMESPACE(blitz)
 // A(Range(5,1,-2));                  [5,3,1]
 // A(Range(fromStart,toEnd,2));       [0,2,4,6]
 
+template<int N_rank> class RectDomain;
 
 const int fromStart = INT_MIN;
 const int toEnd = INT_MAX;
 
 // Class Range
-class Range {
-
+class Range : public ETBase<Range> {
 public:
     typedef int T_numtype;
-	typedef unsigned int T_sizetype;
+    typedef void T_ctorArg1;
+    typedef char       T_ctorArg2;    // dummy
+  typedef TinyVector<int, 1> T_index;
+  typedef Range T_range_result;
+    static const int 
+    numArrayOperands = 0, 
+      numIndexPlaceholders = 1, 
+      rank_ = 1;
 
     Range()
     {
@@ -73,15 +79,12 @@ public:
         stride_ = 1;
     }
 
-    // Range(Range r): allow default copy constructor to be used
-#ifdef BZ_MANUAL_VECEXPR_COPY_CONSTRUCTOR
     Range(const Range& r)
     {
         first_ = r.first_;
         last_ = r.last_;
         stride_ = r.stride_;
     }
-#endif
 
     explicit Range(T_numtype slicePosition)
     {
@@ -102,6 +105,107 @@ public:
             (*this) << ": the stride must evenly divide the range");
     }
 
+  T_numtype operator*()   const { BZPRECONDITION(0); return 0; }
+  T_numtype first_value() const { BZPRECONDITION(0); return 0; }
+
+    int ascending(const int) const { return true; }
+    int ordering(const int)  const { return 0; }
+    int lbound(const int)    const { return 0; }
+  int ubound(const int)    const { return length()-1; }
+
+  RectDomain<rank_> domain() const;
+
+  bool assertInRange(const T_index& BZ_DEBUG_PARAM(index)) const {
+    BZPRECHECK((index[0]<=ubound(0)) && (index[0]>=0),
+	       "Range index out of range: " << index
+	       << endl << "Lower bounds: 0" << endl
+	       <<         "Length:      " << length() << endl);
+    return true;
+  }
+  
+#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
+    template<int N_rank>
+    T_numtype operator()(const TinyVector<int,N_rank> i) const
+  { assertInRange(i); return operator[](i[0]); }
+#else
+    template<int N_rank>
+    T_numtype operator()(const TinyVector<int,N_rank>& i) const
+  { assertInRange(i); return operator[](i[0]); }
+#endif
+
+  T_numtype operator[](int i) const;
+
+    T_numtype operator()(int i) const
+    {
+      return operator[](i);
+    }
+
+  // we could work out how this should work.
+  template<int N_rank>
+  const Range operator()(const RectDomain<N_rank>& d) const
+  {
+    BZPRECONDITION(0); return *this;
+  }
+
+    void push(int) { }
+    void pop(int) { }
+    void advance() { }
+    void advance(int) { }
+    void loadStride(int) { }
+
+    bool isUnitStride(int) const
+    { return true; }
+
+    void advanceUnitStride()
+    { }
+
+    bool canCollapse(int,int) const 
+    { return true; }
+
+    T_numtype fastRead(int) const
+  { BZPRECONDITION(0); return 0; }
+
+  // this is needed for the stencil expression fastRead to work
+  void _bz_offsetData(sizeType i) const{BZPRECONDITION(0);};
+
+    // and these are needed for stencil expression shift to work
+  void _bz_offsetData(sizeType offset, int dim) const {BZPRECONDITION(0);};
+  
+  void _bz_offsetData(sizeType offset1, int dim1, sizeType offset2, int dim2) const {BZPRECONDITION(0);};
+
+    diffType suggestStride(int) const
+    { return 1; }
+
+    bool isStride(int,diffType) const
+    { return true; }
+
+  void moveTo(int) const { BZPRECONDITION(0); }
+
+  T_numtype shift(int offset, int dim) const { BZPRECONDITION(0); }
+
+    T_numtype shift(int offset1, int dim1,int offset2, int dim2) const 
+  { BZPRECONDITION(0); }
+
+    template<int N_rank>
+    void moveTo(const TinyVector<int,N_rank>&) const { BZPRECONDITION(0); }
+
+    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+        prettyPrintFormat& format) const
+    {
+#ifdef BZ_HAVE_STD
+	    BZ_STD_SCOPE(ostringstream) ostr;
+#else
+            ostrstream ostr;
+#endif
+	    ostr << "Range(" << first_ << ", " << last_
+		 << ", " << stride_ << ")";
+            str += ostr.str();
+    }
+
+
+  // old range stuff below. what is needed for the range interface and
+  // what is old vecexpr stuff?
+
     T_numtype first(T_numtype lowRange = 0) const
     { 
         if (first_ == fromStart)
@@ -116,7 +220,7 @@ public:
         return last_;
     }
 
-    T_sizetype length(int =0) const
+  int length(int =0) const
     {
         BZPRECONDITION(first_ != fromStart);
         BZPRECONDITION(last_ != toEnd);
@@ -164,16 +268,6 @@ public:
         return Range(first_ + shift, last_ + shift, stride_); 
     }
 
-    T_numtype operator[](T_sizetype i) const
-    {
-        return first_ + i * stride_;
-    }
-
-    T_numtype operator()(T_sizetype i) const
-    {
-        return first_ + i * stride_;
-    }
-
     friend inline ostream& operator<<(ostream& os, const Range& range)
     {
         os << "Range(" << range.first() << "," << range.last() << ","
@@ -182,30 +276,25 @@ public:
         return os;
     }
 
-    /////////////////////////////////////////////
-    // Library-internal member functions
-    // These are undocumented and may change or
-    // disappear in future releases.
-    /////////////////////////////////////////////
+  // we can't reduce the rank of a range, so we can't slice it
+  template<typename T1, typename T2 = nilArraySection, 
+	   class T3 = nilArraySection, typename T4 = nilArraySection, 
+	   class T5 = nilArraySection, typename T6 = nilArraySection, 
+	   class T7 = nilArraySection, typename T8 = nilArraySection, 
+	   class T9 = nilArraySection, typename T10 = nilArraySection, 
+	   class T11 = nilArraySection>
+  class SliceInfo {
+  public:
+    typedef void T_slice;
+  };
 
-    static const int
-        _bz_staticLengthCount = 0,
-        _bz_dynamicLengthCount = 0,
-        _bz_staticLength = 0;
-
-    bool _bz_hasFastAccess() const
-    { return stride_ == 1; }
-
-    int _bz_fastAccess(unsigned int i) const
-    { return first_ + i; }
-
-    unsigned int _bz_suggestLength() const
-    { 
-        return length();
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
+        typename T7, typename T8, typename T9, typename T10, typename T11>
+    typename SliceInfo<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice
+    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9, T10 r10, T11 r11) const
+    {
+      return *this;
     }
-
-    _bz_VecExpr<Range> _bz_asVecExpr() const
-    { return _bz_VecExpr<Range>(*this); }
 
 private:
   T_numtype first_, last_;

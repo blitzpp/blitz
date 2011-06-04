@@ -74,9 +74,15 @@ asExpr<IndexPlaceholder<N> >::getExpr(T_expr& x)
 
 //  the levi-civita symbol
 template <>
-_bz_typename asExpr<LeviCivita>::T_expr&
+_bz_typename asExpr<LeviCivita>::T_expr
 asExpr<LeviCivita>::getExpr(T_expr x) 
-{ return x; }
+{ return T_expr(x); }
+
+//  Range
+template <>
+_bz_typename asExpr<Range>::T_expr&
+asExpr<Range>::getExpr(T_expr x) 
+{ return T_expr(x); }
 
 BZ_NAMESPACE_END
 

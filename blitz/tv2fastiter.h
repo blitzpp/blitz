@@ -31,6 +31,8 @@
 #ifndef BZ_ARRAY_TV2FASTITER_H
 #define BZ_ARRAY_TV2FASTITER_H
 
+#include <blitz/blitz.h>
+
 #ifdef BZ_HAVE_STD
  #include <sstream>
 #else
@@ -41,6 +43,7 @@
 #include <blitz/bzdebug.h>
 #include <blitz/shapecheck.h>
 #include <blitz/prettyprint.h>
+#include <blitz/tinyvec2.h>
 
 BZ_NAMESPACE(blitz)
 
