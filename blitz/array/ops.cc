@@ -71,9 +71,9 @@ template<typename P_numtype, int N_rank>
 inline Array<P_numtype, N_rank>&
 Array<P_numtype, N_rank>::operator=(const Array<T_numtype,N_rank>& x)
 {
-  typedef Array<T_numtype,N_rank> T;
-  _bz_evaluate(*this, _bz_typename asExpr<T>::T_expr(x),
-	     _bz_update<T_numtype, _bz_typename asExpr<T>::T_expr::T_numtype>());
+  typedef typename asExpr<Array<T_numtype,N_rank> >::T_expr T_expr;
+  _bz_evaluate(*this, T_expr(x),
+	       _bz_update<T_numtype, _bz_typename T_expr::T_result>());
     return *this;
 }
 

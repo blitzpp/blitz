@@ -703,7 +703,6 @@ _bz_evaluateWithIndexTraversal1(T_dest& dest, T_expr expr, T_update)
         for (index[0] = dest.lbound(firstRank); index[0] <= last;
             ++index[0])
         {
-	  //*iter++ = expr(index);
 	  T_update::update(*iter++, expr(index));
         }
     }

@@ -57,11 +57,12 @@ class FastTV2IteratorBase {
 public:
     typedef P_numtype                T_numtype;
   typedef typename opType<T_numtype>::T_optype T_optype;
-
+  // if T_numtype is POD, then T_result is T_numtype, but if T_numtype
+  // is an ET class, T_result will be the array class for that class.
   typedef typename asET<T_numtype>::T_wrapped T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
 
-    typedef TinyVector<T_numtype, N_length> T_vector;
+  typedef TinyVector<T_numtype, N_length> T_vector;
   typedef FastTV2IteratorBase<P_numtype, N_length, P_arraytype> T_iterator;
     typedef const T_vector& T_ctorArg1;
     typedef int            T_ctorArg2;    // dummy

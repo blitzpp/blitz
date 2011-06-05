@@ -333,7 +333,9 @@ public:
         return data_[i];
     }
 
-    T_numtype fastRead(sizeType i) const
+  // must return reference so the iterator can turn it into an
+  // iterator for the contained in case we have a multicomponent.
+  const T_numtype& fastRead(sizeType i) const
     { return data_[i]; }
 
   bool canCollapse(int outerLoopRank, int innerLoopRank) const
