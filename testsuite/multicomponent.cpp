@@ -10,6 +10,7 @@
 #include <blitz/array/methods.cc>
 #include <blitz/array/io.cc>
 #include <blitz/ops.h>
+#include <blitz/array/funcs.h>
 
 BZ_USING_NAMESPACE(blitz)
 
@@ -27,13 +28,13 @@ int main()
   // create some arrays to operate on
   const int sz=5;
 
-  array_1vv a(sz),b(sz);
-  //array_1v a(sz),b(sz);
-  //array_1 a(sz),b(sz);
+  //array_1vv a(sz),b(sz);
+  array_1v a(sz),b(sz);
+  array_1 aa(sz),bb(sz);
   //tv a,b;
   //a(0)[0]=TinyVector<double,2>(1,2);
-  //,2,3,4,5;
-
+  a=1,2,3,4,5;
+  aa=1,2,3,4,5;
   // cout << a << endl;
 
   // a *= 2;
@@ -46,9 +47,11 @@ int main()
   // tv v1(1,1);
   // tv v2;
   //v2 = -v1;
-  b= -a;
+  b= sqrt(a)*a/(-a);
+  bb= sqrt(aa)*aa/(-aa);
 
   cout << b << endl;
+  cout << bb << endl;
 
     return 0;
 }

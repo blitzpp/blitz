@@ -135,17 +135,37 @@ struct unwrapET<ETBase<T> > {
   typedef T T_unwrapped;
 };
 
-// traits class that is used to switch between an ET type or an
+// traits classes that are used to switch between an ET type or an
 // unknown type. If the supplied type T is an ET type, T_selected will
-// be R, otherwise T.
-template<typename T, typename R>
+// be T_ifET, otherwise T.
+template<typename T, typename T_ifET>
 struct selectET {
   typedef T T_selected;
 };
-template<typename T, typename R>
-struct selectET<ETBase<T>, R> {
-  typedef ETBase<R> T_selected;
+template<typename T, typename T_ifET>
+struct selectET<ETBase<T>, T_ifET> {
+  typedef ETBase<T_ifET> T_selected;
 };
+
+// for binary exprs, it is more complicated. if T1 or T2 are an ET,
+// T_ifET is selected, otherwise T_ifnotET.
+template<typename T1, typename T2, typename T_ifnotET, typename T_ifET>
+struct selectET2 {
+  typedef T_ifnotET T_selected;
+};
+template<typename T1, typename T2, typename T_ifnotET, typename T_ifET>
+struct selectET2<ETBase<T1>, T2, T_ifnotET, T_ifET> {
+  typedef ETBase<T_ifET> T_selected;
+};
+template<typename T1, typename T2, typename T_ifnotET, typename T_ifET>
+struct selectET2<T1, ETBase<T2>, T_ifnotET, T_ifET> {
+  typedef ETBase<T_ifET> T_selected;
+};
+template<typename T1, typename T2, typename T_ifnotET, typename T_ifET>
+struct selectET2<ETBase<T1>, ETBase<T2>, T_ifnotET, T_ifET> {
+  typedef ETBase<T_ifET> T_selected;
+};
+
 
 // traits class that resolves to the ultimate numeric datatype used
 // for operations on the container. This is necessary because for
@@ -183,8 +203,7 @@ struct BzUnaryExprResult {
       _bz_ArrayExprUnaryOp<
 	typename asExpr<O1>::T_expr,
 	OP<
-	  typename opType<O1>::T_optype
-	  //typename asExpr<O1>::T_expr::T_numtype
+	  typename asExpr<O1>::T_expr::T_optype
 	  >
 	> > T_result;
 };
@@ -195,8 +214,10 @@ struct BzBinaryExprResult {
     typedef _bz_ArrayExpr<_bz_ArrayExprBinaryOp<
         typename asExpr<O1>::T_expr,
         typename asExpr<O2>::T_expr,
-        OP<typename asExpr<O1>::T_expr::T_numtype,
-           typename asExpr<O2>::T_expr::T_numtype> > > T_result;
+        OP<
+	  typename asExpr<O1>::T_expr::T_optype,
+	  typename asExpr<O2>::T_expr::T_optype
+	  > > > T_result;
 };
 
 template <template <typename T1, typename T2, typename T3> class OP,

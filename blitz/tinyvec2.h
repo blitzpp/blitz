@@ -55,12 +55,6 @@ class FastTV2Iterator;
 template<typename P_numtype, int N_length>
 class FastTV2CopyIterator;
 
-template<typename P_expr>
-class _bz_ArrayExpr;
-
-template<int N0>
-class IndexPlaceholder;
-
 /*****************************************************************************
  * Declaration of class TinyVector
  */

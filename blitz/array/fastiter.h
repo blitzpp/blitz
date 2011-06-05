@@ -195,11 +195,11 @@ public:
         stride_ = array_.stride(rank);
     }
 
-  // returns the lvalue, ie a pointer to the container
+  // returns the lvalue, ie a pointer to the data
     const T_numtype * restrict data() const
     { return data_; }
 
-  const Array<T_numtype, N_rank>& array() const
+  const T_array& array() const
   { return array_; }
 
     void _bz_setData(const T_numtype* ptr)

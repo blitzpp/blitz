@@ -131,12 +131,12 @@ public:
     
   //RectDomain<rank_> domain() const { return array_.domain(); };
 
-    T_numtype first_value() const { return *data_; }
+    T_result first_value() const { return *data_; }
 
-    T_numtype operator*() const
+    T_result operator*() const
     { return *data_; }
 
-    T_numtype operator[](int i) const
+    T_result operator[](int i) const
     { return data_[i * stride_]; }
 
     T_result fastRead(sizeType i) const
@@ -173,6 +173,7 @@ public:
       BZPRECONDITION(r==0); //stride_ = 1;
     }
 
+  // This is used as lvalue, so it should return the actual data
     const T_numtype * restrict data() const
     { return data_; }
 
