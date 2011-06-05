@@ -235,14 +235,25 @@ public:
     T_matrix& noConst() const
     { return const_cast<T_matrix&>(*this); }
 
-  const T_numtype& operator()(unsigned i, unsigned j) const
+  const T_numtype& restrict operator()(unsigned i, unsigned j) const
     {
       assertInRange(i,j);
       return data_[i*N_columns + j];
     }
 
+  T_numtype& restrict operator()(unsigned i, unsigned j)
+    {
+      assertInRange(i,j);
+      return data_[i*N_columns + j];
+    }
 
-  T_numtype operator()(T_index i) const
+  const T_numtype& restrict operator()(T_index i) const
+    {
+      assertInRange(i);
+      return data_[i[0]*N_columns + i[1]];
+    }
+
+  T_numtype& restrict operator()(T_index i)
     {
       assertInRange(i);
       return data_[i[0]*N_columns + i[1]];
