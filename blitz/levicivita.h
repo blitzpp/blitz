@@ -6,6 +6,7 @@
 #include <blitz/numinquire.h>
 #include <blitz/array/domain.h>
 #include <blitz/etbase.h>
+#include <blitz/tinyvec2io.cc>
 
 BZ_NAMESPACE(blitz)
 
@@ -15,6 +16,12 @@ BZ_NAMESPACE(blitz)
 class LeviCivita : public ETBase<LeviCivita> {
 public:
     typedef char T_numtype;
+
+  typedef opType<T_numtype>::T_optype T_optype;
+
+  typedef asET<T_numtype>::T_wrapped T_typeprop;
+  typedef unwrapET<T_typeprop>::T_unwrapped T_result;
+
     typedef void T_ctorArg1;
     typedef char       T_ctorArg2;    // dummy
   typedef TinyVector<int, 3> T_index;

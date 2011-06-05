@@ -92,8 +92,50 @@ struct name {                                                  \
 
 BZ_DEFINE_UNARY_OP(BitwiseNot,~)
 BZ_DEFINE_UNARY_OP(UnaryPlus,+)
-BZ_DEFINE_UNARY_OP(UnaryMinus,-)
-    
+//BZ_DEFINE_UNARY_OP(UnaryMinus,-)
+  
+template<typename T_numtype1>                                  
+struct UnaryMinus {                                                  
+  typedef T_numtype1 T_numtype;                              
+                                                               
+    static inline T_numtype                                    
+    apply(T_numtype1 a)                                        
+  { return - a; }                                           
+
+  // for expressions we just pass them through
+  template<typename T>
+  static inline
+  const T&
+    apply(const T& expr)				       
+  { return expr; }				       
+							       
+    template<typename T1>                                      
+    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,  
+        prettyPrintFormat& format, const T1& t1)               
+    {                                                          
+        str += "-";                                            
+        t1.prettyPrint(str, format);                           
+    }                                                          
+};							       
+ template<typename T>					       
+ struct UnaryMinus<ETBase<T> > {						
+    typedef typename
+    BZ_BLITZ_SCOPE(BzUnaryExprResult)<blitz::UnaryMinus,T>::T_result T_numtype;
+
+
+    static inline T_numtype                                    
+    apply(const ETBase<T>& a)				       
+  { return - a.unwrap(); }				       
+							       
+    template<typename T1>                                      
+    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,  
+        prettyPrintFormat& format, const T1& t1)               
+    {                                                          
+        str += "-";                                            
+        t1.prettyPrint(str, format);                           
+    }                                                          
+};
+  
     
 /* Unary operators that return a specified type */
     

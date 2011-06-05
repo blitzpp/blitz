@@ -35,6 +35,7 @@
 
 #include <blitz/blitz.h>
 #include <blitz/etbase.h>
+#include <blitz/array/asexpr.h>
 #include <blitz/prettyprint.h>
 #include <blitz/tinyvec2.h>
 #include <climits>                  // for INT_MIN, INT_MAX
@@ -63,6 +64,11 @@ const int toEnd = INT_MAX;
 class Range : public ETBase<Range> {
 public:
     typedef int T_numtype;
+  typedef opType<T_numtype>::T_optype T_optype;
+
+  typedef asET<T_numtype>::T_wrapped T_typeprop;
+  typedef unwrapET<T_typeprop>::T_unwrapped T_result;
+
     typedef void T_ctorArg1;
     typedef char       T_ctorArg2;    // dummy
   typedef TinyVector<int, 1> T_index;
@@ -117,7 +123,7 @@ public:
 
   bool assertInRange(const T_index& BZ_DEBUG_PARAM(index)) const {
     BZPRECHECK((index[0]<=ubound(0)) && (index[0]>=0),
-	       "Range index out of range: " << index
+	       "Range index out of range: " << index[0]
 	       << endl << "Lower bounds: 0" << endl
 	       <<         "Length:      " << length() << endl);
     return true;

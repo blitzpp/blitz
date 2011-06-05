@@ -42,7 +42,7 @@ BZ_NAMESPACE(blitz)
 template <typename T>
 struct asExpr {
   typedef _bz_ArrayExpr<_bz_ArrayExprConstant<T> > T_expr;
-    static T_expr getExpr(const T& x) { return T_expr(x); }
+  static T_expr getExpr(const T& x);
 };
 
 //  Already an expression template term
@@ -77,7 +77,7 @@ struct asExpr<TinyMatrix<T,Nr, Nc> > {
 template <int N>
 struct asExpr<IndexPlaceholder<N> > {
     typedef IndexPlaceholder<N> T_expr;
-  static T_expr getExpr(T_expr x);
+  static T_expr getExpr(const T_expr& x);
 };
 
 //  the levi-civita symbol
@@ -94,15 +94,99 @@ struct asExpr<Range> {
   static T_expr getExpr(T_expr x);
 };
 
+
+// traits class that transforms ETBase subclasses into the
+// ET<>-wrapped superclass and corresponding expression, but unlike
+// the asExpr class it leaves POD types alone. This is necessary so
+// operators on multicomponent arrays can resolve properly.
+template<typename T>
+struct asET {
+  typedef T T_wrapped;
+  typedef T T_expr;
+};
+template<typename T>
+struct asET<ETBase<T> > {
+  typedef ETBase<typename asExpr<T>::T_expr> T_wrapped;
+  typedef typename asExpr<T>::T_expr T_expr;
+};
+template<typename T, int N>
+struct asET<Array<T,N> > {
+  typedef ETBase<typename asExpr<Array<T,N> >::T_expr> T_wrapped;
+  typedef typename asExpr<Array<T,N> >::T_expr T_expr;
+};
+template<typename T, int N>
+struct asET<TinyVector<T,N> > {
+  typedef ETBase<typename asExpr<TinyVector<T,N> >::T_expr> T_wrapped;
+  typedef typename asExpr<TinyVector<T,N> >::T_expr T_expr;
+};
+template<typename T, int Nr, int Nc>
+struct asET<TinyMatrix<T,Nr,Nc> > {
+  typedef ETBase<typename asExpr<TinyMatrix<T,Nr,Nc> >::T_expr> T_wrapped;
+  typedef typename asExpr<TinyMatrix<T,Nr,Nc> >::T_expr T_expr;
+};
+
+// traits class that unwraps an ETBase type, otherwise leaves it untouched.
+template<typename T>
+struct unwrapET {
+  typedef T T_unwrapped;
+};
+template<typename T>
+struct unwrapET<ETBase<T> > {
+  typedef T T_unwrapped;
+};
+
+// traits class that is used to switch between an ET type or an
+// unknown type. If the supplied type T is an ET type, T_selected will
+// be R, otherwise T.
+template<typename T, typename R>
+struct selectET {
+  typedef T T_selected;
+};
+template<typename T, typename R>
+struct selectET<ETBase<T>, R> {
+  typedef ETBase<R> T_selected;
+};
+
+// traits class that resolves to the ultimate numeric datatype used
+// for operations on the container. This is necessary because for
+// multicomponent containers we need to determine what the ultimate
+// POD data type is.
+template<typename T>
+struct opType {
+  typedef T T_optype;
+};
+template<typename T>
+struct opType<ETBase<T> > {
+  typedef typename opType<T>::T_optype T_optype;
+};
+template<typename T, int N>
+struct opType<Array<T,N> > {
+  typedef typename opType<T>::T_optype T_optype;
+};
+template<typename T, int N>
+struct opType<TinyVector<T,N> > {
+  typedef typename opType<T>::T_optype T_optype;
+};
+template<typename T, int Nr, int Nc>
+struct opType<TinyMatrix<T,Nr,Nc> > {
+  typedef typename opType<T>::T_optype T_optype;
+};
+
+
 #ifdef BZ_HAVE_TEMPLATES_AS_TEMPLATE_ARGUMENTS
 
 //  traits classes that provide the return type of operations
 
 template <template <typename T1> class OP, typename O1>
 struct BzUnaryExprResult {
-    typedef _bz_ArrayExpr<_bz_ArrayExprUnaryOp<
-        typename asExpr<O1>::T_expr,
-        OP<typename asExpr<O1>::T_expr::T_numtype> > > T_result;
+    typedef _bz_ArrayExpr<
+      _bz_ArrayExprUnaryOp<
+	typename asExpr<O1>::T_expr,
+	OP<
+	  typename opType<O1>::T_optype
+	  //typename asExpr<O1>::T_expr::T_numtype
+	  >
+	> > T_result;
 };
 
 template <template <typename T1, typename T2> class OP,

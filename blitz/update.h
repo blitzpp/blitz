@@ -52,7 +52,7 @@ template<typename X, typename Y>
 class _bz_update : public _bz_updater_base {
   public:
     static inline void update(X& restrict x, Y y)
-    { x = (X)y; }
+  { x = /*(X)*/y; }
 
     static void prettyPrint(BZ_STD_SCOPE(string) &str)
     { str += "="; }

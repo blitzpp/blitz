@@ -32,6 +32,10 @@
 #define BZ_ASEXPR_cc
 
 #include <blitz/array/asexpr.h>
+#include <blitz/array-impl.h>
+#include <blitz/levicivita.h>
+#include <blitz/range.h>
+#include <blitz/array/expr.h>
 
 // implementations of asexpr functions.
 
@@ -44,8 +48,8 @@ _bz_typename asExpr<T>::T_expr asExpr<T>::getExpr(const T& x)
 
 // expression template term just returns itself
 template <typename T>
-_bz_typename const asExpr<_bz_ArrayExpr<T> >::T_expr& 
-asExpr<_bz_ArrayExpr<T>::getExpr(const T_expr& x) 
+const _bz_typename asExpr<_bz_ArrayExpr<T> >::T_expr& 
+asExpr<_bz_ArrayExpr<T> >::getExpr(const T_expr& x) 
 { return x; }
 
 // array operand returns iterator
@@ -62,25 +66,23 @@ asExpr<TinyVector<T,N> >::getExpr(const TinyVector<T,N>& x)
 
 //  tinymatrix operands returns iterator
 template <typename T,int Nr, int Nc>
-asExpr<TinyMatrix<T,Nr, Nc> >::T_expr
+_bz_typename asExpr<TinyMatrix<T,Nr, Nc> >::T_expr
 asExpr<TinyMatrix<T,Nr, Nc> >::getExpr(const TinyMatrix<T,Nr,Nc>& x) 
 { return x.beginFast(); }
 
 //  Index placeholder returns itself
 template <int N>
-_bz_typename asExpr<IndexPlaceholder<N> >::T_expr&
-asExpr<IndexPlaceholder<N> >::getExpr(T_expr& x)
+_bz_typename asExpr<IndexPlaceholder<N> >::T_expr
+asExpr<IndexPlaceholder<N> >::getExpr(const T_expr& x)
  { return x; }
 
 //  the levi-civita symbol
-template <>
-_bz_typename asExpr<LeviCivita>::T_expr
+asExpr<LeviCivita>::T_expr
 asExpr<LeviCivita>::getExpr(T_expr x) 
 { return T_expr(x); }
 
 //  Range
-template <>
-_bz_typename asExpr<Range>::T_expr&
+asExpr<Range>::T_expr
 asExpr<Range>::getExpr(T_expr x) 
 { return T_expr(x); }
 

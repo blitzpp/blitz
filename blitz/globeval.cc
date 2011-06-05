@@ -389,7 +389,7 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
      else {
 	 while (iter.data() != last)
 	 {
-	     T_update::update(*const_cast<T_numtype*>(iter.data()), *expr);
+	   //T_update::update(*const_cast<T_numtype*>(iter.data()), *expr);
 	     iter.advance();
 	     expr.advance();
 	 }
@@ -633,7 +633,7 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
 
             while (iter.data() != end)
             {
-                T_update::update(*const_cast<T_numtype*>(iter.data()), *expr);
+	      //T_update::update(*const_cast<T_numtype*>(iter.data()), *expr);
                 iter.advance();
                 expr.advance();
             }
@@ -703,7 +703,8 @@ _bz_evaluateWithIndexTraversal1(T_dest& dest, T_expr expr, T_update)
         for (index[0] = dest.lbound(firstRank); index[0] <= last;
             ++index[0])
         {
-            T_update::update(*iter++, expr(index));
+	  //*iter++ = expr(index);
+	  T_update::update(*iter++, expr(index));
         }
     }
     else {
@@ -714,7 +715,7 @@ _bz_evaluateWithIndexTraversal1(T_dest& dest, T_expr expr, T_update)
         for (index[0] = iter.lbound(firstRank); index[0] <= last;
             ++index[0])
         {
-            T_update::update(*const_cast<T_numtype*>(iter.data()), 
+	  T_update::update(*const_cast<T_numtype*>(iter.data()), 
                 expr(index));
             iter.advance();
         }
@@ -1234,7 +1235,7 @@ _bz_evaluateWithTiled2DTraversal(T_dest& dest, T_expr expr, T_update)
                     {
                         // Loop through current row elements
                         T_update::update(*const_cast<T_numtype*>(iter.data()), 
-                            *expr);
+					 *expr);
                         iter.advance();
                         expr.advance();
                     }

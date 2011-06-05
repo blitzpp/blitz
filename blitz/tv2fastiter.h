@@ -56,6 +56,11 @@ template<typename P_numtype, int N_length, typename P_arraytype>
 class FastTV2IteratorBase {
 public:
     typedef P_numtype                T_numtype;
+  typedef typename opType<T_numtype>::T_optype T_optype;
+
+  typedef typename asET<T_numtype>::T_wrapped T_typeprop;
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+
     typedef TinyVector<T_numtype, N_length> T_vector;
   typedef FastTV2IteratorBase<P_numtype, N_length, P_arraytype> T_iterator;
     typedef const T_vector& T_ctorArg1;
@@ -94,7 +99,7 @@ public:
     T_numtype operator()(int i) const
     { return array_[i]; }
 
-  T_numtype operator()(TinyVector<int,1> i) const
+  T_result operator()(TinyVector<int,1> i) const
     {
         BZPRECONDITION(array_.lengthCheck(i[0]));
         return array_[i[0]];
@@ -134,7 +139,7 @@ public:
     T_numtype operator[](int i) const
     { return data_[i * stride_]; }
 
-    T_numtype fastRead(sizeType i) const
+    T_result fastRead(sizeType i) const
   { return array_.fastRead(i); }
 
     int suggestStride(int r) const

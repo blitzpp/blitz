@@ -37,6 +37,7 @@
 #include <blitz/prettyprint.h>
 #include <blitz/et-forward.h>
 #include <blitz/array/domain.h>
+#include <blitz/array/asexpr.h>
 
 #ifdef BZ_HAVE_STD
  #include <sstream>
@@ -62,12 +63,17 @@ template<typename, int> class FastArrayCopyIterator;
 template<typename P_numtype, int N_rank, typename P_arraytype>
 class FastArrayIteratorBase {
 public:
-    typedef P_numtype                T_numtype;
-    typedef Array<T_numtype, N_rank> T_array;
-  typedef FastArrayIteratorBase<P_numtype, N_rank, P_arraytype> T_iterator;
+  typedef P_numtype                T_numtype;
+  typedef typename opType<T_numtype>::T_optype T_optype;
+  // if T_numtype is POD, then T_result is T_numtype, but if T_numtype
+  // is an ET class, T_result will be the array class for that class.
+  typedef typename asET<T_numtype>::T_wrapped T_typeprop;
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+  typedef Array<T_numtype, N_rank> T_array;
+  typedef FastArrayIteratorBase<T_numtype, N_rank, P_arraytype> T_iterator;
     typedef const T_array& T_ctorArg1;
     typedef int            T_ctorArg2;    // dummy
-  typedef FastArrayCopyIterator<P_numtype, N_rank> T_range_result;
+  typedef FastArrayCopyIterator<T_numtype, N_rank> T_range_result;
 
     static const int 
         numArrayOperands = 1, 
@@ -100,10 +106,10 @@ public:
     { }
 
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
-    T_numtype operator()(TinyVector<int, N_rank> i) const
+    T_result operator()(TinyVector<int, N_rank> i) const
     { return array_(i); }
 #else
-    T_numtype operator()(const TinyVector<int, N_rank>& i) const
+    T_result operator()(const TinyVector<int, N_rank>& i) const
     { return array_(i); }
 #endif
 
@@ -141,9 +147,9 @@ public:
     
     RectDomain<rank_> domain() const { return array_.domain(); };
 
-    T_numtype first_value() const { return *data_; }
+    T_result first_value() const { return *data_; }
 
-    T_numtype operator*() const
+    T_result operator*() const
     { return *data_; }
 
   template<int N>
@@ -152,10 +158,10 @@ public:
     return T_range_result(array_(d));
   }
 
-    T_numtype operator[](int i) const
+    T_result operator[](int i) const
     { return data_[i * stride_]; }
 
-    T_numtype fastRead(sizeType i) const
+    T_result fastRead(sizeType i) const
     { return data_[i]; }
 
     int suggestStride(int rank) const
@@ -189,6 +195,7 @@ public:
         stride_ = array_.stride(rank);
     }
 
+  // returns the lvalue, ie a pointer to the container
     const T_numtype * restrict data() const
     { return data_; }
 
@@ -310,7 +317,7 @@ public:
     // Experimental
     template<typename T_value>
     void operator+=(T_value x)
-    { *const_cast<T_numtype*>(data_) += x; }
+    { *const_cast<P_numtype*>(data_) += x; }
 
     // NEEDS_WORK: other operators
   
@@ -340,7 +347,7 @@ public:
 	   class T11 = nilArraySection>
   class SliceInfo {
   public:    
-    typedef FastArrayCopyIterator<T_numtype, blitz::SliceInfo<T_numtype, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::rank> T_slice;
+    typedef FastArrayCopyIterator<P_numtype, blitz::SliceInfo<P_numtype, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::rank> T_slice;
   };
 
   template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
@@ -352,9 +359,9 @@ public:
   }
 
 protected:
-  const T_numtype * restrict           data_;
+  const P_numtype * restrict           data_;
   P_arraytype                          array_;
-  ConstPointerStack<T_numtype,N_rank>  stack_;
+  ConstPointerStack<P_numtype,N_rank>  stack_;
   diffType                             stride_;
 };
 

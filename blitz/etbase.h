@@ -37,6 +37,8 @@ BZ_NAMESPACE(blitz)
 template<typename T>
 class ETBase { 
 public:
+  typedef T T_unwrapped;
+
     ETBase() 
     { }
 

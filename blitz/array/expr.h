@@ -95,6 +95,11 @@ class _bz_ArrayExpr
 public:
     typedef P_expr T_expr;
     typedef _bz_typename T_expr::T_numtype T_numtype;
+  // select return type
+  typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
+  typedef typename selectET<typename T_expr::T_typeprop, _bz_ArrayExpr<test> >::T_selected T_typeprop;
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+  typedef typename T_expr::T_optype T_optype;
     typedef T_expr T_ctorArg1;
     typedef int    T_ctorArg2;    // dummy
   typedef _bz_ArrayExpr<_bz_typename P_expr::T_range_result> T_range_result;
@@ -149,16 +154,17 @@ public:
         : iter_(exprpair.first(), exprpair.second())
     { }
 
-    T_numtype operator*() const { return *iter_; }
+  T_result operator*() const { //return *iter_;
+ }
 
-    T_numtype first_value() const { return iter_(iter_.lbound()); }
+  T_result first_value() const { return iter_(iter_.lbound()); }
 
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     template<int N_rank>
-    T_numtype operator()(const TinyVector<int, N_rank> i) const { return iter_(i); }
+    T_result operator()(const TinyVector<int, N_rank> i) const { return iter_(i); }
 #else
     template<int N_rank>
-    T_numtype operator()(const TinyVector<int, N_rank>& i) const { return iter_(i); }
+    T_result operator()(const TinyVector<int, N_rank>& i) const { return iter_(i); }
 #endif
 
   template<int N>
@@ -200,10 +206,10 @@ public:
         return iter_.canCollapse(outerLoopRank, innerLoopRank); 
     }
 
-    T_numtype operator[](int i) const
+    T_result operator[](int i) const
     { return iter_[i]; }
 
-    T_numtype fastRead(int i) const
+    T_result fastRead(int i) const
     { return iter_.fastRead(i); }
 
     // this is needed for the stencil expression fastRead to work
@@ -460,6 +466,11 @@ public:
     typedef P_expr T_expr;
     typedef P_op T_op;
     typedef _bz_typename T_expr::T_numtype T_numtype1;
+  // select return type
+  typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
+  typedef typename selectET<typename T_expr::T_typeprop, _bz_ArrayExprUnaryOp<test, T_op> >::T_selected T_typeprop;
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+  typedef typename T_expr::T_optype T_optype;
     typedef _bz_typename T_op::T_numtype T_numtype;
     typedef T_expr T_ctorArg1;
     typedef int    T_ctorArg2;    // dummy
@@ -496,18 +507,20 @@ public:
     int ubound(const int rank)    const { return iter_.ubound(rank);    }
     RectDomain<rank_> domain() const { return iter_.domain(); }
 
-    T_numtype operator*() const { return T_op::apply(*iter_); }
+  //    T_result operator*() const { return T_op::apply(*iter_); }
 
-    T_numtype first_value() const { return iter_(iter_.lbound()); }
+  //T_result first_value() const { return iter_(iter_.lbound()); }
 
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     template<int N_rank>
-    T_numtype operator()(const TinyVector<int, N_rank> i) const
+    T_result operator()(const TinyVector<int, N_rank> i) const
     { return T_op::apply(iter_(i)); }
 #else
     template<int N_rank>
-    T_numtype operator()(const TinyVector<int, N_rank>& i) const
-    { return T_op::apply(iter_(i)); }
+    T_result operator()(const TinyVector<int, N_rank>& i) const
+  { 
+    T_op::apply(iter_(i)); 
+}
 #endif
 
   template<int N>
@@ -571,11 +584,13 @@ public:
         return iter_.canCollapse(outerLoopRank, innerLoopRank); 
     }
 
-    T_numtype operator[](int i) const
+    T_result operator[](int i) const
     { return T_op::apply(iter_[i]); }
 
-    T_numtype fastRead(int i) const
-    { return T_op::apply(iter_.fastRead(i)); }
+    T_result fastRead(int i) const
+  { 
+    return (T_op::apply(iter_.fastRead(i))); 
+}
 
   // this is needed for the stencil expression fastRead to work
   void _bz_offsetData(sizeType i)
@@ -1422,6 +1437,10 @@ template<typename P_numtype>
 class _bz_ArrayExprConstant {
 public:
     typedef P_numtype T_numtype;
+  typedef typename opType<T_numtype>::T_optype T_optype;
+  typedef typename asET<T_numtype>::T_wrapped T_typeprop;
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+
     typedef T_numtype T_ctorArg1;
     typedef int       T_ctorArg2;    // dummy
   typedef _bz_ArrayExprConstant<P_numtype> T_range_result;

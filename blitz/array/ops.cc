@@ -63,7 +63,7 @@ inline Array<P_numtype,N_rank>&
 Array<P_numtype,N_rank>::operator=(const ETBase<T_expr>& expr)
 {
   _bz_evaluate(*this, _bz_typename asExpr<T_expr>::T_expr(expr.unwrap()), 
-	       _bz_update<T_numtype, _bz_typename T_expr::T_numtype>());
+	       _bz_update<T_numtype, _bz_typename T_expr::T_result>());
     return *this;
 }
 

@@ -47,7 +47,7 @@ template <typename T1>                                                     \
 _bz_inline_et                                                              \
 typename BZ_BLITZ_SCOPE(BzUnaryExprResult)<functor,T1>::T_result           \
 name(const BZ_BLITZ_SCOPE(ETBase)<T1>& d1)                                 \
-{                                                                          \
+{									\
     typedef typename                                                       \
         BZ_BLITZ_SCOPE(BzUnaryExprResult)<functor,T1>::T_result result;    \
     return result(BZ_BLITZ_SCOPE(asExpr)<T1>::getExpr(d1.unwrap()));       \
