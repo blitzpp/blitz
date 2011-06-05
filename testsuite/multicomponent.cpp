@@ -2,6 +2,9 @@
 #include <blitz/array.h>
 //#include <blitz/array.cc>
 #include <blitz/tinyvec2.cc>
+#include <blitz/tinymat2.h>
+#include <blitz/tinymat2io.cc>
+#include <blitz/tm2ops.cc>
 #include <blitz/array/asexpr.cc>
 #include <blitz/array/ops.h>
 #include <blitz/array/ops.cc>
@@ -20,6 +23,7 @@ BZ_USING_NAMESPACE(blitz)
 
 typedef Array<TinyVector<TinyVector<double,2>, 2>, 1> array_1vv;
 typedef Array<TinyVector<double, 2>, 1> array_1v;
+typedef Array<TinyMatrix<double, 2,2>, 1> array_1m;
 typedef Array<double, 1> array_1;
 typedef TinyVector<TinyVector<double,2>, 5> tv;
 
@@ -28,14 +32,15 @@ int main()
   // create some arrays to operate on
   const int sz=5;
 
-  array_1vv a(sz),b(sz);
+  //array_1vv a(sz),b(sz);
   //array_1v a(sz),b(sz);
+  array_1m a(sz),b(sz);
   array_1 aa(sz),bb(sz);
   //tv a,b;
   
-  //a=1,2,3,4,5;
-  a(0)=1;
-  a(1)=TinyVector<double,2>(2,3);
+  a=1,2,3,4,5;
+  //a(0)=1;
+  //  a(1)=TinyVector<double,2>(2,3);
   aa=1,2,3,4,5;
   // cout << a << endl;
 
@@ -50,11 +55,13 @@ int main()
   // tv v2;
   //v2 = -v1;
   //(-a).fastRead(1);//.fastRead(1).fastRead(1);
-  b= 2*(-a)* scalar(TinyVector<double, 2>(0.5,-0.5));
+  b= 2*(-a);//* scalar(TinyVector<double, 2>(0.5,-0.5));
   bb=aa;
   //bb= sqrt(aa)*aa/(-aa);
 
-  cout << a << "\n" << b << endl;
+  TinyMatrix<double,2,2> m;
+  cout << m;
+  //cout << a << "\n" << b << endl;
   cout << bb << endl;
 
     return 0;

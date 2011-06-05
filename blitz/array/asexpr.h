@@ -230,23 +230,27 @@ struct BzTernaryExprResult {
         typename asExpr<O1>::T_expr,
         typename asExpr<O2>::T_expr,
         typename asExpr<O3>::T_expr,
-        OP<typename asExpr<O1>::T_expr::T_numtype,
-           typename asExpr<O2>::T_expr::T_numtype,
-           typename asExpr<O3>::T_expr::T_numtype> > > T_result;
+        OP<
+	  typename asExpr<O1>::T_expr::T_optype,
+	  typename asExpr<O2>::T_expr::T_optype,
+	  typename asExpr<O3>::T_expr::T_optype
+	  > > > T_result;
 };
 
 template <template <typename T1, typename T2, typename T3, typename T4> class OP,
           typename O1, typename O2, typename O3, typename O4>
 struct BzQuaternaryExprResult {
-    typedef _bz_ArrayExpr<_bz_ArrayExprQuaternaryOp<
-        typename asExpr<O1>::T_expr,
-        typename asExpr<O2>::T_expr,
-        typename asExpr<O3>::T_expr,
-        typename asExpr<O4>::T_expr,
-        OP<typename asExpr<O1>::T_expr::T_numtype,
-           typename asExpr<O2>::T_expr::T_numtype,
-           typename asExpr<O3>::T_expr::T_numtype,
-           typename asExpr<O4>::T_expr::T_numtype> > > T_result;
+  typedef _bz_ArrayExpr<_bz_ArrayExprQuaternaryOp<
+			  typename asExpr<O1>::T_expr,
+			  typename asExpr<O2>::T_expr,
+			  typename asExpr<O3>::T_expr,
+			  typename asExpr<O4>::T_expr,
+			  OP<
+			    typename asExpr<O1>::T_expr::T_optype,
+			    typename asExpr<O2>::T_expr::T_optype,
+			    typename asExpr<O3>::T_expr::T_optype,
+			    typename asExpr<O4>::T_expr::T_optype
+			    > > > T_result;
 };
 
 #endif /* BZ_HAVE_TEMPLATES_AS_TEMPLATE_ARGUMENTS */

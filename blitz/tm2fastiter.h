@@ -53,6 +53,12 @@ template<typename P_numtype, int N_rows, int N_columns, typename P_arraytype>
 class FastTM2IteratorBase {
 public:
   typedef P_numtype                T_numtype;
+  typedef typename opType<T_numtype>::T_optype T_optype;
+  // if T_numtype is POD, then T_result is T_numtype, but if T_numtype
+  // is an ET class, T_result will be the array class for that class.
+  typedef typename asET<T_numtype>::T_wrapped T_typeprop;
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+
   typedef TinyMatrix<T_numtype, N_rows, N_columns> T_matrix;
   typedef FastTM2IteratorBase<P_numtype, N_rows, N_columns, P_arraytype> T_iterator;
     typedef const T_matrix& T_ctorArg1;
@@ -88,7 +94,7 @@ public:
     ~FastTM2IteratorBase()
     { }
 
-  T_numtype operator()(TinyVector<int,2> i) const
+  T_result operator()(TinyVector<int,2> i) const
     {
         return array_(i);
     }
@@ -127,15 +133,15 @@ public:
     
   //RectDomain<rank_> domain() const { return T_matrix::domain(); };
 
-    T_numtype first_value() const { return *data_; }
+    T_result first_value() const { return *data_; }
 
-    T_numtype operator*() const
+    T_result operator*() const
     { return *data_; }
 
-    T_numtype operator[](int i) const
+    T_result operator[](int i) const
     { return data_[i * stride_]; }
 
-    T_numtype fastRead(sizeType i) const
+    T_result fastRead(sizeType i) const
   { return data_[i]; }
 
   static int suggestStride(int r) 
@@ -169,6 +175,7 @@ public:
         stride_ = T_matrix::stride(rank);
     }
 
+  // This is used as lvalue, so it should return the actual data
     const T_numtype * restrict data() const
     { return data_; }
 

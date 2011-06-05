@@ -253,6 +253,10 @@ public:
     _bz_ArrayExpr<ArrayIndexMapping<FastTM2Iterator<T_numtype, N_rows, N_columns>, N0, N1> >
     operator()(IndexPlaceholder<N0>, IndexPlaceholder<N1>) const;
 
+  // must return reference so the iterator can turn it into an
+  // iterator for the contained in case we have a multicomponent.
+  const T_numtype& fastRead(sizeType i) const
+    { return data_[i]; }
 
     // T_reference getRef()
     // { return T_reference((T_numtype*)data_); }
