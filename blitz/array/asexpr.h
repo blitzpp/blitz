@@ -52,31 +52,34 @@ struct asExpr<_bz_ArrayExpr<T> > {
   static const T_expr& getExpr(const T_expr& x);
 };
 
-//  Specialization of asExpr for array operands
+//  Specialization of asExpr for array operands 
+// why doesn't it wrap iterators in an ArrayExpr?
 template <typename T,int N>
 struct asExpr<Array<T,N> > {
-    typedef FastArrayIterator<T,N> T_expr;
+  //typedef FastArrayIterator<T,N> T_expr;
+  typedef _bz_ArrayExpr<FastArrayIterator<T,N> > T_expr;
   static T_expr getExpr(const Array<T,N>& x);
 };
 
 //  Specialization of asExpr for tinyvector operands
 template <typename T,int N>
 struct asExpr<TinyVector<T,N> > {
-    typedef FastTV2Iterator<T,N> T_expr;
+  typedef _bz_ArrayExpr<FastTV2Iterator<T,N> > T_expr;
   static T_expr getExpr(const TinyVector<T,N>& x);
 };
 
 //  Specialization of asExpr for tinymatrix operands
 template <typename T,int Nr, int Nc>
 struct asExpr<TinyMatrix<T,Nr, Nc> > {
-  typedef FastTM2Iterator<T,Nr, Nc> T_expr;
+  typedef _bz_ArrayExpr<FastTM2Iterator<T,Nr, Nc> > T_expr;
   static T_expr getExpr(const TinyMatrix<T,Nr,Nc>& x);
 };
 
 //  Index placeholder
 template <int N>
 struct asExpr<IndexPlaceholder<N> > {
-    typedef IndexPlaceholder<N> T_expr;
+  //  typedef _bz_ArrayExpr<IndexPlaceholder<N> > T_expr;
+  typedef IndexPlaceholder<N> T_expr;
   static T_expr getExpr(const T_expr& x);
 };
 

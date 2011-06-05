@@ -514,9 +514,12 @@ public:
 
   //T_result first_value() const { return iter_(iter_.lbound()); }
 
-  // Functions for reading. Because they must depend on the result
-  // type, they utilize a helper class.
 
+  /* Functions for reading. Because they must depend on the result
+   * type, they utilize a helper class.
+   */
+
+  // For numtypes, apply operator
   template<typename T> struct readHelper {
     static T_result fastRead(const T_expr& iter, int i) {
       return (T_op::apply(iter.fastRead(i))); };
@@ -533,6 +536,7 @@ public:
       return T_op::apply(iter(i)); }
   };
 
+  // For ET types, bypass operator and create expression
     template<typename T> struct readHelper<ETBase<T> > {
       static T_result fastRead(const T_expr& iter, int i) {
 	return iter.fastRead(i); };
@@ -697,8 +701,9 @@ public:
   typedef typename selectET2<typename T_expr1::T_typeprop, 
 			     typename T_expr2::T_typeprop, 
 			     T_numtype, 
-			     _bz_ArrayExprBinaryOp<T_unwrapped1, 
-						   T_unwrapped2, T_op> >::T_selected T_typeprop;
+			     _bz_ArrayExprBinaryOp<typename asExpr<T_unwrapped1>::T_expr, 
+						   typename asExpr<T_unwrapped2>::T_expr, 
+						   T_op> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
   typedef typename T_op::T_numtype T_optype;
 
@@ -1592,7 +1597,9 @@ public:
     T_numtype operator[](int) const
     { return value_; }
 
-    T_numtype fastRead(int) const
+  // this must return by reference, because for multicomponent arrays
+  // it gets turned into an iterator by the containing expression.
+  const T_numtype& fastRead(int) const
     { return value_; }
 
   // this is needed for the stencil expression fastRead to work

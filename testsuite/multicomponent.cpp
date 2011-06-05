@@ -47,8 +47,9 @@ int main()
   // tv v1(1,1);
   // tv v2;
   //v2 = -v1;
-  b= sqrt(a)*a/(-a);
-  bb= sqrt(aa)*aa/(-aa);
+  b= a* scalar(TinyVector<double, 2>(0.5,-0.5));
+  bb=aa+2;
+  //bb= sqrt(aa)*aa/(-aa);
 
   cout << b << endl;
   cout << bb << endl;
