@@ -763,7 +763,7 @@ public:
       return T_op::apply(iter1.first_value(), iter2.first_value()); }
     template<int N_rank>
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
-    static T_result indexop(const T_expr& iter, 
+    static T_result indexop(const T_expr1& iter1, const T_expr2& iter2,
 			    const TinyVector<int, N_rank> i) {
 #else
       static T_result indexop(const T_expr1& iter1, const T_expr2& iter2,
@@ -1046,9 +1046,6 @@ public:
         : iter1_(a), iter2_(b), iter3_(c)
     { }
 
-    T_numtype operator*() const
-    { return T_op::apply(*iter1_, *iter2_, *iter3_); }
-
   /* Functions for reading. Because they must depend on the result
    * type, they utilize a helper class.
    */
@@ -1062,6 +1059,9 @@ public:
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, 
 			    const T_expr3& iter3, int i) {
       return T_op::apply(iter1[i], iter2[i], iter3[i]); };
+    static T_result deref(const T_expr1& iter1, const T_expr2& iter2, 
+			  const T_expr3& iter3) {
+      return T_op::apply(*iter1, *iter2, *iter3); };
     static T_result first_value(const T_expr1& iter1, const T_expr2& iter2,
 				const T_expr3& iter3)  {
       return T_op::apply(iter1.first_value(), iter2.first_value(),
@@ -1088,6 +1088,9 @@ public:
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, 
 			    const T_expr3& iter3, int i) {
       return T_result(iter1[i], iter2[i], iter3[i]); };
+    static T_result deref(const T_expr1& iter1, const T_expr2& iter2, 
+			    const T_expr3& iter3) {
+      return T_result(*iter1, *iter2, *iter3); };
     static T_result first_value(const T_expr1& iter1, const T_expr2& iter2,
 				const T_expr3& iter3)  {
       return T_result(iter1.first_value(), iter2.first_value(),
@@ -1118,6 +1121,9 @@ public:
       T_result operator()(const TinyVector<int, N_rank>& i) const {
 #endif
 	return readHelper<T_typeprop>::indexop(iter1_, iter2_, iter3_, i); }
+
+      T_result operator*() const {
+	return readHelper<T_typeprop>::deref(iter1_, iter2_, iter3_); }
     
       T_result first_value() const { 
 	return readHelper<T_typeprop>::first_value(iter1_, iter2_, iter3_); }
@@ -1393,9 +1399,6 @@ public:
         : iter1_(a), iter2_(b), iter3_(c), iter4_(d)
     { }
 
-    T_numtype operator*() const
-    { return T_op::apply(*iter1_, *iter2_, *iter3_, *iter4_); }
-
   /* Functions for reading. Because they must depend on the result
    * type, they utilize a helper class.
    */
@@ -1411,6 +1414,9 @@ public:
 			    const T_expr3& iter3, const T_expr4& iter4, 
 			    int i) {
       return T_op::apply(iter1[i], iter2[i], iter3[i], iter4[i]); };
+    static T_result deref(const T_expr1& iter1, const T_expr2& iter2, 
+			  const T_expr3& iter3, const T_expr4& iter4) {
+      return T_op::apply(*iter1, *iter2, *iter3, *iter4); };
     static T_result first_value(const T_expr1& iter1, const T_expr2& iter2,
 				const T_expr3& iter3, const T_expr3& iter4)  {
       return T_op::apply(iter1.first_value(), iter2.first_value(),
@@ -1438,6 +1444,9 @@ public:
 			    const T_expr3& iter3, const T_expr4& iter4,
 			    int i) {
       return T_result(iter1[i], iter2[i], iter3[i], iter4[i]); };
+    static T_result deref(const T_expr1& iter1, const T_expr2& iter2, 
+			  const T_expr3& iter3, const T_expr4& iter4) {
+      return T_result(*iter1, *iter2, *iter3, *iter4); };
     static T_result first_value(const T_expr1& iter1, const T_expr2& iter2,
 				const T_expr3& iter3, const T_expr3& iter4)  {
       return T_result(iter1.first_value(), iter2.first_value(),
@@ -1471,6 +1480,10 @@ public:
 #endif
 	return readHelper<T_typeprop>::indexop(iter1_, iter2_, 
 					       iter3_, iter4_, i); }
+
+      T_result operator*() const
+      { return readHelper<T_typeprop>::deref(*iter1_, *iter2_, 
+					     *iter3_, *iter4_); }
     
       T_result first_value() const { 
 	return readHelper<T_typeprop>::first_value(iter1_, iter2_, 

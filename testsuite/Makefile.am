@@ -16,13 +16,14 @@ chris-jeffery-3 complex-test constarray contiguous copy ctors		\
 derrick-bass-1 derrick-bass-3 exprctor expression-slicing extract free	\
 gary-huber-1 initialize interlace iter Josef-Wagenhuber levicivita	\
 loop1 matthias-troyer-1 matthias-troyer-2 mattias-lindstroem-1 minmax	\
-minsumpow module multicomponent newet Olaf-Ronneberger-1		\
-patrik-jonsson-1 peter-bienstman-1 peter-bienstman-2 peter-bienstman-3	\
-peter-bienstman-4 peter-bienstman-5 peter-nordlund-1 peter-nordlund-2	\
-peter-nordlund-3 promote pthread qcd reduce reindex reverse		\
-safeToReturn shapecheck shape slice-iterators stencil-et storage stub	\
-theodore-papadopoulo-1 tinymat tinyvec transpose troyer-genilloud	\
-tvinitialize Ulisses-Mello-1 weakref wei-ku-1 where zeek-1
+minsumpow module multicomponent multicomponent-2 newet			\
+Olaf-Ronneberger-1 patrik-jonsson-1 peter-bienstman-1			\
+peter-bienstman-2 peter-bienstman-3 peter-bienstman-4			\
+peter-bienstman-5 peter-nordlund-1 peter-nordlund-2 peter-nordlund-3	\
+promote pthread qcd reduce reindex reverse safeToReturn shapecheck	\
+shape slice-iterators stencil-et storage stub theodore-papadopoulo-1	\
+tinymat tinyvec transpose troyer-genilloud tvinitialize			\
+Ulisses-Mello-1 weakref wei-ku-1 where zeek-1
 
 64bit_SOURCES = 64bit.cpp
 Adnene_Ben_Abdallah_1_SOURCES = Adnene-Ben-Abdallah-1.cpp
@@ -57,6 +58,7 @@ minmax_SOURCES = minmax.cpp
 minsumpow_SOURCES = minsumpow.cpp
 module_SOURCES = module1.cpp module2.cpp
 multicomponent_SOURCES = multicomponent.cpp
+multicomponent_2_SOURCES = multicomponent-2.cpp
 newet_SOURCES = newet.cpp
 Olaf_Ronneberger_1_SOURCES = Olaf-Ronneberger-1.cpp
 patrik_jonsson_1_SOURCES = patrik-jonsson-1.cpp

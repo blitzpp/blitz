@@ -4,6 +4,12 @@
 
 BZ_USING_NAMESPACE(blitz)
 
+class crap {
+public:
+  double operator()(double x) const {return x+1;};
+  BZ_DECLARE_FUNCTOR(crap);
+};
+
 template<typename T>
 void test_1d(T& B)
 {
@@ -35,7 +41,6 @@ void test_1d(T& B)
 template<typename T>
 void test_1dexpr(const T& B)
 {
-
     BZTEST(sum(B) == 12);
     BZTEST(mean(B) == 2);
     BZTEST(min(B) == -2);
@@ -133,6 +138,11 @@ int main()
     B = -2, -30, 4, 3, 0, -1;
     BB = -2, 5, 3, -1, 1, 1;
     test_1dexpr(where(B>BB,B,BB));
+
+    cout << "Testing functor expression reductions\n";
+    B = -2, 5, 4, 3, 1, 1;
+    crap c;
+    test_1dexpr(c(B)-1);
 
     return 0;
 }

@@ -85,7 +85,7 @@
    A = C + applyFunctor(classInstance, B * tensor::i);
    A = C + applyFunctor(classInstance, tensor::i, tensor::j);
     
-   This approach does not work for arbitrary member functions.  The
+   This approach does not work for arbitrary s.  The
    class must be a proper functor with an operator().  
 
 */
@@ -110,6 +110,17 @@ public:
     typedef P_expr T_expr;
     typedef _bz_typename T_expr::T_numtype T_numtype1;
     typedef P_result T_numtype;
+
+  // select return type
+  typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
+  typedef typename selectET<typename T_expr::T_typeprop, 
+			    T_numtype, 
+			    _bz_FunctorExpr<T_functor, 
+					    test, 
+					    P_result> >::T_selected T_typeprop;
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+  typedef T_numtype T_optype;
+
     typedef T_expr    T_ctorArg1;
     typedef int       T_ctorArg2;    // dummy
     typedef int       T_ctorArg3;    // dummy
@@ -129,9 +140,9 @@ public:
         : f_(f), iter_(a)
     { }
 
-    _bz_FunctorExpr(BZ_ETPARM(T_functor) f, _bz_typename T_expr::T_ctorArg1 a)
-        : f_(f), iter_(a)
-    { }
+  // this is identical to the above constructor
+  //_bz_FunctorExpr(BZ_ETPARM(T_functor) f, _bz_typename T_expr::T_ctorArg1 a)
+  //: f_(f), iter_(a)  { }
 
 #if BZ_TEMPLATE_CTOR_DOESNT_CAUSE_HAVOC
     template<typename T1>
@@ -140,18 +151,74 @@ public:
     { }
 #endif
 
-    T_numtype operator*() const
-    { return f_(*iter_); }
+  /* Functions for reading data. Because they must depend on the
+   * result type, they utilize a helper class.
+   */
 
+  // For numtypes, apply operator
+  template<typename T> struct readHelper {
+    static T_result fastRead(const T_functor& f, const T_expr& iter, int i) {
+      return f(iter.fastRead(i)); };
+    static T_result indexop(const T_functor& f, const T_expr& iter, int i) {
+      return f(iter[i]); };
+    static T_result deref(const T_functor& f, const T_expr& iter) {
+      return f(*iter); }
+    static T_result first_value(const T_functor& f, const T_expr& iter)  {
+      return f(iter.first_value()); }
+    template<int N_rank>
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
-    template<int N_rank>
-    T_numtype operator()(TinyVector<int,N_rank> i) const
-    { return f_(iter_(i)); }
+    static T_result indexop(const T_functor& f, const T_expr& iter, 
+			    const TinyVector<int, N_rank> i) {
 #else
-    template<int N_rank>
-    T_numtype operator()(const TinyVector<int,N_rank>& i) const
-    { return f_(iter_(i)); }
+      static T_result indexop(const T_functor& f, const T_expr& iter,
+			      const TinyVector<int, N_rank>& i) {
 #endif
+      return f(iter(i)); }
+  };
+
+  // For ET types, bypass operator and create expression
+    template<typename T> struct readHelper<ETBase<T> > {
+      static T_result fastRead(const T_functor& f, const T_expr& iter, int i) {
+	return T_result(f,iter.fastRead(i)); };
+      static T_result indexop(const T_functor& f, const T_expr& iter, int i) {
+	return T_result(f,iter[i]); };
+      static T_result deref(const T_functor& f, const T_expr& iter) {
+	return T_result(f,*iter); }
+    static T_result first_value(const T_functor& f, const T_expr& iter)  {
+      return iter.first_value(); }
+      template<int N_rank>
+#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
+      static T_result indexop(const T_functor& f, const T_expr& iter,
+			      const TinyVector<int, N_rank> i) {
+#else
+    static T_result indexop(const T_functor& f, const T_expr& iter,
+			    const TinyVector<int, N_rank>& i) {
+#endif
+      return T_result(f,iter(i)); }
+    };
+
+    T_result fastRead(int i) const { 
+      return readHelper<T_typeprop>::fastRead(f_, iter_, i); }
+
+    T_result operator[](int i) const { 
+      return readHelper<T_typeprop>::indexop(f_, iter_, i); }
+
+    template<int N_rank>
+#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
+    T_result operator()(const TinyVector<int, N_rank> i) const {
+#else
+      T_result operator()(const TinyVector<int, N_rank>& i) const {
+#endif
+	return readHelper<T_typeprop>::indexop(f_, iter_,i); }
+
+      T_result operator*() const {
+	return readHelper<T_typeprop>::deref(f_, iter_); }
+
+      T_result first_value() const { 
+	return readHelper<T_typeprop>::first_value(f_, iter_); }
+
+
+      // ****** end reading
 
   T_range_result operator()(RectDomain<rank_> d) const
   {
@@ -182,12 +249,6 @@ public:
     { 
         return iter_.canCollapse(outerLoopRank, innerLoopRank); 
     }
-
-    T_numtype operator[](const int i) const
-    { return f_(iter_[i]); }
-
-    T_numtype fastRead(const int i) const
-    { return f_(iter_.fastRead(i)); }
 
     // this is needed for the stencil expression fastRead to work
     void _bz_offsetData(sizeType i)
@@ -274,6 +335,20 @@ public:
     typedef _bz_typename T_expr1::T_numtype T_numtype1;
     typedef _bz_typename T_expr2::T_numtype T_numtype2;
     typedef P_result T_numtype;
+
+  // select return type
+  typedef typename unwrapET<typename T_expr1::T_result>::T_unwrapped T_unwrapped1;
+  typedef typename unwrapET<typename T_expr2::T_result>::T_unwrapped T_unwrapped2;
+  typedef typename selectET2<typename T_expr1::T_typeprop, 
+			     typename T_expr2::T_typeprop, 
+			     T_numtype, 
+			     _bz_FunctorExpr2<T_functor,
+					      typename asExpr<T_unwrapped1>::T_expr, 
+					      typename asExpr<T_unwrapped2>::T_expr, 
+					      P_result> >::T_selected T_typeprop;
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+  typedef T_numtype T_optype;
+
     typedef T_expr1 T_ctorArg1;
     typedef T_expr1 T_ctorArg2;
     typedef int T_ctorArg3;  // dummy
@@ -304,19 +379,86 @@ public:
     _bz_FunctorExpr2(BZ_ETPARM(T_functor) f, BZ_ETPARM(T1) a, BZ_ETPARM(T2) b) 
         : f_(f), iter1_(a), iter2_(b)
     { }
-  
-    T_numtype operator*() const
-    { return f_(*iter1_, *iter2_); }
 
+  /* Functions for reading. Because they must depend on the result
+   * type, they utilize a helper class.
+   */
+
+  // For numtypes, apply operator
+  template<typename T> struct readHelper {
+    static T_result fastRead(const T_functor& f, const T_expr1& iter1, 
+			     const T_expr2& iter2, int i) {
+      return f(iter1.fastRead(i), iter2.fastRead(i)); }
+    static T_result indexop(const T_functor& f, const T_expr1& iter1, 
+			    const T_expr2& iter2, int i) {
+      return f(iter1[i], iter2[i]); };
+    static T_result deref(const T_functor& f, const T_expr1& iter1, 
+			  const T_expr2& iter2) {
+      return f(*iter1, *iter2); }
+    static T_result first_value(const T_functor& f, const T_expr1& iter1, 
+				const T_expr2& iter2)  {
+      return f(iter1.first_value(), iter2.first_value()); }
+    template<int N_rank>
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
-    template<int N_rank>
-    T_numtype operator()(TinyVector<int, N_rank> i) const
-    { return f_(iter1_(i), iter2_(i)); }
+    static T_result indexop(const T_functor& f, const T_expr& iter, 
+			    const T_expr2& iter2,
+			    const TinyVector<int, N_rank> i) {
 #else
-    template<int N_rank>
-    T_numtype operator()(const TinyVector<int, N_rank>& i) const
-    { return f_(iter1_(i), iter2_(i)); }
+      static T_result indexop(const T_functor& f, const T_expr1& iter1, 
+			      const T_expr2& iter2,
+			      const TinyVector<int, N_rank>& i) {
 #endif
+	return f(iter1(i), iter2(i)); };
+    };
+    
+  // For ET types, bypass operator and create expression
+    template<typename T> struct readHelper<ETBase<T> > {
+      static T_result fastRead(const T_functor& f, const T_expr1& iter1, 
+			       const T_expr2& iter2, int i) {
+	return T_result(f,iter1.fastRead(i), iter2.fastRead(i)); }
+    static T_result indexop(const T_functor& f, const T_expr1& iter1, 
+			    const T_expr2& iter2, int i) {
+      return T_result(f,iter1[i], iter2[i]); };
+    static T_result deref(const T_functor& f, const T_expr1& iter1, 
+			  const T_expr2& iter2) {
+      return T_result(f,*iter1, *iter2); }
+    static T_result first_value(const T_functor& f, const T_expr1& iter1, 
+				const T_expr2& iter2)  {
+      return T_result(f,iter1.first_value(), iter2.first_value()); }
+      template<int N_rank>
+#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
+      static T_result indexop(const T_functor& f, const T_expr1& iter1, 
+			      const T_expr2& iter2,
+			      const TinyVector<int, N_rank> i) {
+#else
+	static T_result indexop(const T_functor& f, const T_expr1& iter1, 
+				const T_expr2& iter2,
+				const TinyVector<int, N_rank>& i) {
+#endif
+	  return T_result(f,iter1(i), iter2(i)); }
+      };
+
+    T_result fastRead(int i) const { 
+      return readHelper<T_typeprop>::fastRead(f_, iter1_, iter2_, i); }
+
+    T_result operator[](int i) const { 
+      return readHelper<T_typeprop>::indexop(f_, iter1_, iter2_, i); }
+
+    template<int N_rank>
+#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
+    T_result operator()(const TinyVector<int, N_rank> i) const {
+#else
+      T_result operator()(const TinyVector<int, N_rank>& i) const {
+#endif
+	return readHelper<T_typeprop>::indexop(f_, iter1_, iter2_, i); }
+
+      T_result operator*() const {
+	return readHelper<T_typeprop>::deref(f_, iter1_, iter2_); }
+
+      T_result first_value() const { 
+	return readHelper<T_typeprop>::first_value(f_, iter1_, iter2_); }
+    
+      // ****** end reading  
 
   T_range_result operator()(RectDomain<rank_> d) const
   {
@@ -390,13 +532,7 @@ public:
     { 
         return iter1_.canCollapse(outerLoopRank, innerLoopRank)
             && iter2_.canCollapse(outerLoopRank, innerLoopRank);
-    } 
-
-    T_numtype operator[](const int i) const
-    { return f_(iter1_[i], iter2_[i]); }
-
-    T_numtype fastRead(const int i) const
-    { return f_(iter1_.fastRead(i), iter2_.fastRead(i)); }
+    }
 
     // this is needed for the stencil expression fastRead to work
     void _bz_offsetData(sizeType i)
@@ -505,6 +641,27 @@ public:
     typedef _bz_typename T_expr2::T_numtype T_numtype2;
     typedef _bz_typename T_expr3::T_numtype T_numtype3;
     typedef P_result T_numtype;
+
+  // select return type
+  typedef typename unwrapET<typename T_expr1::T_result>::T_unwrapped T_unwrapped1;
+  typedef typename unwrapET<typename T_expr2::T_result>::T_unwrapped T_unwrapped2;
+  typedef typename unwrapET<typename T_expr3::T_result>::T_unwrapped T_unwrapped3;
+  typedef typename selectET2<typename T_expr1::T_typeprop, 
+			     typename T_expr2::T_typeprop, 
+			     T_numtype, 
+			     char>::T_selected T_intermediary;
+
+  typedef typename selectET2<T_intermediary,
+			     typename T_expr3::T_typeprop, 
+			     T_numtype, 
+			     _bz_FunctorExpr3<P_functor,
+					      typename asExpr<T_unwrapped1>::T_expr, 
+					      typename asExpr<T_unwrapped2>::T_expr, 
+					      typename asExpr<T_unwrapped3>::T_expr, 
+					      T_numtype> >::T_selected T_typeprop;
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+  typedef T_numtype T_optype;
+
     typedef T_expr1 T_ctorArg1;
     typedef T_expr2 T_ctorArg2;
     typedef T_expr3 T_ctorArg3;
@@ -540,19 +697,95 @@ public:
         BZ_ETPARM(T3) c) 
         : f_(f), iter1_(a), iter2_(b), iter3_(c)
     { }
-  
-    T_numtype operator*() const
-    { return f_(*iter1_, *iter2_, *iter3_); }
 
+  /* Functions for reading. Because they must depend on the result
+   * type, they utilize a helper class.
+   */
+
+  // For numtypes, apply operator
+  template<typename T> struct readHelper {
+    static T_result fastRead(const T_functor& f, const T_expr1& iter1, 
+			     const T_expr2& iter2, const T_expr3& iter3, 
+			     int i) {
+      return f(iter1.fastRead(i), iter2.fastRead(i), 
+	       iter3.fastRead(i)); }
+    static T_result indexop(const T_functor& f, const T_expr1& iter1, 
+			    const T_expr2& iter2, const T_expr3& iter3, 
+			    int i) {
+      return f(iter1[i], iter2[i], iter3[i]); };
+    static T_result deref(const T_functor& f, const T_expr1& iter1, 
+			  const T_expr2& iter2, const T_expr3& iter3) {
+      return f(*iter1, *iter2, *iter3); };
+    static T_result first_value(const T_functor& f, const T_expr1& iter1, 
+				const T_expr2& iter2, const T_expr3& iter3)  {
+      return f(iter1.first_value(), iter2.first_value(),
+			 iter3.first_value()); }
+    template<int N_rank>
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
-    template<int N_rank>
-    T_numtype operator()(TinyVector<int, N_rank> i) const
-    { return f_(iter1_(i), iter2_(i), iter3_(i)); }
+      static T_result indexop(const T_functor& f, const T_expr1& iter1, 
+			      const T_expr2& iter2, const T_expr3& iter3, 
+			      const TinyVector<int, N_rank> i) {
 #else
-    template<int N_rank>
-    T_numtype operator()(const TinyVector<int, N_rank>& i) const
-    { return f_(iter1_(i), iter2_(i), iter3_(i)); }
+      static T_result indexop(const T_functor& f, const T_expr1& iter1, 
+			      const T_expr2& iter2, const T_expr3& iter3, 
+			      const TinyVector<int, N_rank>& i) {
 #endif
+	return f(iter1(i), iter2(i), iter3(i) ); };
+    };
+    
+    // For ET types, bypass operator and create expression
+    template<typename T> struct readHelper<ETBase<T> > {
+    static T_result fastRead(const T_functor& f, const T_expr1& iter1, 
+			     const T_expr2& iter2, const T_expr3& iter3, 
+			     int i) {
+      return T_result(f, iter1.fastRead(i), iter2.fastRead(i), 
+		      iter3.fastRead(i)); }
+    static T_result indexop(const T_functor& f, const T_expr1& iter1, 
+			    const T_expr2& iter2, const T_expr3& iter3, 
+			    int i) {
+      return T_result(f, iter1[i], iter2[i], iter3[i]); };
+    static T_result deref(const T_functor& f, const T_expr1& iter1, 
+			  const T_expr2& iter2, const T_expr3& iter3) {
+      return T_result(f, *iter1, *iter2, *iter3); };
+    static T_result first_value(const T_functor& f, const T_expr1& iter1, 
+				const T_expr2& iter2, const T_expr3& iter3)  {
+      return T_result(f, iter1.first_value(), iter2.first_value(),
+		      iter3.first_value()); }
+      template<int N_rank>
+#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
+      static T_result indexop(const T_functor& f, const T_expr1& iter1, 
+			      const T_expr2& iter2, const T_expr3& iter3, 
+			      const TinyVector<int, N_rank> i) {
+#else
+      static T_result indexop(const T_functor& f, const T_expr1& iter1, 
+			      const T_expr2& iter2, const T_expr3& iter3, 
+			      const TinyVector<int, N_rank>& i) {
+#endif
+	return T_result(f, iter1(i), iter2(i), iter3(i) ); }
+      };
+
+    T_result fastRead(int i) const { 
+      return readHelper<T_typeprop>::fastRead(f_, iter1_, iter2_, iter3_, i); }
+
+    T_result operator[](int i) const { 
+      return readHelper<T_typeprop>::indexop(f_, iter1_, iter2_, iter3_, i); }
+
+    template<int N_rank>
+#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
+    T_result operator()(const TinyVector<int, N_rank> i) const {
+#else
+      T_result operator()(const TinyVector<int, N_rank>& i) const {
+#endif
+	return readHelper<T_typeprop>::indexop(f_, iter1_, iter2_, iter3_, i); }
+
+      T_result operator*() const {
+	return readHelper<T_typeprop>::deref(f_, iter1_, iter2_, iter3_); }
+    
+      T_result first_value() const { 
+	return readHelper<T_typeprop>::first_value(f_, iter1_, iter2_, iter3_); }
+
+      // ****** end reading
+  
 
   T_range_result operator()(RectDomain<rank_> d) const
   {
@@ -638,13 +871,7 @@ public:
         return iter1_.canCollapse(outerLoopRank, innerLoopRank)
             && iter2_.canCollapse(outerLoopRank, innerLoopRank)
             && iter3_.canCollapse(outerLoopRank, innerLoopRank);
-    } 
-
-    T_numtype operator[](const int i) const
-    { return f_(iter1_[i], iter2_[i], iter3_[i]); }
-
-    T_numtype fastRead(const int i) const
-    { return f_(iter1_.fastRead(i), iter2_.fastRead(i), iter3_.fastRead(i)); }
+    }
 
     // this is needed for the stencil expression fastRead to work
     void _bz_offsetData(sizeType i)
@@ -904,13 +1131,13 @@ template<typename P_expr>                                                 \
 BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr)<            \
     classname,                                                            \
     _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr,                  \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr::T_numtype> >     \
+  _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr::T_optype> >	\
 operator()(const BZ_BLITZ_SCOPE(ETBase)<P_expr>& a) const                 \
 {                                                                         \
     return BZ_BLITZ_SCOPE(_bz_ArrayExpr)<                                 \
         BZ_BLITZ_SCOPE(_bz_FunctorExpr)<classname,                        \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr,              \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr::T_numtype> > \
+        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr::T_optype> > \
         (*this, a.unwrap());                                              \
 }
 
@@ -921,9 +1148,9 @@ BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr2)<           \
     _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,                 \
     _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,                 \
     BZ_PROMOTE(_bz_typename                                               \
-               BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,        \
+               BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_optype,        \
                _bz_typename                                               \
-               BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_numtype)> >     \
+               BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_optype)> >     \
 operator()(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                      \
            const BZ_BLITZ_SCOPE(ETBase)<P_expr2>& b) const                \
 {                                                                         \
@@ -932,9 +1159,9 @@ operator()(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                      \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,             \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,             \
         BZ_PROMOTE(_bz_typename                                           \
-                   BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,    \
+                   BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_optype,    \
                    _bz_typename                                           \
-                   BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_numtype)> > \
+                   BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_optype)> > \
         (*this, a.unwrap(), b.unwrap());                                  \
 }
 
@@ -946,11 +1173,11 @@ BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr3)<           \
     _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,                 \
     _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr,                 \
     BZ_PROMOTE(_bz_typename                                               \
-               BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,        \
+               BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_optype,        \
     BZ_PROMOTE(_bz_typename                                               \
-               BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_numtype,        \
+               BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_optype,        \
                _bz_typename                                               \
-               BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr::T_numtype))> >    \
+               BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr::T_optype))> >    \
 operator()(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                      \
            const BZ_BLITZ_SCOPE(ETBase)<P_expr2>& b,                      \
            const BZ_BLITZ_SCOPE(ETBase)<P_expr3>& c) const                \
@@ -961,11 +1188,11 @@ operator()(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                      \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,             \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr,             \
         BZ_PROMOTE(_bz_typename                                           \
-                   BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,    \
+                   BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_optype,    \
         BZ_PROMOTE(_bz_typename                                           \
-                   BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_numtype,    \
+                   BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_optype,    \
                    _bz_typename                                           \
-                   BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr::T_numtype))> >\
+                   BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr::T_optype))> >\
         (*this, a.unwrap(), b.unwrap(), c.unwrap());                      \
 }
 
@@ -1031,14 +1258,14 @@ template<typename P_expr>                                                 \
 BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr)<            \
     _bz_Functor ## classname ## funcname,                                 \
     _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr,                  \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr::T_numtype> >     \
+    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr::T_optype> >     \
 funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr>& a) const                   \
 {                                                                         \
     return BZ_BLITZ_SCOPE(_bz_ArrayExpr)<                                 \
         BZ_BLITZ_SCOPE(_bz_FunctorExpr)<                                  \
         _bz_Functor ## classname ## funcname,                             \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr,              \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr::T_numtype> > \
+        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr::T_optype> > \
         (*this, a.unwrap());                                              \
 }
 
@@ -1050,9 +1277,9 @@ BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr2)<           \
     _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,                 \
     _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,                 \
     BZ_PROMOTE(_bz_typename                                               \
-               BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,        \
+               BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_optype,        \
                _bz_typename                                               \
-               BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_numtype)> >     \
+               BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_optype)> >     \
 funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                        \
          const BZ_BLITZ_SCOPE(ETBase)<P_expr2>& b) const                  \
 {                                                                         \
@@ -1062,9 +1289,9 @@ funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                        \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,             \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,             \
         BZ_PROMOTE(_bz_typename                                           \
-                   BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,    \
+                   BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_optype,    \
                    _bz_typename                                           \
-                   BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_numtype)> > \
+                   BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_optype)> > \
         (*this, a.unwrap(), b.unwrap());                                  \
 }
 
@@ -1077,11 +1304,11 @@ BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr3)<           \
     _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,                 \
     _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr,                 \
     BZ_PROMOTE(_bz_typename                                               \
-               BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,        \
+               BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_optype,        \
     BZ_PROMOTE(_bz_typename                                               \
-               BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_numtype,        \
+               BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_optype,        \
                _bz_typename                                               \
-               BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr::T_numtype))> >    \
+               BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr::T_optype))> >    \
 funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                        \
          const BZ_BLITZ_SCOPE(ETBase)<P_expr2>& b,                        \
          const BZ_BLITZ_SCOPE(ETBase)<P_expr3>& c) const                  \
@@ -1093,11 +1320,11 @@ funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                        \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,             \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr,             \
         BZ_PROMOTE(_bz_typename                                           \
-                   BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_numtype,    \
+                   BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_optype,    \
         BZ_PROMOTE(_bz_typename                                           \
-                   BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_numtype,    \
+                   BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_optype,    \
                    _bz_typename                                           \
-                   BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr::T_numtype))> >\
+                   BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr::T_optype))> >\
         (*this, a.unwrap(), b.unwrap(), c.unwrap());                      \
 }
 

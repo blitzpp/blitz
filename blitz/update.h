@@ -39,19 +39,19 @@ BZ_NAMESPACE(blitz)
 class _bz_updater_base { };
 
 #define BZ_DECL_UPDATER(name,op,symbol)                     \
-  template<typename X, typename Y>                          \
+  template<typename T_dest, typename T_source>                          \
   class name : public _bz_updater_base {                    \
   public:                                                   \
-    static inline void update(X& restrict x, Y y)           \
+    static inline void update(T_dest& restrict x, T_source y)           \
     { x op y; }                                             \
     static void prettyPrint(BZ_STD_SCOPE(string) &str)      \
     { str += symbol; }                                      \
   }
 
-template<typename X, typename Y>
+template<typename T_dest, typename T_source>
 class _bz_update : public _bz_updater_base {
   public:
-    static inline void update(X& restrict x, Y y)
+    static inline void update(T_dest& restrict x, T_source y)
   { x = /*(X)*/y; }
 
     static void prettyPrint(BZ_STD_SCOPE(string) &str)
