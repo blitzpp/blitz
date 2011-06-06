@@ -154,8 +154,7 @@ public:
         : iter_(exprpair.first(), exprpair.second())
     { }
 
-  T_result operator*() const { //return *iter_;
- }
+  T_result operator*() const { return *iter_; }
 
   T_result first_value() const { return iter_(iter_.lbound()); }
 
@@ -510,9 +509,9 @@ public:
     int ubound(const int rank)    const { return iter_.ubound(rank);    }
     RectDomain<rank_> domain() const { return iter_.domain(); }
 
-  //    T_result operator*() const { return T_op::apply(*iter_); }
+  T_result operator*() const { return T_op::apply(*iter_); }
 
-  //T_result first_value() const { return iter_(iter_.lbound()); }
+  T_result first_value() const { return iter_(iter_.lbound()); }
 
 
   /* Functions for reading. Because they must depend on the result
@@ -1055,7 +1054,8 @@ public:
     template<typename T> struct readHelper<ETBase<T> > {
     static T_result fastRead(const T_expr1& iter1, const T_expr2& iter2, 
 			     const T_expr3& iter3, int i) {
-	return T_result(iter1.fastRead(i), iter2.fastRead(i)); }
+      return T_result(iter1.fastRead(i), iter2.fastRead(i), 
+		      iter3.fastRead(i)); }
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, 
 			    const T_expr3& iter3, int i) {
       return T_result(iter1[i], iter2[i], iter3[i]); };

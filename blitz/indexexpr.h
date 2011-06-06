@@ -70,7 +70,7 @@ public:
     typedef int T_ctorArg2;     // Ditto
   typedef int T_range_result; // dummy
 
-  typedef T_numtype T_optype;
+  typedef typename opType<T_numtype>::T_optype T_optype;
   typedef typename asET<T_numtype>::T_wrapped T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
 

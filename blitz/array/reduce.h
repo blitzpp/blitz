@@ -77,6 +77,13 @@ class _bz_ArrayExprReduce {
 
 public:   
     typedef _bz_typename T_reduction::T_numtype T_numtype;
+
+  // select return type
+  typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
+  typedef typename selectET<typename T_expr::T_typeprop, _bz_ArrayExprReduce<test, N_index, T_reduction> >::T_selected T_typeprop;
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+  typedef T_numtype T_optype;
+
     typedef T_expr      T_ctorArg1;
     typedef T_reduction T_ctorArg2;
   typedef int  T_range_result; // dummy
@@ -301,7 +308,7 @@ _bz_typename reduction<_bz_typename T_expr::T_numtype>::T_resulttype    \
 {                                                                       \
   return _bz_ArrayExprFullReduce					\
     (BZ_BLITZ_SCOPE(asExpr)<T_expr>::getExpr(expr.unwrap()),		\
- reduction<_bz_typename T_expr::T_numtype>());				\
+     reduction<_bz_typename T_expr::T_numtype>());			\
 }                                                                       \
 
 BZ_DECL_ARRAY_FULL_REDUCE(sum,      ReduceSum)

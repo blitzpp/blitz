@@ -19,9 +19,9 @@ int main() {
   BZTEST(sum(B) == 9);
   BZTEST(sum(A) == 9);
 
-  // cout << "B=1, B= " << B << endl;
+  //cout << "B=1, B= " << B << endl;
   Array<dtype,2> C(3,3);
-  C = B; // Seems wrong to me
+  C = B; // Seems wrong to 
 
   BZTEST(sum(C) == 9);
 

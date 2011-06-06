@@ -59,6 +59,25 @@ public:
 			 _bz_typename P_expr2::T_range_result,
 			 _bz_typename P_expr3::T_range_result> T_range_result;
 
+  // select return type
+  typedef typename unwrapET<typename T_expr1::T_result>::T_unwrapped T_unwrapped1;
+  typedef typename unwrapET<typename T_expr2::T_result>::T_unwrapped T_unwrapped2;
+  typedef typename unwrapET<typename T_expr3::T_result>::T_unwrapped T_unwrapped3;
+  typedef typename selectET2<typename T_expr1::T_typeprop, 
+			     typename T_expr2::T_typeprop, 
+			     T_numtype, 
+			     char>::T_selected T_intermediary;
+
+  typedef typename selectET2<T_intermediary,
+			     typename T_expr3::T_typeprop, 
+			     T_numtype, 
+			     _bz_ArrayWhere<typename asExpr<T_unwrapped1>::T_expr, 
+					    typename asExpr<T_unwrapped2>::T_expr, 
+					    typename asExpr<T_unwrapped3>::T_expr
+					    > >::T_selected T_typeprop;
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+  typedef T_numtype T_optype;
+
     static const int 
         numArrayOperands = P_expr1::numArrayOperands
                          + P_expr2::numArrayOperands
@@ -81,9 +100,67 @@ public:
     T_numtype operator*() const
     { return (*iter1_) ? (*iter2_) : (*iter3_); }
 
+  /* Functions for reading. Because they must depend on the result
+   * type, they utilize a helper class.
+   */
+
+  // For numtypes, apply operator
+  template<typename T> struct readHelper {
+    static T_result fastRead(const T_expr1& iter1, const T_expr2& iter2, 
+			     const T_expr3& iter3, int i) {
+      return iter1.fastRead(i) ? iter2.fastRead(i) : iter3.fastRead(i); }
+    static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, 
+			    const T_expr3& iter3, int i) {
+      return iter1[i] ? iter2[i] : iter3[i]; }
     template<int N_rank>
-    T_numtype operator()(const TinyVector<int, N_rank>& i) const
-    { return iter1_(i) ? iter2_(i) : iter3_(i); }
+#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
+      static T_result indexop(const T_expr1& iter1, const T_expr2& iter2,
+			      const T_expr3& iter3, 
+			      const TinyVector<int, N_rank> i) {
+#else
+      static T_result indexop(const T_expr1& iter1, const T_expr2& iter2,
+			      const T_expr3& iter3, 
+			      const TinyVector<int, N_rank>& i) {
+#endif
+	return iter1(i) ? iter2(i) : iter3(i); }
+      };
+    
+    // For ET types, bypass operator and create expression
+    template<typename T> struct readHelper<ETBase<T> > {
+    static T_result fastRead(const T_expr1& iter1, const T_expr2& iter2, 
+			     const T_expr3& iter3, int i) {
+	return T_result(iter1.fastRead(i), iter2.fastRead(i)); }
+    static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, 
+			    const T_expr3& iter3, int i) {
+      return T_result(iter1[i], iter2[i], iter3[i]); };
+      template<int N_rank>
+#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
+      static T_result indexop(const T_expr1& iter1, const T_expr2& iter2,
+			      const T_expr3& iter3, 
+			      const TinyVector<int, N_rank> i) {
+#else
+      static T_result indexop(const T_expr1& iter1, const T_expr2& iter2,
+			      const T_expr3& iter3, 
+			      const TinyVector<int, N_rank>& i) {
+#endif
+	return T_result(iter1(i), iter2(i), iter3(i) ); }
+      };
+
+    T_result fastRead(int i) const { 
+      return readHelper<T_typeprop>::fastRead(iter1_, iter2_, iter3_, i); }
+
+    T_result operator[](int i) const { 
+      return readHelper<T_typeprop>::indexop(iter1_, iter2_, iter3_, i); }
+
+    template<int N_rank>
+#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
+    T_result operator()(const TinyVector<int, N_rank> i) const {
+#else
+      T_result operator()(const TinyVector<int, N_rank>& i) const {
+#endif
+	return readHelper<T_typeprop>::indexop(iter1_, iter2_, iter3_, i); }
+    
+      // ****** end reading
 
     T_range_result operator()(const RectDomain<rank_>& d) const
   { return T_range_result(iter1_(d), iter2_(d), iter3_(d)); }
@@ -203,12 +280,6 @@ public:
 	iter2_.shift(offset1, dim1, offset2, dim2) : 
 	iter3_.shift(offset1, dim1, offset2, dim2);
     }
-
-    T_numtype operator[](int i) const
-    { return iter1_[i] ? iter2_[i] : iter3_[i]; }
-
-    T_numtype fastRead(int i) const
-    { return iter1_.fastRead(i) ? iter2_.fastRead(i) : iter3_.fastRead(i); }
 
   // this is needed for the stencil expression fastRead to work
   void _bz_offsetData(sizeType i)

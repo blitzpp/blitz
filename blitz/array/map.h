@@ -349,6 +349,11 @@ class ArrayIndexMapping {
 public:
   typedef P_expr T_expr;
   typedef typename T_expr::T_numtype T_numtype;
+
+  typedef T_numtype T_optype;
+  typedef typename asET<T_numtype>::T_wrapped T_typeprop;
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+
   typedef T_expr T_ctorArg1;
     typedef int                            T_ctorArg2;    // dummy
   typedef ArrayIndexMapping<typename T_expr::T_range_result,N_map0,N_map1,N_map2,N_map3,N_map4,N_map5,N_map6,N_map7,N_map8,N_map9,N_map10> T_range_result;
@@ -403,23 +408,46 @@ public:
   // prevent any performance impact of using the FAI instead of an
   // array directly.
 
+  /* Functions for reading. Because they must depend on the result
+   * type, they utilize a helper class.
+   */
+
+  // For numtypes, apply operator
+  template<typename T> struct readHelper {
+    template<int N_rank>
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
-    template<int N_inputRank>
-    T_numtype operator()(TinyVector<int, N_inputRank> i) const
-    {
-      return _bz_doArrayIndexMapping<exprRank>::map(iter_.array(), i,
-            N_map0, N_map1, N_map2, N_map3, N_map4, N_map5, N_map6,
-            N_map7, N_map8, N_map9, N_map10);
-    }
+    static T_result indexop(const T_expr& iter_er, 
+			    const TinyVector<int, N_rank> i) {
 #else
-    template<int N_inputRank>
-    T_numtype operator()(const TinyVector<int, N_inputRank>& i) const
-    {
-      return _bz_doArrayIndexMapping<exprRank>::map(iter_.array(), i,
+      static T_result indexop(const T_expr& iter,
+			      const TinyVector<int, N_rank>& i) {
+#endif
+	return _bz_doArrayIndexMapping<exprRank>::map(iter.array(), i,
             N_map0, N_map1, N_map2, N_map3, N_map4, N_map5, N_map6,
             N_map7, N_map8, N_map9, N_map10);
-    }
+  };
+    };
+
+  // For ET types, bypass operator and create expression
+    template<typename T> struct readHelper<ETBase<T> > {
+      template<int N_rank>
+#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
+      static T_result indexop(const T_expr& iter,
+			      const TinyVector<int, N_rank> i) {
+#else
+    static T_result indexop(const T_expr& iter,
+			    const TinyVector<int, N_rank>& i) {
 #endif
+      return iter(i); }
+    };
+
+    template<int N_rank>
+#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
+    T_result operator()(const TinyVector<int, N_rank> i) const {
+#else
+      T_result operator()(const TinyVector<int, N_rank>& i) const {
+#endif
+      return readHelper<T_typeprop>::indexop(iter_,i); }
 
   // find which dimension in mapped expression that corresponds to
   // dimension dim. This works such that dimension dim in this
@@ -509,7 +537,7 @@ public:
     // which contains an index placeholder.  You must use index
     // iteration mode instead.
   // (no -- added to support stencils /PJ)
-    T_numtype operator*() const
+    T_result operator*() const
     {
       return *iter_;
     }
@@ -558,13 +586,13 @@ public:
     bool canCollapse(int,int) const
     {   BZPRECONDITION(0);  return false; }
 
-    T_numtype operator[](int)
+    T_result operator[](int)
     {   
         BZPRECONDITION(0);
         return T_numtype();
     }
 
-    T_numtype fastRead(int) const
+    T_result fastRead(int) const
     {
         BZPRECONDITION(0);
         return T_numtype();

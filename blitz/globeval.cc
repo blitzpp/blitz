@@ -633,7 +633,7 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
 
             while (iter.data() != end)
             {
-	      //T_update::update(*const_cast<T_numtype*>(iter.data()), *expr);
+	      T_update::update(*const_cast<T_numtype*>(iter.data()), *expr);
                 iter.advance();
                 expr.advance();
             }

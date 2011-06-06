@@ -2496,7 +2496,8 @@ BZ_NAMESPACE_END
  * Removed the "kitchen-sink inclusion" here because it made
  * dependencies very difficult to figure out.
  */
-
+#include <blitz/array.cc>
+#include <blitz/tinyvec2.cc>
 
 
 #endif // BZ_ARRAY_H
