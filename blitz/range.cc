@@ -19,6 +19,15 @@ inline RectDomain<Range::rank_> Range::domain() const
 			   TinyVector<int,1>(ubound(0)));
 }
 
+inline bool Range::assertInRange(const T_index& BZ_DEBUG_PARAM(index)) const
+{
+  BZPRECHECK((index[0]<=ubound(0)) && (index[0]>=0),
+	     "Range index out of range: " << index[0]
+	     << endl << "Lower bounds: 0" << endl
+	     <<         "Length:      " << length() << endl);
+  return true;
+}
+
 BZ_NAMESPACE_END
 
 #endif

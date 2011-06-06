@@ -1,5 +1,8 @@
 #include "testsuite.h"
-#include <blitz/tinyvec.h>
+#include <blitz/tinyvec2.h>
+#include <blitz/tinyvec2.cc>
+#include <blitz/array.h>
+#include <blitz/array.cc>
 
 BZ_USING_NAMESPACE(blitz)
 

@@ -8,7 +8,7 @@
 //#include <blitz/array/expr.h>
 //#include <blitz/constpointerstack.h>
 //#include <blitz/array/fastiter.h>
-//#include <blitz/tinyvec2.h>
+#include <blitz/tinyvec2.h>
 //#include <blitz/tv2fastiter.h>
 //#include <blitz/array/map.h>
 //#include <blitz/reduce.h>
@@ -21,18 +21,21 @@
 
 //#include <blitz/array/stencil-et.h>
 
-#include <blitz/array.h>
+//#include <blitz/array.h>
 
 
 #include <blitz/tinyvec2.cc>
-#include <blitz/array.cc>
-#include <blitz/range.cc>
+//#include <blitz/array.cc>
+//#include <blitz/range.cc>
 
 using namespace blitz;
 
 int main(int, char**)
 {
-  Array<double,1> a(4);
-  a=Range(0,6,2);
-  cout << a << endl;
+  // Array<double,1> a(4);
+  // a=Range(0,6,2);
+  // cout << a << endl;
+  TinyVector<int,5> d;
+    d=1,-1,2,-2,0;
+
 }

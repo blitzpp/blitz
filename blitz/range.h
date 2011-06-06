@@ -56,6 +56,7 @@ BZ_NAMESPACE(blitz)
 // A(Range(fromStart,toEnd,2));       [0,2,4,6]
 
 template<int N_rank> class RectDomain;
+class nilArraySection;
 
 const int fromStart = INT_MIN;
 const int toEnd = INT_MAX;
@@ -121,13 +122,7 @@ public:
 
   RectDomain<rank_> domain() const;
 
-  bool assertInRange(const T_index& BZ_DEBUG_PARAM(index)) const {
-    BZPRECHECK((index[0]<=ubound(0)) && (index[0]>=0),
-	       "Range index out of range: " << index[0]
-	       << endl << "Lower bounds: 0" << endl
-	       <<         "Length:      " << length() << endl);
-    return true;
-  }
+  bool assertInRange(const T_index& BZ_DEBUG_PARAM(index)) const;
   
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     template<int N_rank>
