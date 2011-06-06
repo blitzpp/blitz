@@ -45,6 +45,15 @@ def BZ_ET_STENCIL(name, result, etresult, MINB, MAXB):
     typedef _bz_StencilExpr<P_expr, P_numtype> T_base;			
     typedef _bz_typename T_base::T_numtype T_numtype;			
     typedef _bz_typename T_base::T_expr T_expr;				
+
+  // select return type
+  typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
+  typedef typename selectET<typename T_expr::T_typeprop, 
+			    T_numtype, 
+			    #name#_et<test, T_numtype> >::T_selected T_typeprop;
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+  typedef T_numtype T_optype;
+
     typedef  #name#_et<_bz_typename P_expr::T_range_result, T_numtype> T_range_result; 
 									
     using T_base::iter_;						
@@ -188,6 +197,27 @@ public:
 	using T_base::T_expr2; */					
   typedef _bz_typename T_base::T_expr1 T_expr1;			
   typedef _bz_typename T_base::T_expr2 T_expr2;			
+
+  // select return type
+  typedef typename unwrapET<typename T_expr1::T_result>::T_unwrapped T_unwrapped1;
+  typedef typename unwrapET<typename T_expr2::T_result>::T_unwrapped T_unwrapped2;
+  typedef typename selectET2<typename T_expr1::T_typeprop, 
+			     typename T_expr2::T_typeprop, 
+			     T_numtype, 
+			     #name#_et2<typename asExpr<T_unwrapped1>::T_expr, 
+						   typename asExpr<T_unwrapped2>::T_expr, 
+						   T_numtype> >::T_selected T_typeprop;
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+  typedef typename T_op::T_numtype T_optype;
+
+  // select return type
+  typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
+  typedef typename selectET<typename T_expr::T_typeprop, 
+			    T_numtype, 
+			    #name#_et2<test, T_numtype> >::T_selected T_typeprop;
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+  typedef T_numtype T_optype;
+
   typedef  #name#_et2<_bz_typename P_expr1::T_range_result, _bz_typename P_expr2::T_range_result, T_numtype> T_range_result; 
 									
   using T_base::iter1_;						
@@ -356,6 +386,15 @@ public:
   typedef _bz_StencilExpr<P_expr, TinyMatrix<_bz_typename multicomponent_traits<typename P_expr::T_numtype>::T_element, result_rank, result_rank> > T_base; 
   typedef _bz_typename T_base::T_numtype T_numtype;			
   typedef _bz_typename T_base::T_expr T_expr;				
+
+  // select return type
+  typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
+  typedef typename selectET<typename T_expr::T_typeprop, 
+			    T_numtype, 
+			    #name#_et<test> >::T_selected T_typeprop;
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+  typedef T_numtype T_optype;
+
   typedef  #name#_et<_bz_typename P_expr::T_range_result> T_range_result; 
 									 
   using T_base::iter_;						
@@ -475,6 +514,15 @@ public:
   typedef _bz_StencilExpr<P_expr, TinyVector<typename P_expr::T_numtype,result_rank> > T_base; 
   typedef _bz_typename T_base::T_numtype T_numtype;			
   typedef _bz_typename T_base::T_expr T_expr;				
+
+  // select return type
+  typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
+  typedef typename selectET<typename T_expr::T_typeprop, 
+			    T_numtype, 
+			    #name#_et<test> >::T_selected T_typeprop;
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+  typedef T_numtype T_optype;
+
   typedef  #name#_et<_bz_typename P_expr::T_range_result> T_range_result; 
 									 
   using T_base::iter_;						
@@ -596,7 +644,16 @@ public:
   typedef _bz_StencilExpr<P_expr, T_result> T_base;			
   typedef _bz_typename T_base::T_numtype T_numtype;			
   typedef _bz_typename T_base::T_expr T_expr;				
-  typedef  #name#_et<_bz_typename P_expr::T_range_result> T_range_result; 
+
+    // select return type
+  typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
+  typedef typename selectET<typename T_expr::T_typeprop, 
+			    T_numtype, 
+			    #name#_et<test> >::T_selected T_typeprop;
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+  typedef T_numtype T_optype;
+
+typedef  #name#_et<_bz_typename P_expr::T_range_result> T_range_result; 
 									 
   using T_base::iter_;						
   using T_base::rank_;							
@@ -719,7 +776,16 @@ public:
   typedef _bz_StencilExpr<P_expr, _bz_typename P_expr::T_numtype> T_base; 
   typedef _bz_typename T_base::T_numtype T_numtype;			
   typedef _bz_typename T_base::T_expr T_expr;				
-  typedef  #name#_et<_bz_typename P_expr::T_range_result> T_range_result; 
+
+    // select return type
+  typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
+  typedef typename selectET<typename T_expr::T_typeprop, 
+			    T_numtype, 
+			    #name#_et<test> >::T_selected T_typeprop;
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+  typedef T_numtype T_optype;
+
+typedef  #name#_et<_bz_typename P_expr::T_range_result> T_range_result; 
 									
   using T_base::iter_;						
   using T_base::rank_;							
@@ -852,7 +918,16 @@ public:
   typedef _bz_StencilExpr<P_expr, T_result> T_base;		
   typedef _bz_typename T_base::T_numtype T_numtype;			
   typedef _bz_typename T_base::T_expr T_expr;				
-  typedef  #name#_et_multi<_bz_typename P_expr::T_range_result> T_range_result; 
+
+    // select return type
+  typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
+  typedef typename selectET<typename T_expr::T_typeprop, 
+			    T_numtype, 
+			    #name#_et_multi<test> >::T_selected T_typeprop;
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+  typedef T_numtype T_optype;
+
+typedef  #name#_et_multi<_bz_typename P_expr::T_range_result> T_range_result; 
 									
   using T_base::iter_;						
   using T_base::rank_;							
@@ -991,7 +1066,16 @@ public:
   typedef _bz_StencilExpr<P_expr, _bz_typename P_expr::T_numtype> T_base;	
   typedef _bz_typename T_base::T_numtype T_numtype;			
   typedef _bz_typename T_base::T_expr T_expr;				
-  typedef  #name#_et<_bz_typename P_expr::T_range_result> T_range_result; 
+
+    // select return type
+  typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
+  typedef typename selectET<typename T_expr::T_typeprop, 
+			    T_numtype, 
+			    #name#_et<test> >::T_selected T_typeprop;
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+  typedef T_numtype T_optype;
+
+typedef  #name#_et<_bz_typename P_expr::T_range_result> T_range_result; 
    									
   using T_base::iter_;							
   using T_base::rank_;							
