@@ -414,9 +414,12 @@ public:
 
   // For numtypes, apply operator
   template<typename T> struct readHelper {
+    static T_result first_value(const T_expr& iter)  {
+      // is the correct thing to do here to return the index zero value?
+      return indexop(iter, TinyVector<int,1>(0)); }
     template<int N_rank>
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
-    static T_result indexop(const T_expr& iter_er, 
+    static T_result indexop(const T_expr& iter, 
 			    const TinyVector<int, N_rank> i) {
 #else
       static T_result indexop(const T_expr& iter,
@@ -439,6 +442,9 @@ public:
 			    const TinyVector<int, N_rank>& i) {
 #endif
       return iter(i); }
+    static T_result first_value(const T_expr& iter)  {
+      // is the correct thing to do here to return the index zero value?
+      return indexop(iter, TinyVector<int,1>(0)); }
     };
 
     template<int N_rank>
@@ -448,6 +454,11 @@ public:
       T_result operator()(const TinyVector<int, N_rank>& i) const {
 #endif
       return readHelper<T_typeprop>::indexop(iter_,i); }
+
+    T_result first_value() const {
+      // unclear how to define "first" value for index expressions.
+      BZPRECHECK(0,"Minmax reductions of index expressions not implemented");
+      return readHelper<T_typeprop>::first_value(iter_); }
 
   // find which dimension in mapped expression that corresponds to
   // dimension dim. This works such that dimension dim in this
@@ -589,13 +600,13 @@ public:
     T_result operator[](int)
     {   
         BZPRECONDITION(0);
-        return T_numtype();
+        return T_result();
     }
 
     T_result fastRead(int) const
     {
         BZPRECONDITION(0);
-        return T_numtype();
+        return T_result();
     }
 
     int suggestStride(int) const

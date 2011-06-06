@@ -24,6 +24,37 @@ void test_1d(T& B)
 
     BZTEST(all(maxIndex(B)==1));
     BZTEST(all(minIndex(B)==0));
+
+    MinMaxValue<int> mm=minmax(B);
+    BZTEST(mm.min==-2);
+    BZTEST(mm.max==5);
+}
+
+// pass in an expression with value
+// (-2, 5, 4, 3, 1, 1)
+template<typename T>
+void test_1dexpr(const T& B)
+{
+
+    BZTEST(sum(B) == 12);
+    BZTEST(mean(B) == 2);
+    BZTEST(min(B) == -2);
+    BZTEST(max(B) == 5);
+    BZTEST(product(B) == -120);
+    BZTEST(first(B>0) == 1);
+    BZTEST(last(B>3) == 2);
+    BZTEST(count(B>0) == 5);
+    BZTEST(any(B>0));
+    BZTEST(!any(B>10));
+    BZTEST(!all(B>0));
+    BZTEST(all(B>-10));
+
+    BZTEST(all(maxIndex(B)==1));
+    BZTEST(all(minIndex(B)==0));
+
+    MinMaxValue<typename T::T_numtype> mm=minmax(B);
+    BZTEST(mm.min==-2);
+    BZTEST(mm.max==5);
 }
 
 int main()
@@ -39,7 +70,7 @@ int main()
     BZTEST(min(A) == 0);
     BZTEST(max(A) == 11);
 
-    const MinMaxValue<int> mm = minmax(A);
+    MinMaxValue<int> mm = minmax(A);
     //std::cerr << mm.min << ' ' << mm.max << std::endl;
     BZTEST(mm.min == 0);
     BZTEST(mm.max == 11);
@@ -61,7 +92,7 @@ int main()
     test_1d(Bv);
 
     Array<int,3> C(2,2,2);
-    C = 0, 1, 2, 3, 4, 5, 6, 7;
+    C = 1, 0, 2, 3, 4, 7, 6, 5;
 
     BZTEST(sum(C) == 7*8/2);
     BZTEST(all(C <= 7));
@@ -70,6 +101,38 @@ int main()
     BZTEST(sum(C(k,j,i)) == 7*8/2);
     BZTEST(sum(C(j,k,i)) == 7*8/2);
     BZTEST(sum(sum(sum(C,k),j)) == 7*8/2);
+    mm = minmax(C);
+    BZTEST(mm.min == 0);
+    BZTEST(mm.max == 7);
+    /* these don't work
+    mm = minmax(C(i,j,k));
+    BZTEST(mm.min == 0);
+    BZTEST(mm.max == 7);
+    mm = minmax(C(k,j,i));
+    BZTEST(mm.min == 0);
+    BZTEST(mm.max == 7);
+    mm = minmax(C(j,k,i));
+    BZTEST(mm.min == 0);
+    BZTEST(mm.max == 7);
+    */
+
+    // test expression reductions
+
+    cout << "Testing unary expression reductions\n";
+    B= 2, -5, -4, -3, -1, -1;
+    test_1dexpr(-B);
+    cout << "Testing binary expression reductions\n";
+    B= -3, 4, 3, 2, 0, 0;
+    test_1dexpr(B+1);
+    Array<float,1> BB(6);
+    cout << "Testing function expression reductions\n";
+    B=-2, 25, 16, 9, 1, 0;
+    BB = 1, .5, .5, .5, 2, 0;
+    test_1dexpr(pow(B,BB));
+    cout << "Testing where expression reductions\n";
+    B = -2, -30, 4, 3, 0, -1;
+    BB = -2, 5, 3, -1, 1, 1;
+    test_1dexpr(where(B>BB,B,BB));
 
     return 0;
 }

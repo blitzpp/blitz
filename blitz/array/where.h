@@ -112,6 +112,10 @@ public:
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, 
 			    const T_expr3& iter3, int i) {
       return iter1[i] ? iter2[i] : iter3[i]; }
+    static T_result first_value(const T_expr1& iter1, const T_expr2& iter2,
+				const T_expr3& iter3)  {
+      return iter1.first_value() ? 
+	iter2.first_value() : iter3.first_value(); }
     template<int N_rank>
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
       static T_result indexop(const T_expr1& iter1, const T_expr2& iter2,
@@ -133,6 +137,10 @@ public:
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, 
 			    const T_expr3& iter3, int i) {
       return T_result(iter1[i], iter2[i], iter3[i]); };
+    static T_result first_value(const T_expr1& iter1, const T_expr2& iter2,
+				const T_expr3& iter3)  {
+      return T_result(iter1.first_value(), iter2.first_value(),
+		      iter3.first_value()); }
       template<int N_rank>
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
       static T_result indexop(const T_expr1& iter1, const T_expr2& iter2,
@@ -160,6 +168,9 @@ public:
 #endif
 	return readHelper<T_typeprop>::indexop(iter1_, iter2_, iter3_, i); }
     
+      T_result first_value() const { 
+	return readHelper<T_typeprop>::first_value(iter1_, iter2_, iter3_); }
+
       // ****** end reading
 
     T_range_result operator()(const RectDomain<rank_>& d) const
