@@ -80,7 +80,9 @@ public:
 
   // select return type
   typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
-  typedef typename selectET<typename T_expr::T_typeprop, _bz_ArrayExprReduce<test, N_index, T_reduction> >::T_selected T_typeprop;
+  typedef typename selectET<typename T_expr::T_typeprop,
+			    T_numtype,
+			    _bz_ArrayExprReduce<test, N_index, T_reduction> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
   typedef T_numtype T_optype;
 

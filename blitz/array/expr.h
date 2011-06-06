@@ -97,7 +97,9 @@ public:
     typedef _bz_typename T_expr::T_numtype T_numtype;
   // select return type
   typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
-  typedef typename selectET<typename T_expr::T_typeprop, _bz_ArrayExpr<test> >::T_selected T_typeprop;
+  typedef typename selectET<typename T_expr::T_typeprop, 
+			    T_numtype,
+			    _bz_ArrayExpr<test> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
   typedef typename T_expr::T_optype T_optype;
     typedef T_expr T_ctorArg1;
@@ -465,15 +467,16 @@ public:
     typedef P_expr T_expr;
     typedef P_op T_op;
     typedef _bz_typename T_expr::T_numtype T_numtype1;
+    typedef _bz_typename T_op::T_numtype T_numtype;
 
   // select return type
   typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
-  typedef typename selectET<typename T_expr::T_typeprop, _bz_ArrayExprUnaryOp<test, T_op> >::T_selected T_typeprop;
+  typedef typename selectET<typename T_expr::T_typeprop, 
+			    T_numtype, 
+			    _bz_ArrayExprUnaryOp<test, T_op> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
-  //typedef typename T_expr::T_optype T_optype;
-  typedef typename T_op::T_numtype T_optype;
+  typedef T_numtype T_optype;
 
-    typedef _bz_typename T_op::T_numtype T_numtype;
     typedef T_expr T_ctorArg1;
     typedef int    T_ctorArg2;    // dummy
   typedef _bz_ArrayExprUnaryOp<_bz_typename P_expr::T_range_result,
@@ -509,8 +512,6 @@ public:
     int ubound(const int rank)    const { return iter_.ubound(rank);    }
     RectDomain<rank_> domain() const { return iter_.domain(); }
 
-  T_result operator*() const { return T_op::apply(*iter_); }
-
   T_result first_value() const { return iter_(iter_.lbound()); }
 
 
@@ -524,6 +525,8 @@ public:
       return (T_op::apply(iter.fastRead(i))); };
     static T_result indexop(const T_expr& iter, int i) {
       return (T_op::apply(iter[i])); };
+    static T_result deref(const T_expr& iter) {
+      return T_op::apply(*iter); }
     template<int N_rank>
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     static T_result indexop(const T_expr& iter, 
@@ -541,6 +544,8 @@ public:
 	return iter.fastRead(i); };
       static T_result indexop(const T_expr& iter, int i) {
 	return iter[i]; };
+      static T_result deref(const T_expr& iter) {
+	return *iter; }
       template<int N_rank>
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
       static T_result indexop(const T_expr& iter,
@@ -565,6 +570,9 @@ public:
       T_result operator()(const TinyVector<int, N_rank>& i) const {
 #endif
       return readHelper<T_typeprop>::indexop(iter_,i); }
+
+      T_result operator*() const {
+	return readHelper<T_typeprop>::deref(iter_); }
 
       // ****** end reading
 
@@ -732,9 +740,6 @@ public:
         : iter1_(a), iter2_(b)
     { }
 
-    T_numtype operator*() const
-    { return T_op::apply(*iter1_, *iter2_); }
-
 
   /* Functions for reading. Because they must depend on the result
    * type, they utilize a helper class.
@@ -746,6 +751,8 @@ public:
       return T_op::apply(iter1.fastRead(i), iter2.fastRead(i)); }
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, int i) {
       return T_op::apply(iter1[i], iter2[i]); };
+    static T_result deref(const T_expr1& iter1, const T_expr2& iter2) {
+      return T_op::apply(*iter1, *iter2); }
     template<int N_rank>
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     static T_result indexop(const T_expr& iter, 
@@ -763,6 +770,8 @@ public:
 	return T_result(iter1.fastRead(i), iter2.fastRead(i)); }
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, int i) {
       return T_result(iter1[i], iter2[i]); };
+    static T_result deref(const T_expr1& iter1, const T_expr2& iter2) {
+      return T_result(*iter1, *iter2); }
       template<int N_rank>
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
       static T_result indexop(const T_expr1& iter1, const T_expr2& iter2,
@@ -787,6 +796,10 @@ public:
       T_result operator()(const TinyVector<int, N_rank>& i) const {
 #endif
 	return readHelper<T_typeprop>::indexop(iter1_, iter2_, i); }
+
+      T_result operator*() const {
+	return readHelper<T_typeprop>::deref(iter1_, iter2_); }
+
     
       // ****** end reading
 

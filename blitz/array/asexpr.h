@@ -141,12 +141,12 @@ struct unwrapET<ETBase<T> > {
 // traits classes that are used to switch between an ET type or an
 // unknown type. If the supplied type T is an ET type, T_selected will
 // be T_ifET, otherwise T.
-template<typename T, typename T_ifET>
+template<typename T, typename T_ifnotET, typename T_ifET>
 struct selectET {
-  typedef T T_selected;
+  typedef T_ifnotET T_selected;
 };
-template<typename T, typename T_ifET>
-struct selectET<ETBase<T>, T_ifET> {
+template<typename T, typename T_ifnotET, typename T_ifET>
+struct selectET<ETBase<T>, T_ifnotET, T_ifET> {
   typedef ETBase<T_ifET> T_selected;
 };
 
