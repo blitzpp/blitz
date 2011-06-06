@@ -11,7 +11,8 @@ const int N=1000;
 // the arrays instead of referencing them.
 
 // this is safe
-_bz_ArrayExpr<blitz::_bz_ArrayExprBinaryOp<blitz::FastArrayCopyIterator<double, 1>, blitz::FastArrayCopyIterator<double, 1>, blitz::Multiply<double, double> > > good()
+BzBinaryExprResult<Multiply, Array<double,1>, Array<double,1> >::T_result::T_range_result
+good()
 {
   Array<double,1> a(N);
   a=tensor::i;
@@ -21,7 +22,8 @@ _bz_ArrayExpr<blitz::_bz_ArrayExprBinaryOp<blitz::FastArrayCopyIterator<double, 
 }
 
 // this is unsafe
-_bz_ArrayExpr<blitz::_bz_ArrayExprBinaryOp<blitz::FastArrayIterator<double, 1>, blitz::FastArrayIterator<double, 1>, blitz::Multiply<double, double> > > bad()
+BzBinaryExprResult<Multiply, Array<double,1>, Array<double,1> >::T_result
+bad()
 {
   Array<double,1> a(N);
   a=tensor::i;
@@ -33,8 +35,9 @@ _bz_ArrayExpr<blitz::_bz_ArrayExprBinaryOp<blitz::FastArrayIterator<double, 1>, 
 int main()
 {
   // switch to expr=bad() and it will crash.
-  _bz_ArrayExpr<blitz::_bz_ArrayExprBinaryOp<blitz::FastArrayCopyIterator<double, 1>, blitz::FastArrayCopyIterator<double, 1>, blitz::Multiply<double, double> > > expr=good();
-  //_bz_ArrayExpr<blitz::_bz_ArrayExprBinaryOp<blitz::FastArrayIterator<double, 1>, blitz::FastArrayIterator<double, 1>, blitz::Multiply<double, double> > > expr=bad();
+  BzBinaryExprResult<Multiply, Array<double,1>, Array<double,1> >::T_result::T_range_result expr=good();
+
+  //BzBinaryExprResult<Multiply, Array<double,1>, Array<double,1> >::T_result expr=bad();
   Array<double,1> result(N);
   result=expr;
   BZTEST(all(result==tensor::i*sin(1.0*tensor::i)));
