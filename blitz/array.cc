@@ -8,7 +8,7 @@
 #include <blitz/array/fastiter.h>   // Fast Array iterators (for et)
 #include <blitz/array/asexpr.cc>       // ET type functions
 #include <blitz/array/expr.cc>       // Array expression objects
-#include <blitz/array/range.cc>       // range objects
+#include <blitz/range.cc>       // range objects
 #include <blitz/array/methods.cc>   // Member functions
 #include <blitz/array/ops.cc>       // Assignment operators
 #include <blitz/array/io.cc>        // Output formatting
