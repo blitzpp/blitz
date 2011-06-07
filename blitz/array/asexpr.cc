@@ -77,12 +77,12 @@ asExpr<IndexPlaceholder<N> >::getExpr(const T_expr& x)
  { return x; }
 
 //  the levi-civita symbol
-asExpr<LeviCivita>::T_expr
+inline asExpr<LeviCivita>::T_expr
 asExpr<LeviCivita>::getExpr(T_expr x) 
 { return T_expr(x); }
 
 //  Range
-asExpr<Range>::T_expr
+inline asExpr<Range>::T_expr
 asExpr<Range>::getExpr(T_expr x) 
 { return T_expr(x); }
 

@@ -29,14 +29,15 @@ def BZ_ET_STENCIL(name, result, etresult, MINB, MAXB):
     stub="""
 
 
-/* Defines a stencil ET "#name#" that operates on an array<P_numtype, N_rank>
-   and specifies the return type as array<#result#, N_rank>. The result
+/** Defines a stencil ET "#name#" that operates on an Array<P_numtype, N_rank>
+   and specifies the return type as Array<#result#, N_rank>. The result
    type is used when running on an array and the etresult type when
-   running on an expression. If you want to refer to the native type
+   running on an expression. The extent of the stencil is MINB-MAXB.
+   If you want to refer to the native type
    of the expression, set result="P_numtype" and etresult="typename
    T1::T_numtype". Sorry for that ugliness, but they define types
    differently. The stencil ET calls the stencil operator
-   name_stencilop, defined in stencilops.h. */
+   name_stencilop, defined in stencilops.h. **/
 
   template<typename P_expr, _bz_typename P_numtype>			
   class #name#_et : public _bz_StencilExpr<P_expr, P_numtype>		
@@ -46,11 +47,10 @@ def BZ_ET_STENCIL(name, result, etresult, MINB, MAXB):
     typedef _bz_typename T_base::T_numtype T_numtype;			
     typedef _bz_typename T_base::T_expr T_expr;				
 
-  // select return type
-  typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
-  typedef typename selectET<typename T_expr::T_typeprop, 
+  // if P_numtype is an ET-type, we need to return an expr
+  typedef typename selectET<P_numtype,
 			    T_numtype, 
-			    #name#_et<test, T_numtype> >::T_selected T_typeprop;
+      ETBase<_bz_ArrayExpr<_bz_ArrayExprConstant<P_numtype> > > >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
   typedef T_numtype T_optype;
 
@@ -71,7 +71,7 @@ def BZ_ET_STENCIL(name, result, etresult, MINB, MAXB):
     _bz_StencilExpr<P_expr, T_numtype>(a)				
       { }								
 									
-    T_numtype operator*() const						
+    T_result operator*() const						
     { return #name#_stencilop(iter_); }						
 									
     /* this is not really const, because we don't undo the moveTo, but	
@@ -79,34 +79,33 @@ def BZ_ET_STENCIL(name, result, etresult, MINB, MAXB):
        some kind of mixed index and stack traversal, but that will	
        screw things up, const or not. */				
     template<int N_rank2>						
-      T_numtype operator()(const TinyVector<int, N_rank2>& i) const	
+      T_result operator()(const TinyVector<int, N_rank2>& i) const	
     { iter_.moveTo(i); return #name#_stencilop(iter_); }    									
     T_range_result operator()(const RectDomain<rank_>& d) const		
     { return T_range_result(iter_(d)); }				
 									
-    T_numtype operator[](int i) const					
-    { return #name#_stencilop(iter_[i]); }						
-									
-    T_numtype fastRead(sizeType i) const				
+    T_result operator[](int i) const					
+    { return #name#_stencilop(iter_[i]); }									
+    T_result fastRead(sizeType i) const				
     {/* this probably isn't very fast... */				
       iter_._bz_offsetData(i);						
-      T_numtype r = #name#_stencilop(iter_);					
+      T_result r = #name#_stencilop(iter_);					
       iter_._bz_offsetData(-i);						
       return r;								
     }									
     									
-    T_numtype shift(int offset, int dim) const				
+    T_result shift(int offset, int dim) const				
     {									
       iter_._bz_offsetData(offset, dim);				
-      T_numtype r = #name#_stencilop(iter_);					
+      T_result r = #name#_stencilop(iter_);					
       iter_._bz_offsetData(-offset, dim);				
       return r;								
     }									
 									
-    T_numtype shift(int offset1, int dim1, int offset2, int dim2) const	
+    T_result shift(int offset1, int dim1, int offset2, int dim2) const	
     {									
       iter_._bz_offsetData(offset1, dim1, offset2, dim2);		
-      T_numtype r = #name#_stencilop (iter_);					
+      T_result r = #name#_stencilop (iter_);					
       iter_._bz_offsetData(-offset1, dim1, -offset2, dim2);		
       return r;								
     }									
@@ -180,7 +179,7 @@ def BZ_ET_STENCIL2(name, result, etresult, MINB, MAXB):
     stub="""
 
 
-/* Defines a stencil "#name#" ET that operates on two arrays of arbitrary type
+/** Defines a stencil "#name#" ET that operates on two arrays of arbitrary type
    and specifies the return type as array<#result#, N_rank>. The result
    type is used when running on an array and the etresult type when
    running on an expression. If you want to refer to the native type
@@ -193,28 +192,13 @@ class #name#_et2 : public _bz_StencilExpr2<P_expr1, P_expr2, P_numtype>
 public:								
   typedef _bz_StencilExpr2<P_expr1, P_expr2, P_numtype> T_base;	
   typedef _bz_typename T_base::T_numtype T_numtype;			
-  /*    using T_base::T_expr1;					
-	using T_base::T_expr2; */					
   typedef _bz_typename T_base::T_expr1 T_expr1;			
   typedef _bz_typename T_base::T_expr2 T_expr2;			
 
-  // select return type
-  typedef typename unwrapET<typename T_expr1::T_result>::T_unwrapped T_unwrapped1;
-  typedef typename unwrapET<typename T_expr2::T_result>::T_unwrapped T_unwrapped2;
-  typedef typename selectET2<typename T_expr1::T_typeprop, 
-			     typename T_expr2::T_typeprop, 
-			     T_numtype, 
-			     #name#_et2<typename asExpr<T_unwrapped1>::T_expr, 
-						   typename asExpr<T_unwrapped2>::T_expr, 
-						   T_numtype> >::T_selected T_typeprop;
-  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
-  typedef typename T_op::T_numtype T_optype;
-
-  // select return type
-  typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
-  typedef typename selectET<typename T_expr::T_typeprop, 
+  // if P_numtype is an ET-type, we need to return an expr
+  typedef typename selectET<P_numtype,
 			    T_numtype, 
-			    #name#_et2<test, T_numtype> >::T_selected T_typeprop;
+      ETBase<_bz_ArrayExpr<_bz_ArrayExprConstant<P_numtype> > > >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
   typedef T_numtype T_optype;
 
@@ -232,42 +216,42 @@ public:
   _bz_StencilExpr2<P_expr1, P_expr2, T_numtype>(a, b)		
   { }								
 
-  T_numtype operator*() const						
+  T_result operator*() const						
   { return #name#_stencilop(iter1_, iter2_); }					
 									
-  T_numtype operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
+  T_result operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
   { iter1_.moveTo(i); iter2_.moveTo(i);
     return #name#_stencilop(iter1_, iter2_); } 
 									
   T_range_result operator()(const RectDomain<rank_>& d) const		
   { return T_range_result(iter1_(d), iter2_(d)); }			
 									
-  T_numtype operator[](int i) const					
+  T_result operator[](int i) const					
   { return #name#_stencilop(iter1_[i], iter2_[i]); }				
 									
-  T_numtype fastRead(sizeType i) const					
+  T_result fastRead(sizeType i) const					
   {/* this probably isn't very fast... */				
     iter1_._bz_offsetData(i); iter2_._bz_offsetData(i);		
-    T_numtype r = #name#_stencilop (iter1_, iter2_);				
+    T_result r = #name#_stencilop (iter1_, iter2_);				
     iter1_._bz_offsetData(-i); iter2_._bz_offsetData(-i);		
     return r;								
   }									
     									
-  T_numtype shift(int offset, int dim) const				
+  T_result shift(int offset, int dim) const				
   {									
     iter1_._bz_offsetData(offset, dim);				
     iter2_._bz_offsetData(offset, dim);				
-    T_numtype r = #name#_stencilop (iter1_, iter2_);				
+    T_result r = #name#_stencilop (iter1_, iter2_);				
     iter1_._bz_offsetData(-offset, dim);				
     iter2_._bz_offsetData(-offset, dim);				
     return r;								
   }									
 									
-  T_numtype shift(int offset1, int dim1, int offset2, int dim2) const	
+  T_result shift(int offset1, int dim1, int offset2, int dim2) const	
   {									
     iter1_._bz_offsetData(offset1, dim1, offset2, dim2);		
     iter2_._bz_offsetData(offset1, dim1, offset2, dim2);		
-    T_numtype r = #name#_stencilop (iter1_, iter2_);				
+    T_result r = #name#_stencilop (iter1_, iter2_);				
     iter1_._bz_offsetData(-offset1, dim1, -offset2, dim2);		
     iter2_._bz_offsetData(-offset1, dim1, -offset2, dim2);		
     return r;								
@@ -374,10 +358,10 @@ def BZ_ET_STENCILM(name, result_rank, MINB, MAXB):
     stub="""
 
 
-/* Defines a stencil ET "#name#" that operates on an array<P_numtype, N_rank>
-   and returns a multicomponent array<TinyMatrix<P_numtype::T_element,
-   rank, rank> >, N_rank>. P_numtype can be a TinyVector or a scalar,
-   I think. */
+/* Defines a stencil ET "#name#" that operates on an array
+   array<P_numtype, N_rank> and returns a multicomponent
+   array<TinyMatrix<P_numtype::T_element, rank, rank> >,
+   N_rank>. P_numtype can be a TinyVector or a scalar, I think. */
 
 template<typename P_expr>						
 class #name#_et : public _bz_StencilExpr<P_expr, TinyMatrix<_bz_typename multicomponent_traits<typename P_expr::T_numtype>::T_element, result_rank, result_rank> > 
@@ -387,11 +371,10 @@ public:
   typedef _bz_typename T_base::T_numtype T_numtype;			
   typedef _bz_typename T_base::T_expr T_expr;				
 
-  // select return type
-  typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
-  typedef typename selectET<typename T_expr::T_typeprop, 
-			    T_numtype, 
-			    #name#_et<test> >::T_selected T_typeprop;
+  // there is no return type selection, as we are returning a
+  // TinyMatrix. This must be returned as a FastTMCopyIterator since the
+  // output of the stencil operator is a temporary.
+  typedef ETBase<_bz_ArrayExpr<FastTM2CopyIterator<typename multicomponent_traits<typename P_expr::T_numtype>::T_element, result_rank, result_rank> > > T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
   typedef T_numtype T_optype;
 
@@ -412,38 +395,38 @@ public:
   _bz_StencilExpr<P_expr, T_numtype>(a)				
   { }								
      									
-  T_numtype operator*() const					
+  T_result operator*() const					
   { return #name#_stencilop(iter_); }						
 
-  T_numtype operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
+  T_result operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
   { iter_.moveTo(i); return #name#_stencilop(iter_); }				
      									
   T_range_result operator()(const RectDomain<rank_>& d) const		
   { return T_range_result(iter_(d)); }				
      									
-  T_numtype operator[](int i) const					
+  T_result operator[](int i) const					
   { return #name#_stencilop(iter_[i]); }						
      									
-  T_numtype fastRead(sizeType i) const				
+  T_result fastRead(sizeType i) const				
   {/* this probably isn't very fast... */				
     iter_._bz_offsetData(i);						
-    T_numtype r = #name#_stencilop (iter_);					
+    T_result r = #name#_stencilop (iter_);					
     iter_._bz_offsetData(-i);					
     return r;							
   }									
      									
-  T_numtype shift(int offset, int dim) const				
+  T_result shift(int offset, int dim) const				
   {									
     iter_._bz_offsetData(offset, dim);				
-    T_numtype r = #name#_stencilop (iter_);					
+    T_result r = #name#_stencilop (iter_);					
     iter_._bz_offsetData(-offset, dim);				
     return r;							
   }									
 									 
-  T_numtype shift(int offset1, int dim1, int offset2, int dim2) const 
+  T_result shift(int offset1, int dim1, int offset2, int dim2) const 
   {									
     iter_._bz_offsetData(offset1, dim1, offset2, dim2);		
-    T_numtype r = #name#_stencilop (iter_);					
+    T_result r = #name#_stencilop (iter_);					
     iter_._bz_offsetData(-offset1, dim1, -offset2, dim2);		
     return r;							
   }									
@@ -515,13 +498,14 @@ public:
   typedef _bz_typename T_base::T_numtype T_numtype;			
   typedef _bz_typename T_base::T_expr T_expr;				
 
-  // select return type
-  typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
-  typedef typename selectET<typename T_expr::T_typeprop, 
-			    T_numtype, 
-			    #name#_et<test> >::T_selected T_typeprop;
+  // there is no return type selection, we assume P_numtype is scalar
+  // and that we are returning a TinyVector. This needs to be returned
+  // as a FastTVCopyIterator that keeps a copy of the TV it is
+  // iterating over, since the result of the stencil operator is a temporary.
+
+  typedef ETBase<_bz_ArrayExpr<FastTV2CopyIterator<typename P_expr::T_numtype, result_rank> > > T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
-  typedef T_numtype T_optype;
+  typedef typename T_expr::T_numtype T_optype;
 
   typedef  #name#_et<_bz_typename P_expr::T_range_result> T_range_result; 
 									 
@@ -540,19 +524,19 @@ public:
   _bz_StencilExpr<P_expr, T_numtype>(a)				
   { }								
 									 
-  T_numtype operator*() const					
+  T_result operator*() const					
   { return #name#_stencilop(iter_); }						
 
-  T_numtype operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
+  T_result operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
   { iter_.moveTo(i); return #name#_stencilop(iter_); }				
 									 
   T_range_result operator()(const RectDomain<rank_>& d) const		
   { return T_range_result(iter_(d)); }				
 									 
-  T_numtype operator[](int i) const					
+  T_result operator[](int i) const					
   { return #name#_stencilop(iter_[i]); }						
 									 
-  T_numtype fastRead(sizeType i) const				
+  T_result fastRead(sizeType i) const				
   {/* this probably isn't very fast... */				
     iter_._bz_offsetData(i);						
     T_numtype r = #name#_stencilop (iter_);					
@@ -632,9 +616,9 @@ def BZ_ET_STENCIL_SCA(name, MINB, MAXB):
     stub="""
 
 
-/* Defines a stencil ET "#name#" that operates on an array<P_numtype, N_rank>
-   (where P_numtype presumably is a multicomponent type) and returns a
-   scalar array<P_numtype::T_element, N_rank>. */
+/** Defines a stencil ET "#name#" that operates on a multicomponent
+   array<P_numtype, N_rank> and returns a scalar
+   array<P_numtype::T_element, N_rank>. */
 
 template<typename P_expr>						
 class #name#_et : public _bz_StencilExpr<P_expr, _bz_typename multicomponent_traits<typename P_expr::T_numtype>::T_element> 
@@ -645,12 +629,10 @@ public:
   typedef _bz_typename T_base::T_numtype T_numtype;			
   typedef _bz_typename T_base::T_expr T_expr;				
 
-    // select return type
-  typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
-  typedef typename selectET<typename T_expr::T_typeprop, 
-			    T_numtype, 
-			    #name#_et<test> >::T_selected T_typeprop;
-  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+  // there is no selecting return type here. because we *know* it is
+  // scalar T_result, there's no question of whether we could be doing
+  // multicomponent evaluations.    
+  typedef T_result T_typeprop;
   typedef T_numtype T_optype;
 
 typedef  #name#_et<_bz_typename P_expr::T_range_result> T_range_result; 
@@ -761,10 +743,10 @@ def BZ_ET_STENCIL_DIFF(name, MINB, MAXB):
     stub="""
 
 
-/* Defines a stencil ET difference operator "#name#" that operates on an
-   array<P_numtype, N_rank> and returns a array<P_numtype,
-   N_rank>. (The only significance of the "difference" aspect is that
-   the operator is assumed to take a second argument which is the
+/* Defines a stencil ET difference operator "#name#" that operates on
+   an array<P_numtype, N_rank> and returns an array of identical
+   type. (The only significance of the "difference" aspect is that the
+   operator is assumed to take a second argument which is the
    dimension to do the difference in). MINB and MAXB are integer
    expressions describing the extent of the operator in the operating
    dimension. */
@@ -802,37 +784,37 @@ public:
   _bz_StencilExpr<P_expr, T_numtype>(a), dim_(dim)		
   { }								
 									
-  T_numtype operator*() const						
+  T_result operator*() const						
   { return #name#_stencilop(iter_, dim_); }					
-  T_numtype operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
+  T_result operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
   { iter_.moveTo(i); return #name#_stencilop(iter_, dim_); }			
 									
   T_range_result operator()(const RectDomain<rank_>& d) const		
   { return T_range_result(iter_(d), dim_); }				
 									
-  T_numtype operator[](int i) const					
+  T_result operator[](int i) const					
   { return #name#_stencilop(iter_[i], dim_); }					
 									
-  T_numtype fastRead(sizeType i) const				
+  T_result fastRead(sizeType i) const				
   {/* this probably isn't very fast... */				
     iter_._bz_offsetData(i);						
-    T_numtype r = #name#_stencilop (iter_, dim_);					
+    T_result r = #name#_stencilop (iter_, dim_);					
     iter_._bz_offsetData(-i);						
     return r;								
   }									
 									
-  T_numtype shift(int offset, int dim) const				
+  T_result shift(int offset, int dim) const				
   {									
     iter_._bz_offsetData(offset, dim);				
-    T_numtype r = #name#_stencilop (iter_);					
+    T_result r = #name#_stencilop (iter_);					
     iter_._bz_offsetData(-offset, dim);				
     return r;								
   }									
 									
-  T_numtype shift(int offset1, int dim1, int offset2, int dim2) const	
+  T_result shift(int offset1, int dim1, int offset2, int dim2) const	
   {									
     iter_._bz_offsetData(offset1, dim1, offset2, dim2);		
-    T_numtype r = #name#_stencilop (iter_);					
+    T_result r = #name#_stencilop (iter_);					
     iter_._bz_offsetData(-offset1, dim1, -offset2, dim2);		
     return r;								
   }									
@@ -906,10 +888,9 @@ def BZ_ET_STENCIL_MULTIDIFF(name, MINB, MAXB):
     stub="""
 
 
-/* Defines a stencil ET difference operator "#name#" that operates on a
+/** Defines a stencil ET difference operator "#name#" that operates on a
    multicomponent array<P_numtype, N_rank> and returns an
    array<P_numtype::T_element, N_rank>. */
-
 template<typename P_expr>						
 class #name#_et_multi : public _bz_StencilExpr<P_expr, _bz_typename multicomponent_traits<typename P_expr::T_numtype>::T_element> 
 {									
@@ -919,12 +900,10 @@ public:
   typedef _bz_typename T_base::T_numtype T_numtype;			
   typedef _bz_typename T_base::T_expr T_expr;				
 
-    // select return type
-  typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
-  typedef typename selectET<typename T_expr::T_typeprop, 
-			    T_numtype, 
-			    #name#_et_multi<test> >::T_selected T_typeprop;
-  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+  // there is no selecting return type here. because we *know* it is
+  // T_result, there's no question of whether we could be doing
+   // multicomponent evaluations.    
+  typedef T_result T_typeprop;
   typedef T_numtype T_optype;
 
 typedef  #name#_et_multi<_bz_typename P_expr::T_range_result> T_range_result; 
@@ -935,7 +914,7 @@ public:
   #name#_et_multi(const #name#_et_multi& a) :		
   _bz_StencilExpr<P_expr, T_numtype>(a), comp_(a.comp_), dim_(a.dim_) 
   { }								
-									
+
   #name#_et_multi(BZ_ETPARM(T_expr) a, int comp, int dim) :	
   _bz_StencilExpr<P_expr, T_numtype>(a),			
     comp_(comp), dim_(dim)						
@@ -1053,11 +1032,11 @@ def BZ_ET_STENCIL_DIFF2(name, MINB1, MAXB1, MINB2, MAXB2):
     stub="""
 
 
-/* Defines a stencil ET double-difference operator "#name#" that operates on an
-   array<P_numtype, N_rank> and returns a array<P_numtype,
-   N_rank>. (The only significance of the "difference" aspect is that
-   the operator is assumed to take two extra arguments which are the
-   dimensions to do the differences in). */
+/** Defines a stencil ET double-difference operator "#name#" that
+   operates on an array<P_numtype, N_rank> and returns an array of
+   identical type. (The only significance of the "double-difference" aspect
+   is that the operator is assumed to take two extra arguments which
+   are the dimensions to do the differences in). */
 
 template<typename P_expr>						
 class #name#_et : public _bz_StencilExpr<P_expr, _bz_typename P_expr::T_numtype> 

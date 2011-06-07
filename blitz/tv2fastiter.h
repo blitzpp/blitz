@@ -91,7 +91,7 @@ public:
     FastTV2IteratorBase(const T_vector& array)
         : array_(array)
     {
-        data_   = array.data();
+        data_   = array_.data();
     }
 
     ~FastTV2IteratorBase()
@@ -281,18 +281,18 @@ public:
     { return *data_; }
   */
 
-    // // Experimental
-    // T_numtype shift(int offset, int dim) const
-    // {
-    //   return data_[offset*array_.stride(dim)];
-    // }
+  //   Experimental
+    T_result shift(int offset, int dim) const
+    {
+      return data_[offset*array_.stride(dim)];
+    }
 
-    // // Experimental
-    // T_numtype shift(int offset1, int dim1, int offset2, int dim2) const
-    // {
-    //   return data_[offset1*array_.stride(dim1) 
-    // 		   + offset2*array_.stride(dim2)];
-    // }
+    // Experimental
+    T_result shift(int offset1, int dim1, int offset2, int dim2) const
+    {
+      return data_[offset1*array_.stride(dim1) 
+    		   + offset2*array_.stride(dim2)];
+    }
 
     void prettyPrint(BZ_STD_SCOPE(string) &str, 
         prettyPrintFormat& format) const

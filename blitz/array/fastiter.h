@@ -99,7 +99,7 @@ public:
     FastArrayIteratorBase(const T_array& array)
         : array_(array)
     {
-        data_   = array.data();
+        data_   = array_.data();
     }
 
     ~FastArrayIteratorBase()
@@ -326,13 +326,13 @@ public:
     { return *data_; }
 
     // Experimental
-    T_numtype shift(int offset, int dim) const
+    T_result shift(int offset, int dim) const
     {
       return data_[offset*array_.stride(dim)];
     }
 
     // Experimental
-    T_numtype shift(int offset1, int dim1, int offset2, int dim2) const
+    T_result shift(int offset1, int dim1, int offset2, int dim2) const
     {
       return data_[offset1*array_.stride(dim1) 
 		   + offset2*array_.stride(dim2)];

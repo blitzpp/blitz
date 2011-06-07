@@ -62,6 +62,13 @@ struct multicomponent_traits<TinyVector<T_numtype,N_rank> > {
     static const int numComponents = N_rank;
 };
 
+// TinyMatrix
+template<typename T_numtype, int N_rows, int N_cols>
+struct multicomponent_traits<TinyMatrix<T_numtype,N_rows, N_cols> > {
+    typedef T_numtype T_element;
+    static const int numComponents = N_rows*N_cols;
+};
+
 #ifdef BZ_HAVE_COMPLEX
 // complex<T>
 template<typename T>

@@ -76,10 +76,18 @@ BZ_NAMESPACE(blitz)
     typedef _bz_StencilExpr<P_expr, P_numtype> T_base;			\
     typedef _bz_typename T_base::T_numtype T_numtype;			\
     typedef _bz_typename T_base::T_expr T_expr;				\
+									\
+    // if P_numtype is an ET-type, we need to return an expr		\
+    typedef typename selectET<P_numtype,				\
+			      T_numtype,				\
+      ETBase<_bz_ArrayExpr<_bz_ArrayExprConstant<P_numtype> > > >::T_selected T_typeprop;\
+    typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;	\
+    typedef T_numtype T_optype;						\
+									\
     typedef  name ## _et<_bz_typename P_expr::T_range_result, T_numtype> T_range_result; \
 									\
     using T_base::iter_;						\
-    using T_base::rank_;							\
+    using T_base::rank_;						\
   public:								\
     name ## _et(const name ## _et& a) :					\
     _bz_StencilExpr<P_expr, T_numtype>(a)				\
@@ -93,43 +101,43 @@ BZ_NAMESPACE(blitz)
     _bz_StencilExpr<P_expr, T_numtype>(a)				\
       { }								\
 									\
-    T_numtype operator*() const						\
-    { return name ## _stencilop(iter_); }						\
+    T_result operator*() const						\
+    { return name ## _stencilop(iter_); }				\
 									\
     /* this is not really const, because we don't undo the moveTo, but	\
        that should not be visible to outside. It would be if we used	\
        some kind of mixed index and stack traversal, but that will	\
        screw things up, const or not. */				\
     template<int N_rank2>						\
-      T_numtype operator()(const TinyVector<int, N_rank2>& i) const	\
+      T_result operator()(const TinyVector<int, N_rank2>& i) const	\
     { iter_.moveTo(i); return name ## _stencilop(iter_); }				\
     									\
     T_range_result operator()(const RectDomain<rank_>& d) const		\
     { return T_range_result(iter_(d)); }				\
 									\
-    T_numtype operator[](int i) const					\
+    T_result operator[](int i) const					\
     { return name ## _stencilop(iter_[i]); }						\
 									\
-    T_numtype fastRead(sizeType i) const				\
+    T_result fastRead(sizeType i) const				\
     {/* this probably isn't very fast... */				\
       iter_._bz_offsetData(i);						\
-      T_numtype r = name ## _stencilop (iter_);					\
+      T_result r = name ## _stencilop (iter_);					\
       iter_._bz_offsetData(-i);						\
       return r;								\
     }									\
     									\
-    T_numtype shift(int offset, int dim) const				\
+    T_result shift(int offset, int dim) const				\
     {									\
       iter_._bz_offsetData(offset, dim);				\
-      T_numtype r = name ## _stencilop (iter_);					\
+      T_result r = name ## _stencilop (iter_);					\
       iter_._bz_offsetData(-offset, dim);				\
       return r;								\
     }									\
 									\
-    T_numtype shift(int offset1, int dim1, int offset2, int dim2) const	\
+    T_result shift(int offset1, int dim1, int offset2, int dim2) const	\
     {									\
       iter_._bz_offsetData(offset1, dim1, offset2, dim2);		\
-      T_numtype r = name ## _stencilop (iter_);					\
+      T_result r = name ## _stencilop (iter_);					\
       iter_._bz_offsetData(-offset1, dim1, -offset2, dim2);		\
       return r;								\
     }									\
@@ -213,10 +221,16 @@ BZ_NAMESPACE(blitz)
   public:								\
     typedef _bz_StencilExpr2<P_expr1, P_expr2, P_numtype> T_base;	\
     typedef _bz_typename T_base::T_numtype T_numtype;			\
-    /*    using T_base::T_expr1;					\
-	  using T_base::T_expr2; */					\
     typedef _bz_typename T_base::T_expr1 T_expr1;			\
     typedef _bz_typename T_base::T_expr2 T_expr2;			\
+									\
+    // if P_numtype is an ET-type, we need to return an expr		\
+    typedef typename selectET<P_numtype,				\
+			      T_numtype,				\
+      ETBase<_bz_ArrayExpr<_bz_ArrayExprConstant<P_numtype> > > >::T_selected T_typeprop;\
+    typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;	\
+    typedef T_numtype T_optype;						\
+									\
     typedef  name ## _et2<_bz_typename P_expr1::T_range_result, _bz_typename P_expr2::T_range_result, T_numtype> T_range_result; \
 									\
     using T_base::iter1_;						\
@@ -235,41 +249,41 @@ BZ_NAMESPACE(blitz)
       _bz_StencilExpr2<P_expr, T_numtype>(a)				\
       { }								\
     */									\
-    T_numtype operator*() const						\
+    T_result operator*() const						\
     { return name ## _stencilop(iter1_, iter2_); }					\
 									\
-    T_numtype operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const \
+    T_result operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const \
     { iter1_.moveTo(i); iter2_.moveTo(i); return name ## _stencilop(iter1_, iter2_); } \
 									\
     T_range_result operator()(const RectDomain<rank_>& d) const		\
     { return T_range_result(iter1_(d), iter2_(d)); }			\
 									\
-    T_numtype operator[](int i) const					\
+    T_result operator[](int i) const					\
     { return name ## _stencilop(iter1_[i], iter2_[i]); }				\
 									\
-    T_numtype fastRead(sizeType i) const					\
+    T_result fastRead(sizeType i) const					\
     {/* this probably isn't very fast... */				\
       iter1_._bz_offsetData(i); iter2_._bz_offsetData(i);		\
-      T_numtype r = name ## _stencilop (iter1_, iter2_);				\
+      T_result r = name ## _stencilop (iter1_, iter2_);				\
       iter1_._bz_offsetData(-i); iter2_._bz_offsetData(-i);		\
       return r;								\
     }									\
     									\
-    T_numtype shift(int offset, int dim) const				\
+    T_result shift(int offset, int dim) const				\
     {									\
       iter1_._bz_offsetData(offset, dim);				\
       iter2_._bz_offsetData(offset, dim);				\
-      T_numtype r = name ## _stencilop (iter1_, iter2_);				\
+      T_result r = name ## _stencilop (iter1_, iter2_);				\
       iter1_._bz_offsetData(-offset, dim);				\
       iter2_._bz_offsetData(-offset, dim);				\
       return r;								\
     }									\
 									\
-    T_numtype shift(int offset1, int dim1, int offset2, int dim2) const	\
+    T_result shift(int offset1, int dim1, int offset2, int dim2) const	\
     {									\
       iter1_._bz_offsetData(offset1, dim1, offset2, dim2);		\
       iter2_._bz_offsetData(offset1, dim1, offset2, dim2);		\
-      T_numtype r = name ## _stencilop (iter1_, iter2_);				\
+      T_result r = name ## _stencilop (iter1_, iter2_);				\
       iter1_._bz_offsetData(-offset1, dim1, -offset2, dim2);		\
       iter2_._bz_offsetData(-offset1, dim1, -offset2, dim2);		\
       return r;								\
@@ -385,6 +399,14 @@ BZ_NAMESPACE(blitz)
      typedef _bz_StencilExpr<P_expr, TinyMatrix<_bz_typename multicomponent_traits<typename P_expr::T_numtype>::T_element, result_rank, result_rank> > T_base; \
      typedef _bz_typename T_base::T_numtype T_numtype;			\
      typedef _bz_typename T_base::T_expr T_expr;				\
+									\
+     // there is no return type selection, as we are returning a	\
+  // TinyMatrix. This must be returned as a FastTMCopyIterator since the\
+  // output of the stencil operator is a temporary.\
+  typedef ETBase<_bz_ArrayExpr<FastTM2CopyIterator<typename multicomponent_traits<typename P_expr::T_numtype>::T_element, result_rank, result_rank> > > T_typeprop;\
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;\
+  typedef T_numtype T_optype;\
+\
      typedef  name ## _et<_bz_typename P_expr::T_range_result> T_range_result; \
 									 \
      using T_base::iter_;						\
@@ -402,37 +424,37 @@ BZ_NAMESPACE(blitz)
        _bz_StencilExpr<P_expr, T_numtype>(a)				\
        { }								\
      									\
-     T_numtype operator*() const					\
+     T_result operator*() const					\
      { return name ## _stencilop(iter_); }						\
-     T_numtype operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const \
+     T_result operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const \
      { iter_.moveTo(i); return name ## _stencilop(iter_); }				\
      									\
      T_range_result operator()(const RectDomain<rank_>& d) const		\
      { return T_range_result(iter_(d)); }				\
      									\
-     T_numtype operator[](int i) const					\
+     T_result operator[](int i) const					\
      { return name ## _stencilop(iter_[i]); }						\
      									\
-     T_numtype fastRead(sizeType i) const				\
+     T_result fastRead(sizeType i) const				\
      {/* this probably isn't very fast... */				\
        iter_._bz_offsetData(i);						\
-       T_numtype r = name ## _stencilop (iter_);					\
+       T_result r = name ## _stencilop (iter_);					\
        iter_._bz_offsetData(-i);					\
        return r;							\
      }									\
      									\
-     T_numtype shift(int offset, int dim) const				\
+     T_result shift(int offset, int dim) const				\
      {									\
        iter_._bz_offsetData(offset, dim);				\
-       T_numtype r = name ## _stencilop (iter_);					\
+       T_result r = name ## _stencilop (iter_);					\
        iter_._bz_offsetData(-offset, dim);				\
        return r;							\
      }									\
 									 \
-     T_numtype shift(int offset1, int dim1, int offset2, int dim2) const \
+     T_result shift(int offset1, int dim1, int offset2, int dim2) const \
      {									\
        iter_._bz_offsetData(offset1, dim1, offset2, dim2);		\
-       T_numtype r = name ## _stencilop (iter_);					\
+       T_result r = name ## _stencilop (iter_);					\
        iter_._bz_offsetData(-offset1, dim1, -offset2, dim2);		\
        return r;							\
      }									\
@@ -498,7 +520,17 @@ BZ_NAMESPACE(blitz)
  public:									\
      typedef _bz_StencilExpr<P_expr, TinyVector<typename P_expr::T_numtype,result_rank> > T_base; \
      typedef _bz_typename T_base::T_numtype T_numtype;			\
-     typedef _bz_typename T_base::T_expr T_expr;				\
+     typedef _bz_typename T_base::T_expr T_expr;			\
+									\
+     // there is no return type selection, we assume P_numtype is scalar \
+     // and that we are returning a TinyVector. This needs to be returned \
+     // as a FastTVCopyIterator that keeps a copy of the TV it is	\
+     // iterating over, since the result of the stencil operator is a temporary.\
+									\
+     typedef ETBase<_bz_ArrayExpr<FastTV2CopyIterator<typename P_expr::T_numtype, result_rank> > > T_typeprop; \
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;		\
+  typedef typename T_expr::T_numtype T_optype;				\
+									\
      typedef  name ## _et<_bz_typename P_expr::T_range_result> T_range_result; \
 									 \
      using T_base::iter_;						\
@@ -516,37 +548,37 @@ BZ_NAMESPACE(blitz)
      _bz_StencilExpr<P_expr, T_numtype>(a)				\
        { }								\
 									 \
-     T_numtype operator*() const					\
+     T_result operator*() const					\
      { return name ## _stencilop(iter_); }						\
-     T_numtype operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const \
+     T_result operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const \
      { iter_.moveTo(i); return name ## _stencilop(iter_); }				\
 									 \
      T_range_result operator()(const RectDomain<rank_>& d) const		\
      { return T_range_result(iter_(d)); }				\
 									 \
-     T_numtype operator[](int i) const					\
+     T_result operator[](int i) const					\
      { return name ## _stencilop(iter_[i]); }						\
 									 \
-     T_numtype fastRead(sizeType i) const				\
+     T_result fastRead(sizeType i) const				\
      {/* this probably isn't very fast... */				\
        iter_._bz_offsetData(i);						\
-       T_numtype r = name ## _stencilop (iter_);					\
+       T_result r = name ## _stencilop (iter_);					\
        iter_._bz_offsetData(-i);					\
        return r;							\
      }									\
 									 \
-     T_numtype shift(int offset, int dim) const				\
+     T_result shift(int offset, int dim) const				\
      {									\
        iter_._bz_offsetData(offset, dim);				\
-       T_numtype r = name ## _stencilop (iter_);					\
+       T_result r = name ## _stencilop (iter_);					\
        iter_._bz_offsetData(-offset, dim);				\
        return r;								\
      }									\
 									 \
-     T_numtype shift(int offset1, int dim1, int offset2, int dim2) const \
+     T_result shift(int offset1, int dim1, int offset2, int dim2) const \
      {									\
        iter_._bz_offsetData(offset1, dim1, offset2, dim2);		\
-       T_numtype r = name ## _stencilop (iter_);					\
+       T_result r = name ## _stencilop (iter_);					\
        iter_._bz_offsetData(-offset1, dim1, -offset2, dim2);		\
        return r;								\
      }									\
@@ -614,8 +646,15 @@ BZ_NAMESPACE(blitz)
      typedef _bz_StencilExpr<P_expr, T_result> T_base;			\
      typedef _bz_typename T_base::T_numtype T_numtype;			\
      typedef _bz_typename T_base::T_expr T_expr;				\
+     									\
+     // there is no selecting return type here. because we *know* it is	\
+     // scalar T_result, there's no question of whether we could be doing \
+     // multicomponent evaluations.					\
+     typedef T_result T_typeprop;					\
+     typedef T_numtype T_optype;					\
+									\
      typedef  name ## _et<_bz_typename P_expr::T_range_result> T_range_result; \
-									 \
+     									\
      using T_base::iter_;						\
      using T_base::rank_;							\
    public:								\
@@ -631,37 +670,37 @@ BZ_NAMESPACE(blitz)
      _bz_StencilExpr<P_expr, T_numtype>(a)				\
              { }								\
     									\
-    T_numtype operator*() const						\
+    T_result operator*() const						\
     { return name ## _stencilop(iter_); }						\
-    T_numtype operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const \
+    T_result operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const \
     { iter_.moveTo(i); return name ## _stencilop(iter_); }				\
 									\
     T_range_result operator()(const RectDomain<rank_>& d) const		\
     { return T_range_result(iter_(d)); }				\
 									\
-    T_numtype operator[](int i) const					\
+    T_result operator[](int i) const					\
     { return name ## _stencilop(iter_[i]); }						\
 									\
-    T_numtype fastRead(sizeType i) const				\
+    T_result fastRead(sizeType i) const				\
     {/* this probably isn't very fast... */				\
       iter_._bz_offsetData(i);						\
-      T_numtype r = name ## _stencilop (iter_);					\
+      T_result r = name ## _stencilop (iter_);					\
       iter_._bz_offsetData(-i);						\
       return r;								\
     }									\
 									\
-    T_numtype shift(int offset, int dim) const				\
+    T_result shift(int offset, int dim) const				\
     {									\
       iter_._bz_offsetData(offset, dim);				\
-      T_numtype r = name ## _stencilop (iter_);					\
+      T_result r = name ## _stencilop (iter_);					\
       iter_._bz_offsetData(-offset, dim);				\
       return r;								\
     }									\
 									\
-    T_numtype shift(int offset1, int dim1, int offset2, int dim2) const	\
+    T_result shift(int offset1, int dim1, int offset2, int dim2) const	\
     {									\
       iter_._bz_offsetData(offset1, dim1, offset2, dim2);		\
-      T_numtype r = name ## _stencilop (iter_);					\
+      T_result r = name ## _stencilop (iter_);					\
       iter_._bz_offsetData(-offset1, dim1, -offset2, dim2);		\
       return r;								\
     }									\
@@ -732,54 +771,63 @@ BZ_NAMESPACE(blitz)
     typedef _bz_StencilExpr<P_expr, _bz_typename P_expr::T_numtype> T_base; \
     typedef _bz_typename T_base::T_numtype T_numtype;			\
     typedef _bz_typename T_base::T_expr T_expr;				\
+    									\
+    // select return type						\
+    typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test; \
+    typedef typename selectET<typename T_expr::T_typeprop,		\
+			      T_numtype,				\
+			      #name#_et<test> >::T_selected T_typeprop;	\
+    typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;	\
+    typedef T_numtype T_optype;						\
+    									\
     typedef  name ## _et<_bz_typename P_expr::T_range_result> T_range_result; \
-									\
+    									\
     using T_base::iter_;						\
-    using T_base::rank_;							\
+    using T_base::rank_;						\
   public:								\
-    name ## _et(const name ## _et& a) :				\
-    _bz_StencilExpr<P_expr, T_numtype>(a), dim_(a.dim_)	\
+    name ## _et(const name ## _et& a) :					\
+      _bz_StencilExpr<P_expr, T_numtype>(a), dim_(a.dim_)		\
       { }								\
-									\
-    name ## _et(BZ_ETPARM(T_expr) a, int dim) :			\
-      _bz_StencilExpr<P_expr, T_numtype>(a), dim_(dim)		\
-      { }								\
-									\
-    name ## _et(_bz_typename T_expr::T_ctorArg1 a, int dim) :	\
-      _bz_StencilExpr<P_expr, T_numtype>(a), dim_(dim)		\
-      { }								\
-									\
-    T_numtype operator*() const						\
-    { return name ## _stencilop(iter_, dim_); }					\
-    T_numtype operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const \
-    { iter_.moveTo(i); return name ## _stencilop(iter_, dim_); }			\
-									\
+    									\
+    name ## _et(BZ_ETPARM(T_expr) a, int dim) :				\
+      _bz_StencilExpr<P_expr, T_numtype>(a), dim_(dim)			\
+    { }									\
+    									\
+    name ## _et(_bz_typename T_expr::T_ctorArg1 a, int dim) :		\
+      _bz_StencilExpr<P_expr, T_numtype>(a), dim_(dim)			\
+    { }									\
+    									\
+    T_result operator*() const						\
+    { return name ## _stencilop(iter_, dim_); }				\
+    T_result operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const \
+    { iter_.moveTo(i); return name ## _stencilop(iter_, dim_); }	\
+    									\
     T_range_result operator()(const RectDomain<rank_>& d) const		\
     { return T_range_result(iter_(d), dim_); }				\
-									\
-    T_numtype operator[](int i) const					\
-    { return name ## _stencilop(iter_[i], dim_); }					\
-									\
-    T_numtype fastRead(sizeType i) const				\
+    									\
+    T_result operator[](int i) const					\
+    { return name ## _stencilop(iter_[i], dim_); }			\
+    									\
+    T_result fastRead(sizeType i) const					\
     {/* this probably isn't very fast... */				\
       iter_._bz_offsetData(i);						\
-      T_numtype r = name ## _stencilop (iter_, dim_);					\
+      T_result r = name ## _stencilop (iter_, dim_);			\
       iter_._bz_offsetData(-i);						\
       return r;								\
     }									\
 									\
-    T_numtype shift(int offset, int dim) const				\
+    T_result shift(int offset, int dim) const				\
     {									\
       iter_._bz_offsetData(offset, dim);				\
-      T_numtype r = name ## _stencilop (iter_);					\
+      T_result r = name ## _stencilop (iter_);				\
       iter_._bz_offsetData(-offset, dim);				\
       return r;								\
     }									\
-									\
-    T_numtype shift(int offset1, int dim1, int offset2, int dim2) const	\
+    									\
+    T_result shift(int offset1, int dim1, int offset2, int dim2) const	\
     {									\
       iter_._bz_offsetData(offset1, dim1, offset2, dim2);		\
-      T_numtype r = name ## _stencilop (iter_);					\
+      T_result r = name ## _stencilop (iter_);				\
       iter_._bz_offsetData(-offset1, dim1, -offset2, dim2);		\
       return r;								\
     }									\
@@ -843,7 +891,7 @@ BZ_NAMESPACE(blitz)
   { return name(d1.wrap(), dim); }					\
    template<typename T, int N>						\
    inline _bz_ArrayExpr<name ## _et<_bz_typename BZ_BLITZ_SCOPE(asExpr)<Array<T,N> >::T_expr::T_range_result> > \
-   name(Array<T,N>& d1, int dim)						\
+   name(Array<T,N>& d1, int dim)					\
    { return name(d1.wrap(), dim); }
 
 
@@ -860,6 +908,12 @@ BZ_NAMESPACE(blitz)
     typedef _bz_StencilExpr<P_expr, T_result> T_base;		\
     typedef _bz_typename T_base::T_numtype T_numtype;			\
     typedef _bz_typename T_base::T_expr T_expr;				\
+									\
+    // there is no selecting return type here. because we *know* it is	\
+    // T_result, there's no question of whether we could be doing	\
+    // multicomponent evaluations.					\
+    typedef T_result T_typeprop;					\
+  typedef T_numtype T_optype;						\
     typedef  name ## _et_multi<_bz_typename P_expr::T_range_result> T_range_result; \
 									\
     using T_base::iter_;						\
@@ -879,37 +933,37 @@ BZ_NAMESPACE(blitz)
       comp_(comp), dim_(dim)						\
       { }								\
 									\
-    T_numtype operator*() const						\
+    T_result operator*() const						\
     { return name ## _stencilop(iter_, comp_, dim_); }				\
-    T_numtype operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const \
+    T_result operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const \
     { iter_.moveTo(i); return name ## _stencilop(iter_, comp_, dim_); }		\
 									\
     T_range_result operator()(const RectDomain<rank_>& d) const		\
     { return T_range_result(iter_(d), comp_, dim_); }			\
 									\
-    T_numtype operator[](int i) const					\
+    T_result operator[](int i) const					\
     { return name ## _stencilop(iter_[i], comp_, dim_); }				\
 									\
-    T_numtype fastRead(sizeType i) const				\
+    T_result fastRead(sizeType i) const				\
     {/* this probably isn't very fast... */				\
       iter_._bz_offsetData(i);						\
-      T_numtype r = name ## _stencilop (iter_, comp_, dim_);				\
+      T_result r = name ## _stencilop (iter_, comp_, dim_);				\
       iter_._bz_offsetData(-i);						\
       return r;								\
     }									\
 									\
-    T_numtype shift(int offset, int dim) const				\
+    T_result shift(int offset, int dim) const				\
     {									\
       iter_._bz_offsetData(offset, dim);				\
-      T_numtype r = name ## _stencilop (iter_);					\
+      T_result r = name ## _stencilop (iter_);					\
       iter_._bz_offsetData(-offset, dim);				\
       return r;								\
     }									\
 									\
-    T_numtype shift(int offset1, int dim1, int offset2, int dim2) const	\
+    T_result shift(int offset1, int dim1, int offset2, int dim2) const	\
     {									\
       iter_._bz_offsetData(offset1, dim1, offset2, dim2);		\
-      T_numtype r = name ## _stencilop (iter_);					\
+      T_result r = name ## _stencilop (iter_);					\
       iter_._bz_offsetData(-offset1, dim1, -offset2, dim2);		\
       return r;								\
     }									\
@@ -993,6 +1047,14 @@ BZ_NAMESPACE(blitz)
    typedef _bz_StencilExpr<P_expr, _bz_typename P_expr::T_numtype> T_base;	\
    typedef _bz_typename T_base::T_numtype T_numtype;			\
    typedef _bz_typename T_base::T_expr T_expr;				\
+									\
+   // select return type						\
+   typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test; \
+  typedef typename selectET<typename T_expr::T_typeprop,		\
+			    T_numtype,					\
+			    #name#_et<test> >::T_selected T_typeprop;	\
+  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;		\
+  typedef T_numtype T_optype;						\
    typedef  name ## _et<_bz_typename P_expr::T_range_result> T_range_result; \
    									\
    using T_base::iter_;							\
@@ -1014,37 +1076,37 @@ BZ_NAMESPACE(blitz)
      dim1_(dim1), dim2_(dim2)						\
    { }									\
    									\
-   T_numtype operator*() const						\
+   T_result operator*() const						\
    { return name ## _stencilop(iter_, dim1_, dim2_); }				\
-   T_numtype operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const \
+   T_result operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const \
    { iter_.moveTo(i); return name ## _stencilop(iter_, dim1_, dim2_); }		\
 									\
    T_range_result operator()(const RectDomain<rank_>& d) const		\
    { return T_range_result(iter_(d), dim1_, dim2_); }			\
    									\
-   T_numtype operator[](int i) const					\
+   T_result operator[](int i) const					\
    { return name ## _stencilop(iter_[i], dim1_, dim2_); }				\
 									\
-   T_numtype fastRead(sizeType i) const					\
+   T_result fastRead(sizeType i) const					\
    {/* this probably isn't very fast... */				\
      iter_._bz_offsetData(i);						\
-     T_numtype r = name ## _stencilop (iter_, dim1_, dim2_);				\
+     T_result r = name ## _stencilop (iter_, dim1_, dim2_);				\
      iter_._bz_offsetData(-i);						\
      return r;								\
    }									\
 									\
-    T_numtype shift(int offset, int dim) const				\
+    T_result shift(int offset, int dim) const				\
     {									\
       iter_._bz_offsetData(offset, dim);				\
-      T_numtype r = name ## _stencilop (iter_);					\
+      T_result r = name ## _stencilop (iter_);					\
       iter_._bz_offsetData(-offset, dim);				\
       return r;								\
     }									\
 									\
-    T_numtype shift(int offset1, int dim1, int offset2, int dim2) const	\
+    T_result shift(int offset1, int dim1, int offset2, int dim2) const	\
     {									\
       iter_._bz_offsetData(offset1, dim1, offset2, dim2);		\
-      T_numtype r = name ## _stencilop (iter_);					\
+      T_result r = name ## _stencilop (iter_);					\
       iter_._bz_offsetData(-offset1, dim1, -offset2, dim2);		\
       return r;								\
     }									\

@@ -88,7 +88,7 @@ public:
     FastTM2IteratorBase(const T_matrix& array)
         : array_(array)
     {
-        data_   = array.data();
+        data_   = array_.data();
     }
 
     ~FastTM2IteratorBase()
@@ -265,18 +265,18 @@ public:
     { return *data_; }
   */
 
-    // // Experimental
-    // T_numtype shift(int offset, int dim) const
-    // {
-    //   return data_[offset*T_matrix::stride(dim)];
-    // }
+    // Experimental
+    T_result shift(int offset, int dim) const
+    {
+      return data_[offset*T_matrix::stride(dim)];
+    }
 
-    // // Experimental
-    // T_numtype shift(int offset1, int dim1, int offset2, int dim2) const
-    // {
-    //   return data_[offset1*T_matrix::stride(dim1) 
-    // 		   + offset2*T_matrix::stride(dim2)];
-    // }
+    // Experimental
+    T_result shift(int offset1, int dim1, int offset2, int dim2) const
+    {
+      return data_[offset1*T_matrix::stride(dim1) 
+    		   + offset2*T_matrix::stride(dim2)];
+    }
 
     void prettyPrint(BZ_STD_SCOPE(string) &str, 
         prettyPrintFormat& format) const

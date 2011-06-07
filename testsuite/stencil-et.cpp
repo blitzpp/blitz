@@ -1,6 +1,8 @@
 #include "testsuite.h"
 #include <blitz/array.h>
+#include <blitz/array.cc>
 #include <blitz/array/stencil-et.h>
+#include <blitz/array/stencilops.h>
 #include <blitz/array/stencil-et-macros.h>
 //#include <blitz/tinyvec-et.h>
 //#include <blitz/matrix.h>
@@ -65,7 +67,7 @@ void test_mexpr(const T1& d1, const T2& d2)
 BZ_DECLARE_DIFF(shifter) {
   return A.shift(1,dim); }
 
-BZ_ET_STENCIL_DIFF(shifter, 1,1)
+//BZ_ET_STENCIL_DIFF(shifter, 1,1)
 
 int main()
 {
@@ -143,6 +145,7 @@ int main()
   // and expressions involving index remappings. we do these on arrays
   // with different sizes in all dimensions to make it less likely we
   // don't detect a screwup
+  /*
   test_expr(shifter(field2,firstDim), 
 	    shifter(field2(tensor::i, tensor::j),firstDim));
   {
@@ -161,7 +164,7 @@ int main()
     array_3 temp(shifter(field3,thirdDim));
     test_expr(temp(tensor::i, tensor::k, tensor::j), 
 	      shifter(field3(tensor::i, tensor::k, tensor::j),secondDim));
-  }
+	      }*/
   {
     array_3 temp(Laplacian3D(field3));
     test_expr(temp(tensor::k, tensor::i, tensor::j),

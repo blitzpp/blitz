@@ -37,7 +37,7 @@
 #include <blitz/tinyvec2io.cc> // fix this - for some reason it doesn't get included through tinyvec2.h
 #include <blitz/listinit.h>
 #include <blitz/etbase.h>
-//#include <blitz/array/slice.h>
+#include <blitz/array/slice.h>
 #include <blitz/indexmap-forward.h>
 //#include <blitz/meta/vecassign.h>
 //#include <blitz/update.h>
@@ -127,8 +127,7 @@ public:
   static int                               dimensions() 
     { return 2; }
 
-  static RectDomain<2>                domain() 
-    { return RectDomain<2>(lbound(), ubound()); }
+  static RectDomain<2>                domain();
 
     iterator                          end()
   { return data_+size(); }

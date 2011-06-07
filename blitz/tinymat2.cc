@@ -33,6 +33,7 @@
 
 #include <blitz/tm2ops.cc>
 #include <blitz/tinymat2io.cc>
+#include <blitz/array/domain.h>
 
 BZ_NAMESPACE(blitz)
 
@@ -70,6 +71,13 @@ TinyMatrix<P_numtype, N_rows, N_columns>::operator()(IndexPlaceholder<N0>, Index
 							 N_columns>, 
 					 N0, N1> >(noConst());
 } 
+
+template<typename P_numtype, int N_rows, int N_columns>
+inline RectDomain<2> 
+TinyMatrix<P_numtype, N_rows, N_columns>::domain()
+{
+  return RectDomain<2>(lbound(), ubound()); 
+}
 
 
 
