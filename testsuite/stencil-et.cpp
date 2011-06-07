@@ -36,7 +36,6 @@ public:
   double operator()(double a, double b) const {return a*b;}
   BZ_DECLARE_FUNCTOR2(multiplier);
 };
-
 /*
 // Test two expressions for equality
 template<typename T1, typename T2>
@@ -67,7 +66,8 @@ void test_mexpr(const T1& d1, const T2& d2)
 BZ_DECLARE_DIFF(shifter) {
   return A.shift(1,dim); }
 
-//BZ_ET_STENCIL_DIFF(shifter, 1,1)
+BZ_ET_STENCIL_DIFF(shifter, 1,1)
+
 
 int main()
 {
@@ -145,7 +145,6 @@ int main()
   // and expressions involving index remappings. we do these on arrays
   // with different sizes in all dimensions to make it less likely we
   // don't detect a screwup
-  /*
   test_expr(shifter(field2,firstDim), 
 	    shifter(field2(tensor::i, tensor::j),firstDim));
   {
@@ -164,7 +163,7 @@ int main()
     array_3 temp(shifter(field3,thirdDim));
     test_expr(temp(tensor::i, tensor::k, tensor::j), 
 	      shifter(field3(tensor::i, tensor::k, tensor::j),secondDim));
-	      }*/
+	      }
   {
     array_3 temp(Laplacian3D(field3));
     test_expr(temp(tensor::k, tensor::i, tensor::j),

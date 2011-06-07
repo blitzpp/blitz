@@ -502,7 +502,6 @@ public:
   // and that we are returning a TinyVector. This needs to be returned
   // as a FastTVCopyIterator that keeps a copy of the TV it is
   // iterating over, since the result of the stencil operator is a temporary.
-
   typedef ETBase<_bz_ArrayExpr<FastTV2CopyIterator<typename P_expr::T_numtype, result_rank> > > T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
   typedef typename T_expr::T_numtype T_optype;

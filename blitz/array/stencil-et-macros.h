@@ -77,7 +77,7 @@ BZ_NAMESPACE(blitz)
     typedef _bz_typename T_base::T_numtype T_numtype;			\
     typedef _bz_typename T_base::T_expr T_expr;				\
 									\
-    // if P_numtype is an ET-type, we need to return an expr		\
+    /* if P_numtype is an ET-type, we need to return an expr */		\
     typedef typename selectET<P_numtype,				\
 			      T_numtype,				\
       ETBase<_bz_ArrayExpr<_bz_ArrayExprConstant<P_numtype> > > >::T_selected T_typeprop;\
@@ -224,7 +224,7 @@ BZ_NAMESPACE(blitz)
     typedef _bz_typename T_base::T_expr1 T_expr1;			\
     typedef _bz_typename T_base::T_expr2 T_expr2;			\
 									\
-    // if P_numtype is an ET-type, we need to return an expr		\
+    /* if P_numtype is an ET-type, we need to return an expr */		\
     typedef typename selectET<P_numtype,				\
 			      T_numtype,				\
       ETBase<_bz_ArrayExpr<_bz_ArrayExprConstant<P_numtype> > > >::T_selected T_typeprop;\
@@ -398,11 +398,11 @@ BZ_NAMESPACE(blitz)
  public:									\
      typedef _bz_StencilExpr<P_expr, TinyMatrix<_bz_typename multicomponent_traits<typename P_expr::T_numtype>::T_element, result_rank, result_rank> > T_base; \
      typedef _bz_typename T_base::T_numtype T_numtype;			\
-     typedef _bz_typename T_base::T_expr T_expr;				\
-									\
-     // there is no return type selection, as we are returning a	\
-  // TinyMatrix. This must be returned as a FastTMCopyIterator since the\
-  // output of the stencil operator is a temporary.\
+     typedef _bz_typename T_base::T_expr T_expr;			\
+     									\
+     /* there is no return type selection, as we are returning a	\
+	TinyMatrix. This must be returned as a FastTMCopyIterator since the \
+	output of the stencil operator is a temporary. */		\
   typedef ETBase<_bz_ArrayExpr<FastTM2CopyIterator<typename multicomponent_traits<typename P_expr::T_numtype>::T_element, result_rank, result_rank> > > T_typeprop;\
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;\
   typedef T_numtype T_optype;\
@@ -522,11 +522,11 @@ BZ_NAMESPACE(blitz)
      typedef _bz_typename T_base::T_numtype T_numtype;			\
      typedef _bz_typename T_base::T_expr T_expr;			\
 									\
-     // there is no return type selection, we assume P_numtype is scalar \
-     // and that we are returning a TinyVector. This needs to be returned \
-     // as a FastTVCopyIterator that keeps a copy of the TV it is	\
-     // iterating over, since the result of the stencil operator is a temporary.\
-									\
+     /* there is no return type selection, we assume P_numtype is scalar \
+	and that we are returning a TinyVector. This needs to be returned \
+	as a FastTVCopyIterator that keeps a copy of the TV it is	\
+	iterating over, since the result of the stencil operator is	\
+	a temporary. */							\
      typedef ETBase<_bz_ArrayExpr<FastTV2CopyIterator<typename P_expr::T_numtype, result_rank> > > T_typeprop; \
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;		\
   typedef typename T_expr::T_numtype T_optype;				\
@@ -645,11 +645,11 @@ BZ_NAMESPACE(blitz)
      typedef _bz_typename multicomponent_traits<typename P_expr::T_numtype>::T_element T_result; \
      typedef _bz_StencilExpr<P_expr, T_result> T_base;			\
      typedef _bz_typename T_base::T_numtype T_numtype;			\
-     typedef _bz_typename T_base::T_expr T_expr;				\
+     typedef _bz_typename T_base::T_expr T_expr;			\
      									\
-     // there is no selecting return type here. because we *know* it is	\
-     // scalar T_result, there's no question of whether we could be doing \
-     // multicomponent evaluations.					\
+     /* there is no selecting return type here. because we *know* it is	\
+	scalar T_result, there's no question of whether we could be doing \
+	multicomponent evaluations. */					\
      typedef T_result T_typeprop;					\
      typedef T_numtype T_optype;					\
 									\
@@ -765,18 +765,19 @@ BZ_NAMESPACE(blitz)
 
 #define BZ_ET_STENCIL_DIFF(name, MINB, MAXB)				\
   template<typename P_expr>						\
-  class name ## _et : public _bz_StencilExpr<P_expr, _bz_typename P_expr::T_numtype>	\
+  class name ## _et :							\
+    public _bz_StencilExpr<P_expr, _bz_typename P_expr::T_numtype>	\
   {									\
   public:								\
     typedef _bz_StencilExpr<P_expr, _bz_typename P_expr::T_numtype> T_base; \
     typedef _bz_typename T_base::T_numtype T_numtype;			\
     typedef _bz_typename T_base::T_expr T_expr;				\
     									\
-    // select return type						\
+    /* select return type */						\
     typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test; \
     typedef typename selectET<typename T_expr::T_typeprop,		\
 			      T_numtype,				\
-			      #name#_et<test> >::T_selected T_typeprop;	\
+			      name ##_et<test> >::T_selected T_typeprop; \
     typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;	\
     typedef T_numtype T_optype;						\
     									\
@@ -909,11 +910,12 @@ BZ_NAMESPACE(blitz)
     typedef _bz_typename T_base::T_numtype T_numtype;			\
     typedef _bz_typename T_base::T_expr T_expr;				\
 									\
-    // there is no selecting return type here. because we *know* it is	\
-    // T_result, there's no question of whether we could be doing	\
-    // multicomponent evaluations.					\
+    /* there is no selecting return type here. because we *know* it is	\
+       T_result, there's no question of whether we could be doing	\
+       multicomponent evaluations. */					\
     typedef T_result T_typeprop;					\
   typedef T_numtype T_optype;						\
+									\
     typedef  name ## _et_multi<_bz_typename P_expr::T_range_result> T_range_result; \
 									\
     using T_base::iter_;						\
@@ -1010,13 +1012,13 @@ BZ_NAMESPACE(blitz)
   private:								\
     int comp_;								\
     int dim_;								\
-  };									\
+    };									\
   /* create ET from application to expression */			\
   template<typename T1>							\
   inline _bz_ArrayExpr<name ## _et_multi<typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_range_result> >	\
   name(const BZ_BLITZ_SCOPE(ETBase)<T1>& d1, int comp, int dim)		\
   {									\
-    TinyVector<int, BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::rank_> minb(0), maxb(0);	\
+    TinyVector<int, BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::rank_> minb(0), maxb(0); \
     minb[dim]=MINB; maxb[dim]=MAXB;					\
     return _bz_ArrayExpr<name ## _et_multi<typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_range_result> > \
       (BZ_BLITZ_SCOPE(asExpr)<T1>::getExpr(d1.unwrap())(_bz_shrinkDomain(d1.unwrap().domain(),minb, maxb)), comp, dim); \
@@ -1048,11 +1050,11 @@ BZ_NAMESPACE(blitz)
    typedef _bz_typename T_base::T_numtype T_numtype;			\
    typedef _bz_typename T_base::T_expr T_expr;				\
 									\
-   // select return type						\
+   /* select return type */						\
    typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test; \
   typedef typename selectET<typename T_expr::T_typeprop,		\
 			    T_numtype,					\
-			    #name#_et<test> >::T_selected T_typeprop;	\
+			    name ## _et<test> >::T_selected T_typeprop;	\
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;		\
   typedef T_numtype T_optype;						\
    typedef  name ## _et<_bz_typename P_expr::T_range_result> T_range_result; \
