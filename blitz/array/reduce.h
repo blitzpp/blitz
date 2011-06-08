@@ -155,36 +155,50 @@ public:
     // which contains an index placeholder.  You must use index
     // iteration mode instead.
 
-    int operator*()        const { BZPRECONDITION(0); return 0; }
-    int suggestStride(int) const { BZPRECONDITION(0); return 0; }
+    int operator*()        const {
+      BZPRECHECK(0,"Can't use stack iteration on a reduction."); return 0; }
+    int suggestStride(int) const { 
+      BZPRECHECK(0,"Can't use stack iteration on a reduction."); return 0; }
 
-    void push(int)           const { BZPRECONDITION(0); }
-    void pop(int)            const { BZPRECONDITION(0); }
-    void advance()           const { BZPRECONDITION(0); }
-    void advance(int)        const { BZPRECONDITION(0); }
-    void loadStride(int)     const { BZPRECONDITION(0); }
-    void advanceUnitStride() const { BZPRECONDITION(0); }
+    void push(int)           const { 
+      BZPRECHECK(0,"Can't use stack iteration on a reduction."); }
+    void pop(int)            const { 
+      BZPRECHECK(0,"Can't use stack iteration on a reduction."); }
+    void advance()           const { 
+      BZPRECHECK(0,"Can't use stack iteration on a reduction."); }
+    void advance(int)        const { 
+      BZPRECHECK(0,"Can't use stack iteration on a reduction."); }
+    void loadStride(int)     const { 
+      BZPRECHECK(0,"Can't use stack iteration on a reduction."); }
+    void advanceUnitStride() const { 
+      BZPRECHECK(0,"Can't use stack iteration on a reduction."); }
 
     template<int N_rank>
-    void moveTo(const TinyVector<int,N_rank>&) const { BZPRECONDITION(0); }
+    void moveTo(const TinyVector<int,N_rank>&) const { 
+      BZPRECHECK(0,"Stencils of reductions are not implemented"); }
 
-    bool isUnitStride(int)    const { BZPRECONDITION(0); return false; }
-    bool canCollapse(int,int) const { BZPRECONDITION(0); return false; }
-    bool isStride(int,int)    const { BZPRECONDITION(0); return true;  }
+    bool isUnitStride(int)    const { 
+      BZPRECHECK(0,"Can't use stack iteration on a reduction."); return false; }
+    bool canCollapse(int,int) const { 
+      BZPRECHECK(0,"Can't use stack iteration on a reduction."); return false; }
+    bool isStride(int,int)    const { 
+      BZPRECHECK(0,"Can't use stack iteration on a reduction."); return true;  }
 
-    T_numtype operator[](int) const { BZPRECONDITION(0); return T_numtype(); }
-    T_numtype fastRead(int)   const { BZPRECONDITION(0); return T_numtype(); }
+    T_numtype operator[](int) const { 
+      BZPRECHECK(0,"Can't use stack iteration on a reduction."); return T_numtype(); }
+    T_numtype fastRead(int)   const { 
+      BZPRECHECK(0,"Can't use stack iteration on a reduction."); return T_numtype(); }
 
     // don't know how to define these, so stencil expressions won't work
-    T_numtype shift(int offset, int dim) const
-  { BZPRECONDITION(0); return T_numtype(); }
-    T_numtype shift(int offset1, int dim1,int offset2, int dim2) const 
-  { BZPRECONDITION(0); return T_numtype(); }
+    T_result shift(int offset, int dim) const
+  { BZPRECHECK(0,"Stencils of reductions are not implemented"); return T_numtype(); }
+    T_result shift(int offset1, int dim1,int offset2, int dim2) const 
+  { BZPRECHECK(0,"Stencils of reductions are not implemented"); return T_numtype(); }
     void _bz_offsetData(sizeType i) { BZPRECONDITION(0); }
 
   // Unclear how to define this, and stencils don't work anyway
   T_range_result operator()(RectDomain<rank_> d) const
-  { BZPRECONDITION(0); }
+  { BZPRECHECK(0,"Stencils of reductions are not implemented"); }
 
     void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format) const
     {
@@ -194,10 +208,10 @@ public:
         str += ")";
     }
 
+  /** \todo do a real shape check (tricky) */
     template<typename T_shape>
     bool shapeCheck(const T_shape&) const
     { 
-        // NEEDS_WORK-- do a real shape check (tricky)
         return true; 
     }
 

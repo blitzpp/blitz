@@ -165,6 +165,12 @@ public:
       return f(*iter); }
     static T_result first_value(const T_functor& f, const T_expr& iter)  {
       return f(iter.first_value()); }
+    static T_result shift(const T_functor& f, const T_expr& iter,
+			  int offset, int dim) {
+      return f(iter.shift(offset, dim)); }
+    static T_result shift(const T_functor& f, const T_expr& iter,
+			  int offset1, int dim1,int offset2, int dim2) {
+      return f(iter.shift(offset1, dim1, offset2, dim2)); }
     template<int N_rank>
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     static T_result indexop(const T_functor& f, const T_expr& iter, 
@@ -186,6 +192,12 @@ public:
 	return T_result(f,*iter); }
     static T_result first_value(const T_functor& f, const T_expr& iter)  {
       return iter.first_value(); }
+    static T_result shift(const T_functor& f, const T_expr& iter,
+			  int offset, int dim) {
+      return T_result(f,iter.shift(offset, dim)); }
+    static T_result shift(const T_functor& f, const T_expr& iter,
+			  int offset1, int dim1,int offset2, int dim2) {
+      return T_result(f,iter.shift(offset1, dim1, offset2, dim2)); }
       template<int N_rank>
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
       static T_result indexop(const T_functor& f, const T_expr& iter,
@@ -217,6 +229,12 @@ public:
       T_result first_value() const { 
 	return readHelper<T_typeprop>::first_value(f_, iter_); }
 
+    T_result shift(int offset, int dim) const {
+      return readHelper<T_typeprop>::shift(f_,iter_,offset, dim); }
+
+    T_result shift(int offset1, int dim1,int offset2, int dim2) const {
+      return readHelper<T_typeprop>::shift(f_,iter_,offset1, dim1,
+					   offset2, dim2); }
 
       // ****** end reading
 
@@ -284,16 +302,6 @@ public:
     void moveTo(const TinyVector<int,N_rank>& i)
     {
         iter_.moveTo(i);
-    }
-
-    T_numtype shift(int offset, int dim) const
-    {
-      return f_(iter_.shift(offset, dim));
-    }
-
-    T_numtype shift(int offset1, int dim1,int offset2, int dim2) const
-    {
-      return f_(iter_.shift(offset1, dim1, offset2, dim2));
     }
 
   // sliceinfo for expressions
@@ -398,6 +406,15 @@ public:
     static T_result first_value(const T_functor& f, const T_expr1& iter1, 
 				const T_expr2& iter2)  {
       return f(iter1.first_value(), iter2.first_value()); }
+    static T_result shift(const T_functor& f, const T_expr1& iter1, 
+			  const T_expr2& iter2,
+			  int offset, int dim) {
+      return f(iter1.shift(offset, dim),iter2.shift(offset, dim)); }
+    static T_result shift(const T_functor& f, const T_expr1& iter1, 
+			  const T_expr2& iter2,
+			  int offset1, int dim1,int offset2, int dim2) {
+      return f(iter1.shift(offset1, dim1, offset2, dim2),
+	       iter2.shift(offset1, dim1, offset2, dim2)); }
     template<int N_rank>
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     static T_result indexop(const T_functor& f, const T_expr& iter, 
@@ -425,6 +442,15 @@ public:
     static T_result first_value(const T_functor& f, const T_expr1& iter1, 
 				const T_expr2& iter2)  {
       return T_result(f,iter1.first_value(), iter2.first_value()); }
+    static T_result shift(const T_functor& f, const T_expr1& iter1, 
+			  const T_expr2& iter2,
+			  int offset, int dim) {
+      return T_result(f,iter1.shift(offset, dim),iter2.shift(offset, dim)); }
+    static T_result shift(const T_functor& f, const T_expr1& iter1, 
+			  const T_expr2& iter2,
+			  int offset1, int dim1,int offset2, int dim2) {
+      return T_result(f,iter1.shift(offset1, dim1, offset2, dim2),
+		      iter2.shift(offset1, dim1, offset2, dim2)); }
       template<int N_rank>
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
       static T_result indexop(const T_functor& f, const T_expr1& iter1, 
@@ -457,6 +483,14 @@ public:
 
       T_result first_value() const { 
 	return readHelper<T_typeprop>::first_value(f_, iter1_, iter2_); }
+
+    T_result shift(int offset, int dim) const {
+      return readHelper<T_typeprop>::shift(f_,iter1_,iter2_,offset, dim); }
+
+    T_result shift(int offset1, int dim1,int offset2, int dim2) const
+    {
+      return readHelper<T_typeprop>::shift(f_,iter1_,iter2_,
+					   offset1, dim1, offset2, dim2); }
     
       // ****** end reading  
 
@@ -579,17 +613,6 @@ public:
     {
         iter1_.moveTo(i);
         iter2_.moveTo(i);
-    }
-
-    T_numtype shift(int offset, int dim) const
-    {
-      return f_(iter1_.shift(offset, dim),iter2_.shift(offset, dim));
-    }
-
-    T_numtype shift(int offset1, int dim1,int offset2, int dim2) const
-    {
-      return f_(iter1_.shift(offset1, dim1, offset2, dim2),
-		iter2_.shift(offset1, dim1, offset2, dim2));
     }
   
     template<typename T_shape>
@@ -720,6 +743,17 @@ public:
 				const T_expr2& iter2, const T_expr3& iter3)  {
       return f(iter1.first_value(), iter2.first_value(),
 			 iter3.first_value()); }
+    static T_result shift(const T_functor& f, const T_expr1& iter1, 
+			  const T_expr2& iter2, const T_expr3& iter3,
+			  int offset, int dim) {
+      return f(iter1.shift(offset, dim),iter2.shift(offset, dim),
+	       iter3.shift(offset, dim)); }
+    static T_result shift(const T_functor& f, const T_expr1& iter1, 
+			  const T_expr2& iter2, const T_expr3& iter3,
+			  int offset1, int dim1,int offset2, int dim2) {
+      return f(iter1.shift(offset1, dim1, offset2, dim2),
+	       iter2.shift(offset1, dim1, offset2, dim2),
+	       iter2.shift(offset1, dim1, offset2, dim2)); }
     template<int N_rank>
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
       static T_result indexop(const T_functor& f, const T_expr1& iter1, 
@@ -751,6 +785,17 @@ public:
 				const T_expr2& iter2, const T_expr3& iter3)  {
       return T_result(f, iter1.first_value(), iter2.first_value(),
 		      iter3.first_value()); }
+    static T_result shift(const T_functor& f, const T_expr1& iter1, 
+			  const T_expr2& iter2, const T_expr3& iter3,
+			  int offset, int dim) {
+      return T_result(f,iter1.shift(offset, dim),iter2.shift(offset, dim),
+		      iter3.shift(offset, dim)); }
+    static T_result shift(const T_functor& f, const T_expr1& iter1, 
+			  const T_expr2& iter2, const T_expr3& iter3,
+			  int offset1, int dim1,int offset2, int dim2) {
+      return T_result(f, iter1.shift(offset1, dim1, offset2, dim2),
+		      iter2.shift(offset1, dim1, offset2, dim2),
+		      iter2.shift(offset1, dim1, offset2, dim2)); }
       template<int N_rank>
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
       static T_result indexop(const T_functor& f, const T_expr1& iter1, 
@@ -783,6 +828,14 @@ public:
     
       T_result first_value() const { 
 	return readHelper<T_typeprop>::first_value(f_, iter1_, iter2_, iter3_); }
+
+      T_result shift(int offset, int dim) const {
+	return readHelper<T_typeprop>::shift(f_,iter1_,iter2_, 
+					     iter3_, offset, dim); }
+
+    T_result shift(int offset1, int dim1,int offset2, int dim2) const {
+      return readHelper<T_typeprop>::shift(f_,iter1_,iter2_,iter3_,
+					   offset1, dim1, offset2, dim2); }
 
       // ****** end reading
   
@@ -925,21 +978,7 @@ public:
         iter1_.moveTo(i);
         iter2_.moveTo(i);
         iter3_.moveTo(i);
-    }
-  
-    T_numtype shift(int offset, int dim) const
-    {
-      return f_(iter1_.shift(offset, dim),
-		iter2_.shift(offset, dim),
-		iter3_.shift(offset, dim));
-    }
-
-    T_numtype shift(int offset1, int dim1,int offset2, int dim2) const
-    {
-      return f_(iter1_.shift(offset1, dim1, offset2, dim2),
-		iter2_.shift(offset1, dim1, offset2, dim2),
-		iter3_.shift(offset1, dim1, offset2, dim2));
-    }
+    }  
   
     template<typename T_shape>
     bool shapeCheck(const T_shape& shape) const

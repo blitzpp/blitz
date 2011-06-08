@@ -90,10 +90,10 @@ public:
 
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     template<int N_rank>
-    T_numtype operator()(TinyVector<int, N_rank> i) const { return i[N]; }
+    T_result operator()(TinyVector<int, N_rank> i) const { return i[N]; }
 #else
     template<int N_rank>
-    T_numtype operator()(const TinyVector<int, N_rank>& i) const { return i[N]; }
+    T_result operator()(const TinyVector<int, N_rank>& i) const { return i[N]; }
 #endif
 
     int ascending(int) const { return INT_MIN; }
@@ -129,12 +129,12 @@ public:
         return false; 
     }
 
-    T_numtype operator[](int) const {
+    T_result operator[](int) const {
         BZPRECONDITION(0);
         return T_numtype();
     }
 
-    T_numtype fastRead(int) const {
+    T_result fastRead(int) const {
         BZPRECONDITION(0);
         return T_numtype();
     }
@@ -151,15 +151,17 @@ public:
 
   // don't know how to define shift, as it relies on having an
   // implicit position. thus stencils won't work
-  T_numtype shift(int offset, int dim) const
-  { BZPRECONDITION(0); return T_numtype(); }
-  T_numtype shift(int offset1, int dim1,int offset2, int dim2) const {
-    BZPRECONDITION(0); return T_numtype(); }
+  T_result shift(int offset, int dim) const
+  { BZPRECHECK(0,"Stencils of index expressions are not implemented");
+    return T_numtype(); }
+  T_result shift(int offset1, int dim1,int offset2, int dim2) const {
+    BZPRECHECK(0,"Stencils of index expressions are not implemented");
+    return T_numtype(); }
   void _bz_offsetData(sizeType i) { BZPRECONDITION(0); }
 
   // Unclear how to define this, and stencils don't work anyway
   T_range_result operator()(RectDomain<rank_> d) const
-  { BZPRECONDITION(0); }
+  { BZPRECHECK(0,"Stencils of index expressions are not implemented"); }
 
     void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat&) const {
         // NEEDS_WORK-- do real formatting for reductions

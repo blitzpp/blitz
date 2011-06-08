@@ -116,6 +116,16 @@ public:
 				const T_expr3& iter3)  {
       return iter1.first_value() ? 
 	iter2.first_value() : iter3.first_value(); }
+    static T_result shift(const T_expr1& iter1, const T_expr2& iter2,
+			  const T_expr3& iter3, int offset, int dim) {
+      return iter1.shift(offset, dim) ? iter2.shift(offset, dim) : 
+	iter3.shift(offset, dim); }
+    static T_result shift(const T_expr1& iter1, const T_expr2& iter2,
+			  const T_expr3& iter3, int offset1, int dim1,
+			  int offset2, int dim2) {
+      return iter1.shift(offset1, dim1, offset2, dim2) ? 
+	iter2.shift(offset1, dim1, offset2, dim2) : 
+	iter3.shift(offset1, dim1, offset2, dim2); }
     template<int N_rank>
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
       static T_result indexop(const T_expr1& iter1, const T_expr2& iter2,
@@ -141,6 +151,16 @@ public:
 				const T_expr3& iter3)  {
       return T_result(iter1.first_value(), iter2.first_value(),
 		      iter3.first_value()); }
+    static T_result shift(const T_expr1& iter1, const T_expr2& iter2,
+			  const T_expr3& iter3, int offset, int dim) {
+      return T_result(iter1.shift(offset, dim), iter2.shift(offset, dim),
+		      iter3.shift(offset, dim)); }
+    static T_result shift(const T_expr1& iter1, const T_expr2& iter2,
+			  const T_expr3& iter3, int offset1, int dim1,
+			  int offset2, int dim2) {
+      return T_result(iter1.shift(offset1, dim1, offset2, dim2),
+		      iter2.shift(offset1, dim1, offset2, dim2), 
+		      iter3.shift(offset1, dim1, offset2, dim2)); }
       template<int N_rank>
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
       static T_result indexop(const T_expr1& iter1, const T_expr2& iter2,
@@ -170,6 +190,14 @@ public:
     
       T_result first_value() const { 
 	return readHelper<T_typeprop>::first_value(iter1_, iter2_, iter3_); }
+
+    T_result shift(int offset, int dim) const {
+      return readHelper<T_typeprop>::shift(iter1_, iter2_, iter3_, 
+					   offset, dim); }
+
+    T_result shift(int offset1, int dim1,int offset2, int dim2) const {
+      return readHelper<T_typeprop>::shift(iter1_, iter2_, iter3_,
+					   offset1, dim1, offset2, dim2); }
 
       // ****** end reading
 
@@ -276,20 +304,6 @@ public:
         iter1_.moveTo(i);
         iter2_.moveTo(i);
         iter3_.moveTo(i);
-    }
-
-    T_numtype shift(int offset, int dim) const
-    {
-      return iter1_.shift(offset, dim) ? 
-	iter2_.shift(offset, dim) : 
-	iter3_.shift(offset, dim);
-    }
-
-    T_numtype shift(int offset1, int dim1,int offset2, int dim2) const
-    {
-      return iter1_.shift(offset1, dim1, offset2, dim2) ? 
-	iter2_.shift(offset1, dim1, offset2, dim2) : 
-	iter3_.shift(offset1, dim1, offset2, dim2);
     }
 
   // this is needed for the stencil expression fastRead to work

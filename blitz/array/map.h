@@ -584,68 +584,68 @@ public:
     // See operator*() note
     void push(int)
     {
-        BZPRECONDITION(0);
+        BZPRECHECK(0,"Can't use stack iteration on an index mapping.");
     }
 
     // See operator*() note
     void pop(int)
     {
-        BZPRECONDITION(0);
+        BZPRECHECK(0,"Can't use stack iteration on an index mapping.");
     }
 
     // See operator*() note
     void advance()
     {
-        BZPRECONDITION(0);
+        BZPRECHECK(0,"Can't use stack iteration on an index mapping.");
     }
 
     // See operator*() note
     void advance(int)
     {
-        BZPRECONDITION(0);
+        BZPRECHECK(0,"Can't use stack iteration on an index mapping.");
     }
 
     // See operator*() note
     void loadStride(int)
     {
-        BZPRECONDITION(0);
+        BZPRECHECK(0,"Can't use stack iteration on an index mapping.");
     }
 
     bool isUnitStride(int) const
     {
-        BZPRECONDITION(0);
+        BZPRECHECK(0,"Can't use stack iteration on an index mapping.");
         return false;
     }
 
     void advanceUnitStride()
     {
-        BZPRECONDITION(0);
+        BZPRECHECK(0,"Can't use stack iteration on an index mapping.");
     }
 
     bool canCollapse(int,int) const
-    {   BZPRECONDITION(0);  return false; }
+    {   BZPRECHECK(0,"Can't use stack iteration on an index mapping.");  return false; }
 
     T_result operator[](int)
     {   
-        BZPRECONDITION(0);
+        BZPRECHECK(0,"Can't use stack iteration on an index mapping.");
         return T_result();
     }
 
     T_result fastRead(int) const
     {
-        BZPRECONDITION(0);
+        BZPRECHECK(0,"Can't use stack iteration on an index mapping.");
         return T_result();
     }
 
     int suggestStride(int) const
     {
-        BZPRECONDITION(0);
+        BZPRECHECK(0,"Can't use stack iteration on an index mapping.");
         return 0;
     }
 
     bool isStride(int,int) const
     {
-        BZPRECONDITION(0);
+        BZPRECHECK(0,"Can't use stack iteration on an index mapping.");
         return true;
     }
 
@@ -663,7 +663,7 @@ public:
     }
 #endif
 
-  T_numtype shift(int offset, int dim) const { 
+  T_result shift(int offset, int dim) const { 
     // need to check if dim is mapped into this expression
     const int d=map_dim(dim);
     if (d<0)
@@ -672,7 +672,7 @@ public:
       return iter_.shift(offset, d);
   }
 
-  T_numtype shift(int offset1, int dim1,int offset2, int dim2) const {
+  T_result shift(int offset1, int dim1,int offset2, int dim2) const {
     // need to check if dims are mapped into this expression
     int d1=map_dim(dim1);
     int d2=map_dim(dim2);
@@ -683,7 +683,9 @@ public:
     return iter_.shift(offset1, d1, offset2, d2);
   }
 
-  void _bz_offsetData(sizeType i) { BZPRECONDITION(0); }
+  void _bz_offsetData(sizeType i) {
+        BZPRECHECK(0,"Can't use stack iteration on an index mapping.");
+  }
 
   template<int N>
   T_range_result operator()(RectDomain<N> d) const
