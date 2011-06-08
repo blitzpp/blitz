@@ -100,13 +100,13 @@ template<typename P_parameter>
 void BenchmarkExt<P_parameter>::setParameterVector(Array<P_parameter,1> parms)
 {
     BZPRECONDITION(state_ == initializing);
-    BZPRECONDITION(parms.length() == parameters_.length());
+    BZPRECONDITION(parms.size() == parameters_.size());
 
     // NEEDS_WORK: should use operator=(), once that problem
     // gets sorted out.
     // parameters_ = parms;
-    for (int i=0; i < parameters_.length(); ++i)
-        parameters_[i] = parms(i);
+    for (int i=0; i < parameters_.size(); ++i)
+      parameters_(i) = parms(i);
 }
 
 template<typename P_parameter>
@@ -124,8 +124,8 @@ void BenchmarkExt<P_parameter>::setIterations(Array<long,1> iters)
     // gets sorted out.
     // iterations_ = iters;
 
-    for (int i=0; i < iterations_.length(); ++i)
-        iterations_[i] = iters(i);
+    for (int i=0; i < iterations_.size(); ++i)
+      iterations_(i) = iters(i);
 }
 
 template<typename P_parameter>
@@ -138,8 +138,8 @@ void BenchmarkExt<P_parameter>::setFlopsPerIteration(Array<double,1>
     // gets sorted out.
     // flopsPerIteration_ = flopsPerIteration;
 
-    for (int i=0; i < flopsPerIteration_.length(); ++i)
-        flopsPerIteration_[i] = flopsPerIteration[i];
+    for (int i=0; i < flopsPerIteration_.size(); ++i)
+      flopsPerIteration_(i) = flopsPerIteration(i);
 }
 
 template<typename P_parameter>
