@@ -76,7 +76,8 @@ inline nilArraySection _bz_makeRange(const nilArraySection& r)
 }
 
 
-// necessary because we can't have an #ifdef in the macros
+/** necessary because we can't have an #ifdef in the macros
+    \todo convert to _bz_Indexpar. */
 template<typename T> struct _bz_IndexParameter {
 #ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
   typedef T type;
