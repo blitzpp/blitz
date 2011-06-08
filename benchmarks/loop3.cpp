@@ -52,6 +52,7 @@ extern "C" {
 
 void VectorVersion(BenchmarkExt<int>& bench, double a);
 void ArrayVersion(BenchmarkExt<int>& bench, double a);
+void doTinyVectorVersion(BenchmarkExt<int>& bench, double a);
 void F77Version(BenchmarkExt<int>& bench, double a);
 #ifdef FORTRAN_90
 void F90Version(BenchmarkExt<int>& bench, double a);
@@ -62,9 +63,13 @@ void ValarrayVersion(BenchmarkExt<int>& bench, double a);
 
 void sink() {}
 
+const int numSizes = 20;
+const int Nmax=1<<(numSizes-1);//(int)pow(10.0, numSizes/4.0);
+//const double Nratio=pow(10.0, 0.25);
+
 int main()
 {
-    int numBenchmarks = 5;
+    int numBenchmarks = 6;
 #ifndef BENCHMARK_VALARRAY
     numBenchmarks--;   // No  valarray
 #endif
@@ -74,7 +79,6 @@ int main()
 
     BenchmarkExt<int> bench("loop3: $y=$y+$a*$x", numBenchmarks);
 
-    const int numSizes = 23;
     bench.setNumParameters(numSizes);
     bench.setRateDescription("Mflops/s");
 
@@ -84,8 +88,8 @@ int main()
 
     for (int i=0; i < numSizes; ++i)
     {
-        parameters(i) = (int)pow(10.0, (i+1)/4.0);
-        iters(i) = 10000000L / parameters(i);
+      parameters(i) = Nmax>>i;
+        iters(i) = 50000000L / parameters(i);
         if (iters(i) < 2)
             iters(i) = 2;
         flops(i) = 2 * parameters(i);
@@ -101,6 +105,7 @@ int main()
 
     VectorVersion(bench, a);
     ArrayVersion(bench, a);
+    doTinyVectorVersion(bench, a);
     F77Version(bench, a);
 #ifdef FORTRAN_90
     F90Version(bench, a);
@@ -201,6 +206,50 @@ void ArrayVersion(BenchmarkExt<int>& bench, double a)
 
     bench.endImplementation();
 }
+  
+
+template<int N>
+void TinyVectorVersion(BenchmarkExt<int>& bench, double a)
+{
+
+        cout << "Tinyvector<T, " << N << ">" << endl;
+        cout.flush();
+
+        long iters = bench.getIterations();
+
+        TinyVector<double,N+1> x;
+        initializeRandomDouble(x.dataFirst(), N);
+        TinyVector<double,N+1> y;
+        initializeRandomDouble(y.dataFirst(), N);
+
+        bench.start();
+        for (long i=0; i < iters; ++i)
+        {
+            y=y+a*x;
+            sink();
+        }
+        bench.stop();
+
+        bench.startOverhead();
+        for (long i=0; i < iters; ++i)
+            sink();
+        bench.stopOverhead();
+
+	TinyVectorVersion<N>>1>(bench,a);
+}
+
+// end recursion
+template<>
+void TinyVectorVersion<0>(BenchmarkExt<int>& bench, double a)
+{}
+
+void doTinyVectorVersion(BenchmarkExt<int>& bench, double a)
+{
+  bench.beginImplementation("TinyVector<T>");
+  TinyVectorVersion<Nmax>(bench,a);
+    bench.endImplementation();
+}
+
 
 #ifdef BENCHMARK_VALARRAY
 void ValarrayVersion(BenchmarkExt<int>& bench, double a)
