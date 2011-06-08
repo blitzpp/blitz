@@ -63,12 +63,10 @@ TinyMatrix<P_numtype, N_rows, N_columns>::TinyMatrix(const TinyMatrix<P_numtype2
 
 template<typename P_numtype, int N_rows, int N_columns>
 template<int N0, int N1>
-inline _bz_ArrayExpr<ArrayIndexMapping<FastTM2Iterator<P_numtype, N_rows, N_columns>, N0, N1> >
+inline _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<TinyMatrix<P_numtype, N_rows, N_columns> >::T_expr, N0, N1> >
 TinyMatrix<P_numtype, N_rows, N_columns>::operator()(IndexPlaceholder<N0>, IndexPlaceholder<N1>) const
 {
-  return _bz_ArrayExpr<ArrayIndexMapping<FastTM2Iterator<T_numtype, 
-							 N_rows, 
-							 N_columns>, 
+  return _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_matrix>::T_expr, 
 					 N0, N1> >(noConst());
 } 
 

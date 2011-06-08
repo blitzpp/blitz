@@ -318,7 +318,7 @@ public:
     }
 
     template<int N0>
-    _bz_ArrayExpr<ArrayIndexMapping<FastTV2Iterator<T_numtype, N_length>, N0> >
+    _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_vector>::T_expr, N0> >
     operator()(IndexPlaceholder<N0>) const;
 
     const T_numtype& operator[](unsigned i) const

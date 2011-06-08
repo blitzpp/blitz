@@ -113,10 +113,10 @@ BZ_TV2_UPDATE(>>=, _bz_shiftr_update)
 
 template<typename P_numtype, int N_length>
 template<int N0>
-_bz_ArrayExpr<ArrayIndexMapping<FastTV2Iterator<P_numtype, N_length>, N0> >
+_bz_ArrayExpr<ArrayIndexMapping<typename asExpr<TinyVector<P_numtype, N_length> >::T_expr, N0> >
 TinyVector<P_numtype, N_length>::operator()(IndexPlaceholder<N0>) const
 { 
-        return _bz_ArrayExpr<ArrayIndexMapping<FastTV2Iterator<T_numtype, N_length>, N0> >
+        return _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_vector>::T_expr, N0> >
             (noConst());
 }
 

@@ -63,36 +63,31 @@ BZ_NAMESPACE(blitz)
 template<int N_rank>
 struct _bz_doArrayIndexMapping {
   static const int rank=N_rank;
-    template<typename T_numtype, int N_inputRank>
-    static T_numtype map(const Array<T_numtype, N_rank>&, 
+  template<typename T_expr, int N_inputRank>
+  static typename T_expr::T_numtype map(const ETBase<T_expr>& expr,
         const TinyVector<int,N_inputRank>&, int, int, int, int, int, int,
         int, int, int, int, int)
     {
         // If you try to use an array index mapping on an array with
         // rank greater than 11, then you'll get a precondition failure
         // here.
-        BZPRECONDITION(0);
-        return T_numtype();
+      BZPRECHECK(0,"Index mappings for containers of rank>11 not implemented");
+      return T_expr::T_numtype();
     }
 };
 
 template<>
 struct _bz_doArrayIndexMapping<1> {
   static const int rank=1;
-  template<typename T_numtype, int N_inputRank>
-    static T_numtype map(const Array<T_numtype, rank>& array,
+  template<typename T_expr, int N_inputRank>
+  static typename T_expr::T_numtype map(const ETBase<T_expr>& expr,
         const TinyVector<int,N_inputRank>& index, int i0, int, int, int, int, 
         int, int, int, int, int, int)
     {
-        return array(index[i0]);
-    }
-
-  template<typename T_numtype, int N_length, int N_inputRank>
-    static T_numtype map(const TinyVector<T_numtype, N_length>& array,
-        const TinyVector<int,N_inputRank>& index, int i0, int, int, int, int, 
-        int, int, int, int, int, int)
-    {
-        return array(index[i0]);
+      // this was the case when it took an array. is it necessary?
+      BZPRECHECK(T_expr::rank_==rank,
+		 "Rank confusion in _bz_doArrayIndexMapping"); 
+      return expr.unwrap()(index[i0]);
     }
 
   template<int N_inputRank>
@@ -112,12 +107,15 @@ template<>
 struct _bz_doArrayIndexMapping<2> {
   static const int rank=2;
 
-    template<typename T_numtype, int N_inputRank>
-    static T_numtype map(const Array<T_numtype, rank>& array,
+  template<typename T_expr, int N_inputRank>
+  static typename T_expr::T_numtype map(const ETBase<T_expr>& expr,
         const TinyVector<int,N_inputRank>& index, int i0, int i1, int, 
         int, int, int, int, int, int, int, int)
     {
-        return array(index[i0], index[i1]);
+      // this was the case when it took an array. is it necessary?
+      BZPRECHECK(T_expr::rank_==rank,
+		 "Rank confusion in _bz_doArrayIndexMapping"); 
+      return expr.unwrap()(index[i0], index[i1]);
     }
 
   template<int N_inputRank>
@@ -133,12 +131,15 @@ template<>
 struct _bz_doArrayIndexMapping<3> {
   static const int rank=3;
 
-    template<typename T_numtype, int N_inputRank>
-    static T_numtype map(const Array<T_numtype, rank>& array,
+  template<typename T_expr, int N_inputRank>
+  static typename T_expr::T_numtype map(const ETBase<T_expr>& expr,
         const TinyVector<int,N_inputRank>& index, int i0, int i1, int i2,
         int, int, int, int, int, int, int, int)
     {
-        return array(index[i0], index[i1], index[i2]);
+      // this was the case when it took an array. is it necessary?
+      BZPRECHECK(T_expr::rank_==rank,
+		 "Rank confusion in _bz_doArrayIndexMapping"); 
+      return expr.unwrap()(index[i0], index[i1], index[i2]);
     }
 
   template<int N_inputRank>
@@ -154,12 +155,15 @@ template<>
 struct _bz_doArrayIndexMapping<4> {
   static const int rank=4;
 
-    template<typename T_numtype, int N_inputRank>
-    static T_numtype map(const Array<T_numtype, rank>& array,
+  template<typename T_expr, int N_inputRank>
+  static typename T_expr::T_numtype map(const ETBase<T_expr>& expr,
         const TinyVector<int,N_inputRank>& index, int i0, int i1, int i2,
         int i3, int, int, int, int, int, int, int)
     {
-        return array(index[i0], index[i1], index[i2], index[i3]);
+      // this was the case when it took an array. is it necessary?
+      BZPRECHECK(T_expr::rank_==rank,
+		 "Rank confusion in _bz_doArrayIndexMapping"); 
+        return expr.unwrap()(index[i0], index[i1], index[i2], index[i3]);
     }
 
   template<int N_inputRank>
@@ -176,12 +180,15 @@ template<>
 struct _bz_doArrayIndexMapping<5> {
   static const int rank=5;
 
-    template<typename T_numtype, int N_inputRank>
-    static T_numtype map(const Array<T_numtype, rank>& array,
+  template<typename T_expr, int N_inputRank>
+  static typename T_expr::T_numtype map(const ETBase<T_expr>& expr,
         const TinyVector<int,N_inputRank>& index, int i0, int i1, int i2,
         int i3, int i4, int, int, int, int, int, int)
     {
-        return array(index[i0], index[i1], index[i2], index[i3], index[i4]);
+      // this was the case when it took an array. is it necessary?
+      BZPRECHECK(T_expr::rank_==rank,
+		 "Rank confusion in _bz_doArrayIndexMapping"); 
+        return expr.unwrap()(index[i0], index[i1], index[i2], index[i3], index[i4]);
     }
 
   template<int N_inputRank>
@@ -198,12 +205,15 @@ template<>
 struct _bz_doArrayIndexMapping<6> {
   static const int rank=6;
 
-    template<typename T_numtype, int N_inputRank>
-    static T_numtype map(const Array<T_numtype, rank>& array,
+  template<typename T_expr, int N_inputRank>
+  static typename T_expr::T_numtype map(const ETBase<T_expr>& expr,
         const TinyVector<int,N_inputRank>& index, int i0, int i1, int i2,
         int i3, int i4, int i5, int, int, int, int, int)
     {
-        return array(index[i0], index[i1], index[i2], index[i3], index[i4],
+      // this was the case when it took an array. is it necessary?
+      BZPRECHECK(T_expr::rank_==rank,
+		 "Rank confusion in _bz_doArrayIndexMapping"); 
+        return expr.unwrap()(index[i0], index[i1], index[i2], index[i3], index[i4],
             index[i5]);
     }
 
@@ -221,13 +231,16 @@ template<>
 struct _bz_doArrayIndexMapping<7> {
   static const int rank=7;
 
-    template<typename T_numtype, int N_inputRank>
-    static T_numtype map(const Array<T_numtype, rank>& array,
+  template<typename T_expr, int N_inputRank>
+  static typename T_expr::T_numtype map(const ETBase<T_expr>& expr,
         const TinyVector<int,N_inputRank>& index, int i0, int i1, int i2,
         int i3, int i4, int i5, int i6, int, int, int, int)
     {
-        return array(index[i0], index[i1], index[i2], index[i3], index[i4],
-            index[i5], index[i6]);
+      // this was the case when it took an array. is it necessary?
+      BZPRECHECK(T_expr::rank_==rank,
+		 "Rank confusion in _bz_doArrayIndexMapping"); 
+        return expr.unwrap()(index[i0], index[i1], index[i2], index[i3], 
+			     index[i4], index[i5], index[i6]);
     }
 
   template<int N_inputRank>
@@ -245,13 +258,16 @@ template<>
 struct _bz_doArrayIndexMapping<8> {
   static const int rank=8;
 
-    template<typename T_numtype, int N_inputRank>
-    static T_numtype map(const Array<T_numtype, rank>& array,
+  template<typename T_expr, int N_inputRank>
+  static typename T_expr::T_numtype map(const ETBase<T_expr>& expr,
         const TinyVector<int,N_inputRank>& index, int i0, int i1, int i2,
         int i3, int i4, int i5, int i6, int i7, int, int, int)
     {
-        return array(index[i0], index[i1], index[i2], index[i3], index[i4],
-            index[i5], index[i6], index[i7]);
+      // this was the case when it took an array. is it necessary?
+      BZPRECHECK(T_expr::rank_==rank,
+		 "Rank confusion in _bz_doArrayIndexMapping"); 
+        return expr.unwrap()(index[i0], index[i1], index[i2], index[i3], 
+			     index[i4], index[i5], index[i6], index[i7]);
     }
 
   template<int N_inputRank>
@@ -269,13 +285,17 @@ template<>
 struct _bz_doArrayIndexMapping<9> {
   static const int rank=9;
 
-    template<typename T_numtype, int N_inputRank>
-    static T_numtype map(const Array<T_numtype, rank>& array,
+  template<typename T_expr, int N_inputRank>
+  static typename T_expr::T_numtype map(const ETBase<T_expr>& expr,
         const TinyVector<int,N_inputRank>& index, int i0, int i1, int i2,
         int i3, int i4, int i5, int i6, int i7, int i8, int, int)
     {
-        return array(index[i0], index[i1], index[i2], index[i3], index[i4],
-            index[i5], index[i6], index[i7], index[i8]);
+      // this was the case when it took an array. is it necessary?
+      BZPRECHECK(T_expr::rank_==rank,
+		 "Rank confusion in _bz_doArrayIndexMapping"); 
+        return expr.unwrap()(index[i0], index[i1], index[i2], index[i3], 
+			     index[i4], index[i5], index[i6], index[i7], 
+			     index[i8]);
     }
 
   template<int N_inputRank>
@@ -293,13 +313,17 @@ template<>
 struct _bz_doArrayIndexMapping<10> {
   static const int rank=10;
 
-    template<typename T_numtype, int N_inputRank>
-    static T_numtype map(const Array<T_numtype, rank>& array,
+  template<typename T_expr, int N_inputRank>
+  static typename T_expr::T_numtype map(const ETBase<T_expr>& expr,
         const TinyVector<int,N_inputRank>& index, int i0, int i1, int i2,
         int i3, int i4, int i5, int i6, int i7, int i8, int i9, int)
     {
-        return array(index[i0], index[i1], index[i2], index[i3], index[i4],
-            index[i5], index[i6], index[i7], index[i8], index[i9]);
+      // this was the case when it took an array. is it necessary?
+      BZPRECHECK(T_expr::rank_==rank,
+		 "Rank confusion in _bz_doArrayIndexMapping"); 
+        return expr.unwrap()(index[i0], index[i1], index[i2], index[i3], 
+			     index[i4], index[i5], index[i6], index[i7], 
+			     index[i8], index[i9]);
     }
 
   template<int N_inputRank>
@@ -318,14 +342,17 @@ template<>
 struct _bz_doArrayIndexMapping<11> {
   static const int rank=11;
 
-    template<typename T_numtype, int N_inputRank>
-    static T_numtype map(const Array<T_numtype, rank>& array,
+  template<typename T_expr, int N_inputRank>
+  static typename T_expr::T_numtype map(const ETBase<T_expr>& expr,
         const TinyVector<int,N_inputRank>& index, int i0, int i1, int i2,
         int i3, int i4, int i5, int i6, int i7, int i8, int i9, int i10)
     {
-        return array(index[i0], index[i1], index[i2], index[i3], index[i4],
-            index[i5], index[i6], index[i7], index[i8], index[i9],
-            index[i10]);
+      // this was the case when it took an array. is it necessary?
+      BZPRECHECK(T_expr::rank_==rank,
+		 "Rank confusion in _bz_doArrayIndexMapping"); 
+        return expr.unwrap()(index[i0], index[i1], index[i2], index[i3], 
+			     index[i4], index[i5], index[i6], index[i7], 
+			     index[i8], index[i9], index[i10]);
     }
 
   template<int N_inputRank>
@@ -400,9 +427,10 @@ public:
         : iter_(a)
     { }
 
-  ArrayIndexMapping(_bz_typename T_expr::T_ctorArg1 a)
-        : iter_(a)
-    { }
+  // this is ambiguous with the above
+  // ArrayIndexMapping(_bz_typename T_expr::T_ctorArg1 a)
+  //       : iter_(a)
+  //   { }
 
   // these bypass the FAI and go directly to the array. That should
   // prevent any performance impact of using the FAI instead of an
@@ -425,7 +453,7 @@ public:
       static T_result indexop(const T_expr& iter,
 			      const TinyVector<int, N_rank>& i) {
 #endif
-	return _bz_doArrayIndexMapping<exprRank>::map(iter.array(), i,
+	return _bz_doArrayIndexMapping<exprRank>::map(iter/*.array()*/, i,
             N_map0, N_map1, N_map2, N_map3, N_map4, N_map5, N_map6,
             N_map7, N_map8, N_map9, N_map10);
   };

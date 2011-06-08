@@ -5,7 +5,7 @@
 
 #define BZ_DISABLE_RESTRICT
 
-#include <blitz/vector.h>
+#include <blitz/vector2.h>
 #include <blitz/array.h>
 #include <blitz/rand-uniform.h>
 #include <blitz/benchext.h>
@@ -84,11 +84,11 @@ int main()
 
     for (int i=0; i < numSizes; ++i)
     {
-        parameters[i] = (int)pow(10.0, (i+1)/4.0);
-        iters[i] = 10000000L / parameters[i];
-        if (iters[i] < 2)
-            iters[i] = 2;
-        flops[i] = 2 * parameters[i];
+        parameters(i) = (int)pow(10.0, (i+1)/4.0);
+        iters(i) = 10000000L / parameters(i);
+        if (iters(i) < 2)
+            iters(i) = 2;
+        flops(i) = 2 * parameters(i);
     }
 
     bench.setParameterVector(parameters);

@@ -260,7 +260,7 @@ public:
 
     template<int N0, int N1>
     inline 
-    _bz_ArrayExpr<ArrayIndexMapping<FastTM2Iterator<T_numtype, N_rows, N_columns>, N0, N1> >
+    _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_matrix>::T_expr, N0, N1> >
     operator()(IndexPlaceholder<N0>, IndexPlaceholder<N1>) const;
 
   // must return reference so the iterator can turn it into an

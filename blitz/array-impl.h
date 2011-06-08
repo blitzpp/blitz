@@ -2037,113 +2037,113 @@ public:
      */
 
     template<int N0>
-    _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0> >
+    _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0> >
     operator()(IndexPlaceholder<N0>) const
     { 
-        return _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0> >
+        return _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0> >
             (noConst());
     }
 
     template<int N0, int N1>
-    _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0, N1> >
+    _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0, N1> >
     operator()(IndexPlaceholder<N0>, IndexPlaceholder<N1>) const
     {
-        return _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0,
+        return _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0,
             N1> >(noConst());
     } 
 
     template<int N0, int N1, int N2>
-    _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0, N1, N2> >
+    _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0, N1, N2> >
     operator()(IndexPlaceholder<N0>, IndexPlaceholder<N1>,
         IndexPlaceholder<N2>) const
     {
-        return _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0,
+        return _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0,
             N1, N2> >(noConst());
     }
 
     template<int N0, int N1, int N2, int N3>
-    _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0, N1, N2, N3> >
+    _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0, N1, N2, N3> >
     operator()(IndexPlaceholder<N0>, IndexPlaceholder<N1>,
         IndexPlaceholder<N2>, IndexPlaceholder<N3>) const
     {
-        return _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0,
+        return _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0,
             N1, N2, N3> >(noConst());
     }
 
     template<int N0, int N1, int N2, int N3, int N4>
-    _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0, N1, N2, N3, N4> >
+    _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0, N1, N2, N3, N4> >
     operator()(IndexPlaceholder<N0>, IndexPlaceholder<N1>,
         IndexPlaceholder<N2>, IndexPlaceholder<N3>, 
         IndexPlaceholder<N4>) const
     {
-        return _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0,
+        return _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0,
             N1, N2, N3, N4> >(noConst());
     }
 
     template<int N0, int N1, int N2, int N3, int N4, int N5>
-    _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0, N1, N2, N3, 
+    _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0, N1, N2, N3, 
         N4, N5> >
     operator()(IndexPlaceholder<N0>, IndexPlaceholder<N1>,
         IndexPlaceholder<N2>, IndexPlaceholder<N3>, IndexPlaceholder<N4>,
         IndexPlaceholder<N5>) const
     {
-        return _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0,
+        return _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0,
             N1, N2, N3, N4, N5> >(noConst());
     }
 
     template<int N0, int N1, int N2, int N3, int N4, int N5, int N6>
-    _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0, N1, N2, N3,
+    _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0, N1, N2, N3,
         N4, N5, N6> >
     operator()(IndexPlaceholder<N0>, IndexPlaceholder<N1>,
         IndexPlaceholder<N2>, IndexPlaceholder<N3>, IndexPlaceholder<N4>,
         IndexPlaceholder<N5>, IndexPlaceholder<N6>) const
     {
-        return _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0,
+        return _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0,
             N1, N2, N3, N4, N5, N6> >(noConst());
     }
 
     template<int N0, int N1, int N2, int N3, int N4, int N5, int N6,
         int N7>
-    _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0, N1, N2, N3,
+    _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0, N1, N2, N3,
         N4, N5, N6, N7> >
     operator()(IndexPlaceholder<N0>, IndexPlaceholder<N1>,
         IndexPlaceholder<N2>, IndexPlaceholder<N3>, IndexPlaceholder<N4>,
         IndexPlaceholder<N5>, IndexPlaceholder<N6>, 
         IndexPlaceholder<N7>) const
     {
-        return _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0,
+        return _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0,
             N1, N2, N3, N4, N5, N6, N7> >(noConst());
     }
 
     template<int N0, int N1, int N2, int N3, int N4, int N5, int N6,
         int N7, int N8>
-    _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0, N1, N2, N3,
+    _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0, N1, N2, N3,
         N4, N5, N6, N7, N8> >
     operator()(IndexPlaceholder<N0>, IndexPlaceholder<N1>,
         IndexPlaceholder<N2>, IndexPlaceholder<N3>, IndexPlaceholder<N4>,
         IndexPlaceholder<N5>, IndexPlaceholder<N6>, IndexPlaceholder<N7>,
         IndexPlaceholder<N8>) const
     {
-        return _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0,
+        return _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0,
             N1, N2, N3, N4, N5, N6, N7, N8> >(noConst());
     }
 
     template<int N0, int N1, int N2, int N3, int N4, int N5, int N6,
         int N7, int N8, int N9>
-    _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0, N1, N2, N3,
+    _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0, N1, N2, N3,
         N4, N5, N6, N7, N8, N9> >
     operator()(IndexPlaceholder<N0>, IndexPlaceholder<N1>,
         IndexPlaceholder<N2>, IndexPlaceholder<N3>, IndexPlaceholder<N4>,
         IndexPlaceholder<N5>, IndexPlaceholder<N6>, IndexPlaceholder<N7>,
         IndexPlaceholder<N8>, IndexPlaceholder<N9>) const
     {
-        return _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0,
+        return _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0,
             N1, N2, N3, N4, N5, N6, N7, N8, N9> >(noConst());
     }
 
     template<int N0, int N1, int N2, int N3, int N4, int N5, int N6,
         int N7, int N8, int N9, int N10>
-    _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0, N1, N2, N3,
+    _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0, N1, N2, N3,
         N4, N5, N6, N7, N8, N9, N10> >
     operator()(IndexPlaceholder<N0>, IndexPlaceholder<N1>,
         IndexPlaceholder<N2>, IndexPlaceholder<N3>, IndexPlaceholder<N4>,
@@ -2151,7 +2151,7 @@ public:
         IndexPlaceholder<N8>, IndexPlaceholder<N9>, 
         IndexPlaceholder<N10>) const
     {
-        return _bz_ArrayExpr<ArrayIndexMapping<FastArrayIterator<T_numtype, N_rank>, N0,
+        return _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_array >::T_expr, N0,
             N1, N2, N3, N4, N5, N6, N7, N8, N9, N10> >(noConst());
     }
 

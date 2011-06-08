@@ -1,6 +1,5 @@
 #include "testsuite.h"
 #include<blitz/array.h>
-#include <blitz/levicivita.h>
 
 BZ_USING_NAMESPACE(blitz)
 

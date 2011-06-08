@@ -5,7 +5,7 @@
 #include "testsuite.h"
 
 #include <blitz/array.h>
-#include <blitz/tinyvec-et.h>
+#include <blitz/tinyvec2.h>
 
 BZ_USING_NAMESPACE(blitz)
 

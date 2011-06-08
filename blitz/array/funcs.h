@@ -218,6 +218,7 @@ dot(const ETBase<T1>& d1, const ETBase<T2>& d2)
 
 template<typename T1, typename T2>
 inline
+
 _bz_ArrayExpr<
   _bz_ArrayExprReduce<
     _bz_ArrayExpr<
@@ -226,7 +227,7 @@ _bz_ArrayExpr<
 	  Multiply,
 	  _bz_typename BzBinaryExprResult<
 	    Multiply,
-	    LeviCivita,
+	    _bz_ArrayExpr<LeviCivita>,
 	    _bz_ArrayExpr<
 	      ArrayIndexMapping<
 		_bz_typename asExpr<T1>::T_expr, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
@@ -239,16 +240,48 @@ _bz_ArrayExpr<
 	  >::T_result,
 	2,
 	ReduceSum<
-	  _bz_typename BzBinaryExprResult<Multiply,_bz_typename BzBinaryExprResult<Multiply,LeviCivita,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T1>::T_expr, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > >::T_result,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T2>::T_expr, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > > ::T_result::T_numtype,
-	  BZ_SUMTYPE(bzCC(_bz_typename BzBinaryExprResult<Multiply,_bz_typename BzBinaryExprResult<Multiply,LeviCivita,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T1>::T_expr, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > >::T_result,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T2>::T_expr, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > > ::T_result::T_numtype))>
+	  _bz_typename BzBinaryExprResult<Multiply,_bz_typename BzBinaryExprResult<Multiply,_bz_ArrayExpr<LeviCivita>,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T1>::T_expr, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > >::T_result,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T2>::T_expr, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > > ::T_result::T_numtype,
+	  BZ_SUMTYPE(bzCC(_bz_typename BzBinaryExprResult<Multiply,_bz_typename BzBinaryExprResult<Multiply,_bz_ArrayExpr<LeviCivita>,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T1>::T_expr, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > >::T_result,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T2>::T_expr, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > > ::T_result::T_numtype))>
 	> 
       >,
     1, 
-    ReduceSum<BZ_SUMTYPE(bzCC(_bz_typename BzBinaryExprResult<Multiply,_bz_typename BzBinaryExprResult<Multiply,LeviCivita,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T1>::T_expr, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > >::T_result,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T2>::T_expr, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > > ::T_result::T_numtype))>
+    ReduceSum<BZ_SUMTYPE(bzCC(_bz_typename BzBinaryExprResult<Multiply,_bz_typename BzBinaryExprResult<Multiply,_bz_ArrayExpr<LeviCivita>,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T1>::T_expr, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > >::T_result,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T2>::T_expr, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > > ::T_result::T_numtype))>
     > 
   >
+
+//int
 cross(const ETBase<T1>& d1, const ETBase<T2>& d2)
 {
+_bz_ArrayExpr<
+  _bz_ArrayExprReduce<
+    _bz_ArrayExpr<
+      _bz_ArrayExprReduce<
+	_bz_typename BzBinaryExprResult<
+	  Multiply,
+	  _bz_typename BzBinaryExprResult<
+	    Multiply,
+	    _bz_ArrayExpr<LeviCivita>,
+	    _bz_ArrayExpr<
+	      ArrayIndexMapping<
+		_bz_typename asExpr<T1>::T_expr, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
+	      >
+	    >::T_result,
+	  _bz_ArrayExpr<
+	    ArrayIndexMapping<
+	      _bz_typename asExpr<T2>::T_expr, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0>
+	    >
+	  >::T_result,
+	2,
+	ReduceSum<
+	  _bz_typename BzBinaryExprResult<Multiply,_bz_typename BzBinaryExprResult<Multiply,_bz_ArrayExpr<LeviCivita>,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T1>::T_expr, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > >::T_result,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T2>::T_expr, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > > ::T_result::T_numtype,
+	  BZ_SUMTYPE(bzCC(_bz_typename BzBinaryExprResult<Multiply,_bz_typename BzBinaryExprResult<Multiply,_bz_ArrayExpr<LeviCivita>,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T1>::T_expr, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > >::T_result,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T2>::T_expr, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > > ::T_result::T_numtype))>
+	> 
+      >,
+    1, 
+    ReduceSum<BZ_SUMTYPE(bzCC(_bz_typename BzBinaryExprResult<Multiply,_bz_typename BzBinaryExprResult<Multiply,_bz_ArrayExpr<LeviCivita>,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T1>::T_expr, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > >::T_result,_bz_ArrayExpr<ArrayIndexMapping<_bz_typename asExpr<T2>::T_expr, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> > > ::T_result::T_numtype))>
+    > 
+  >* x;
+//int a=*x;
   return sum(sum(LeviCivita()*d1.unwrap()(tensor::j)*d2.unwrap()(tensor::k),
 		 tensor::k),
 	     tensor::j);
