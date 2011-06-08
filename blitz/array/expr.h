@@ -37,6 +37,7 @@
 #include <blitz/array/domain.h>
 #include <blitz/array/slice.h>
 #include <blitz/bounds.h>
+#include <blitz/indexpar.h>
 
 /*
  * The array expression templates iterator interface is followed by
@@ -160,13 +161,9 @@ public:
 
   T_result first_value() const { return iter_.first_value(); }
 
-#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
-    template<int N_rank>
-    T_result operator()(const TinyVector<int, N_rank> i) const { return iter_(i); }
-#else
-    template<int N_rank>
-    T_result operator()(const TinyVector<int, N_rank>& i) const { return iter_(i); }
-#endif
+  template<int N_rank>
+  T_result operator()(typename _bz_Indexpar<N_rank>::index i) const {
+    return iter_(i); }
 
   template<int N>
   T_range_result operator()(const RectDomain<N>& d) const
@@ -534,13 +531,8 @@ public:
 			  int offset1, int dim1, int offset2, int dim2) {
       return T_op::apply(iter.shift(offset1, dim1, offset2, dim2)); }
     template<int N_rank>
-#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     static T_result indexop(const T_expr& iter, 
-			    const TinyVector<int, N_rank> i) {
-#else
-      static T_result indexop(const T_expr& iter,
-			      const TinyVector<int, N_rank>& i) {
-#endif
+			    typename _bz_Indexpar<N_rank>::index i) {
       return T_op::apply(iter(i)); }
   };
 
@@ -557,17 +549,12 @@ public:
     static T_result shift(const T_expr& iter, 
 			  int offset, int dim) {
       return T_result(iter.shift(offset, dim)); }
-    static T_result shift(const T_expr& iter, 
-			  int offset1, int dim1, int offset2, int dim2) {
+      static T_result shift(const T_expr& iter, 
+			    int offset1, int dim1, int offset2, int dim2) {
       return T_result(iter.shift(offset1, dim1, offset2, dim2)); }
       template<int N_rank>
-#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
       static T_result indexop(const T_expr& iter,
-			      const TinyVector<int, N_rank> i) {
-#else
-    static T_result indexop(const T_expr& iter,
-			    const TinyVector<int, N_rank>& i) {
-#endif
+			      typename _bz_Indexpar<N_rank>::index i) {
       return iter(i); }
     };
 
@@ -578,11 +565,7 @@ public:
       return readHelper<T_typeprop>::indexop(iter_, i); }
 
     template<int N_rank>
-#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
-    T_result operator()(const TinyVector<int, N_rank> i) const {
-#else
-      T_result operator()(const TinyVector<int, N_rank>& i) const {
-#endif
+    T_result operator()(typename _bz_Indexpar<N_rank>::index i) const {
       return readHelper<T_typeprop>::indexop(iter_,i); }
 
       T_result operator*() const {
@@ -783,13 +766,8 @@ public:
       return T_op::apply(iter1.shift(offset1, dim1, offset2, dim2),
 			 iter2.shift(offset1, dim1, offset2, dim2)); }
     template<int N_rank>
-#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2,
-			    const TinyVector<int, N_rank> i) {
-#else
-      static T_result indexop(const T_expr1& iter1, const T_expr2& iter2,
-			      const TinyVector<int, N_rank>& i) {
-#endif
+			    typename _bz_Indexpar<N_rank>::index i) {
 	return T_op::apply(iter1(i), iter2(i)); };
     };
     
@@ -811,13 +789,8 @@ public:
       return T_result(iter1.shift(offset1, dim1, offset2, dim2),
 		      iter2.shift(offset1, dim1, offset2, dim2)); }
       template<int N_rank>
-#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
       static T_result indexop(const T_expr1& iter1, const T_expr2& iter2,
-			      const TinyVector<int, N_rank> i) {
-#else
-	static T_result indexop(const T_expr1& iter1, const T_expr2& iter2,
-				const TinyVector<int, N_rank>& i) {
-#endif
+			      typename _bz_Indexpar<N_rank>::index i) {
 	  return T_result(iter1(i), iter2(i)); }
       };
 
@@ -828,12 +801,8 @@ public:
       return readHelper<T_typeprop>::indexop(iter1_, iter2_, i); }
 
     template<int N_rank>
-#ifdef BZ_ARRAY_EXPR_PASS_INDEX_BY_VALUE
-    T_result operator()(const TinyVector<int, N_rank> i) const {
-#else
-      T_result operator()(const TinyVector<int, N_rank>& i) const {
-#endif
-	return readHelper<T_typeprop>::indexop(iter1_, iter2_, i); }
+    T_result operator()(typename _bz_Indexpar<N_rank>::index i) const {
+      return readHelper<T_typeprop>::indexop(iter1_, iter2_, i); }
 
       T_result operator*() const {
 	return readHelper<T_typeprop>::deref(iter1_, iter2_); }
