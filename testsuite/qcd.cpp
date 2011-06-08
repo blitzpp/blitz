@@ -1,9 +1,11 @@
 // This program causes/caused some versions of egcs to crash.
 
-#include <blitz/tinymat.h>
-#include <blitz/vector.h>
+#include <blitz/tinymat2.h>
+#include <blitz/tinymat2.cc>
+//#include <blitz/vector.h>
 #include <blitz/benchext.h>
 #include <blitz/rand-uniform.h>
+#include <blitz/array.h>
 
 #ifdef BZ_HAVE_COMPLEX
 
@@ -57,8 +59,8 @@ int QCDBlitzVersion(BenchmarkExt<int>& bench)
         int length = bench.getParameter();
         int iters = (int)bench.getIterations();
 
-        Vector<spinor> res(length), src(length);
-        Vector<SU3Gauge> M(length);
+        Array<spinor,1> res(length), src(length);
+        Array<SU3Gauge,1> M(length);
 
         initializeRandomDouble((double*)src.data(), 
             length * sizeof(spinor) / sizeof(double));
@@ -70,7 +72,7 @@ int QCDBlitzVersion(BenchmarkExt<int>& bench)
         for (i=0; i < iters; ++i)
         {
             for (int i=0; i < length; ++i)
-                res[i] = product(M[i], src[i]);
+	      res(i) = M(i)*src(i);
         }
         bench.stop();
 
@@ -105,7 +107,7 @@ int QCDBlitzTunedVersion(BenchmarkExt<int>& bench)
         int length = bench.getParameter();
         int iters = (int)bench.getIterations();
 
-        Vector<latticeUnit> lattice(length);
+        Array<latticeUnit,1> lattice(length);
 
         initializeRandomDouble((double*)lattice.data(),
             length * sizeof(latticeUnit) / sizeof(double));
@@ -115,7 +117,7 @@ int QCDBlitzTunedVersion(BenchmarkExt<int>& bench)
         for (i=0; i < iters; ++i)
         {
             for (int i=0; i < length; ++i)
-                lattice[i].two = product(lattice[i].gauge, lattice[i].two);
+	      lattice(i).two = lattice(i).gauge * lattice(i).two;
         }
         bench.stop();
 

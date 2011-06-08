@@ -34,7 +34,7 @@
  #error <blitz/benchext.cc> must be included via <blitz/benchext.h>
 #endif
 
-#include <blitz/vector-et.h>
+//#include <blitz/vector-et.h>
 
 #ifdef BZ_HAVE_STD
  #include <fstream>
@@ -97,7 +97,7 @@ void BenchmarkExt<P_parameter>::setNumParameters(int numParameters)
 }
 
 template<typename P_parameter>
-void BenchmarkExt<P_parameter>::setParameterVector(Vector<P_parameter> parms)
+void BenchmarkExt<P_parameter>::setParameterVector(Array<P_parameter,1> parms)
 {
     BZPRECONDITION(state_ == initializing);
     BZPRECONDITION(parms.length() == parameters_.length());
@@ -116,7 +116,7 @@ void BenchmarkExt<P_parameter>::setParameterDescription(const char* string)
 }
 
 template<typename P_parameter>
-void BenchmarkExt<P_parameter>::setIterations(Vector<long> iters)
+void BenchmarkExt<P_parameter>::setIterations(Array<long,1> iters)
 {
     BZPRECONDITION(state_ == initializing);
 
@@ -129,10 +129,10 @@ void BenchmarkExt<P_parameter>::setIterations(Vector<long> iters)
 }
 
 template<typename P_parameter>
-void BenchmarkExt<P_parameter>::setFlopsPerIteration(Vector<double> 
+void BenchmarkExt<P_parameter>::setFlopsPerIteration(Array<double,1> 
     flopsPerIteration)
 {
-    BZPRECONDITION(flopsPerIteration_.length() == flopsPerIteration.length());
+    BZPRECONDITION(flopsPerIteration_.size() == flopsPerIteration.size());
 
     // NEEDS_WORK: should use operator=(), once that problem
     // gets sorted out.
@@ -180,7 +180,7 @@ P_parameter BenchmarkExt<P_parameter>::getParameter() const
     BZPRECONDITION(state_ == benchmarkingImplementation);
     BZPRECONDITION(parameterNumber_ < numParameters_);
 
-    return parameters_[parameterNumber_];
+    return parameters_(parameterNumber_);
 }
 
 template<typename P_parameter>
@@ -189,7 +189,7 @@ long BenchmarkExt<P_parameter>::getIterations() const
     BZPRECONDITION(state_ == benchmarkingImplementation);
     BZPRECONDITION(parameterNumber_ < numParameters_);
 
-    return iterations_[parameterNumber_];
+    return iterations_(parameterNumber_);
 }
 
 template<typename P_parameter>
@@ -208,7 +208,7 @@ inline void BenchmarkExt<P_parameter>::stop()
     BZPRECONDITION(state_ == running);
     state_ = benchmarkingImplementation;
     
-    times_(implementationNumber_, parameterNumber_) = timer_.elapsedSeconds();
+    times_(int(implementationNumber_), int(parameterNumber_)) = timer_.elapsedSeconds();
 
     ++parameterNumber_;
 }
@@ -228,7 +228,7 @@ inline void BenchmarkExt<P_parameter>::stopOverhead()
 {
     BZPRECONDITION(state_ == runningOverhead);
     overheadTimer_.stop();
-    times_(implementationNumber_, parameterNumber_-1) -= 
+    times_(int(implementationNumber_), int(parameterNumber_-1)) -= 
         overheadTimer_.elapsedSeconds();
 
     state_ = benchmarkingImplementation;
@@ -262,7 +262,7 @@ double BenchmarkExt<P_parameter>::getMflops(unsigned implementation,
     BZPRECONDITION(implementation < numImplementations_);
     BZPRECONDITION(parameterNum < numParameters_);
     return iterations_(parameterNum) * flopsPerIteration_(parameterNum)
-        / times_(implementation, parameterNum) / 1.0e+6;
+      / times_(int(implementation), int(parameterNum)) / 1.0e+6;
 }
 
 template<typename P_parameter>
@@ -294,7 +294,7 @@ void BenchmarkExt<P_parameter>::saveMatlabGraph(const char* filename, const char
     ofs << "parm = [ ";
     unsigned i;
     for (i=0; i < numParameters_; ++i)
-        ofs << setprecision(12) << double(parameters_[i]) << " ";
+      ofs << setprecision(12) << double(parameters_(i)) << " ";
     ofs << "]; " << endl << endl;
 
     ofs << "Mf = [ ";
@@ -316,7 +316,7 @@ void BenchmarkExt<P_parameter>::saveMatlabGraph(const char* filename, const char
     
     for (unsigned j=0; j < numImplementations_; ++j)
     {
-        ofs << "'" << implementationDescriptions_(j) << "'";
+        ofs << "'" << implementationDescriptions_[j] << "'";
         if (j != numImplementations_ - 1)
             ofs << ", ";
     } 
@@ -349,7 +349,7 @@ void BenchmarkExt<P_parameter>::savePylabGraph(const char* filename, const char*
     ofs << "parm = array([ ";
     unsigned i;
     for (i=0; i < numParameters_; ++i)
-        ofs << setprecision(12) << double(parameters_[i]) << ", ";
+      ofs << setprecision(12) << double(parameters_(i)) << ", ";
     ofs << "])\n\n";
 
     ofs << "Mf = array([[ ";
@@ -372,7 +372,7 @@ void BenchmarkExt<P_parameter>::savePylabGraph(const char* filename, const char*
     
     for (unsigned j=0; j < numImplementations_; ++j)
     {
-        ofs << "'" << implementationDescriptions_(j) << "'";
+        ofs << "'" << implementationDescriptions_[j] << "'";
         if (j != numImplementations_ - 1)
             ofs << ", ";
     } 

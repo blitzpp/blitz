@@ -33,9 +33,10 @@
 #ifndef BZ_BENCHEXT_H
 #define BZ_BENCHEXT_H
 
-#ifndef BZ_MATRIX_H
- #include <blitz/matrix.h>
-#endif
+//#ifndef BZ_MATRIX_H
+#include <blitz/array.h>
+//#endif
+ #include <vector>
 
 #ifndef BZ_TIMER_H
  #include <blitz/timer.h>
@@ -64,10 +65,10 @@ public:
     ~BenchmarkExt();
 
     void setNumParameters(int numParameters);
-    void setParameterVector(Vector<T_parameter> parms);
+  void setParameterVector(Array<T_parameter,1> parms);
     void setParameterDescription(const char* string);
-    void setIterations(Vector<long> iters);
-    void setFlopsPerIteration(Vector<double> flopsPerIteration);
+  void setIterations(Array<long,1> iters);
+  void setFlopsPerIteration(Array<double,1> flopsPerIteration);
     void setRateDescription(const char* string);
 
     void beginBenchmarking();
@@ -105,13 +106,13 @@ protected:
     unsigned implementationNumber_;
 
     const char* description_;
-    Vector<const char*> implementationDescriptions_;
+  std::vector<std::string> implementationDescriptions_;
 
-    Matrix<double,RowMajor> times_;       // Elapsed time
+  Array<double,2> times_;       // Elapsed time
 
-    Vector<T_parameter> parameters_;
-    Vector<long> iterations_;
-    Vector<double> flopsPerIteration_;
+  Array<T_parameter,1> parameters_;
+  Array<long,1> iterations_;
+  Array<double,1> flopsPerIteration_;
 
     Timer timer_;
     Timer overheadTimer_;
