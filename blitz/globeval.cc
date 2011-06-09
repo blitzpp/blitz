@@ -165,8 +165,14 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
      * went into an infinite loop.
      */
 
-    if (dest.numElements() == 0)
+    const int n = dest.numElements();
+    if (n == 0)
       return;
+    if (n == 1) {
+      // shortcut here since it's easy
+      T_update::update(*dest.dataFirst(), expr(dest.lbound()));
+      return;
+    }
 
 #ifdef BZ_DEBUG_TRAVERSE
     cout << "T_expr::numIndexPlaceholders = " << T_expr::numIndexPlaceholders
