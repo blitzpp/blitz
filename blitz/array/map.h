@@ -404,7 +404,9 @@ public:
         maxRank10 = (N_map10 > maxRank9) ? N_map10 : maxRank9;
 
     static const int 
-        numArrayOperands = 1, 
+    numArrayOperands = T_expr::numArrayOperands, 
+      numTVOperands = T_expr::numTVOperands,
+      numTMOperands = T_expr::numTMOperands,
         numIndexPlaceholders = 1,
         rank_ = maxRank10 + 1,
         exprRank = T_expr::rank_;

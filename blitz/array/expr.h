@@ -108,6 +108,8 @@ public:
 
     static const int 
         numArrayOperands = T_expr::numArrayOperands,
+        numTVOperands = T_expr::numTVOperands,
+        numTMOperands = T_expr::numTMOperands,
         numIndexPlaceholders = T_expr::numIndexPlaceholders,
         rank_ = T_expr::rank_;
 
@@ -484,6 +486,8 @@ public:
 
     static const int 
         numArrayOperands = T_expr::numArrayOperands,
+        numTVOperands = T_expr::numTVOperands,
+        numTMOperands = T_expr::numTMOperands,
         numIndexPlaceholders = T_expr::numIndexPlaceholders,
         rank_ = T_expr::rank_;
 
@@ -745,6 +749,10 @@ public:
     static const int 
         numArrayOperands = T_expr1::numArrayOperands
                          + T_expr2::numArrayOperands,
+        numTVOperands = T_expr1::numTVOperands +
+      T_expr2::numTVOperands,
+        numTMOperands = T_expr1::numTMOperands +
+      T_expr2::numTMOperands,
         numIndexPlaceholders = T_expr1::numIndexPlaceholders
                              + T_expr2::numIndexPlaceholders,
         rank_ = (T_expr1::rank_ > T_expr2::rank_) 
@@ -1051,6 +1059,12 @@ public:
         numArrayOperands = T_expr1::numArrayOperands
                          + T_expr2::numArrayOperands
                          + T_expr3::numArrayOperands,
+        numTVOperands = T_expr1::numTVOperands +
+      T_expr2::numTVOperands +
+      T_expr3::numTVOperands,
+        numTMOperands = T_expr1::numTMOperands +
+      T_expr2::numTMOperands +
+      T_expr3::numTMOperands,
         numIndexPlaceholders = T_expr1::numIndexPlaceholders
                              + T_expr2::numIndexPlaceholders
                              + T_expr3::numIndexPlaceholders,
@@ -1431,6 +1445,16 @@ public:
     + T_expr2::numArrayOperands
     + T_expr3::numArrayOperands
     + T_expr4::numArrayOperands,
+
+    numTVOperands = T_expr1::numTVOperands +
+    T_expr2::numTVOperands +
+    T_expr3::numTVOperands +
+    T_expr4::numTVOperands,
+
+    numTMOperands = T_expr1::numTMOperands +
+    T_expr2::numTMOperands +
+    T_expr3::numTMOperands +
+    T_expr4::numTMOperands,
 
     numIndexPlaceholders = T_expr1::numIndexPlaceholders
     + T_expr2::numIndexPlaceholders
@@ -1818,6 +1842,8 @@ public:
   typedef _bz_ArrayExprConstant<P_numtype> T_range_result;
     static const int 
         numArrayOperands = 0, 
+        numTVOperands = 0, 
+        numTMOperands = 0, 
         numIndexPlaceholders = 0, 
         rank_ = 0;
 

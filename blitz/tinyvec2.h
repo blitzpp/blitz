@@ -357,6 +357,10 @@ public:
 
   T_vector& initialize(T_numtype);
 
+  template<typename T_expr, typename T_update>
+  void
+  _tv_evaluate(const T_expr& expr, T_update);
+
   // T_vector& operator=(const TinyVector<T_numtype,N_length>& rhs) {
   //       _bz_meta_vecAssign<N_length, 0>::
   // 	  assign(data_, rhs.data_, _bz_update<T_numtype,T_numtype>()); }

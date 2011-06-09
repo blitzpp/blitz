@@ -77,6 +77,8 @@ public:
 
     static const int 
         numArrayOperands = 1, 
+        numTVOperands = 0, 
+        numTMOperands = 0,
         numIndexPlaceholders = 0,
         rank_ = N_rank;
 
@@ -384,6 +386,8 @@ public:
   
   using T_base::rank_;
   using T_base::numArrayOperands;
+  using T_base::numTVOperands;
+  using T_base::numTMOperands;
   using T_base::numIndexPlaceholders;
 
   // NB: this ctor does NOT preserve stack and stride
@@ -422,6 +426,8 @@ public:
 
   using T_base::rank_;
   using T_base::numArrayOperands;
+  using T_base::numTVOperands;
+  using T_base::numTMOperands;
   using T_base::numIndexPlaceholders;
 
 

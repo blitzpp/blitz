@@ -79,7 +79,7 @@ struct asExpr<TinyMatrix<T,Nr, Nc> > {
 template <int N>
 struct asExpr<IndexPlaceholder<N> > {
   //  typedef _bz_ArrayExpr<IndexPlaceholder<N> > T_expr;
-  typedef IndexPlaceholder<N> T_expr;
+  typedef _bz_ArrayExpr<IndexPlaceholder<N> > T_expr;
   static T_expr getExpr(const T_expr& x);
 };
 

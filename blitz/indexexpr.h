@@ -76,6 +76,8 @@ public:
 
     static const int 
         numArrayOperands = 0, 
+        numTVOperands = 0, 
+        numTMOperands = 0, 
         numIndexPlaceholders = 1,
         rank_ = N+1;
 

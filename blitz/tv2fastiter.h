@@ -69,7 +69,9 @@ public:
   typedef FastTV2CopyIterator<P_numtype, N_length> T_range_result;
 
     static const int 
-        numArrayOperands = 1, 
+        numArrayOperands = 0, 
+        numTVOperands = 1, 
+        numTMOperands = 0, 
         numIndexPlaceholders = 0,
         rank_ = 1;
 
@@ -360,6 +362,8 @@ public:
   
   using T_base::rank_;
   using T_base::numArrayOperands;
+  using T_base::numTVOperands;
+  using T_base::numTMOperands;
   using T_base::numIndexPlaceholders;
 
   // NB: this ctor does NOT preserve stack and stride
@@ -415,6 +419,8 @@ public:
 
   using T_base::rank_;
   using T_base::numArrayOperands;
+  using T_base::numTVOperands;
+  using T_base::numTMOperands;
   using T_base::numIndexPlaceholders;
 
 

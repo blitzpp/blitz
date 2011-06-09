@@ -82,6 +82,12 @@ public:
         numArrayOperands = P_expr1::numArrayOperands
                          + P_expr2::numArrayOperands
                          + P_expr3::numArrayOperands,
+        numTVOperands = T_expr1::numTVOperands +
+      T_expr2::numTVOperands +
+      T_expr3::numTVOperands,
+        numTMOperands = T_expr1::numTMOperands +
+      T_expr2::numTMOperands +
+      T_expr3::numTMOperands,
         numIndexPlaceholders = P_expr1::numIndexPlaceholders
                              + P_expr2::numIndexPlaceholders
                              + P_expr3::numIndexPlaceholders,

@@ -72,11 +72,49 @@ TinyVector<P_numtype, N_length>& TinyVector<P_numtype,N_length>::initialize(T_nu
     return *this;
 }
 
+/** This function intercepts TinyVector-only expressions and uses a
+    much simpler evaluation that is more likely to get totally
+    inlined */
+template<typename P_numtype, int N_length>
+template<typename T_expr, typename T_update>
+inline void
+TinyVector<P_numtype,N_length>::_tv_evaluate(const T_expr& expr, T_update)
+{
+  const int test=expr.numIndexPlaceholders;
+  const int test2=T_expr::numIndexPlaceholders;
+
+  if ((T_expr::numArrayOperands>0) || 
+      (T_expr::numTMOperands>0) ||
+      (T_expr::numIndexPlaceholders>0) ) {
+    // not TV-only, punt to general evaluate
+    _bz_evaluate(*this, expr, T_update());
+    return;
+  }
+
+  // TV-only. Since TinyVectors can't have funny storage, ordering,
+  // stride, or anything, it's now just a matter of evaluating it like
+  // in the old vecassign.
+
+  // since we can't resize tinyvectors, there are two options: all
+  // vectors have our size or the expression is malformed.
+  BZPRECHECK(expr.shapeCheck(shape()),
+	     "Shape check failed." << endl << "Expression:");
+
+  BZPRECONDITION(expr.isUnitStride(0));
+  BZPRECONDITION(T_expr::rank_<=1);
+  BZPRECONDITION(T_expr::numIndexPlaceholders==0);
+
+  // this loop should vectorize and unroll fine by itself since it is static
+  for (int i=0; i < N_length; ++i)
+    T_update::update(data_[i], expr.fastRead(i));
+}
+
+
 template<typename P_numtype, int N_length> template<typename T_expr>
 inline TinyVector<P_numtype,N_length>&
 TinyVector<P_numtype,N_length>::operator=(const ETBase<T_expr>& expr)
 {
-  _bz_evaluate(*this, _bz_typename asExpr<T_expr>::T_expr(expr.unwrap()), 
+  _tv_evaluate(_bz_typename asExpr<T_expr>::T_expr(expr.unwrap()), 
 	       _bz_update<
 	       T_numtype, 
 	       _bz_typename asExpr<T_expr>::T_expr::T_result>());
@@ -89,7 +127,7 @@ TinyVector<P_numtype,N_length>::operator=(const ETBase<T_expr>& expr)
   inline TinyVector<P_numtype,N_length>&				\
   TinyVector<P_numtype,N_length>::operator op(const T& expr)		\
   {									\
-    _bz_evaluate(*this, _bz_typename asExpr<T>::T_expr(expr),		\
+    _tv_evaluate(_bz_typename asExpr<T>::T_expr(expr),			\
 		 name<T_numtype,					\
 		 _bz_typename asExpr<T>::T_expr::T_result>());		\
     return *this;							\
