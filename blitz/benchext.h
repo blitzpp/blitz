@@ -85,11 +85,12 @@ public:
 
     void startOverhead();
     void stopOverhead();
+    void skip();
+
 
     void endImplementation();
 
     void endBenchmarking();
- 
     double getMflops(unsigned implementation, unsigned parameterNum) const;
 
     void saveMatlabGraph(const char* filename, const char* graphType="semilogx") const;

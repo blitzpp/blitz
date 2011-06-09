@@ -235,6 +235,16 @@ inline void BenchmarkExt<P_parameter>::stopOverhead()
 }
 
 template<typename P_parameter>
+inline void BenchmarkExt<P_parameter>::skip()
+{
+    BZPRECONDITION(state_ == benchmarkingImplementation);
+    BZPRECONDITION(parameterNumber_ < numParameters_);
+    times_(int(implementationNumber_), int(parameterNumber_)) = blitz::huge(double());
+    ++parameterNumber_;
+    state_ = benchmarkingImplementation;
+}
+
+template<typename P_parameter>
 void BenchmarkExt<P_parameter>::endImplementation()
 {
     BZPRECONDITION(state_ == benchmarkingImplementation);

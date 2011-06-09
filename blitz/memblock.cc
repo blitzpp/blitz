@@ -38,7 +38,7 @@ template<typename P_type>
 void MemoryBlock<P_type>::deallocate()
 {
 #ifndef BZ_ALIGN_BLOCKS_ON_CACHELINE_BOUNDARY
-    delete [] dataBlockAddress_;
+  delete [] dBA_tv_;
 #else
     if (!NumericTypeTraits<T_type>::hasTrivialCtor) {
         for (int i=0; i < length_; ++i)
@@ -58,9 +58,12 @@ inline void MemoryBlock<P_type>::allocate(sizeType length)
         + CT(P_type) + "]");
     TAU_PROFILE(p1, "void ()", TAU_BLITZ);
 
+    //assert(length%simdTypes<P_type>::vecWidth==0);
+
 #ifndef BZ_ALIGN_BLOCKS_ON_CACHELINE_BOUNDARY
-    dataBlockAddress_ = new T_type[length];
-    data_ = dataBlockAddress_;
+    dBA_tv_ = 
+      new typename simdTypes<P_type>::vecType[length/simdTypes<P_type>::vecWidth];
+    data_= dataBlockAddress_;
 #else
     sizeType numBytes = length * sizeof(T_type);
 

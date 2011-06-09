@@ -36,8 +36,8 @@
 #include <blitz/listinit.h>
 #include <blitz/et-forward.h>
 #include <blitz/etbase.h>
+#include <blitz/simdtypes.h>
 #include <blitz/array/slice.h>
-//#include <blitz/meta/vecassign.h>
 
 
 #ifdef BZ_HAVE_CSTRING
@@ -395,7 +395,7 @@ public:
   // };
 
 private:
-    T_numtype data_[N_length];
+    BZ_ALIGN_VARIABLE(T_numtype, data_[N_length], BZ_SIMD_WIDTH)
 };
 
 

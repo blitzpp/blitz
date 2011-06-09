@@ -110,13 +110,27 @@ AC_ARG_WITH([tbb],
     AC_MSG_RESULT([yes])
     AC_CHECK_HEADERS([tbb/atomic.h],,AC_MSG_ERROR([tbb/atomic.h not found]))
     AC_DEFINE([THREADSAFE_USE_TBB],1,[Use TBB atomic types])
-    ])
+    ],AC_MSG_RESULT([no]))
+
+AC_MSG_CHECKING([whether to enable SIMD instruction width optimizations])
+AC_ARG_ENABLE([simd-width],
+  AS_HELP_STRING([--enable-simd-width=n],[Facilitate compiler vectorization optimizations for SIMD instruction width of n bytes.]),,[
+  enable_simd_width=no])
+AC_MSG_RESULT([$enable_simd_width])
+if test "$enable_simd_width" == [no] ; then
+   enable_simd_width=1
+fi
+AC_DEFINE_UNQUOTED([SIMD_WIDTH],[$enable_simd_width],[Set SIMD instruction width in bytes])
+
+# Figure out how to declare aligned variables
+AC_ALIGNMENT_DIRECTIVE
 
 AC_MSG_CHECKING([whether to enable Blitz 64-bit dimensions])
 AC_ARG_ENABLE(64-bit-dimensions,
   AS_HELP_STRING([--enable-64-bit-dimensions],[Enable dimensions with > 2^31 elements (not yet implemented)]),
   AC_MSG_WARN([Dimensions with > 2^31 elements are not yet implemented])
-  AC_DEFINE([FULLY64BIT],[1],[Enable dimensions with > 2^31 elements (NOT IMPLEMENTED)]),)
+  AC_DEFINE([FULLY64BIT],[1],[Enable dimensions with > 2^31 elements (NOT IMPLEMENTED)]),AC_MSG_RESULT([no]))
+
 
 # autoconf replacement of bzconfig
 AC_CHECK_CXX_FEATURES

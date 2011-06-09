@@ -33,6 +33,7 @@
 #define BZ_MEMBLOCK_H
 
 #include <blitz/blitz.h>
+#include <blitz/simdtypes.h>
 
 #include <stddef.h>     // diffType
 
@@ -75,6 +76,13 @@ protected:
 
     explicit MemoryBlock(sizeType items)
     {
+      // pad the length to vecWidth, if not already done
+    const int w = simdTypes<T_type>::vecWidth;
+    const int mod = items%w;
+    if (mod>0)
+      items += simdTypes<T_type>::vecWidth-mod;
+    assert(items%w==0);
+      
         length_ = items;
         allocate(length_);
 
@@ -92,6 +100,7 @@ protected:
 
     MemoryBlock(sizeType length, T_type* data)
     {
+    assert(length%simdTypes<T_type>::vecWidth==0);
         length_ = length;
         data_ = data;
         dataBlockAddress_ = data;
@@ -207,9 +216,15 @@ private:   // Disabled member functions
     void operator=(const MemoryBlock<T_type>&)
     { }
 
-private:   // Data members
+private:   // Data members 
+ union {
     T_type * restrict     data_;
-    T_type *              dataBlockAddress_;
+   typename simdTypes<T_type>::vecType * restrict data_tv_;
+  };
+ union {
+   T_type *              dataBlockAddress_;
+   typename simdTypes<T_type>::vecType * restrict dBA_tv_;
+  };
     sizeType              length_;
 
 #if defined(BZ_THREADSAFE) && !defined(BZ_THREADSAFE_USE_ATOMIC)
@@ -299,6 +314,14 @@ public:
     {
         blockRemoveReference();
     }
+
+  // Returns true if the offset from data_ is vector aligned. we test
+  // that by testing if it is offset from the datablockaddress (which
+  // we know is vector aligned) by an integral vector offset.
+  bool isVectorAligned(size_t offset) const
+  { return ( (data_ + offset - block_->dataBlockAddress()) %
+	     simdTypes<T_type>::vecWidth ) == 0; }
+
 
 protected:
 #ifdef BZ_TESTSUITE

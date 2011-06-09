@@ -36,6 +36,8 @@
 #include <blitz/range.h>
 #include <blitz/listinit.h>
 #include <blitz/tiny.h>
+#include <blitz/bzconfig.h>
+
 
 #ifdef BZ_HAVE_CSTRING
 #include <cstring> // For memcpy
@@ -421,9 +423,8 @@ public:
     { return dataFirst(); }
 
 private:
-    T_numtype data_[N_length];
+    BZ_ALIGN_VARIABLE(T_numtype, data_[N_length], BZ_SIMD_WIDTH)
 };
-
 
 // Specialization for N = 0: KCC is giving some
 // peculiar errors, perhaps this will fix.
@@ -431,6 +432,7 @@ private:
 template<typename T>
 class TinyVector<T,0> {
 };
+
 
 BZ_NAMESPACE_END
 

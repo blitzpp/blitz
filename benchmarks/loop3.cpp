@@ -53,6 +53,7 @@ extern "C" {
 void VectorVersion(BenchmarkExt<int>& bench, double a);
 void ArrayVersion(BenchmarkExt<int>& bench, double a);
 void doTinyVectorVersion(BenchmarkExt<int>& bench, double a);
+void doTinyVectorVersion(BenchmarkExt<int>& bench, double a);
 void F77Version(BenchmarkExt<int>& bench, double a);
 #ifdef FORTRAN_90
 void F90Version(BenchmarkExt<int>& bench, double a);
@@ -63,9 +64,15 @@ void ValarrayVersion(BenchmarkExt<int>& bench, double a);
 
 void sink() {}
 
+<<<<<<< /home/patrik/blitz_vect/benchmarks/loop3.cpp
+const int numSizes = 20;
+const int Nmax=1<<(numSizes-1);
+const int tvNmax=7;
+=======
 const int numSizes = 8;
 const int Nmax=1<<(numSizes-1);//(int)pow(10.0, numSizes/4.0);
 //const double Nratio=pow(10.0, 0.25);
+>>>>>>> /tmp/loop3.cpp~other.bemqxo
 
 int main()
 {
@@ -201,6 +208,7 @@ void ArrayVersion(BenchmarkExt<int>& bench, double a)
         bench.startOverhead();
         for (long i=0; i < iters; ++i)
             sink();
+
         bench.stopOverhead();
     }
 
@@ -214,12 +222,13 @@ void TinyVectorVersion(BenchmarkExt<int>& bench, double a)
 
         cout << "Tinyvector<T, " << N << ">" << endl;
         cout.flush();
+	bench.getParameter();
 
         long iters = bench.getIterations();
 
-        TinyVector<double,N+1> x;
+        TinyVector<double,N> x;
         initializeRandomDouble(x.dataFirst(), N);
-        TinyVector<double,N+1> y;
+        TinyVector<double,N> y;
         initializeRandomDouble(y.dataFirst(), N);
 
         bench.start();
@@ -246,9 +255,20 @@ void TinyVectorVersion<0>(BenchmarkExt<int>& bench, double a)
 void doTinyVectorVersion(BenchmarkExt<int>& bench, double a)
 {
   bench.beginImplementation("TinyVector<T>");
-  TinyVectorVersion<Nmax>(bench,a);
-    bench.endImplementation();
+  // this tinyvector doesn't work with more than 9
+  int N=Nmax;
+  while(N> 1<<tvNmax) {
+    bench.getParameter();
+   bench.getIterations();
+   bench.skip();
+   N>>=1;
+  }
+
+
+  TinyVectorVersion< 1<<tvNmax >(bench,a);
+  bench.endImplementation();
 }
+  
 
 
 #ifdef BENCHMARK_VALARRAY

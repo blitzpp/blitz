@@ -46,11 +46,13 @@ else
   if test -f $_INP ; then
     echo "s/@%:@undef  *\\(@<:@m4_cr_LETTERS[]_@:>@\\)/@%:@undef $_UPP""_\\1/" > _script
     echo "s/@%:@undef  *\\(@<:@m4_cr_letters@:>@\\)/@%:@undef $_LOW""_\\1/" >> _script
+    # the substition of upper-case macros
     echo "s/@%:@def[]ine  *\\(@<:@m4_cr_LETTERS[]_@:>@@<:@_symbol@:>@*\\)\\(.*\\)/@%:@ifndef $_UPP""_\\1 \\" >> _script
-    echo "@%:@def[]ine $_UPP""_\\1 \\2 \\" >> _script
+    echo "@%:@def[]ine $_UPP""_\\1\\2 \\" >> _script
     echo "@%:@endif/" >>_script
+    # the substition of lower-case macros
     echo "s/@%:@def[]ine  *\\(@<:@m4_cr_letters@:>@@<:@_symbol@:>@*\\)\\(.*\\)/@%:@ifndef $_LOW""_\\1 \\" >> _script
-    echo "@%:@define $_LOW""_\\1 \\2 \\" >> _script
+    echo "@%:@define $_LOW""_\\1\\2 \\" >> _script
     echo "@%:@endif/" >> _script
     # now executing _script on _DEF input to create _OUT output file
     echo "@%:@ifndef $_DEF"      >$tmp/pconfig.h
