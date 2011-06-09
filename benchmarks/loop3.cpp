@@ -63,7 +63,7 @@ void ValarrayVersion(BenchmarkExt<int>& bench, double a);
 
 void sink() {}
 
-const int numSizes = 20;
+const int numSizes = 8;
 const int Nmax=1<<(numSizes-1);//(int)pow(10.0, numSizes/4.0);
 //const double Nratio=pow(10.0, 0.25);
 
@@ -89,7 +89,8 @@ int main()
     for (int i=0; i < numSizes; ++i)
     {
       parameters(i) = Nmax>>i;
-        iters(i) = 50000000L / parameters(i);
+      iters(i) = 50000000L * (parameters(i)<4 ? 4/parameters(i) :1) / parameters(i);
+	
         if (iters(i) < 2)
             iters(i) = 2;
         flops(i) = 2 * parameters(i);
@@ -117,7 +118,6 @@ int main()
     bench.endBenchmarking();
 
     bench.saveMatlabGraph("loop3.m");
-
     return 0;
 }
 
