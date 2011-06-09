@@ -44,7 +44,7 @@ public:
     template<typename T_vector, typename T_expr, typename T_updater>
     static inline void fastAssign(T_vector& vec, T_expr expr, T_updater u)
     {
-        u.update(vec[I], expr._bz_fastAccess(I));
+      u.update(vec[I], expr.fastRead(I));//expr._bz_fastAccess(I));
         _bz_meta_vecAssign<N * loopFlag, (I+1) * loopFlag>
            ::fastAssign(vec,expr,u);
     }

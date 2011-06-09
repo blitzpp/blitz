@@ -80,9 +80,6 @@ template<typename T_expr, typename T_update>
 inline void
 TinyVector<P_numtype,N_length>::_tv_evaluate(const T_expr& expr, T_update)
 {
-  const int test=expr.numIndexPlaceholders;
-  const int test2=T_expr::numIndexPlaceholders;
-
   if ((T_expr::numArrayOperands>0) || 
       (T_expr::numTMOperands>0) ||
       (T_expr::numIndexPlaceholders>0) ) {
@@ -105,8 +102,12 @@ TinyVector<P_numtype,N_length>::_tv_evaluate(const T_expr& expr, T_update)
   BZPRECONDITION(T_expr::numIndexPlaceholders==0);
 
   // this loop should vectorize and unroll fine by itself since it is static
+  //  if(N_length<=8)
+  //_bz_meta_vecAssign<N_length, 0>::fastAssign(*this, expr, T_update());
+  //else
+  #pragma ivdep
   for (int i=0; i < N_length; ++i)
-    T_update::update(data_[i], expr.fastRead(i));
+  T_update::update(data_[i], expr.fastRead(i));
 }
 
 
