@@ -33,7 +33,7 @@
 using namespace blitz;
 
 typedef TinyVector<double,2> tv2;
-typedef TinyVector<double,3> tv3;
+typedef TinyVector<double,4> tv3;
 typedef TinyVector<int,3> it;
 typedef Array<double,2> a2;
 typedef Array<TinyVector<double,2>,2> atv2;
@@ -42,33 +42,25 @@ typedef Array<TinyVector<double,3>,3> atv3;
 typedef Array<TinyMatrix<double,3,3>,3> atm3;
 typedef Array<TinyMatrix<double,2,2>,2> atm2;
 
+tv3 fill() { return tv3(1,3,1,3); }
+
+extern void junk(tv3&, tv3&);
+
 int main(int, char**)
 {
-  atv2 a(5,5);
-  a2 b(3,3);
-  b=2;
-  a=1,2,3,3,3,3,4,3,2,
-    1,2,3,2,tv2(-1,-2),3,4,3,2,
-    1,2,3,3,3,3,4;//,3,2;
-  
-  //blitz::_bz_ArrayExpr<blitz::_bz_ArrayExprBinaryOp<blitz::_bz_ArrayExpr<blitz::_bz_ArrayExprConstant<int> >, blitz::_bz_ArrayExpr<blitz::FastArrayIterator<blitz::TinyVector<double, 2>, 2> >, blitz::Multiply<int, double> > > x(2*a);
-  //x.shift(1,firstDim);
-  //double dd;
-
-  //dd=central12_stencilop(asExpr<atv2>::getExpr(a),firstDim,firstDim);
-
-  //dd=central12_stencilop(2*a, firstDim, firstDim);
-
-  //dd=div2D_stencilop(2*a);
-  //dd=div2D_stencilop(asExpr<atv2>::getExpr(a));
-  a2 b1(div2D(a));
-  a2 b2(div2D(1.0*a));
-  
-  //b(0,0,0)=(div(a,a))(it(0,0,0));
-    //a3 bb(div(a,a));
-
+  tv3 a=fill();
+  tv3 b=fill();
+  tv3 c=fill();
+  const int N=100;
+  const double x=0.2354;
+  double s=0;
+  for(int i=0;i<N;++i) {
+    //blitz::_bz_ArrayExpr<blitz::_bz_ArrayExprBinaryOp<blitz::_bz_ArrayExpr<blitz::FastTV2Iterator<double, 3> >, blitz::_bz_ArrayExpr<blitz::FastTV2Iterator<double, 3> >, blitz::Multiply<double, double> > > xpr(b*c);
+    asm("nop;nop;nop;");
+    a= a + x*c;
+    asm("nop;nop;nop;");
+    junk(c,b);
+  }
   cout << a << endl;
-  cout << b1 << endl;
-  cout << b2 << endl;
-
+  cout << s << endl;
 }
