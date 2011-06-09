@@ -28,6 +28,8 @@ public:
   typedef LeviCivita T_range_result;
     static const int 
         numArrayOperands = 0, 
+        numTVOperands = 0, 
+        numTMOperands = 0, 
         numIndexPlaceholders = 3, 
         rank_ = 3;
 
