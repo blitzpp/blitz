@@ -101,13 +101,14 @@ TinyVector<P_numtype,N_length>::_tv_evaluate(const T_expr& expr, T_update)
   BZPRECONDITION(T_expr::rank_<=1);
   BZPRECONDITION(T_expr::numIndexPlaceholders==0);
 
-  // this loop should vectorize and unroll fine by itself since it is static
-  //  if(N_length<=8)
-  _bz_meta_vecAssign<N_length, 0>::fastAssign(*this, expr, T_update());
-  //else
-  //#pragma ivdep
-  //for (int i=0; i < N_length; ++i)
-  // T_update::update(data_[i], expr.fastRead(i));
+#ifdef BZ_TV_EVALUATE_UNROLL_LENGTH
+  if(N_length < BZ_TV_EVALUATE_UNROLL_LENGTH)
+    _bz_meta_vecAssign<N_length, 0>::fastAssign(*this, expr, T_update());
+  else
+#endif
+#pragma ivdep
+    for (int i=0; i < N_length; ++i)
+      T_update::update(data_[i], expr.fastRead(i));
 }
 
 

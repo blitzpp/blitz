@@ -15,4 +15,7 @@
 #include <blitz/zero.cc>          // static ZeroElement data instances
 #include <random/mtparam.cc>      // MT19937 parameter sets
 
+// used to avoid loop elimination in the benchmarks
+void sink() {};
+
 char _blitz_id[] = BZ_PACKAGE_STRING;

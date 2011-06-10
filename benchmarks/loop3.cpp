@@ -62,17 +62,11 @@ void F90Version(BenchmarkExt<int>& bench, double a);
 void ValarrayVersion(BenchmarkExt<int>& bench, double a);
 #endif
 
-void sink() {}
+extern void sink();
 
-<<<<<<< /home/patrik/blitz_vect/benchmarks/loop3.cpp
 const int numSizes = 20;
 const int Nmax=1<<(numSizes-1);
 const int tvNmax=7;
-=======
-const int numSizes = 8;
-const int Nmax=1<<(numSizes-1);//(int)pow(10.0, numSizes/4.0);
-//const double Nratio=pow(10.0, 0.25);
->>>>>>> /tmp/loop3.cpp~other.bemqxo
 
 int main()
 {
@@ -166,14 +160,19 @@ void VectorVersion(BenchmarkExt<int>& bench, double a)
         bench.start();
         for (long i=0; i < iters; ++i)
         {
+	  asm("nop;nop;");
             y=y+a*x;
+	  asm("nop;nop;");
             sink();
         }
         bench.stop();
 
         bench.startOverhead();
-        for (long i=0; i < iters; ++i)
+        for (long i=0; i < iters; ++i) {
+	  asm("nop;nop;");
             sink();
+	  asm("nop;nop;");
+	}
         bench.stopOverhead();
     }
 
@@ -200,14 +199,19 @@ void ArrayVersion(BenchmarkExt<int>& bench, double a)
         bench.start();
         for (long i=0; i < iters; ++i)
         {
+	  asm("nop;nop;");
             y=y+a*x;
+	  asm("nop;nop;");
             sink();
         }
         bench.stop();
 
         bench.startOverhead();
-        for (long i=0; i < iters; ++i)
+        for (long i=0; i < iters; ++i) {
+	  asm("nop;nop;");
             sink();
+	  asm("nop;nop;");
+	}
 
         bench.stopOverhead();
     }
@@ -234,14 +238,19 @@ void TinyVectorVersion(BenchmarkExt<int>& bench, double a)
         bench.start();
         for (long i=0; i < iters; ++i)
         {
+	  asm("nop;nop;");
             y=y+a*x;
+	  asm("nop;nop;");
             sink();
         }
         bench.stop();
 
         bench.startOverhead();
-        for (long i=0; i < iters; ++i)
+        for (long i=0; i < iters; ++i) {
+	  asm("nop;nop;");
             sink();
+	  asm("nop;nop;");
+	}
         bench.stopOverhead();
 
 	TinyVectorVersion<N>>1>(bench,a);
@@ -292,14 +301,19 @@ void ValarrayVersion(BenchmarkExt<int>& bench, double a)
         bench.start();
         for (long i=0; i < iters; ++i)
         {
+	  asm("nop;nop;");
             y=y+a*x;
+	  asm("nop;nop;");
             sink();
         }
         bench.stop();
 
         bench.startOverhead();
-        for (long i=0; i < iters; ++i)
-            sink();
+        for (long i=0; i < iters; ++i) {
+	  asm("nop;nop;");
+	  sink();
+	  asm("nop;nop;");
+	}
         bench.stopOverhead();
     }
 
@@ -326,14 +340,19 @@ void F77Version(BenchmarkExt<int>& bench, double a)
         initializeRandomDouble(y, N);
 
         bench.start();
-        for (int iter=0; iter < iters; ++iter)
+        for (int iter=0; iter < iters; ++iter) {
+	  asm("nop;nop;");
             loop3_f77(N, x, y, a);
+	  asm("nop;nop;");
+	}
         bench.stop();
 
         bench.startOverhead();
-        for (int iter=0; iter < iters; ++iter)
+        for (int iter=0; iter < iters; ++iter) {
+	  asm("nop;nop;");
             loop3_f77overhead(N, x, y, a);
-
+	  asm("nop;nop;");
+	}
         bench.stopOverhead();
         delete [] x;
         delete [] y;
@@ -362,13 +381,19 @@ void F90Version(BenchmarkExt<int>& bench, double a)
         initializeRandomDouble(y, N);
 
         bench.start();
-        for (int iter=0; iter < iters; ++iter)
+        for (int iter=0; iter < iters; ++iter) {
+	  asm("nop;nop;");
             loop3_f90(N, x, y, a);
+	  asm("nop;nop;");
+	}
         bench.stop();
 
         bench.startOverhead();
-        for (int iter=0; iter < iters; ++iter)
+        for (int iter=0; iter < iters; ++iter) {
+	  asm("nop;nop;");
             loop3_f90overhead(N, x, y, a);
+	  asm("nop;nop;");
+	}
 
         bench.stopOverhead();
         delete [] x;
