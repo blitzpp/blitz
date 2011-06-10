@@ -56,7 +56,8 @@ public:
     ListInitializer<T_numtype, T_iterator> operator,(T_numtype x)
     {
         *iter_ = x;
-        return ListInitializer<T_numtype, T_iterator>(iter_ + 1);
+	++iter_;
+        return ListInitializer<T_numtype, T_iterator>(iter_);
     }
 
 private:
@@ -94,9 +95,11 @@ public:
         wipeOnDestruct_ = false;
         T_iterator iter = array_.getInitializationIterator();
         *iter = value_;
-        T_iterator iter2 = iter + 1;
-        *iter2 = x;
-        return ListInitializer<T_numtype, T_iterator>(iter2 + 1);
+	++iter;
+        //T_iterator iter2 = iter + 1;
+        *iter = x;
+	++iter;
+        return ListInitializer<T_numtype, T_iterator>(iter);
     }
 
     void disable() const

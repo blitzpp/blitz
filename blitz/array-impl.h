@@ -2206,12 +2206,21 @@ public:
     // Assignment Operators
     //////////////////////////////////////////////
 
-    // Scalar operand
-    // NEEDS_WORK : need a precondition check on
-    // isStorageContiguous when operator, is used.
-    ListInitializationSwitch<T_array,T_numtype*> operator=(T_numtype x)
+  /** \name Assignment operators.  \todo Index placeholder
+      operand. \todo Random operand.  @{ */
+
+  /** 
+      Scalar operand assignment.  \todo Need a precondition check on
+      isStorageContiguous when operator, is used. \todo We should do
+      bounds checking, right now we will buffer overrun if the number
+      of initializers in the list is larger than numElements.
+      
+      Changed to use an iterator instead of a POD pointer. This should
+      work as long as the iterators work correctly (which is
+      questionable...) */
+    ListInitializationSwitch<T_array,iterator> operator=(T_numtype x)
     {
-        return ListInitializationSwitch<T_array,T_numtype*>(*this, x);
+      return ListInitializationSwitch<T_array,iterator>(*this, x);
     }
 
     T_array& initialize(T_numtype);
@@ -2305,9 +2314,8 @@ public:
     template<typename T_expr>
     inline T_array& operator<<=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr);
 
-    // NEEDS_WORK -- Index placeholder operand
+  /// @}
 
-    // NEEDS_WORK -- Random operand
 #endif
 
 public:
@@ -2348,7 +2356,8 @@ public:
         T_expr expr, T_update);
 
 
-    T_numtype* restrict getInitializationIterator() { return dataFirst(); }
+  //T_numtype* restrict getInitializationIterator() { return dataFirst(); }
+  iterator restrict getInitializationIterator() { return begin(); }
 
     bool canCollapse(int outerRank, int innerRank) const { 
 #ifdef BZ_DEBUG_TRAVERSE
