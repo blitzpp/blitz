@@ -38,7 +38,11 @@ template<typename P_type>
 void MemoryBlock<P_type>::deallocate()
 {
 #ifndef BZ_ALIGN_BLOCKS_ON_CACHELINE_BOUNDARY
-  delete [] dBA_tv_;
+  if(allocatedByUs_)
+    delete [] dBA_tv_;
+  else
+    delete [] dataBlockAddress_;
+
 #else
     if (!NumericTypeTraits<T_type>::hasTrivialCtor) {
         for (int i=0; i < length_; ++i)
@@ -61,6 +65,7 @@ inline void MemoryBlock<P_type>::allocate(sizeType length)
     //assert(length%simdTypes<P_type>::vecWidth==0);
 
 #ifndef BZ_ALIGN_BLOCKS_ON_CACHELINE_BOUNDARY
+    BZASSERT(length%simdTypes<P_type>::vecWidth==0);
     dBA_tv_ = 
       new typename simdTypes<P_type>::vecType[length/simdTypes<P_type>::vecWidth];
     data_= dataBlockAddress_;

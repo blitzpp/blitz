@@ -12,7 +12,7 @@ BZ_USING_NAMESPACE(blitz)
 void VectorVersion(BenchmarkExt<int>& bench);
 void ArrayVersion(BenchmarkExt<int>& bench);
 
-void sink() {}
+extern void sink();
 
 int dontActuallyRunBenchmark()
 {

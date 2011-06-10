@@ -425,9 +425,15 @@ Array<P_numtype2,N_rank> Array<P_numtype,N_rank>::extractComponent(P_numtype2,
     BZPRECONDITION((componentNumber >= 0) 
         && (componentNumber < numComponents));
 
+    // If P_numtype is a multicomponent type, it may have an alignment
+    // setting. For this reason it is not correct to use
+    // numComponents, we must use sizeof(P_numtype)/sizeof(P_numtype2)
+    // instead.
+    BZASSERT(sizeof(P_numtype)%sizeof(P_numtype2)==0);
+
     TinyVector<diffType, N_rank> stride2;
     for (int i=0; i < N_rank; ++i)
-      stride2(i) = stride_(i) * numComponents;
+      stride2(i) = stride_(i) * sizeof(P_numtype)/sizeof(P_numtype2);
     const P_numtype2* dataFirst2 = 
         ((const P_numtype2*)dataFirst()) + componentNumber;
     return Array<P_numtype2,N_rank>(const_cast<P_numtype2*>(dataFirst2), 

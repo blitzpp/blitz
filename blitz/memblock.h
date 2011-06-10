@@ -81,7 +81,7 @@ protected:
     const int mod = items%w;
     if (mod>0)
       items += simdTypes<T_type>::vecWidth-mod;
-    assert(items%w==0);
+    BZASSERT(items%w==0);
       
         length_ = items;
         allocate(length_);
@@ -94,18 +94,27 @@ protected:
         BZASSERT(dataBlockAddress_ != 0);
 
         references_ = 1;
+	allocatedByUs_ = true;
 
         BZ_MUTEX_INIT(mutex)
     }
 
+  /** Constructor for a preallocated block that should be deleted when
+      we are done? \todo In this case, how do we assert that the block
+      is actually aligned on BZ_SIMD_WIDTH? */
     MemoryBlock(sizeType length, T_type* data)
     {
-    assert(length%simdTypes<T_type>::vecWidth==0);
+      BZPRECHECK(length%simdTypes<T_type>::vecWidth==0, 
+		 "SIMD width set but memory block passed is not even multiple");
+      BZPRECHECK(*reinterpret_cast<long int*>(&data) % BZ_SIMD_WIDTH==0,
+		 "SIMD width set but memory block passed is not aligned to it");
+
         length_ = length;
         data_ = data;
         dataBlockAddress_ = data;
         references_ = 1;
         BZ_MUTEX_INIT(mutex)
+	  allocatedByUs_ = false;
     }
 
     virtual ~MemoryBlock()
@@ -217,6 +226,13 @@ private:   // Disabled member functions
     { }
 
 private:   // Data members 
+#if defined(BZ_THREADSAFE) && !defined(BZ_THREADSAFE_USE_ATOMIC)
+    // with atomic reference counts, there is no locking
+    bool    mutexLocking_;
+#endif
+  /// Keeps track of whether the block was preallocated or not.
+  bool allocatedByUs_;
+
  union {
     T_type * restrict     data_;
    typename simdTypes<T_type>::vecType * restrict data_tv_;
@@ -227,10 +243,6 @@ private:   // Data members
   };
     sizeType              length_;
 
-#if defined(BZ_THREADSAFE) && !defined(BZ_THREADSAFE_USE_ATOMIC)
-    // with atomic reference counts, there is no locking
-    bool    mutexLocking_;
-#endif
     BZ_REFCOUNT_DECLARE(references_)
     BZ_MUTEX_DECLARE(mutex)
 };

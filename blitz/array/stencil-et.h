@@ -105,6 +105,8 @@ class _bz_StencilExpr {
   
   static const int 
     numArrayOperands = T_expr::numArrayOperands,
+    numTVOperands = T_expr::numTVOperands,
+    numTMOperands = T_expr::numTMOperands,
     numIndexPlaceholders = T_expr::numIndexPlaceholders,
     rank_ = T_expr::rank_;
   

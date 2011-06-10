@@ -151,7 +151,7 @@ public:
   static int                               lbound(int rank) 
   { BZPRECONDITION(rank<2); return 0; }
   static TinyVector<int,2>            lbound() 
-  { BZPRECONDITION(rank<2); return 0; }
+  { return 0; }
 
   static int                               length(int rank) 
   { BZPRECONDITION(rank<2); return rank==0 ? N_rows : N_columns; }

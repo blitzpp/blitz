@@ -92,6 +92,8 @@ public:
 
     static const int 
         numArrayOperands = T_expr::numArrayOperands,
+        numTVOperands = T_expr::numTVOperands,
+        numTMOperands = T_expr::numTMOperands,
         numIndexPlaceholders = T_expr::numIndexPlaceholders + 1,
         rank_ = T_expr::rank_ - 1;
 
