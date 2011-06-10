@@ -85,9 +85,9 @@
 
 #ifdef __INTEL_COMPILER
 // the intel compiler seems to have a harder time unrolling than gcc
- #define BZ_PARTIAL_LOOP_UNROLL
- #define BZ_ARRAY_FAST_TRAVERSAL_UNROLL
- #define BZ_ARRAY_STACK_TRAVERSAL_UNROLL
+ #undef BZ_PARTIAL_LOOP_UNROLL
+ #undef BZ_ARRAY_FAST_TRAVERSAL_UNROLL
+ #undef BZ_ARRAY_STACK_TRAVERSAL_UNROLL
  // rough empirical value -- seems unlikely anyone would use larger
  // tinyvectors, but...
  #define BZ_TV_EVALUATE_UNROLL_LENGTH 26
