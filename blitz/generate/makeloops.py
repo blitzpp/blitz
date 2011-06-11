@@ -16,7 +16,7 @@ loops=[
     ("loop9", ("a","x"), (), ("double", 8), 1, "$x = $x+$a"),
     ("loop10", ("x","a","b","c"), ("u"), ("double", 8), 3, "$x = u+$a+$b+$c"),
     ("loop11", ("x","a","b","c","d"), (), ("double", 8), 3, "$x = $a+$b+$c+$d"),
-    ("loop12", ("y","x","a","b","c","d"), (), ("double", 8), 4,
+    ("loop12", ("y","x","a","b","c","d"), ("u"), ("double", 8), 4,
      "$y = u+$a; $x = $a+$b+$c+$d"),
     ("loop13", ("y","x","a","b","c","d"), ("u"), ("double", 8), 4,
      "$x = $a+$b+$c+$d; $y = u+$d"),
@@ -40,8 +40,43 @@ loops=[
      "$x = $a*$c - $b*$c; $y = $a*$d + $b+$c"),
     ("loop25", ("x","a","b","c","y"), ("u","v","w"), ("double", 8), 6,
      "$x = u*$b; $y = v*$b + w*$a + u*$c"),
-    ("loop36", ("x","e"),(), ("double", 8), 1, "$x = exp($e)")
-    ]
+    ("loop36", ("x","e"),(), ("double", 8), 1, "$x = exp($e)"),
+# and loops with floats to test vectorization impact
+    ("floop1", ("x","y"),(), ("float", 4), 1, "$x = sqrt($y)"),
+    ("floop2", ("x","y"),("u"), ("float", 4), 1, "$x = $y/u"),
+    ("floop3", ("x","y"), ("a"), ("float", 4), 2, "$y = $y + a*$x"),
+    ("floop5", ("x","a","b"), (), ("float", 4), 1, "$x = $a+$b"),
+    ("floop6", ("x","a","b"), (), ("float", 4), 1, "$x = $a*$b"),
+    ("floop8", ("a","x"), ("u"), ("float", 4), 1, "$x = u/$a"),
+    ("floop9", ("a","x"), (), ("float", 4), 1, "$x = $x+$a"),
+    ("floop10", ("x","a","b","c"), ("u"), ("float", 4), 3, "$x = u+$a+$b+$c"),
+    ("floop11", ("x","a","b","c","d"), (), ("float", 4), 3, "$x = $a+$b+$c+$d"),
+    ("floop12", ("y","x","a","b","c","d"), ("u"), ("float", 4), 4,
+     "$y = u+$a; $x = $a+$b+$c+$d"),
+    ("floop13", ("y","x","a","b","c","d"), ("u"), ("float", 4), 4,
+     "$x = $a+$b+$c+$d; $y = u+$d"),
+    ("floop14", ("y","x","a","b"), (), ("float", 4), 2,
+     "$x = $a+$b; $y = $a-$b"),
+    ("floop15", ("x","a","b","c"), (), ("float", 4), 3, "$x = $c + $a*$b"),
+    ("floop16", ("y","x","a","b","c"), ("u"), ("float", 4), 4,
+     "$x = $a+$b+$c; $y = $x+$c+u"),
+    ("floop17", ("x","a","b","c","d"), (), ("float", 4), 3,
+     "$x = ($a+$b)*($c+$d)"),
+    ("floop18", ("x","a","b"), ("u","v"), ("float", 4), 3, "$x = (u+$a)*(v+$b)"),
+    ("floop19", ("y","x","a","b"), ("u","v"), ("float", 4), 2,
+     "$x = u*$a; $y = v*$b"),
+    ("floop21", ("x","a","b","c","d"), (), ("float", 4), 3,
+     "$x = $a*$b + $c*$d"),
+    ("floop22", ("x","a","b","c","d"), (), ("float", 4), 4,
+     "$x = $x + $a*$b + $c*$d"),
+    ("floop23", ("x","a","b","c","d","y"), (), ("float", 4), 4,
+     "$x = $a*$b + $c*$d; $y = $b+$d"),
+    ("floop24", ("x","a","b","c","d","y"), (), ("float", 4), 6,
+     "$x = $a*$c - $b*$c; $y = $a*$d + $b+$c"),
+    ("floop25", ("x","a","b","c","y"), ("u","v","w"), ("float", 4), 6,
+     "$x = u*$b; $y = v*$b + w*$a + u*$c"),
+    ("floop36", ("x","e"),(), ("float", 4), 1, "$x = exp($e)")
+]
 
 # handy access functions for readibility
 def loopname(loop):
@@ -73,14 +108,15 @@ def fortrandecls(loop):
              for suffix in ("f77","f77overhead","f90","f90overhead")])
     return decl
 
-def declandfill(loop, type,datamember):
-    decl=cc(["        %s %s(N);\n        initializeRandomDouble(%s.%s(), N);\n"%
-             (type, n, n,datamember) for n in looparrays(loop)])
+def declandfill(loop, declstub,datamember):
+    decl=cc(["        %s;\n        initializeRandomDouble(%s%s, N);\n"%
+             (declstub%n, n, datamember) for n in looparrays(loop)])
     return decl
 
 def gencpp(loop):
     """Generate the C++ loop code from loop data by substituting the
     skeleton."""
+    numtype=loopnumtype(loop)[0]
     
     subs=[
         ("loopname",loopname(loop)),
@@ -89,15 +125,24 @@ def gencpp(loop):
         ("fortrandecls", fortrandecls(loop)),
         ("scalarargdecl", cc([", %s %s"%(loopnumtype(loop)[0], n)
                               for n in loopscalars(loop)])),
+        ("arrayargs", cc([", %s"%n for n in looparrays(loop)])),
         ("scalarargs", cc([", %s"%n for n in loopscalars(loop)])),
         ("loopexpr", loopexpr(loop)),
         ("declarescalars",
-         cc(["%s %s = 0.39123982498157938742;\n"%(loopnumtype(loop)[0], n)
+         cc(["%s %s = 0.39123982498157938742;\n"%(numtype, n)
              for n in loopscalars(loop)])),
         ("arraydeclandfill",
-         declandfill(loop, "Array<%s,1>"%loopnumtype(loop)[0], "dataFirst")),
+         declandfill(loop, "Array<%s,1> %s(N)"%(numtype,"%s"),
+                     ".dataFirst()")),
         ("tvdeclandfill",
-         declandfill(loop, "TinyVector<%s,N>"%loopnumtype(loop)[0], "dataFirst")),
+         declandfill(loop, "TinyVector<%s,N> %s(N)"%(numtype,"%s"),
+                     ".dataFirst()")),
+        ("valarraydeclandfill",
+         declandfill(loop, "valarray<%s> %s(N)"%(numtype,"%s"),""),""),
+        ("carraydeclandfill",
+         declandfill(loop, "%s* %s = new %s[N]"%(numtype, "%s", numtype),"")),
+        ("delcarray",
+         cc(["        delete [] %s;\n"%n for n in looparrays(loop)])),
         ("looparrayexpr", loopexpr(loop).replace("$",""))
         ]
 
@@ -203,7 +248,7 @@ const int tvNmax=7;
 
 int main()
 {
-    int numBenchmarks = 6;
+    int numBenchmarks = 5;
 #ifndef BENCHMARK_VALARRAY
     numBenchmarks--;   // No  valarray
 #endif
@@ -238,7 +283,7 @@ int main()
 
 #declarescalars#
 
-    VectorVersion(bench #scalarargs#);
+    //VectorVersion(bench #scalarargs#);
     ArrayVersion(bench #scalarargs#);
     doTinyVectorVersion(bench #scalarargs#);
     F77Version(bench #scalarargs#);
@@ -290,7 +335,7 @@ void ArrayVersion(BenchmarkExt<int>& bench#scalarargdecl#)
         for (long i=0; i < iters; ++i)
         {
 	  asm("nop;nop;");
-            #looparrayexpr#
+            #looparrayexpr#;
 	  asm("nop;nop;");
             sink();
         }
@@ -324,7 +369,7 @@ void TinyVectorVersion(BenchmarkExt<int>& bench#scalarargdecl#)
         for (long i=0; i < iters; ++i)
         {
 	  asm("nop;nop;");
-            #looparrayexpr#
+            #looparrayexpr#;
 	  asm("nop;nop;");
             sink();
         }
@@ -359,7 +404,7 @@ void doTinyVectorVersion(BenchmarkExt<int>& bench#scalarargdecl#)
    N>>=1;
   }
 
-  TinyVectorVersion< 1<<tvNmax >(bench,#scalarargs#);
+  TinyVectorVersion< 1<<tvNmax >(bench#scalarargs#);
   bench.endImplementation();
 }
 
@@ -376,13 +421,13 @@ void ValarrayVersion(BenchmarkExt<int>& bench#scalarargdecl#)
 
         long iters = bench.getIterations();
 
-        #vararraydeclandfill#
+#valarraydeclandfill#
 
         bench.start();
         for (long i=0; i < iters; ++i)
         {
 	  asm("nop;nop;");
-            #looparrayexpr#
+            #looparrayexpr#;
 	  asm("nop;nop;");
             sink();
         }
@@ -400,6 +445,68 @@ void ValarrayVersion(BenchmarkExt<int>& bench#scalarargdecl#)
     bench.endImplementation();
 }
 #endif
+
+void F77Version(BenchmarkExt<int>& bench#scalarargdecl#)
+{
+    bench.beginImplementation("Fortran 77");
+
+    while (!bench.doneImplementationBenchmark())
+    {
+        int N = bench.getParameter();
+        cout << "Fortran 77: N = " << N << endl;
+
+        int iters = bench.getIterations();
+
+#carraydeclandfill#        
+
+        bench.start();
+        for (int iter=0; iter < iters; ++iter)
+            #loopname#_f77(N#arrayargs##scalarargs#);
+        bench.stop();
+
+        bench.startOverhead();
+        for (int iter=0; iter < iters; ++iter)
+            #loopname#_f77overhead(N#arrayargs##scalarargs#);
+
+        bench.stopOverhead();
+
+#delcarray#
+    }
+
+    bench.endImplementation();
+}
+
+#ifdef FORTRAN_90
+void F90Version(BenchmarkExt<int>& bench#scalarargdecl#)
+{
+    bench.beginImplementation("Fortran 90");
+
+    while (!bench.doneImplementationBenchmark())
+    {
+        int N = bench.getParameter();
+        cout << "Fortran 90: N = " << N << endl;
+
+        int iters = bench.getIterations();
+
+#carraydeclandfill#
+
+        bench.start();
+        for (int iter=0; iter < iters; ++iter)
+            #loopname#_f90(N#arrayargs##scalarargs#);
+        bench.stop();
+
+        bench.startOverhead();
+        for (int iter=0; iter < iters; ++iter)
+            #loopname#_f90overhead(N#arrayargs##scalarargs#);
+
+        bench.stopOverhead();
+#delcarray#
+    }
+
+    bench.endImplementation();
+}
+#endif
+
 """
 
 f77_skeleton = """
