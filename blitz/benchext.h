@@ -43,6 +43,7 @@
 #endif
 
 #include <math.h>
+#include <string>
 
 // NEEDS_WORK: replace use of const char* with <string>, once standard
 // library is widely supported.
@@ -69,7 +70,7 @@ public:
     void setParameterDescription(const char* string);
   void setIterations(Array<long,1> iters);
   void setFlopsPerIteration(Array<double,1> flopsPerIteration);
-    void setRateDescription(const char* string);
+  //void setRateDescription(const char* string);
 
     void beginBenchmarking();
 
@@ -106,7 +107,7 @@ protected:
     unsigned numImplementations_;
     unsigned implementationNumber_;
 
-    const char* description_;
+  std::string description_;
   std::vector<std::string> implementationDescriptions_;
 
   Array<double,2> times_;       // Elapsed time
@@ -118,8 +119,9 @@ protected:
     Timer timer_;
     Timer overheadTimer_;
 
-    const char* parameterDescription_;
-    const char* rateDescription_;
+  std::string parameterDescription_;
+  std::string rateDescription_;
+  double timerconversion_;
 
     unsigned numParameters_;
     unsigned parameterNumber_;

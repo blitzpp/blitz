@@ -207,6 +207,7 @@ cpp_skeleton = """
 #endif
 
 BZ_USING_NAMESPACE(blitz)
+BZ_USING_NAMESPACE(std)
 
 #if defined(BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES)
  #define #loopname#_f77 #loopname#_f77_
@@ -259,7 +260,6 @@ int main()
     BenchmarkExt<int> bench("#loopname#: #loopexpr#", numBenchmarks);
 
     bench.setNumParameters(numSizes);
-    bench.setRateDescription("Mflops/s");
 
     Vector<int> parameters(numSizes);
     Vector<long> iters(numSizes);

@@ -48,6 +48,8 @@
 
 BZ_NAMESPACE(blitz)
 
+#ifndef WITH_LIBPAPI
+
 class Timer {
 
 public:
@@ -71,41 +73,109 @@ public:
     
 /* Compaq cxx compiler in ansi mode cannot print out long double type! */
 #if defined(__DECCXX)
-    double elapsedSeconds()
+    long int elapsed()
 #else
-    long double elapsedSeconds()
+    long int elapsed()
 #endif
     {
         BZPRECONDITION(state_ == stopped);
         return t2_ - t1_;
     }
 
+  string indep_var() const { return ivar_; };
+
 private:
     Timer(Timer&) { }
     void operator=(Timer&) { }
 
-    long double systemTime()
+    long int systemTime()
     {
 #ifdef BZ_HAVE_RUSAGE
         getrusage(RUSAGE_SELF, &resourceUsage_);
-        double seconds = resourceUsage_.ru_utime.tv_sec 
+        long int sec = resourceUsage_.ru_utime.tv_sec 
             + resourceUsage_.ru_stime.tv_sec;
-        double micros  = resourceUsage_.ru_utime.tv_usec 
+        long int usec  = resourceUsage_.ru_utime.tv_usec 
             + resourceUsage_.ru_stime.tv_usec;
-        return seconds + micros/1.0e6;
+        return sec*1000000+usec;
 #else
-        return clock() / (long double) CLOCKS_PER_SEC;
+        return 1000000*clock() / (long int) CLOCKS_PER_SEC;
 #endif
     }
 
     enum { uninitialized, running, stopped } state_;
 
+  static const char* const ivar_="us";
+
 #ifdef BZ_HAVE_RUSAGE
     struct rusage resourceUsage_;
 #endif
 
-    long double t1_, t2_;
+    long int t1_, t2_;
 };
+
+#else
+
+// implementation using PAPI performance counters
+
+#include <papi.h>
+#include <papiStdEventDefs.h>
+
+class Timer {
+
+public:
+    Timer() 
+    { 
+        state_ = uninitialized;
+    }
+
+    void start()
+    { 
+        state_ = running;
+        if(PAPI_start_counters(Events, nevents)!=PAPI_OK) {
+	  cerr << "Error starting counters\n";
+	  state_=uninitialized;
+	}
+    }
+
+    void stop()
+    {
+        PAPI_stop_counters(counters_.data(), nevents);
+	BZPRECONDITION(state_ == running);
+	state_ = stopped;
+    }
+
+  // since we don't know the clock frequency of the processor, we
+  // instead output "flops/clock cycle" which seems like a better
+  // measure of code performance and not machine performance.
+    long_long elapsed() const
+    {
+        BZPRECONDITION(state_ == stopped);
+        return counters_[0];
+    }
+
+  long_long instr() const { return counters_[1]; };
+  long_long flops() const { return counters_[2]; };
+
+  string indep_var() const { return ivar_; };
+
+private:
+    Timer(Timer&) { }
+    void operator=(Timer&) { }
+
+    enum { uninitialized, running, stopped } state_;
+
+  static const int nevents=3;
+  static const int Events[nevents] = {PAPI_TOT_CYC, PAPI_TOT_INS, PAPI_RES_STL};
+  static const char* const ivar_="c";
+
+
+  TinyVector<long_long, nevents> counters_;
+};
+
+#endif
+
+
+
 
 BZ_NAMESPACE_END
 

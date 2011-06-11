@@ -57,7 +57,19 @@ BenchmarkExt<P_parameter>::BenchmarkExt(const char* name,
 
     implementationDescriptions_.resize(numImplementations);
     parameterDescription_ = "Vector length";
-    rateDescription_ = "Mflops/s";
+    
+    if(timer_.indep_var()=="us") {
+      rateDescription_ = "Gflops/s";
+      timerconversion_ = 1e6/1e9;
+    }
+    else if(timer_.indep_var()=="c") {
+      rateDescription_ = "flops/cycle";
+      timerconversion_ = 1;
+    }
+    else {
+      rateDescription_ = std::string("flops/")+timer_.indep_var();
+      timerconversion_ = 1;
+    }
 
     // Set up default parameters and iterations
     setNumParameters(19);
@@ -66,7 +78,7 @@ BenchmarkExt<P_parameter>::BenchmarkExt(const char* name,
     // parameters_ = pow(10.0, Range(1,20)/4.0);
 
     for (unsigned i=0; i < numParameters_; ++i)
-        parameters_[i] = static_cast<P_parameter>(BZ_MATHFN_SCOPE(pow)(10.0, (i+1)/4.0));
+      parameters_(i) = static_cast<P_parameter>(BZ_MATHFN_SCOPE(pow)(10.0, (i+1)/4.0));
 
     iterations_ = 5.0e+5 / parameters_;
     flopsPerIteration_ = parameters_;
@@ -142,11 +154,11 @@ void BenchmarkExt<P_parameter>::setFlopsPerIteration(Array<double,1>
       flopsPerIteration_(i) = flopsPerIteration(i);
 }
 
-template<typename P_parameter>
-void BenchmarkExt<P_parameter>::setRateDescription(const char* string)
-{
-    rateDescription_ = string;
-}
+// template<typename P_parameter>
+// void BenchmarkExt<P_parameter>::setRateDescription(const char* string)
+// {
+//     rateDescription_ = string;
+// }
 
 template<typename P_parameter>
 void BenchmarkExt<P_parameter>::beginBenchmarking()
@@ -208,7 +220,7 @@ inline void BenchmarkExt<P_parameter>::stop()
     BZPRECONDITION(state_ == running);
     state_ = benchmarkingImplementation;
     
-    times_(int(implementationNumber_), int(parameterNumber_)) = timer_.elapsedSeconds();
+    times_(int(implementationNumber_), int(parameterNumber_)) = timer_.elapsed();
 
     ++parameterNumber_;
 }
@@ -229,7 +241,9 @@ inline void BenchmarkExt<P_parameter>::stopOverhead()
     BZPRECONDITION(state_ == runningOverhead);
     overheadTimer_.stop();
     times_(int(implementationNumber_), int(parameterNumber_-1)) -= 
-        overheadTimer_.elapsedSeconds();
+        overheadTimer_.elapsed();
+    if(times_(int(implementationNumber_), int(parameterNumber_-1))<0)
+      cerr << "Error: Timer underflow in benchmark " << implementationDescriptions_[implementationNumber_] << " " << parameters_(parameterNumber_) << endl;
 
     state_ = benchmarkingImplementation;
 }
@@ -239,7 +253,7 @@ inline void BenchmarkExt<P_parameter>::skip()
 {
     BZPRECONDITION(state_ == benchmarkingImplementation);
     BZPRECONDITION(parameterNumber_ < numParameters_);
-    times_(int(implementationNumber_), int(parameterNumber_)) = blitz::huge(double());
+    times_(int(implementationNumber_), int(parameterNumber_)) = blitz::quiet_NaN(double());
     ++parameterNumber_;
     state_ = benchmarkingImplementation;
 }
@@ -272,7 +286,7 @@ double BenchmarkExt<P_parameter>::getMflops(unsigned implementation,
     BZPRECONDITION(implementation < numImplementations_);
     BZPRECONDITION(parameterNum < numParameters_);
     return iterations_(parameterNum) * flopsPerIteration_(parameterNum)
-      / times_(int(implementation), int(parameterNum)) / 1.0e+6;
+      / times_(int(implementation), int(parameterNum)) * timerconversion_;
 }
 
 template<typename P_parameter>
