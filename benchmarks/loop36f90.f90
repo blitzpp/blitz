@@ -1,13 +1,14 @@
-      SUBROUTINE loop36_F90(N, x, e)
+
+      SUBROUTINE loop36_F90(N, x, y, a)
       INTEGER i, N
       REAL*8 x(N), e(N)
 
-      x=exp(e)
+      x = exp(e)
       RETURN
       END
 
 
-      SUBROUTINE loop36_F90Overhead(N, x, e)
+      SUBROUTINE loop36_F90Overhead(N, x, y, a)
       INTEGER i, N
       REAL*8 x(N), e(N)
 

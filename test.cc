@@ -50,23 +50,42 @@ extern void sink();
 
 int main(int, char**)
 {
-  const int sz=8;
-  // tv3 a=fill();
-  // tv3 b=fill();
-  // tv3 c=fill();
-  a1 a(sz),b(sz),c(sz);
-  b=1.,2.,3.,4.,5.,6.,7.,8.;
-  c=7.,6.,.5,293.,4.,9.,0.,1.0;
+  // const int sz=8;
+  // // tv3 a=fill();
+  // // tv3 b=fill();
+  // // tv3 c=fill();
+  // a1 a(sz),b(sz),c(sz);
+  // b=1.,2.,3.,4.,5.,6.,7.,8.;
+  // c=7.,6.,.5,293.,4.,9.,0.,1.0;
 
-  const int N=100;
-  const double x=0.2354;
-  double s=0;
-  for(int i=0;i<N;++i) {
-    asm("nop;nop;nop;");
-    a= a + x*c;
-    asm("nop;nop;nop;");
-    sink();
-  }
-  cout << a << endl;
-  cout << s << endl;
+  // const int N=100;
+  // const double x=0.2354;
+  // double s=0;
+  // for(int i=0;i<N;++i) {
+  //   asm("nop;nop;nop;");
+  //   a= a + x*c;
+  //   asm("nop;nop;nop;");
+  //   sink();
+  // }
+  // cout << a << endl;
+  // cout << s << endl;
+
+  GeneralArrayStorage<2> storage;
+  storage.ordering() = firstRank, secondRank;
+  storage.base() = 0,0;
+  storage.ascendingFlag() = false,true;
+
+  a2 C;
+  C.setStorage(storage);
+  C.resize(2,2);
+  C(0,0)=0;
+  C(0,1)=1;
+  C(1,0)=2;
+  C(1,1)=3;
+  a2::iterator i=C.begin();
+  cout << *i << '\t' << endl; ++i;
+  cout << *i << '\t' << endl; ++i;
+  cout << *i << '\t' << endl; ++i;
+  cout << *i << '\t' << endl; ++i;
+  assert(i==C.end());
 }
