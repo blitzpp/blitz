@@ -576,8 +576,8 @@ public:
     template<typename T> struct readHelper<ETBase<T> > {
       static T_result fastRead(const T_expr& iter, int i) {
 	return iter.fastRead(i); };
-      static T_tvresult fastRead(const T_expr& iter, int i) {
-	return iter.fastReadtv(i); };
+      static T_tvresult fastRead_tv(const T_expr& iter, int i) {
+	return iter.fastRead_tv(i); };
       static T_result indexop(const T_expr& iter, int i) {
 	return iter[i]; };
       static T_result deref(const T_expr& iter) {
