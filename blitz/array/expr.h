@@ -101,6 +101,14 @@ public:
 			    T_numtype,
 			    _bz_ArrayExpr<test> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+
+  // select tvreturn type
+  typedef typename selectET<typename T_expr::T_tvtypeprop, 
+			    T_numtype,
+			    _bz_ArrayExpr<typename T_expr::T_tvresult> 
+			    >::T_selected T_tvtypeprop;
+  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
+
   typedef typename T_expr::T_optype T_optype;
     typedef T_expr T_ctorArg1;
     typedef int    T_ctorArg2;    // dummy
@@ -214,6 +222,12 @@ public:
 
     T_result fastRead(int i) const
     { return iter_.fastRead(i); }
+
+    T_tvresult fastRead_tv(int i) const
+    { return iter_.fastRead_tv(i); }
+
+  bool isVectorAligned() const 
+  { return iter_.isVectorAligned(); }
 
     // this is needed for the stencil expression fastRead to work
     void _bz_offsetData(sizeType i)
@@ -477,6 +491,14 @@ public:
 			    T_numtype, 
 			    _bz_ArrayExprUnaryOp<test, T_op> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+
+  // select tvreturn type
+  typedef typename selectET<typename T_expr::T_tvtypeprop, 
+			    T_numtype,
+			    _bz_ArrayExprUnaryOp<typename T_expr::T_tvresult, T_op> 
+			    >::T_selected T_tvtypeprop;
+  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
+
   typedef T_numtype T_optype;
 
     typedef T_expr T_ctorArg1;
@@ -525,6 +547,8 @@ public:
   template<typename T> struct readHelper {
     static T_result fastRead(const T_expr& iter, int i) {
       return (T_op::apply(iter.fastRead(i))); };
+    static T_tvresult fastRead_tv(const T_expr& iter, int i) {
+      BZPRECONDITION(0); return (T_op::apply(iter.fastRead(i))); };
     static T_result indexop(const T_expr& iter, int i) {
       return (T_op::apply(iter[i])); };
     static T_result deref(const T_expr& iter) {
@@ -552,6 +576,8 @@ public:
     template<typename T> struct readHelper<ETBase<T> > {
       static T_result fastRead(const T_expr& iter, int i) {
 	return iter.fastRead(i); };
+      static T_tvresult fastRead(const T_expr& iter, int i) {
+	return iter.fastReadtv(i); };
       static T_result indexop(const T_expr& iter, int i) {
 	return iter[i]; };
       static T_result deref(const T_expr& iter) {
@@ -577,6 +603,9 @@ public:
 
     T_result fastRead(int i) const { 
       return readHelper<T_typeprop>::fastRead(iter_, i); }
+
+    T_tvresult fastRead_tv(int i) const { 
+      return readHelper<T_tvtypeprop>::fastRead_tv(iter_, i); }
 
     T_result operator[](int i) const { 
       return readHelper<T_typeprop>::indexop(iter_, i); }
@@ -606,9 +635,10 @@ public:
 					   offset1, dim1, offset2, dim2);
     }
 
-
-
       // ****** end reading
+
+  bool isVectorAligned() const 
+  { return iter_.isVectorAligned(); }
 
   template<int N>
   T_range_result operator()(const RectDomain<N>& d) const
@@ -738,6 +768,17 @@ public:
 						   typename asExpr<T_unwrapped2>::T_expr, 
 						   T_op> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+
+  // select tv return type
+  typedef typename selectET2<typename T_expr1::T_tvtypeprop, 
+			     typename T_expr2::T_tvtypeprop, 
+			     T_numtype,
+			     _bz_ArrayExprBinaryOp<typename T_expr1::T_tvresult,
+						   typename T_expr2::T_tvresult,
+						   T_op> 
+			     >::T_selected T_tvtypeprop;
+  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
+
   typedef typename T_op::T_numtype T_optype;
 
     typedef T_expr1 T_ctorArg1;
@@ -777,6 +818,10 @@ public:
   template<typename T> struct readHelper {
     static T_result fastRead(const T_expr1& iter1, const T_expr2& iter2, int i) {
       return T_op::apply(iter1.fastRead(i), iter2.fastRead(i)); }
+    static T_tvresult fastRead_tv(const T_expr1& iter1, const T_expr2& iter2,
+				  int i) {
+      BZPRECONDITION(0);
+      return T_op::apply(iter1.fastRead_tv(i), iter2.fastRead_tv(i)); }
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, int i) {
       return T_op::apply(iter1[i], iter2[i]); };
     static T_result deref(const T_expr1& iter1, const T_expr2& iter2) {
@@ -803,8 +848,12 @@ public:
     
   // For ET types, bypass operator and create expression
     template<typename T> struct readHelper<ETBase<T> > {
-      static T_result fastRead(const T_expr1& iter1, const T_expr2& iter2, int i) {
+      static T_result fastRead(const T_expr1& iter1, const T_expr2& iter2, 
+			       int i) {
 	return T_result(iter1.fastRead(i), iter2.fastRead(i)); }
+      static T_tvresult fastRead_tv(const T_expr1& iter1, const T_expr2& iter2,
+				    int i) {
+	return T_tvresult(iter1.fastRead_tv(i), iter2.fastRead_tv(i)); }
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, int i) {
       return T_result(iter1[i], iter2[i]); };
     static T_result deref(const T_expr1& iter1, const T_expr2& iter2) {
@@ -832,6 +881,9 @@ public:
     T_result fastRead(int i) const { 
       return readHelper<T_typeprop>::fastRead(iter1_, iter2_, i); }
 
+    T_tvresult fastRead_tv(int i) const { 
+      return readHelper<T_tvtypeprop>::fastRead_tv(iter1_, iter2_, i); }
+
     T_result operator[](int i) const { 
       return readHelper<T_typeprop>::indexop(iter1_, iter2_, i); }
 
@@ -856,7 +908,11 @@ public:
       return readHelper<T_typeprop>::shift(iter1_, iter2_, 
 					   offset1, dim1, offset2, dim2); }
     
+
       // ****** end reading
+
+  bool isVectorAligned() const 
+  { return iter1_.isVectorAligned() && iter2_.isVectorAligned(); }
 
   template<int N>
   T_range_result operator()(const RectDomain<N>& d) const
@@ -1038,14 +1094,27 @@ public:
 			     T_numtype, 
 			     char>::T_selected T_intermediary;
 
-  typedef typename selectET2<T_intermediary,
-			     typename T_expr3::T_typeprop, 
-			     T_numtype, 
-			     _bz_ArrayExprTernaryOp<typename asExpr<T_unwrapped1>::T_expr, 
-						    typename asExpr<T_unwrapped2>::T_expr, 
-						    typename asExpr<T_unwrapped3>::T_expr, 
-						   T_op> >::T_selected T_typeprop;
+  typedef typename selectET2<
+    T_intermediary,
+    typename T_expr3::T_typeprop, 
+    T_numtype, 
+    _bz_ArrayExprTernaryOp<typename asExpr<T_unwrapped1>::T_expr, 
+			   typename asExpr<T_unwrapped2>::T_expr, 
+			   typename asExpr<T_unwrapped3>::T_expr, 
+			   T_op> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+    
+  // select tv return type
+  typedef typename unwrapET<
+    typename selectET2<T_intermediary,
+		       typename T_expr3::T_typeprop, 
+		       T_numtype, 
+		       _bz_ArrayExprTernaryOp<typename T_expr1::T_tvresult,
+					      typename T_expr2::T_tvresult,
+					      typename T_expr3::T_tvresult,
+					      T_op> >::T_selected>::T_unwrapped
+  T_tvresult;
+
   typedef typename T_op::T_numtype T_optype;
 
     typedef T_expr1 T_ctorArg1;
@@ -1194,7 +1263,19 @@ public:
       return readHelper<T_typeprop>::shift(iter1_, iter2_, iter3_,
 					   offset1, dim1, offset2, dim2); }
 
+    /** Return a TinyVector view of the expression at i. This does not
+	need to be in the readHelper selector, because tvresult is
+	always a TinyVector type. */
+    T_tvresult fastRead_tv(int i) const
+    { return T_tvresult(iter1_.fastRead_tv(i), iter2_.fastRead_tv(i),
+			iter3_.fastRead_tv(i)); }
+
+
       // ****** end reading
+
+  bool isVectorAligned() const 
+  { return iter1_.isVectorAligned() && iter2_.isVectorAligned() &&
+      iter3_.isVectorAligned(); }
 
   template<int N>
   T_range_result operator()(const RectDomain<N>& d) const
@@ -1428,6 +1509,11 @@ public:
 						       typename asExpr<T_unwrapped4>::T_expr, 
 						       T_op> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+  typedef _bz_ArrayExprQuaternaryOp<typename T_expr1::T_tvresult, 
+				    typename T_expr2::T_tvresult, 
+				    typename T_expr3::T_tvresult, 
+				    typename T_expr4::T_tvresult, 
+				    T_op> T_tvresult;
   typedef typename T_op::T_numtype T_optype;
 
     typedef T_expr1 T_ctorArg1;
@@ -1597,7 +1683,18 @@ public:
       return readHelper<T_typeprop>::shift(iter1_, iter2_, iter3_, iter4_, 
 					   offset1, dim1, offset2, dim2); }
 
+    /** Return a TinyVector view of the expression at i. This does not
+	need to be in the readHelper selector, because tvresult is
+	always a TinyVector type. */
+    T_tvresult fastRead_tv(int i) const
+    { return T_tvresult(iter1_.fastRead_tv(i), iter2_.fastRead_tv(i),
+			iter3_.fastRead_tv(i), iter4_.fastRead_tv(i)); }
+
       // ****** end reading
+
+  bool isVectorAligned() const 
+  { return iter1_.isVectorAligned() && iter2_.isVectorAligned() &&
+      iter3_.isVectorAligned() && iter3_.isVectorAligned(); }
 
   template<int N>
   T_range_result operator()(const RectDomain<rank_>& d) const
@@ -1836,6 +1933,8 @@ public:
   typedef typename opType<T_numtype>::T_optype T_optype;
   typedef typename asET<T_numtype>::T_wrapped T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+  typedef T_typeprop T_tvtypeprop;
+  typedef T_result T_tvresult;
 
     typedef T_numtype T_ctorArg1;
     typedef int       T_ctorArg2;    // dummy
@@ -1914,6 +2013,12 @@ public:
   const T_numtype& fastRead(int) const
     { return value_; }
 
+  const T_tvresult& fastRead_tv(int) const
+    { return value_; }
+
+  bool isVectorAligned() const 
+  { return true; }
+
   // this is needed for the stencil expression fastRead to work
   void _bz_offsetData(sizeType i) const{};
 
@@ -1977,6 +2082,7 @@ protected:
 
     T_numtype value_;
 };
+    
 
 BZ_NAMESPACE_END
 

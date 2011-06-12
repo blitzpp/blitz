@@ -338,6 +338,11 @@ public:
   const T_numtype& fastRead(sizeType i) const
     { return data_[i]; }
 
+  /** Return true, since TinyVectors are simd aligned by
+      construction. */
+  bool isVectorAligned() const 
+  { return true; }
+
   bool canCollapse(int outerLoopRank, int innerLoopRank) const
   {
     BZPRECONDITION(outerLoopRank==0);

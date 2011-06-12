@@ -35,6 +35,7 @@
 #include <blitz/array/slice.h>
 #include <blitz/constpointerstack.h>
 #include <blitz/prettyprint.h>
+#include <blitz/simdtypes.h>
 #include <blitz/et-forward.h>
 #include <blitz/array/domain.h>
 #include <blitz/array/asexpr.h>
@@ -69,6 +70,12 @@ public:
   // is an ET class, T_result will be the array class for that class.
   typedef typename asET<T_numtype>::T_wrapped T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+
+  /// Result type for fastRead_tv is a FastTVIterator.
+  typedef ETBase<FastTV2Iterator<T_numtype, 
+				 simdTypes<T_numtype>::vecWidth> > T_tvtypeprop;
+  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
+
   typedef Array<T_numtype, N_rank> T_array;
   typedef FastArrayIteratorBase<T_numtype, N_rank, P_arraytype> T_iterator;
     typedef const T_array& T_ctorArg1;
@@ -165,6 +172,19 @@ public:
 
     T_result fastRead(sizeType i) const
     { return data_[i]; }
+
+  /** Returns a TinyVector "view" of the data at i, with a vector
+      length appropriate for the simd width. This makes it possible to
+      convert the expression into a TinyVector expression, which is
+      efficiently vectorized. */ 
+   T_tvresult fastRead_tv(sizeType i) const
+  { BZASSERT(i%simdTypes<T_numtype>::vecWidth==0);
+    return T_tvresult(*reinterpret_cast<const typename simdTypes<T_numtype>::vecType*>(&data_[i])); }
+
+  /** Returns true if the iterator data is aligned on a simd
+      vector. */
+  bool isVectorAligned() const
+  { return array().isVectorAligned(); };
 
     int suggestStride(int rank) const
     { return array_.stride(rank); }

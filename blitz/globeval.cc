@@ -270,6 +270,7 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
  _bz_evaluateWithStackTraversal1(T_dest& dest, T_expr expr, T_update)
  {
    typedef typename T_dest::T_numtype T_numtype;
+   typedef typename T_update::template updateCast<typename simdTypes<typename T_dest::T_numtype>::vecType, typename T_expr::T_tvresult>::T_updater T_tvupdater;
 
  #ifdef BZ_DEBUG_TRAVERSE
      BZ_DEBUG_MESSAGE("Array<" << BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_numtype)
@@ -315,6 +316,20 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
 	 if (commonStride == 1)
 	 {
   #ifndef BZ_ARRAY_STACK_TRAVERSAL_UNROLL
+	   const int dest_width =
+	     simdTypes<typename T_dest::T_numtype>::vecWidth;
+	   // if expressions are vector aligned we use the tv loop
+	   if( (dest_width >1) && (ubound>dest_width) && 
+	       (simdTypes<typename T_dest::T_numtype>::vecWidth ==
+		simdTypes<typename T_expr::T_numtype>::vecWidth) &&
+	       dest.isVectorAligned() && expr.isVectorAligned() ) {
+	     for (int i=0; i < ubound; i+=dest_width)
+	       T_tvupdater::update(*reinterpret_cast<typename simdTypes<typename T_dest::T_numtype>::vecType*>(data+i), expr.fastRead_tv(i));
+	   }
+	   else
+	     // if not aligned, not wide enough loop, or not more than
+	     // one item fitting in simd width, we revert to
+	     // single-element loop
 #pragma ivdep
 	     for (int i=0; i < ubound; ++i)
 	       T_update::update(data[i], expr.fastRead(i));

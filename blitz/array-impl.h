@@ -1144,6 +1144,10 @@ public:
     int                               zeroOffset() const
     { return zeroOffset_; }
 
+  /** Returns true if the array is aligned on a simd vector width. */
+  bool isVectorAligned() const
+  { return T_base::isVectorAligned(zeroOffset()); };
+
     //////////////////////////////////////////////
     // Debugging routines
     //////////////////////////////////////////////

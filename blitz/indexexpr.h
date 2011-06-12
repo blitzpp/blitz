@@ -74,6 +74,10 @@ public:
   typedef typename asET<T_numtype>::T_wrapped T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
 
+  // not used, but must be defined
+  typedef T_typeprop T_tvtypeprop;
+  typedef T_result T_tvresult;
+
     static const int 
         numArrayOperands = 0, 
         numTVOperands = 0, 
@@ -141,6 +145,16 @@ public:
         return T_numtype();
     }
 
+  T_tvresult fastRead_tv(int) const;
+ // {
+ //        BZPRECONDITION(0);
+ //        return T_tvresult();
+ //    }
+
+  /** There are no alignment issues here, so just return true. */
+  bool isVectorAligned() const {
+    return true; }
+  
     diffType suggestStride(int) const {
         BZPRECONDITION(0);
         return 0;

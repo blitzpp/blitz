@@ -18,9 +18,12 @@ public:
     typedef char T_numtype;
 
   typedef opType<T_numtype>::T_optype T_optype;
-
   typedef asET<T_numtype>::T_wrapped T_typeprop;
   typedef unwrapET<T_typeprop>::T_unwrapped T_result;
+
+  // dummy
+  typedef asET<T_numtype>::T_wrapped T_tvtypeprop;
+  typedef unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
 
     typedef void T_ctorArg1;
     typedef char       T_ctorArg2;    // dummy
@@ -95,6 +98,9 @@ public:
   { BZPRECONDITION(0); return 0; }
 
     T_numtype fastRead(int) const
+  { BZPRECONDITION(0); return 0; }
+
+    T_numtype fastRead_tv(int) const
   { BZPRECONDITION(0); return 0; }
 
   // this is needed for the stencil expression fastRead to work
