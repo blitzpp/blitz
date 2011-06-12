@@ -13,9 +13,22 @@
 #include <blitz/indexexpr.h>      // Tensor index objects
 #include <blitz/bzdebug.h>        // Test suite globals
 #include <blitz/zero.cc>          // static ZeroElement data instances
+#include <blitz/timer.h>          // Timer instances
 #include <random/mtparam.cc>      // MT19937 parameter sets
+
+BZ_NAMESPACE(blitz);
 
 // used to avoid loop elimination in the benchmarks
 void sink() {};
 
 char _blitz_id[] = BZ_PACKAGE_STRING;
+
+#ifdef BZ_HAVE_LIBPAPI
+#include <papiStdEventDefs.h>
+const int Timer::Events[] =  {PAPI_TOT_CYC, PAPI_TOT_INS, PAPI_FP_INS};
+const char* const Timer::ivar_="c";
+#else
+const char* const Timer::ivar_="us";
+#endif
+
+BZ_NAMESPACE_END

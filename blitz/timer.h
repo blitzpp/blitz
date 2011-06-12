@@ -48,7 +48,7 @@
 
 BZ_NAMESPACE(blitz)
 
-#ifndef WITH_LIBPAPI
+#ifndef BZ_HAVE_LIBPAPI
 
 class Timer {
 
@@ -118,7 +118,6 @@ private:
 // implementation using PAPI performance counters
 
 #include <papi.h>
-#include <papiStdEventDefs.h>
 
 class Timer {
 
@@ -131,7 +130,7 @@ public:
     void start()
     { 
         state_ = running;
-        if(PAPI_start_counters(Events, nevents)!=PAPI_OK) {
+        if(PAPI_start_counters((int*)Events, nevents)!=PAPI_OK) {
 	  cerr << "Error starting counters\n";
 	  state_=uninitialized;
 	}
@@ -165,8 +164,8 @@ private:
     enum { uninitialized, running, stopped } state_;
 
   static const int nevents=3;
-  static const int Events[nevents] = {PAPI_TOT_CYC, PAPI_TOT_INS, PAPI_RES_STL};
-  static const char* const ivar_="c";
+  static const int Events[nevents];
+  static const char* const ivar_;
 
 
   TinyVector<long_long, nevents> counters_;
