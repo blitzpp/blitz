@@ -131,6 +131,8 @@ AC_ARG_ENABLE(64-bit-dimensions,
   AC_MSG_WARN([Dimensions with > 2^31 elements are not yet implemented])
   AC_DEFINE([FULLY64BIT],[1],[Enable dimensions with > 2^31 elements (NOT IMPLEMENTED)]),AC_MSG_RESULT([no]))
 
+# check for PAPI library
+AC_CHECK_LIB([papi],[main])
 
 # autoconf replacement of bzconfig
 AC_CHECK_CXX_FEATURES
