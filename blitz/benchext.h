@@ -93,6 +93,8 @@ public:
 
     void endBenchmarking();
     double getMflops(unsigned implementation, unsigned parameterNum) const;
+    double getinstrperc(int implementation, int parameterNum) const;
+    double getflopsperc(int implementation, int parameterNum) const;
 
     void saveMatlabGraph(const char* filename, const char* graphType="semilogx") const;
     void savePylabGraph(const char* filename, const char* graphType="semilogx") const;
@@ -111,6 +113,8 @@ protected:
   std::vector<std::string> implementationDescriptions_;
 
   Array<double,2> times_;       // Elapsed time
+  Array<double,2> instr_;       // instructions according to timer
+  Array<double,2> flops_;       // flops according to timer
 
   Array<T_parameter,1> parameters_;
   Array<long,1> iterations_;

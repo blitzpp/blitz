@@ -71,18 +71,19 @@ BenchmarkExt<P_parameter>::BenchmarkExt(const char* name,
       timerconversion_ = 1;
     }
 
+    /*
     // Set up default parameters and iterations
     setNumParameters(19);
 
     // NEEDS_WORK: once pow(X,Y) is supported, can just say
     // parameters_ = pow(10.0, Range(1,20)/4.0);
-
+    
     for (unsigned i=0; i < numParameters_; ++i)
       parameters_(i) = static_cast<P_parameter>(BZ_MATHFN_SCOPE(pow)(10.0, (i+1)/4.0));
 
     iterations_ = 5.0e+5 / parameters_;
     flopsPerIteration_ = parameters_;
-
+    */
     // Set up initial state
     state_ = initializing;
     implementationNumber_ = 0;
@@ -106,6 +107,8 @@ void BenchmarkExt<P_parameter>::setNumParameters(int numParameters)
 
     // Set up timer and Mflops array
     times_.resize(numImplementations_, numParameters_);
+    instr_.resize(numImplementations_, numParameters_);
+    flops_.resize(numImplementations_, numParameters_);
 }
 
 template<typename P_parameter>
@@ -221,6 +224,8 @@ inline void BenchmarkExt<P_parameter>::stop()
     state_ = benchmarkingImplementation;
     
     times_(int(implementationNumber_), int(parameterNumber_)) = timer_.elapsed();
+    instr_(int(implementationNumber_), int(parameterNumber_)) = timer_.instr();
+    flops_(int(implementationNumber_), int(parameterNumber_)) = timer_.flops();
 
     ++parameterNumber_;
 }
@@ -242,6 +247,11 @@ inline void BenchmarkExt<P_parameter>::stopOverhead()
     overheadTimer_.stop();
     times_(int(implementationNumber_), int(parameterNumber_-1)) -= 
         overheadTimer_.elapsed();
+    instr_(int(implementationNumber_), int(parameterNumber_-1)) -= 
+        overheadTimer_.instr();
+    flops_(int(implementationNumber_), int(parameterNumber_-1)) -= 
+        overheadTimer_.flops();
+
     if(times_(int(implementationNumber_), int(parameterNumber_-1))<0)
       cerr << "Error: Timer underflow in benchmark " << implementationDescriptions_[implementationNumber_] << " " << parameters_(parameterNumber_) << endl;
 
@@ -287,6 +297,27 @@ double BenchmarkExt<P_parameter>::getMflops(unsigned implementation,
     BZPRECONDITION(parameterNum < numParameters_);
     return iterations_(parameterNum) * flopsPerIteration_(parameterNum)
       / times_(int(implementation), int(parameterNum)) * timerconversion_;
+}
+
+template<typename P_parameter>
+double BenchmarkExt<P_parameter>::getinstrperc(int implementation,
+					       int parameterNum) const
+{
+    BZPRECONDITION(state_ == done);
+    BZPRECONDITION(implementation < numImplementations_);
+    BZPRECONDITION(parameterNum < numParameters_);
+    return instr_(implementation,parameterNum)/
+      times_(int(implementation), int(parameterNum));
+}
+template<typename P_parameter>
+double BenchmarkExt<P_parameter>::getflopsperc(int implementation,
+					       int parameterNum) const
+{
+    BZPRECONDITION(state_ == done);
+    BZPRECONDITION(implementation < numImplementations_);
+    BZPRECONDITION(parameterNum < numParameters_);
+    return flops_(implementation,parameterNum)/
+      times_(int(implementation), int(parameterNum));
 }
 
 template<typename P_parameter>
@@ -388,6 +419,33 @@ void BenchmarkExt<P_parameter>::savePylabGraph(const char* filename, const char*
 	ofs << "]";
     }
     ofs << "])" << endl << endl;
+#ifdef BZ_HAVE_LIBPAPI
+    // add i/c and flops counters
+    ofs << "ic = array([[ ";
+    for (i=0; i < numParameters_; ++i)
+    {
+        if(i>0) ofs << ", [ ";
+        for (unsigned j=0; j < numImplementations_; ++j)
+        {
+	  ofs << setprecision(12) << getinstrperc(j,i);
+	  if(j<numImplementations_-1) ofs << ", ";
+        }
+	ofs << "]";
+    }
+    ofs << "])" << endl << endl;
+    ofs << "fc = array([[ ";
+    for (i=0; i < numParameters_; ++i)
+    {
+        if(i>0) ofs << ", [ ";
+        for (unsigned j=0; j < numImplementations_; ++j)
+        {
+	  ofs << setprecision(12) << getflopsperc(j,i);
+	  if(j<numImplementations_-1) ofs << ", ";
+        }
+	ofs << "]";
+    }
+    ofs << "])" << endl << endl;
+#endif
 
     ofs << graphType << "(parm,Mf)\ntitle('" << description_ << "')\n"
         << "xlabel('" << parameterDescription_ << "')\n"
