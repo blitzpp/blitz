@@ -145,11 +145,10 @@ public:
         return T_numtype();
     }
 
-  T_tvresult fastRead_tv(int) const;
- // {
- //        BZPRECONDITION(0);
- //        return T_tvresult();
- //    }
+  T_tvresult fastRead_tv(int) const {
+        BZPRECONDITION(0);
+        return T_tvresult();
+    }
 
   /** There are no alignment issues here, so just return true. */
   bool isVectorAligned() const {

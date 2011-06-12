@@ -32,7 +32,7 @@ int main()
 
     BenchmarkExt<int> bench("Lattice QCD Benchmark", 2);
 
-    bench.setRateDescription("Millions of operations/s");
+    //bench.setRateDescription("Millions of operations/s"); \todo removed for now
     bench.beginBenchmarking();
 
     QCDBlitzVersion(bench);

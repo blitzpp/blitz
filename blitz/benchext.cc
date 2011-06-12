@@ -246,11 +246,11 @@ inline void BenchmarkExt<P_parameter>::stopOverhead()
     BZPRECONDITION(state_ == runningOverhead);
     overheadTimer_.stop();
     times_(int(implementationNumber_), int(parameterNumber_-1)) -= 
-        overheadTimer_.elapsed();
+      overheadTimer_.elapsed();
     instr_(int(implementationNumber_), int(parameterNumber_-1)) -= 
-        overheadTimer_.instr();
+      overheadTimer_.instr();
     flops_(int(implementationNumber_), int(parameterNumber_-1)) -= 
-        overheadTimer_.flops();
+      overheadTimer_.flops();
 
     if(times_(int(implementationNumber_), int(parameterNumber_-1))<0)
       cerr << "Error: Timer underflow in benchmark " << implementationDescriptions_[implementationNumber_] << " " << parameters_(parameterNumber_) << endl;

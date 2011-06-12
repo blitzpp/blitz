@@ -119,6 +119,17 @@ public:
 					    test, 
 					    P_result> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+
+  // select tvreturn type
+  typedef typename selectET<typename T_expr::T_tvtypeprop, 
+			    T_numtype,
+			    _bz_FunctorExpr<
+			      T_functor,
+			      typename asExpr<typename T_expr::T_tvresult>::T_expr,
+			      P_result> 
+			    >::T_selected T_tvtypeprop;
+  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
+
   typedef T_numtype T_optype;
 
     typedef T_expr    T_ctorArg1;
@@ -161,6 +172,9 @@ public:
   template<typename T> struct readHelper {
     static T_result fastRead(const T_functor& f, const T_expr& iter, int i) {
       return f(iter.fastRead(i)); };
+    static T_tvresult fastRead_tv(const T_functor& f, const T_expr& iter,
+				  int i) {
+      BZPRECONDITION(0); return T_tvresult(); };
     static T_result indexop(const T_functor& f, const T_expr& iter, int i) {
       return f(iter[i]); };
     static T_result deref(const T_functor& f, const T_expr& iter) {
@@ -188,6 +202,9 @@ public:
     template<typename T> struct readHelper<ETBase<T> > {
       static T_result fastRead(const T_functor& f, const T_expr& iter, int i) {
 	return T_result(f,iter.fastRead(i)); };
+      static T_tvresult fastRead_tv(const T_functor& f, const T_expr& iter, 
+				    int i) {
+	return T_tvresult(f,iter.fastRead_tv(i)); };
       static T_result indexop(const T_functor& f, const T_expr& iter, int i) {
 	return T_result(f,iter[i]); };
       static T_result deref(const T_functor& f, const T_expr& iter) {
@@ -214,6 +231,9 @@ public:
     T_result fastRead(int i) const { 
       return readHelper<T_typeprop>::fastRead(f_, iter_, i); }
 
+    T_tvresult fastRead_tv(int i) const { 
+      return readHelper<T_tvtypeprop>::fastRead_tv(f_, iter_, i); }
+
     T_result operator[](int i) const { 
       return readHelper<T_typeprop>::indexop(f_, iter_, i); }
 
@@ -239,6 +259,9 @@ public:
 					   offset2, dim2); }
 
       // ****** end reading
+
+  bool isVectorAligned() const 
+  { return iter_.isVectorAligned(); }
 
   T_range_result operator()(RectDomain<rank_> d) const
   {
@@ -355,8 +378,20 @@ public:
 			     _bz_FunctorExpr2<T_functor,
 					      typename asExpr<T_unwrapped1>::T_expr, 
 					      typename asExpr<T_unwrapped2>::T_expr, 
-					      P_result> >::T_selected T_typeprop;
+					      T_numtype> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+
+  // select tv return type
+  typedef typename selectET2<typename T_expr1::T_tvtypeprop, 
+			     typename T_expr2::T_tvtypeprop, 
+			     T_numtype,
+			     _bz_FunctorExpr2<T_functor,
+					      typename asExpr<typename T_expr1::T_tvresult>::T_expr,
+					      typename asExpr<typename T_expr2::T_tvresult>::T_expr,
+					      T_numtype> 
+			     >::T_selected T_tvtypeprop;
+  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
+
   typedef T_numtype T_optype;
 
     typedef T_expr1 T_ctorArg1;
@@ -401,6 +436,9 @@ public:
     static T_result fastRead(const T_functor& f, const T_expr1& iter1, 
 			     const T_expr2& iter2, int i) {
       return f(iter1.fastRead(i), iter2.fastRead(i)); }
+    static T_tvresult fastRead_tv(const T_functor& f, const T_expr1& iter1, 
+				  const T_expr2& iter2, int i) {
+      BZPRECONDITION(0); return T_tvresult(); };
     static T_result indexop(const T_functor& f, const T_expr1& iter1, 
 			    const T_expr2& iter2, int i) {
       return f(iter1[i], iter2[i]); };
@@ -437,6 +475,9 @@ public:
       static T_result fastRead(const T_functor& f, const T_expr1& iter1, 
 			       const T_expr2& iter2, int i) {
 	return T_result(f,iter1.fastRead(i), iter2.fastRead(i)); }
+      static T_tvresult fastRead_tv(const T_functor& f, const T_expr1& iter1, 
+				    const T_expr2& iter2, int i) {
+	return T_tvresult(f,iter1.fastRead_tv(i), iter2.fastRead_tv(i)); }
     static T_result indexop(const T_functor& f, const T_expr1& iter1, 
 			    const T_expr2& iter2, int i) {
       return T_result(f,iter1[i], iter2[i]); };
@@ -471,6 +512,9 @@ public:
     T_result fastRead(int i) const { 
       return readHelper<T_typeprop>::fastRead(f_, iter1_, iter2_, i); }
 
+    T_tvresult fastRead_tv(int i) const { 
+      return readHelper<T_tvtypeprop>::fastRead_tv(f_, iter1_, iter2_, i); }
+
     T_result operator[](int i) const { 
       return readHelper<T_typeprop>::indexop(f_, iter1_, iter2_, i); }
 
@@ -502,6 +546,9 @@ public:
   {
     return T_range_result(f_, iter1_(d), iter2_(d));
   }
+
+  bool isVectorAligned() const 
+  { return iter1_.isVectorAligned() && iter2_.isVectorAligned(); }
 
     int ascending(const int rank) const {
         return bounds::compute_ascending(rank, iter1_.ascending(rank),
@@ -687,6 +734,23 @@ public:
 					      typename asExpr<T_unwrapped3>::T_expr, 
 					      T_numtype> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+
+  // select tv return type
+  typedef typename selectET2<typename T_expr1::T_tvtypeprop, 
+			     typename T_expr2::T_tvtypeprop, 
+			     T_numtype, 
+			     char>::T_selected T_tvintermediary;
+  typedef typename selectET2<
+    T_tvintermediary,
+    typename T_expr3::T_tvtypeprop, 
+    T_numtype, 
+    _bz_FunctorExpr3<P_functor,
+		     typename asExpr<typename T_expr1::T_tvresult>::T_expr,
+		     typename asExpr<typename T_expr2::T_tvresult>::T_expr,
+		     typename asExpr<typename T_expr3::T_tvresult>::T_expr,
+		     T_numtype> >::T_selected T_tvtypeprop;
+  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
+
   typedef T_numtype T_optype;
 
     typedef T_expr1 T_ctorArg1;
@@ -742,10 +806,14 @@ public:
 			     int i) {
       return f(iter1.fastRead(i), iter2.fastRead(i), 
 	       iter3.fastRead(i)); }
+    static T_tvresult fastRead_tv(const T_functor& f, const T_expr1& iter1, 
+				  const T_expr2& iter2, const T_expr3& iter3, 
+				  int i) {
+      BZPRECONDITION(0); return T_tvresult(); }
     static T_result indexop(const T_functor& f, const T_expr1& iter1, 
 			    const T_expr2& iter2, const T_expr3& iter3, 
 			    int i) {
-      return f(iter1[i], iter2[i], iter3[i]); };
+      return f(iter1[i], iter2[i], iter3[i]); }
     static T_result deref(const T_functor& f, const T_expr1& iter1, 
 			  const T_expr2& iter2, const T_expr3& iter3) {
       return f(*iter1, *iter2, *iter3); };
@@ -784,6 +852,11 @@ public:
 			     int i) {
       return T_result(f, iter1.fastRead(i), iter2.fastRead(i), 
 		      iter3.fastRead(i)); }
+    static T_tvresult fastRead_tv(const T_functor& f, const T_expr1& iter1, 
+				  const T_expr2& iter2, const T_expr3& iter3, 
+				  int i) {
+      return T_tvresult(f, iter1.fastRead_tv(i), iter2.fastRead_tv(i), 
+			iter3.fastRead_tv(i)); }
     static T_result indexop(const T_functor& f, const T_expr1& iter1, 
 			    const T_expr2& iter2, const T_expr3& iter3, 
 			    int i) {
@@ -822,6 +895,10 @@ public:
     T_result fastRead(int i) const { 
       return readHelper<T_typeprop>::fastRead(f_, iter1_, iter2_, iter3_, i); }
 
+    T_tvresult fastRead_tv(int i) const { 
+      return readHelper<T_tvtypeprop>::fastRead_tv(f_, iter1_, 
+						   iter2_, iter3_, i); }
+
     T_result operator[](int i) const { 
       return readHelper<T_typeprop>::indexop(f_, iter1_, iter2_, iter3_, i); }
 
@@ -849,6 +926,9 @@ public:
 
       // ****** end reading
   
+  bool isVectorAligned() const 
+  { return iter1_.isVectorAligned() && iter2_.isVectorAligned() &&
+      iter3_.isVectorAligned(); }
 
   T_range_result operator()(RectDomain<rank_> d) const
   {

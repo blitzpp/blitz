@@ -32,16 +32,17 @@
 
 using namespace blitz;
 
-typedef TinyVector<double,2> tv2;
-typedef TinyVector<double,4> tv3;
+typedef double numtype;
+typedef TinyVector<numtype,2> tv2;
+typedef TinyVector<numtype,4> tv3;
 typedef TinyVector<int,3> it;
-typedef Array<double,1> a1;
-typedef Array<double,2> a2;
-typedef Array<TinyVector<double,2>,2> atv2;
-typedef Array<double,3> a3;
-typedef Array<TinyVector<double,3>,3> atv3;
-typedef Array<TinyMatrix<double,3,3>,3> atm3;
-typedef Array<TinyMatrix<double,2,2>,2> atm2;
+typedef Array<numtype,1> a1;
+typedef Array<numtype,2> a2;
+typedef Array<TinyVector<numtype,2>,2> atv2;
+typedef Array<numtype,3> a3;
+typedef Array<TinyVector<numtype,3>,3> atv3;
+typedef Array<TinyMatrix<numtype,3,3>,3> atm3;
+typedef Array<TinyMatrix<numtype,2,2>,2> atm2;
 
 //tv3 fill() { return tv3(1,3,1,3); }
 
@@ -58,10 +59,9 @@ int main(int, char**)
   b=1.,2.,3.,4.,5.,6.,7.,8.;
   c=7.,6.,.5,293.,4.,9.,0.,1.0;
 
-
   // const int N=100;
-  // const double x=0.2354;
-  // double s=0;
+  // const numtype x=0.2354;
+  // numtype s=0;
   // for(int i=0;i<N;++i) {
   //   asm("nop;nop;nop;");
   //   a= a + x*c;
@@ -70,9 +70,12 @@ int main(int, char**)
   // }
   // cout << a << endl;
   // cout << s << endl;
-  simdTypes<double>::vecType v;
 
-  v=(b*c).fastRead_tv(0);
-  a = b*c;
+  simdTypes<numtype>::vecType v,w,z;
+  w=1,2; z=2,3;
+  //v=w*z;
+  //v=(b*c).fastRead_tv(0);
+
+  a=2*b+c;
   cout << a << endl;
 }

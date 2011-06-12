@@ -265,12 +265,34 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
      }
  }
 
- template<typename T_dest, typename T_expr, typename T_update>
- inline void
- _bz_evaluateWithStackTraversal1(T_dest& dest, T_expr expr, T_update)
- {
+/** This class performs the vectorized update through the update()
+    method. It is a class because it is specialized to do nothing for
+    instances where the simd vector width is 1. This avoids tricky
+    infinite template recursions on multicomponent containers. */
+template<typename T_numtype, typename T_expr, typename T_update, int N>
+struct chunked_updater {
+  typedef typename T_update::template updateCast<typename simdTypes<T_numtype>::vecType, typename T_expr::T_tvresult>::T_updater T_tvupdater;
+
+  static inline void update(T_numtype* data, T_expr expr, int i) {  
+    T_tvupdater::update(*reinterpret_cast<typename simdTypes<T_numtype>::vecType*>(data+i), expr.fastRead_tv(i));
+  };
+};
+
+/** specialization ensures we don't try to instantiate updates for
+    types with a vecWidth of 1. */
+template<typename T_numtype, typename T_expr, typename T_update>
+struct chunked_updater<T_numtype, T_expr, T_update, 1> {
+  static inline void update(T_numtype* data, T_expr expr, int i)
+  {
+    BZPRECONDITION(0);
+  };
+};
+
+template<typename T_dest, typename T_expr, typename T_update>
+inline void
+_bz_evaluateWithStackTraversal1(T_dest& dest, T_expr expr, T_update)
+{
    typedef typename T_dest::T_numtype T_numtype;
-   typedef typename T_update::template updateCast<typename simdTypes<typename T_dest::T_numtype>::vecType, typename T_expr::T_tvresult>::T_updater T_tvupdater;
 
  #ifdef BZ_DEBUG_TRAVERSE
      BZ_DEBUG_MESSAGE("Array<" << BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_numtype)
@@ -316,15 +338,17 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
 	 if (commonStride == 1)
 	 {
   #ifndef BZ_ARRAY_STACK_TRAVERSAL_UNROLL
-	   const int dest_width =
-	     simdTypes<typename T_dest::T_numtype>::vecWidth;
+	   const int dest_width = simdTypes<T_numtype>::vecWidth;
 	   // if expressions are vector aligned we use the tv loop
 	   if( (dest_width >1) && (ubound>dest_width) && 
 	       (simdTypes<typename T_dest::T_numtype>::vecWidth ==
 		simdTypes<typename T_expr::T_numtype>::vecWidth) &&
 	       dest.isVectorAligned() && expr.isVectorAligned() ) {
+	     asm("nop;nop;nop;");
 	     for (int i=0; i < ubound; i+=dest_width)
-	       T_tvupdater::update(*reinterpret_cast<typename simdTypes<typename T_dest::T_numtype>::vecType*>(data+i), expr.fastRead_tv(i));
+#pragma vector aligned
+	       chunked_updater<T_numtype, T_expr, T_update, simdTypes<T_numtype>::vecWidth>::update(data, expr, i);
+	     asm("nop;nop;nop;");
 	   }
 	   else
 	     // if not aligned, not wide enough loop, or not more than

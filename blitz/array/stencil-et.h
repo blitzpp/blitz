@@ -102,6 +102,11 @@ class _bz_StencilExpr {
   typedef P_result T_numtype;
   typedef T_expr T_ctorArg1;
   typedef int    T_ctorArg2;    // dummy
+
+  // tv return type should be a dummy because we can't vectorize
+  // stencils this way
+  typedef typename asExpr<T_numtype>::T_expr T_tvtypeprop;
+  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
   
   static const int 
     numArrayOperands = T_expr::numArrayOperands,
@@ -151,6 +156,13 @@ class _bz_StencilExpr {
     }
 
   //T_numtype first_value() const { return iter_(iter_.lbound()); }
+
+  T_numtype fastRead_tv(int i) const {
+    BZPRECONDITION(0); return T_numtype(); }
+
+  /** Vectorization doesn't make sense for stencils, so we say so. */
+  bool isVectorAligned() const {
+    return false; }
 
   void push(int position)
   {
@@ -234,6 +246,11 @@ class _bz_StencilExpr2 {
   typedef P_result T_numtype;
   typedef T_expr1 T_ctorArg1;
   typedef T_expr2 T_ctorArg2;
+
+  // tv return type should be a dummy because we can't vectorize
+  // stencils this way
+  typedef typename asExpr<T_numtype>::T_expr T_tvtypeprop;
+  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
   
   static const int 
   numArrayOperands = T_expr1::numArrayOperands
@@ -290,6 +307,10 @@ class _bz_StencilExpr2 {
     }
     return RectDomain<rank_>(lb,ub);
   }
+
+  /** Vectorization doesn't make sense for stencils, so we say so. */
+  bool isVectorAligned() const {
+    return false; }
 
     void push(int position)
     { 

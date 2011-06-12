@@ -82,6 +82,9 @@ public:
         return t2_ - t1_;
     }
 
+  long long instr() const { return 0; };
+  long long flops() const { return 0; };
+
   string indep_var() const { return ivar_; };
 
 private:
@@ -104,7 +107,7 @@ private:
 
     enum { uninitialized, running, stopped } state_;
 
-  static const char* const ivar_="us";
+  static const char* const ivar_;
 
 #ifdef BZ_HAVE_RUSAGE
     struct rusage resourceUsage_;
@@ -146,14 +149,14 @@ public:
   // since we don't know the clock frequency of the processor, we
   // instead output "flops/clock cycle" which seems like a better
   // measure of code performance and not machine performance.
-    long_long elapsed() const
+    long long elapsed() const
     {
         BZPRECONDITION(state_ == stopped);
         return counters_[0];
     }
 
-  long_long instr() const { return counters_[1]; };
-  long_long flops() const { return counters_[2]; };
+  long long instr() const { return counters_[1]; };
+  long long flops() const { return counters_[2]; };
 
   string indep_var() const { return ivar_; };
 
@@ -168,7 +171,7 @@ private:
   static const char* const ivar_;
 
 
-  TinyVector<long_long, nevents> counters_;
+  TinyVector<long long, nevents> counters_;
 };
 
 #endif

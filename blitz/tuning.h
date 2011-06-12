@@ -90,7 +90,7 @@
  #undef BZ_ARRAY_STACK_TRAVERSAL_UNROLL
  // rough empirical value -- seems unlikely anyone would use larger
  // tinyvectors, but...
- #define BZ_TV_EVALUATE_UNROLL_LENGTH 26
+//#define BZ_TV_EVALUATE_UNROLL_LENGTH 26
 #else // need this since icpc also defines __GNUC__
 #ifdef __GNUC__
  // The egcs compiler does a good job of loop unrolling, if

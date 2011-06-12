@@ -7,12 +7,14 @@
 #include <blitz/rand-uniform.h>
 #include <blitz/benchext.h>
 
+BZ_NAMESPACE(blitz)
+extern void sink();
+BZ_NAMESPACE_END
+
 BZ_USING_NAMESPACE(blitz)
 
 void VectorVersion(BenchmarkExt<int>& bench);
 void ArrayVersion(BenchmarkExt<int>& bench);
-
-extern void sink();
 
 int dontActuallyRunBenchmark()
 {
@@ -30,7 +32,7 @@ int main()
 
     const int numSizes = 26;
     bench.setNumParameters(numSizes);
-    bench.setRateDescription("Mflops/s");
+    //bench.setRateDescription("Mflops/s"); removed
 
     Vector<int> parameters(numSizes);
     Vector<long> iters(numSizes);

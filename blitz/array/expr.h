@@ -495,7 +495,9 @@ public:
   // select tvreturn type
   typedef typename selectET<typename T_expr::T_tvtypeprop, 
 			    T_numtype,
-			    _bz_ArrayExprUnaryOp<typename T_expr::T_tvresult, T_op> 
+			    _bz_ArrayExprUnaryOp<
+			      typename asExpr<typename T_expr::T_tvresult>::T_expr,
+			      T_op> 
 			    >::T_selected T_tvtypeprop;
   typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
 
@@ -548,7 +550,7 @@ public:
     static T_result fastRead(const T_expr& iter, int i) {
       return (T_op::apply(iter.fastRead(i))); };
     static T_tvresult fastRead_tv(const T_expr& iter, int i) {
-      BZPRECONDITION(0); return (T_op::apply(iter.fastRead(i))); };
+      BZPRECONDITION(0); return T_tvresult(); };
     static T_result indexop(const T_expr& iter, int i) {
       return (T_op::apply(iter[i])); };
     static T_result deref(const T_expr& iter) {
@@ -773,8 +775,8 @@ public:
   typedef typename selectET2<typename T_expr1::T_tvtypeprop, 
 			     typename T_expr2::T_tvtypeprop, 
 			     T_numtype,
-			     _bz_ArrayExprBinaryOp<typename T_expr1::T_tvresult,
-						   typename T_expr2::T_tvresult,
+			     _bz_ArrayExprBinaryOp<typename asExpr<typename T_expr1::T_tvresult>::T_expr,
+						   typename asExpr<typename T_expr2::T_tvresult>::T_expr,
 						   T_op> 
 			     >::T_selected T_tvtypeprop;
   typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
@@ -820,8 +822,7 @@ public:
       return T_op::apply(iter1.fastRead(i), iter2.fastRead(i)); }
     static T_tvresult fastRead_tv(const T_expr1& iter1, const T_expr2& iter2,
 				  int i) {
-      BZPRECONDITION(0);
-      return T_op::apply(iter1.fastRead_tv(i), iter2.fastRead_tv(i)); }
+      BZPRECONDITION(0); return T_tvresult(); };
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, int i) {
       return T_op::apply(iter1[i], iter2[i]); };
     static T_result deref(const T_expr1& iter1, const T_expr2& iter2) {
@@ -1086,9 +1087,12 @@ public:
     typedef _bz_typename T_op::T_numtype T_numtype;
 
   // select return type
-  typedef typename unwrapET<typename T_expr1::T_result>::T_unwrapped T_unwrapped1;
-  typedef typename unwrapET<typename T_expr2::T_result>::T_unwrapped T_unwrapped2;
-  typedef typename unwrapET<typename T_expr3::T_result>::T_unwrapped T_unwrapped3;
+  typedef typename unwrapET<
+    typename T_expr1::T_result>::T_unwrapped T_unwrapped1;
+  typedef typename unwrapET<
+    typename T_expr2::T_result>::T_unwrapped T_unwrapped2;
+  typedef typename unwrapET<
+    typename T_expr3::T_result>::T_unwrapped T_unwrapped3;
   typedef typename selectET2<typename T_expr1::T_typeprop, 
 			     typename T_expr2::T_typeprop, 
 			     T_numtype, 
@@ -1103,17 +1107,23 @@ public:
 			   typename asExpr<T_unwrapped3>::T_expr, 
 			   T_op> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
-    
+
   // select tv return type
-  typedef typename unwrapET<
-    typename selectET2<T_intermediary,
-		       typename T_expr3::T_typeprop, 
-		       T_numtype, 
-		       _bz_ArrayExprTernaryOp<typename T_expr1::T_tvresult,
-					      typename T_expr2::T_tvresult,
-					      typename T_expr3::T_tvresult,
-					      T_op> >::T_selected>::T_unwrapped
-  T_tvresult;
+  typedef typename selectET2<typename T_expr1::T_tvtypeprop, 
+			     typename T_expr2::T_tvtypeprop, 
+			     T_numtype, 
+			     char>::T_selected T_tvintermediary;
+  typedef typename selectET2<
+    T_tvintermediary,
+    typename T_expr3::T_tvtypeprop, 
+    T_numtype, 
+    _bz_ArrayExprTernaryOp<typename asExpr<typename T_expr1::T_tvresult>::T_expr,
+			   typename asExpr<typename T_expr2::T_tvresult>::T_expr,
+			   typename asExpr<typename T_expr3::T_tvresult>::T_expr,
+			   T_op
+			   > 
+    >::T_selected T_tvtypeprop;
+  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
 
   typedef typename T_op::T_numtype T_optype;
 
@@ -1163,6 +1173,9 @@ public:
 			     const T_expr3& iter3, int i) {
       return T_op::apply(iter1.fastRead(i), iter2.fastRead(i), 
 			 iter3.fastRead(i)); }
+    static T_tvresult fastRead_tv(const T_expr1& iter1, const T_expr2& iter2, 
+				  const T_expr3& iter3, int i) {
+      BZPRECONDITION(0); return T_tvresult(); }
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, 
 			    const T_expr3& iter3, int i) {
       return T_op::apply(iter1[i], iter2[i], iter3[i]); };
@@ -1202,6 +1215,10 @@ public:
 			     const T_expr3& iter3, int i) {
       return T_result(iter1.fastRead(i), iter2.fastRead(i), 
 		      iter3.fastRead(i)); }
+    static T_tvresult fastRead_tv(const T_expr1& iter1, const T_expr2& iter2, 
+				  const T_expr3& iter3, int i) {
+      return T_tvresult(iter1.fastRead_tv(i), iter2.fastRead_tv(i), 
+			iter3.fastRead_tv(i)); }
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, 
 			    const T_expr3& iter3, int i) {
       return T_result(iter1[i], iter2[i], iter3[i]); };
@@ -1238,6 +1255,9 @@ public:
     T_result fastRead(int i) const { 
       return readHelper<T_typeprop>::fastRead(iter1_, iter2_, iter3_, i); }
 
+    T_tvresult fastRead_tv(int i) const { 
+      return readHelper<T_tvtypeprop>::fastRead_tv(iter1_, iter2_, iter3_, i); }
+
     T_result operator[](int i) const { 
       return readHelper<T_typeprop>::indexop(iter1_, iter2_, iter3_, i); }
 
@@ -1262,13 +1282,6 @@ public:
     T_result shift(int offset1, int dim1,int offset2, int dim2) const {
       return readHelper<T_typeprop>::shift(iter1_, iter2_, iter3_,
 					   offset1, dim1, offset2, dim2); }
-
-    /** Return a TinyVector view of the expression at i. This does not
-	need to be in the readHelper selector, because tvresult is
-	always a TinyVector type. */
-    T_tvresult fastRead_tv(int i) const
-    { return T_tvresult(iter1_.fastRead_tv(i), iter2_.fastRead_tv(i),
-			iter3_.fastRead_tv(i)); }
 
 
       // ****** end reading
@@ -1497,23 +1510,41 @@ public:
 			     T_numtype, 
 			     char>::T_selected T_intermediary1;
   typedef typename selectET2<T_intermediary1,
-			     typename T_expr2::T_typeprop, 
+			     typename T_expr3::T_typeprop, 
 			     T_numtype, 
 			     char>::T_selected T_intermediary2;
-  typedef typename selectET2<T_intermediary2,
-			     typename T_expr4::T_typeprop, 
-			     T_numtype, 
-			     _bz_ArrayExprQuaternaryOp<typename asExpr<T_unwrapped1>::T_expr, 
-						       typename asExpr<T_unwrapped2>::T_expr, 
-						       typename asExpr<T_unwrapped3>::T_expr, 
-						       typename asExpr<T_unwrapped4>::T_expr, 
-						       T_op> >::T_selected T_typeprop;
+  typedef typename selectET2<
+    T_intermediary2,
+    typename T_expr4::T_typeprop, 
+    T_numtype, 
+    _bz_ArrayExprQuaternaryOp<typename asExpr<T_unwrapped1>::T_expr, 
+			      typename asExpr<T_unwrapped2>::T_expr, 
+			      typename asExpr<T_unwrapped3>::T_expr, 
+			      typename asExpr<T_unwrapped4>::T_expr, 
+			      T_op> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
-  typedef _bz_ArrayExprQuaternaryOp<typename T_expr1::T_tvresult, 
-				    typename T_expr2::T_tvresult, 
-				    typename T_expr3::T_tvresult, 
-				    typename T_expr4::T_tvresult, 
-				    T_op> T_tvresult;
+    
+  // select tv return type
+  typedef typename selectET2<typename T_expr1::T_tvtypeprop, 
+			     typename T_expr2::T_tvtypeprop, 
+			     T_numtype, 
+			     char>::T_selected T_tvintermediary1;
+  typedef typename selectET2<T_tvintermediary1,
+			     typename T_expr3::T_tvtypeprop, 
+			     T_numtype, 
+			     char>::T_selected T_tvintermediary2;
+  typedef typename selectET2<
+    T_tvintermediary2,
+    typename T_expr4::T_tvtypeprop, 
+    T_numtype, 
+    _bz_ArrayExprQuaternaryOp<
+      typename asExpr<typename T_expr1::T_tvresult>::T_expr,
+      typename asExpr<typename T_expr2::T_tvresult>::T_expr,
+      typename asExpr<typename T_expr3::T_tvresult>::T_expr,
+      typename asExpr<typename T_expr4::T_tvresult>::T_expr,
+      T_op> >::T_selected T_tvtypeprop;
+  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
+
   typedef typename T_op::T_numtype T_optype;
 
     typedef T_expr1 T_ctorArg1;
@@ -1572,6 +1603,10 @@ public:
 			     int i) {
       return T_op::apply(iter1.fastRead(i), iter2.fastRead(i), 
 			 iter3.fastRead(i), iter4.fastRead(i)); }
+    static T_result fastRead_tv(const T_expr1& iter1, const T_expr2& iter2, 
+				const T_expr3& iter3, const T_expr4& iter4, 
+				int i) {
+      BZPRECONDITION(0); return T_tvresult(); };
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, 
 			    const T_expr3& iter3, const T_expr4& iter4, 
 			    int i) {
@@ -1613,7 +1648,13 @@ public:
     static T_result fastRead(const T_expr1& iter1, const T_expr2& iter2, 
 			     const T_expr3& iter3, const T_expr4& iter4, 
 			     int i) {
-	return T_result(iter1.fastRead(i), iter2.fastRead(i)); }
+      return T_result(iter1.fastRead(i), iter2.fastRead(i),
+		      iter3.fastRead(i), iter4.fastRead(i)); }
+    static T_tvresult fastRead_tv(const T_expr1& iter1, const T_expr2& iter2, 
+				  const T_expr3& iter3, const T_expr4& iter4, 
+				  int i) {
+      return T_tvresult(iter1.fastRead_tv(i), iter2.fastRead_tv(i),
+			iter3.fastRead_tv(i), iter4.fastRead_tv(i)); }
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, 
 			    const T_expr3& iter3, const T_expr4& iter4,
 			    int i) {
@@ -1654,6 +1695,10 @@ public:
       return readHelper<T_typeprop>::fastRead(iter1_, iter2_, 
 					      iter3_, iter4_, i); }
 
+    T_tvresult fastRead_tv(int i) const { 
+      return readHelper<T_tvtypeprop>::fastRead_tv(iter1_, iter2_, 
+						   iter3_, iter4_, i); }
+
     T_result operator[](int i) const { 
       return readHelper<T_typeprop>::indexop(iter1_, iter2_, 
 					     iter3_, iter4_, i); }
@@ -1682,13 +1727,6 @@ public:
     T_result shift(int offset1, int dim1,int offset2, int dim2) const {
       return readHelper<T_typeprop>::shift(iter1_, iter2_, iter3_, iter4_, 
 					   offset1, dim1, offset2, dim2); }
-
-    /** Return a TinyVector view of the expression at i. This does not
-	need to be in the readHelper selector, because tvresult is
-	always a TinyVector type. */
-    T_tvresult fastRead_tv(int i) const
-    { return T_tvresult(iter1_.fastRead_tv(i), iter2_.fastRead_tv(i),
-			iter3_.fastRead_tv(i), iter4_.fastRead_tv(i)); }
 
       // ****** end reading
 
@@ -2013,7 +2051,7 @@ public:
   const T_numtype& fastRead(int) const
     { return value_; }
 
-  const T_tvresult& fastRead_tv(int) const
+  const T_numtype& fastRead_tv(int) const
     { return value_; }
 
   bool isVectorAligned() const 

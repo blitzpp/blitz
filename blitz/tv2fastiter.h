@@ -63,8 +63,8 @@ public:
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
 
   /** Result type for fastRead_tv can't be a TV type, because that leads to infinite template instantiation recursion. */
-  typedef T_typeprop T_tvtypeprop;
-  typedef T_result T_tvresult;
+  typedef typename asExpr<T_optype>::T_expr T_tvtypeprop;
+  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
 
   typedef TinyVector<T_numtype, N_length> T_vector;
   typedef FastTV2IteratorBase<P_numtype, N_length, P_arraytype> T_iterator;
@@ -149,8 +149,8 @@ public:
     T_result fastRead(sizeType i) const
   { return array_.fastRead(i); }
 
-    T_tvresult fastRead_tv(sizeType i) const
-  { BZPRECONDITION(0); return array_.fastRead(i); }
+    T_numtype fastRead_tv(sizeType i) const
+  { BZPRECONDITION(0); return T_numtype(); }
 
   /** Return true, since TinyVectors are simd aligned by
       construction. */

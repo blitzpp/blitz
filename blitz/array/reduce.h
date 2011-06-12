@@ -84,6 +84,12 @@ public:
 			    T_numtype,
 			    _bz_ArrayExprReduce<test, N_index, T_reduction> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+
+  // tv return type should be a dummy because we can't vectorize
+  // reductions this way
+  typedef typename asExpr<T_numtype>::T_expr T_tvtypeprop;
+  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
+
   typedef T_numtype T_optype;
 
     typedef T_expr      T_ctorArg1;
@@ -190,6 +196,17 @@ public:
       BZPRECHECK(0,"Can't use stack iteration on a reduction."); return T_numtype(); }
     T_numtype fastRead(int)   const { 
       BZPRECHECK(0,"Can't use stack iteration on a reduction."); return T_numtype(); }
+
+    T_numtype fastRead_tv(int)   const { 
+      BZPRECHECK(0,"Can't use stack iteration on a reduction."); 
+      return T_numtype();//tvresult(iter_, reduce_); 
+    }
+
+    /** Determining whether the resulting expression is aligned is
+	difficult, so to be safe we say no. It shouldn't be attempted
+	anyway, though. */
+    bool isVectorAligned() const {
+      return false; }
 
     // don't know how to define these, so stencil expressions won't work
     T_result shift(int offset, int dim) const

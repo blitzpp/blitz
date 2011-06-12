@@ -268,6 +268,11 @@ public:
   const T_numtype& fastRead(sizeType i) const
     { return data_[i]; }
 
+  /** Return true, since TinyMatrices are simd aligned by
+      construction. */
+  bool isVectorAligned() const 
+  { return true; }
+
     // T_reference getRef()
     // { return T_reference((T_numtype*)data_); }
 
@@ -315,7 +320,7 @@ public:
 
 
 protected:
-    T_numtype data_[N_rows * N_columns];
+    BZ_ALIGN_VARIABLE(T_numtype, data_[N_rows * N_columns], BZ_SIMD_WIDTH)
 };
 
 BZ_NAMESPACE_END

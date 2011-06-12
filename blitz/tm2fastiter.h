@@ -59,6 +59,12 @@ public:
   typedef typename asET<T_numtype>::T_wrapped T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
 
+  /** Result type for fastRead_tv can't be a TV type, because that
+      leads to infinite template instantiation recursion. Tinymatrix
+      expressions should be suitably vectorized anyway. */
+  typedef typename asExpr<T_optype>::T_expr T_tvtypeprop;
+  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
+
   typedef TinyMatrix<T_numtype, N_rows, N_columns> T_matrix;
   typedef FastTM2IteratorBase<P_numtype, N_rows, N_columns, P_arraytype> T_iterator;
     typedef const T_matrix& T_ctorArg1;
@@ -145,6 +151,15 @@ public:
 
     T_result fastRead(sizeType i) const
   { return data_[i]; }
+
+    T_numtype fastRead_tv(sizeType i) const
+  { BZPRECONDITION(0); return T_numtype(); }
+
+  /** Return true, since TinyMatrices are simd aligned by
+      construction. (It doesn't matter since we didn't enable the
+      tvresult machineray anyway. */
+  bool isVectorAligned() const 
+  { return true; }
 
   static int suggestStride(int r) 
     { return T_matrix::stride(r); }
