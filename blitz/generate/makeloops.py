@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/usr/bin/env python
 
 # python version of the makeloops.cpp that generates the benchmark
 # loops.
@@ -206,6 +206,10 @@ cpp_skeleton = """
 #include <valarray>
 #endif
 
+BZ_NAMESPACE(blitz)
+extern void sink();
+BZ_NAMESPACE_END
+
 BZ_USING_NAMESPACE(blitz)
 BZ_USING_NAMESPACE(std)
 
@@ -241,8 +245,6 @@ void F90Version(BenchmarkExt<int>& bench#scalarargdecl#);
 void ValarrayVersion(BenchmarkExt<int>& bench#scalarargdecl#);
 #endif
 
-extern void sink();
-
 const int numSizes = 20;
 const int Nmax=1<<(numSizes-1);
 const int tvNmax=7;
@@ -268,7 +270,7 @@ int main()
     for (int i=0; i < numSizes; ++i)
     {
       parameters(i) = Nmax>>i;
-      iters(i) = 50000000L * (parameters(i)<4 ? 4/parameters(i) :1) / parameters(i);
+      iters(i) = 50000000L / parameters(i);
 	
         if (iters(i) < 2)
             iters(i) = 2;
@@ -325,27 +327,23 @@ void ArrayVersion(BenchmarkExt<int>& bench#scalarargdecl#)
     while (!bench.doneImplementationBenchmark())
     {
         int N = bench.getParameter();
-        cout << "Array<T,1>: N = " << N << endl;
-
         long iters = bench.getIterations();
+
+        cout << "Array<T,1>: N = " << N << endl;
 
 #arraydeclandfill#
 
         bench.start();
         for (long i=0; i < iters; ++i)
         {
-	  asm("nop;nop;");
             #looparrayexpr#;
-	  asm("nop;nop;");
             sink();
         }
         bench.stop();
 
         bench.startOverhead();
         for (long i=0; i < iters; ++i) {
-	  asm("nop;nop;");
             sink();
-	  asm("nop;nop;");
 	}
 
         bench.stopOverhead();
@@ -359,8 +357,9 @@ template<int N>
 void TinyVectorVersion(BenchmarkExt<int>& bench#scalarargdecl#)
 {
         cout << "Tinyvector<T, " << N << ">" << endl;
-	bench.getParameter();
-
+        const int sz = bench.getParameter();
+        assert(N==sz);
+                           
         long iters = bench.getIterations();
 
 #tvdeclandfill#
@@ -368,18 +367,14 @@ void TinyVectorVersion(BenchmarkExt<int>& bench#scalarargdecl#)
         bench.start();
         for (long i=0; i < iters; ++i)
         {
-	  asm("nop;nop;");
             #looparrayexpr#;
-	  asm("nop;nop;");
             sink();
         }
         bench.stop();
 
         bench.startOverhead();
         for (long i=0; i < iters; ++i) {
-	  asm("nop;nop;");
             sink();
-	  asm("nop;nop;");
 	}
         bench.stopOverhead();
 
@@ -426,18 +421,14 @@ void ValarrayVersion(BenchmarkExt<int>& bench#scalarargdecl#)
         bench.start();
         for (long i=0; i < iters; ++i)
         {
-	  asm("nop;nop;");
             #looparrayexpr#;
-	  asm("nop;nop;");
             sink();
         }
         bench.stop();
 
         bench.startOverhead();
         for (long i=0; i < iters; ++i) {
-	  asm("nop;nop;");
 	  sink();
-	  asm("nop;nop;");
 	}
         bench.stopOverhead();
     }
