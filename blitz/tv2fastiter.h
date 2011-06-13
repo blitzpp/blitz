@@ -62,8 +62,10 @@ public:
   typedef typename asET<T_numtype>::T_wrapped T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
 
-  /** Result type for fastRead_tv can't be a TV type, because that leads to infinite template instantiation recursion. */
-  typedef typename asExpr<T_optype>::T_expr T_tvtypeprop;
+  /** Result type for fastRead_tv is a FastTVIterator. This is only
+      used for mixed TV/Array expressions. */
+  typedef ETBase<FastTV2Iterator<T_numtype, 
+				 simdTypes<T_numtype>::vecWidth> > T_tvtypeprop;
   typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
 
   typedef TinyVector<T_numtype, N_length> T_vector;
@@ -149,8 +151,9 @@ public:
     T_result fastRead(sizeType i) const
   { return array_.fastRead(i); }
 
-    T_numtype fastRead_tv(sizeType i) const
-  { BZPRECONDITION(0); return T_numtype(); }
+  T_tvresult fastRead_tv(sizeType i) const 
+  { BZASSERT(i%simdTypes<T_numtype>::vecWidth==0);
+    return T_tvresult(*reinterpret_cast<const typename simdTypes<T_numtype>::vecType*>(array_.data()+i)); }
 
   /** Return true, since TinyVectors are simd aligned by
       construction. */

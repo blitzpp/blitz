@@ -59,10 +59,10 @@ public:
   typedef typename asET<T_numtype>::T_wrapped T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
 
-  /** Result type for fastRead_tv can't be a TV type, because that
-      leads to infinite template instantiation recursion. Tinymatrix
-      expressions should be suitably vectorized anyway. */
-  typedef typename asExpr<T_optype>::T_expr T_tvtypeprop;
+  /** Result type for fastRead_tv is a FastTVIterator. This should
+      only be used for mixed TM/Array expressions. */
+  typedef ETBase<FastTV2Iterator<T_numtype, 
+				 simdTypes<T_numtype>::vecWidth> > T_tvtypeprop;
   typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
 
   typedef TinyMatrix<T_numtype, N_rows, N_columns> T_matrix;
@@ -150,16 +150,18 @@ public:
     { return data_[i * stride_]; }
 
     T_result fastRead(sizeType i) const
-  { return data_[i]; }
+  { return array_.fastRead(i); }
 
-    T_numtype fastRead_tv(sizeType i) const
-  { BZPRECONDITION(0); return T_numtype(); }
+    T_tvresult fastRead_tv(sizeType i) const
+  { BZASSERT(i%simdTypes<T_numtype>::vecWidth==0);
+    return T_tvresult(*reinterpret_cast<const typename simdTypes<T_numtype>::vecType*>(array_.data()+i)); }
 
-  /** Return true, since TinyMatrices are simd aligned by
-      construction. (It doesn't matter since we didn't enable the
-      tvresult machineray anyway. */
+  /** Return true if the data pointer is simd aligned. We just check
+      that the offset of data_ from the array data() by an integral
+      amount, since the TinyMatrix itself is aligned by
+      construction. */
   bool isVectorAligned() const 
-  { return true; }
+  { return (array_.data()-data_)%simdTypes<T_numtype>::vecWidth == 0; }
 
   static int suggestStride(int r) 
     { return T_matrix::stride(r); }

@@ -263,11 +263,11 @@ public:
     _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_matrix>::T_expr, N0, N1> >
     operator()(IndexPlaceholder<N0>, IndexPlaceholder<N1>) const;
 
-  // must return reference so the iterator can turn it into an
-  // iterator for the contained in case we have a multicomponent.
+  /** Fastread must return reference so the iterator can turn it into an
+      iterator for the contained in case we have a multicomponent. */
   const T_numtype& fastRead(sizeType i) const
-    { return data_[i]; }
-
+  { return data_[i]; }
+  
   /** Return true, since TinyMatrices are simd aligned by
       construction. */
   bool isVectorAligned() const 
