@@ -41,6 +41,11 @@ loops=[
     ("loop25", ("x","a","b","c","y"), ("u","v","w"), ("double", 8), 6,
      "$x = u*$b; $y = v*$b + w*$a + u*$c"),
     ("loop36", ("x","e"),(), ("double", 8), 1, "$x = exp($e)"),
+    # loops added by Patrik to specifically test different assignments
+    # and very large expressions
+    ("loop100",("a","b","c","d","x"),("u","v","w","z"),("double",8),18,
+     "$x=(1.0-$c*$c)/((4*w)*sin(1.0+$c*$c-2*v*$c))*$a*$b*u*exp(-z*$d)"),
+    #(pow substituted for sin since it's ** in f77)
 # and loops with floats to test vectorization impact
     ("floop1", ("x","y"),(), ("float", 4), 1, "$x = sqrt($y)"),
     ("floop2", ("x","y"),("u"), ("float", 4), 1, "$x = $y/u"),
@@ -78,7 +83,7 @@ loops=[
     ("floop36", ("x","e"),(), ("float", 4), 1, "$x = exp($e)")
 ]
 
-# handy access functions for readibility
+# handy access functions for readability
 def loopname(loop):
     return loop[0]
 def looparrays(loop):
@@ -156,7 +161,11 @@ def genf77(loop):
     f77expr = loopexpr(loop)
     for n in looparrays(loop):
         f77expr=f77expr.replace("$%s"%n,"%s(i)"%n)
-
+    # see if we must continue line
+    maxlen=60
+    if len(f77expr)>maxlen:
+        f77expr=f77expr[:maxlen]+"\n     !"+f77expr[maxlen:]
+    
     subs=[
         ("loopname",loopname(loop)),
         ("f77args", cc([", %s"%n for n in looparrays(loop)])+
