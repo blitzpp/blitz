@@ -252,9 +252,10 @@ inline void BenchmarkExt<P_parameter>::stopOverhead()
     flops_(int(implementationNumber_), int(parameterNumber_-1)) -= 
       overheadTimer_.flops();
 
-    if(times_(int(implementationNumber_), int(parameterNumber_-1))<0)
+    if(times_(int(implementationNumber_), int(parameterNumber_-1))<0) {
       cerr << "Error: Timer underflow in benchmark " << implementationDescriptions_[implementationNumber_] << " " << parameters_(parameterNumber_) << endl;
-
+      times_(int(implementationNumber_), int(parameterNumber_-1)) = 0;
+    }
     state_ = benchmarkingImplementation;
 }
 
