@@ -23,7 +23,7 @@ LDADD = -L$(top_builddir)/lib -lblitz @BLASLIB@ @FCLIBS@ @FLIBS@
 
 LOOP_KERNELS = loop1 loop2 loop3 loop5 loop6 loop8 loop9 loop10 loop11 \
 loop12 loop13 loop14 loop15 loop16 loop17 loop18 loop19 loop21 loop22 \
-loop23 loop24 loop25 loop36 \
+loop23 loop24 loop25 loop36 loop100 \
 floop1 floop2 floop3 floop5 floop6 floop8 floop9 floop10 floop11 \
 floop12 floop13 floop14 floop15 floop16 floop17 floop18 floop19 floop21 floop22 \
 floop23 floop24 floop25 floop36
@@ -122,6 +122,7 @@ loop23_SOURCES = loop23.cpp loop23f.f loop23f90.f90
 loop24_SOURCES = loop24.cpp loop24f.f loop24f90.f90
 loop25_SOURCES = loop25.cpp loop25f.f loop25f90.f90
 loop36_SOURCES = loop36.cpp loop36f.f loop36f90.f90
+loop100_SOURCES = loop100.cpp loop100f.f loop100f90.f90
 else
 loop1_SOURCES = loop1.cpp loop1f.f
 loop2_SOURCES = loop2.cpp loop2f.f
@@ -146,6 +147,7 @@ loop23_SOURCES = loop23.cpp loop23f.f
 loop24_SOURCES = loop24.cpp loop24f.f
 loop25_SOURCES = loop25.cpp loop25f.f
 loop36_SOURCES = loop36.cpp loop36f.f
+loop100_SOURCES = loop100.cpp loop100f.f
 endif
 
 if F90_COMPILER
