@@ -451,7 +451,7 @@ void BenchmarkExt<P_parameter>::savePylabGraph(const char* filename, const char*
     ofs << graphType << "(parm,Mf)\ntitle('" << description_ << "')\n"
         << "xlabel('" << parameterDescription_ << "')\n"
         << "ylabel('" << rateDescription_ << "')\n"
-        << "legend([";
+        << "legnames=[";
     
     for (unsigned j=0; j < numImplementations_; ++j)
     {
@@ -460,7 +460,7 @@ void BenchmarkExt<P_parameter>::savePylabGraph(const char* filename, const char*
             ofs << ", ";
     } 
 
-    ofs << "])\n";
+    ofs << "])\nlegend(legnames)\n";
 }
 
 BZ_NAMESPACE_END
