@@ -121,7 +121,6 @@ protected:
   Array<double,1> flopsPerIteration_;
 
     Timer timer_;
-    Timer overheadTimer_;
 
   std::string parameterDescription_;
   std::string rateDescription_;

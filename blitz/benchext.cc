@@ -222,7 +222,7 @@ inline void BenchmarkExt<P_parameter>::stop()
     timer_.stop();
     BZPRECONDITION(state_ == running);
     state_ = benchmarkingImplementation;
-    
+    cout << timer_.elapsed() << endl;
     times_(int(implementationNumber_), int(parameterNumber_)) = timer_.elapsed();
     instr_(int(implementationNumber_), int(parameterNumber_)) = timer_.instr();
     flops_(int(implementationNumber_), int(parameterNumber_)) = timer_.flops();
@@ -237,24 +237,27 @@ inline void BenchmarkExt<P_parameter>::startOverhead()
     BZPRECONDITION(parameterNumber_ > 0);
     BZPRECONDITION(parameterNumber_ <= numParameters_);
     state_ = runningOverhead;
-    overheadTimer_.start();
+    timer_.start();
 }
 
 template<typename P_parameter>
 inline void BenchmarkExt<P_parameter>::stopOverhead()
 {
     BZPRECONDITION(state_ == runningOverhead);
-    overheadTimer_.stop();
+    timer_.stop();
+    cout << timer_.elapsed() << endl;
+    cout << "\ttimer overhead: " <<
+      timer_.elapsed()/times_(int(implementationNumber_), int(parameterNumber_-1)) << endl;
     times_(int(implementationNumber_), int(parameterNumber_-1)) -= 
-      overheadTimer_.elapsed();
+      timer_.elapsed();
     instr_(int(implementationNumber_), int(parameterNumber_-1)) -= 
-      overheadTimer_.instr();
+      timer_.instr();
     flops_(int(implementationNumber_), int(parameterNumber_-1)) -= 
-      overheadTimer_.flops();
+      timer_.flops();
 
     if(times_(int(implementationNumber_), int(parameterNumber_-1))<0) {
-      cerr << "Error: Timer underflow in benchmark " << implementationDescriptions_[implementationNumber_] << " " << parameters_(parameterNumber_) << endl;
-      times_(int(implementationNumber_), int(parameterNumber_-1)) = 0;
+      cerr << "\tError: Timer underflow in benchmark " << implementationDescriptions_[implementationNumber_] << " " << parameters_(parameterNumber_-1) << endl;
+      times_(int(implementationNumber_), int(parameterNumber_-1)) = blitz::quiet_NaN(double());
     }
     state_ = benchmarkingImplementation;
 }

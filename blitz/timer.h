@@ -127,21 +127,27 @@ class Timer {
 public:
     Timer() 
     { 
-        state_ = uninitialized;
+      // maybe overhead is less from just reading counters
+      if(PAPI_start_counters((int*)Events, nevents)!=PAPI_OK) {
+	cerr << "Error starting counters\n";
+      }
+      state_ = uninitialized;
+    }
+  ~Timer() 
+    { 
+      PAPI_stop_counters(counters_.data(), nevents);
     }
 
     void start()
     { 
         state_ = running;
-        if(PAPI_start_counters((int*)Events, nevents)!=PAPI_OK) {
-	  cerr << "Error starting counters\n";
-	  state_=uninitialized;
-	}
+	// this resets the counters
+        PAPI_read_counters(counters_.data(), nevents);
     }
 
     void stop()
     {
-        PAPI_stop_counters(counters_.data(), nevents);
+        PAPI_read_counters(counters_.data(), nevents);
 	BZPRECONDITION(state_ == running);
 	state_ = stopped;
     }
@@ -169,7 +175,6 @@ private:
   static const int nevents=3;
   static const int Events[nevents];
   static const char* const ivar_;
-
 
   TinyVector<long long, nevents> counters_;
 };
