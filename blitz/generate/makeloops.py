@@ -139,6 +139,9 @@ def gencpp(loop):
         ("arraydeclandfill",
          declandfill(loop, "Array<%s,1> %s(N)"%(numtype,"%s"),
                      ".dataFirst()")),
+        ("vectordeclandfill",
+         declandfill(loop, "Vector<%s> %s(N)"%(numtype,"%s"),
+                     ".data()")),
         ("tvdeclandfill",
          declandfill(loop, "TinyVector<%s,N> %s(N)"%(numtype,"%s"),
                      ".dataFirst()")),
@@ -257,10 +260,11 @@ void ValarrayVersion(BenchmarkExt<int>& bench#scalarargdecl#);
 const int numSizes = 20;
 const int Nmax=1<<(numSizes-1);
 const int tvNmax=7;
+const bool runvector=true;
 
 int main()
 {
-    int numBenchmarks = 5;
+    int numBenchmarks = runvector ? 6 : 5;
 #ifndef BENCHMARK_VALARRAY
     numBenchmarks--;   // No  valarray
 #endif
@@ -272,9 +276,9 @@ int main()
 
     bench.setNumParameters(numSizes);
 
-    Vector<int> parameters(numSizes);
-    Vector<long> iters(numSizes);
-    Vector<double> flops(numSizes);
+    Array<int,1> parameters(numSizes);
+    Array<long,1> iters(numSizes);
+    Array<double,1> flops(numSizes);
 
     for (int i=0; i < numSizes; ++i)
     {
@@ -294,7 +298,6 @@ int main()
 
 #declarescalars#
 
-    //VectorVersion(bench #scalarargs#);
     ArrayVersion(bench #scalarargs#);
     doTinyVectorVersion(bench #scalarargs#);
     F77Version(bench #scalarargs#);
@@ -304,6 +307,9 @@ int main()
 #ifdef BENCHMARK_VALARRAY
     ValarrayVersion(bench #scalarargs#);
 #endif
+
+    if(runvector)
+      VectorVersion(bench #scalarargs#);
 
     bench.endBenchmarking();
 
@@ -329,7 +335,40 @@ void initializeArray(T& array, int numElements)
         array[i] = rnd.random();
 }
 
-void ArrayVersion(BenchmarkExt<int>& bench#scalarargdecl#)
+void VectorVersion(BenchmarkExt<int>& bench#scalarargdecl#)
+{
+    bench.beginImplementation("Vector<T>");
+
+    while (!bench.doneImplementationBenchmark())
+    {
+        int N = bench.getParameter();
+        long iters = bench.getIterations();
+
+        cout << "Vector<T>: N = " << N << endl;
+
+#vectordeclandfill#
+
+        bench.start();
+        for (long i=0; i < iters; ++i)
+        {
+            #looparrayexpr#;
+            sink();
+        }
+        bench.stop();
+
+        bench.startOverhead();
+        for (long i=0; i < iters; ++i) {
+            sink();
+	}
+
+        bench.stopOverhead();
+    }
+
+    bench.endImplementation();
+}
+
+
+  void ArrayVersion(BenchmarkExt<int>& bench#scalarargdecl#)
 {
     bench.beginImplementation("Array<T,1>");
 
@@ -360,7 +399,7 @@ void ArrayVersion(BenchmarkExt<int>& bench#scalarargdecl#)
 
     bench.endImplementation();
 }
-  
+
 
 template<int N>
 void TinyVectorVersion(BenchmarkExt<int>& bench#scalarargdecl#)
