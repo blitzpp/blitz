@@ -460,7 +460,7 @@ void BenchmarkExt<P_parameter>::savePylabGraph(const char* filename, const char*
             ofs << ", ";
     } 
 
-    ofs << "])\nlegend(legnames)\n";
+    ofs << "]\nlegend(legnames)\n";
 }
 
 BZ_NAMESPACE_END
