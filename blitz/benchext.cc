@@ -222,7 +222,7 @@ inline void BenchmarkExt<P_parameter>::stop()
     timer_.stop();
     BZPRECONDITION(state_ == running);
     state_ = benchmarkingImplementation;
-    cout << timer_.elapsed() << endl;
+
     times_(int(implementationNumber_), int(parameterNumber_)) = timer_.elapsed();
     instr_(int(implementationNumber_), int(parameterNumber_)) = timer_.instr();
     flops_(int(implementationNumber_), int(parameterNumber_)) = timer_.flops();
@@ -245,9 +245,10 @@ inline void BenchmarkExt<P_parameter>::stopOverhead()
 {
     BZPRECONDITION(state_ == runningOverhead);
     timer_.stop();
-    cout << timer_.elapsed() << endl;
+
     cout << "\ttimer overhead: " <<
       timer_.elapsed()/times_(int(implementationNumber_), int(parameterNumber_-1)) << endl;
+
     times_(int(implementationNumber_), int(parameterNumber_-1)) -= 
       timer_.elapsed();
     instr_(int(implementationNumber_), int(parameterNumber_-1)) -= 
