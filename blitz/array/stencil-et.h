@@ -255,6 +255,8 @@ class _bz_StencilExpr2 {
   static const int 
   numArrayOperands = T_expr1::numArrayOperands
     + T_expr2::numArrayOperands,
+    numTVOperands = T_expr1::numTVOperands + T_expr2::numTVOperands,
+    numTMOperands = T_expr1::numTMOperands + T_expr2::numTMOperands,
     numIndexPlaceholders = T_expr1::numIndexPlaceholders
     + T_expr2::numIndexPlaceholders,
     rank_ = (T_expr1::rank_ > T_expr2::rank_) 
