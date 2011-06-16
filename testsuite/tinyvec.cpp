@@ -58,16 +58,16 @@ int main()
     // test funcs
     B=-1,-2,-3;
     A=abs(B);
-    BZTEST(A[0]=1);
-    BZTEST(A[1]=2);
-    BZTEST(A[2]=3);
+    BZTEST(A[0]==1);
+    BZTEST(A[1]==2);
+    BZTEST(A[2]==3);
 
     TinyVector<double,3> C,D;
     D=1,4,9;
     C=sqrt(D);
-    BZTEST(C[0]=1);
-    BZTEST(C[1]=2);
-    BZTEST(C[2]=3);
+    BZTEST(C[0]==1);
+    BZTEST(C[1]==2);
+    BZTEST(C[2]==3);
 
     return 0;
 }
