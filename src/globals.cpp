@@ -12,7 +12,6 @@
 #include <blitz/array.h>          // Dummy array object (_dummyArray)
 #include <blitz/indexexpr.h>      // Tensor index objects
 #include <blitz/bzdebug.h>        // Test suite globals
-#include <blitz/zero.cc>          // static ZeroElement data instances
 #include <blitz/timer.h>          // Timer instances
 #include <random/mtparam.cc>      // MT19937 parameter sets
 

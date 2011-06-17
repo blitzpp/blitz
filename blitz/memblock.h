@@ -259,6 +259,8 @@ public:
 protected:
     T_type * restrict data_;
 
+  const MemoryBlock<T_type>* block() const {return block_;}
+
 private:
     MemoryBlock<T_type>* block_;
 

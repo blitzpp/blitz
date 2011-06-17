@@ -5,10 +5,11 @@
 arraydir = $(includedir)/blitz/array
 generatedir = ../generate
 
-genheaders = bops.cc uops.cc
+genheaders = stencil-classes.cc 
+#bops.cc uops.cc
 
 array_HEADERS = asexpr.h cartesian.h cgsolve.h complex.cc \
-convolve.cc convolve.h cycle.cc domain.h et.h eval.cc expr.h fastiter.h \
+convolve.cc convolve.h cycle.cc domain.h et.h expr.h fastiter.h \
 funcs.h functorExpr.h geometry.h indirect.h interlace.cc io.cc iter.h map.h \
 methods.cc misc.cc multi.h newet-macros.h \
 newet.h ops.cc ops.h reduce.cc reduce.h resize.cc shape.h slice.h slicing.cc \

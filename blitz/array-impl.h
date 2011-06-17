@@ -1136,7 +1136,7 @@ public:
       example, write it to disk, this is the size of the block
       needed. */
     sizeType                               storageSize() const
-  { return block_.length(); }
+  { return T_base::block().length(); }
 
     const TinyVector<diffType, N_rank>&    stride() const
     { return stride_; }
