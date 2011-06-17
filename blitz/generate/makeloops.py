@@ -207,7 +207,7 @@ cpp_skeleton = """
 
 #include <blitz/vector2.h>
 #include <blitz/array.h>
-#include <blitz/rand-uniform.h>
+#include <random/uniform.h>
 #include <blitz/benchext.h>
 
 #ifdef BZ_HAVE_VALARRAY
@@ -318,21 +318,21 @@ int main()
 }
 
 template<class T>
-void initializeRandomDouble(T data, int numElements, int stride = 1)
+void initializeRandomDouble(T* data, int numElements, int stride = 1)
 {
-    static Random<Uniform> rnd;
+    ranlib::Uniform<T> rnd;
 
     for (int i=0; i < numElements; ++i)
         data[size_t(i*stride)] = rnd.random();
 }
 
 template<class T>
-void initializeArray(T& array, int numElements)
+void initializeRandomDouble(valarray<T>& data, int numElements, int stride = 1)
 {
-    static Random<Uniform> rnd;
+    ranlib::Uniform<T> rnd;
 
-    for (size_t i=0; i < numElements; ++i)
-        array[i] = rnd.random();
+    for (int i=0; i < numElements; ++i)
+        data[size_t(i*stride)] = rnd.random();
 }
 
 void VectorVersion(BenchmarkExt<int>& bench#scalarargdecl#)

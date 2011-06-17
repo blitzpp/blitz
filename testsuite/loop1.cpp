@@ -4,7 +4,7 @@
 
 #include <blitz/vector2.h>
 #include <blitz/array.h>
-#include <blitz/rand-uniform.h>
+#include <random/uniform.h>
 #include <blitz/benchext.h>
 
 BZ_NAMESPACE(blitz)
@@ -65,21 +65,12 @@ int main()
 }
 
 template<typename T>
-void initializeRandomDouble(T data, int numElements, int stride = 1)
+void initializeRandomDouble(T* data, int numElements, int stride = 1)
 {
-    static Random<Uniform> rnd;
+  ranlib::Uniform<T> rnd;
 
     for (int i=0; i < numElements; ++i)
         data[size_t(i*stride)] = rnd.random();
-}
-
-template<typename T>
-void initializeArray(T& array, int numElements)
-{
-    static Random<Uniform> rnd;
-
-    for (size_t i=0; i < numElements; ++i)
-        array(i) = rnd.random();
 }
 
 void VectorVersion(BenchmarkExt<int>& bench)
