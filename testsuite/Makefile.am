@@ -20,10 +20,10 @@ minsumpow module multicomponent multicomponent-2 newet			\
 Olaf-Ronneberger-1 patrik-jonsson-1 peter-bienstman-1			\
 peter-bienstman-2 peter-bienstman-3 peter-bienstman-4			\
 peter-bienstman-5 peter-nordlund-1 peter-nordlund-2 peter-nordlund-3	\
-promote pthread qcd reduce reindex reverse safeToReturn shapecheck	\
-shape slice-iterators stencil-et storage stub theodore-papadopoulo-1	\
-tinymat tinyvec transpose troyer-genilloud tvinitialize			\
-Ulisses-Mello-1 weakref wei-ku-1 where zeek-1
+preexisting promote pthread qcd reduce reindex reverse safeToReturn	\
+shapecheck shape slice-iterators stencil-et storage stub		\
+theodore-papadopoulo-1 tinymat tinyvec transpose troyer-genilloud	\
+tvinitialize Ulisses-Mello-1 weakref wei-ku-1 where zeek-1
 
 64bit_SOURCES = 64bit.cpp
 Adnene_Ben_Abdallah_1_SOURCES = Adnene-Ben-Abdallah-1.cpp
@@ -71,6 +71,7 @@ peter_bienstman_5_SOURCES = peter-bienstman-5.cpp
 peter_nordlund_1_SOURCES = peter-nordlund-1.cpp
 peter_nordlund_2_SOURCES = peter-nordlund-2.cpp
 peter_nordlund_3_SOURCES = peter-nordlund-3.cpp
+preexisting_SOURCES = preexisting.cpp
 promote_SOURCES = promote.cpp
 pthread_SOURCES = pthread.cpp
 qcd_SOURCES = qcd.cpp

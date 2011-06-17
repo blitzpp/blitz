@@ -341,6 +341,11 @@ public:
         length_ = shape;
         computeStrides();
         data_ += zeroOffset_;
+
+#ifdef BZ_DEBUG
+	if(!isStorageContiguous())
+	  cerr << "Warning: Pre-existing Array constructor used, but due to alignment requirements,\nthe Array is not contiguous. This will likely lead to memory corruption!\nConsider explicitly specifying strides." << endl;
+#endif
     }
 
     /*
@@ -378,6 +383,11 @@ public:
         length_ = shape;
         computeStrides();
         data_ += zeroOffset_;
+
+#ifdef BZ_DEBUG
+	if(!isStorageContiguous())
+	  cerr << "Warning: Pre-existing Array constructor used, but due to alignment requirements,\nthe Array is not contiguous. This will likely lead to memory corruption!\nConsider explicitly specifying strides." << endl;
+#endif
 
         if (deletionPolicy == duplicateData)
             reference(copy());
