@@ -258,6 +258,7 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
         // If fast traversal isn't available or appropriate, then just
         // do a stack traversal.
         if (N_rank == 1)
+#pragma forceinline recursive
 	  _bz_evaluateWithStackTraversal1(dest, expr, T_update());
 	 else
 	   _bz_evaluateWithStackTraversalN(dest, expr, T_update());
@@ -295,8 +296,8 @@ _bz_evaluateWithStackTraversal1(T_dest& dest, T_expr expr, T_update)
    typedef typename T_dest::T_numtype T_numtype;
 
  #ifdef BZ_DEBUG_TRAVERSE
-     BZ_DEBUG_MESSAGE("Array<" << BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_numtype)
-	  << ", " << N_rank << ">: Using stack traversal");
+   /// \todo this should print the type
+   BZ_DEBUG_MESSAGE("Evaluate: Using stack traversal");
  #endif
      typename T_dest::T_iterator iter(dest);
      iter.loadStride(firstRank);
@@ -338,26 +339,36 @@ _bz_evaluateWithStackTraversal1(T_dest& dest, T_expr expr, T_update)
 	 if (commonStride == 1)
 	 {
   #ifndef BZ_ARRAY_STACK_TRAVERSAL_UNROLL
+	   int i=0;
 	   const int dest_width = simdTypes<T_numtype>::vecWidth;
-	   // if expressions are vector aligned we use the tv loop
+	   // if expressions are vector aligned we use the tv loop for
+	   // everything except the final uneven tail.
 	   if( (dest_width >1) && (ubound>dest_width) && 
 	       (simdTypes<typename T_dest::T_numtype>::vecWidth ==
 		simdTypes<typename T_expr::T_numtype>::vecWidth) &&
 	       dest.isVectorAligned() && expr.isVectorAligned() ) {
+ #ifdef BZ_DEBUG_TRAVERSE
+	     BZ_DEBUG_MESSAGE("\tUsing vectorized loop");
+ #endif
 	     asm("nop;nop;nop;");
-	     for (int i=0; i < ubound; i+=dest_width)
+	     for (; i < ubound-dest_width+1; i+=dest_width)
 #pragma vector aligned
+#pragma forceinline recursive
 	       chunked_updater<T_numtype, T_expr, T_update, simdTypes<T_numtype>::vecWidth>::update(data, expr, i);
 	     asm("nop;nop;nop;");
 	   }
-	   else
-	     // if not aligned, not wide enough loop, or not more than
-	     // one item fitting in simd width, we revert to
-	     // single-element loop
+
+	   // now complete the loop with the elements not done in
+	   // the chunked loop. (if not aligned, not wide enough
+	   // loop, or not more than one item fitting in simd width,
+	   // this is all of them.)
 #pragma ivdep
-	     for (int i=0; i < ubound; ++i)
-	       T_update::update(data[i], expr.fastRead(i));
-  #else
+	   for (; i < ubound; ++i)
+#pragma forceinline recursive
+	     T_update::update(data[i], expr.fastRead(i));
+
+#else // BZ_ARRAY_STACK_TRAVERSAL_UNROLL
+
 	     diffType n1 = ubound & 3;
 	     diffType i = 0;
 	     for (; i < n1; ++i)

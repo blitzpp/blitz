@@ -3,7 +3,6 @@
 
 BZ_USING_NAMESPACE(blitz)
 
-// test that TinyVector and TinyMatrix are aligned properly.
 template<typename T_numtype, int N, int M>
 void testalign() {
   BZTEST(__alignof__(TinyVector<T_numtype,N>)==simdTypes<T_numtype>::byteWidth);
@@ -16,6 +15,7 @@ void testalign() {
 
 int main()
 {
+// test that TinyVector and TinyMatrix are aligned properly.
   testalign<int,1,1>();
   testalign<int,2,2>();
   testalign<int,3,2>();
@@ -39,6 +39,30 @@ int main()
   testalign<double,5,2>();
   testalign<double,6,2>();
   testalign<double,7,2>();
+
+  const int w=simdTypes<float>::vecWidth;
+  if(w>1) {
+    // test that arrays correctly report as being aligned or not.
+    Array<float, 2> A(3*w,3*w);
+    BZTEST(A.isVectorAligned());
+    Array<float,1> B(A(1,Range::all()));
+    BZTEST(B.isVectorAligned());
+    BZTEST(!A(Range::all(),1).isVectorAligned());
+    BZTEST(B(Range(w,2*w-1)).isVectorAligned());
+    BZTEST(!B(Range(1,2*w-1)).isVectorAligned());
+
+    // test that expressions correctly report as being aligned or not
+    BZTEST((A(1,Range::all())*B).isVectorAligned());
+    BZTEST(!(A(Range::all(),1)*B).isVectorAligned());
+
+    // test that we don't overwrite the end of aligned but uneven-length arrays
+    B=0;
+    B(Range(0,0))=1;
+    BZTEST(sum(B)==1);
+    B(Range(0,w))=1;
+    BZTEST(sum(B)==w+1);
+  }
+    
 
   return 0;
 }
