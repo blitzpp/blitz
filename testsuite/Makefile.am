@@ -11,7 +11,7 @@ AM_CXXFLAGS = @CXX_DEBUG_FLAGS@ -DBZ_DEBUG
 LDADD = -L$(top_builddir)/lib -lblitz
 
 EXTRA_PROGRAMS = 64bit Adnene-Ben-Abdallah-1 Adnene-Ben-Abdallah-2	\
-arrayresize arrayinitialize chris-jeffery-1 chris-jeffery-2		\
+alignment arrayresize arrayinitialize chris-jeffery-1 chris-jeffery-2	\
 chris-jeffery-3 complex-test constarray contiguous copy ctors		\
 derrick-bass-1 derrick-bass-3 exprctor expression-slicing extract free	\
 gary-huber-1 initialize interlace iter Josef-Wagenhuber levicivita	\
@@ -28,6 +28,7 @@ Ulisses-Mello-1 weakref wei-ku-1 where zeek-1
 64bit_SOURCES = 64bit.cpp
 Adnene_Ben_Abdallah_1_SOURCES = Adnene-Ben-Abdallah-1.cpp
 Adnene_Ben_Abdallah_2_SOURCES = Adnene-Ben-Abdallah-2.cpp
+alignment_SOURCES = alignment.cpp
 arrayinitialize_SOURCES = arrayinitialize.cpp
 arrayresize_SOURCES = arrayresize.cpp
 chris_jeffery_1_SOURCES = chris-jeffery-1.cpp
