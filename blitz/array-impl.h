@@ -49,12 +49,7 @@
 #include <blitz/tinyvec2.h>
 #include <blitz/tvecglobs.h>
 
-#ifdef BZ_ARRAY_SPACE_FILLING_TRAVERSAL
-#include <blitz/traversal.h>
-#endif
-
 #include <blitz/indexexpr.h>
-#include <blitz/prettyprint.h>
 
 #include <blitz/array/slice.h>     // Subarrays and slicing
 #include <blitz/array/map.h>       // Tensor index notation
@@ -2341,42 +2336,6 @@ public:
 #endif
 
 public:
-    // Undocumented implementation routines
-
-    template<typename T_expr, typename T_update>
-    inline T_array& evaluate(T_expr expr, T_update);
-
-#ifdef BZ_HAVE_STD
-#ifdef BZ_ARRAY_SPACE_FILLING_TRAVERSAL
-    template<typename T_expr, typename T_update>
-    inline T_array& evaluateWithFastTraversal(
-        const TraversalOrder<N_rank - 1>& order, 
-        T_expr expr, T_update);
-#endif // BZ_ARRAY_SPACE_FILLING_TRAVERSAL
-#endif
-
-#ifdef BZ_ARRAY_2D_STENCIL_TILING
-    template<typename T_expr, typename T_update>
-    inline T_array& evaluateWithTiled2DTraversal(
-        T_expr expr, T_update);
-#endif
-
-    template<typename T_expr, typename T_update>
-    inline T_array& evaluateWithIndexTraversal1(
-        T_expr expr, T_update);
-
-    template<typename T_expr, typename T_update>
-    inline T_array& evaluateWithIndexTraversalN(
-        T_expr expr, T_update);
-
-    template<typename T_expr, typename T_update>
-    inline T_array& evaluateWithStackTraversal1(
-        T_expr expr, T_update);
-
-    template<typename T_expr, typename T_update>
-    inline T_array& evaluateWithStackTraversalN(
-        T_expr expr, T_update);
-
 
   //T_numtype* restrict getInitializationIterator() { return dataFirst(); }
   iterator restrict getInitializationIterator() { return begin(); }
