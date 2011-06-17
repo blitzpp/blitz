@@ -1,10 +1,7 @@
 // This program causes/caused some versions of egcs to crash.
 
-#include <blitz/tinymat2.h>
-#include <blitz/tinymat2.cc>
-//#include <blitz/vector.h>
 #include <blitz/benchext.h>
-#include <blitz/rand-uniform.h>
+#include <random/uniform.h>
 #include <blitz/array.h>
 
 #ifdef BZ_HAVE_COMPLEX
@@ -139,7 +136,7 @@ void initializeRandomDouble(double* data, int numElements)
     // This is a temporary kludge until I implement random complex
     // numbers.
 
-    static Random<Uniform> rnd;
+  ranlib::Uniform<double> rnd;
 
     for (int i=0; i < numElements; ++i)
         data[i] = rnd.random();
