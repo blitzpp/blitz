@@ -1120,6 +1120,14 @@ public:
     sizeType                               size() const
     { return numElements(); }
 
+  /** Returns the length of the array storage. This can be larger than
+      the number of elements due to padding to meet alignment
+      requirements. If you want to extract the array data to, for
+      example, write it to disk, this is the size of the block
+      needed. */
+    sizeType                               storageSize() const
+  { return block_.length(); }
+
     const TinyVector<diffType, N_rank>&    stride() const
     { return stride_; }
 

@@ -15,6 +15,7 @@ int main() {
   
   Array<dtype,2> B = A(Range(0,sz-1,3), Range(0,sz-3,2));
   // cout << "B=A, B= " << B << endl;
+
   B = 1;
   BZTEST(sum(B) == 9);
   BZTEST(sum(A) == 9);

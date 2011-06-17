@@ -5,15 +5,19 @@ BZ_USING_NAMESPACE(blitz)
 
 int main()
 {
-    Array<int,3> A(3,7,11);
+  const int w=simdTypes<double>::vecWidth;
+  if(w>1)
+    cerr << "NOTE:This test makes assumptions about storage that are not true when a SIMD\nwidth is specified. The test has been altered to not fail.\n";
+
+    Array<int,3> A(2*w,3*w,4*w);
 
 //    A.dumpStructureInformation();
 
     A.transposeSelf(secondDim, thirdDim, firstDim);
 
     BZTEST(A.ordering(0) == 1 && A.ordering(1) == 0 && A.ordering(2) == 2);
-    BZTEST(A.length(0) == 7 && A.length(1) == 11 && A.length(2) == 3);
-    BZTEST(A.stride(0) == 11 && A.stride(1) == 1 && A.stride(2) == 77);
+    BZTEST(A.length(0) == 3*w && A.length(1) == 4*w && A.length(2) == 2*w);
+    BZTEST(A.stride(0) == 4*w && A.stride(1) == 1 && A.stride(2) == 12*w*w);
 
 //    A.dumpStructureInformation();
 

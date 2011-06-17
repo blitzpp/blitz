@@ -3,6 +3,8 @@
 
 BZ_USING_NAMESPACE(blitz)
 
+const int w=simdTypes<int>::vecWidth;
+
 void check1DArrays();
 void check3DArrays();
 void checkEmpty1DArray(Array<int,1>& A);
@@ -87,9 +89,13 @@ void checkFull1DArray(Array<int,1>& A, int length)
 
 void check3DArrays()
 {
+    Array<int,3> AA(2*w,3*w,4*w);
+    checkFull3DArray(AA,2*w,3*w,4*w);
     Array<int,3> A(2,3,4);
     checkFull3DArray(A,2,3,4);
 
+    Array<int,3> BB(2*w,3*w,4*w,FortranArray<3>());
+    checkFull3DFortranArray(BB,2*w,3*w,4*w);
     Array<int,3> B(2,3,4,FortranArray<3>());
     checkFull3DFortranArray(B,2,3,4);
 }
@@ -126,8 +132,16 @@ void checkFull3DArray(Array<int,3>& A, int L, int M, int N)
     BZTEST(A.rank() == 3);
     BZTEST(A.rows() == L);
     BZTEST(A.size() == L*N*M);
-    BZTEST(A.stride(0) == N*M);
-    BZTEST(A.stride(1) == N);
+    if(N%w) {
+      beginCheckAssert();
+      BZASSERT(A.stride(0) == N*M);
+      BZASSERT(A.stride(1) == N);
+      endCheckAssert();
+    }
+    else {
+      BZTEST(A.stride(0) == N*M);
+      BZTEST(A.stride(1) == N);
+    }
     BZTEST(A.stride(2) == 1);
     BZTEST(A.ubound(0) == L-1);
     BZTEST(A.ubound(1) == M-1);
@@ -168,8 +182,16 @@ void checkFull3DFortranArray(Array<int,3>& A, int L, int M, int N)
     BZTEST(A.rows() == L);
     BZTEST(A.size() == L*N*M);
     BZTEST(A.stride(0) == 1);
-    BZTEST(A.stride(1) == L);
-    BZTEST(A.stride(2) == L*M);
+    if(L%w) {
+      beginCheckAssert();
+      BZASSERT(A.stride(1) == L);
+      BZASSERT(A.stride(2) == L*M);
+      endCheckAssert();
+    }
+    else {
+      BZTEST(A.stride(1) == L);
+      BZTEST(A.stride(2) == L*M);
+    }
     BZTEST(A.ubound(0) == L);
     BZTEST(A.ubound(1) == M);
     BZTEST(A.ubound(2) == N);

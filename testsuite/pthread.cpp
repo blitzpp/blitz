@@ -11,10 +11,10 @@ using namespace std;
 int main(int, char**)
 {
 #ifndef BZ_THREADSAFE
-  std::cout << "must use --enable-threadsafe to test thread safety\n";
+  std::cerr << "must use --enable-threadsafe to test thread safety\n";
 #endif
 #ifndef _REENTRANT
-  std::cout << "pthreads not enabled, can't create threads (you must use\n--disable-cxx-flags-preset and add -pthread to CXXFLAGS if you are using TBB)\n";
+  std::cerr << "pthreads not enabled, can't create threads (you must use\n--disable-cxx-flags-preset and add -pthread to CXXFLAGS if you are using TBB)\n";
 #endif
   return 0;
 }

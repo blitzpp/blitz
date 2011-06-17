@@ -137,7 +137,16 @@ _bz_inline2 void Array<P_numtype, N_rank>::computeStrides()
           // the ranks minor to it.
           stride_[ordering(n)] = stride * strideSign;
 
-          stride *= length_[ordering(n)];
+	  // The lowest rank dimension is padded to vecWidth, so this
+	  // needs to be accounted for in the stride
+	  if(n==0) {
+	    const int w = simdTypes<T_numtype>::vecWidth;
+	    stride *= 
+	      (length_[ordering(n)]/w + 
+	       (length_[ordering(n)]%w > 0 ? 1:0 )) * w;
+	  }
+	  else
+	    stride *= length_[ordering(n)];
       }
     }
     else {
@@ -297,8 +306,16 @@ _bz_inline2 void Array<P_numtype, N_rank>::setupStorage(int lastRankInitialized)
     // Compute strides
     computeStrides();
 
-    // Allocate a block of memory
-    sizeType numElem = numElements();
+    // Allocate a block of memory. The size of the block is NOT equal
+    // to numelements, because the lowest rank dimension is padded to
+    // vecWidth
+    TinyVector<int, N_rank> alloc_length = length();
+    const int w = simdTypes<T_numtype>::vecWidth;
+    const int mod = alloc_length[ordering(0)]%w;
+    if (mod>0)
+      alloc_length[ordering(0)] += simdTypes<T_numtype>::vecWidth-mod;
+    BZASSERT(alloc_length[ordering(0)]%w==0);
+    sizeType numElem = _bz_returntype<sizeType>::product(alloc_length);
     if (numElem==0)
         T_base::changeToNullBlock();
     else
