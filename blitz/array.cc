@@ -23,5 +23,5 @@
 #include <blitz/array/where.h>      // where(X,Y,Z)
 #include <blitz/array/indirect.h>   // Indirection
 #include <blitz/array/stencils.h>   // Stencil objects
-
+#include <blitz/tinymat2.cc>        // TinyMatrix implementations
 #endif
