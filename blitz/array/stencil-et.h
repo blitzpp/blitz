@@ -192,6 +192,9 @@ class _bz_StencilExpr {
   bool isUnitStride(int rank) const
   { return iter_.isUnitStride(rank); }
 
+  bool isUnitStride() const
+  { return iter_.isUnitStride(); }
+
   void advanceUnitStride()
   {
     iter_.advanceUnitStride();
@@ -358,6 +361,9 @@ class _bz_StencilExpr2 {
     
     bool isUnitStride(int rank) const
     { return iter1_.isUnitStride(rank) && iter2_.isUnitStride(rank); }
+
+    bool isUnitStride() const
+    { return iter1_.isUnitStride() && iter2_.isUnitStride(); }
 
     void advanceUnitStride()
     { 

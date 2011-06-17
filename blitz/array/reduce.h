@@ -187,6 +187,8 @@ public:
 
     bool isUnitStride(int)    const { 
       BZPRECHECK(0,"Can't use stack iteration on a reduction."); return false; }
+    bool isUnitStride()       const { 
+      BZPRECHECK(0,"Can't use stack iteration on a reduction."); return false; }
     bool canCollapse(int,int) const { 
       BZPRECHECK(0,"Can't use stack iteration on a reduction."); return false; }
     bool isStride(int,int)    const { 

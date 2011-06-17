@@ -286,6 +286,8 @@ public:
 
     bool isUnitStride(const int rank) const { return iter_.isUnitStride(rank); }
 
+    bool isUnitStride() const { return iter_.isUnitStride(); }
+
     void advanceUnitStride() { iter_.advanceUnitStride(); }
   
     bool canCollapse(const int outerLoopRank, const int innerLoopRank) const
@@ -607,6 +609,9 @@ public:
   
     bool isUnitStride(const int rank) const
     { return iter1_.isUnitStride(rank) && iter2_.isUnitStride(rank); }
+  
+    bool isUnitStride() const
+    { return iter1_.isUnitStride() && iter2_.isUnitStride(); }
   
     void advanceUnitStride() { 
         iter1_.advanceUnitStride(); 
@@ -1002,6 +1007,11 @@ public:
     bool isUnitStride(const int rank) const {
         return iter1_.isUnitStride(rank) && iter2_.isUnitStride(rank)
             && iter3_.isUnitStride(rank);
+    }
+  
+    bool isUnitStride() const {
+        return iter1_.isUnitStride() && iter2_.isUnitStride()
+            && iter3_.isUnitStride();
     }
   
     void advanceUnitStride() { 

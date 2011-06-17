@@ -112,16 +112,41 @@ cout.flush();
         return false;
     }
 };
-
 #endif // BZ_ARRAY_SPACE_FILLING_TRAVERSAL
 #endif // BZ_HAVE_STD
+
+
+/** Helper class that implements the evaluation routines for different
+    ranks. */
+template<int N> struct _bz_evaluator {
+  template<typename T_dest, typename T_expr, typename T_update>
+  static void evaluateWithStackTraversal(T_dest&, T_expr, T_update);
+  template<typename T_dest, typename T_expr, typename T_update>
+  static void evaluateWithIndexTraversal(T_dest&, T_expr, T_update);
+};
+template<> struct _bz_evaluator<1> {
+  template<typename T_dest, typename T_expr, typename T_update>
+  static void evaluateWithStackTraversal(T_dest&, T_expr, T_update);
+  template<typename T_dest, typename T_expr, typename T_update>
+  static void evaluateWithUnitStride(T_dest& dest, 
+				     typename T_dest::T_iterator& iter,
+				     T_expr expr, T_update);
+  template<typename T_dest, typename T_expr, typename T_update>
+  static void evaluateWithCommonStride(T_dest& dest, 
+				       typename T_dest::T_iterator& iter,
+				       T_expr expr, int commonStride,
+				       T_update);
+  template<typename T_dest, typename T_expr, typename T_update>
+  static void evaluateWithIndexTraversal(T_dest&, T_expr, T_update);
+};
+
 
 template<typename T_dest, typename T_expr, typename T_update>
 inline void
 _bz_evaluate(T_dest& dest, T_expr expr, T_update)
 {
   typedef typename T_dest::T_numtype T_numtype;
-  const int N_rank = T_dest::rank();
+  const int N_rank = T_dest::rank_;
 
     // Check that all arrays have the same shape
 #ifdef BZ_DEBUG
@@ -204,11 +229,8 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
         // The expression involves index placeholders, so have to
         // use index traversal rather than stack traversal.
 
-        if (N_rank == 1)
-	  _bz_evaluateWithIndexTraversal1(dest, expr, T_update());
-        else
-	  _bz_evaluateWithIndexTraversalN(dest, expr, T_update());
-	return;
+      _bz_evaluator<T_dest::rank_>::evaluateWithIndexTraversal(dest, expr, T_update());
+      return;
     }
     else {
 
@@ -257,14 +279,11 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
 
         // If fast traversal isn't available or appropriate, then just
         // do a stack traversal.
-        if (N_rank == 1)
 #pragma forceinline recursive
-	  _bz_evaluateWithStackTraversal1(dest, expr, T_update());
-	 else
-	   _bz_evaluateWithStackTraversalN(dest, expr, T_update());
-	 return;
-     }
- }
+	_bz_evaluator<T_dest::rank_>::evaluateWithStackTraversal(dest, expr, T_update());
+	return;
+    }
+}
 
 /** This class performs the vectorized update through the update()
     method. It is a class because it is specialized to do nothing for
@@ -274,7 +293,7 @@ template<typename T_numtype, typename T_expr, typename T_update, int N>
 struct chunked_updater {
   typedef typename T_update::template updateCast<typename simdTypes<T_numtype>::vecType, typename T_expr::T_tvresult>::T_updater T_tvupdater;
 
-  static inline void update(T_numtype* data, T_expr expr, int i) {  
+  static __forceinline void update(T_numtype* data, T_expr expr, int i) {  
     T_tvupdater::update(*reinterpret_cast<typename simdTypes<T_numtype>::vecType*>(data+i), expr.fastRead_tv(i));
   };
 };
@@ -289,173 +308,162 @@ struct chunked_updater<T_numtype, T_expr, T_update, 1> {
   };
 };
 
+/** Unit-stride evaluator. This can use vectorized update, so if both
+    dest and expr are unit stride, we redirect here. This in its own
+    function to make it easier to read. This is never unrolled, since
+    it's already vectorized using the chunk_updater. \todo Would it be
+    useful to retain the unrolled loop for scalar architectures?  */
 template<typename T_dest, typename T_expr, typename T_update>
 inline void
-_bz_evaluateWithStackTraversal1(T_dest& dest, T_expr expr, T_update)
+_bz_evaluator<1>::
+evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
+		       T_expr expr, T_update)
 {
-   typedef typename T_dest::T_numtype T_numtype;
+#ifdef BZ_DEBUG_TRAVERSE
+  BZ_DEBUG_MESSAGE("\tunit stride");
+#endif
 
- #ifdef BZ_DEBUG_TRAVERSE
-   /// \todo this should print the type
-   BZ_DEBUG_MESSAGE("Evaluate: Using stack traversal");
- #endif
-     typename T_dest::T_iterator iter(dest);
-     iter.loadStride(firstRank);
-     expr.loadStride(firstRank);
+  typedef typename T_dest::T_numtype T_numtype;
+  const int dest_width = simdTypes<T_numtype>::vecWidth;
+  const diffType ubound = dest.length(firstRank);
+  T_numtype* restrict data = const_cast<T_numtype*>(iter.data());
 
-     const bool useUnitStride = iter.isUnitStride(firstRank)
-       && expr.isUnitStride(firstRank);
-
- #ifdef BZ_ARRAY_EXPR_USE_COMMON_STRIDE
-     diffType commonStride = expr.suggestStride(firstRank);
-     if (iter.suggestStride(firstRank) > commonStride)
-	 commonStride = iter.suggestStride(firstRank);
-     bool useCommonStride = iter.isStride(firstRank,commonStride)
-	 && expr.isStride(firstRank,commonStride);
-
-  #ifdef BZ_DEBUG_TRAVERSE
-     BZ_DEBUG_MESSAGE("BZ_ARRAY_EXPR_USE_COMMON_STRIDE:" << endl
-	 << "    commonStride = " << commonStride << " useCommonStride = "
-	 << useCommonStride);
-  #endif
- #else
-     const diffType commonStride = 1;
-     const bool useCommonStride = false;
- #endif
-
-     const T_numtype * last = iter.data() + dest.length(firstRank) 
-	 * dest.stride(firstRank);
-
-     if (useUnitStride || useCommonStride)
-     {
- #ifdef BZ_USE_FAST_READ_ARRAY_EXPR
-
- #ifdef BZ_DEBUG_TRAVERSE
-     BZ_DEBUG_MESSAGE("BZ_USE_FAST_READ_ARRAY_EXPR with commonStride");
- #endif
-     const diffType ubound = dest.length(firstRank) * commonStride;
-	 T_numtype* restrict data = const_cast<T_numtype*>(iter.data());
-
-	 if (commonStride == 1)
-	 {
-  #ifndef BZ_ARRAY_STACK_TRAVERSAL_UNROLL
-	   int i=0;
-	   const int dest_width = simdTypes<T_numtype>::vecWidth;
-	   // if expressions are vector aligned we use the tv loop for
-	   // everything except the final uneven tail.
-	   if( (dest_width >1) && (ubound>dest_width) && 
-	       (simdTypes<typename T_dest::T_numtype>::vecWidth ==
-		simdTypes<typename T_expr::T_numtype>::vecWidth) &&
-	       dest.isVectorAligned() && expr.isVectorAligned() ) {
- #ifdef BZ_DEBUG_TRAVERSE
-	     BZ_DEBUG_MESSAGE("\tUsing vectorized loop");
- #endif
-	     asm("nop;nop;nop;");
-	     for (; i < ubound-dest_width+1; i+=dest_width)
+  // if expressions are vector aligned we use the tv loop for
+  // everything except the final uneven tail.
+  int i=0;
+  if( (dest_width >1) &&
+      (dest_width == simdTypes<typename T_expr::T_numtype>::vecWidth) &&
+      (ubound>dest_width) &&
+      dest.isVectorAligned() &&
+      expr.isVectorAligned() ) {
+    
+#ifdef BZ_DEBUG_TRAVERSE
+    BZ_DEBUG_MESSAGE("\tusing vectorized loop");
+#endif
+    //asm("nop;nop;nop;");
+    for (; i < ubound-dest_width+1; i+=dest_width)
 #pragma vector aligned
 #pragma forceinline recursive
-	       chunked_updater<T_numtype, T_expr, T_update, simdTypes<T_numtype>::vecWidth>::update(data, expr, i);
-	     asm("nop;nop;nop;");
-	   }
-
-	   // now complete the loop with the elements not done in
-	   // the chunked loop. (if not aligned, not wide enough
-	   // loop, or not more than one item fitting in simd width,
-	   // this is all of them.)
+      chunked_updater<T_numtype, T_expr, T_update, simdTypes<T_numtype>::vecWidth>::update(data, expr, i);
+    //asm("nop;nop;nop;");
+  }
+  
+  // now complete the loop with the elements not done in
+  // the chunked loop. (if not aligned, not wide enough
+  // loop, or not more than one item fitting in simd width,
+  // this is all of them.)
 #pragma ivdep
-	   for (; i < ubound; ++i)
+  for (; i < ubound; ++i)
 #pragma forceinline recursive
-	     T_update::update(data[i], expr.fastRead(i));
+    T_update::update(data[i], expr.fastRead(i));
+}
 
-#else // BZ_ARRAY_STACK_TRAVERSAL_UNROLL
 
-	     diffType n1 = ubound & 3;
-	     diffType i = 0;
-	     for (; i < n1; ++i)
-		 T_update::update(*data++, expr.fastRead(i));
+/** Common-stride evaluator. Used for common but non-unit strides. */
+template<typename T_dest, typename T_expr, typename T_update>
+inline void
+_bz_evaluator<1>::
+evaluateWithCommonStride(T_dest& dest, typename T_dest::T_iterator& iter,
+			 T_expr expr, int commonStride, T_update)
+{
+#ifdef BZ_DEBUG_TRAVERSE 
+     BZ_DEBUG_MESSAGE("\tcommon stride = " << commonStride);
+#endif
 
-	     for (; i < ubound; i += 4)
-	     {
- #ifndef BZ_ARRAY_STACK_TRAVERSAL_CSE_AND_ANTIALIAS
-		 T_update::update(*data++, expr.fastRead(i));
-		 T_update::update(*data++, expr.fastRead(i+1));
-		 T_update::update(*data++, expr.fastRead(i+2));
-		 T_update::update(*data++, expr.fastRead(i+3));
- #else
-		 const diffType t1 = i+1;
-		 const diffType t2 = i+2;
-		 const diffType t3 = i+3;
+  typedef typename T_dest::T_numtype T_numtype;
+  const diffType ubound = dest.length(firstRank) * commonStride;
+  T_numtype* restrict data = const_cast<T_numtype*>(iter.data());
 
-		 _bz_typename T_expr::T_numtype tmp1, tmp2, tmp3, tmp4;
+#ifndef BZ_ARRAY_STACK_TRAVERSAL_UNROLL
+#pragma ivdep
+  for (diffType i=0; i != ubound; i += commonStride)
+    T_update::update(data[i], expr.fastRead(i));
+#else
+  diffType n1 = (dest.length(firstRank) & 3) * commonStride;
+	 
+  diffType i = 0;
+  for (; i != n1; i += commonStride)
+    T_update::update(data[i], expr.fastRead(i));
+	 
+  diffType strideInc = 4 * commonStride;
+  for (; i != ubound; i += strideInc)
+    {
+      T_update::update(data[i], expr.fastRead(i));
+      diffType i2 = i + commonStride;
+      T_update::update(data[i2], expr.fastRead(i2));
+      diffType i3 = i + 2 * commonStride;
+      T_update::update(data[i3], expr.fastRead(i3));
+      diffType i4 = i + 3 * commonStride;
+      T_update::update(data[i4], expr.fastRead(i4));
+    }
+#endif  // BZ_ARRAY_STACK_TRAVERSAL_UNROLL
+  return;
+}
 
-		 tmp1 = expr.fastRead(i);
-		 tmp2 = expr.fastRead(BZ_NO_PROPAGATE(t1));
-		 tmp3 = expr.fastRead(BZ_NO_PROPAGATE(t2));
-		 tmp4 = expr.fastRead(BZ_NO_PROPAGATE(t3));
 
-		 T_update::update(*data++, tmp1);
-		 T_update::update(*data++, tmp2);
-		 T_update::update(*data++, tmp3);
-		 T_update::update(*data++, tmp4);
- #endif
-	     }
-  #endif // BZ_ARRAY_STACK_TRAVERSAL_UNROLL
+/* 1-d stack traversal evaluation. Forwards to evaluateWithUnitStride
+   or evaluateWithCommonStride, if applicable, otherwise does the slow
+   different-stride update. */
+template<typename T_dest, typename T_expr, typename T_update>
+inline void
+_bz_evaluator<1>::
+evaluateWithStackTraversal(T_dest& dest, T_expr expr, T_update)
+{
+#ifdef BZ_DEBUG_TRAVERSE
+  BZ_DEBUG_MESSAGE("_bz_evaluator<1>: Using stack traversal");
+#endif
 
-	 }
-  #ifdef BZ_ARRAY_EXPR_USE_COMMON_STRIDE
-	 else {
+  typename T_dest::T_iterator iter(dest);
+  iter.loadStride(firstRank);
+  expr.loadStride(firstRank);
 
-   #ifndef BZ_ARRAY_STACK_TRAVERSAL_UNROLL
-	     for (diffType i=0; i != ubound; i += commonStride)
-		 T_update::update(data[i], expr.fastRead(i));
-   #else
-	     diffType n1 = (dest.length(firstRank) & 3) * commonStride;
+  const bool useUnitStride = iter.isUnitStride()
+    && expr.isUnitStride();
 
-	     diffType i = 0;
-	     for (; i != n1; i += commonStride)
-		 T_update::update(data[i], expr.fastRead(i));
+  if(useUnitStride) {
+    evaluateWithUnitStride(dest, iter, expr, T_update());
+    return;
+  }
 
-	     diffType strideInc = 4 * commonStride;
-	     for (; i != ubound; i += strideInc)
-	     {
-		 T_update::update(data[i], expr.fastRead(i));
-		 diffType i2 = i + commonStride;
-		 T_update::update(data[i2], expr.fastRead(i2));
-		 diffType i3 = i + 2 * commonStride;
-		 T_update::update(data[i3], expr.fastRead(i3));
-		 diffType i4 = i + 3 * commonStride;
-		 T_update::update(data[i4], expr.fastRead(i4));
-	     }
-   #endif  // BZ_ARRAY_STACK_TRAVERSAL_UNROLL
-	 }
-  #endif  // BZ_ARRAY_EXPR_USE_COMMON_STRIDE
+#ifdef BZ_ARRAY_EXPR_USE_COMMON_STRIDE
+  diffType commonStride = expr.suggestStride(firstRank);
+  if (iter.suggestStride(firstRank) > commonStride)
+    commonStride = iter.suggestStride(firstRank);
+  bool useCommonStride = iter.isStride(firstRank,commonStride)
+    && expr.isStride(firstRank,commonStride);
+#else
+  diffType commonStride = 1;
+  bool useCommonStride = false;
+#endif
 
- #else   // ! BZ_USE_FAST_READ_ARRAY_EXPR
+  if (useCommonStride) {
+    evaluateWithCommonStride(dest, iter, expr, commonStride, T_update());
+    return;
+  }
 
- #ifdef BZ_DEBUG_TRAVERSE
-     BZ_DEBUG_MESSAGE("Common stride, no fast read");
- #endif
-	 while (iter.data() != last)
-	 {
-	     T_update::update(*const_cast<T_numtype*>(iter.data()), *expr);
-	     iter.advance(commonStride);
-	     expr.advance(commonStride);
-	 }
- #endif
-     }
-     else {
-	 while (iter.data() != last)
-	 {
-	     T_update::update(*const_cast<T_numtype*>(iter.data()), *expr);
-	     iter.advance();
-	     expr.advance();
-	 }
-     }
- }
+#ifdef BZ_DEBUG_TRAVERSE
+  BZ_DEBUG_MESSAGE("\tnot common stride");
+#endif
 
- template<typename T_dest, typename T_expr, typename T_update>
- inline void
- _bz_evaluateWithStackTraversalN(T_dest& dest, T_expr expr, T_update)
+  // not common stride
+  typedef typename T_dest::T_numtype T_numtype;
+  const T_numtype * last = iter.data() + dest.length(firstRank) 
+    * dest.stride(firstRank);
+     
+  while (iter.data() != last)
+    {
+      T_update::update(*const_cast<T_numtype*>(iter.data()), *expr);
+      iter.advance();
+      expr.advance();
+    }
+}
+
+
+template<int N>
+template<typename T_dest, typename T_expr, typename T_update>
+inline void
+_bz_evaluator<N>::
+evaluateWithStackTraversal(T_dest& dest, T_expr expr, T_update)
  {
    typedef typename T_dest::T_numtype T_numtype;
    const int N_rank = T_dest::rank();
@@ -521,8 +529,8 @@ _bz_evaluateWithStackTraversal1(T_dest& dest, T_expr expr, T_update)
       * we might take advantage of this and generate more
       * efficient code.
       */
-     const bool useUnitStride = iter.isUnitStride(maxRank)
-                          && expr.isUnitStride(maxRank);
+     const bool useUnitStride = iter.isUnitStride()
+                          && expr.isUnitStride();
 
     /*
      * Do all array operands share a common stride in the innermost
@@ -743,9 +751,11 @@ _bz_evaluateWithStackTraversal1(T_dest& dest, T_expr expr, T_update)
     }
 }
 
+
 template<typename T_dest, typename T_expr, typename T_update>
 inline void
-_bz_evaluateWithIndexTraversal1(T_dest& dest, T_expr expr, T_update)
+_bz_evaluator<1>::
+evaluateWithIndexTraversal(T_dest& dest, T_expr expr, T_update)
 {
   typedef typename T_dest::T_numtype T_numtype;
   const int N_rank = T_dest::rank();
@@ -778,9 +788,11 @@ _bz_evaluateWithIndexTraversal1(T_dest& dest, T_expr expr, T_update)
     }
 }
 
+  template<int N>
 template<typename T_dest, typename T_expr, typename T_update>
 inline void
-_bz_evaluateWithIndexTraversalN(T_dest& dest, T_expr expr, T_update)
+_bz_evaluator<N>::
+evaluateWithIndexTraversal(T_dest& dest, T_expr expr, T_update)
 {
   typedef typename T_dest::T_numtype T_numtype;
   const int N_rank = T_dest::rank();

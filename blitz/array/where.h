@@ -320,6 +320,13 @@ public:
             && iter3_.isUnitStride(rank);
     }
 
+    bool isUnitStride() const
+    { 
+        return iter1_.isUnitStride() 
+            && iter2_.isUnitStride() 
+            && iter3_.isUnitStride();
+    }
+
     void advanceUnitStride()
     {
         iter1_.advanceUnitStride();

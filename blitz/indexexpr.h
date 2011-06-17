@@ -128,6 +128,11 @@ public:
         return false;
     }
 
+    bool isUnitStride() const { 
+        BZPRECONDITION(0);
+        return false;
+    }
+
     void advanceUnitStride() { BZPRECONDITION(0); }
 
     bool canCollapse(int,int) const {   

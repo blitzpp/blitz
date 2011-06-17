@@ -161,7 +161,7 @@ public:
     void loadStride(int) { }
 
     bool isUnitStride(int) const
-    { return true; }
+  { BZPRECONDITION(0); return 0; }
 
     void advanceUnitStride()
     { }
@@ -260,6 +260,7 @@ public:
     static Range all() 
     { return Range(fromStart,toEnd,1); }
 
+  /// \todo this talks about the stride of the RANGE, not the expression stride.
     bool isUnitStride() const
     { return stride_ == 1; }
 

@@ -219,6 +219,9 @@ public:
     bool isUnitStride(int r) const
     { BZPRECONDITION(r==0); return stride_ == 1; }
 
+    bool isUnitStride() const
+    { return stride_ == 1; }
+
     void advanceUnitStride()
     { ++data_; }
 

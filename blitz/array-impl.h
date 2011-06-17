@@ -1159,7 +1159,7 @@ public:
 
   /** Returns true if the array is aligned on a simd vector width. */
   bool isVectorAligned() const
-  { return T_base::isVectorAligned(zeroOffset()); };
+  { return simdTypes<T_numtype>::isVectorAligned(dataFirst()); };
 
     //////////////////////////////////////////////
     // Debugging routines

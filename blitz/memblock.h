@@ -106,7 +106,7 @@ protected:
     {
       BZPRECHECK(length%simdTypes<T_type>::vecWidth==0, 
 		 "SIMD width set but memory block passed is not even multiple");
-      BZPRECHECK(*reinterpret_cast<long int*>(&data) % BZ_SIMD_WIDTH==0,
+      BZPRECHECK(simdTypes<T_type>::isVectorAligned(data),
 		 "SIMD width set but memory block passed is not aligned to it");
 
         length_ = length;

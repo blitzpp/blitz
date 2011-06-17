@@ -49,6 +49,7 @@ Array<P_numtype, N_rank>& Array<P_numtype,N_rank>::initialize(T_numtype x)
   // we can't use asExpr here, because if we are initializing an array
   // whose components are also ETBase, it would parse as an array
   // expression, not as an initialization with a scalar.
+#pragma forceinline recursive
   (*this) = _bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
   return *this;
 }
@@ -59,9 +60,11 @@ Array<P_numtype, N_rank>& Array<P_numtype,N_rank>::initialize(T_numtype x)
 // that operator=(T_numtype) will be the best match for list
 // initializations.
 template<typename P_numtype, int N_rank> template<typename T_expr>
-inline Array<P_numtype,N_rank>&
+inline __forceinline 
+Array<P_numtype,N_rank>&
 Array<P_numtype,N_rank>::operator=(const ETBase<T_expr>& expr)
 {
+#pragma forceinline recursive
   _bz_evaluate(*this, _bz_typename asExpr<T_expr>::T_expr(expr.unwrap()), 
 	       _bz_update<T_numtype, 
 	       _bz_typename asExpr<T_expr>::T_expr::T_result>());
@@ -74,6 +77,7 @@ inline Array<P_numtype, N_rank>&
 Array<P_numtype, N_rank>::operator=(const Array<T_numtype,N_rank>& x)
 {
   typedef typename asExpr<Array<T_numtype,N_rank> >::T_expr T_expr;
+#pragma forceinline recursive
   _bz_evaluate(*this, asExpr<Array<T_numtype,N_rank> >::getExpr(x),
 	       //T_expr(x),
 	       _bz_update<T_numtype, 
@@ -81,16 +85,17 @@ Array<P_numtype, N_rank>::operator=(const Array<T_numtype,N_rank>& x)
     return *this;
 }
 
-#define BZ_ARRAY_UPDATE(op,name) \
-template<typename P_numtype, int N_rank> \
-template<typename T> \
-inline Array<P_numtype,N_rank>& \
-Array<P_numtype,N_rank>::operator op(const T& expr) \
-{ \
-  _bz_evaluate(*this, _bz_typename asExpr<T>::T_expr(expr),  \
-      name<T_numtype, _bz_typename asExpr<T>::T_expr::T_numtype>()); \
-    return *this; \
-}
+#define BZ_ARRAY_UPDATE(op,name)					\
+  template<typename P_numtype, int N_rank>				\
+  template<typename T>							\
+  inline Array<P_numtype,N_rank>&					\
+  Array<P_numtype,N_rank>::operator op(const T& expr)			\
+  {									\
+    _Pragma("forceinline recursive")					\
+    _bz_evaluate(*this, _bz_typename asExpr<T>::T_expr(expr),		\
+		 name<T_numtype, _bz_typename asExpr<T>::T_expr::T_numtype>()); \
+  return *this;								\
+  }
 
 BZ_ARRAY_UPDATE(+=, _bz_plus_update)
 BZ_ARRAY_UPDATE(-=, _bz_minus_update)

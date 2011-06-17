@@ -28,6 +28,10 @@ public:
 
   /// Vector type of T that fills the simd width.
   typedef TinyVector<T, vecWidth> vecType;
+
+  /** Test if a pointer to T is simd aligned. */
+  static inline bool isVectorAligned(const T* restrict pointer)
+  { return (uintptr_t)((void*)pointer) % byteWidth == 0; }  
 };
 
 BZ_NAMESPACE_END

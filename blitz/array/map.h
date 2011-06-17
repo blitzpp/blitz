@@ -622,6 +622,12 @@ public:
         return false;
     }
 
+    bool isUnitStride() const
+    {
+        BZPRECHECK(0,"Can't use stack iteration on an index mapping.");
+        return false;
+    }
+
     void advanceUnitStride()
     {
         BZPRECHECK(0,"Can't use stack iteration on an index mapping.");

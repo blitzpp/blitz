@@ -101,6 +101,8 @@ TinyVector<P_numtype,N_length>::_tv_evaluate(const T_expr& expr, T_update)
   BZPRECONDITION(T_expr::rank_<=1);
   BZPRECONDITION(T_expr::numIndexPlaceholders==0);
 
+  //asm("nop;nop;");
+
 #ifdef BZ_TV_EVALUATE_UNROLL_LENGTH
   if(N_length < BZ_TV_EVALUATE_UNROLL_LENGTH)
     _bz_meta_vecAssign<N_length, 0>::fastAssign(*this, expr, T_update());
@@ -109,6 +111,8 @@ TinyVector<P_numtype,N_length>::_tv_evaluate(const T_expr& expr, T_update)
 #pragma ivdep
     for (int i=0; i < N_length; ++i)
       T_update::update(data_[i], expr.fastRead(i));
+  //asm("nop;nop;");
+
 }
 
 

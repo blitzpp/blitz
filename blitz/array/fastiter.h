@@ -184,7 +184,7 @@ public:
   /** Returns true if the iterator data is aligned on a simd
       vector. */
   bool isVectorAligned() const
-  { return array().isVectorAligned(); };
+  { return simdTypes<T_numtype>::isVectorAligned(data_); };
 
     int suggestStride(int rank) const
     { return array_.stride(rank); }
@@ -242,8 +242,13 @@ public:
     int stride() const
     { return stride_; }
 
+  /** Returns true if the Array has unit stride in the rank. */
     bool isUnitStride(int rank) const
     { return array_.stride(rank) == 1; }
+
+  /** Returns true if the loaded iterator stride is 1. */
+    bool isUnitStride() const
+    { return stride() == 1; }
 
     void advanceUnitStride()
     { ++data_; }

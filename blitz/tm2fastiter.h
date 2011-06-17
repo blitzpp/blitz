@@ -222,6 +222,9 @@ public:
   static bool isUnitStride(int r) 
     { return T_matrix::stride(r) == 1; }
 
+  bool isUnitStride() const
+    { return stride() == 1; }
+
     void advanceUnitStride()
     { ++data_; }
 
