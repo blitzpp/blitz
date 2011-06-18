@@ -1184,7 +1184,7 @@ public:                                                                   \
     _bz_Functor ## classname ## funcname (const classname& c)             \
         : c_(c)                                                           \
     { }                                                                   \
-    template<typename T_numtype1>                                            \
+    template<typename T_numtype1>					\
     inline T_numtype1 operator()(T_numtype1 x) const                      \
     { return c_.funcname(x); }                                            \
 private:                                                                  \
@@ -1405,7 +1405,7 @@ funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr>& a) const                   \
         _bz_Functor ## classname ## funcname,                             \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr,              \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr::T_optype> > \
-        (*this, a.unwrap());                                              \
+      (_bz_Functor ## classname ## funcname(*this), a.unwrap());	\
 }
 
 #define BZ_DECLARE_MEMBER_FUNCTION2(classname, funcname)                  \
@@ -1431,7 +1431,7 @@ funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                        \
                    BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_optype,    \
                    _bz_typename                                           \
                    BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_optype)> > \
-        (*this, a.unwrap(), b.unwrap());                                  \
+      (_bz_Functor ## classname ## funcname(*this), a.unwrap(), b.unwrap()); \
 }
 
 #define BZ_DECLARE_MEMBER_FUNCTION3(classname, funcname)                  \
@@ -1464,7 +1464,8 @@ funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                        \
                    BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_optype,    \
                    _bz_typename                                           \
                    BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr::T_optype))> >\
-        (*this, a.unwrap(), b.unwrap(), c.unwrap());                      \
+      (_bz_Functor ## classname ## funcname(*this),			\
+       a.unwrap(), b.unwrap(), c.unwrap());				\
 }
 
 
@@ -1480,9 +1481,8 @@ funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr>& a) const                   \
     return BZ_BLITZ_SCOPE(_bz_ArrayExpr)<                                 \
         BZ_BLITZ_SCOPE(_bz_FunctorExpr)<                                  \
         _bz_Functor ## classname ## funcname,                             \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr,              \
-        ret> >                                                            \
-        (*this, a.unwrap());                                              \
+      _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr, ret> >	\
+      (_bz_Functor ## classname ## funcname(*this), a.unwrap());	\
 }
 
 #define BZ_DECLARE_MEMBER_FUNCTION2_RET(classname, funcname, ret)         \
@@ -1502,7 +1502,7 @@ funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                        \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,             \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,             \
         ret> >                                                            \
-        (*this, a.unwrap(), b.unwrap());                                  \
+      (_bz_Functor ## classname ## funcname(*this), a.unwrap(), b.unwrap()); \
 }
 
 #define BZ_DECLARE_MEMBER_FUNCTION3_RET(classname, funcname, ret)         \
@@ -1525,7 +1525,8 @@ funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                        \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,             \
         _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr,             \
         ret> >                                                            \
-        (*this, a.unwrap(), b.unwrap(), c.unwrap());                      \
+      (_bz_Functor ## classname ## funcname(*this),			\
+       a.unwrap(), b.unwrap(), c.unwrap());				\
 }
 
 
