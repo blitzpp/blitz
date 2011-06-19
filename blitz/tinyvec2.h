@@ -88,12 +88,17 @@ public:
     template <typename T_numtype2>
     inline TinyVector(const TinyVector<T_numtype2,N_length>& x);
 
+    template <typename T_expr>
+    inline TinyVector(const ETBase<T_expr>& expr) {
+      *this = expr; }
+
     inline TinyVector(const T_numtype initValue);
 
     inline TinyVector(const T_numtype x[]) {
         memcpy(data_,x,N_length*sizeof(T_numtype));
     }
 
+  
     TinyVector(T_numtype x0, T_numtype x1)
     {
         data_[0] = x0;

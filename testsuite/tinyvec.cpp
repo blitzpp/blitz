@@ -69,6 +69,10 @@ int main()
     BZTEST(C[1]==2);
     BZTEST(C[2]==3);
 
+    // test expr constructor
+    tv3 E(A+B*B);
+    BZTEST(all(E==tv3(2,6,12)));
+
     return 0;
 }
 
