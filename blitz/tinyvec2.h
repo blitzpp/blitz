@@ -89,7 +89,7 @@ public:
     inline TinyVector(const TinyVector<T_numtype2,N_length>& x);
 
     template <typename T_expr>
-    inline TinyVector(const ETBase<T_expr>& expr) {
+    inline explicit TinyVector(const ETBase<T_expr>& expr) {
       *this = expr; }
 
     inline TinyVector(const T_numtype initValue);
