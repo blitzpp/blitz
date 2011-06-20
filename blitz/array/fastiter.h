@@ -178,7 +178,7 @@ public:
       convert the expression into a TinyVector expression, which is
       efficiently vectorized. */ 
    T_tvresult fastRead_tv(sizeType i) const
-  { BZASSERT(i%simdTypes<T_numtype>::vecWidth==0);
+  { BZPRECONDITION(isVectorAligned(i));
     return T_tvresult(*reinterpret_cast<const typename simdTypes<T_numtype>::vecType*>(&data_[i])); }
 
   /** Returns true if the iterator data is aligned on a simd

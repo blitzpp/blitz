@@ -201,9 +201,7 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
     // }
 
 #ifdef BZ_DEBUG_TRAVERSE
-    cout << "T_expr::numIndexPlaceholders = " << T_expr::numIndexPlaceholders
-         << endl; 
-    cout.flush();
+    BZ_DEBUG_MESSAGE( "T_expr::numIndexPlaceholders = " << T_expr::numIndexPlaceholders);
 #endif
 
     // Tau profiling code.  Provide Tau with a pretty-printed version of
@@ -294,7 +292,6 @@ struct chunked_updater {
   typedef typename T_update::template updateCast<typename simdTypes<T_numtype>::vecType, typename T_expr::T_tvresult>::T_updater T_tvupdater;
 
   static __forceinline void update(T_numtype* data, T_expr expr, int i) { 
-    BZPRECONDITION(simdTypes<T_numtype>::isVectorAligned(data+i));
     T_tvupdater::update(*reinterpret_cast<typename simdTypes<T_numtype>::vecType*>(data+i), expr.fastRead_tv(i));
   };
 };
@@ -308,7 +305,6 @@ struct chunked_updater<T_numtype, T_expr, T_update, 1> {
     BZPRECONDITION(0);
   };
 };
-
 /** Unit-stride evaluator. This can use vectorized update, so if both
     dest and expr are unit stride, we redirect here. This in its own
     function to make it easier to read. This is never unrolled, since
@@ -320,10 +316,6 @@ _bz_evaluator<1>::
 evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
 		       T_expr expr, T_update)
 {
-#ifdef BZ_DEBUG_TRAVERSE
-  BZ_DEBUG_MESSAGE("\tunit stride");
-#endif
-
   typedef typename T_dest::T_numtype T_numtype;
   const int dest_width = simdTypes<T_numtype>::vecWidth;
   const diffType ubound = dest.length(firstRank);
@@ -332,6 +324,14 @@ evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
 
   // calculate uneven elements at the beginning of dest
   const int uneven_start=simdTypes<T_numtype>::offsetToAlignment(data);
+
+#ifdef BZ_DEBUG_TRAVERSE
+  BZ_DEBUG_MESSAGE("\tunit stride expression with length "<< ubound << ", SIMD width " << dest_width);
+  if(dest_width != simdTypes<typename T_expr::T_numtype>::vecWidth)
+    BZ_DEBUG_MESSAGE("\tdest has different width: " << simdTypes<typename T_expr::T_numtype>::vecWidth << ", vectorization not possible")
+  if(!expr.isVectorAligned(uneven_start))
+    BZ_DEBUG_MESSAGE("\tsource and dest have different alignment, vectorization not possible");
+#endif
 
   // check that the expression and destination have equal simd width,
   // that we actually have enough aligned operations to fill at least
@@ -342,9 +342,12 @@ evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
       (dest_width == simdTypes<typename T_expr::T_numtype>::vecWidth) &&
       (ubound-uneven_start>=dest_width) &&
       expr.isVectorAligned(uneven_start) ) {
-    BZASSERT(simdTypes<T_numtype>::isVectorAligned(data+uneven_start));
 
     // first do the uneven scalar operations
+#ifdef BZ_DEBUG_TRAVERSE
+    if(i<uneven_start)
+       BZ_DEBUG_MESSAGE("\tscalar loop for " << uneven_start << " unaligned starting elements");
+#endif
 #pragma ivdep
     for (; i < uneven_start; ++i)
 #pragma forceinline recursive
@@ -352,7 +355,8 @@ evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
     
     // then the vectorized loop
 #ifdef BZ_DEBUG_TRAVERSE
-    BZ_DEBUG_MESSAGE("\tusing vectorized loop");
+    if(i<=ubound-dest_width)
+      BZ_DEBUG_MESSAGE("\tvectorized loop starting at " << i);
 #endif
     //asm("nop;nop;nop;");
     for (; i <= ubound-dest_width; i+=dest_width)
@@ -361,15 +365,24 @@ evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
       chunked_updater<T_numtype, T_expr, T_update, simdTypes<T_numtype>::vecWidth>::update(data, expr, i);
     //asm("nop;nop;nop;");
   }
-  
+
+
   // now complete the loop with the elements not done in
   // the chunked loop. (if not aligned, not wide enough
   // loop, or not more than one item fitting in simd width,
   // this is all of them.)
+#ifdef BZ_DEBUG_TRAVERSE
+  if(i<ubound)
+    BZ_DEBUG_MESSAGE("\tscalar loop for " << ubound-i << " trailing elements starting at " << i);
+#endif
 #pragma ivdep
   for (; i < ubound; ++i)
 #pragma forceinline recursive
     T_update::update(data[i], expr.fastRead(i));
+
+#ifdef BZ_DEBUG_TRAVERSE
+  BZ_DEBUG_MESSAGE("\tunit stride evaluation done")
+#endif
 }
 
 

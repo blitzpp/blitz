@@ -153,15 +153,13 @@ public:
   { return array_.fastRead(i); }
 
     T_tvresult fastRead_tv(sizeType i) const
-  { BZASSERT(i%simdTypes<T_numtype>::vecWidth==0);
+  { BZASSERT(isVectorAligned(i));
     return T_tvresult(*reinterpret_cast<const typename simdTypes<T_numtype>::vecType*>(array_.data()+i)); }
 
-  /** Return true if the data pointer is simd aligned. We just check
-      that the offset of data_ from the array data() by an integral
-      amount, since the TinyMatrix itself is aligned by
-      construction. */
-  bool isVectorAligned() const 
-  { return (array_.data()-data_)%simdTypes<T_numtype>::vecWidth == 0; }
+  /** Since data_ is simd aligned by construction, we just have
+      to check the offest. */
+  bool isVectorAligned(diffType offset) const 
+  { return (offset%simdTypes<T_numtype>::vecWidth==0) ? true : false; }
 
   static int suggestStride(int r) 
     { return T_matrix::stride(r); }

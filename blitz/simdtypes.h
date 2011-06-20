@@ -26,7 +26,7 @@ public:
   static const int vecWidth=
     BZ_SIMD_WIDTH>sizeof(T) ? BZ_SIMD_WIDTH/sizeof(T) : 1;
 
-  /// Vector type of T that fills the simd width.
+  /// TinyVector type of T that fills the simd width.
   typedef TinyVector<T, vecWidth> vecType;
 
   /** Test if a pointer to T is simd aligned. */
@@ -34,8 +34,9 @@ public:
   { return (uintptr_t)((void*)pointer) % byteWidth == 0; }  
 
   /** Return number of elements from pointer to next simd width boundary. This is used to figure out how many scalar operations need to be done before beginning vectorized operations. */
-  static inline diffType offsetToAlignment(const T* restrict pointer)
-  { return byteWidth - ((uintptr_t)((void*)pointer) % byteWidth); }  
+  static inline diffType offsetToAlignment(const T* restrict pointer) { 
+    const uintptr_t m = (uintptr_t)((void*)pointer) % byteWidth;
+    return m==0 ? 0 : vecWidth - m/sizeof(T); }  
 };
 
 BZ_NAMESPACE_END

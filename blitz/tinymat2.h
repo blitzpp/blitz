@@ -268,10 +268,10 @@ public:
   const T_numtype& fastRead(sizeType i) const
   { return data_[i]; }
   
-  /** Return true, since TinyMatrices are simd aligned by
-      construction. */
-  bool isVectorAligned() const 
-  { return true; }
+  /** Since data_ is simd aligned by construction, we just have
+      to check the offest. */
+  bool isVectorAligned(diffType offset) const 
+  { return (offset%simdTypes<T_numtype>::vecWidth==0) ? true : false; }
 
     // T_reference getRef()
     // { return T_reference((T_numtype*)data_); }

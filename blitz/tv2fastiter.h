@@ -152,11 +152,11 @@ public:
   { return array_.fastRead(i); }
 
   T_tvresult fastRead_tv(sizeType i) const 
-  { BZASSERT(i%simdTypes<T_numtype>::vecWidth==0);
+  { BZPRECONDITION(isVectorAligned(i));
     return T_tvresult(*reinterpret_cast<const typename simdTypes<T_numtype>::vecType*>(array_.data()+i)); }
 
-  /** Return true, since TinyVectors are simd aligned by
-      construction. */
+  /** Since data_ is simd aligned by construction, we just have
+      to check the offest. */
   bool isVectorAligned(diffType offset) const 
   { return (offset%simdTypes<T_numtype>::vecWidth==0) ? true : false; }
 

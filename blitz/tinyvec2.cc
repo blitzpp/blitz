@@ -94,6 +94,23 @@ TinyVector<P_numtype,N_length>::_tv_evaluate(const T_expr& expr, T_update)
 
   // since we can't resize tinyvectors, there are two options: all
   // vectors have our size or the expression is malformed.
+    // Check that all arrays have the same shape
+#ifdef BZ_DEBUG
+    if (!expr.shapeCheck(shape()))
+    {
+      if (assertFailMode == false)
+      {
+        cerr << "[Blitz++] Shape check failed: Module " << __FILE__
+             << " line " << __LINE__ << endl
+             << "          Expression: ";
+        prettyPrintFormat format(true);   // Use terse formatting
+        BZ_STD_SCOPE(string) str;
+        expr.prettyPrint(str, format);
+        cerr << str << endl ;
+      }
+    }
+#endif
+
   BZPRECHECK(expr.shapeCheck(shape()),
 	     "Shape check failed." << endl << "Expression:");
 
