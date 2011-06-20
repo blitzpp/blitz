@@ -55,10 +55,13 @@ class FastTV2Iterator;
 template<typename P_numtype, int N_length>
 class FastTV2CopyIterator;
 
-/*****************************************************************************
- * Declaration of class TinyVector
- */
 
+/** The TinyVector class is a one-dimensional, fixed length vector
+    that implements the blitz expression template
+    machinery. TinyVector-only expressions are very fast because they
+    usually get reduced to just the unrolled (and vectorized, if
+    enabled) assembly instructions. TinyVectors can also be used in
+    mixed expressions with other ET classes. */
 template<typename P_numtype, int N_length>
 class TinyVector : public ETBase<TinyVector<P_numtype, N_length> >
 {
@@ -76,8 +79,8 @@ public:
   typedef FastTV2CopyIterator<P_numtype, N_length> T_range_result;
 
     static const int 
-        numArrayOperands = 1, 
-        numIndexPlaceholders = 0,
+    //numArrayOperands = 1, 
+    //numIndexPlaceholders = 0,
         rank_ = 1;
 
     TinyVector()  { }
@@ -88,8 +91,20 @@ public:
     template <typename T_numtype2>
     inline TinyVector(const TinyVector<T_numtype2,N_length>& x);
 
+  /** This constructor creates a TinyVector from another ETBase
+      object. It needs to be explicit to avoid all kinds of
+      ambiguities. */
     template <typename T_expr>
     inline explicit TinyVector(const ETBase<T_expr>& expr) {
+      *this = expr; }
+
+  /** This constructor creates a TinyVector specifically from an
+      expression. This one we do NOT want to be explicit because that
+      breaks simple construction assignments like "TinyVector<double,
+      1> v = a+b;", forcing the user to explicitly write it like a
+      construction. */
+    template <typename T_expr>
+    inline TinyVector(const _bz_ArrayExpr<T_expr>& expr) {
       *this = expr; }
 
     inline TinyVector(const T_numtype initValue);

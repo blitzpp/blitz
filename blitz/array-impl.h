@@ -135,10 +135,10 @@ public:
     //////////////////////////////////////////////
 
     
-    /*
-     * Construct an array from an array expression.
-     */
-
+    /** Construct an array from an expression. Because this entails a
+	memory allocation, it is explicit so this fact is obvious to
+	the user. (There may also be ambiguities in making it
+	implicit?) */
     template<typename T_expr>
     explicit Array(_bz_ArrayExpr<T_expr> expr);
 
