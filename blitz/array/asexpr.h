@@ -32,6 +32,7 @@
 #define BZ_ASEXPR_H
 
 #include <blitz/et-forward.h>
+#include <blitz/numtrait.h>
 
 BZ_NAMESPACE(blitz)
 
@@ -252,6 +253,49 @@ struct BzQuaternaryExprResult {
 			    typename asExpr<O4>::T_expr::T_optype
 			    > > > T_result;
 };
+
+template <template <typename T1, typename T2> class RED, int N, typename O1,
+	  typename T_result = BZ_SUMTYPE(typename asExpr<O1>::T_expr::T_optype)>
+struct BzReductionResult {
+  typedef _bz_ArrayExpr<
+    _bz_ArrayExprReduce<
+      typename asExpr<O1>::T_expr,
+      N,
+      RED<typename asExpr<O1>::T_expr::T_optype, T_result>
+      > > T_result;
+};
+
+template<typename O1, int N0, int N1=0, int N2=0, int N3=0, int N4=0, 
+	 int N5=0, int N6=0, int N7=0, int N8=0, int N9=0, int N10=0> 
+struct BzIndexmapResult {
+  typedef _bz_ArrayExpr<
+    ArrayIndexMapping<
+      typename asExpr<O1>::T_expr,
+      N0, N1, N2, N3, N4, N5, N6, N7, N8, N9, N10
+      >
+    > T_result;
+};
+
+template<template <typename T> class STENCIL, typename O1>
+struct BzStencilResult {
+  typedef _bz_ArrayExpr<
+    STENCIL<
+      typename asExpr<O1>::T_expr::T_range_result
+      >
+    > T_result;
+};
+
+template<template <typename T1, typename T2, typename T3> class STENCIL, 
+	 typename O1, typename O2, typename T_result>
+struct BzBinaryStencilResult {
+  typedef _bz_ArrayExpr<
+    STENCIL<
+      typename asExpr<O1>::T_expr::T_range_result,
+      typename asExpr<O2>::T_expr::T_range_result,
+      T_result
+      > > T_result;
+};
+
 
 #endif /* BZ_HAVE_TEMPLATES_AS_TEMPLATE_ARGUMENTS */
 
