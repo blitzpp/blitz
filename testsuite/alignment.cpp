@@ -44,16 +44,18 @@ int main()
   if(w>1) {
     // test that arrays correctly report as being aligned or not.
     Array<float, 2> A(3*w,3*w);
-    BZTEST(A.isVectorAligned());
+    BZTEST(A.isVectorAligned(0));
     Array<float,1> B(A(1,Range::all()));
-    BZTEST(B.isVectorAligned());
-    BZTEST(!A(Range::all(),1).isVectorAligned());
-    BZTEST(B(Range(w,2*w-1)).isVectorAligned());
-    BZTEST(!B(Range(1,2*w-1)).isVectorAligned());
+    BZTEST(B.isVectorAligned(0));
+    BZTEST(!A(Range::all(),1).isVectorAligned(0));
+    BZTEST(B(Range(w,2*w-1)).isVectorAligned(0));
+    BZTEST(!B(Range(1,2*w-1)).isVectorAligned(0));
+    BZTEST(B(Range(1,2*w-1)).isVectorAligned(w-1));
 
     // test that expressions correctly report as being aligned or not
-    BZTEST((A(1,Range::all())*B).isVectorAligned());
-    BZTEST(!(A(Range::all(),1)*B).isVectorAligned());
+    BZTEST((A(1,Range::all())*B).isVectorAligned(0));
+    BZTEST(!(A(Range::all(),1)*B).isVectorAligned(0));
+    BZTEST((A(Range::all(),1)*B(Range(1,2*w-1))).isVectorAligned(w-1));
 
     // test that we don't overwrite the end of aligned but uneven-length arrays
     B=0;
