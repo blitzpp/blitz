@@ -260,8 +260,8 @@ public:
 
       // ****** end reading
 
-  bool isVectorAligned() const 
-  { return iter_.isVectorAligned(); }
+  bool isVectorAligned(diffType offset) const 
+  { return iter_.isVectorAligned(offset); }
 
   T_range_result operator()(RectDomain<rank_> d) const
   {
@@ -549,8 +549,9 @@ public:
     return T_range_result(f_, iter1_(d), iter2_(d));
   }
 
-  bool isVectorAligned() const 
-  { return iter1_.isVectorAligned() && iter2_.isVectorAligned(); }
+  bool isVectorAligned(diffType offset) const 
+  { return iter1_.isVectorAligned(offset) && 
+      iter2_.isVectorAligned(offset); }
 
     int ascending(const int rank) const {
         return bounds::compute_ascending(rank, iter1_.ascending(rank),
@@ -931,9 +932,10 @@ public:
 
       // ****** end reading
   
-  bool isVectorAligned() const 
-  { return iter1_.isVectorAligned() && iter2_.isVectorAligned() &&
-      iter3_.isVectorAligned(); }
+  bool isVectorAligned(diffType offset) const 
+  { return iter1_.isVectorAligned(offset) &&
+      iter2_.isVectorAligned(offset) &&
+      iter3_.isVectorAligned(offset); }
 
   T_range_result operator()(RectDomain<rank_> d) const
   {

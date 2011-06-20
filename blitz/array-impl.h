@@ -1158,8 +1158,8 @@ public:
     { return zeroOffset_; }
 
   /** Returns true if the array is aligned on a simd vector width. */
-  bool isVectorAligned() const
-  { return simdTypes<T_numtype>::isVectorAligned(dataFirst()); };
+  bool isVectorAligned(diffType offset) const
+  { return simdTypes<T_numtype>::isVectorAligned(dataFirst()+offset); };
 
     //////////////////////////////////////////////
     // Debugging routines

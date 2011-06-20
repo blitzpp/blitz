@@ -157,8 +157,8 @@ public:
 
   /** Return true, since TinyVectors are simd aligned by
       construction. */
-  bool isVectorAligned() const 
-  { return true; }
+  bool isVectorAligned(diffType offset) const 
+  { return (offset%simdTypes<T_numtype>::vecWidth==0) ? true : false; }
 
     int suggestStride(int r) const
   { BZPRECONDITION(r==0); return stride_; }

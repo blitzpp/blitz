@@ -293,7 +293,8 @@ template<typename T_numtype, typename T_expr, typename T_update, int N>
 struct chunked_updater {
   typedef typename T_update::template updateCast<typename simdTypes<T_numtype>::vecType, typename T_expr::T_tvresult>::T_updater T_tvupdater;
 
-  static __forceinline void update(T_numtype* data, T_expr expr, int i) {  
+  static __forceinline void update(T_numtype* data, T_expr expr, int i) { 
+    BZPRECONDITION(simdTypes<T_numtype>::isVectorAligned(data+i));
     T_tvupdater::update(*reinterpret_cast<typename simdTypes<T_numtype>::vecType*>(data+i), expr.fastRead_tv(i));
   };
 };
@@ -327,21 +328,34 @@ evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
   const int dest_width = simdTypes<T_numtype>::vecWidth;
   const diffType ubound = dest.length(firstRank);
   T_numtype* restrict data = const_cast<T_numtype*>(iter.data());
-
-  // if expressions are vector aligned we use the tv loop for
-  // everything except the final uneven tail.
   int i=0;
+
+  // calculate uneven elements at the beginning of dest
+  const int uneven_start=simdTypes<T_numtype>::offsetToAlignment(data);
+
+  // check that the expression and destination have equal simd width,
+  // that we actually have enough aligned operations to fill at least
+  // one simd operation, and that the expression and destination have
+  // *equal* alignment. (The first two are static so should be
+  // evaluated by the compiler.)
   if( (dest_width >1) &&
       (dest_width == simdTypes<typename T_expr::T_numtype>::vecWidth) &&
-      (ubound>dest_width) &&
-      dest.isVectorAligned() &&
-      expr.isVectorAligned() ) {
+      (ubound-uneven_start>=dest_width) &&
+      expr.isVectorAligned(uneven_start) ) {
+    BZASSERT(simdTypes<T_numtype>::isVectorAligned(data+uneven_start));
+
+    // first do the uneven scalar operations
+#pragma ivdep
+    for (; i < uneven_start; ++i)
+#pragma forceinline recursive
+      T_update::update(data[i], expr.fastRead(i));
     
+    // then the vectorized loop
 #ifdef BZ_DEBUG_TRAVERSE
     BZ_DEBUG_MESSAGE("\tusing vectorized loop");
 #endif
     //asm("nop;nop;nop;");
-    for (; i < ubound-dest_width+1; i+=dest_width)
+    for (; i <= ubound-dest_width; i+=dest_width)
 #pragma vector aligned
 #pragma forceinline recursive
       chunked_updater<T_numtype, T_expr, T_update, simdTypes<T_numtype>::vecWidth>::update(data, expr, i);

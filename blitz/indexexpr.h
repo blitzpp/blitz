@@ -156,7 +156,7 @@ public:
     }
 
   /** There are no alignment issues here, so just return true. */
-  bool isVectorAligned() const {
+  bool isVectorAligned(diffType offset) const {
     return true; }
   
     diffType suggestStride(int) const {

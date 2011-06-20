@@ -183,8 +183,8 @@ public:
 
   /** Returns true if the iterator data is aligned on a simd
       vector. */
-  bool isVectorAligned() const
-  { return simdTypes<T_numtype>::isVectorAligned(data_); };
+  bool isVectorAligned(diffType offset) const
+  { return simdTypes<T_numtype>::isVectorAligned(data_ + offset); };
 
     int suggestStride(int rank) const
     { return array_.stride(rank); }

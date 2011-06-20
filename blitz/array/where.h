@@ -233,9 +233,10 @@ public:
 
       // ****** end reading
 
-  bool isVectorAligned() const 
-  { return iter1_.isVectorAligned() && iter2_.isVectorAligned() &&
-      iter3_.isVectorAligned(); }
+  bool isVectorAligned(diffType offset) const 
+  { return iter1_.isVectorAligned(offset) && 
+      iter2_.isVectorAligned(offset) &&
+      iter3_.isVectorAligned(offset); }
 
     T_range_result operator()(const RectDomain<rank_>& d) const
   { return T_range_result(iter1_(d), iter2_(d), iter3_(d)); }

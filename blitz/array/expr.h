@@ -229,8 +229,8 @@ public:
     T_tvresult fastRead_tv(int i) const
     { return iter_.fastRead_tv(i); }
 
-  bool isVectorAligned() const 
-  { return iter_.isVectorAligned(); }
+  bool isVectorAligned(diffType offset) const 
+  { return iter_.isVectorAligned(offset); }
 
     // this is needed for the stencil expression fastRead to work
     void _bz_offsetData(sizeType i)
@@ -642,8 +642,8 @@ public:
 
       // ****** end reading
 
-  bool isVectorAligned() const 
-  { return iter_.isVectorAligned(); }
+  bool isVectorAligned(diffType offset) const 
+  { return iter_.isVectorAligned(offset); }
 
   template<int N>
   T_range_result operator()(const RectDomain<N>& d) const
@@ -918,8 +918,9 @@ public:
 
       // ****** end reading
 
-  bool isVectorAligned() const 
-  { return iter1_.isVectorAligned() && iter2_.isVectorAligned(); }
+  bool isVectorAligned(diffType offset) const 
+  { return iter1_.isVectorAligned(offset) && 
+      iter2_.isVectorAligned(offset); }
 
   template<int N>
   T_range_result operator()(const RectDomain<N>& d) const
@@ -1295,9 +1296,10 @@ public:
 
       // ****** end reading
 
-  bool isVectorAligned() const 
-  { return iter1_.isVectorAligned() && iter2_.isVectorAligned() &&
-      iter3_.isVectorAligned(); }
+  bool isVectorAligned(diffType offset) const 
+  { return iter1_.isVectorAligned(offset) && 
+      iter2_.isVectorAligned(offset) &&
+      iter3_.isVectorAligned(offset); }
 
   template<int N>
   T_range_result operator()(const RectDomain<N>& d) const
@@ -1746,9 +1748,11 @@ public:
 
       // ****** end reading
 
-  bool isVectorAligned() const 
-  { return iter1_.isVectorAligned() && iter2_.isVectorAligned() &&
-      iter3_.isVectorAligned() && iter3_.isVectorAligned(); }
+  bool isVectorAligned(diffType offset) const 
+  { return iter1_.isVectorAligned(offset) &&
+      iter2_.isVectorAligned(offset) &&
+      iter3_.isVectorAligned(offset) &&
+      iter3_.isVectorAligned(offset); }
 
   template<int N>
   T_range_result operator()(const RectDomain<rank_>& d) const
@@ -2081,7 +2085,7 @@ public:
   const T_numtype& fastRead_tv(int) const
     { return value_; }
 
-  bool isVectorAligned() const 
+  bool isVectorAligned(diffType offset) const 
   { return true; }
 
   // this is needed for the stencil expression fastRead to work

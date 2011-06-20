@@ -207,7 +207,7 @@ public:
     /** Determining whether the resulting expression is aligned is
 	difficult, so to be safe we say no. It shouldn't be attempted
 	anyway, though. */
-    bool isVectorAligned() const {
+    bool isVectorAligned(diffType offset) const {
       return false; }
 
     // don't know how to define these, so stencil expressions won't work
@@ -337,7 +337,7 @@ template<typename T_expr, typename T_reduction>
 _bz_typename T_reduction::T_resulttype
 _bz_reduceWithIndexVectorTraversal(T_expr expr, T_reduction reduction);
 
-#define BZ_DECL_ARRAY_FULL_REDUCE(fn,reduction)                         \
+#define BZ_DECL_ARRAY_FULL_REDUCE(fn,reduction)				\
 template<typename T_expr>                                               \
  _bz_inline_et								\
 _bz_typename reduction<_bz_typename T_expr::T_numtype>::T_resulttype    \

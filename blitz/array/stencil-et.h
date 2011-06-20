@@ -161,7 +161,7 @@ class _bz_StencilExpr {
     BZPRECONDITION(0); return T_numtype(); }
 
   /** Vectorization doesn't make sense for stencils, so we say so. */
-  bool isVectorAligned() const {
+  bool isVectorAligned(diffType offset) const {
     return false; }
 
   void push(int position)
@@ -314,7 +314,7 @@ class _bz_StencilExpr2 {
   }
 
   /** Vectorization doesn't make sense for stencils, so we say so. */
-  bool isVectorAligned() const {
+  bool isVectorAligned(diffType offset) const {
     return false; }
 
     void push(int position)

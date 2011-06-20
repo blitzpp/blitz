@@ -657,7 +657,7 @@ public:
     /** Determining whether the resulting expression is aligned is
 	difficult, so to be safe we say no. It shouldn't be attempted
 	anyway, though. */
-    bool isVectorAligned() const {
+    bool isVectorAligned(diffType offset) const {
       return false; }
 
     int suggestStride(int) const
