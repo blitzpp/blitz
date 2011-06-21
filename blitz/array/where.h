@@ -107,8 +107,19 @@ public:
         numIndexPlaceholders = P_expr1::numIndexPlaceholders
                              + P_expr2::numIndexPlaceholders
                              + P_expr3::numIndexPlaceholders,
-        rank_ = _bz_meta_max<_bz_meta_max<P_expr1::rank_,P_expr2::rank_>::max,
-                            P_expr3::rank_>::max;
+      minWidth = BZ_MIN(BZ_MIN(T_expr1::minWidth, T_expr2::minWidth),
+			T_expr3::minWidth),
+      maxWidth = BZ_MAX(BZ_MAX(T_expr1::maxWidth, T_expr2::maxWidth), 
+			T_expr3::maxWidth),
+      rank_ = BZ_MAX(BZ_MAX(T_expr1::rank_, T_expr2::rank_),
+		     T_expr3::rank_);
+
+  template<int N> struct tvresult {
+    typedef _bz_ArrayWhere<
+      typename T_expr1::template tvresult<N>::Type,
+      typename T_expr2::template tvresult<N>::Type,
+      typename T_expr3::template tvresult<N>::Type> Type; 
+  };
 
     _bz_ArrayWhere(const _bz_ArrayWhere<T_expr1,T_expr2,T_expr3>& a)
       : iter1_(a.iter1_), iter2_(a.iter2_), iter3_(a.iter3_)
@@ -206,8 +217,13 @@ public:
     T_result fastRead(int i) const { 
       return readHelper<T_typeprop>::fastRead(iter1_, iter2_, iter3_, i); }
 
-    T_tvresult fastRead_tv(int i) const { 
-      return readHelper<T_tvtypeprop>::fastRead_tv(iter1_, iter2_, iter3_, i); }
+      template<int N>
+      typename tvresult<N>::Type fastRead_tv(int i) const
+      { return typename tvresult<N>::Type(iter1_.fastRead_tv<N>(i),
+					  iter2_.fastRead_tv<N>(i),
+					  iter3_.fastRead_tv<N>(i)); }
+    // T_tvresult fastRead_tv(int i) const { 
+    //   return readHelper<T_tvtypeprop>::fastRead_tv(iter1_, iter2_, iter3_, i); }
 
     T_result operator[](int i) const { 
       return readHelper<T_typeprop>::indexop(iter1_, iter2_, iter3_, i); }

@@ -411,8 +411,14 @@ public:
       numTVOperands = T_expr::numTVOperands,
       numTMOperands = T_expr::numTMOperands,
         numIndexPlaceholders = 1,
+      minWidth = simdTypes<T_numtype>::vecWidth,
+      maxWidth = simdTypes<T_numtype>::vecWidth,
         rank_ = maxRank10 + 1,
         exprRank = T_expr::rank_;
+
+  template<int N> struct tvresult {
+    typedef FastTV2Iterator<T_numtype, N> Type;
+  };
 
   /*
     ArrayIndexMapping(const Array<T_numtype, rank>& array)
@@ -648,10 +654,10 @@ public:
         return T_result();
     }
 
-    T_tvresult fastRead_tv(int) const
-    {
-        BZPRECHECK(0,"Can't use stack iteration on an index mapping.");
-        return T_tvresult();
+  template<int N>
+  typename tvresult<N>::Type fastRead_tv(int) const {
+    BZPRECHECK(0,"Can't use stack iteration on an index mapping.");
+    return TinyVector<T_numtype, N>();
     }
 
     /** Determining whether the resulting expression is aligned is

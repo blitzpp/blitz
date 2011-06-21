@@ -113,7 +113,15 @@ class _bz_StencilExpr {
     numTVOperands = T_expr::numTVOperands,
     numTMOperands = T_expr::numTMOperands,
     numIndexPlaceholders = T_expr::numIndexPlaceholders,
+      minWidth = T_expr::minWidth,
+      maxWidth = T_expr::maxWidth,
     rank_ = T_expr::rank_;
+
+  template<int N> struct tvresult {
+    typedef _bz_StencilExpr<
+      typename T_expr::template tvresult<N>::Type,
+      T_numtype> Type;
+  };
   
  _bz_StencilExpr(const _bz_StencilExpr<T_expr, T_numtype>& a)
    : iter_(a.iter_)
@@ -157,8 +165,9 @@ class _bz_StencilExpr {
 
   //T_numtype first_value() const { return iter_(iter_.lbound()); }
 
-  T_numtype fastRead_tv(int i) const {
-    BZPRECONDITION(0); return T_numtype(); }
+  template<int N>
+  typename tvresult<N>::Type fastRead_tv(int i) const
+  { return iter_.fastRead_tv<N>(i); }
 
   /** Vectorization doesn't make sense for stencils, so we say so. */
   bool isVectorAligned(diffType offset) const {
@@ -262,8 +271,17 @@ class _bz_StencilExpr2 {
     numTMOperands = T_expr1::numTMOperands + T_expr2::numTMOperands,
     numIndexPlaceholders = T_expr1::numIndexPlaceholders
     + T_expr2::numIndexPlaceholders,
-    rank_ = (T_expr1::rank_ > T_expr2::rank_) 
-    ? T_expr1::rank_ : T_expr2::rank_;
+      minWidth = BZ_MIN(T_expr1::minWidth, T_expr2::minWidth),
+      maxWidth = BZ_MAX(T_expr1::maxWidth, T_expr2::maxWidth),
+      rank_ = BZ_MAX(T_expr1::rank_, T_expr2::rank_);
+
+  /// dummy
+  template<int N> struct tvresult {
+    typedef _bz_StencilExpr2<
+      typename T_expr1::template tvresult<N>::Type,
+      typename T_expr2::template tvresult<N>::Type,
+      T_numtype> Type; 
+  };
   
   _bz_StencilExpr2(const _bz_StencilExpr2<T_expr1, T_expr2, T_numtype>& a)
     : iter1_(a.iter1_), iter2_(a.iter2_)

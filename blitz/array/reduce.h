@@ -101,7 +101,15 @@ public:
         numTVOperands = T_expr::numTVOperands,
         numTMOperands = T_expr::numTMOperands,
         numIndexPlaceholders = T_expr::numIndexPlaceholders + 1,
+      minWidth = simdTypes<T_numtype>::vecWidth,
+      maxWidth = simdTypes<T_numtype>::vecWidth,
         rank_ = T_expr::rank_ - 1;
+
+  /** Vectorization doesn't work for index expressions, so we can use
+      a dummy here. */
+  template<int N> struct tvresult {
+    typedef FastTV2Iterator<T_numtype, N> Type;
+  };
 
     _bz_ArrayExprReduce(const _bz_ArrayExprReduce& reduce)
         : reduce_(reduce.reduce_), iter_(reduce.iter_), ordering_(reduce.ordering_) { }
@@ -199,9 +207,10 @@ public:
     T_numtype fastRead(int)   const { 
       BZPRECHECK(0,"Can't use stack iteration on a reduction."); return T_numtype(); }
 
-    T_numtype fastRead_tv(int)   const { 
-      BZPRECHECK(0,"Can't use stack iteration on a reduction."); 
-      return T_numtype();//tvresult(iter_, reduce_); 
+  template<int N>
+  typename tvresult<N>::Type fastRead_tv(int) const {
+    BZPRECHECK(0,"Can't use stack iteration on an index mapping.");
+    return TinyVector<T_numtype, N>();
     }
 
     /** Determining whether the resulting expression is aligned is

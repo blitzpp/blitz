@@ -307,6 +307,10 @@ struct chunked_updater {
     types with a vecWidth of 1. */
 template<typename T_numtype, typename T_expr, typename T_update>
 struct chunked_updater<T_numtype, T_expr, T_update, 1> {
+  static __forceinline void aligned_update(T_numtype* data, T_expr expr, int i) {
+    BZPRECONDITION(0); };
+  static __forceinline void unaligned_update(T_numtype* data, T_expr expr, int i) {
+    BZPRECONDITION(0); };
 };
 
 /** A metaprogram that uses the chunked_updater to assign an

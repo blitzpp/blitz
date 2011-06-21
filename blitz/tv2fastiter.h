@@ -159,13 +159,9 @@ public:
     T_result fastRead(sizeType i) const
   { return array_.fastRead(i); }
 
-  // T_tvresult fastRead_tv(sizeType i) const 
-  // { BZPRECONDITION(isVectorAligned(i));
-  //   return T_tvresult(*reinterpret_cast<const typename simdTypes<T_numtype>::vecType*>(array_.data()+i)); }
-
   template<int N>
   typename tvresult<N>::Type fastRead_tv(sizeType i) const
-  { BZPRECONDITION(isVectorAligned(i));
+  { 
     return typename tvresult<N>::Type(*reinterpret_cast<const TinyVector<T_numtype,N>*>(&data_[i])); }
 
   /** Since data_ is simd aligned by construction, we just have

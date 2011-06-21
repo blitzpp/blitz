@@ -182,16 +182,12 @@ public:
     { return data_[i]; }
 
   /** Returns a TinyVector "view" of the data at i, with a vector
-      length appropriate for the simd width. This makes it possible to
-      convert the expression into a TinyVector expression, which is
-      efficiently vectorized. */ 
-  //  T_tvresult fastRead_tv(sizeType i) const
-  // { BZPRECONDITION(isVectorAligned(i));
-  //   return T_tvresult(*reinterpret_cast<const typename simdTypes<T_numtype>::vecType*>(&data_[i])); }
-
+      length specified by the template parameter N. This makes it
+      possible to convert a small part of an arbitrary expression into
+      a TinyVector expression, which is efficiently vectorized. */ 
   template<int N>
   typename tvresult<N>::Type fastRead_tv(sizeType i) const
-  { //BZPRECONDITION(isVectorAligned(i));
+  {
     return typename tvresult<N>::Type(*reinterpret_cast<const TinyVector<T_numtype,N>*>(&data_[i])); }
 
   /** Returns true if the iterator data is aligned on a simd

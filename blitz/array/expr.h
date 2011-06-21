@@ -1196,16 +1196,20 @@ public:
         numIndexPlaceholders = T_expr1::numIndexPlaceholders
                              + T_expr2::numIndexPlaceholders
                              + T_expr3::numIndexPlaceholders,
-        minWidth = (T_expr1::minWidth < T_expr2::minWidth) 
-             ? ((T_expr1::minWidth < T_expr3::minWidth)
-                ? T_expr1::minWidth : T_expr3::minWidth)
-             : ((T_expr2::minWidth < T_expr3::minWidth) 
-                ? T_expr2::minWidth : T_expr3::minWidth),
-        rank_ = (T_expr1::rank_ > T_expr2::rank_) 
-             ? ((T_expr1::rank_ > T_expr3::rank_)
-                ? T_expr1::rank_ : T_expr3::rank_)
-             : ((T_expr2::rank_ > T_expr3::rank_) 
-                ? T_expr2::rank_ : T_expr3::rank_);
+      minWidth = BZ_MIN(BZ_MIN(T_expr1::minWidth, T_expr2::minWidth),
+			T_expr3::minWidth),
+      maxWidth = BZ_MAX(BZ_MAX(T_expr1::maxWidth, T_expr2::maxWidth), 
+			T_expr3::maxWidth),
+      rank_ = BZ_MAX(BZ_MAX(T_expr1::rank_, T_expr2::rank_),
+		     T_expr3::rank_);
+
+  template<int N> struct tvresult {
+    typedef _bz_ArrayExprTernaryOp<
+      typename T_expr1::template tvresult<N>::Type,
+      typename T_expr2::template tvresult<N>::Type,
+      typename T_expr3::template tvresult<N>::Type,
+      T_op> Type; 
+  };
 
     _bz_ArrayExprTernaryOp(
         const _bz_ArrayExprTernaryOp<T_expr1, T_expr2, T_expr3, T_op>& a)
@@ -1309,8 +1313,14 @@ public:
     T_result fastRead(int i) const { 
       return readHelper<T_typeprop>::fastRead(iter1_, iter2_, iter3_, i); }
 
-    T_tvresult fastRead_tv(int i) const { 
-      return readHelper<T_tvtypeprop>::fastRead_tv(iter1_, iter2_, iter3_, i); }
+      template<int N>
+      typename tvresult<N>::Type fastRead_tv(int i) const
+      { return typename tvresult<N>::Type(iter1_.fastRead_tv<N>(i),
+					  iter2_.fastRead_tv<N>(i),
+					  iter3_.fastRead_tv<N>(i)); }
+      
+    // T_tvresult fastRead_tv(int i) const { 
+    //   return readHelper<T_tvtypeprop>::fastRead_tv(iter1_, iter2_, iter3_, i); }
 
     T_result operator[](int i) const { 
       return readHelper<T_typeprop>::indexop(iter1_, iter2_, iter3_, i); }
@@ -1639,10 +1649,21 @@ public:
     + T_expr4::numIndexPlaceholders,
 
     minWidth = BZ_MIN(BZ_MIN(T_expr1::minWidth, T_expr2::minWidth),
-		       BZ_MIN(T_expr3::minWidth, T_expr4::minWidth)),
+		      BZ_MIN(T_expr3::minWidth, T_expr4::minWidth)),
+    maxWidth = BZ_MAX(BZ_MAX(T_expr1::maxWidth, T_expr2::maxWidth),
+		      BZ_MAX(T_expr3::maxWidth, T_expr4::maxWidth)),
 
     rank_ = BZ_MAX(BZ_MAX(T_expr1::rank_, T_expr2::rank_),
 		  BZ_MAX(T_expr3::rank_, T_expr4::rank_));
+
+  template<int N> struct tvresult {
+    typedef _bz_ArrayExprQuaternaryOp<
+      typename T_expr1::template tvresult<N>::Type,
+      typename T_expr2::template tvresult<N>::Type,
+      typename T_expr3::template tvresult<N>::Type,
+      typename T_expr4::template tvresult<N>::Type,
+      T_op> Type; 
+  };
 
     _bz_ArrayExprQuaternaryOp(
         const _bz_ArrayExprQuaternaryOp<T_expr1, T_expr2, T_expr3, T_expr4, T_op>& a)
@@ -1758,9 +1779,16 @@ public:
       return readHelper<T_typeprop>::fastRead(iter1_, iter2_, 
 					      iter3_, iter4_, i); }
 
-    T_tvresult fastRead_tv(int i) const { 
-      return readHelper<T_tvtypeprop>::fastRead_tv(iter1_, iter2_, 
-						   iter3_, iter4_, i); }
+      template<int N>
+      typename tvresult<N>::Type fastRead_tv(int i) const
+      { return typename tvresult<N>::Type(iter1_.fastRead_tv<N>(i),
+					  iter2_.fastRead_tv<N>(i),
+					  iter3_.fastRead_tv<N>(i),
+					  iter4_.fastRead_tv<N>(i)); }
+
+    // T_tvresult fastRead_tv(int i) const { 
+    //   return readHelper<T_tvtypeprop>::fastRead_tv(iter1_, iter2_, 
+    // 						   iter3_, iter4_, i); }
 
     T_result operator[](int i) const { 
       return readHelper<T_typeprop>::indexop(iter1_, iter2_, 

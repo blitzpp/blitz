@@ -143,8 +143,17 @@ public:
         numTVOperands = T_expr::numTVOperands,
         numTMOperands = T_expr::numTMOperands,
 	numIndexPlaceholders = T_expr::numIndexPlaceholders,
+      minWidth = T_expr::minWidth,
+      maxWidth = T_expr::maxWidth,
 	rank_ = T_expr::rank_;
     
+  template<int N> struct tvresult {
+    typedef _bz_FunctorExpr<
+      T_functor,
+      typename T_expr::template tvresult<N>::Type,
+      T_numtype> Type; 
+  };
+
     _bz_FunctorExpr(const _bz_FunctorExpr<P_functor,P_expr,P_result>& a)
         : f_(a.f_), iter_(a.iter_)
     { }
@@ -231,8 +240,9 @@ public:
     T_result fastRead(int i) const { 
       return readHelper<T_typeprop>::fastRead(f_, iter_, i); }
 
-    T_tvresult fastRead_tv(int i) const { 
-      return readHelper<T_tvtypeprop>::fastRead_tv(f_, iter_, i); }
+  template<int N>
+  typename tvresult<N>::Type fastRead_tv(int i) const
+      { return typename tvresult<N>::Type(f_,iter_.fastRead_tv<N>(i)); }
 
     T_result operator[](int i) const { 
       return readHelper<T_typeprop>::indexop(f_, iter_, i); }
@@ -411,8 +421,17 @@ public:
         numTMOperands = T_expr1::numTMOperands + T_expr2::numTMOperands,
 	numIndexPlaceholders = T_expr1::numIndexPlaceholders
 	                     + T_expr2::numIndexPlaceholders,
-	rank_ = T_expr1::rank_ > T_expr2::rank_
-             ? T_expr1::rank_ : T_expr2::rank_;
+      minWidth = BZ_MIN(T_expr1::minWidth, T_expr2::minWidth),
+      maxWidth = BZ_MAX(T_expr1::maxWidth, T_expr2::maxWidth),
+      rank_ = BZ_MAX(T_expr1::rank_, T_expr2::rank_);
+
+  template<int N> struct tvresult {
+    typedef _bz_FunctorExpr2<
+      T_functor,
+      typename T_expr1::template tvresult<N>::Type,
+      typename T_expr2::template tvresult<N>::Type,
+      T_numtype> Type; 
+  };
   
     _bz_FunctorExpr2(const _bz_FunctorExpr2<P_functor, P_expr1, P_expr2,
         P_result>& a) 
@@ -514,8 +533,11 @@ public:
     T_result fastRead(int i) const { 
       return readHelper<T_typeprop>::fastRead(f_, iter1_, iter2_, i); }
 
-    T_tvresult fastRead_tv(int i) const { 
-      return readHelper<T_tvtypeprop>::fastRead_tv(f_, iter1_, iter2_, i); }
+  template<int N>
+  typename tvresult<N>::Type fastRead_tv(int i) const
+      { return typename tvresult<N>::Type(f_,
+					  iter1_.fastRead_tv<N>(i),
+					  iter2_.fastRead_tv<N>(i)); }
 
     T_result operator[](int i) const { 
       return readHelper<T_typeprop>::indexop(f_, iter1_, iter2_, i); }
@@ -781,9 +803,21 @@ public:
 	numIndexPlaceholders = T_expr1::numIndexPlaceholders
 	                     + T_expr2::numIndexPlaceholders
 	                     + T_expr3::numIndexPlaceholders,
-	rank12 = T_expr1::rank_ > T_expr2::rank_
-	       ? T_expr1::rank_ : T_expr2::rank_,
-	rank_ = rank12 > T_expr3::rank_ ? rank12 : T_expr3::rank_;
+      minWidth = BZ_MIN(BZ_MIN(T_expr1::minWidth, T_expr2::minWidth),
+			T_expr3::minWidth),
+      maxWidth = BZ_MAX(BZ_MAX(T_expr1::maxWidth, T_expr2::maxWidth), 
+			T_expr3::maxWidth),
+      rank_ = BZ_MAX(BZ_MAX(T_expr1::rank_, T_expr2::rank_),
+		     T_expr3::rank_);
+
+  template<int N> struct tvresult {
+    typedef _bz_FunctorExpr3<
+      T_functor,
+      typename T_expr1::template tvresult<N>::Type,
+      typename T_expr2::template tvresult<N>::Type,
+      typename T_expr3::template tvresult<N>::Type,
+      T_numtype> Type; 
+  };
   
     _bz_FunctorExpr3(const _bz_FunctorExpr3<P_functor, P_expr1, P_expr2,
         P_expr3, P_result>& a) 
@@ -901,9 +935,12 @@ public:
     T_result fastRead(int i) const { 
       return readHelper<T_typeprop>::fastRead(f_, iter1_, iter2_, iter3_, i); }
 
-    T_tvresult fastRead_tv(int i) const { 
-      return readHelper<T_tvtypeprop>::fastRead_tv(f_, iter1_, 
-						   iter2_, iter3_, i); }
+      template<int N>
+      typename tvresult<N>::Type fastRead_tv(int i) const
+      { return typename tvresult<N>::Type(f_,
+					  iter1_.fastRead_tv<N>(i),
+					  iter2_.fastRead_tv<N>(i),
+					  iter3_.fastRead_tv<N>(i)); }
 
     T_result operator[](int i) const { 
       return readHelper<T_typeprop>::indexop(f_, iter1_, iter2_, iter3_, i); }
