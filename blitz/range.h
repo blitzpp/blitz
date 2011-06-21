@@ -83,8 +83,18 @@ public:
         numTVOperands = 0, 
         numTMOperands = 0,
       numIndexPlaceholders = 1, 
-      simdWidth = simdTypes<T_numtype>::vecWidth,
+      minWidth = simdTypes<T_numtype>::vecWidth,
+      maxWidth = simdTypes<T_numtype>::vecWidth,
       rank_ = 1;
+
+  /** The vectorized return type for a Range should be another range,
+      but that's not useful since a vectorized TinyVector assignment
+      can not contain index placeholders. In fact, since vectorization
+      doesn't work for index expressions anyway, we can just set this
+      to a dummy. */
+  template<int N> struct tvresult {
+    typedef FastTV2Iterator<T_numtype, N> Type;
+  };
 
     Range()
     {
@@ -173,7 +183,8 @@ public:
     T_numtype fastRead(int) const
   { BZPRECONDITION(0); return 0; }
 
-    T_numtype fastRead_tv(int) const
+  template<int N>
+  typename tvresult<N>::Type fastRead_tv(int) const
   { BZPRECONDITION(0); return 0; }
 
   // this is needed for the stencil expression fastRead to work

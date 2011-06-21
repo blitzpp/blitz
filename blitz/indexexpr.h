@@ -83,8 +83,18 @@ public:
         numTVOperands = 0, 
         numTMOperands = 0, 
         numIndexPlaceholders = 1,
-      simdWidth = simdTypes<T_numtype>::vecWidth,
+      minWidth = simdTypes<T_numtype>::vecWidth,
+      maxWidth = simdTypes<T_numtype>::vecWidth,
         rank_ = N+1;
+
+  /** The vectorized return type for an IndexPlaceholder should be
+      some form of range, but that's not useful since a vectorized
+      TinyVector assignment can not contain index placeholders. In
+      fact, since vectorization doesn't work for index expressions
+      anyway, we can just set this to a dummy. */
+  template<int N> struct tvresult {
+    typedef FastTV2Iterator<T_numtype, N> Type;
+  };
 
     // If you have a precondition failure on this routine, it means
     // you are trying to use stack iteration mode on an expression
@@ -151,9 +161,10 @@ public:
         return T_numtype();
     }
 
-  T_tvresult fastRead_tv(int) const {
-        BZPRECONDITION(0);
-        return T_tvresult();
+  template<int N>
+  typename tvresult<N>::Type fastRead_tv(int) const {
+    BZPRECONDITION(0);
+    return TinyVector<T_numtype, N>();
     }
 
   /** There are no alignment issues here, so just return true. */

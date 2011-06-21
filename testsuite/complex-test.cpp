@@ -23,7 +23,8 @@ typedef Array<complex<float>, 1> CArray;
 static const double eps = 0.0001;
 int main()
 {
-    CArray A(2);
+  const int sz=7;
+    CArray A(sz);
     A(0) = complex<float>(1,2);
     A(1) = complex<float>(3,4);
 
@@ -33,13 +34,13 @@ int main()
     Array<float,1> Ai = imag(A);
     BZTEST(int(Ai(0)) == 2 && int(Ai(1)) == 4);
 
-    CArray Ac(2);
+    CArray Ac(sz);
     Ac = conj(A);
 
     BZTEST(Ac(0) == complex<float>(1,-2));
     BZTEST(Ac(1) == complex<float>(3,-4));
 
-    Array<float,1> Ab(2);
+    Array<float,1> Ab(sz);
     Ab = abs(A);
     BZTEST(fabs(Ab(0) - 2.236068) < eps);
     BZTEST(fabs(Ab(1) - 5.0) < eps);
@@ -48,7 +49,7 @@ int main()
     BZTEST(fabs(Ab(0) - atan(2.0)) < eps);
     BZTEST(fabs(Ab(1) - atan(4.0/3.0)) < eps);
 
-    Array<float,1> r(2), theta(2);
+    Array<float,1> r(sz), theta(sz);
     r(0) = 4.0f;
     r(1) = 15.0f;
     theta(0) = float(3.141592/3.0);

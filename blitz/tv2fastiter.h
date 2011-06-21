@@ -79,8 +79,15 @@ public:
         numTVOperands = 1, 
         numTMOperands = 0, 
         numIndexPlaceholders = 0,
-      simdWidth = simdTypes<T_numtype>::vecWidth,
+      minWidth = simdTypes<T_numtype>::vecWidth,
+      maxWidth = simdTypes<T_numtype>::vecWidth,
         rank_ = 1;
+
+  /** For an iterator, the vectorized result for width N is always a
+      TinyVector<T_numtype, N>. */
+  template<int N> struct tvresult {
+    typedef FastTV2Iterator<T_numtype, N> Type;
+  };
 
   FastTV2IteratorBase(const T_iterator& x)
         : data_(x.data_), array_(x.array_)
@@ -152,9 +159,14 @@ public:
     T_result fastRead(sizeType i) const
   { return array_.fastRead(i); }
 
-  T_tvresult fastRead_tv(sizeType i) const 
+  // T_tvresult fastRead_tv(sizeType i) const 
+  // { BZPRECONDITION(isVectorAligned(i));
+  //   return T_tvresult(*reinterpret_cast<const typename simdTypes<T_numtype>::vecType*>(array_.data()+i)); }
+
+  template<int N>
+  typename tvresult<N>::Type fastRead_tv(sizeType i) const
   { BZPRECONDITION(isVectorAligned(i));
-    return T_tvresult(*reinterpret_cast<const typename simdTypes<T_numtype>::vecType*>(array_.data()+i)); }
+    return typename tvresult<N>::Type(*reinterpret_cast<const TinyVector<T_numtype,N>*>(&data_[i])); }
 
   /** Since data_ is simd aligned by construction, we just have
       to check the offest. */

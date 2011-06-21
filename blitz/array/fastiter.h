@@ -87,8 +87,15 @@ public:
         numTVOperands = 0, 
         numTMOperands = 0,
         numIndexPlaceholders = 0,
-      simdWidth = simdTypes<T_numtype>::vecWidth,
+      minWidth = simdTypes<T_numtype>::vecWidth,
+      maxWidth = simdTypes<T_numtype>::vecWidth,
         rank_ = N_rank;
+
+  /** For an iterator, the vectorized result for width N is always a
+      TinyVector<T_numtype, N>. */
+  template<int N> struct tvresult {
+    typedef FastTV2Iterator<T_numtype, N> Type;
+  };
 
     // NB: this ctor does NOT preserve stack and stride
     // parameters.  This is for speed purposes.
@@ -178,9 +185,14 @@ public:
       length appropriate for the simd width. This makes it possible to
       convert the expression into a TinyVector expression, which is
       efficiently vectorized. */ 
-   T_tvresult fastRead_tv(sizeType i) const
-  { BZPRECONDITION(isVectorAligned(i));
-    return T_tvresult(*reinterpret_cast<const typename simdTypes<T_numtype>::vecType*>(&data_[i])); }
+  //  T_tvresult fastRead_tv(sizeType i) const
+  // { BZPRECONDITION(isVectorAligned(i));
+  //   return T_tvresult(*reinterpret_cast<const typename simdTypes<T_numtype>::vecType*>(&data_[i])); }
+
+  template<int N>
+  typename tvresult<N>::Type fastRead_tv(sizeType i) const
+  { //BZPRECONDITION(isVectorAligned(i));
+    return typename tvresult<N>::Type(*reinterpret_cast<const TinyVector<T_numtype,N>*>(&data_[i])); }
 
   /** Returns true if the iterator data is aligned on a simd
       vector. */

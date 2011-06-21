@@ -289,10 +289,14 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
     infinite template recursions on multicomponent containers. */
 template<typename T_numtype, typename T_expr, typename T_update, int N>
 struct chunked_updater {
-  typedef typename T_update::template updateCast<TinyVector<T_numtype, T_expr::simdWidth>, typename T_expr::T_tvresult>::T_updater T_tvupdater;
+  typedef typename T_update::template updateCast<
+    TinyVector<T_numtype, N>,
+    typename T_expr::template tvresult<N>::Type
+    >::T_updater T_tvupdater;
 
   static __forceinline void update(T_numtype* data, T_expr expr, int i) { 
-    T_tvupdater::update(*reinterpret_cast<TinyVector<T_numtype, T_expr::simdWidth>*>(data+i), expr.fastRead_tv(i));
+#pragma vector aligned
+    T_tvupdater::update(*reinterpret_cast<TinyVector<T_numtype, N>*>(data+i), expr.fastRead_tv<N>(i));
   };
 };
 
@@ -325,57 +329,96 @@ evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
   // calculate uneven elements at the beginning of dest
   const int uneven_start=simdTypes<T_numtype>::offsetToAlignment(data);
 
+  // we can only guarantee alignment if all operands have the same
+  // width and are not mutually misaligned
+  const bool use_aligned = 
+    (T_expr::minWidth == T_expr::maxWidth) &&
+    (T_expr::minWidth == dest_width) &&
+    expr.isVectorAligned(uneven_start);
+
+  // if we have mixed widths, we make the loop the widest and let the
+  // compiler sort out how to vectorize. (We can not take the
+  // expression length into account here as that would make this a
+  // runtime computation.)
+  const int loop_width = BZ_MAX(BZ_MAX(T_expr::minWidth, T_expr::maxWidth),
+		  simdTypes<T_numtype>::vecWidth);
+
 #ifdef BZ_DEBUG_TRAVERSE
   BZ_DEBUG_MESSAGE("\tunit stride expression with length: "<< ubound << ".");
-  BZ_DEBUG_MESSAGE("\texpression SIMD width: " << simdTypes<typename T_expr::T_numtype>::vecWidth);
+  if(T_expr::minWidth!=T_expr::maxWidth) {
+    BZ_DEBUG_MESSAGE("\texpression has mixed width: " << T_expr::minWidth << "-" <<T_expr::maxWidth);
+  } else {
+    BZ_DEBUG_MESSAGE("\texpression SIMD width: " << T_expr::minWidth);
+  }
   BZ_DEBUG_MESSAGE("\tdestination SIMD width: " << dest_width);
-  if(dest_width != simdTypes<typename T_expr::T_numtype>::vecWidth)
-    BZ_DEBUG_MESSAGE("\tdest has different width: " << simdTypes<typename T_expr::T_numtype>::vecWidth << ", vectorization not possible")
-  if(!expr.isVectorAligned(uneven_start))
-    BZ_DEBUG_MESSAGE("\tsource and dest have different alignment, vectorization not possible");
+  if(loop_width>1) {
+  if(!expr.isVectorAligned(uneven_start)) {
+    BZ_DEBUG_MESSAGE("\toperands have different alignments");
+  }
+  if(!use_aligned) {
+    BZ_DEBUG_MESSAGE("\tcannot guarantee alignment - using unaligned vectorization")
+      } else {
+    BZ_DEBUG_MESSAGE("\texpression can be aligned");
+  }
+  if(loop_width<=ubound) {
+    BZ_DEBUG_MESSAGE("\tusing vectorization width " << loop_width);
+  } else {
+    BZ_DEBUG_MESSAGE("\texpression not long enough to be vectorized");
+  }
+  } else {
+    BZ_DEBUG_MESSAGE("\texpression cannot be vectorized");
+  }
 #endif
 
-  // check that the expression and destination have equal simd width,
-  // that we actually have enough aligned operations to fill at least
-  // one simd operation, and that the expression and destination have
-  // *equal* alignment. (The first two are static so should be
-  // evaluated by the compiler.)
-  if( (dest_width >1) &&
-      (dest_width == simdTypes<typename T_expr::T_numtype>::vecWidth) &&
-      (ubound-uneven_start>=dest_width) &&
-      expr.isVectorAligned(uneven_start) ) {
-
-    // first do the uneven scalar operations
+  // if we can use aligned instructions, we need to first do the
+  // uneven scalar operations
+  if(loop_width>1)
+    if(use_aligned && (ubound-uneven_start>=loop_width)) {
 #ifdef BZ_DEBUG_TRAVERSE
-    if(i<uneven_start)
-       BZ_DEBUG_MESSAGE("\tscalar loop for " << uneven_start << " unaligned starting elements");
+      if(i<uneven_start) {
+	BZ_DEBUG_MESSAGE("\tscalar loop for " << uneven_start << " unaligned starting elements");
+      }
 #endif
 #pragma ivdep
-    for (; i < uneven_start; ++i)
+      for (; i < uneven_start; ++i)
 #pragma forceinline recursive
-      T_update::update(data[i], expr.fastRead(i));
-    
-    // then the vectorized loop
+	T_update::update(data[i], expr.fastRead(i));
+      
+      // and then the vecotrized part
 #ifdef BZ_DEBUG_TRAVERSE
-    if(i<=ubound-dest_width)
-      BZ_DEBUG_MESSAGE("\tvectorized loop starting at " << i);
+      if(i<=ubound-loop_width) {
+	BZ_DEBUG_MESSAGE("\taligned vectorized loop with width " << loop_width << " starting at " << i);
+      }
 #endif
-    //asm("nop;nop;nop;");
-    for (; i <= ubound-dest_width; i+=dest_width)
-#pragma vector aligned
+      //asm("nop;nop;nop;");
+      for (; i <= ubound-loop_width; i+=loop_width)
 #pragma forceinline recursive
-      chunked_updater<T_numtype, T_expr, T_update, simdTypes<T_numtype>::vecWidth>::update(data, expr, i);
-    //asm("nop;nop;nop;");
-  }
-
+	chunked_updater<T_numtype, T_expr, T_update, loop_width>::update(data, expr, i);
+      //asm("nop;nop;nop;");
+    }
+    else {
+      // if we can not line up the expressions, we just start using
+      // unaligned vectorized instructions from element 0
+#ifdef BZ_DEBUG_TRAVERSE
+      if(i<=ubound-loop_width) {
+	BZ_DEBUG_MESSAGE("\tunaligned vectorized loop with width " << loop_width << " starting at " << i);
+      }
+#endif
+      //asm("nop;nop;nop;");
+      for (; i <= ubound-loop_width; i+=loop_width)
+#pragma forceinline recursive
+	chunked_updater<T_numtype, T_expr, T_update, loop_width>::update(data, expr, i);
+      //asm("nop;nop;nop;");
+    }
 
   // now complete the loop with the elements not done in
   // the chunked loop. (if not aligned, not wide enough
   // loop, or not more than one item fitting in simd width,
   // this is all of them.)
 #ifdef BZ_DEBUG_TRAVERSE
-  if(i<ubound)
+  if(i<ubound) {
     BZ_DEBUG_MESSAGE("\tscalar loop for " << ubound-i << " trailing elements starting at " << i);
+  }
 #endif
 #pragma ivdep
   for (; i < ubound; ++i)
