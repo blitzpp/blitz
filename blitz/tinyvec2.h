@@ -383,8 +383,13 @@ public:
   T_vector& initialize(T_numtype);
 
   template<typename T_expr, typename T_update>
-  void
-  _tv_evaluate(const T_expr& expr, T_update);
+  void _tv_evaluate(const T_expr& expr, T_update);
+
+  template<typename T_expr, typename T_update>
+  static void _tv_evaluate_aligned(T_numtype* data, const T_expr& expr, T_update);
+
+  template<typename T_expr, typename T_update>
+  static void _tv_evaluate_unaligned(T_numtype* data, const T_expr& expr, T_update);
 
   // T_vector& operator=(const TinyVector<T_numtype,N_length>& rhs) {
   //       _bz_meta_vecAssign<N_length, 0>::

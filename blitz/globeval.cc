@@ -289,31 +289,84 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
     infinite template recursions on multicomponent containers. */
 template<typename T_numtype, typename T_expr, typename T_update, int N>
 struct chunked_updater {
-  typedef typename T_update::template updateCast<
-    TinyVector<T_numtype, N>,
-    typename T_expr::template tvresult<N>::Type
-    >::T_updater T_tvupdater;
 
-  static __forceinline void update(T_numtype* data, T_expr expr, int i) { 
-#pragma vector aligned
-    T_tvupdater::update(*reinterpret_cast<TinyVector<T_numtype, N>*>(data+i), expr.fastRead_tv<N>(i));
+  static __forceinline void aligned_update(T_numtype* data, T_expr expr, int i) {
+
+    TinyVector<T_numtype,N>::_tv_evaluate_aligned
+      (data+i, expr.fastRead_tv<N>(i), T_update());
   };
+
+  static __forceinline void unaligned_update(T_numtype* data, T_expr expr, int i) {
+    TinyVector<T_numtype,N>::_tv_evaluate_unaligned
+      (data+i, expr.fastRead_tv<N>(i), T_update());
+  };
+
 };
 
-/** specialization ensures we don't try to instantiate updates for
+/** specialization ensures we don't try to instantiate chunked_updates for
     types with a vecWidth of 1. */
 template<typename T_numtype, typename T_expr, typename T_update>
 struct chunked_updater<T_numtype, T_expr, T_update, 1> {
-  static inline void update(T_numtype* data, T_expr expr, int i)
-  {
-    BZPRECONDITION(0);
-  };
 };
+
+/** A metaprogram that uses the chunked_updater to assign an
+    unknown-length expression to a pointer by unrolling in a binary
+    fashion. N is the number of significant bits in the longest length
+    to consider, I is the bit currently being assigned (starting at
+    0). In this way, assigning a vector of length 1<<(N-1) will take N
+    operations. */
+template<int N, int I> 
+class _bz_meta_binaryAssign {
+public:
+    static const int loopFlag = (I < N-1) ? 1 : 0;
+
+    template<typename T_data, typename T_expr, typename T_update>
+    static inline void assign(T_data* data, T_expr expr,
+			      int ubound, int pos, T_update) {
+      if(ubound&(1<<I)) {
+	chunked_updater<T_data, T_expr, T_update, 1<<I >::
+	  unaligned_update(data, expr, pos); 
+	pos += (1<<I);
+      }
+      _bz_meta_binaryAssign<N*loopFlag, (I+1)*loopFlag>::
+	assign(data, expr, ubound, pos, T_update());
+      }
+        
+};
+
+/** Partial specialization for bit 0 uses the scalar update. */
+template<int N> 
+class _bz_meta_binaryAssign<N,0> {
+public:
+    static const int loopFlag = (0 < N-1) ? 1 : 0;
+
+    template<typename T_data, typename T_expr, typename T_update>
+    static inline void assign(T_data* data, T_expr expr,
+			      int ubound, int pos, T_update) {
+      if(ubound&1) {
+	T_update::update(data[pos], expr.fastRead(pos));
+	++pos;
+      }
+      _bz_meta_binaryAssign<N*loopFlag, 1*loopFlag>::
+	assign(data, expr, ubound, pos, T_update());
+      }
+        
+};
+
+template<>
+class _bz_meta_binaryAssign<0,0> {
+public:
+    template<typename T_data, typename T_expr, typename T_update>
+    static inline void assign(T_data*, T_expr, int, int, T_update)
+    { }
+};
+
+
 /** Unit-stride evaluator. This can use vectorized update, so if both
-    dest and expr are unit stride, we redirect here. This in its own
-    function to make it easier to read. This is never unrolled, since
-    it's already vectorized using the chunk_updater. \todo Would it be
-    useful to retain the unrolled loop for scalar architectures?  */
+    dest and expr are unit stride, we redirect here. This function then deals with unaligned   There is no
+    explicit unrolling option here, since it's already vectorized
+    using the chunk_updater. \todo Would it be useful to retain the
+    unrolled loop for scalar architectures?  */
 template<typename T_dest, typename T_expr, typename T_update>
 inline void
 _bz_evaluator<1>::
@@ -321,17 +374,40 @@ evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
 		       T_expr expr, T_update)
 {
   typedef typename T_dest::T_numtype T_numtype;
-  const int dest_width = simdTypes<T_numtype>::vecWidth;
   const diffType ubound = dest.length(firstRank);
   T_numtype* restrict data = const_cast<T_numtype*>(iter.data());
   int i=0;
 
+#ifdef BZ_DEBUG_TRAVERSE
+  BZ_DEBUG_MESSAGE("\tunit stride expression with length: "<< ubound << ".");
+#endif
+
+  const int max_bits_for_unroll=4;
+  if(ubound <= 1<<(max_bits_for_unroll-1)) {
+    // for short expressions, it's more important to lose
+    // overhead. Single-element ones have already been dealt with, but
+    // for lengths that are have fewer significant bits than
+    // max_bits_in_length_for_unroll we do a binary-style unroll
+    // here. (We don't worry about simd widths either, because we
+    // essentially just present the compiler with a vectorizable
+    // view. It will do sensible things even if the expressions are
+    // not vectorizable.)
+#ifdef BZ_DEBUG_TRAVERSE
+    BZ_DEBUG_MESSAGE("\tshort expression, using binary meta-unroll assignment.");
+#endif
+
+    _bz_meta_binaryAssign<max_bits_for_unroll, 0>::
+      assign(data, expr, ubound, 0, T_update());
+    return;
+  }
+
   // calculate uneven elements at the beginning of dest
   const int uneven_start=simdTypes<T_numtype>::offsetToAlignment(data);
+  const int dest_width = simdTypes<T_numtype>::vecWidth;
 
   // we can only guarantee alignment if all operands have the same
   // width and are not mutually misaligned
-  const bool use_aligned = 
+  const bool can_align = 
     (T_expr::minWidth == T_expr::maxWidth) &&
     (T_expr::minWidth == dest_width) &&
     expr.isVectorAligned(uneven_start);
@@ -344,7 +420,6 @@ evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
 		  simdTypes<T_numtype>::vecWidth);
 
 #ifdef BZ_DEBUG_TRAVERSE
-  BZ_DEBUG_MESSAGE("\tunit stride expression with length: "<< ubound << ".");
   if(T_expr::minWidth!=T_expr::maxWidth) {
     BZ_DEBUG_MESSAGE("\texpression has mixed width: " << T_expr::minWidth << "-" <<T_expr::maxWidth);
   } else {
@@ -355,7 +430,7 @@ evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
   if(!expr.isVectorAligned(uneven_start)) {
     BZ_DEBUG_MESSAGE("\toperands have different alignments");
   }
-  if(!use_aligned) {
+  if(!can_align) {
     BZ_DEBUG_MESSAGE("\tcannot guarantee alignment - using unaligned vectorization")
       } else {
     BZ_DEBUG_MESSAGE("\texpression can be aligned");
@@ -370,10 +445,20 @@ evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
   }
 #endif
 
-  // if we can use aligned instructions, we need to first do the
-  // uneven scalar operations
+  // For short unaligned expressions, the overhead in doing the
+  // heading and trailing scalar elements outweigh the gain of having
+  // full alignment, so we only do so if the expression is long
+  // enough. This critical width is pretty long.
+  const int min_number_of_vector_per_scalar = 16;
+
   if(loop_width>1)
-    if(use_aligned && (ubound-uneven_start>=loop_width)) {
+
+    // If the expression is aligned, we do so.  However, if we need to
+    // deal with uneven start/end elements, we only use the aligned
+    // loop if the number of scalar operations required to reach
+    // alignment is small enough.
+    if(can_align && 
+       (uneven_start*min_number_of_vector_per_scalar*loop_width < ubound)) {
 #ifdef BZ_DEBUG_TRAVERSE
       if(i<uneven_start) {
 	BZ_DEBUG_MESSAGE("\tscalar loop for " << uneven_start << " unaligned starting elements");
@@ -390,11 +475,10 @@ evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
 	BZ_DEBUG_MESSAGE("\taligned vectorized loop with width " << loop_width << " starting at " << i);
       }
 #endif
-      //asm("nop;nop;nop;");
       for (; i <= ubound-loop_width; i+=loop_width)
 #pragma forceinline recursive
-	chunked_updater<T_numtype, T_expr, T_update, loop_width>::update(data, expr, i);
-      //asm("nop;nop;nop;");
+	chunked_updater<T_numtype, T_expr, T_update, loop_width>::
+	  aligned_update(data, expr, i);
     }
     else {
       // if we can not line up the expressions, we just start using
@@ -404,11 +488,10 @@ evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
 	BZ_DEBUG_MESSAGE("\tunaligned vectorized loop with width " << loop_width << " starting at " << i);
       }
 #endif
-      //asm("nop;nop;nop;");
       for (; i <= ubound-loop_width; i+=loop_width)
 #pragma forceinline recursive
-	chunked_updater<T_numtype, T_expr, T_update, loop_width>::update(data, expr, i);
-      //asm("nop;nop;nop;");
+	chunked_updater<T_numtype, T_expr, T_update, loop_width>::
+	  unaligned_update(data, expr, i);
     }
 
   // now complete the loop with the elements not done in
@@ -486,6 +569,17 @@ evaluateWithStackTraversal(T_dest& dest, T_expr expr, T_update)
 #endif
 
   typename T_dest::T_iterator iter(dest);
+
+  // if we only have one element, strides don't matter. In that case,
+  // we just evaluate that right now so we don't have to deal with it.
+  if(dest.length(firstRank)==1) {
+#ifdef BZ_DEBUG_TRAVERSE
+  BZ_DEBUG_MESSAGE("\tshortcutting evaluation of single-element expression");
+#endif
+    T_update::update(*const_cast<typename T_dest::T_numtype*>(iter.data()), *expr);
+    return;
+  }
+
   iter.loadStride(firstRank);
   expr.loadStride(firstRank);
 

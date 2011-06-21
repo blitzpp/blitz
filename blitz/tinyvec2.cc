@@ -118,20 +118,55 @@ TinyVector<P_numtype,N_length>::_tv_evaluate(const T_expr& expr, T_update)
   BZPRECONDITION(T_expr::rank_<=1);
   BZPRECONDITION(T_expr::numIndexPlaceholders==0);
 
-  //asm("nop;nop;");
+  _tv_evaluate_aligned(data(), expr, T_update());
+}
 
+
+/** This version of the evaluation function is used normally and
+    assumes that the TinyVectors have appropriate alignment (as will
+    always be the case if they are actual TinyVector objects and not
+    created using reinterpret_cast in the chunked_updater. */
+template<typename P_numtype, int N_length>
+template<typename T_expr, typename T_update>
+inline void
+TinyVector<P_numtype,N_length>::
+_tv_evaluate_aligned(T_numtype* data, const T_expr& expr, T_update)
+{
+  //asm("nop;nop;");
 #ifdef BZ_TV_EVALUATE_UNROLL_LENGTH
   if(N_length < BZ_TV_EVALUATE_UNROLL_LENGTH)
-    _bz_meta_vecAssign<N_length, 0>::fastAssign(*this, expr, T_update());
+    _bz_meta_vecAssign<N_length, 0>::fastAssign(data, expr, T_update());
   else
 #endif
 #pragma ivdep
+#pragma vector aligned
     for (int i=0; i < N_length; ++i)
-      T_update::update(data_[i], expr.fastRead(i));
+      T_update::update(data[i], expr.fastRead(i));
   //asm("nop;nop;");
-
 }
 
+/** This version of the evaluation function is used when vectorizing
+    expressions that we know can't be aligned. The only difference
+    with _tv_evaluate_aligned is the compiler pragma that tells the
+    compiler it is unaligned. */
+template<typename P_numtype, int N_length>
+template<typename T_expr, typename T_update>
+inline void
+TinyVector<P_numtype,N_length>::
+_tv_evaluate_unaligned(T_numtype* data, const T_expr& expr, T_update)
+{
+  //asm("nop;nop;");
+#ifdef BZ_TV_EVALUATE_UNROLL_LENGTH
+  if(N_length < BZ_TV_EVALUATE_UNROLL_LENGTH)
+    _bz_meta_vecAssign<N_length, 0>::fastAssign(data, expr, T_update());
+  else
+#endif
+#pragma ivdep
+#pragma vector unaligned
+    for (int i=0; i < N_length; ++i)
+      T_update::update(data[i], expr.fastRead(i));
+  //asm("nop;nop;");
+}
 
 template<typename P_numtype, int N_length> template<typename T_expr>
 inline TinyVector<P_numtype,N_length>&

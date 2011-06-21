@@ -41,12 +41,12 @@ class _bz_meta_vecAssign {
 public:
     static const int loopFlag = (I < N-1) ? 1 : 0;
 
-    template<typename T_vector, typename T_expr, typename T_updater>
-    static inline void fastAssign(T_vector& vec, T_expr expr, T_updater u)
+    template<typename T_data, typename T_expr, typename T_updater>
+    static inline void fastAssign(T_data* data, T_expr expr, T_updater u)
     {
-      u.update(vec[I], expr.fastRead(I));//expr._bz_fastAccess(I));
+      u.update(data[I], expr.fastRead(I));
         _bz_meta_vecAssign<N * loopFlag, (I+1) * loopFlag>
-           ::fastAssign(vec,expr,u);
+	  ::fastAssign(data,expr,u);
     }
 
     template<typename T_vector, typename T_expr, typename T_updater>
@@ -89,6 +89,8 @@ public:
     {
     }
 };
+
+
 
 BZ_NAMESPACE_END
 
