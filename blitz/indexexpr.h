@@ -83,6 +83,7 @@ public:
         numTVOperands = 0, 
         numTMOperands = 0, 
         numIndexPlaceholders = 1,
+      simdWidth = simdTypes<T_numtype>::vecWidth,
         rank_ = N+1;
 
     // If you have a precondition failure on this routine, it means

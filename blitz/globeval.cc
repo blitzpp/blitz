@@ -289,10 +289,10 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
     infinite template recursions on multicomponent containers. */
 template<typename T_numtype, typename T_expr, typename T_update, int N>
 struct chunked_updater {
-  typedef typename T_update::template updateCast<typename simdTypes<T_numtype>::vecType, typename T_expr::T_tvresult>::T_updater T_tvupdater;
+  typedef typename T_update::template updateCast<TinyVector<T_numtype, T_expr::simdWidth>, typename T_expr::T_tvresult>::T_updater T_tvupdater;
 
   static __forceinline void update(T_numtype* data, T_expr expr, int i) { 
-    T_tvupdater::update(*reinterpret_cast<typename simdTypes<T_numtype>::vecType*>(data+i), expr.fastRead_tv(i));
+    T_tvupdater::update(*reinterpret_cast<TinyVector<T_numtype, T_expr::simdWidth>*>(data+i), expr.fastRead_tv(i));
   };
 };
 
@@ -326,7 +326,9 @@ evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
   const int uneven_start=simdTypes<T_numtype>::offsetToAlignment(data);
 
 #ifdef BZ_DEBUG_TRAVERSE
-  BZ_DEBUG_MESSAGE("\tunit stride expression with length "<< ubound << ", SIMD width " << dest_width);
+  BZ_DEBUG_MESSAGE("\tunit stride expression with length: "<< ubound << ".");
+  BZ_DEBUG_MESSAGE("\texpression SIMD width: " << simdTypes<typename T_expr::T_numtype>::vecWidth);
+  BZ_DEBUG_MESSAGE("\tdestination SIMD width: " << dest_width);
   if(dest_width != simdTypes<typename T_expr::T_numtype>::vecWidth)
     BZ_DEBUG_MESSAGE("\tdest has different width: " << simdTypes<typename T_expr::T_numtype>::vecWidth << ", vectorization not possible")
   if(!expr.isVectorAligned(uneven_start))

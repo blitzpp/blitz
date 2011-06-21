@@ -83,6 +83,7 @@ public:
         numTVOperands = 0, 
         numTMOperands = 0,
       numIndexPlaceholders = 1, 
+      simdWidth = simdTypes<T_numtype>::vecWidth,
       rank_ = 1;
 
     Range()

@@ -61,6 +61,9 @@
 
 BZ_NAMESPACE(blitz)
 
+#define BZ_MAX(a,b) (a)>(b) ? (a) : (b)
+#define BZ_MIN(a,b) (a)<(b) ? (a) : (b)
+
 template<typename T1, typename T2>
 class _bz_ExprPair {
 public:
@@ -119,6 +122,7 @@ public:
         numTVOperands = T_expr::numTVOperands,
         numTMOperands = T_expr::numTMOperands,
         numIndexPlaceholders = T_expr::numIndexPlaceholders,
+      simdWidth = T_expr::simdWidth,
         rank_ = T_expr::rank_;
 
     _bz_ArrayExpr(const _bz_ArrayExpr<T_expr>& a)
@@ -516,6 +520,7 @@ public:
         numTVOperands = T_expr::numTVOperands,
         numTMOperands = T_expr::numTMOperands,
         numIndexPlaceholders = T_expr::numIndexPlaceholders,
+      simdWidth = T_expr::simdWidth,
         rank_ = T_expr::rank_;
 
     _bz_ArrayExprUnaryOp(const _bz_ArrayExprUnaryOp<T_expr, T_op>& a)
@@ -804,6 +809,8 @@ public:
       T_expr2::numTMOperands,
         numIndexPlaceholders = T_expr1::numIndexPlaceholders
                              + T_expr2::numIndexPlaceholders,
+      simdWidth = (T_expr1::simdWidth < T_expr2::simdWidth) 
+      ? T_expr1::simdWidth : T_expr2::simdWidth,
         rank_ = (T_expr1::rank_ > T_expr2::rank_) 
              ? T_expr1::rank_ : T_expr2::rank_;
 
@@ -1157,6 +1164,11 @@ public:
         numIndexPlaceholders = T_expr1::numIndexPlaceholders
                              + T_expr2::numIndexPlaceholders
                              + T_expr3::numIndexPlaceholders,
+        simdWidth = (T_expr1::simdWidth < T_expr2::simdWidth) 
+             ? ((T_expr1::simdWidth < T_expr3::simdWidth)
+                ? T_expr1::simdWidth : T_expr3::simdWidth)
+             : ((T_expr2::simdWidth < T_expr3::simdWidth) 
+                ? T_expr2::simdWidth : T_expr3::simdWidth),
         rank_ = (T_expr1::rank_ > T_expr2::rank_) 
              ? ((T_expr1::rank_ > T_expr3::rank_)
                 ? T_expr1::rank_ : T_expr3::rank_)
@@ -1501,8 +1513,6 @@ protected:
     T_expr3 iter3_; 
 };
 
-#define BZ_MAX(a,b) (a)>(b) ? (a) : (b)
-
 template<typename P_expr1, typename P_expr2, typename P_expr3,
 	 typename P_expr4, typename P_op>
 class _bz_ArrayExprQuaternaryOp {
@@ -1595,6 +1605,9 @@ public:
     + T_expr2::numIndexPlaceholders
     + T_expr3::numIndexPlaceholders
     + T_expr4::numIndexPlaceholders,
+
+    simdWidth = BZ_MIN(BZ_MIN(T_expr1::simdWidth, T_expr2::simdWidth),
+		       BZ_MIN(T_expr3::simdWidth, T_expr4::simdWidth)),
 
     rank_ = BZ_MAX(BZ_MAX(T_expr1::rank_, T_expr2::rank_),
 		  BZ_MAX(T_expr3::rank_, T_expr4::rank_));
@@ -2010,6 +2023,7 @@ public:
         numTVOperands = 0, 
         numTMOperands = 0, 
         numIndexPlaceholders = 0, 
+      simdWidth = simdTypes<T_numtype>::vecWidth,
         rank_ = 0;
 
     _bz_ArrayExprConstant(const _bz_ArrayExprConstant<T_numtype>& a)

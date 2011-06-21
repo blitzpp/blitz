@@ -87,6 +87,7 @@ public:
         numTVOperands = 0, 
         numTMOperands = 0,
         numIndexPlaceholders = 0,
+      simdWidth = simdTypes<T_numtype>::vecWidth,
         rank_ = N_rank;
 
     // NB: this ctor does NOT preserve stack and stride

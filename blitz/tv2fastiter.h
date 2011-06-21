@@ -79,6 +79,7 @@ public:
         numTVOperands = 1, 
         numTMOperands = 0, 
         numIndexPlaceholders = 0,
+      simdWidth = simdTypes<T_numtype>::vecWidth,
         rank_ = 1;
 
   FastTV2IteratorBase(const T_iterator& x)
