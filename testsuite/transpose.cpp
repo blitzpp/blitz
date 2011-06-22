@@ -6,8 +6,10 @@ BZ_USING_NAMESPACE(blitz)
 int main()
 {
   const int w=simdTypes<double>::vecWidth;
+#if BZ_PAD_ARRAYS
   if(w>1)
     cerr << "NOTE:This test makes assumptions about storage that are not true when a SIMD\nwidth is specified. The test has been altered to not fail.\n";
+#endif
 
     Array<int,3> A(2*w,3*w,4*w);
 

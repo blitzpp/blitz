@@ -12,8 +12,11 @@ struct A {
       : a(fortranArray)
     {
 	const int w=simdTypes<double>::vecWidth;
+
+#if BZ_PAD_ARRAYS
 	if(w>1)
 	  cerr << "NOTE:This test makes assumptions about storage that are not true when a SIMD\nwidth is specified. The test has been altered to not fail.\n";
+#endif
 
         a.resize(5*w,5*w);
 

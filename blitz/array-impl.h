@@ -1129,7 +1129,7 @@ public:
       the number of elements due to padding to meet alignment
       requirements. If you want to extract the array data to, for
       example, write it to disk, this is the size of the block
-      needed. */
+      needed. \todo Is this safe if there is no block? */
     sizeType                               storageSize() const
   { return T_base::block().length(); }
 

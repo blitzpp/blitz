@@ -112,7 +112,7 @@ AC_ARG_WITH([tbb],
     AC_DEFINE([THREADSAFE_USE_TBB],1,[Use TBB atomic types])
     ],AC_MSG_RESULT([no]))
 
-AC_MSG_CHECKING([whether to enable SIMD instruction width optimizations])
+AC_MSG_CHECKING([for SIMD instruction width])
 AC_ARG_ENABLE([simd-width],
   AS_HELP_STRING([--enable-simd-width=n],[Facilitate compiler vectorization optimizations for SIMD instruction width of n bytes.]),,[
   enable_simd_width=no])
@@ -121,6 +121,17 @@ if test "$enable_simd_width" == [no] ; then
    enable_simd_width=1
 fi
 AC_DEFINE_UNQUOTED([SIMD_WIDTH],[$enable_simd_width],[Set SIMD instruction width in bytes])
+
+AC_MSG_CHECKING([whether to pad array lengths to SIMD instruction width])
+AC_ARG_ENABLE([array-length-padding],
+  AS_HELP_STRING([--enable-array-length-padding],[Increases the chances of aligned vectorized access by padding all lowest-rank lengths to nearest larger SIMD width. The drawback is that arrays will in general be non-contiguous.]),
+  [
+  AC_MSG_RESULT([yes])
+  if test "$enable_simd_width" == [1] ; then
+     AC_MSG_WARN([This option is useless without a SIMD width >1.])
+  fi
+  AC_DEFINE([PAD_ARRAYS],1,[Pad array lengths to SIMD width.])
+  ],AC_MSG_RESULT([no]))
 
 # Figure out how to declare aligned variables
 AC_ALIGNMENT_DIRECTIVE

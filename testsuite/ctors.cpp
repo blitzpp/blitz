@@ -132,16 +132,19 @@ void checkFull3DArray(Array<int,3>& A, int L, int M, int N)
     BZTEST(A.rank() == 3);
     BZTEST(A.rows() == L);
     BZTEST(A.size() == L*N*M);
+#if BZ_PAD_ARRAYS
     if(N%w) {
       beginCheckAssert();
       BZASSERT(A.stride(0) == N*M);
       BZASSERT(A.stride(1) == N);
       endCheckAssert();
     }
-    else {
-      BZTEST(A.stride(0) == N*M);
-      BZTEST(A.stride(1) == N);
-    }
+    else 
+#endif
+      {
+	BZTEST(A.stride(0) == N*M);
+	BZTEST(A.stride(1) == N);
+      }
     BZTEST(A.stride(2) == 1);
     BZTEST(A.ubound(0) == L-1);
     BZTEST(A.ubound(1) == M-1);
@@ -182,16 +185,19 @@ void checkFull3DFortranArray(Array<int,3>& A, int L, int M, int N)
     BZTEST(A.rows() == L);
     BZTEST(A.size() == L*N*M);
     BZTEST(A.stride(0) == 1);
+#if BZ_PAD_ARRAYS
     if(L%w) {
       beginCheckAssert();
       BZASSERT(A.stride(1) == L);
       BZASSERT(A.stride(2) == L*M);
       endCheckAssert();
     }
-    else {
-      BZTEST(A.stride(1) == L);
-      BZTEST(A.stride(2) == L*M);
-    }
+    else
+#endif
+      {
+	BZTEST(A.stride(1) == L);
+	BZTEST(A.stride(2) == L*M);
+      }
     BZTEST(A.ubound(0) == L);
     BZTEST(A.ubound(1) == M);
     BZTEST(A.ubound(2) == N);

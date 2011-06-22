@@ -102,11 +102,10 @@ Array<P_numtype,N_rank>::Array(const TinyVector<int, N_rank>& lbounds,
 }
 
 
-/*
- * This routine takes the storage information for the array
- * (ascendingFlag_[], base_[], and ordering_[]) and the size
- * of the array (length_[]) and computes the stride vector
- * (stride_[]) and the zero offset (see explanation in array.h).
+/** This routine takes the storage information for the array
+    (ascendingFlag_[], base_[], and ordering_[]) and the size of the
+    array (length_[]) and computes the stride vector (stride_[]) and
+    the zero offset (see explanation in array.h).
  */
 template<typename P_numtype, int N_rank>
 _bz_inline2 void Array<P_numtype, N_rank>::computeStrides()
@@ -137,6 +136,7 @@ _bz_inline2 void Array<P_numtype, N_rank>::computeStrides()
           // the ranks minor to it.
           stride_[ordering(n)] = stride * strideSign;
 
+#ifdef BZ_PAD_ARRAYS	  
 	  // The lowest rank dimension is padded to vecWidth, so this
 	  // needs to be accounted for in the stride
 	  if(n==0) {
@@ -146,6 +146,7 @@ _bz_inline2 void Array<P_numtype, N_rank>::computeStrides()
 	       (length_[ordering(n)]%w > 0 ? 1:0 )) * w;
 	  }
 	  else
+#endif
 	    stride *= length_[ordering(n)];
       }
     }
@@ -247,7 +248,7 @@ void Array<P_numtype, N_rank>::reference(const Array<P_numtype, N_rank>& array)
     T_base::changeBlock(array.noConst());
 }
 
-/* This method makes the array reference another, but it does it as a
+/** This method makes the array reference another, but it does it as a
    "weak" reference that is not counted. If you can guarantee that the
    array memory block containing the data is persistent, this will 
    allow reference counting to be bypassed for this array, which if 
@@ -306,15 +307,17 @@ _bz_inline2 void Array<P_numtype, N_rank>::setupStorage(int lastRankInitialized)
     // Compute strides
     computeStrides();
 
-    // Allocate a block of memory. The size of the block is NOT equal
-    // to numelements, because the lowest rank dimension is padded to
-    // vecWidth
+    // Allocate a block of memory.
     TinyVector<int, N_rank> alloc_length = length();
+#ifdef BZ_PAD_ARRAYS
+    // The size of the block is NOT equal to numelements, because the
+    // lowest rank dimension is padded to vecWidth
     const int w = simdTypes<T_numtype>::vecWidth;
     const int mod = alloc_length[ordering(0)]%w;
     if (mod>0)
       alloc_length[ordering(0)] += simdTypes<T_numtype>::vecWidth-mod;
     BZASSERT(alloc_length[ordering(0)]%w==0);
+#endif
     sizeType numElem = _bz_returntype<sizeType>::product(alloc_length);
     if (numElem==0)
         T_base::changeToNullBlock();
