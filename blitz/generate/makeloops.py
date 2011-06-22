@@ -122,7 +122,7 @@ def unaligneddeclandfill(loop):
     decl=cc(["""
     Array<%s,1> %s(N+1);
     Array<%s,1> %s(%s(Range(1,N)));
-    initializeRandomDouble(%s.dataFirst(), N+1);\n"""%
+    initializeRandomDouble(%s.dataFirst(), N);\n"""%
              (loopnumtype(loop)[0], n+"fill", loopnumtype(loop)[0],
               n, n+"fill",n) \
              for n in looparrays(loop)])
@@ -132,10 +132,10 @@ def misaligneddeclandfill(loop):
     decl=cc(["""
     Array<%s,1> %s(N+%d);
     Array<%s,1> %s(%s(Range(%d,N+%d-1)));
-    initializeRandomDouble(%s.dataFirst(), N+%d);\n"""%
+    initializeRandomDouble(%s.dataFirst(), N);\n"""%
              (loopnumtype(loop)[0], n+"fill", len(looparrays(loop)),
               loopnumtype(loop)[0], n, n+"fill",i,i,
-              n,len(looparrays(loop))) \
+              n) \
              for i,n in enumerate(looparrays(loop))])
     return decl
 
@@ -147,6 +147,7 @@ def gencpp(loop):
     subs=[
         ("loopname",loopname(loop)),
         ("LOOPNAME",loopname(loop).upper()),
+        ("loopflops",`loopflops(loop)`),
         ("gentime",time.asctime(time.gmtime())),
         ("fortrandecls", fortrandecls(loop)),
         ("scalarargdecl", cc([", %s %s"%(loopnumtype(loop)[0], n)
@@ -312,7 +313,7 @@ int main()
 	
         if (iters(i) < 2)
             iters(i) = 2;
-        flops(i) = 2 * parameters(i);
+        flops(i) = #loopflops# * parameters(i);
     }
 
     bench.setParameterVector(parameters);
