@@ -40,7 +40,7 @@ int main()
   //BzBinaryExprResult<Multiply, Array<double,1>, Array<double,1> >::T_result expr=bad();
   Array<double,1> result(N);
   result=expr;
-  BZTEST(all(result==tensor::i*sin(1.0*tensor::i)));
+  BZTEST(all(abs(result-tensor::i*sin(1.0*tensor::i))<1e-5));
 
     return 0;
 }

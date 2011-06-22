@@ -10,7 +10,7 @@ typedef blitz::Array<double,3> array_3;
 
 /* Test slicing functionality for expressions. */
 
-#define test_expr(d1,d2) BZTEST(all((d1)==(d2)));
+#define test_expr(d1,d2) BZTEST(all(abs(d1-d2)<1e-5));
 
 // test with functors
 class doubler {
