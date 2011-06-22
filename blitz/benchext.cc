@@ -401,12 +401,15 @@ void BenchmarkExt<P_parameter>::savePylabGraph(const char* filename, const char*
 
     ofs.setf(ios::scientific);
 
-    // This will be a lot simpler once Matlab-style output formatting
-    // of vectors & matrices is finished.
+    ofs << "legnames=[";
+    for (unsigned j=0; j < numImplementations_; ++j)
+    {
+        ofs << "'" << implementationDescriptions_[j] << "'";
+        if (j != numImplementations_ - 1)
+            ofs << ", ";
+    } 
 
-    // ofs << "parm = " << parameters_ << ";" << endl << endl;
-
-    ofs << "parm = array([ ";
+    ofs << "]\n\nparm = array([ ";
     unsigned i;
     for (i=0; i < numParameters_; ++i)
       ofs << setprecision(12) << double(parameters_(i)) << ", ";
@@ -454,17 +457,9 @@ void BenchmarkExt<P_parameter>::savePylabGraph(const char* filename, const char*
 
     ofs << graphType << "(parm,Mf)\ntitle('" << description_ << "')\n"
         << "xlabel('" << parameterDescription_ << "')\n"
-        << "ylabel('" << rateDescription_ << "')\n"
-        << "legnames=[";
-    
-    for (unsigned j=0; j < numImplementations_; ++j)
-    {
-        ofs << "'" << implementationDescriptions_[j] << "'";
-        if (j != numImplementations_ - 1)
-            ofs << ", ";
-    } 
+        << "ylabel('" << rateDescription_ << "')\n";
 
-    ofs << "]\nlegend(legnames)\n";
+    ofs << "legend(legnames)\n";
 }
 
 BZ_NAMESPACE_END
