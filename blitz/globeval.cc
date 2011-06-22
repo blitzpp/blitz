@@ -391,21 +391,20 @@ evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
 
   // calculate uneven elements at the beginning of dest
   const int uneven_start=simdTypes<T_numtype>::offsetToAlignment(data);
-  const int dest_width = simdTypes<T_numtype>::vecWidth;
 
   // we can only guarantee alignment if all operands have the same
   // width and are not mutually misaligned
   const bool can_align = 
     (T_expr::minWidth == T_expr::maxWidth) &&
-    (T_expr::minWidth == dest_width) &&
+    (T_expr::minWidth == simdTypes<T_numtype>::vecWidth) &&
     expr.isVectorAligned(uneven_start);
 
   // if we have mixed widths, we make the loop the widest and let the
   // compiler sort out how to vectorize. (We can not take the
   // expression length into account here as that would make this a
   // runtime computation.)
-  const int loop_width = BZ_MAX(BZ_MAX(T_expr::minWidth, T_expr::maxWidth),
-		  simdTypes<T_numtype>::vecWidth);
+  const int loop_width = BZ_MAX(T_expr::maxWidth,
+				simdTypes<T_numtype>::vecWidth);
 
 #ifdef BZ_DEBUG_TRAVERSE
   if(T_expr::minWidth!=T_expr::maxWidth) {
@@ -413,7 +412,7 @@ evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
   } else {
     BZ_DEBUG_MESSAGE("\texpression SIMD width: " << T_expr::minWidth);
   }
-  BZ_DEBUG_MESSAGE("\tdestination SIMD width: " << dest_width);
+  BZ_DEBUG_MESSAGE("\tdestination SIMD width: " << simdTypes<T_numtype>::vecWidth);
   if(loop_width>1) {
   if(!expr.isVectorAligned(uneven_start)) {
     BZ_DEBUG_MESSAGE("\toperands have different alignments");
