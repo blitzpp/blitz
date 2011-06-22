@@ -247,7 +247,7 @@ inline void BenchmarkExt<P_parameter>::stopOverhead()
     timer_.stop();
 
     cout << "\ttimer overhead: " <<
-      timer_.elapsed()/times_(int(implementationNumber_), int(parameterNumber_-1)) << endl;
+      1.0*timer_.elapsed()/times_(int(implementationNumber_), int(parameterNumber_-1)) << endl;
 
     times_(int(implementationNumber_), int(parameterNumber_-1)) -= 
       timer_.elapsed();
@@ -258,7 +258,7 @@ inline void BenchmarkExt<P_parameter>::stopOverhead()
 
     if(times_(int(implementationNumber_), int(parameterNumber_-1))<0) {
       cerr << "\tError: Timer underflow in benchmark " << implementationDescriptions_[implementationNumber_] << " " << parameters_(parameterNumber_-1) << endl;
-      times_(int(implementationNumber_), int(parameterNumber_-1)) = blitz::quiet_NaN(double());
+      times_(int(implementationNumber_), int(parameterNumber_-1)) = blitz::huge(times_(0,0));
     }
     state_ = benchmarkingImplementation;
 }
@@ -300,7 +300,7 @@ double BenchmarkExt<P_parameter>::getMflops(unsigned implementation,
     BZPRECONDITION(state_ == done);
     BZPRECONDITION(implementation < numImplementations_);
     BZPRECONDITION(parameterNum < numParameters_);
-    return iterations_(parameterNum) * flopsPerIteration_(parameterNum)
+    return 1.0*iterations_(parameterNum) * flopsPerIteration_(parameterNum)
       / times_(int(implementation), int(parameterNum)) * timerconversion_;
 }
 
@@ -311,7 +311,7 @@ double BenchmarkExt<P_parameter>::getinstrperc(int implementation,
     BZPRECONDITION(state_ == done);
     BZPRECONDITION(implementation < numImplementations_);
     BZPRECONDITION(parameterNum < numParameters_);
-    return instr_(implementation,parameterNum)/
+    return 1.0*instr_(implementation,parameterNum)/
       times_(int(implementation), int(parameterNum));
 }
 template<typename P_parameter>
@@ -321,7 +321,7 @@ double BenchmarkExt<P_parameter>::getflopsperc(int implementation,
     BZPRECONDITION(state_ == done);
     BZPRECONDITION(implementation < numImplementations_);
     BZPRECONDITION(parameterNum < numParameters_);
-    return flops_(implementation,parameterNum)/
+    return 1.0*flops_(implementation,parameterNum)/
       times_(int(implementation), int(parameterNum));
 }
 

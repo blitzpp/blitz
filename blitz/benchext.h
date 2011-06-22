@@ -112,9 +112,9 @@ protected:
   std::string description_;
   std::vector<std::string> implementationDescriptions_;
 
-  Array<double,2> times_;       // Elapsed time
-  Array<double,2> instr_;       // instructions according to timer
-  Array<double,2> flops_;       // flops according to timer
+  Array<long long,2> times_;       // Elapsed time
+  Array<long long,2> instr_;       // instructions according to timer
+  Array<long long,2> flops_;       // flops according to timer
 
   Array<T_parameter,1> parameters_;
   Array<long,1> iterations_;
