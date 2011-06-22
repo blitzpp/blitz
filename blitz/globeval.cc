@@ -315,15 +315,14 @@ struct chunked_updater<T_numtype, T_expr, T_update, 1> {
 
 /** A metaprogram that uses the chunked_updater to assign an
     unknown-length expression to a pointer by unrolling in a binary
-    fashion. N is the number of significant bits in the longest length
-    to consider, I is the bit currently being assigned (starting at
-    0). In this way, assigning a vector of length 1<<(N-1) will take N
-    operations. */
-template<int N, int I> 
+    fashion. I+1 is the number of significant bits in the longest
+    length to consider. In this way, assigning a vector of length 7 is
+    I=2 and will take 3 operations. The metaprogram counts down, that
+    way it will start with large updates which will be aligned for
+    aligned expressions. */
+template<int I> 
 class _bz_meta_binaryAssign {
 public:
-    static const int loopFlag = (I < N-1) ? 1 : 0;
-
     template<typename T_data, typename T_expr, typename T_update>
     static inline void assign(T_data* data, T_expr expr,
 			      int ubound, int pos, T_update) {
@@ -332,18 +331,15 @@ public:
 	  unaligned_update(data, expr, pos); 
 	pos += (1<<I);
       }
-      _bz_meta_binaryAssign<N*loopFlag, (I+1)*loopFlag>::
-	assign(data, expr, ubound, pos, T_update());
+      _bz_meta_binaryAssign<I-1>::assign(data, expr, ubound, pos, T_update());
       }
         
 };
 
 /** Partial specialization for bit 0 uses the scalar update. */
-template<int N> 
-class _bz_meta_binaryAssign<N,0> {
+template<> 
+class _bz_meta_binaryAssign<0> {
 public:
-    static const int loopFlag = (0 < N-1) ? 1 : 0;
-
     template<typename T_data, typename T_expr, typename T_update>
     static inline void assign(T_data* data, T_expr expr,
 			      int ubound, int pos, T_update) {
@@ -351,20 +347,9 @@ public:
 	T_update::update(data[pos], expr.fastRead(pos));
 	++pos;
       }
-      _bz_meta_binaryAssign<N*loopFlag, 1*loopFlag>::
-	assign(data, expr, ubound, pos, T_update());
-      }
-        
+      // this ends the metaprogram.
+    }
 };
-
-template<>
-class _bz_meta_binaryAssign<0,0> {
-public:
-    template<typename T_data, typename T_expr, typename T_update>
-    static inline void assign(T_data*, T_expr, int, int, T_update)
-    { }
-};
-
 
 /** Unit-stride evaluator. This can use vectorized update, so if both
     dest and expr are unit stride, we redirect here. This function then deals with unaligned   There is no
@@ -387,20 +372,19 @@ evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
 #endif
 
   const int max_bits_for_unroll=4;
-  if(ubound <= 1<<(max_bits_for_unroll-1)) {
+  if(ubound < 1<<max_bits_for_unroll) {
     // for short expressions, it's more important to lose
     // overhead. Single-element ones have already been dealt with, but
     // for lengths that are have fewer significant bits than
-    // max_bits_in_length_for_unroll we do a binary-style unroll
-    // here. (We don't worry about simd widths either, because we
-    // essentially just present the compiler with a vectorizable
-    // view. It will do sensible things even if the expressions are
-    // not vectorizable.)
+    // max_bits_for_unroll we do a binary-style unroll here. (We don't
+    // worry about simd widths either, because we essentially just
+    // present the compiler with a vectorizable view. It will do
+    // sensible things even if the expressions are not vectorizable.)
 #ifdef BZ_DEBUG_TRAVERSE
     BZ_DEBUG_MESSAGE("\tshort expression, using binary meta-unroll assignment.");
 #endif
 
-    _bz_meta_binaryAssign<max_bits_for_unroll, 0>::
+    _bz_meta_binaryAssign<max_bits_for_unroll-1>::
       assign(data, expr, ubound, 0, T_update());
     return;
   }
@@ -452,17 +436,16 @@ evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
   // For short unaligned expressions, the overhead in doing the
   // heading and trailing scalar elements outweigh the gain of having
   // full alignment, so we only do so if the expression is long
-  // enough. This critical width is pretty long.
-  const int min_number_of_vector_per_scalar = 16;
+  // enough. The critical length goes down as the simd width goes up.
+  const int min_number_of_vector_per_scalar = 16/loop_width;
 
   if(loop_width>1)
 
     // If the expression is aligned, we do so.  However, if we need to
     // deal with uneven start/end elements, we only use the aligned
-    // loop if the number of scalar operations required to reach
-    // alignment is small enough.
+    // loop if the number of vector operations is large 
     if(can_align && 
-       (uneven_start*min_number_of_vector_per_scalar*loop_width < ubound)) {
+       ((uneven_start>0?1:0)*min_number_of_vector_per_scalar < ubound)) {
 #ifdef BZ_DEBUG_TRAVERSE
       if(i<uneven_start) {
 	BZ_DEBUG_MESSAGE("\tscalar loop for " << uneven_start << " unaligned starting elements");
