@@ -40,7 +40,33 @@ int main()
   testalign<double,6,2>();
   testalign<double,7,2>();
 
+  // test that simdTypes returns correct values
+
+  BZTEST(bzCC(_bz_meta_bitwidth<0,0>::width==0));
+  BZTEST(bzCC(_bz_meta_bitwidth<1,0>::width==1));
+  BZTEST(bzCC(_bz_meta_bitwidth<2,0>::width==2));
+  BZTEST(bzCC(_bz_meta_bitwidth<3,0>::width==2));
+  BZTEST(bzCC(_bz_meta_bitwidth<4,0>::width==3));
+  BZTEST(bzCC(_bz_meta_bitwidth<5,0>::width==3));
+  BZTEST(bzCC(_bz_meta_bitwidth<6,0>::width==3));
+  BZTEST(bzCC(_bz_meta_bitwidth<7,0>::width==3));
+  BZTEST(bzCC(_bz_meta_bitwidth<8,0>::width==4));
+
+  for(size_t i=0; i<100; ++i) {
+    const size_t l = simdTypes<float>::paddedLength(i);
+    BZTEST(l%simdTypes<float>::vecWidth==0);
+    BZTEST(l>=i);
+    BZTEST(l-i<simdTypes<float>::vecWidth);
+  }
+
+  TinyVector<float, 2*simdTypes<float>::vecWidth> v;
   const int w=simdTypes<float>::vecWidth;
+
+  BZTEST(simdTypes<float>::offsetToAlignment(v.data())==0);
+  for (int i=1; i<w; ++i) {
+    BZTEST(simdTypes<float>::offsetToAlignment(v.data()+i)==w-i);
+  }
+
   if(w>1) {
     // test that arrays correctly report as being aligned or not.
     Array<float, 2> A(3*w,3*w);
