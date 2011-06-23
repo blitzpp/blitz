@@ -61,6 +61,29 @@ public:
   };
 };
 
+
+/** Partial specialization for bools. There are no SIMD instructions
+    for bools, so it's pointless to waste 16 bytes for each TinyVector
+    of bools... */
+template<> class simdTypes<bool> {
+public:
+  static const size_t byteWidth = 1;
+
+  static const size_t vecWidth = 1;
+
+  typedef TinyVector<bool, vecWidth> vecType;
+
+  static inline bool isVectorAligned(const bool* restrict pointer)
+  { return true; }
+
+  static inline diffType offsetToAlignment(const bool* restrict pointer) { 
+    return 0; }  
+
+  static inline size_t paddedLength(size_t length) {
+    return length; }
+};
+
+
 BZ_NAMESPACE_END
 
 #endif

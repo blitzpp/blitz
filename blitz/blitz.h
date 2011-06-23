@@ -105,6 +105,13 @@ typedef int indexType;
 typedef size_t sizeType; // Used for memory indexing
 typedef ptrdiff_t diffType; // Used for memory index differences, ie strides
 
+// set the default padding policy
+#ifdef BZ_PAD_ARRAYS
+#define BZ_PADDING_DEFAULT paddedData
+#else
+#define BZ_PADDING_DEFAULT contiguousData
+#endif
+
 BZ_NAMESPACE_END
 
 /*

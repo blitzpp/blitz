@@ -39,76 +39,71 @@
 BZ_NAMESPACE(blitz)
 
 template<typename T_numtype, int N_rank>
-void Array<T_numtype, N_rank>::resize(int extent0)
+void Array<T_numtype, N_rank>::resize(int extent0, paddingPolicy pp)
 {
     BZPRECONDITION(extent0 >= 0);
-    BZPRECONDITION(N_rank == 1);
+    BZPRECONDITION(N_rank >= 1);
 
     if (extent0 != length_[0])
     {
-        length_[0] = extent0;
-        setupStorage(0);
-    }
-}
-
-template<typename T_numtype, int N_rank>
-void Array<T_numtype, N_rank>::resize(int extent0, int extent1)
-{
-    BZPRECONDITION((extent0 >= 0) && (extent1 >= 0));
-    BZPRECONDITION(N_rank == 2);
-
-    if ((extent0 != length_[0]) || (extent1 != length_[1]))
-    {
-        length_[0] = extent0;
-        length_[1] = extent1;
-        setupStorage(1);
+        length_ = extent0;
+        setupStorage(0, pp);
     }
 }
 
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
-    int extent2)
+				      paddingPolicy pp)
+{
+    BZPRECONDITION((extent0 >= 0) && (extent1 >= 0));
+    BZPRECONDITION(N_rank >= 2);
+
+    if ((extent0 != length_[0]) || (extent1 != length_[1]))
+    {
+      length_ = extent0, extent1;
+      setupStorage(1, pp);
+    }
+}
+
+template<typename T_numtype, int N_rank>
+void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
+				      int extent2, paddingPolicy pp)
 {
     BZPRECONDITION((extent0 >= 0) && (extent1 >= 0) && (extent2 >= 0));
-    BZPRECONDITION(N_rank == 3);
+    BZPRECONDITION(N_rank >= 3);
 
     if ((extent0 != length_[0]) || (extent1 != length_[1])
         || (extent2 != length_[2]))
     {
-        length_[0] = extent0;
-        length_[1] = extent1;
-        length_[2] = extent2;
-        setupStorage(2);
+      length_ = extent0, extent1, extent2;
+      setupStorage(2, pp);
     }
 }
 
 
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
-    int extent2, int extent3)
+    int extent2, int extent3, paddingPolicy pp)
 {
     BZPRECONDITION((extent0 >= 0) && (extent1 >= 0) && (extent2 >= 0)
         && (extent3 >= 0));
-    BZPRECONDITION(N_rank == 4);
+    BZPRECONDITION(N_rank >= 4);
 
     if ((extent0 != length_[0]) || (extent1 != length_[1])
         || (extent2 != length_[2]) || (extent3 != length_[3]))
     {
-        length_[0] = extent0;
-        length_[1] = extent1;
-        length_[2] = extent2;
-        length_[3] = extent3;
-        setupStorage(3);
+      length_ = extent0, extent1, extent2, extent3;
+      setupStorage(3, pp);
     }
 }
 
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
-    int extent2, int extent3, int extent4)
+    int extent2, int extent3, int extent4, paddingPolicy pp)
 {
     BZPRECONDITION((extent0 >= 0) && (extent1 >= 0) && (extent2 >= 0)
         && (extent3 >= 0) && (extent4 >= 0));
-    BZPRECONDITION(N_rank == 5);
+    BZPRECONDITION(N_rank >= 5);
 
     if ((extent0 != length_[0]) || (extent1 != length_[1])
         || (extent2 != length_[2]) || (extent3 != length_[3])
@@ -119,17 +114,18 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
         length_[2] = extent2;
         length_[3] = extent3;
         length_[4] = extent4;
-        setupStorage(4);
+        setupStorage(4, pp);
     }
 }
 
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
-    int extent2, int extent3, int extent4, int extent5)
+    int extent2, int extent3, int extent4, int extent5, 
+				      paddingPolicy pp)
 {
     BZPRECONDITION((extent0 >= 0) && (extent1 >= 0) && (extent2 >= 0)
         && (extent3 >= 0) && (extent4 >= 0) && (extent5 >= 0));
-    BZPRECONDITION(N_rank == 6);
+    BZPRECONDITION(N_rank >= 6);
 
     if ((extent0 != length_[0]) || (extent1 != length_[1])
         || (extent2 != length_[2]) || (extent3 != length_[3])
@@ -141,19 +137,19 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
         length_[3] = extent3;
         length_[4] = extent4;
         length_[5] = extent5;
-        setupStorage(5);
+        setupStorage(5, pp);
     }
 }
 
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2, int extent3, int extent4, int extent5,
-    int extent6)
+    int extent6, paddingPolicy pp)
 {
     BZPRECONDITION((extent0 >= 0) && (extent1 >= 0) && (extent2 >= 0)
         && (extent3 >= 0) && (extent4 >= 0) && (extent5 >= 0)
         && (extent6 >= 0));
-    BZPRECONDITION(N_rank == 7);
+    BZPRECONDITION(N_rank >= 7);
 
     if ((extent0 != length_[0]) || (extent1 != length_[1])
         || (extent2 != length_[2]) || (extent3 != length_[3])
@@ -167,19 +163,19 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
         length_[4] = extent4;
         length_[5] = extent5;
         length_[6] = extent6;
-        setupStorage(6);
+        setupStorage(6, pp);
     }
 }
 
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2, int extent3, int extent4, int extent5,
-    int extent6, int extent7)
+    int extent6, int extent7, paddingPolicy pp)
 {
     BZPRECONDITION((extent0 >= 0) && (extent1 >= 0) && (extent2 >= 0)
         && (extent3 >= 0) && (extent4 >= 0) && (extent5 >= 0)
         && (extent6 >= 0) && (extent7 >= 0));
-    BZPRECONDITION(N_rank == 8);
+    BZPRECONDITION(N_rank >= 8);
 
     if ((extent0 != length_[0]) || (extent1 != length_[1])
         || (extent2 != length_[2]) || (extent3 != length_[3])
@@ -194,19 +190,19 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
         length_[5] = extent5;
         length_[6] = extent6;
         length_[7] = extent7;
-        setupStorage(7);
+        setupStorage(7, pp);
     }
 }
 
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2, int extent3, int extent4, int extent5,
-    int extent6, int extent7, int extent8)
+    int extent6, int extent7, int extent8, paddingPolicy pp)
 {
     BZPRECONDITION((extent0 >= 0) && (extent1 >= 0) && (extent2 >= 0)
         && (extent3 >= 0) && (extent4 >= 0) && (extent5 >= 0)
         && (extent6 >= 0) && (extent7 >= 0) && (extent8 >= 0));
-    BZPRECONDITION(N_rank == 9);
+    BZPRECONDITION(N_rank >= 9);
 
     if ((extent0 != length_[0]) || (extent1 != length_[1])
         || (extent2 != length_[2]) || (extent3 != length_[3])
@@ -223,7 +219,7 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
         length_[6] = extent6;
         length_[7] = extent7;
         length_[8] = extent8;
-        setupStorage(8);
+        setupStorage(8, pp);
     }
 }
 
@@ -231,13 +227,14 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2, int extent3, int extent4, int extent5,
-    int extent6, int extent7, int extent8, int extent9)
+    int extent6, int extent7, int extent8, int extent9, 
+				      paddingPolicy pp)
 {
     BZPRECONDITION((extent0 >= 0) && (extent1 >= 0) && (extent2 >= 0)
         && (extent3 >= 0) && (extent4 >= 0) && (extent5 >= 0)
         && (extent6 >= 0) && (extent7 >= 0) && (extent8 >= 0)
         && (extent9 >= 0));
-    BZPRECONDITION(N_rank == 10);
+    BZPRECONDITION(N_rank >= 10);
 
     if ((extent0 != length_[0]) || (extent1 != length_[1])
         || (extent2 != length_[2]) || (extent3 != length_[3])
@@ -255,7 +252,7 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
         length_[7] = extent7;
         length_[8] = extent8;
         length_[9] = extent9;
-        setupStorage(9);
+        setupStorage(9, pp);
     }
 }
 
@@ -263,13 +260,13 @@ template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
     int extent2, int extent3, int extent4, int extent5,
     int extent6, int extent7, int extent8, int extent9,
-    int extent10)
+    int extent10, paddingPolicy pp)
 {
     BZPRECONDITION((extent0 >= 0) && (extent1 >= 0) && (extent2 >= 0)
         && (extent3 >= 0) && (extent4 >= 0) && (extent5 >= 0)
         && (extent6 >= 0) && (extent7 >= 0) && (extent8 >= 0)
         && (extent9 >= 0) && (extent10 >= 0));
-    BZPRECONDITION(N_rank == 11);
+    BZPRECONDITION(N_rank >= 11);
 
     if ((extent0 != length_[0]) || (extent1 != length_[1])
         || (extent2 != length_[2]) || (extent3 != length_[3])
@@ -289,24 +286,24 @@ void Array<T_numtype, N_rank>::resize(int extent0, int extent1,
         length_[8] = extent8;
         length_[9] = extent9;
         length_[10] = extent10;
-        setupStorage(10);
+        setupStorage(10, pp);
     }
 }
 
 
 template<typename T_numtype, int N_rank>
-void Array<T_numtype, N_rank>::resize(Range r0)
+void Array<T_numtype, N_rank>::resize(Range r0, paddingPolicy pp)
 {
 	BZPRECONDITION(r0.isAscendingContiguous());
 
 	length_[0] = r0.length();
 	storage_.setBase(0, r0.first());
 
-	setupStorage(0);
+	setupStorage(0, pp);
 }
 
 template<typename T_numtype, int N_rank>
-void Array<T_numtype, N_rank>::resize(Range r0, Range r1)
+void Array<T_numtype, N_rank>::resize(Range r0, Range r1, paddingPolicy pp)
 {
 	BZPRECONDITION(r0.isAscendingContiguous() &&
 			r1.isAscendingContiguous());
@@ -316,11 +313,12 @@ void Array<T_numtype, N_rank>::resize(Range r0, Range r1)
 	length_[1] = r1.length();
 	storage_.setBase(1, r1.first());
 
-	setupStorage(1);
+	setupStorage(1, pp);
 }
 
 template<typename T_numtype, int N_rank>
-void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2)
+void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
+				      paddingPolicy pp)
 { 
 	BZPRECONDITION(r0.isAscendingContiguous() &&
 			r1.isAscendingContiguous() && r2.isAscendingContiguous());
@@ -332,12 +330,12 @@ void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2)
 	length_[2] = r2.length();
 	storage_.setBase(2, r2.first());
 
-	setupStorage(2);
+	setupStorage(2, pp);
 }
 
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
-		Range r3)
+		Range r3, paddingPolicy pp)
 {
 	BZPRECONDITION(r0.isAscendingContiguous() &&
 			r1.isAscendingContiguous() && r2.isAscendingContiguous()
@@ -352,12 +350,12 @@ void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 	length_[3] = r3.length();
 	storage_.setBase(3, r3.first());
 
-	setupStorage(3);
+	setupStorage(3, pp);
 } 
 
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
-		Range r3, Range r4)
+				      Range r3, Range r4, paddingPolicy pp)
 {
 	BZPRECONDITION(r0.isAscendingContiguous() &&
 			r1.isAscendingContiguous() && r2.isAscendingContiguous()
@@ -374,12 +372,12 @@ void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 	length_[4] = r4.length();
 	storage_.setBase(4, r4.first());
 
-	setupStorage(4);
+	setupStorage(4, pp);
 } 
 
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
-		Range r3, Range r4, Range r5)
+		Range r3, Range r4, Range r5, paddingPolicy pp)
 {
 	BZPRECONDITION(r0.isAscendingContiguous() &&
 			r1.isAscendingContiguous() && r2.isAscendingContiguous()
@@ -399,12 +397,12 @@ void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 	length_[5] = r5.length();
 	storage_.setBase(5, r5.first());
 
-	setupStorage(5);
+	setupStorage(5, pp);
 } 
 
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
-		Range r3, Range r4, Range r5, Range r6)
+		Range r3, Range r4, Range r5, Range r6, paddingPolicy pp)
 {
 	BZPRECONDITION(r0.isAscendingContiguous() &&
 			r1.isAscendingContiguous() && r2.isAscendingContiguous()
@@ -426,12 +424,13 @@ void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 	length_[6] = r6.length();
 	storage_.setBase(6, r6.first());
 
-	setupStorage(6);
+	setupStorage(6, pp);
 } 
 
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
-		Range r3, Range r4, Range r5, Range r6, Range r7)
+				      Range r3, Range r4, Range r5, Range r6, Range r7,
+				      paddingPolicy pp)
 {
 	BZPRECONDITION(r0.isAscendingContiguous() &&
 			r1.isAscendingContiguous() && r2.isAscendingContiguous()
@@ -456,12 +455,13 @@ void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 	length_[7] = r7.length();
 	storage_.setBase(7, r7.first());
 
-	setupStorage(7);
+	setupStorage(7, pp);
 } 
 
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
-		Range r3, Range r4, Range r5, Range r6, Range r7, Range r8)
+				      Range r3, Range r4, Range r5, Range r6, Range r7, Range r8,
+				      paddingPolicy pp)
 {
 	BZPRECONDITION(r0.isAscendingContiguous() &&
 			r1.isAscendingContiguous() && r2.isAscendingContiguous()
@@ -488,13 +488,13 @@ void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 	length_[8] = r8.length();
 	storage_.setBase(8, r8.first());
 
-	setupStorage(8);
+	setupStorage(8, pp);
 } 
 
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 		Range r3, Range r4, Range r5, Range r6, Range r7, Range r8,
-		Range r9)
+				      Range r9, paddingPolicy pp)
 {
 	BZPRECONDITION(r0.isAscendingContiguous() &&
 			r1.isAscendingContiguous() && r2.isAscendingContiguous()
@@ -524,13 +524,13 @@ void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 	length_[9] = r9.length();
 	storage_.setBase(9, r9.first());
 
-	setupStorage(9);
+	setupStorage(9, pp);
 } 
 
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 		Range r3, Range r4, Range r5, Range r6, Range r7, Range r8,
-		Range r9, Range r10)
+		Range r9, Range r10, paddingPolicy pp)
 {
 	BZPRECONDITION(r0.isAscendingContiguous() &&
 			r1.isAscendingContiguous() && r2.isAscendingContiguous()
@@ -562,7 +562,7 @@ void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 	length_[10] = r10.length();
 	storage_.setBase(10, r10.first());
 
-	setupStorage(10);
+	setupStorage(10, pp);
 } 
 
 

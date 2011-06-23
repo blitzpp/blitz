@@ -163,8 +163,10 @@ protected:
      * Array<float,2> A(Range(30,40),Range(23,33));
      * will create an array with base_[] = { 30, 23 }.
      */
-    TinyVector<int,  N_rank> ordering_;
+  // declare the tinyvector<bool> first, because it doesn't have alignment
+  bool paddingPolicy_;
     TinyVector<bool, N_rank> ascendingFlag_;
+    TinyVector<int,  N_rank> ordering_;
     TinyVector<int,  N_rank> base_;
 };
 

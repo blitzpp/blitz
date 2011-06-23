@@ -1,25 +1,27 @@
 #include "testsuite.h"
 #include <blitz/array.h>
+#include <random/discrete-uniform.h>
 
 BZ_USING_NAMESPACE(blitz)
 
 int main()
 {
-  const int w=simdTypes<double>::vecWidth;
-#if BZ_PAD_ARRAYS
-  if(w>1)
-    cerr << "NOTE:This test makes assumptions about storage that are not true when a SIMD\nwidth is specified. The test has been altered to not fail.\n";
-#endif
-
-    Array<int,3> A(2*w,3*w,4*w);
+  // try with all kinds of different sizes to make sure it works for
+  // aligned and nonaligned lengths.
+  for(int i=0;i<20;++i) {
+    const int sx=ranlib::DiscreteUniform<int>(10).random();
+    const int sy=ranlib::DiscreteUniform<int>(10).random();
+    const int sz=ranlib::DiscreteUniform<int>(10).random();
+    Array<int,3> A(sx,sy,sz, contiguousData);
 
 //    A.dumpStructureInformation();
 
     A.transposeSelf(secondDim, thirdDim, firstDim);
 
     BZTEST(A.ordering(0) == 1 && A.ordering(1) == 0 && A.ordering(2) == 2);
-    BZTEST(A.length(0) == 3*w && A.length(1) == 4*w && A.length(2) == 2*w);
-    BZTEST(A.stride(0) == 4*w && A.stride(1) == 1 && A.stride(2) == 12*w*w);
+    BZTEST(A.length(0) == sy && A.length(1) == sz && A.length(2) == sx);
+    BZTEST(A.stride(0) == sz && A.stride(1) == 1 && A.stride(2) == sz*sy);
+  }
 
 //    A.dumpStructureInformation();
 

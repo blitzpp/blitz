@@ -124,7 +124,7 @@ AC_DEFINE_UNQUOTED([SIMD_WIDTH],[$enable_simd_width],[Set SIMD instruction width
 
 AC_MSG_CHECKING([whether to pad array lengths to SIMD instruction width])
 AC_ARG_ENABLE([array-length-padding],
-  AS_HELP_STRING([--enable-array-length-padding],[Increases the chances of aligned vectorized access by padding all lowest-rank lengths to nearest larger SIMD width. The drawback is that arrays will in general be non-contiguous.]),
+  AS_HELP_STRING([--enable-array-length-padding],[Sets the default array padding policy to pad all lowest-rank lengths to nearest larger SIMD width. Caution: This means that arrays will in general be non-contiguous.]),
   [
   AC_MSG_RESULT([yes])
   if test "$enable_simd_width" == [1] ; then

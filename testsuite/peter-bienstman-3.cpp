@@ -11,27 +11,20 @@ struct A {
     A()
       : a(fortranArray)
     {
-	const int w=simdTypes<double>::vecWidth;
-
-#if BZ_PAD_ARRAYS
-	if(w>1)
-	  cerr << "NOTE:This test makes assumptions about storage that are not true when a SIMD\nwidth is specified. The test has been altered to not fail.\n";
-#endif
-
-        a.resize(5*w,5*w);
+      a.resize(10,10, contiguousData);
 
         Array<double,2> d(fortranArray);
-        d.resize(5*w,5*w);
+        d.resize(10,10, contiguousData);
 
         Array<double,2> e(0,0,fortranArray);
-        e.resize(5*w,5*w);
+        e.resize(10,10, contiguousData);
 
-        BZTEST(a.extent(0) == 5*w && a.extent(1) == 5*w);
-        BZTEST(a.stride(0) == 1 && a.stride(1) == 5*w);
-        BZTEST(d.extent(0) == 5*w && d.extent(1) == 5*w);
-        BZTEST(d.stride(0) == 1 && d.stride(1) == 5*w);
-        BZTEST(e.extent(0) == 5*w && e.extent(1) == 5*w);
-        BZTEST(e.stride(0) == 1 && e.stride(1) == 5*w);
+        BZTEST(a.extent(0) == 10 && a.extent(1) == 10);
+        BZTEST(a.stride(0) == 1 && a.stride(1) == 10);
+        BZTEST(d.extent(0) == 10 && d.extent(1) == 10);
+        BZTEST(d.stride(0) == 1 && d.stride(1) == 10);
+        BZTEST(e.extent(0) == 10 && e.extent(1) == 10);
+        BZTEST(e.stride(0) == 1 && e.stride(1) == 10);
     }
 };
 

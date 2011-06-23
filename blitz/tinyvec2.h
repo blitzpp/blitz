@@ -425,7 +425,8 @@ public:
   // };
 
 private:
-    BZ_ALIGN_VARIABLE(T_numtype, data_[N_length], BZ_SIMD_WIDTH)
+  BZ_ALIGN_VARIABLE(T_numtype, data_[N_length],
+		    simdTypes<T_numtype>::byteWidth)
 };
 
 
