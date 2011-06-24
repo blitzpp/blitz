@@ -209,8 +209,6 @@ dot(const ETBase<T1>& d1, const ETBase<T2>& d2)
   return sum(d1 * d2);
 }
 
-#define bzCC(...) __VA_ARGS__
-
 // we define a generalized cross product for all classes using the
 // Levi-Civita symbol. Return type is nice (ever heard of "write-once
 // code")... it took 10 times longer to figure out how to write the

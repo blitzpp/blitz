@@ -100,21 +100,15 @@ protected:
     }
 
   /** Constructor for a preallocated block that should be deleted when
-      we are done? \todo In this case, how do we assert that the block
-      is actually aligned on BZ_SIMD_WIDTH? */
+      we are done? */
     MemoryBlock(sizeType length, T_type* data)
     {
-      BZPRECHECK(length%simdTypes<T_type>::vecWidth==0, 
-		 "SIMD width set but memory block passed is not even multiple");
-      BZPRECHECK(simdTypes<T_type>::isVectorAligned(data),
-		 "SIMD width set but memory block passed is not aligned to it");
-
-        length_ = length;
-        data_ = data;
-        dataBlockAddress_ = data;
-        references_ = 1;
-        BZ_MUTEX_INIT(mutex)
-	  allocatedByUs_ = false;
+      length_ = length;
+      data_ = data;
+      dataBlockAddress_ = data;
+      references_ = 1;
+      BZ_MUTEX_INIT(mutex);
+      allocatedByUs_ = false;
     }
 
     virtual ~MemoryBlock()

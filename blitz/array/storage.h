@@ -33,25 +33,42 @@
 
 BZ_NAMESPACE(blitz)
 
-/*
- * Declaration of class GeneralStorage<N_rank>
- *
- * This class describes a storage format for an N-dimensional array.
- * The dimensions can be stored in an arbitrary order (for example, as
- * a C-style row major array or Fortran-style column major array, or
- * something else entirely).  Each dimension can be stored in either
- * ascending (the most common) or descending order.  Each dimension
- * can have its own base (starting index value: e.g. 0 for C-style arrays, 
- * 1 for Fortran arrays).
- *
- * GeneralArrayStorage<N> defaults to C-style arrays.  To implement
- * other storage formats, subclass and modify the constructor.  The
- * class FortranArray, below, is an example.
- *
- * Objects inheriting from GeneralArrayStorage<N> can be passed as
- * an optional constructor argument to Array objects.
- * e.g. Array<int,3> A(16,16,16, FortranArray<3>());
- * will create a 3-dimensional 16x16x16 Fortran-style array.
+
+/// Enum for specifying whether padding for alignment should be done.
+enum paddingPolicy {
+  /// The container should have contiguous data.
+  contiguousData,
+  /** The container data should be padded so minor rank dimensions
+      always are SIMD aligned. */
+  paddedData
+};
+
+
+/** The default padding policy, set by the configure script
+    --enable-array-length-padding argument. */
+const paddingPolicy defaultPadding = BZ_PADDING_DEFAULT;
+
+
+/**
+  Declaration of class GeneralArrayStorage<N_rank>
+ 
+  This class describes a storage format for an N-dimensional array.
+  The dimensions can be stored in an arbitrary order (for example, as
+  a C-style row major array or Fortran-style column major array, or
+  something else entirely).  Each dimension can be stored in either
+  ascending (the most common) or descending order.  Each dimension can
+  have its own base (starting index value: e.g. 0 for C-style arrays,
+  1 for Fortran arrays).  The GeneralArrayStorage class also
+  determines the padding policy when SIMD width is set.
+
+  GeneralArrayStorage<N> defaults to C-style arrays.  To implement
+  other storage formats, subclass and modify the constructor.  The
+  class FortranArray, below, is an example.
+ 
+  Objects inheriting from GeneralArrayStorage<N> can be passed as
+  an optional constructor argument to Array objects.
+  e.g. Array<int,3> A(16,16,16, FortranArray<3>());
+  will create a 3-dimensional 16x16x16 Fortran-style array.
  */
 
 template<int N_rank>
@@ -62,23 +79,26 @@ public:
     GeneralArrayStorage(noInitializeFlag)
     { }
 
-    GeneralArrayStorage()
+    GeneralArrayStorage(paddingPolicy pp = defaultPadding)
     {
         for (int i=0; i < N_rank; ++i)
           ordering_(i) = N_rank - 1 - i;
         ascendingFlag_ = true;
         base_ = 0;
+	paddingPolicy_ = pp;
     }
 
     GeneralArrayStorage(const GeneralArrayStorage<N_rank>& x)
         : ordering_(x.ordering_), ascendingFlag_(x.ascendingFlag_),
-          base_(x.base_)
+          base_(x.base_), paddingPolicy_(x.paddingPolicy_)
     { 
     }
 
     GeneralArrayStorage(TinyVector<int,N_rank> ordering,
-        TinyVector<bool,N_rank> ascendingFlag)
-      : ordering_(ordering), ascendingFlag_(ascendingFlag)
+			TinyVector<bool,N_rank> ascendingFlag,
+			paddingPolicy pp = defaultPadding)
+      : ordering_(ordering), ascendingFlag_(ascendingFlag),
+	paddingPolicy_(pp)
     {
         base_ = 0;
     }
@@ -92,6 +112,7 @@ public:
         ordering_ = rhs.ordering();
         ascendingFlag_ = rhs.ascendingFlag();
         base_ = rhs.base();
+	paddingPolicy_ = rhs.paddingPolicy_;
         return *this;
     }
 
@@ -141,6 +162,8 @@ public:
     void setBase(const TinyVector<int, N_rank>& base)
     { base_ = base; }
 
+  const paddingPolicy& padding() const { return paddingPolicy_; }
+
 protected:
     /*
      * ordering_[] specifies the order in which the array is stored in
@@ -163,20 +186,120 @@ protected:
      * Array<float,2> A(Range(30,40),Range(23,33));
      * will create an array with base_[] = { 30, 23 }.
      */
-  // declare the tinyvector<bool> first, because it doesn't have alignment
-  bool paddingPolicy_;
+
+    // declare the tinyvector<bool> first, because it doesn't have alignment
+    paddingPolicy paddingPolicy_;
     TinyVector<bool, N_rank> ascendingFlag_;
     TinyVector<int,  N_rank> ordering_;
     TinyVector<int,  N_rank> base_;
 };
 
-/*
- * Class FortranArray specializes GeneralArrayStorage to provide Fortran
- * style arrays (column major ordering, base of 1).  The noInitializeFlag()
- * passed to the base constructor indicates that the subclass will take
- * care of initializing the ordering_, ascendingFlag_ and base_ members.
- */
 
+/** This tag class can be used to provide a nicer notation for
+    constructing padded arrays: instead of
+      Array<int,2> A(3, 3, GeneralArrayStorage<2>(paddedData));
+    one can simply write:
+      Array<int,2> A(3, 3, paddedArray);
+    where paddedArray is an object of type _bz_paddedTag.
+*/
+class _bz_paddedTag {
+public:
+    operator GeneralArrayStorage<1>()
+    { return GeneralArrayStorage<1>(paddedData); }
+
+    operator GeneralArrayStorage<2>()
+    { return GeneralArrayStorage<2>(paddedData); }
+
+    operator GeneralArrayStorage<3>()
+    { return GeneralArrayStorage<3>(paddedData); }
+
+    operator GeneralArrayStorage<4>()
+    { return GeneralArrayStorage<4>(paddedData); }
+
+    operator GeneralArrayStorage<5>()
+    { return GeneralArrayStorage<5>(paddedData); }
+
+    operator GeneralArrayStorage<6>()
+    { return GeneralArrayStorage<6>(paddedData); }
+
+    operator GeneralArrayStorage<7>()
+    { return GeneralArrayStorage<7>(paddedData); }
+
+    operator GeneralArrayStorage<8>()
+    { return GeneralArrayStorage<8>(paddedData); }
+
+    operator GeneralArrayStorage<9>()
+    { return GeneralArrayStorage<9>(paddedData); }
+
+    operator GeneralArrayStorage<10>()
+    { return GeneralArrayStorage<10>(paddedData); }
+
+    operator GeneralArrayStorage<11>()
+    { return GeneralArrayStorage<11>(paddedData); }
+};
+
+// A global instance of this class will be placed in
+// the blitz library (libblitz.a on unix machines).
+
+_bz_global _bz_paddedTag paddedArray;
+
+
+/** This tag class can be used to provide a nicer notation for
+    constructing unpadded arrays: instead of
+      Array<int,2> A(3, 3, GeneralArrayStorage<2>(contiguousData));
+    one can simply write:
+      Array<int,2> A(3, 3, contiguousArray);
+    where contiguousArray is an object of type _bz_contiguousTag.
+*/
+class _bz_contiguousTag {
+public:
+    operator GeneralArrayStorage<1>()
+    { return GeneralArrayStorage<1>(contiguousData); }
+
+    operator GeneralArrayStorage<2>()
+    { return GeneralArrayStorage<2>(contiguousData); }
+
+    operator GeneralArrayStorage<3>()
+    { return GeneralArrayStorage<3>(contiguousData); }
+
+    operator GeneralArrayStorage<4>()
+    { return GeneralArrayStorage<4>(contiguousData); }
+
+    operator GeneralArrayStorage<5>()
+    { return GeneralArrayStorage<5>(contiguousData); }
+
+    operator GeneralArrayStorage<6>()
+    { return GeneralArrayStorage<6>(contiguousData); }
+
+    operator GeneralArrayStorage<7>()
+    { return GeneralArrayStorage<7>(contiguousData); }
+
+    operator GeneralArrayStorage<8>()
+    { return GeneralArrayStorage<8>(contiguousData); }
+
+    operator GeneralArrayStorage<9>()
+    { return GeneralArrayStorage<9>(contiguousData); }
+
+    operator GeneralArrayStorage<10>()
+    { return GeneralArrayStorage<10>(contiguousData); }
+
+    operator GeneralArrayStorage<11>()
+    { return GeneralArrayStorage<11>(contiguousData); }
+};
+
+// A global instance of this class will be placed in
+// the blitz library (libblitz.a on unix machines).
+
+_bz_global _bz_contiguousTag contiguousArray;
+
+
+/**
+   Class FortranArray specializes GeneralArrayStorage to provide
+   Fortran style arrays (column major ordering, base of 1).  The
+   noInitializeFlag() passed to the base constructor indicates that
+   the subclass will take care of initializing the ordering_,
+   ascendingFlag_ and base_ members.
+ */
 template<int N_rank>
 class FortranArray : public GeneralArrayStorage<N_rank> {
 private:
@@ -185,14 +308,16 @@ private:
     using T_base::ordering_;
     using T_base::ascendingFlag_;
     using T_base::base_;
+    using T_base::paddingPolicy_;
 public:
-    FortranArray()
+    FortranArray(paddingPolicy pp = defaultPadding)
         : GeneralArrayStorage<N_rank>(noInitializeFlag())
     {
         for (int i=0; i < N_rank; ++i)
           ordering_(i) = i;
         ascendingFlag_ = true;
         base_ = 1;
+	paddingPolicy_ = pp;
     }
 };
 
@@ -246,9 +371,9 @@ public:
 _bz_global _bz_fortranTag fortranArray;
 
 
-/*
- * Class ColumnMajorArray specializes GeneralArrayStorage to provide column
- * major arrays (column major ordering, base of 0).
+/**
+   Class ColumnMajorArray specializes GeneralArrayStorage to provide
+   column major arrays (column major ordering, base of 0).
  */
 
 template<int N_rank>
@@ -259,13 +384,15 @@ private:
     using T_base::ordering_;
     using T_base::ascendingFlag_;
     using T_base::base_;
+    using T_base::paddingPolicy_;
 public:
-    ColumnMajorArray()
-        : GeneralArrayStorage<N_rank>(noInitializeFlag())
+  ColumnMajorArray(paddingPolicy pp = defaultPadding)
+    : GeneralArrayStorage<N_rank>(noInitializeFlag())
     {
       ordering_ = tensor::i;//Range(0, N_rank - 1);
         ascendingFlag_ = true;
         base_ = 0;
+	paddingPolicy_ = pp;
     }
 };
 
@@ -277,6 +404,7 @@ public:
 // where columnMajorArray is an object of type _bz_columnMajorTag.
 
 class _bz_columnMajorTag {
+
 public:
     operator GeneralArrayStorage<1>()
     { return ColumnMajorArray<1>(); }

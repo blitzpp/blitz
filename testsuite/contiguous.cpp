@@ -6,7 +6,7 @@ BZ_USING_NAMESPACE(blitz)
 int main()
 {
   {
-    Array<int, 2> A(7,11, contiguousData);
+    Array<int, 2> A(7,11, contiguousArray);
     BZTEST(A.isStorageContiguous());
 
     BZTEST(!(A(Range(fromStart, toEnd, 2), 
@@ -18,7 +18,7 @@ int main()
   }
 
   {
-    Array<int, 2> A(7,11,columnMajorArray, contiguousData);
+    Array<int, 2> A(7,11, ColumnMajorArray<2>(contiguousData));
     BZTEST(A.isStorageContiguous());
 
     BZTEST(!(A(Range(fromStart, toEnd, 2), 
@@ -30,7 +30,7 @@ int main()
   }
 
   {
-    Array<int, 2> A(Range(-4,8),Range(4,27), contiguousData);
+    Array<int, 2> A(Range(-4,8),Range(4,27), contiguousArray);
     BZTEST(A.isStorageContiguous());
 
     BZTEST(!(A(Range(fromStart, toEnd, 2), 

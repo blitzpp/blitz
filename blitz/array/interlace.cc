@@ -102,7 +102,7 @@ template<typename T_numtype, int N_rank>
 void interlaceArrays(const TinyVector<int,N_rank>& shape,
     Array<T_numtype,N_rank>& a1, Array<T_numtype,N_rank>& a2)
 {
-    GeneralArrayStorage<N_rank+1> storage;
+    GeneralArrayStorage<N_rank+1> storage(contiguousData);
     Array<T_numtype, N_rank+1> array(shape, 2, storage);
     makeInterlacedArray(array, a1, 0);
     makeInterlacedArray(array, a2, 1);
@@ -113,7 +113,7 @@ void interlaceArrays(const TinyVector<int,N_rank>& shape,
     Array<T_numtype,N_rank>& a1, Array<T_numtype,N_rank>& a2,
     Array<T_numtype,N_rank>& a3)
 {
-    GeneralArrayStorage<N_rank+1> storage;
+    GeneralArrayStorage<N_rank+1> storage(contiguousData);
     Array<T_numtype, N_rank+1> array(shape, 3, storage);
     makeInterlacedArray(array, a1, 0);
     makeInterlacedArray(array, a2, 1);
@@ -125,7 +125,7 @@ void interlaceArrays(const TinyVector<int,N_rank>& shape,
     Array<T_numtype,N_rank>& a1, Array<T_numtype,N_rank>& a2,
     Array<T_numtype,N_rank>& a3, Array<T_numtype,N_rank>& a4)
 {
-    GeneralArrayStorage<N_rank+1> storage;
+    GeneralArrayStorage<N_rank+1> storage(contiguousData);
     Array<T_numtype, N_rank+1> array(shape, 4, storage);
     makeInterlacedArray(array, a1, 0);
     makeInterlacedArray(array, a2, 1);
@@ -139,7 +139,7 @@ void interlaceArrays(const TinyVector<int,N_rank>& shape,
     Array<T_numtype,N_rank>& a3, Array<T_numtype,N_rank>& a4,
     Array<T_numtype,N_rank>& a5)
 {
-    GeneralArrayStorage<N_rank+1> storage;
+    GeneralArrayStorage<N_rank+1> storage(contiguousData);
     Array<T_numtype, N_rank+1> array(shape, 5, storage);
     makeInterlacedArray(array, a1, 0);
     makeInterlacedArray(array, a2, 1);
@@ -154,7 +154,7 @@ void interlaceArrays(const TinyVector<int,N_rank>& shape,
     Array<T_numtype,N_rank>& a3, Array<T_numtype,N_rank>& a4,
     Array<T_numtype,N_rank>& a5, Array<T_numtype,N_rank>& a6)
 {
-    GeneralArrayStorage<N_rank+1> storage;
+    GeneralArrayStorage<N_rank+1> storage(contiguousData);
     Array<T_numtype, N_rank+1> array(shape, 6, storage);
     makeInterlacedArray(array, a1, 0);
     makeInterlacedArray(array, a2, 1);
@@ -171,7 +171,7 @@ void interlaceArrays(const TinyVector<int,N_rank>& shape,
     Array<T_numtype,N_rank>& a5, Array<T_numtype,N_rank>& a6,
     Array<T_numtype,N_rank>& a7)
 {
-    GeneralArrayStorage<N_rank+1> storage;
+    GeneralArrayStorage<N_rank+1> storage(contiguousData);
     Array<T_numtype, N_rank+1> array(shape, 7, storage);
     makeInterlacedArray(array, a1, 0);
     makeInterlacedArray(array, a2, 1);
@@ -189,7 +189,7 @@ void interlaceArrays(const TinyVector<int,N_rank>& shape,
     Array<T_numtype,N_rank>& a5, Array<T_numtype,N_rank>& a6,
     Array<T_numtype,N_rank>& a7, Array<T_numtype,N_rank>& a8)
 {
-    GeneralArrayStorage<N_rank+1> storage;
+    GeneralArrayStorage<N_rank+1> storage(contiguousData);
     Array<T_numtype, N_rank+1> array(shape, 8, storage);
     makeInterlacedArray(array, a1, 0);
     makeInterlacedArray(array, a2, 1);
@@ -209,7 +209,7 @@ void interlaceArrays(const TinyVector<int,N_rank>& shape,
     Array<T_numtype,N_rank>& a7, Array<T_numtype,N_rank>& a8,
     Array<T_numtype,N_rank>& a9)
 {
-    GeneralArrayStorage<N_rank+1> storage;
+    GeneralArrayStorage<N_rank+1> storage(contiguousData);
     Array<T_numtype, N_rank+1> array(shape, 9, storage);
     makeInterlacedArray(array, a1, 0);
     makeInterlacedArray(array, a2, 1);
@@ -230,7 +230,7 @@ void interlaceArrays(const TinyVector<int,N_rank>& shape,
     Array<T_numtype,N_rank>& a7, Array<T_numtype,N_rank>& a8,
     Array<T_numtype,N_rank>& a9, Array<T_numtype,N_rank>& a10)
 {
-    GeneralArrayStorage<N_rank+1> storage;
+    GeneralArrayStorage<N_rank+1> storage(contiguousData);
     Array<T_numtype, N_rank+1> array(shape, 10, storage);
     makeInterlacedArray(array, a1, 0);
     makeInterlacedArray(array, a2, 1);
@@ -253,7 +253,7 @@ void interlaceArrays(const TinyVector<int,N_rank>& shape,
     Array<T_numtype,N_rank>& a9, Array<T_numtype,N_rank>& a10,
     Array<T_numtype,N_rank>& a11)
 {
-    GeneralArrayStorage<N_rank+1> storage;
+    GeneralArrayStorage<N_rank+1> storage(contiguousData);
     Array<T_numtype, N_rank+1> array(shape, 11, storage);
     makeInterlacedArray(array, a1, 0);
     makeInterlacedArray(array, a2, 1);
@@ -467,9 +467,7 @@ void allocateArrays(const TinyVector<int,N_rank>& shape,
 
 // NEEDS_WORK -- allocateArrays for TinyVector<Range,N_rank>
 
-/** This constructor is used to create interlaced arrays. Interlaced
-    arrays are always created with contiguous data since given how
-    they are used it doesn't make sense to pad them. */
+/** This constructor is used to create interlaced arrays. */
 template<typename T_numtype, int N_rank>
 Array<T_numtype,N_rank>::Array(const TinyVector<int,N_rank-1>& shape,
     int lastExtent, const GeneralArrayStorage<N_rank>& storage)
@@ -499,7 +497,7 @@ Array<T_numtype,N_rank>::Array(const TinyVector<int,N_rank-1>& shape,
         BZPRECHECK(0, "Used allocateArrays() with a peculiar storage format");
     }
 
-    setupStorage(N_rank-1, contiguousData);
+    setupStorage(N_rank-1);
 }
 
 // NEEDS_WORK -- see note about TinyVector<Range,N> in <blitz/arrayshape.h>

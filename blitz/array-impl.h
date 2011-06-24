@@ -86,21 +86,6 @@ template <typename P_numtype, int N_rank>
 void find(Array<TinyVector<int,N_rank>,1>&,const Array<P_numtype,N_rank>&);
 
 
-/// Enum for specifying whether padding for alignment should be done.
-enum paddingPolicy {
-  /// The container should have contiguous data.
-  contiguousData,
-  /** The container data should be padded so minor rank dimensions
-      always are SIMD aligned. */
-  paddedData
-};
-
-
-/** The default padding policy, set by the configure script
-    --enable-array-length-padding argument. */
-const paddingPolicy defaultPadding = BZ_PADDING_DEFAULT;
-
-
 /** Declaration of class Array, the "Swiss army knife" of Blitz
     expression template classes. This is an arbitrary (at compile
     time) rank, arbitrary size container.
@@ -109,7 +94,8 @@ const paddingPolicy defaultPadding = BZ_PADDING_DEFAULT;
     To make this work, need to expose
     MemoryBlockReference::numReferences() and make Array<P,N2> a
     friend of Array<P,N> for slicing. (Is this still relevant? Array
-    DOES inherit from MemoryBlockReference.)  */
+    DOES inherit from MemoryBlockReference.)
+  */
 
 template<typename P_numtype, int N_rank>
 class Array : public MemoryBlockReference<P_numtype> 
@@ -156,8 +142,7 @@ public:
     /** Construct an array from an expression. Because this entails a
 	memory allocation, it is explicit so this fact is obvious to
 	the user. (There may also be ambiguities in making it
-	implicit?) How does this constructor decide what storage to
-	use? */
+	implicit?) */
     template<typename T_expr>
     explicit Array(_bz_ArrayExpr<T_expr> expr);
 
@@ -176,213 +161,168 @@ public:
         zeroOffset_ = 0;
     }
 
-  explicit Array(int length0,
-		 paddingPolicy pp = defaultPadding,
-		 GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+    explicit Array(int length0, 
+        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
         : storage_(storage)
     {
-      resize(length0, pp);
-    }
-
-  Array(int length0,
-	GeneralArrayStorage<N_rank> storage,
-	paddingPolicy pp = defaultPadding)
-        : storage_(storage)
-    {
-      resize(length0, pp);
+        length_[0] = length0;
+        setupStorage(0);
     }
 
     Array(int length0, int length1,
-	  paddingPolicy pp = defaultPadding,
-	  GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
-      : storage_(storage)
+        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        : storage_(storage)
     {
         BZPRECONDITION(N_rank >= 2);
         TAU_TYPE_STRING(p1, "Array<T,N>::Array() [T="
             + CT(T_numtype) + ",N=" + CT(N_rank) + "]");
         TAU_PROFILE(p1, "void (int,int)", TAU_BLITZ);
 
-	resize(length0, length1, pp);
-    }
-
-    Array(int length0, int length1,
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp = defaultPadding)
-      : storage_(storage)
-    {
-        TAU_TYPE_STRING(p1, "Array<T,N>::Array() [T="
-            + CT(T_numtype) + ",N=" + CT(N_rank) + "]");
-        TAU_PROFILE(p1, "void (int,int)", TAU_BLITZ);
-
-	resize(length0, length1, pp);
+        length_[0] = length0;
+        length_[1] = length1;
+        setupStorage(1);
     }
 
     Array(int length0, int length1, int length2,
-	  paddingPolicy pp = defaultPadding,
-	  GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
         : storage_(storage)
     {
-        resize(length0, length1, length2, pp);
-    }
-
-    Array(int length0, int length1, int length2,
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp = defaultPadding)
-        : storage_(storage)
-    {
-        resize(length0, length1, length2, pp);
+        BZPRECONDITION(N_rank >= 3);
+        length_[0] = length0;
+        length_[1] = length1;
+        length_[2] = length2;
+        setupStorage(2);
     }
 
     Array(int length0, int length1, int length2, int length3,
-	  paddingPolicy pp = defaultPadding,
-	  GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
-        : storage_(storage)
-    {
-      resize(length0, length1, length2, length3, pp);
-    }
-
-    Array(int length0, int length1, int length2, int length3,
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp = defaultPadding)
-        : storage_(storage)
-    {
-      resize(length0, length1, length2, length3, pp);
-    }
-
-    Array(int length0, int length1, int length2, int length3, int length4,
-	  paddingPolicy pp = defaultPadding,
-	  GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
-        : storage_(storage)
-    {
-      resize(length0, length1, length2, length3, length4, pp);
-    }
-
-    Array(int length0, int length1, int length2, int length3, int length4,
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp = defaultPadding)
-        : storage_(storage)
-    {
-      resize(length0, length1, length2, length3, length4, pp);
-    }
-
-    Array(int length0, int length1, int length2, int length3, int length4,
-	  int length5,
-	  paddingPolicy pp = defaultPadding,
         GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
         : storage_(storage)
     {
-      resize(length0, length1, length2, length3, length4, length5, pp);
+        BZPRECONDITION(N_rank >= 4);
+        length_[0] = length0;
+        length_[1] = length1;
+        length_[2] = length2;
+        length_[3] = length3;
+        setupStorage(3);
     }
 
     Array(int length0, int length1, int length2, int length3, int length4,
-	  int length5,
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp = defaultPadding)
-        : storage_(storage)
-    {
-      resize(length0, length1, length2, length3, length4, length5, pp);
-    }
-
-    Array(int length0, int length1, int length2, int length3, int length4,
-	  int length5, int length6,
-	  paddingPolicy pp = defaultPadding,
-	  GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
-        : storage_(storage)
-    {
-      resize(length0, length1, length2, length3, length4, length5, length6, 
-	     pp);
-    }
-
-    Array(int length0, int length1, int length2, int length3, int length4,
-	  int length5, int length6,
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp = defaultPadding)
-      : storage_(storage)
-    {
-      resize(length0, length1, length2, length3, length4, length5, length6, 
-	     pp);
-    }
-
-    Array(int length0, int length1, int length2, int length3, int length4,
-	  int length5, int length6, int length7,
-	  paddingPolicy pp = defaultPadding,
         GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
         : storage_(storage)
     {
-      resize(length0, length1, length2, length3, length4, length5, length6, 
-	     length7, pp);
+        BZPRECONDITION(N_rank >= 5);
+        length_[0] = length0;
+        length_[1] = length1;
+        length_[2] = length2;
+        length_[3] = length3;
+        length_[4] = length4;
+        setupStorage(4);
     }
 
     Array(int length0, int length1, int length2, int length3, int length4,
-	  int length5, int length6, int length7,
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp = defaultPadding)
-        : storage_(storage)
-    {
-      resize(length0, length1, length2, length3, length4, length5, length6, 
-	     length7, pp);
-    }
-
-    Array(int length0, int length1, int length2, int length3, int length4,
-	  int length5, int length6, int length7, int length8,
-	  paddingPolicy pp = defaultPadding,
+        int length5,
         GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
         : storage_(storage)
     {
-      resize(length0, length1, length2, length3, length4, length5, length6, 
-	     length7, length8, pp);
+        BZPRECONDITION(N_rank >= 6);
+        length_[0] = length0;
+        length_[1] = length1;
+        length_[2] = length2;
+        length_[3] = length3;
+        length_[4] = length4;
+        length_[5] = length5;
+        setupStorage(5);
     }
 
     Array(int length0, int length1, int length2, int length3, int length4,
-	  int length5, int length6, int length7, int length8,
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp = defaultPadding)
+        int length5, int length6,
+        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
         : storage_(storage)
     {
-      resize(length0, length1, length2, length3, length4, length5, length6, 
-	     length7, length8, pp);
+        BZPRECONDITION(N_rank >= 7);
+        length_[0] = length0;
+        length_[1] = length1;
+        length_[2] = length2;
+        length_[3] = length3;
+        length_[4] = length4;
+        length_[5] = length5;
+        length_[6] = length6;
+        setupStorage(6);
+    }
+
+    Array(int length0, int length1, int length2, int length3, int length4,
+        int length5, int length6, int length7,
+        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        : storage_(storage)
+    {
+        BZPRECONDITION(N_rank >= 8);
+        length_[0] = length0;
+        length_[1] = length1;
+        length_[2] = length2;
+        length_[3] = length3;
+        length_[4] = length4;
+        length_[5] = length5;
+        length_[6] = length6;
+        length_[7] = length7;
+        setupStorage(7);
+    }
+
+    Array(int length0, int length1, int length2, int length3, int length4,
+        int length5, int length6, int length7, int length8,
+        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        : storage_(storage)
+    {
+        BZPRECONDITION(N_rank >= 9);
+        length_[0] = length0;
+        length_[1] = length1;
+        length_[2] = length2;
+        length_[3] = length3;
+        length_[4] = length4;
+        length_[5] = length5;
+        length_[6] = length6;
+        length_[7] = length7;
+        length_[8] = length8;
+        setupStorage(8);
     }
 
     Array(int length0, int length1, int length2, int length3, int length4,
         int length5, int length6, int length7, int length8, int length9,
-	  paddingPolicy pp = defaultPadding,
         GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
         : storage_(storage)
     {
-      resize(length0, length1, length2, length3, length4, length5, length6, 
-	     length7, length8, length9, pp);
-    }
-
-    Array(int length0, int length1, int length2, int length3, int length4,
-        int length5, int length6, int length7, int length8, int length9,
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp = defaultPadding)
-        : storage_(storage)
-    {
-      resize(length0, length1, length2, length3, length4, length5, length6, 
-	     length7, length8, length9, pp);
+        BZPRECONDITION(N_rank >= 10);
+        length_[0] = length0;
+        length_[1] = length1;
+        length_[2] = length2;
+        length_[3] = length3;
+        length_[4] = length4;
+        length_[5] = length5;
+        length_[6] = length6;
+        length_[7] = length7;
+        length_[8] = length8;
+        length_[9] = length9;
+        setupStorage(9);
     }
 
     Array(int length0, int length1, int length2, int length3, int length4,
         int length5, int length6, int length7, int length8, int length9,
         int length10,
-	  paddingPolicy pp = defaultPadding,
         GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
         : storage_(storage)
     {
-      resize(length0, length1, length2, length3, length4, length5, length6, 
-	     length7, length8, length9, length10, pp);
-    }
-
-    Array(int length0, int length1, int length2, int length3, int length4,
-	  int length5, int length6, int length7, int length8, int length9,
-	  int length10,
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp = defaultPadding)
-        : storage_(storage)
-    {
-      resize(length0, length1, length2, length3, length4, length5, length6, 
-	     length7, length8, length9, length10, pp);
+        BZPRECONDITION(N_rank >= 11);
+        length_[0] = length0;
+        length_[1] = length1;
+        length_[2] = length2;
+        length_[3] = length3;
+        length_[4] = length4;
+        length_[5] = length5;
+        length_[6] = length6;
+        length_[7] = length7;
+        length_[8] = length8;
+        length_[9] = length9;
+        length_[10] = length10;
+        setupStorage(10);
     }
 
     /*
@@ -390,31 +330,40 @@ public:
      * is not acquired (this is provided for backwards compatibility).
      */
     Array(T_numtype* restrict dataFirst, TinyVector<int, N_rank> shape,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = 
+	  GeneralArrayStorage<N_rank>(contiguousData))
       : MemoryBlockReference<T_numtype>(_bz_returntype<sizeType>::product(shape), dataFirst, 
           neverDeleteData),
         storage_(storage)
     {
-        BZPRECONDITION(dataFirst != 0);
+      BZPRECONDITION(dataFirst != 0);
 
         length_ = shape;
-        computeStrides(contiguousData);
+        computeStrides();
         data_ += zeroOffset_;
+
+	BZPRECHECK(isStorageContiguous(), "Non-contiguous storage used with pre-existing memory");
     }
 
-    /*
-     * Construct an array from an existing block of memory, with a
-     * given set of strides.  Ownership is not acquired (i.e. the memory
-     * block will not be freed by Blitz++).
+  /**
+      Construct an array from an existing block of memory, with a
+      given set of strides.  Ownership is not acquired (i.e. the
+      memory block will not be freed by Blitz++).  This constructor is
+      used by extractComponent to make a component view of a
+      multicomponent array, which is by design noncontiguous. This
+      creates an incorrect length in the MemoryBlockReference (though
+      that may be of no consequence since we're not freeing the
+      memory).
      */
     Array(T_numtype* restrict dataFirst, TinyVector<int, N_rank> shape,
         TinyVector<diffType, N_rank> stride, 
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = 
+	  GeneralArrayStorage<N_rank>(contiguousData))
       : MemoryBlockReference<T_numtype>(_bz_returntype<sizeType>::product(shape), dataFirst, 
           neverDeleteData),
         storage_(storage)
     {
-        BZPRECONDITION(dataFirst != 0);
+      BZPRECONDITION(dataFirst != 0);
 
         length_ = shape;
         stride_ = stride;
@@ -422,44 +371,57 @@ public:
         data_ += zeroOffset_;
     }
 
-    /*
-     * Construct an array from an existing block of memory.
+  /**
+     Construct an array from an existing block of memory. If the
+     storage represents a padded array, the length of the memory block
+     will be incorrect, which would lead to a crash if
+     "deleteDataWhenDone" is used. For this reason, we check that the
+     resulting array is contiguous.
      */
     Array(T_numtype* restrict dataFirst, TinyVector<int, N_rank> shape,
         preexistingMemoryPolicy deletionPolicy,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = 
+	  GeneralArrayStorage<N_rank>(contiguousData))
       : MemoryBlockReference<T_numtype>(_bz_returntype<sizeType>::product(shape), dataFirst, 
             deletionPolicy),
         storage_(storage)
     {
-        BZPRECONDITION(dataFirst != 0);
+      BZPRECONDITION(dataFirst != 0);
 
         length_ = shape;
-        computeStrides(contiguousData);
+        computeStrides();
         data_ += zeroOffset_;
+
+	BZPRECHECK(isStorageContiguous(), "Non-contiguous storage used with pre-existing memory");
 
         if (deletionPolicy == duplicateData)
             reference(copy());
     }
 
-    /*
-     * Construct an array from an existing block of memory, with a
-     * given set of strides.  
+  /**
+     Construct an array from an existing block of memory, with a given
+     set of strides. If the strides represent a noncontiguous array,
+     the calculated length of the memory block will be wrong, which
+     will lead to a crash if "deleteDataWhenDone" is specified. For
+     this reason, we check that the resulting array is contiguous.
      */
     Array(T_numtype* restrict dataFirst, TinyVector<int, N_rank> shape,
         TinyVector<diffType, N_rank> stride,
         preexistingMemoryPolicy deletionPolicy,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = 
+	  GeneralArrayStorage<N_rank>(contiguousData))
       : MemoryBlockReference<T_numtype>(_bz_returntype<sizeType>::product(shape), dataFirst, 
           deletionPolicy),
         storage_(storage)
     {
-        BZPRECONDITION(dataFirst != 0);
+      BZPRECONDITION(dataFirst != 0);
 
         length_ = shape;
         stride_ = stride;
         calculateZeroOffset();
         data_ += zeroOffset_;
+
+	BZPRECHECK(isStorageContiguous(), "Non-contiguous storage used with pre-existing memory");
 
         if (deletionPolicy == duplicateData)
             reference(copy());
@@ -470,21 +432,11 @@ public:
      */
 
     Array(const TinyVector<int, N_rank>& extent, 
-	  paddingPolicy pp = defaultPadding,
-	  GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
         : storage_(storage)
     {
         length_ = extent;
-        setupStorage(N_rank - 1, pp);
-    }
-
-    Array(const TinyVector<int, N_rank>& extent, 
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp= defaultPadding)
-        : storage_(storage)
-    {
-        length_ = extent;
-        setupStorage(N_rank - 1, pp);
+        setupStorage(N_rank - 1);
     }
 
     /*
@@ -492,17 +444,10 @@ public:
      * extents.
      */
 
-  Array(const TinyVector<int, N_rank>& lbounds,
+    Array(const TinyVector<int, N_rank>& lbounds,
         const TinyVector<int, N_rank>& extent,
-	paddingPolicy= defaultPadding,
         const GeneralArrayStorage<N_rank>& storage 
            = GeneralArrayStorage<N_rank>());
-
-  Array(const TinyVector<int, N_rank>& lbounds,
-        const TinyVector<int, N_rank>& extent,
-        const GeneralArrayStorage<N_rank>& storage 
-	= GeneralArrayStorage<N_rank>(),
-	paddingPolicy= defaultPadding);
 
     /*
      * These constructors allow arbitrary bases (starting indices) to be set.
@@ -510,189 +455,279 @@ public:
      * will create an 11x11 array whose indices are 10..20 and 20..30
      */
     Array(Range r0, 
-	  paddingPolicy pp = defaultPadding,
-	  GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
-        : storage_(storage)
-    {
-      resize(r0, pp);
-    }
-
-    Array(Range r0, 
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp = defaultPadding)
-        : storage_(storage)
-    {
-      resize(r0, pp);
-    }
-
-    Array(Range r0, Range r1,
-	  paddingPolicy pp = defaultPadding,
-	  GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
-        : storage_(storage)
-    {
-      resize(r0, r1, pp);
-    }
-
-    Array(Range r0, Range r1,
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp = defaultPadding)
-        : storage_(storage)
-    {
-      resize(r0, r1, pp);
-    }
-
-    Array(Range r0, Range r1, Range r2,
-	  paddingPolicy pp = defaultPadding,
         GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
         : storage_(storage)
     {
-      resize(r0, r1, r2, pp);
+        BZPRECONDITION(r0.isAscendingContiguous());
+
+        length_[0] = r0.length();
+        storage_.setBase(0, r0.first());
+        setupStorage(0);
+    }
+
+    Array(Range r0, Range r1,
+        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        : storage_(storage)
+    {
+        BZPRECONDITION(r0.isAscendingContiguous() && 
+            r1.isAscendingContiguous());
+
+        length_[0] = r0.length();
+        storage_.setBase(0, r0.first());
+        length_[1] = r1.length();
+        storage_.setBase(1, r1.first());
+
+        setupStorage(1);
     }
 
     Array(Range r0, Range r1, Range r2,
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp = defaultPadding)
+        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
         : storage_(storage)
     {
-      resize(r0, r1, r2, pp);
+        BZPRECONDITION(r0.isAscendingContiguous() &&
+            r1.isAscendingContiguous() && r2.isAscendingContiguous());
+
+        length_[0] = r0.length();
+        storage_.setBase(0, r0.first());
+        length_[1] = r1.length();
+        storage_.setBase(1, r1.first());
+        length_[2] = r2.length();
+        storage_.setBase(2, r2.first());
+
+        setupStorage(2);
     }
 
     Array(Range r0, Range r1, Range r2, Range r3,
-	  paddingPolicy pp = defaultPadding,
-	  GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
         : storage_(storage)
     {
-      resize(r0, r1, r2, r3, pp);
-    }
+        BZPRECONDITION(r0.isAscendingContiguous() &&
+            r1.isAscendingContiguous() && r2.isAscendingContiguous()
+            && r3.isAscendingContiguous());
 
-    Array(Range r0, Range r1, Range r2, Range r3,
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp = defaultPadding)
-        : storage_(storage)
-    {
-      resize(r0, r1, r2, r3, pp);
-    }
+        length_[0] = r0.length();
+        storage_.setBase(0, r0.first());
+        length_[1] = r1.length();
+        storage_.setBase(1, r1.first());
+        length_[2] = r2.length();
+        storage_.setBase(2, r2.first());
+        length_[3] = r3.length();
+        storage_.setBase(3, r3.first());
 
-    Array(Range r0, Range r1, Range r2, Range r3, Range r4,
-	  paddingPolicy pp = defaultPadding,
-	  GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
-        : storage_(storage)
-    {
-      resize(r0, r1, r2, r3, r4, pp);
+        setupStorage(3);
     }
 
     Array(Range r0, Range r1, Range r2, Range r3, Range r4,
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp = defaultPadding)
+        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
         : storage_(storage)
     {
-      resize(r0, r1, r2, r3, r4, pp);
+        BZPRECONDITION(r0.isAscendingContiguous() &&
+            r1.isAscendingContiguous() && r2.isAscendingContiguous()
+            && r3.isAscendingContiguous() && r4.isAscendingContiguous());
+
+        length_[0] = r0.length();
+        storage_.setBase(0, r0.first());
+        length_[1] = r1.length();
+        storage_.setBase(1, r1.first());
+        length_[2] = r2.length();
+        storage_.setBase(2, r2.first());
+        length_[3] = r3.length();
+        storage_.setBase(3, r3.first());
+        length_[4] = r4.length();
+        storage_.setBase(4, r4.first());
+
+        setupStorage(4);
     }
 
     Array(Range r0, Range r1, Range r2, Range r3, Range r4, Range r5,
-	  paddingPolicy pp = defaultPadding,
-	  GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
         : storage_(storage)
     {
-      resize(r0, r1, r2, r3, r4, r5, pp);
-    }
+        BZPRECONDITION(r0.isAscendingContiguous() &&
+            r1.isAscendingContiguous() && r2.isAscendingContiguous()
+            && r3.isAscendingContiguous() && r4.isAscendingContiguous()
+            && r5.isAscendingContiguous());
 
-    Array(Range r0, Range r1, Range r2, Range r3, Range r4, Range r5,
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp = defaultPadding)
-        : storage_(storage)
-    {
-      resize(r0, r1, r2, r3, r4, r5, pp);
+        length_[0] = r0.length();
+        storage_.setBase(0, r0.first());
+        length_[1] = r1.length();
+        storage_.setBase(1, r1.first());
+        length_[2] = r2.length();
+        storage_.setBase(2, r2.first());
+        length_[3] = r3.length();
+        storage_.setBase(3, r3.first());
+        length_[4] = r4.length();
+        storage_.setBase(4, r4.first());
+        length_[5] = r5.length();
+        storage_.setBase(5, r5.first());
+
+        setupStorage(5);
     }
 
     Array(Range r0, Range r1, Range r2, Range r3, Range r4, Range r5,
         Range r6,
-	  paddingPolicy pp = defaultPadding,
-	  GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
         : storage_(storage)
     {
-      resize(r0, r1, r2, r3, r4, r5, r6, pp);
-    }
+        BZPRECONDITION(r0.isAscendingContiguous() &&
+            r1.isAscendingContiguous() && r2.isAscendingContiguous()
+            && r3.isAscendingContiguous() && r4.isAscendingContiguous()
+            && r5.isAscendingContiguous() && r6.isAscendingContiguous());
 
-    Array(Range r0, Range r1, Range r2, Range r3, Range r4, Range r5,
-	  Range r6,
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp = defaultPadding)
-        : storage_(storage)
-    {
-      resize(r0, r1, r2, r3, r4, r5, r6, pp);
+        length_[0] = r0.length();
+        storage_.setBase(0, r0.first());
+        length_[1] = r1.length();
+        storage_.setBase(1, r1.first());
+        length_[2] = r2.length();
+        storage_.setBase(2, r2.first());
+        length_[3] = r3.length();
+        storage_.setBase(3, r3.first());
+        length_[4] = r4.length();
+        storage_.setBase(4, r4.first());
+        length_[5] = r5.length();
+        storage_.setBase(5, r5.first());
+        length_[6] = r6.length();
+        storage_.setBase(6, r6.first());
+
+        setupStorage(6);
     }
 
     Array(Range r0, Range r1, Range r2, Range r3, Range r4, Range r5,
         Range r6, Range r7,
-	  paddingPolicy pp = defaultPadding,
         GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
         : storage_(storage)
     {
-      resize(r0, r1, r2, r3, r4, r5, r6, r7, pp);
-    }
+        BZPRECONDITION(r0.isAscendingContiguous() &&
+            r1.isAscendingContiguous() && r2.isAscendingContiguous()
+            && r3.isAscendingContiguous() && r4.isAscendingContiguous()
+            && r5.isAscendingContiguous() && r6.isAscendingContiguous()
+            && r7.isAscendingContiguous());
 
-    Array(Range r0, Range r1, Range r2, Range r3, Range r4, Range r5,
-	  Range r6, Range r7,
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp = defaultPadding)
-        : storage_(storage)
-    {
-      resize(r0, r1, r2, r3, r4, r5, r6, r7, pp);
+        length_[0] = r0.length();
+        storage_.setBase(0, r0.first());
+        length_[1] = r1.length();
+        storage_.setBase(1, r1.first());
+        length_[2] = r2.length();
+        storage_.setBase(2, r2.first());
+        length_[3] = r3.length();
+        storage_.setBase(3, r3.first());
+        length_[4] = r4.length();
+        storage_.setBase(4, r4.first());
+        length_[5] = r5.length();
+        storage_.setBase(5, r5.first());
+        length_[6] = r6.length();
+        storage_.setBase(6, r6.first());
+        length_[7] = r7.length();
+        storage_.setBase(7, r7.first());
+
+        setupStorage(7);
     }
 
     Array(Range r0, Range r1, Range r2, Range r3, Range r4, Range r5,
         Range r6, Range r7, Range r8,
-	  paddingPolicy pp = defaultPadding,
         GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
         : storage_(storage)
     {
-      resize(r0, r1, r2, r3, r4, r5, r6, r7, r8, pp);
-    }
+        BZPRECONDITION(r0.isAscendingContiguous() &&
+            r1.isAscendingContiguous() && r2.isAscendingContiguous()
+            && r3.isAscendingContiguous() && r4.isAscendingContiguous()
+            && r5.isAscendingContiguous() && r6.isAscendingContiguous()
+            && r7.isAscendingContiguous() && r8.isAscendingContiguous());
 
-    Array(Range r0, Range r1, Range r2, Range r3, Range r4, Range r5,
-        Range r6, Range r7, Range r8,
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp = defaultPadding)
-        : storage_(storage)
-    {
-      resize(r0, r1, r2, r3, r4, r5, r6, r7, r8, pp);
+        length_[0] = r0.length();
+        storage_.setBase(0, r0.first());
+        length_[1] = r1.length();
+        storage_.setBase(1, r1.first());
+        length_[2] = r2.length();
+        storage_.setBase(2, r2.first());
+        length_[3] = r3.length();
+        storage_.setBase(3, r3.first());
+        length_[4] = r4.length();
+        storage_.setBase(4, r4.first());
+        length_[5] = r5.length();
+        storage_.setBase(5, r5.first());
+        length_[6] = r6.length();
+        storage_.setBase(6, r6.first());
+        length_[7] = r7.length();
+        storage_.setBase(7, r7.first());
+        length_[8] = r8.length();
+        storage_.setBase(8, r8.first());
+
+        setupStorage(8);
     }
 
     Array(Range r0, Range r1, Range r2, Range r3, Range r4, Range r5,
         Range r6, Range r7, Range r8, Range r9,
-	  paddingPolicy pp = defaultPadding,
         GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
         : storage_(storage)
     {
-      resize(r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, pp);
-    }
+        BZPRECONDITION(r0.isAscendingContiguous() &&
+            r1.isAscendingContiguous() && r2.isAscendingContiguous()
+            && r3.isAscendingContiguous() && r4.isAscendingContiguous()
+            && r5.isAscendingContiguous() && r6.isAscendingContiguous()
+            && r7.isAscendingContiguous() && r8.isAscendingContiguous()
+            && r9.isAscendingContiguous());
 
-    Array(Range r0, Range r1, Range r2, Range r3, Range r4, Range r5,
-        Range r6, Range r7, Range r8, Range r9,
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp = defaultPadding)
-        : storage_(storage)
-    {
-      resize(r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, pp);
+        length_[0] = r0.length();
+        storage_.setBase(0, r0.first());
+        length_[1] = r1.length();
+        storage_.setBase(1, r1.first());
+        length_[2] = r2.length();
+        storage_.setBase(2, r2.first());
+        length_[3] = r3.length();
+        storage_.setBase(3, r3.first());
+        length_[4] = r4.length();
+        storage_.setBase(4, r4.first());
+        length_[5] = r5.length();
+        storage_.setBase(5, r5.first());
+        length_[6] = r6.length();
+        storage_.setBase(6, r6.first());
+        length_[7] = r7.length();
+        storage_.setBase(7, r7.first());
+        length_[8] = r8.length();
+        storage_.setBase(8, r8.first());
+        length_[9] = r9.length();
+        storage_.setBase(9, r9.first());
+
+        setupStorage(9);
     }
 
     Array(Range r0, Range r1, Range r2, Range r3, Range r4, Range r5,
         Range r6, Range r7, Range r8, Range r9, Range r10,
-	  paddingPolicy pp = defaultPadding,
         GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
         : storage_(storage)
     {
-      resize(r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, pp);
-    }
+        BZPRECONDITION(r0.isAscendingContiguous() &&
+            r1.isAscendingContiguous() && r2.isAscendingContiguous()
+            && r3.isAscendingContiguous() && r4.isAscendingContiguous()
+            && r5.isAscendingContiguous() && r6.isAscendingContiguous()
+            && r7.isAscendingContiguous() && r8.isAscendingContiguous()
+            && r9.isAscendingContiguous() && r10.isAscendingContiguous());
 
-    Array(Range r0, Range r1, Range r2, Range r3, Range r4, Range r5,
-        Range r6, Range r7, Range r8, Range r9, Range r10,
-	  GeneralArrayStorage<N_rank> storage,
-	  paddingPolicy pp = defaultPadding)
-        : storage_(storage)
-    {
-      resize(r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, pp);
+        length_[0] = r0.length();
+        storage_.setBase(0, r0.first());
+        length_[1] = r1.length();
+        storage_.setBase(1, r1.first());
+        length_[2] = r2.length();
+        storage_.setBase(2, r2.first());
+        length_[3] = r3.length();
+        storage_.setBase(3, r3.first());
+        length_[4] = r4.length();
+        storage_.setBase(4, r4.first());
+        length_[5] = r5.length();
+        storage_.setBase(5, r5.first());
+        length_[6] = r6.length();
+        storage_.setBase(6, r6.first());
+        length_[7] = r7.length();
+        storage_.setBase(7, r7.first());
+        length_[8] = r8.length();
+        storage_.setBase(8, r8.first());
+        length_[9] = r9.length();
+        storage_.setBase(9, r9.first());
+        length_[10] = r10.length();
+        storage_.setBase(10, r10.first());
+
+        setupStorage(10);
     }
 
     /*
@@ -988,61 +1023,64 @@ public:
     void                              reindexSelf(
                                         const TinyVector<int,N_rank>&);
 
-  void resize(int extent, paddingPolicy= defaultPadding);
-  void resize(int extent1, int extent2, paddingPolicy= defaultPadding);
-  void resize(int extent1, int extent2, int extent3, 
-	      paddingPolicy= defaultPadding);
-  void resize(int extent1, int extent2, int extent3, int extent4,
-	      paddingPolicy= defaultPadding);
-    void resize(int extent1, int extent2, int extent3, int extent4, 
-		int extent5, paddingPolicy= defaultPadding);
-    void resize(int extent1, int extent2, int extent3, int extent4, 
-		int extent5, int extent6, paddingPolicy= defaultPadding);
-    void resize(int extent1, int extent2, int extent3, int extent4, 
-		int extent5, int extent6, int extent7, 
-		paddingPolicy= defaultPadding);
-    void resize(int extent1, int extent2, int extent3, int extent4, 
-		int extent5, int extent6, int extent7, int extent8,
-		paddingPolicy= defaultPadding);
-    void resize(int extent1, int extent2, int extent3, int extent4, 
-		int extent5, int extent6, int extent7, int extent8,
-		int extent9, paddingPolicy= defaultPadding);
-    void resize(int extent1, int extent2, int extent3, int extent4, 
-		int extent5, int extent6, int extent7, int extent8,
-		int extent9, int extent10, paddingPolicy= defaultPadding);
+    void                              resize(int extent);
+    void                              resize(int extent1, int extent2);
+    void                              resize(int extent1, int extent2,
+                                        int extent3);
+    void                              resize(int extent1, int extent2,
+                                        int extent3, int extent4);
+    void                              resize(int extent1, int extent2,
+                                        int extent3, int extent4, int extent5);
+    void                              resize(int extent1, int extent2,
+                                        int extent3, int extent4, int extent5,
+                                        int extent6);
+    void                              resize(int extent1, int extent2,
+                                        int extent3, int extent4, int extent5,
+                                        int extent6, int extent7);
+    void                              resize(int extent1, int extent2,
+                                        int extent3, int extent4, int extent5,
+                                        int extent6, int extent7, int extent8);
+    void                              resize(int extent1, int extent2,
+                                        int extent3, int extent4, int extent5,
+                                        int extent6, int extent7, int extent8,
+                                        int extent9);
+    void                              resize(int extent1, int extent2,
+                                        int extent3, int extent4, int extent5,
+                                        int extent6, int extent7, int extent8,
+                                        int extent9, int extent10);
+    void                              resize(int extent1, int extent2,
+                                        int extent3, int extent4, int extent5,
+                                        int extent6, int extent7, int extent8,
+                                        int extent9, int extent10, 
+                                        int extent11);
 
-    void resize(int extent1, int extent2, int extent3, int extent4, 
-		int extent5, int extent6, int extent7, int extent8,
-		int extent9, int extent10, int extent11,
-		paddingPolicy= defaultPadding);
 
-
-    void resize(Range r1, paddingPolicy= defaultPadding);
-    void resize(Range r1, Range r2, paddingPolicy= defaultPadding);
-    void resize(Range r1, Range r2, Range r3, paddingPolicy= defaultPadding);
-    void resize(Range r1, Range r2, Range r3,
-		Range r4, paddingPolicy= defaultPadding);
-    void resize(Range r1, Range r2, Range r3,
-		Range r4, Range r5, paddingPolicy= defaultPadding);
-    void resize(Range r1, Range r2, Range r3,
-		Range r4, Range r5, Range r6, paddingPolicy= defaultPadding);
-    void resize(Range r1, Range r2, Range r3,
-		Range r4, Range r5, Range r6,
-		Range r7, paddingPolicy= defaultPadding);
-  void resize(Range r1, Range r2, Range r3,
-	      Range r4, Range r5, Range r6,
-	      Range r7, Range r8, paddingPolicy= defaultPadding);
-    void resize(Range r1, Range r2, Range r3,
-		Range r4, Range r5, Range r6,
-		Range r7, Range r8, Range r9, paddingPolicy= defaultPadding);
-    void resize(Range r1, Range r2, Range r3,
-		Range r4, Range r5, Range r6,
-		Range r7, Range r8, Range r9, 
-		Range r10, paddingPolicy= defaultPadding);
-    void resize(Range r1, Range r2, Range r3,
-		Range r4, Range r5, Range r6,
-		Range r7, Range r8, Range r9, 
-		Range r10, Range r11, paddingPolicy= defaultPadding);
+    void                              resize(Range r1);
+    void                              resize(Range r1, Range r2);
+    void                              resize(Range r1, Range r2, Range r3);
+    void                              resize(Range r1, Range r2, Range r3,
+                                        Range r4);
+    void                              resize(Range r1, Range r2, Range r3,
+                                        Range r4, Range r5);
+    void                              resize(Range r1, Range r2, Range r3,
+                                        Range r4, Range r5, Range r6);
+    void                              resize(Range r1, Range r2, Range r3,
+                                        Range r4, Range r5, Range r6,
+                                        Range r7);
+    void                              resize(Range r1, Range r2, Range r3,
+                                        Range r4, Range r5, Range r6,
+                                        Range r7, Range r8);
+    void                              resize(Range r1, Range r2, Range r3,
+                                        Range r4, Range r5, Range r6,
+                                        Range r7, Range r8, Range r9);
+    void                              resize(Range r1, Range r2, Range r3,
+                                        Range r4, Range r5, Range r6,
+                                        Range r7, Range r8, Range r9, 
+                                        Range r10);
+    void                              resize(Range r1, Range r2, Range r3,
+                                        Range r4, Range r5, Range r6,
+                                        Range r7, Range r8, Range r9, 
+                                        Range r10, Range r11);
 
     void                              resize(const TinyVector<int,N_rank>&);
  
@@ -2332,8 +2370,8 @@ protected:
     // Implementation routines
     //////////////////////////////////////////////
 
-    _bz_inline2 void computeStrides(paddingPolicy);
-  _bz_inline2 void setupStorage(int rank, paddingPolicy=defaultPadding);
+    _bz_inline2 void computeStrides();
+    _bz_inline2 void setupStorage(int rank);
     void constructSubarray(Array<T_numtype, N_rank>& array, 
         const RectDomain<N_rank>&);
     void constructSubarray(Array<T_numtype, N_rank>& array,

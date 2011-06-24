@@ -75,6 +75,10 @@
 
 #define BZ_THROW                     // Needed in <blitz/numinquire.h>
 
+// This macro is needed to pass template types to macros, since macros
+// don't recognize <> as parentheses.
+#define bzCC(...) __VA_ARGS__
+
 BZ_NAMESPACE(blitz)
 
 #ifdef BZ_HAVE_STD

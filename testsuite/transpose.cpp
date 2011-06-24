@@ -12,7 +12,7 @@ int main()
     const int sx=ranlib::DiscreteUniform<int>(10).random();
     const int sy=ranlib::DiscreteUniform<int>(10).random();
     const int sz=ranlib::DiscreteUniform<int>(10).random();
-    Array<int,3> A(sx,sy,sz, contiguousData);
+    Array<int,3> A(sx,sy,sz, contiguousArray);
 
 //    A.dumpStructureInformation();
 

@@ -92,26 +92,13 @@ Array<P_numtype,N_rank>::Array(_bz_ArrayExpr<T_expr> expr)
 
 template<typename P_numtype, int N_rank>
 Array<P_numtype,N_rank>::Array(const TinyVector<int, N_rank>& lbounds,
-			       const TinyVector<int, N_rank>& extent,
-			       paddingPolicy pp,
-			       const GeneralArrayStorage<N_rank>& storage)
+    const TinyVector<int, N_rank>& extent,
+    const GeneralArrayStorage<N_rank>& storage)
     : storage_(storage)
 {
     length_ = extent;
     storage_.setBase(lbounds);
-    setupStorage(N_rank - 1, pp);
-}
-
-template<typename P_numtype, int N_rank>
-Array<P_numtype,N_rank>::Array(const TinyVector<int, N_rank>& lbounds,
-			       const TinyVector<int, N_rank>& extent,
-			       const GeneralArrayStorage<N_rank>& storage,
-			       paddingPolicy pp)
-    : storage_(storage)
-{
-    length_ = extent;
-    storage_.setBase(lbounds);
-    setupStorage(N_rank - 1, pp);
+    setupStorage(N_rank - 1);
 }
 
 
@@ -121,8 +108,7 @@ Array<P_numtype,N_rank>::Array(const TinyVector<int, N_rank>& lbounds,
     the zero offset (see explanation in array.h).
  */
 template<typename P_numtype, int N_rank>
-_bz_inline2 void Array<P_numtype, N_rank>::
-computeStrides(paddingPolicy pp)
+_bz_inline2 void Array<P_numtype, N_rank>::computeStrides()
 {
     if (N_rank > 1)
     {
@@ -150,7 +136,7 @@ computeStrides(paddingPolicy pp)
           // the ranks minor to it.
           stride_[ordering(n)] = stride * strideSign;
 
-	  if((pp==paddedData)&&(n==0)) {
+	  if((storage_.padding()==paddedData)&&(n==0)) {
 	    // The lowest rank dimension is padded to vecWidth, so this
 	    // needs to be accounted for in the stride
 	    stride *= simdTypes<T_numtype>::paddedLength(length_[ordering(0)]);
@@ -295,8 +281,7 @@ void Array<P_numtype, N_rank>::setStorage(GeneralArrayStorage<N_rank> x)
  * This method is called to allocate memory for a new array.  
  */
 template<typename P_numtype, int N_rank>
-_bz_inline2 void Array<P_numtype, N_rank>::setupStorage(int lastRankInitialized,
-							paddingPolicy pp)
+_bz_inline2 void Array<P_numtype, N_rank>::setupStorage(int lastRankInitialized)
 {
     TAU_TYPE_STRING(p1, "Array<T,N>::setupStorage() [T="
         + CT(P_numtype) + ",N=" + CT(N_rank) + "]");
@@ -315,18 +300,16 @@ _bz_inline2 void Array<P_numtype, N_rank>::setupStorage(int lastRankInitialized,
     }
 
     // Compute strides
-    computeStrides(pp);
+    computeStrides();
 
     // Allocate a block of memory.
     TinyVector<int, N_rank> alloc_length = length();
-
-    if(pp==paddedData) {
+    if(storage_.padding()==paddedData) {
       // The size of the block is NOT equal to numelements, because the
       // lowest rank dimension is padded to vecWidth
       alloc_length[ordering(0)] = 
 	simdTypes<T_numtype>::paddedLength(alloc_length[ordering(0)]);
     }
-
     sizeType numElem = _bz_returntype<sizeType>::product(alloc_length);
     if (numElem==0)
         T_base::changeToNullBlock();
