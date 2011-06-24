@@ -229,8 +229,9 @@ void Array<P_numtype, N_rank>::dumpStructureInformation(ostream& os) const
        << "isStorageContiguous() = " << isStorageContiguous() << endl;
 }
 
-/*
- * Make this array a view of another array's data.
+/**
+  Make this array a view of another array's data. This overrides the
+  current storage of the array.
  */
 template<typename P_numtype, int N_rank>
 void Array<P_numtype, N_rank>::reference(const Array<P_numtype, N_rank>& array)
@@ -244,10 +245,10 @@ void Array<P_numtype, N_rank>::reference(const Array<P_numtype, N_rank>& array)
 }
 
 /** This method makes the array reference another, but it does it as a
-   "weak" reference that is not counted. If you can guarantee that the
-   array memory block containing the data is persistent, this will 
-   allow reference counting to be bypassed for this array, which if 
-   mutex-locking is involved is a significant overhead. */
+    "weak" reference that is not counted. If you can guarantee that
+    the array memory block containing the data is persistent, this
+    will allow reference counting to be bypassed for this array, which
+    if mutex-locking is involved is a significant overhead. */
 template<typename P_numtype, int N_rank>
 void 
 Array<P_numtype, N_rank>::weakReference(const Array<P_numtype, N_rank>& array)
@@ -261,8 +262,9 @@ Array<P_numtype, N_rank>::weakReference(const Array<P_numtype, N_rank>& array)
     data_ = array.data_;
 }
 
-/*
- * Modify the Array storage.  Array must be unallocated.
+
+/**
+   Modify the Array storage.  Array must be unallocated.
  */
 template<typename P_numtype, int N_rank>
 void Array<P_numtype, N_rank>::setStorage(GeneralArrayStorage<N_rank> x)
@@ -277,8 +279,9 @@ void Array<P_numtype, N_rank>::setStorage(GeneralArrayStorage<N_rank> x)
     return;
 }
 
-/*
- * This method is called to allocate memory for a new array.  
+/**
+   This method is called to allocate memory for a new array. It
+   assumes the storage_ and length_ members are already initialized.
  */
 template<typename P_numtype, int N_rank>
 _bz_inline2 void Array<P_numtype, N_rank>::setupStorage(int lastRankInitialized)
@@ -321,6 +324,8 @@ _bz_inline2 void Array<P_numtype, N_rank>::setupStorage(int lastRankInitialized)
     data_ += zeroOffset_;
 }
 
+/** Return a deep copy of an array (as opposed to the reference copy
+    done by the copy constructor. */
 template<typename P_numtype, int N_rank>
 Array<P_numtype, N_rank> Array<P_numtype, N_rank>::copy() const
 {
@@ -336,6 +341,8 @@ Array<P_numtype, N_rank> Array<P_numtype, N_rank>::copy() const
     }
 }
 
+/** Make the array have its own memory block by making a copy if the
+    block has a reference count greater than one. */
 template<typename P_numtype, int N_rank>
 void Array<P_numtype, N_rank>::makeUnique()
 {

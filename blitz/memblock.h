@@ -253,8 +253,6 @@ public:
 protected:
     T_type * restrict data_;
 
-  const MemoryBlock<T_type>* block() const {return block_;}
-
 private:
     MemoryBlock<T_type>* block_;
 
@@ -323,14 +321,13 @@ public:
         blockRemoveReference();
     }
 
-  // Returns true if the offset from data_ is vector aligned. we test
-  // that by testing if it is offset from the datablockaddress (which
-  // we know is vector aligned) by an integral vector offset.
+  /** Returns true if the offset from data_ is vector aligned. */
   bool isVectorAligned(size_t offset) const
-  { return ( (data_ + offset - block_->dataBlockAddress()) %
-	     simdTypes<T_type>::vecWidth ) == 0; }
+  { return simdTypes<T_type>::isVectorAligned(data_ + offset); }
 
-
+  /** Returns the allocated length of the memory block. */
+  sizeType blockLength() const { return block_->length(); };
+  
 protected:
 #ifdef BZ_TESTSUITE
 public:

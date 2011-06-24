@@ -1147,7 +1147,7 @@ public:
       example, write it to disk, this is the size of the block
       needed. \todo Is this safe if there is no block? */
     sizeType                               storageSize() const
-  { return T_base::block().length(); }
+  { return T_base::blockLength(); }
 
     const TinyVector<diffType, N_rank>&    stride() const
     { return stride_; }
