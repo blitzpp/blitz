@@ -73,13 +73,14 @@ public:
     
 /* Compaq cxx compiler in ansi mode cannot print out long double type! */
 #if defined(__DECCXX)
-    long int elapsed()
+    double elapsed() const
 #else
-    long int elapsed()
+    /** Return elapsed time in seconds. */
+    double elapsed() const
 #endif
     {
         BZPRECONDITION(state_ == stopped);
-        return t2_ - t1_;
+        return (t2_ - t1_)/1e6;
     }
 
   long long instr() const { return 0; };
@@ -152,9 +153,9 @@ public:
 	state_ = stopped;
     }
 
-  // since we don't know the clock frequency of the processor, we
-  // instead output "flops/clock cycle" which seems like a better
-  // measure of code performance and not machine performance.
+  /** since we don't know the clock frequency of the processor, we
+      instead output "flops/clock cycle" which seems like a better
+      measure of code performance and not machine performance. */
     long long elapsed() const
     {
         BZPRECONDITION(state_ == stopped);

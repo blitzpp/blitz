@@ -27,7 +27,7 @@ char _blitz_id[] = BZ_PACKAGE_STRING;
 const int Timer::Events[] =  {PAPI_TOT_CYC, PAPI_TOT_INS, PAPI_FP_INS};
 const char* const Timer::ivar_="c";
 #else
-const char* const Timer::ivar_="us";
+const char* const Timer::ivar_="s";
 #endif
 
 BZ_NAMESPACE_END
