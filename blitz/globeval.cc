@@ -1163,7 +1163,7 @@ _bz_evaluateWithTiled2DTraversal(T_dest& dest, T_expr expr, T_update)
   typedef typename T_dest::T_numtype T_numtype;
   const int N_rank = T_dest::rank();
 
-    T_dest::T_iterator iter(dest);
+  typename T_dest::T_iterator iter(dest);
 
     const int minorRank = iter.ordering(0);
     const int majorRank = iter.ordering(1);
