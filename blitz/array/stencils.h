@@ -210,7 +210,7 @@ private:
  */
 
 template<int N_rank,typename P_numtype>
-class stencilExtent {
+class stencilExtent : public ETBase<stencilExtent<N_rank, P_numtype> > {
 public:
     typedef P_numtype T_numtype;
 
@@ -220,20 +220,20 @@ public:
         max_ = 0;
     }
   
-    dummy<T_numtype> operator()(int i)
+    dummy<T_numtype> operator()(int i) const
     {
         update(0, i);
         return dummy<T_numtype>(1);
     }
  
-    dummy<T_numtype> operator()(int i, int j)
+    dummy<T_numtype> operator()(int i, int j) const
     {
         update(0, i);
         update(1, j);
         return dummy<T_numtype>(1);
     }
 
-    dummy<T_numtype> operator()(int i, int j, int k)
+    dummy<T_numtype> operator()(int i, int j, int k) const
     {
         update(0, i);
         update(1, j);
@@ -241,13 +241,13 @@ public:
         return dummy<T_numtype>(1);
     }
 
-    dummy<T_numtype> shift(int offset, int dim)
+    dummy<T_numtype> shift(int offset, int dim) const
     {
         update(dim, offset);
         return dummy<T_numtype>(1);
     }
   
-    dummy<T_numtype> shift(int offset1, int dim1, int offset2, int dim2)
+    dummy<T_numtype> shift(int offset1, int dim1, int offset2, int dim2) const
     {
         update(dim1, offset1);
         update(dim2, offset2);
@@ -255,13 +255,13 @@ public:
     }
  
     dummy<_bz_typename multicomponent_traits<T_numtype>::T_element> 
-        operator[](int)
+        operator[](int) const
     {
         return dummy<_bz_typename multicomponent_traits<T_numtype>::T_element>
             (1);
     }
  
-    void update(int rank, int offset)
+    void update(int rank, int offset) const
     {
         if (offset < min_[rank])
             min_[rank] = offset;
@@ -270,7 +270,7 @@ public:
     }
 
     template<typename T_numtype2>
-    void combine(const stencilExtent<N_rank,T_numtype2>& x)
+    void combine(const stencilExtent<N_rank,T_numtype2>& x) const
     {
         for (int i=0; i < N_rank; ++i)
         {
@@ -280,7 +280,7 @@ public:
     }
 
     template<typename T_numtype2>
-    void combine(const dummy<T_numtype2>&)
+    void combine(const dummy<T_numtype2>&) const
     { }
 
     int (min)(int i) const
@@ -308,7 +308,7 @@ public:
     operator T_numtype()
     { return T_numtype(1); }
 
-    T_numtype operator*()
+    T_numtype operator*() const
     { return T_numtype(1); }
  
 private:
