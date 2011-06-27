@@ -106,8 +106,8 @@ void MakeHilbertTraversal(Vector<TinyVector<int,N_dimensions> >& coord,
         if ((coord2(i)[0] < length) && (coord2(i)[1] < length) 
             && (coord2(i)[0] >= 0) && (coord2(i)[1] >= 0))
         {
-            coord[j][0] = coord2(i)[0];
-            coord[j][1] = coord2(i)[1];
+	  coord(j)[0] = coord2(i)[0];
+	  coord(j)[1] = coord2(i)[1];
             ++j;
         }
     }
