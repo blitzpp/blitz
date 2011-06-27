@@ -86,7 +86,7 @@ public:
   long long instr() const { return 0; };
   long long flops() const { return 0; };
 
-  string indep_var() const { return ivar_; };
+  static const string& indep_var() { return ivar_; };
 
 private:
     Timer(Timer&) { }
@@ -165,7 +165,7 @@ public:
   long long instr() const { return counters_[1]; };
   long long flops() const { return counters_[2]; };
 
-  string indep_var() const { return ivar_; };
+  static const string& indep_var() { return ivar_; };
 
 private:
     Timer(Timer&) { }

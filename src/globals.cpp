@@ -14,6 +14,7 @@
 #include <blitz/bzdebug.h>        // Test suite globals
 #include <blitz/timer.h>          // Timer instances
 #include <random/mtparam.cc>      // MT19937 parameter sets
+#include <string>
 
 BZ_NAMESPACE(blitz);
 
@@ -25,9 +26,9 @@ char _blitz_id[] = BZ_PACKAGE_STRING;
 #ifdef BZ_HAVE_LIBPAPI
 #include <papiStdEventDefs.h>
 const int Timer::Events[] =  {PAPI_TOT_CYC, PAPI_TOT_INS, PAPI_FP_INS};
-const char* const Timer::ivar_="c";
+const string Timer::ivar_="c";
 #else
-const char* const Timer::ivar_="s";
+const string Timer::ivar_="s";
 #endif
 
 BZ_NAMESPACE_END
