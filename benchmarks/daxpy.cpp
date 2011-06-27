@@ -1,11 +1,6 @@
-// In KAI C++ 3.2c, restrict causes problems for copy propagation.
-// Temporary kludge is to disable use of the restrict keyword.
-
-#define BZ_DISABLE_RESTRICT
-
-#include <blitz/vector.h>
+#include <blitz/vector2.h>
 #include <blitz/array.h>
-#include <blitz/rand-uniform.h>
+#include <random/uniform.h>
 #include <blitz/benchext.h>
 
 #ifdef BZ_HAVE_VALARRAY
@@ -15,6 +10,10 @@
 #ifdef BENCHMARK_VALARRAY
 #include <valarray>
 #endif
+
+BZ_NAMESPACE(blitz)
+extern void sink();
+BZ_NAMESPACE_END
 
 BZ_USING_NAMESPACE(blitz)
 
@@ -80,7 +79,6 @@ int main()
 
     const int numSizes = 19;
     bench.setNumParameters(numSizes);
-    bench.setRateDescription("Mflops/s");
 
     Vector<int> parameters(numSizes);
     Vector<long> iters(numSizes);
@@ -88,11 +86,11 @@ int main()
 
     for (int i=0; i < numSizes; ++i)
     {
-        parameters[i] = static_cast<int>(pow(10.0, 0.25*(i+1)));
-        iters[i] = 50000000L / parameters[i];
-        if (iters[i] < 2)
-            iters[i] = 2;
-        flops[i] = 2 * parameters[i] * 2;
+        parameters(i) = static_cast<int>(pow(10.0, 0.25*(i+1)));
+        iters(i) = 50000000L / parameters(i);
+        if (iters(i) < 2)
+            iters(i) = 2;
+        flops(i) = 2 * parameters(i) * 2;
     }
 
     bench.setParameterVector(parameters);
@@ -121,21 +119,23 @@ int main()
     return 0;
 }
 
-void initializeRandomDouble(double* data, int numElements, int stride = 1)
+
+template<class T>
+void initializeRandomDouble(T* data, int numElements, int stride = 1)
 {
-    static Random<Uniform> rnd;
+    ranlib::Uniform<T> rnd;
 
     for (int i=0; i < numElements; ++i)
-        data[i*stride] = rnd.random();
+        data[size_t(i*stride)] = rnd.random();
 }
 
 template<class T>
-void initializeArray(T& array, int numElements)
+void initializeRandomDouble(valarray<T>& data, int numElements, int stride = 1)
 {
-    static Random<Uniform> rnd;
+    ranlib::Uniform<T> rnd;
 
-    for (size_t i=0; i < numElements; ++i)
-        array[i] = rnd.random();
+    for (int i=0; i < numElements; ++i)
+        data[size_t(i*stride)] = rnd.random();
 }
 
 void daxpyVectorVersion(BenchmarkExt<int>& bench, double a, double b)
@@ -190,10 +190,17 @@ void daxpyArrayVersion(BenchmarkExt<int>& bench, double a)
         bench.start();
         for (long i=0; i < iters; ++i)
         {
-            y += a * x;
-            y += b * x;
+            y = y + a * x;
+            y = y + b * x;
+	    sink();
         }
         bench.stop();
+
+        bench.startOverhead();
+        for (long i=0; i < iters; ++i) {
+            sink();
+	}
+        bench.stopOverhead();
     }
 
     bench.endImplementation();
@@ -320,8 +327,8 @@ void daxpyValarrayVersion(BenchmarkExt<int>& bench, double a)
         long iters = bench.getIterations();
 
         valarray<double> x(N), y(N);
-        initializeArray(x, N);
-        initializeArray(y, N);
+        initializeRandomDouble(x, N);
+        initializeRandomDouble(y, N);
 
         double b = - a;
 
