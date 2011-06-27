@@ -41,6 +41,16 @@ float acoustic3D_BlitzInterlacedCycled(int N, int niters);
 float acoustic3D_BlitzCycled(int N, int niters);
 float acoustic3D_BlitzStencil(int N, int niters);
 
+
+void output_data(const char* type, const Timer& t, float check, double Gflops)
+{
+  cout << type << ": " << t.elapsed() 
+	 << t.indep_var() << "  check = " 
+         << check << " Gflop/" << t.indep_var() << " = " 
+	 << (Gflops/t.elapsed())
+         << endl << endl;
+}
+
 int main()
 {
     Timer timer;
@@ -50,77 +60,58 @@ int main()
 
 		cout << "Acoustic 3D Benchmark" << endl << endl;
 
-		double Mflops = (N-2)*(N-2)*(N-2) * 11.0 * niters / 1.0e+6;
+		double Gflops = (N-2)*(N-2)*(N-2) * 11.0 * niters / 1.0e+9;
 
     generateFastTraversalOrder(TinyVector<int,2>(N-2,N-2));
 
     timer.start();
     check = acoustic3D_BlitzRaw(N, niters);
     timer.stop();
-    cout << "Blitz++ (raw):    " << timer.elapsedSeconds() << " s  check = " 
-         << check << " Mflops = " << (Mflops/timer.elapsedSeconds())
-				 << endl << endl;
+    output_data("Blitz++ (raw)", timer, check, Gflops);
 
     timer.start();
     check = acoustic3D_BlitzStencil(N, niters);
     timer.stop();
-    cout << "Blitz++ (stencil): " << timer.elapsedSeconds()
-         << " s check = " << check 
-				 << " Mflops = " << (Mflops/timer.elapsedSeconds())
-				 << endl << endl;
+    output_data("Blitz++ (stencil)", timer, check, Gflops);
 
 #if 0
     timer.start();
     check = acoustic3D_BlitzInterlaced(N, niters, c);
     timer.stop();
-    cout << "Blitz++ (interlaced):    " << timer.elapsedSeconds() << " s  check = "
-         << check << endl;
+    output_data("Blitz++ (interlaced)", timer, check, Gflops);
 #endif
 
     timer.start();
     check = acoustic3D_BlitzCycled(N, niters);
     timer.stop();
-    cout << "Blitz++ (cycled): " << timer.elapsedSeconds() << " s check = "
-         << check << " Mflops = " << (Mflops/timer.elapsedSeconds())
-				 << endl << endl;
+    output_data("Blitz++ (cycled)", timer, check, Gflops);
  
     timer.start();
     check = acoustic3D_BlitzInterlacedCycled(N, niters);
     timer.stop();
-    cout << "Blitz++ (interlaced & cycled): " << timer.elapsedSeconds()
-         << " s check = " << check
-				 << " Mflops = " << (Mflops/timer.elapsedSeconds())
-				 << endl << endl;
+    output_data("Blitz++ (interlaced & cycled)", timer, check, Gflops);
 
 #ifdef FORTRAN_90
     timer.start();
     acoustic3d_f90(N, niters, check);
     timer.stop();
-    cout << "Fortran 90: " << timer.elapsedSeconds() << " s  check = " 
-         << check << " Mflops = " << (Mflops/timer.elapsedSeconds())
-				 << endl << endl;
+    output_data("Fortran 90", timer, check, Gflops);
 
     timer.start();
     acoustic3d_f90tuned(N, niters, check);
     timer.stop();
-    cout << "Fortran 90 (tuned): " << timer.elapsedSeconds() << " s  check = "
-         << check << " Mflops = " << (Mflops/timer.elapsedSeconds())
-				 << endl << endl;
+    output_data("Fortran 90 (tuned)", timer, check, Gflops);
 #endif
 
     timer.start(); 
     acoustic3d_f77(N, niters, check);
     timer.stop(); 
-    cout << "Fortran 77: " << timer.elapsedSeconds() << " s  check = " 
-         << check << " Mflops = " << (Mflops/timer.elapsedSeconds())
-				 << endl << endl;
+    output_data("Fortran 77", timer, check, Gflops);
 
     timer.start();
     acoustic3d_f77tuned(N, niters, check);
     timer.stop();
-    cout << "Fortran 77 (tuned): " << timer.elapsedSeconds() << " s  check = "
-         << check << " Mflops = " << (Mflops/timer.elapsedSeconds())
-				 << endl << endl;
+    output_data("Fortran 77 (tuned)", timer, check, Gflops);
 
     return 0;
 }
@@ -156,11 +147,14 @@ void setupInitialConditions(Array<float,3>& P1, Array<float,3>& P2,
         Range(cavityFront,cavityBack)) = 0.001;
 
     // Initial pressure distribution
-    BZ_USING_NAMESPACE(blitz::tensor)
+    BZ_USING_NAMESPACE(blitz::tensor);
+      
+    float NN = N;
     float ci = N/2-1;
     float cj = N/2-1;
     float ck = N/2-1;
-    float s2 = 64.0 * 9.0 / pow2(N/2.0);
+    // pow2 is an ET-only function, it's not defined for POD types
+    float s2 = 64.0 * 9.0 / pow(NN/2.0, 2);
     P1 = 0.0;
     P2 = exp(-(pow2(i-ci)+pow2(j-cj)+pow2(k-ck)) * s2);
     P3 = 0.0;

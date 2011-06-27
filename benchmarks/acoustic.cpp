@@ -1,4 +1,4 @@
-#define BZ_DISABLE_RESTRICT
+//#define BZ_DISABLE_RESTRICT
 #define BZ_ARRAY_2D_NEW_STENCIL_TILING
 
 #include <blitz/array.h>
@@ -41,6 +41,15 @@ float echo_BlitzCycled(int N, int niters);
 float echo_BlitzRaw(int N, int niters);
 float echo_BlitzStencil(int N, int niters);
 
+void output_data(const char* type, const Timer& t, float check, double Gflops)
+{
+  cout << type << ": " << t.elapsed() 
+	 << t.indep_var() << "  check = " 
+         << check << " Gflop/" << t.indep_var() << " = " 
+	 << (Gflops/t.elapsed())
+         << endl << endl;
+}
+
 int main()
 {
     Timer timer;
@@ -50,75 +59,56 @@ int main()
 
     cout << "Acoustic 2D Benchmark" << endl << endl;
 
-    double Mflops = (N-2)*(N-2) * 9.0 * niters / 1.0e+6;
+    double Gflops = (N-2)*(N-2) * 9.0 * niters / 1.0e+9;
 
     timer.start();
     check = echo_BlitzRaw(N, niters);
     timer.stop();
-    cout << "Blitz++ (raw):    " << timer.elapsedSeconds() << " s  check = " 
-         << check << " Mflops = " << (Mflops/timer.elapsedSeconds())
-         << endl << endl;
+    output_data("Blitz++ (raw)", timer, check, Gflops);
 
     timer.start();
     check = echo_BlitzStencil(N, niters);
     timer.stop();
-    cout << "Blitz++ (stencil):    " << timer.elapsedSeconds() << " s  check = "
-         << check << " Mflops = " << (Mflops/timer.elapsedSeconds())
-         << endl << endl;
+    output_data("Blitz++ (stencil)", timer, check, Gflops);
 
 #if 0
     timer.start();
     check = echo_BlitzInterlaced(N, niters, c);
     timer.stop();
-    cout << "Blitz++ (interlaced):    " << timer.elapsedSeconds() << " s  check = "
-         << check << " Mflops = " << (Mflops/timer.elapsedSeconds())
-         << endl << endl;
+    output_data("Blitz++ (interlaced)", timer, check, Gflops);
 #endif
 
     timer.start();
     check = echo_BlitzCycled(N, niters);
     timer.stop();
-    cout << "Blitz++ (cycled): " << timer.elapsedSeconds() << " s check = "
-         << check << " Mflops = " << (Mflops/timer.elapsedSeconds())
-         << endl << endl;
+    output_data("Blitz++ (cycled)", timer, check, Gflops);
     
     timer.start();
     check = echo_BlitzInterlacedCycled(N, niters);
     timer.stop();
-    cout << "Blitz++ (interlaced & cycled): " << timer.elapsedSeconds()
-         << " s check = " << check 
-         << " Mflops = " << (Mflops/timer.elapsedSeconds()) 
-				 << endl << endl;
+    output_data("Blitz++ (interlaced & cycled)", timer, check, Gflops);
 
 #ifdef FORTRAN_90
     timer.start();
     echo_f90(N, niters, check);
     timer.stop();
-    cout << "Fortran 90: " << timer.elapsedSeconds() << " s  check = "
-         << check << " Mflops = " << (Mflops/timer.elapsedSeconds()) 
-         << endl << endl;
+    output_data("Fortran 90", timer, check, Gflops);
 
     timer.start();
     echo_f90_tuned(N, niters, check);
     timer.stop();
-    cout << "Fortran 90 (tuned): " << timer.elapsedSeconds() << " s  check = "
-         << check << " Mflops = " << (Mflops/timer.elapsedSeconds())
-         << endl << endl;
+    output_data("Fortran 90 (tuned)", timer, check, Gflops);
 #endif
 
     timer.start();
     echo_f77(N, niters, check);
     timer.stop();
-    cout << "Fortran 77: " << timer.elapsedSeconds() << " s  check = "
-         << check << " Mflops = " << (Mflops/timer.elapsedSeconds())
-         << endl << endl;
+    output_data("Fortran 77", timer, check, Gflops);
 
     timer.start();
     echo_f77tuned(N, niters, check);
     timer.stop();
-    cout << "Fortran 77 (tuned): " << timer.elapsedSeconds() << " s  check = "
-         << check << " Mflops = " << (Mflops/timer.elapsedSeconds())
-         << endl << endl;
+    output_data("Fortran 77 (tuned)", timer, check, Gflops);
 
     return 0;
 }
@@ -218,7 +208,7 @@ float echo_BlitzInterlacedCycled(int N, int niters)
 }
 
 BZ_DECLARE_STENCIL4(acoustic2D,P1,P2,P3,c)
-  P3 = 2 * P2 + c * Laplacian2D(P2) - P1;
+  P3 = 2 * P2 + c * Laplacian2D_stencilop(P2) - P1;
 BZ_STENCIL_END
 
 float echo_BlitzStencil(int N, int niters)
@@ -264,7 +254,8 @@ void setInitialConditions(Array<float,2>& c, Array<float,2>& P1,
     BZ_USING_NAMESPACE(blitz::tensor)
     int cr = int(N/2-1);
     int cc = int(7.0*N/8.0-1);
-    float s2 = 64.0 * 9.0 / pow2(N/2.0);
+    // pow2 is not defined for pod types.
+    float s2 = 64.0 * 9.0 / pow(N/2.0,2);
     cout << "cr = " << cr << " cc = " << cc << " s2 = " << s2 << endl;
     P1 = 0.0;
     P2 = exp(-(pow2(i-cr)+pow2(j-cc)) * s2);
