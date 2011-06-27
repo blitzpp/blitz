@@ -3,6 +3,8 @@
 
 #include <blitz/array.h>
 #include <blitz/timer.h>
+#include <blitz/benchext.h>
+#include <blitz/vector2.h>
 
 #ifdef BZ_HAVE_STD
   #include <fstream>
@@ -36,10 +38,15 @@ void echo_f90_tuned(int& N, int& niters, float& check);
 void echo_f77tuned(int& N, int& niters, float& check);
 }
 
-float echo_BlitzInterlacedCycled(int N, int niters);
-float echo_BlitzCycled(int N, int niters);
-float echo_BlitzRaw(int N, int niters);
-float echo_BlitzStencil(int N, int niters);
+float f77(BenchmarkExt<int>&);
+float f90(BenchmarkExt<int>&);
+float f77_tuned(BenchmarkExt<int>&);
+float f90_tuned(BenchmarkExt<int>&);
+
+float echo_BlitzInterlacedCycled(BenchmarkExt<int>&);
+float echo_BlitzCycled(BenchmarkExt<int>&);
+float echo_BlitzRaw(BenchmarkExt<int>&);
+float echo_BlitzStencil(BenchmarkExt<int>&);
 
 void output_data(const char* type, const Timer& t, float check, double Gflops)
 {
@@ -56,59 +63,46 @@ int main()
     int N = 650;
     int niters = 60;
     float check;
+    int numBenchmarks = 6;
+#ifdef FORTRAN_90
+    numBenchmarks+=2;
+#endif
 
-    cout << "Acoustic 2D Benchmark" << endl << endl;
+    BenchmarkExt<int> bench("Acoustic 2D Benchmark", numBenchmarks);
+    const int numSizes=7;
+    bench.setNumParameters(numSizes);
+    Vector<int> parameters(numSizes); parameters=10*pow(2.0,tensor::i);
+    Vector<long> iters(numSizes); iters=(20*650/parameters)*3;
+    Vector<double> flops(numSizes); flops=(parameters-2)*(parameters-2) * 9.0 * iters;
+    bench.setParameterVector(parameters);
+    bench.setIterations(iters);
+    bench.setOpsPerIteration(flops);
+    bench.setDependentVariable("flops");
+    bench.beginBenchmarking();
 
-    double Gflops = (N-2)*(N-2) * 9.0 * niters / 1.0e+9;
-
-    timer.start();
-    check = echo_BlitzRaw(N, niters);
-    timer.stop();
-    output_data("Blitz++ (raw)", timer, check, Gflops);
-
-    timer.start();
-    check = echo_BlitzStencil(N, niters);
-    timer.stop();
-    output_data("Blitz++ (stencil)", timer, check, Gflops);
+    check = echo_BlitzRaw(bench);
+    check = echo_BlitzStencil(bench);
 
 #if 0
     timer.start();
-    check = echo_BlitzInterlaced(N, niters, c);
+    check = echo_BlitzInterlaced(bench, c);
     timer.stop();
     output_data("Blitz++ (interlaced)", timer, check, Gflops);
 #endif
 
-    timer.start();
-    check = echo_BlitzCycled(N, niters);
-    timer.stop();
-    output_data("Blitz++ (cycled)", timer, check, Gflops);
-    
-    timer.start();
-    check = echo_BlitzInterlacedCycled(N, niters);
-    timer.stop();
-    output_data("Blitz++ (interlaced & cycled)", timer, check, Gflops);
+    check = echo_BlitzCycled(bench);
+    check = echo_BlitzInterlacedCycled(bench);
 
 #ifdef FORTRAN_90
-    timer.start();
-    echo_f90(N, niters, check);
-    timer.stop();
-    output_data("Fortran 90", timer, check, Gflops);
-
-    timer.start();
-    echo_f90_tuned(N, niters, check);
-    timer.stop();
-    output_data("Fortran 90 (tuned)", timer, check, Gflops);
+    check=f90(bench);
+    check=f90_tuned(bench);
 #endif
 
-    timer.start();
-    echo_f77(N, niters, check);
-    timer.stop();
-    output_data("Fortran 77", timer, check, Gflops);
+    check=f77(bench);
+    check=f77_tuned(bench);
 
-    timer.start();
-    echo_f77tuned(N, niters, check);
-    timer.stop();
-    output_data("Fortran 77 (tuned)", timer, check, Gflops);
+    bench.endBenchmarking();
+    bench.saveMatlabGraph("acoustic.m");
 
     return 0;
 }
@@ -127,8 +121,14 @@ void setInitialConditions(Array<float,2>& c, Array<float,2>& P1,
     Array<float,2>& P2, Array<float,2>& P3, int N);
 
 
-float echo_BlitzRaw(int N, int niters)
+float echo_BlitzRaw(BenchmarkExt<int>&bench)
 {
+    bench.beginImplementation("Blitz++ (raw)");
+    while (!bench.doneImplementationBenchmark())
+    {
+      int N = bench.getParameter();
+      int niters = bench.getIterations();
+
     Array<float,2> P1(N,N), P2(N,N), P3(N,N), c(N,N);
     Range I(1,N-2), J(1,N-2);
 
@@ -136,6 +136,7 @@ float echo_BlitzRaw(int N, int niters)
     checkArray(P2, N);
     checkArray(c, N);
 
+    bench.start();
     for (int iter=0; iter < niters; ++iter)
     {
         P3(I,J) = (2-4*c(I,J)) * P2(I,J)
@@ -145,7 +146,14 @@ float echo_BlitzRaw(int N, int niters)
         P1 = P2;
         P2 = P3;
     }
+    bench.stop();
 
+    cout << P1(N/2-1,(7*N)/8-1) << endl;
+    }
+
+    bench.endImplementation();
+
+    
 #if 0
 ofstream ofs("testecho.m");
 ofs << "A = [";
@@ -161,11 +169,17 @@ for (int i=0; i < N; ++i)
 ofs << "];" << endl;
 #endif
 
-    return P1(N/2-1,(7*N)/8-1);
 }
 
-float echo_BlitzCycled(int N, int niters)
+float echo_BlitzCycled(BenchmarkExt<int>&bench)
 {
+    bench.beginImplementation("Blitz++ (cycled)");
+    while (!bench.doneImplementationBenchmark())
+    {
+    int N = bench.getParameter();
+    int niters = bench.getIterations();
+    cout << bench.currentImplementation() << " N=" << N << endl;
+
     Array<float,2> P1(N,N), P2(N,N), P3(N,N), c(N,N);
     Range I(1,N-2), J(1,N-2);
 
@@ -173,6 +187,7 @@ float echo_BlitzCycled(int N, int niters)
     checkArray(P2, N);
     checkArray(c, N);
 
+    bench.start();
     for (int iter=0; iter < niters; ++iter)
     {
         P3(I,J) = (2-4*c(I,J)) * P2(I,J)
@@ -181,12 +196,23 @@ float echo_BlitzCycled(int N, int niters)
 
         cycleArrays(P1,P2,P3);
     }
+    bench.stop();
 
-    return P1(N/2-1,(7*N)/8-1);
+    cout << P1(N/2-1,(7*N)/8-1) << endl;
+    }
+
+    bench.endImplementation();
 }
 
-float echo_BlitzInterlacedCycled(int N, int niters)
+float echo_BlitzInterlacedCycled(BenchmarkExt<int>&bench)
 {
+    bench.beginImplementation("Blitz++ (interlaced & cycled)");
+    while (!bench.doneImplementationBenchmark())
+    {
+    int N = bench.getParameter();
+    int niters = bench.getIterations();
+    cout << bench.currentImplementation() << " N=" << N << endl;
+
     Array<float,2> P1, P2, P3, c;
     allocateArrays(shape(N,N), P1, P2, P3, c);
     Range I(1,N-2), J(1,N-2);
@@ -195,6 +221,7 @@ float echo_BlitzInterlacedCycled(int N, int niters)
     checkArray(P2, N);
     checkArray(c, N);
 
+    bench.start();
     for (int iter=0; iter < niters; ++iter)
     {
         P3(I,J) = (2-4*c(I,J)) * P2(I,J)
@@ -203,16 +230,27 @@ float echo_BlitzInterlacedCycled(int N, int niters)
 
         cycleArrays(P1,P2,P3);
     }
+    bench.stop();
 
-    return P1(N/2-1,(7*N)/8-1);
+    cout << P1(N/2-1,(7*N)/8-1) << endl;
+    }
+
+    bench.endImplementation();
 }
 
 BZ_DECLARE_STENCIL4(acoustic2D,P1,P2,P3,c)
   P3 = 2 * P2 + c * Laplacian2D_stencilop(P2) - P1;
 BZ_STENCIL_END
 
-float echo_BlitzStencil(int N, int niters)
+float echo_BlitzStencil(BenchmarkExt<int>&bench)
 {
+    bench.beginImplementation("Blitz++ (stencil)");
+    while (!bench.doneImplementationBenchmark())
+    {
+    int N = bench.getParameter();
+    int niters = bench.getIterations();
+    cout << bench.currentImplementation() << " N=" << N << endl;
+
     Array<float,2> P1, P2, P3, c;
     allocateArrays(shape(N,N), P1, P2, P3, c);
 
@@ -220,13 +258,18 @@ float echo_BlitzStencil(int N, int niters)
     checkArray(P2, N);
     checkArray(c, N);
 
+    bench.start();
     for (int iter=0; iter < niters; ++iter)
     {
         applyStencil(acoustic2D(), P1, P2, P3, c);
         cycleArrays(P1,P2,P3);
     }
+    bench.stop();
 
-    return P1(N/2-1,(7*N)/8-1);
+    cout << P1(N/2-1,(7*N)/8-1) << endl;
+    }
+
+    bench.endImplementation();
 }
 
 void setInitialConditions(Array<float,2>& c, Array<float,2>& P1,
@@ -262,3 +305,73 @@ void setInitialConditions(Array<float,2>& c, Array<float,2>& P1,
     P3 = 0.0;
 }
 
+
+float f77(BenchmarkExt<int>&bench)
+{
+  bench.beginImplementation("Fortran77");
+    while (!bench.doneImplementationBenchmark())
+    {
+  int N = bench.getParameter();
+  int niters = bench.getIterations();
+    cout << bench.currentImplementation() << " N=" << N << endl;
+  float check;
+  bench.start();
+  echo_f77(N, niters, check);
+  bench.stop();
+    cout << check << endl;
+    }
+    bench.endImplementation();
+};
+
+float f77_tuned(BenchmarkExt<int>&bench)
+{
+  bench.beginImplementation("Fortran77 (tuned)");
+    while (!bench.doneImplementationBenchmark())
+    {
+  int N = bench.getParameter();
+  int niters = bench.getIterations();
+    cout << bench.currentImplementation() << " N=" << N << endl;
+  float check;
+  bench.start();
+  echo_f77tuned(N, niters, check);
+  bench.stop();
+    cout << check << endl;
+    }
+
+    bench.endImplementation();
+};
+
+float f90(BenchmarkExt<int>&bench)
+{
+  bench.beginImplementation("Fortran90");
+    while (!bench.doneImplementationBenchmark())
+    {
+  int N = bench.getParameter();
+  int niters = bench.getIterations();
+    cout << bench.currentImplementation() << " N=" << N << endl;
+  float check;
+  bench.start();
+  echo_f90(N, niters, check);
+  bench.stop();
+    cout << check << endl;
+    }
+
+    bench.endImplementation();
+};
+float f90_tuned(BenchmarkExt<int>&bench)
+{
+  bench.beginImplementation("Fortran90 (tuned)");
+    while (!bench.doneImplementationBenchmark())
+    {
+  int N = bench.getParameter();
+  int niters = bench.getIterations();
+    cout << bench.currentImplementation() << " N=" << N << endl;
+  float check;
+  bench.start();
+  echo_f90_tuned(N, niters, check);
+  bench.stop();
+    cout << check << endl;
+    }
+
+    bench.endImplementation();
+};
