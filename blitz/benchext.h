@@ -69,14 +69,14 @@ public:
   void setParameterVector(Array<T_parameter,1> parms);
     void setParameterDescription(const char* string);
   void setIterations(Array<long,1> iters);
-  void setFlopsPerIteration(Array<double,1> flopsPerIteration);
-  //void setRateDescription(const char* string);
+  void setOpsPerIteration(Array<double,1> flopsPerIteration);
+  void setDependentVariable(const char* string);
 
     void beginBenchmarking();
 
     void beginImplementation(const char* description);
-
     bool doneImplementationBenchmark() const;
+  const string& currentImplementation() const;
 
     T_parameter getParameter() const;
     long        getIterations() const;
@@ -123,7 +123,7 @@ protected:
     Timer timer_;
 
   std::string parameterDescription_;
-  std::string rateDescription_;
+  std::string depvar_;
   double timerconversion_;
 
     unsigned numParameters_;

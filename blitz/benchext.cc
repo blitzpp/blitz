@@ -58,18 +58,8 @@ BenchmarkExt<P_parameter>::BenchmarkExt(const char* name,
     implementationDescriptions_.resize(numImplementations);
     parameterDescription_ = "Vector length";
     
-    if(timer_.indep_var()=="us") {
-      rateDescription_ = "Gflops/s";
-      timerconversion_ = 1e6/1e9;
-    }
-    else if(timer_.indep_var()=="c") {
-      rateDescription_ = "flops/cycle";
-      timerconversion_ = 1;
-    }
-    else {
-      rateDescription_ = std::string("flops/")+timer_.indep_var();
-      timerconversion_ = 1;
-    }
+    // we don't really know this is the default, do we...
+    setDependentVariable("flops");
 
     /*
     // Set up default parameters and iterations
@@ -117,11 +107,7 @@ void BenchmarkExt<P_parameter>::setParameterVector(Array<P_parameter,1> parms)
     BZPRECONDITION(state_ == initializing);
     BZPRECONDITION(parms.size() == parameters_.size());
 
-    // NEEDS_WORK: should use operator=(), once that problem
-    // gets sorted out.
-    // parameters_ = parms;
-    for (int i=0; i < parameters_.size(); ++i)
-      parameters_(i) = parms(i);
+    parameters_ = parms;
 }
 
 template<typename P_parameter>
@@ -135,33 +121,37 @@ void BenchmarkExt<P_parameter>::setIterations(Array<long,1> iters)
 {
     BZPRECONDITION(state_ == initializing);
 
-    // NEEDS_WORK: should use operator=(), once that problem
-    // gets sorted out.
-    // iterations_ = iters;
-
-    for (int i=0; i < iterations_.size(); ++i)
-      iterations_(i) = iters(i);
+    iterations_ = iters;
 }
 
 template<typename P_parameter>
-void BenchmarkExt<P_parameter>::setFlopsPerIteration(Array<double,1> 
+void BenchmarkExt<P_parameter>::setOpsPerIteration(Array<double,1> 
     flopsPerIteration)
 {
     BZPRECONDITION(flopsPerIteration_.size() == flopsPerIteration.size());
 
-    // NEEDS_WORK: should use operator=(), once that problem
-    // gets sorted out.
-    // flopsPerIteration_ = flopsPerIteration;
-
-    for (int i=0; i < flopsPerIteration_.size(); ++i)
-      flopsPerIteration_(i) = flopsPerIteration(i);
+    flopsPerIteration_ = flopsPerIteration;
 }
 
-// template<typename P_parameter>
-// void BenchmarkExt<P_parameter>::setRateDescription(const char* string)
-// {
-//     rateDescription_ = string;
-// }
+/** Set the dependent variable of the measurements. If the independent
+    variable is seconds, we output "G<dvar>/s", if it is cycles, we
+    output "<dvar/c". */
+template<typename P_parameter>
+void BenchmarkExt<P_parameter>::setDependentVariable(const char* dvar)
+{
+  if(timer_.indep_var()=="s") {
+    depvar_ = string("G")+dvar+"/s";
+    timerconversion_ = 1./1e9;
+  }
+  else if(timer_.indep_var()=="c") {
+    depvar_ = string(dvar)+"/c";
+    timerconversion_ = 1.;
+  }
+  else {
+    depvar_ = std::string(dvar)+"/"+timer_.indep_var();
+    timerconversion_ = 1;
+    }
+}
 
 template<typename P_parameter>
 void BenchmarkExt<P_parameter>::beginBenchmarking()
@@ -188,6 +178,14 @@ bool BenchmarkExt<P_parameter>::doneImplementationBenchmark() const
     BZPRECONDITION(state_ == benchmarkingImplementation);
     return parameterNumber_ == numParameters_;
 }
+
+template<typename P_parameter>
+const string& BenchmarkExt<P_parameter>::currentImplementation() const
+{
+    BZPRECONDITION(implementationNumber_ < numImplementations_);
+    return implementationDescriptions_[implementationNumber_];
+}
+
 
 template<typename P_parameter>
 P_parameter BenchmarkExt<P_parameter>::getParameter() const
@@ -371,7 +369,7 @@ void BenchmarkExt<P_parameter>::saveMatlabGraph(const char* filename, const char
 
     ofs << graphType << "(parm,Mf), title('" << description_ << "'), " << endl
         << "    xlabel('" << parameterDescription_ << "'), "
-        << "ylabel('" << rateDescription_ << "')" << endl
+        << "ylabel('" << depvar_<<"/"<<Timer::indep_var() << "')\n"
         << "legend(";
     
     for (unsigned j=0; j < numImplementations_; ++j)
@@ -457,7 +455,7 @@ void BenchmarkExt<P_parameter>::savePylabGraph(const char* filename, const char*
 
     ofs << graphType << "(parm,Mf)\ntitle('" << description_ << "')\n"
         << "xlabel('" << parameterDescription_ << "')\n"
-        << "ylabel('" << rateDescription_ << "')\n";
+        << "ylabel('" << depvar_<<"/"<<Timer::indep_var() << "')\n";
 
     ofs << "legend(legnames)\n";
 }
