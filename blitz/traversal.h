@@ -36,13 +36,7 @@
 #ifndef BZ_TRAVERSAL_H
 #define BZ_TRAVERSAL_H
 
-#ifndef BZ_TINYVEC_H
- #include <blitz/tinyvec.h>
-#endif
-
-#ifndef BZ_VECTOR_H
- #include <blitz/vector.h>
-#endif
+#include <blitz/vector2.h>
 
 #include <set>
 
@@ -53,7 +47,7 @@ class TraversalOrder {
 
 public:
     typedef TinyVector<int, N_dimensions> T_coord;
-    typedef Vector<T_coord>               T_traversal;
+  typedef Vector<T_coord>               T_traversal;
 
     TraversalOrder()
     {

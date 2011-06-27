@@ -80,6 +80,9 @@ class Vector : public Array<P_numtype,1>
 		    GeneralArrayStorage<rank_> storage = GeneralArrayStorage<rank_>()) :
       T_base(length0, storage) {};
 
+  Vector(GeneralArrayStorage<rank_> storage = GeneralArrayStorage<rank_>()) :
+      T_base(storage) {};
+
     Vector(T_numtype* restrict dataFirst, TinyVector<int, rank_> shape,
 	   GeneralArrayStorage<rank_> storage = GeneralArrayStorage<rank_>()) :
       T_base(dataFirst, shape, storage) {};

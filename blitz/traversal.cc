@@ -47,21 +47,21 @@ static set<TraversalOrder<2> > *_bz_intel_kludge;
 
 template<int N>
 void makeHilbert(Vector<TinyVector<int,N> >& coord, 
-    int x0, int y0, int xis, int xjs,
-    int yis, int yjs, int n, int& i)
+		 int x0, int y0, int xis, int xjs,
+		 int yis, int yjs, int n, int& i)
 {
     // N != 2 is not yet implemented.
     BZPRECONDITION(N == 2);
 
     if (!n)
     {
-        if (i > coord.length())
+        if (i > coord.length(firstDim))
         {
             cerr << "makeHilbert: vector not long enough" << endl;
             exit(1);
         }
-        coord[i][0] = x0 + (xis+yis)/2;
-        coord[i][1] = y0 + (xjs+yjs)/2;
+        coord(i)[0] = x0 + (xis+yis)/2;
+        coord(i)[1] = y0 + (xjs+yjs)/2;
         ++i;
     }
     else {
@@ -91,8 +91,8 @@ void MakeHilbertTraversal(Vector<TinyVector<int,N_dimensions> >& coord,
     int i=0;
     makeHilbert(coord2,0,0,32768,0,0,32768,d,i);
 
-    int xp0 = coord2[0][0];
-    int yp0 = coord2[0][1];
+    int xp0 = coord2(0)[0];
+    int yp0 = coord2(0)[1];
 
     int j=0;
 
@@ -100,14 +100,14 @@ void MakeHilbertTraversal(Vector<TinyVector<int,N_dimensions> >& coord,
 
     for (int i=0; i < Npoints; ++i)
     {
-        coord2[i][0] = (coord2[i][0]-xp0)/(2*xp0);
-        coord2[i][1] = (coord2[i][1]-yp0)/(2*yp0);
+        coord2(i)[0] = (coord2(i)[0]-xp0)/(2*xp0);
+        coord2(i)[1] = (coord2(i)[1]-yp0)/(2*yp0);
 
-        if ((coord2[i][0] < length) && (coord2[i][1] < length) 
-            && (coord2[i][0] >= 0) && (coord2[i][1] >= 0))
+        if ((coord2(i)[0] < length) && (coord2(i)[1] < length) 
+            && (coord2(i)[0] >= 0) && (coord2(i)[1] >= 0))
         {
-            coord[j][0] = coord2[i][0];
-            coord[j][1] = coord2[i][1];
+            coord[j][0] = coord2(i)[0];
+            coord[j][1] = coord2(i)[1];
             ++j;
         }
     }
