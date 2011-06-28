@@ -1,17 +1,24 @@
 // Array DAXPY benchmark
 
-#include <blitz/array.h>
 #include <blitz/benchext.h>
-#include <blitz/rand-uniform.h>
+#include <blitz/array.h>
+#include <blitz/vector2.h>
+#include <random/uniform.h>
+
+BZ_NAMESPACE(blitz)
+extern void sink();
+BZ_NAMESPACE_END
 
 BZ_USING_NAMESPACE(blitz)
 
 #ifdef BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES
-  #define stencilf stencilf_
+  #define arrdaxpyf arrdaxpyf_
+#elif defined(BZ_FORTRAN_SYMBOLS_WITH_DOUBLE_TRAILING_UNDERSCORES)
+  #define arrdaxpyf arrdaxpyf__
 #endif
 
 extern "C" {
-    void arrdaxpyf(double* A, double* B, int& N, int& iters, double& a);
+    void arrdaxpyf(double* A, double* B, int& N, double& a);
 }
 
 void arrdaxpyFortran77Version(BenchmarkExt<int>& bench);
@@ -21,26 +28,26 @@ int main()
 {
     BenchmarkExt<int> bench("Array DAXPY", 2);
 
-    const int numSizes = 128;
+    const int numSizes = 8;
 
     bench.setNumParameters(numSizes);
-    bench.setRateDescription("Mflops/s");
+    bench.setDependentVariable("flops");
 
     Vector<int> parameters(numSizes);
     Vector<long> iters(numSizes);
     Vector<double> flops(numSizes);
 
-    for (int i=0; i < numSizes; ++i)
-    {
-        parameters[i] = (i+1);
-        iters[i] = 16*32*8*8*8/(i+1)/(i+1)/(i+1);
-        float npoints = parameters[i];
-        flops[i] = npoints * npoints * npoints * 2 * 2;
-    }
+    parameters = pow(2.,tensor::i);
+    cout << parameters;
+    iters = 100*16*32*8*8*8/pow3(parameters);
+    cout << iters;
+    flops = pow3(parameters) * 2 * 2;
+    cout << flops;
 
     bench.setParameterVector(parameters);
+    bench.setParameterDescription("3D Array size");
     bench.setIterations(iters);
-    bench.setFlopsPerIteration(flops);
+    bench.setOpsPerIteration(flops);
 
     bench.beginBenchmarking();
     arrdaxpyBlitzVersion(bench);
@@ -54,7 +61,7 @@ int main()
 
 void initializeRandomDouble(double* data, int numElements)
 {
-    static Random<Uniform> rnd;
+  ranlib::Uniform<double> rnd;
 
     for (int i=0; i < numElements; ++i)
         data[i] = rnd.random();
@@ -85,8 +92,15 @@ void arrdaxpyBlitzVersion(BenchmarkExt<int>& bench)
         {
             A += a * B;
             A += b * B;
+	    sink();
         }
         bench.stop();
+
+        bench.startOverhead();
+        for (long i=0; i < iters; ++i) {
+            sink();
+	}
+        bench.stopOverhead();
     }
 
     bench.endImplementation();
@@ -113,10 +127,20 @@ void arrdaxpyFortran77Version(BenchmarkExt<int>& bench)
         initializeRandomDouble(A, arraySize);
         initializeRandomDouble(B, arraySize);
 
-        bench.start();
         double a = 0.34928313;
-        arrdaxpyf(A, B, N, iters, a);
+
+        for (long i=0; i < iters; ++i)
+        {
+	  arrdaxpyf(A,B,N,a);
+	  sink();
+        }
         bench.stop();
+
+        bench.startOverhead();
+        for (long i=0; i < iters; ++i) {
+            sink();
+	}
+        bench.stopOverhead();
 
         delete [] A;
         delete [] B;

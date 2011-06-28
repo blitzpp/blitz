@@ -2,14 +2,14 @@
 # Written by Patrick Guio <patrick.guio@fys.uio.no>
 #
 
-EXTRA_DIST = arrdaxpy.cpp arrdaxpy.m arrdaxpy2.m arrdaxpyf.f arrexpr1.cpp \
-arrexpr1.m cfd.cpp cfdf.f cfortran.h chunky.cpp compiletime.cpp \
-ctime-results ctime1.cpp ctime1v.cpp ctime2.cpp ctime2v.cpp ctime3.cpp \
-ctime3v.cpp ctime4.cpp ctime4v.cpp ctime5.cpp ctime5c.cpp ctime5v.cpp \
-daxpy2.cpp daxpyf90-2.f90 dot.cpp dot2.cpp echof2-back.f echotune.cpp \
-echotune.m echotunef.f frek.m hao-he-mark.cpp kepler.cpp loop1-bug.cpp \
-loop4.cpp loop4f.f loop4f90.f90 loopstruct.cpp looptest.cpp makelogo.cpp \
-makeloops.cpp qcd.txt quinlan.cpp stenciln.cpp tiny3.cpp iter.cpp
+EXTRA_DIST = arrexpr1.cpp arrexpr1.m cfd.cpp cfdf.f cfortran.h	     \
+chunky.cpp compiletime.cpp ctime-results ctime1.cpp ctime1v.cpp	     \
+ctime2.cpp ctime2v.cpp ctime3.cpp ctime3v.cpp ctime4.cpp ctime4v.cpp \
+ctime5.cpp ctime5c.cpp ctime5v.cpp daxpy2.cpp daxpyf90-2.f90 dot.cpp \
+dot2.cpp echof2-back.f echotune.cpp echotune.m echotunef.f frek.m    \
+hao-he-mark.cpp kepler.cpp loop1-bug.cpp loop4.cpp loop4f.f	     \
+loop4f90.f90 loopstruct.cpp looptest.cpp makelogo.cpp makeloops.cpp  \
+qcd.txt quinlan.cpp stenciln.cpp tiny3.cpp iter.cpp
 
 
 AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir) -I$(top_builddir)
@@ -28,7 +28,7 @@ floop1 floop2 floop3 floop5 floop6 floop8 floop9 floop10 floop11 \
 floop12 floop13 floop14 floop15 floop16 floop17 floop18 floop19 floop21 floop22 \
 floop23 floop24 floop25 floop36
 
-OTHER_BENCH = daxpy haney qcd stencil tinydaxpy acoustic acou3d hao-he iter cfd
+OTHER_BENCH = arrdaxpy daxpy haney qcd stencil tinydaxpy acoustic acou3d hao-he iter cfd
 
 BENCHMARKS = $(LOOP_KERNELS) $(OTHER_BENCH)
 
@@ -65,6 +65,7 @@ check-benchmarks: run run-loops ctime
 
 haney_SOURCES = haney.cpp haneyf.f
 qcd_SOURCES = qcd.cpp qcdf.f
+arrdaxpy_SOURCES = arrdaxpy.cpp arrdaxpyf.f
 tinydaxpy_SOURCES = tinydaxpy.cpp
 hao_he_SOURCES = hao-he.cpp
 iter_SOURCES= iter.cpp
