@@ -871,7 +871,7 @@ public:
     template<int N>
     typename tvresult<N>::Type fastRead_tv(int i) const {
       BZPRECHECK(0, "Can't vectorize stencils");
-      return iter_.fastRead_tv<N>(i); }
+      return typename tvresult<N>::Type(iter_.fastRead_tv<N>(i),dim_); }
 
   T_result shift(int offset, int dim) const				
   {									
@@ -1023,7 +1023,7 @@ public:
     template<int N>
     typename tvresult<N>::Type fastRead_tv(int i) const {
       BZPRECHECK(0, "Can't vectorize stencils");
-      return iter_.fastRead_tv<N>(i); }
+      return typename tvresult<N>::Type(iter_.fastRead_tv<N>(i),comp_,dim_); }
 
   T_numtype shift(int offset, int dim) const				
   {									
@@ -1184,7 +1184,7 @@ public:
     template<int N>
     typename tvresult<N>::Type fastRead_tv(int i) const {
       BZPRECHECK(0, "Can't vectorize stencils");
-      return iter_.fastRead_tv<N>(i); }
+      return typename tvresult<N>::Type(iter_.fastRead_tv<N>(i),dim1_,dim2_); }
 
   T_numtype shift(int offset, int dim) const				
   {									

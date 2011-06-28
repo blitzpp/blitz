@@ -108,8 +108,9 @@ class _bz_StencilExpr {
     numTVOperands = T_expr::numTVOperands,
     numTMOperands = T_expr::numTMOperands,
     numIndexPlaceholders = T_expr::numIndexPlaceholders,
-      minWidth = T_expr::minWidth,
-      maxWidth = T_expr::maxWidth,
+  /// vectorization of stencils is disabled by setting this to 0.
+    minWidth = 0, //T_expr::minWidth,
+    maxWidth = 0, //T_expr::maxWidth,
     rank_ = T_expr::rank_;
   
  _bz_StencilExpr(const _bz_StencilExpr<T_expr, T_numtype>& a)
@@ -251,8 +252,9 @@ class _bz_StencilExpr2 {
     numTMOperands = T_expr1::numTMOperands + T_expr2::numTMOperands,
     numIndexPlaceholders = T_expr1::numIndexPlaceholders
     + T_expr2::numIndexPlaceholders,
-      minWidth = BZ_MIN(T_expr1::minWidth, T_expr2::minWidth),
-      maxWidth = BZ_MAX(T_expr1::maxWidth, T_expr2::maxWidth),
+  /// vectorization of stencils is disabled by setting this to 0.
+    minWidth = 0, //BZ_MIN(T_expr1::minWidth, T_expr2::minWidth),
+    maxWidth = 0, //BZ_MAX(T_expr1::maxWidth, T_expr2::maxWidth),
       rank_ = BZ_MAX(T_expr1::rank_, T_expr2::rank_);
   
   _bz_StencilExpr2(const _bz_StencilExpr2<T_expr1, T_expr2, T_numtype>& a)

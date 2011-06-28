@@ -88,6 +88,17 @@ inline _bz_ExprPair<T1,T2> makeExprPair(const T1& a, const T2& b)
     return _bz_ExprPair<T1,T2>(a,b);
 }
 
+
+/** The main expression template class which is used to wrap all other
+    elements. This makes an expression easy to recognize.  A container
+    that wants to be usable through the expression template machinery
+    must must implement the same interface as this class. Once it
+    does, it will be able to interoperate with the other containers.
+    Note that the expression components (_bz_ArrayExprUnaryOp,
+    _bz_ArrayExprBinaryOp, _bz_ArrayExprReduce, etc.) do not inherit
+    from ETBase. Since all the functions are duplicated in all ET
+    classes, they are documented only in this class. \todo Actually
+    document the interface.  */
 template<typename P_expr>
 class _bz_ArrayExpr 
 #ifdef BZ_NEW_EXPRESSION_TEMPLATES

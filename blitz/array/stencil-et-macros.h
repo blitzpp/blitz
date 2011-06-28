@@ -84,6 +84,11 @@ BZ_NAMESPACE(blitz)
     typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;	\
     typedef T_numtype T_optype;						\
 									\
+    /* dummy */								\
+    template<int N> struct tvresult {					\
+      typedef name ## _et<typename T_expr::template tvresult<N>::Type,T_numtype> Type; \
+    };									\
+									\
     typedef  name ## _et<_bz_typename P_expr::T_range_result, T_numtype> T_range_result; \
 									\
     using T_base::iter_;						\
@@ -126,6 +131,12 @@ BZ_NAMESPACE(blitz)
       return r;								\
     }									\
     									\
+    /** This way of vectorizing won't work on stencils. */		\
+    template<int N>							\
+    typename tvresult<N>::Type fastRead_tv(int i) const {		\
+      BZPRECHECK(0, "Can't vectorize stencils");			\
+      return iter_.fastRead_tv<N>(i); }					\
+									\
     T_result shift(int offset, int dim) const				\
     {									\
       iter_._bz_offsetData(offset, dim);				\
@@ -231,6 +242,11 @@ BZ_NAMESPACE(blitz)
     typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;	\
     typedef T_numtype T_optype;						\
 									\
+    /* dummy */								\
+    template<int N> struct tvresult {					\
+      typedef name ## _et2<typename T_expr1::template tvresult<N>::Type,typename T_expr2::template tvresult<N>::Type,T_numtype> Type; \
+    };									\
+									\
     typedef  name ## _et2<_bz_typename P_expr1::T_range_result, _bz_typename P_expr2::T_range_result, T_numtype> T_range_result; \
 									\
     using T_base::iter1_;						\
@@ -268,6 +284,13 @@ BZ_NAMESPACE(blitz)
       iter1_._bz_offsetData(-i); iter2_._bz_offsetData(-i);		\
       return r;								\
     }									\
+    									\
+    /** This way of vectorizing won't work on stencils. */		\
+    template<int N>							\
+      typename tvresult<N>::Type fastRead_tv(int i) const {		\
+      BZPRECHECK(0, "Can't vectorize stencils");			\
+      return typename tvresult<N>::Type(iter1_.fastRead_tv<N>(i),	\
+					iter2_.fastRead_tv<N>(i)); }	\
     									\
     T_result shift(int offset, int dim) const				\
     {									\
@@ -406,7 +429,12 @@ BZ_NAMESPACE(blitz)
   typedef ETBase<_bz_ArrayExpr<FastTM2CopyIterator<typename multicomponent_traits<typename P_expr::T_numtype>::T_element, result_rank, result_rank> > > T_typeprop;\
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;\
   typedef T_numtype T_optype;\
-\
+									\
+    /* dummy */								\
+    template<int N> struct tvresult {					\
+      typedef name ## _et<typename T_expr::template tvresult<N>::Type> Type; \
+    };									\
+  									\
      typedef  name ## _et<_bz_typename P_expr::T_range_result> T_range_result; \
 									 \
      using T_base::iter_;						\
@@ -442,7 +470,13 @@ BZ_NAMESPACE(blitz)
        iter_._bz_offsetData(-i);					\
        return r;							\
      }									\
-     									\
+    									\
+    /** This way of vectorizing won't work on stencils. */		\
+    template<int N>							\
+    typename tvresult<N>::Type fastRead_tv(int i) const {		\
+      BZPRECHECK(0, "Can't vectorize stencils");			\
+      return iter_.fastRead_tv<N>(i); }					\
+									\
      T_result shift(int offset, int dim) const				\
      {									\
        iter_._bz_offsetData(offset, dim);				\
@@ -531,6 +565,11 @@ BZ_NAMESPACE(blitz)
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;		\
   typedef typename T_expr::T_numtype T_optype;				\
 									\
+    /* dummy */								\
+    template<int N> struct tvresult {					\
+      typedef name ## _et<typename T_expr::template tvresult<N>::Type> Type; \
+    };									\
+									\
      typedef  name ## _et<_bz_typename P_expr::T_range_result> T_range_result; \
 									 \
      using T_base::iter_;						\
@@ -566,6 +605,12 @@ BZ_NAMESPACE(blitz)
        iter_._bz_offsetData(-i);					\
        return r;							\
      }									\
+    									\
+    /** This way of vectorizing won't work on stencils. */		\
+    template<int N>							\
+    typename tvresult<N>::Type fastRead_tv(int i) const {		\
+      BZPRECHECK(0, "Can't vectorize stencils");			\
+      return iter_.fastRead_tv<N>(i); }					\
 									 \
      T_result shift(int offset, int dim) const				\
      {									\
@@ -653,6 +698,11 @@ BZ_NAMESPACE(blitz)
      typedef T_result T_typeprop;					\
      typedef T_numtype T_optype;					\
 									\
+    /* dummy */								\
+    template<int N> struct tvresult {					\
+      typedef name ## _et<typename T_expr::template tvresult<N>::Type> Type; \
+    };									\
+									\
      typedef  name ## _et<_bz_typename P_expr::T_range_result> T_range_result; \
      									\
      using T_base::iter_;						\
@@ -688,6 +738,12 @@ BZ_NAMESPACE(blitz)
       iter_._bz_offsetData(-i);						\
       return r;								\
     }									\
+    									\
+    /** This way of vectorizing won't work on stencils. */		\
+    template<int N>							\
+    typename tvresult<N>::Type fastRead_tv(int i) const {		\
+      BZPRECHECK(0, "Can't vectorize stencils");			\
+      return iter_.fastRead_tv<N>(i); }					\
 									\
     T_result shift(int offset, int dim) const				\
     {									\
@@ -780,6 +836,11 @@ BZ_NAMESPACE(blitz)
 			      name ##_et<test> >::T_selected T_typeprop; \
     typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;	\
     typedef T_numtype T_optype;						\
+									\
+    /* dummy */								\
+    template<int N> struct tvresult {					\
+      typedef name ## _et<typename T_expr::template tvresult<N>::Type> Type; \
+    };									\
     									\
     typedef  name ## _et<_bz_typename P_expr::T_range_result> T_range_result; \
     									\
@@ -816,6 +877,12 @@ BZ_NAMESPACE(blitz)
       iter_._bz_offsetData(-i);						\
       return r;								\
     }									\
+    									\
+    /** This way of vectorizing won't work on stencils. */		\
+    template<int N>							\
+    typename tvresult<N>::Type fastRead_tv(int i) const {		\
+      BZPRECHECK(0, "Can't vectorize stencils");			\
+      return typename tvresult<N>::Type(iter_.fastRead_tv<N>(i),dim_); } \
 									\
     T_result shift(int offset, int dim) const				\
     {									\
@@ -916,6 +983,11 @@ BZ_NAMESPACE(blitz)
     typedef T_result T_typeprop;					\
   typedef T_numtype T_optype;						\
 									\
+    /* dummy */								\
+    template<int N> struct tvresult {					\
+      typedef name ## _et_multi<typename T_expr::template tvresult<N>::Type> Type; \
+    };									\
+									\
     typedef  name ## _et_multi<_bz_typename P_expr::T_range_result> T_range_result; \
 									\
     using T_base::iter_;						\
@@ -953,6 +1025,12 @@ BZ_NAMESPACE(blitz)
       iter_._bz_offsetData(-i);						\
       return r;								\
     }									\
+    									\
+    /** This way of vectorizing won't work on stencils. */		\
+    template<int N>							\
+    typename tvresult<N>::Type fastRead_tv(int i) const {		\
+      BZPRECHECK(0, "Can't vectorize stencils");			\
+      return typename tvresult<N>::Type(iter_.fastRead_tv<N>(i),comp_,dim_); } \
 									\
     T_result shift(int offset, int dim) const				\
     {									\
@@ -1057,6 +1135,12 @@ BZ_NAMESPACE(blitz)
 			    name ## _et<test> >::T_selected T_typeprop;	\
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;		\
   typedef T_numtype T_optype;						\
+									\
+    /* dummy */								\
+    template<int N> struct tvresult {					\
+      typedef name ## _et<typename T_expr::template tvresult<N>::Type> Type; \
+    };									\
+									\
    typedef  name ## _et<_bz_typename P_expr::T_range_result> T_range_result; \
    									\
    using T_base::iter_;							\
@@ -1096,6 +1180,12 @@ BZ_NAMESPACE(blitz)
      iter_._bz_offsetData(-i);						\
      return r;								\
    }									\
+    									\
+    /** This way of vectorizing won't work on stencils. */		\
+    template<int N>							\
+    typename tvresult<N>::Type fastRead_tv(int i) const {		\
+      BZPRECHECK(0, "Can't vectorize stencils");			\
+      return typename tvresult<N>::Type(iter_.fastRead_tv<N>(i),dim1_,dim2_); } \
 									\
     T_result shift(int offset, int dim) const				\
     {									\

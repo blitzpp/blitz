@@ -369,8 +369,20 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
   BZ_DEBUG_MESSAGE("\tunit stride expression with length: "<< ubound << ".");
 #endif
 
+  // If the minWidth is set to 0, there are elements in the expression
+  // which can NOT use the vectorized expression (i.e, stencils). In
+  // that case, we fall through to the scalar loop
+  const bool unvectorizable = (T_expr::minWidth==0);
+
+  // if we have mixed widths, we make the loop the widest and let the
+  // compiler sort out how to vectorize. (We can not take the
+  // expression length into account here as that would make this a
+  // runtime computation.)
+  const int loop_width = BZ_MAX(T_expr::maxWidth,
+				simdTypes<T_numtype>::vecWidth);
+
   const int max_bits_for_unroll=4;
-  if(ubound < 1<<max_bits_for_unroll) {
+  if(!unvectorizable && (ubound < 1<<max_bits_for_unroll)) {
     // for short expressions, it's more important to lose
     // overhead. Single-element ones have already been dealt with, but
     // for lengths that are have fewer significant bits than
@@ -396,13 +408,6 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
     (T_expr::minWidth == T_expr::maxWidth) &&
     (T_expr::minWidth == simdTypes<T_numtype>::vecWidth) &&
     expr.isVectorAligned(uneven_start);
-
-  // if we have mixed widths, we make the loop the widest and let the
-  // compiler sort out how to vectorize. (We can not take the
-  // expression length into account here as that would make this a
-  // runtime computation.)
-  const int loop_width = BZ_MAX(T_expr::maxWidth,
-				simdTypes<T_numtype>::vecWidth);
 
 #ifdef BZ_DEBUG_TRAVERSE
   if(T_expr::minWidth!=T_expr::maxWidth) {
@@ -436,7 +441,7 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
   // enough. The critical length goes down as the simd width goes up.
   const int min_number_of_vector_per_scalar = 16/loop_width;
 
-  if(loop_width>1)
+  if(!unvectorizable && (loop_width>1))
 
     // If the expression is aligned, we do so.  However, if we need to
     // deal with uneven start/end elements, we only use the aligned
@@ -478,10 +483,8 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
 	  unaligned_update(data, expr, i);
     }
 
-  // now complete the loop with the elements not done in
-  // the chunked loop. (if not aligned, not wide enough
-  // loop, or not more than one item fitting in simd width,
-  // this is all of them.)
+  // now complete the loop with the elements not done in the chunked
+  // loop.
 #ifdef BZ_DEBUG_TRAVERSE
   if(i<ubound) {
     BZ_DEBUG_MESSAGE("\tscalar loop for " << ubound-i << " trailing elements starting at " << i);
