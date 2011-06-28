@@ -573,8 +573,6 @@ public:
   template<typename T> struct readHelper {
     static T_result fastRead(const T_expr& iter, int i) {
       return (T_op::apply(iter.fastRead(i))); };
-    static T_tvresult fastRead_tv(const T_expr& iter, int i) {
-      BZPRECONDITION(0); return T_tvresult(); };
     static T_result indexop(const T_expr& iter, int i) {
       return (T_op::apply(iter[i])); };
     static T_result deref(const T_expr& iter) {
@@ -602,8 +600,6 @@ public:
     template<typename T> struct readHelper<ETBase<T> > {
       static T_result fastRead(const T_expr& iter, int i) {
 	return iter.fastRead(i); };
-      static T_tvresult fastRead_tv(const T_expr& iter, int i) {
-	return iter.fastRead_tv(i); };
       static T_result indexop(const T_expr& iter, int i) {
 	return iter[i]; };
       static T_result deref(const T_expr& iter) {
@@ -629,9 +625,6 @@ public:
 
     T_result fastRead(int i) const { 
       return readHelper<T_typeprop>::fastRead(iter_, i); }
-
-      //T_tvresult fastRead_tv(int i) const { 
-      //return readHelper<T_tvtypeprop>::fastRead_tv(iter_, i); }
 
   template<int N>
   typename tvresult<N>::Type fastRead_tv(int i) const
@@ -860,9 +853,6 @@ public:
   template<typename T> struct readHelper {
     static T_result fastRead(const T_expr1& iter1, const T_expr2& iter2, int i) {
       return T_op::apply(iter1.fastRead(i), iter2.fastRead(i)); }
-    static T_tvresult fastRead_tv(const T_expr1& iter1, const T_expr2& iter2,
-				  int i) {
-      BZPRECONDITION(0); return T_tvresult(); };
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, int i) {
       return T_op::apply(iter1[i], iter2[i]); };
     static T_result deref(const T_expr1& iter1, const T_expr2& iter2) {
@@ -892,9 +882,6 @@ public:
       static T_result fastRead(const T_expr1& iter1, const T_expr2& iter2, 
 			       int i) {
 	return T_result(iter1.fastRead(i), iter2.fastRead(i)); }
-      static T_tvresult fastRead_tv(const T_expr1& iter1, const T_expr2& iter2,
-				    int i) {
-	return T_tvresult(iter1.fastRead_tv(i), iter2.fastRead_tv(i)); }
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, int i) {
       return T_result(iter1[i], iter2[i]); };
     static T_result deref(const T_expr1& iter1, const T_expr2& iter2) {
@@ -921,9 +908,6 @@ public:
 
     T_result fastRead(int i) const { 
       return readHelper<T_typeprop>::fastRead(iter1_, iter2_, i); }
-
-    // T_tvresult fastRead_tv(int i) const { 
-    //   return readHelper<T_tvtypeprop>::fastRead_tv(iter1_, iter2_, i); }
 
   template<int N>
   typename tvresult<N>::Type fastRead_tv(int i) const
@@ -1231,9 +1215,6 @@ public:
 			     const T_expr3& iter3, int i) {
       return T_op::apply(iter1.fastRead(i), iter2.fastRead(i), 
 			 iter3.fastRead(i)); }
-    static T_tvresult fastRead_tv(const T_expr1& iter1, const T_expr2& iter2, 
-				  const T_expr3& iter3, int i) {
-      BZPRECONDITION(0); return T_tvresult(); }
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, 
 			    const T_expr3& iter3, int i) {
       return T_op::apply(iter1[i], iter2[i], iter3[i]); };
@@ -1273,10 +1254,6 @@ public:
 			     const T_expr3& iter3, int i) {
       return T_result(iter1.fastRead(i), iter2.fastRead(i), 
 		      iter3.fastRead(i)); }
-    static T_tvresult fastRead_tv(const T_expr1& iter1, const T_expr2& iter2, 
-				  const T_expr3& iter3, int i) {
-      return T_tvresult(iter1.fastRead_tv(i), iter2.fastRead_tv(i), 
-			iter3.fastRead_tv(i)); }
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, 
 			    const T_expr3& iter3, int i) {
       return T_result(iter1[i], iter2[i], iter3[i]); };
@@ -1319,9 +1296,6 @@ public:
 					  iter2_.fastRead_tv<N>(i),
 					  iter3_.fastRead_tv<N>(i)); }
       
-    // T_tvresult fastRead_tv(int i) const { 
-    //   return readHelper<T_tvtypeprop>::fastRead_tv(iter1_, iter2_, iter3_, i); }
-
     T_result operator[](int i) const { 
       return readHelper<T_typeprop>::indexop(iter1_, iter2_, iter3_, i); }
 
@@ -1687,10 +1661,6 @@ public:
 			     int i) {
       return T_op::apply(iter1.fastRead(i), iter2.fastRead(i), 
 			 iter3.fastRead(i), iter4.fastRead(i)); }
-    static T_result fastRead_tv(const T_expr1& iter1, const T_expr2& iter2, 
-				const T_expr3& iter3, const T_expr4& iter4, 
-				int i) {
-      BZPRECONDITION(0); return T_tvresult(); };
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, 
 			    const T_expr3& iter3, const T_expr4& iter4, 
 			    int i) {
@@ -1734,11 +1704,6 @@ public:
 			     int i) {
       return T_result(iter1.fastRead(i), iter2.fastRead(i),
 		      iter3.fastRead(i), iter4.fastRead(i)); }
-    static T_tvresult fastRead_tv(const T_expr1& iter1, const T_expr2& iter2, 
-				  const T_expr3& iter3, const T_expr4& iter4, 
-				  int i) {
-      return T_tvresult(iter1.fastRead_tv(i), iter2.fastRead_tv(i),
-			iter3.fastRead_tv(i), iter4.fastRead_tv(i)); }
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, 
 			    const T_expr3& iter3, const T_expr4& iter4,
 			    int i) {
@@ -1785,10 +1750,6 @@ public:
 					  iter2_.fastRead_tv<N>(i),
 					  iter3_.fastRead_tv<N>(i),
 					  iter4_.fastRead_tv<N>(i)); }
-
-    // T_tvresult fastRead_tv(int i) const { 
-    //   return readHelper<T_tvtypeprop>::fastRead_tv(iter1_, iter2_, 
-    // 						   iter3_, iter4_, i); }
 
     T_result operator[](int i) const { 
       return readHelper<T_typeprop>::indexop(iter1_, iter2_, 
@@ -2163,9 +2124,6 @@ public:
   // it gets turned into an iterator by the containing expression.
   const T_numtype& fastRead(int) const
     { return value_; }
-
-  // const T_numtype& fastRead_tv(int) const
-  //   { return value_; }
 
   template<int N>
   typename tvresult<N>::Type fastRead_tv(int i) const
