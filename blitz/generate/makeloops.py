@@ -102,7 +102,11 @@ def cc(l):
 
 def sub_skeleton(skeleton, subs):
     for s in subs:
-        skeleton=skeleton.replace("#%s#"%s[0],s[1])
+        try:
+            skeleton=skeleton.replace("#%s#"%s[0],s[1])
+        except:
+            print "Error subbing %s with %s in skeleton"%s
+            raise
     return skeleton
 
 def fortrandecls(loop):
@@ -139,6 +143,23 @@ def misaligneddeclandfill(loop):
              for i,n in enumerate(looparrays(loop))])
     return decl
 
+def indexexpr(loop, index, sub_lvalue=True):
+    """Replace the variables in the loop expression with ones indexed
+    by index. sub_lvalue determines wether the lvalue should also have
+    the index appended, since that's the case for Fortran but not for
+    Blitz index expressions."""
+    indexexpr = loopexpr(loop)
+    if sub_lvalue:
+        asspos=0
+    else:
+        asspos=indexexpr.find("=")
+    lvalue=indexexpr[0:asspos]
+    rvalue=indexexpr[asspos:]
+    for n in looparrays(loop):
+        rvalue=rvalue.replace("$%s"%n,"%s(%s)"%(n,index))
+        lvalue=lvalue.replace("$%s"%n,"%s"%n)
+    return lvalue+rvalue
+
 def gencpp(loop):
     """Generate the C++ loop code from loop data by substituting the
     skeleton."""
@@ -156,7 +177,7 @@ def gencpp(loop):
         ("scalarargs", cc([", %s"%n for n in loopscalars(loop)])),
         ("loopexpr", loopexpr(loop)),
         ("declarescalars",
-         cc(["%s %s = 0.39123982498157938742;\n"%(numtype, n)
+         cc(["    %s %s = 0.39123982498157938742;\n"%(numtype, n)
              for n in loopscalars(loop)])),
         ("arraydeclandfill",
          declandfill(loop, "Array<%s,1> %s(N)"%(numtype,"%s"),
@@ -175,7 +196,8 @@ def gencpp(loop):
          declandfill(loop, "%s* %s = new %s[N]"%(numtype, "%s", numtype),"")),
         ("delcarray",
          cc(["        delete [] %s;\n"%n for n in looparrays(loop)])),
-        ("looparrayexpr", loopexpr(loop).replace("$",""))
+        ("looparrayexpr", loopexpr(loop).replace("$","")),
+        ("looparrayindexexpr", indexexpr(loop,"tensor::i", False))
         ]
 
     cpp =  sub_skeleton(cpp_skeleton, subs)
@@ -185,9 +207,7 @@ def gencpp(loop):
 def genf77(loop):
     """Generate the fortran code from loop data."""
 
-    f77expr = loopexpr(loop)
-    for n in looparrays(loop):
-        f77expr=f77expr.replace("$%s"%n,"%s(i)"%n)
+    f77expr = indexexpr(loop,"i")
     # see if we must continue line
     maxlen=60
     if len(f77expr)>maxlen:
@@ -274,6 +294,7 @@ void VectorVersion(BenchmarkExt<int>& bench#scalarargdecl#);
 void ArrayVersion(BenchmarkExt<int>& bench#scalarargdecl#);
 void ArrayVersion_unaligned(BenchmarkExt<int>& bench#scalarargdecl#);
 void ArrayVersion_misaligned(BenchmarkExt<int>& bench#scalarargdecl#);
+void ArrayVersion_index(BenchmarkExt<int>& bench#scalarargdecl#);
 void doTinyVectorVersion(BenchmarkExt<int>& bench#scalarargdecl#);
 void F77Version(BenchmarkExt<int>& bench#scalarargdecl#);
 #ifdef FORTRAN_90
@@ -286,16 +307,17 @@ void ValarrayVersion(BenchmarkExt<int>& bench#scalarargdecl#);
 const int numSizes = 20;
 const int Nmax=1<<(numSizes-1);
 const int tvNmax=7;
-const bool runvector=true;
+const bool runvector=false; // no point as long as Vector is Array<1>
 
 int main()
 {
-    int numBenchmarks = runvector ? 8 : 7;
-#ifndef BENCHMARK_VALARRAY
-    numBenchmarks--;   // No  valarray
+    int numBenchmarks = 6;
+    if (runvector) numBenchmarks++;
+#ifdef BENCHMARK_VALARRAY
+    numBenchmarks++;
 #endif
-#ifndef FORTRAN_90
-    numBenchmarks--;   // No fortran 90
+#ifdef FORTRAN_90
+    numBenchmarks++;
 #endif
 
     BenchmarkExt<int> bench("#loopname#: #loopexpr#", numBenchmarks);
@@ -318,8 +340,8 @@ int main()
 
     bench.setParameterVector(parameters);
     bench.setIterations(iters);
-    bench.setFlopsPerIteration(flops);
-
+    bench.setOpsPerIteration(flops);
+    bench.setDependentVariable("flops");
     bench.beginBenchmarking();
 
 #declarescalars#
@@ -327,17 +349,18 @@ int main()
     ArrayVersion(bench#scalarargs#);
     ArrayVersion_unaligned(bench#scalarargs#);
     ArrayVersion_misaligned(bench#scalarargs#);
+    ArrayVersion_index(bench#scalarargs#);
     doTinyVectorVersion(bench#scalarargs#);
-    F77Version(bench #scalarargs#);
+    F77Version(bench#scalarargs#);
 #ifdef FORTRAN_90
-    F90Version(bench #scalarargs#);
+    F90Version(bench#scalarargs#);
 #endif
 #ifdef BENCHMARK_VALARRAY
-    ValarrayVersion(bench #scalarargs#);
+    ValarrayVersion(bench#scalarargs#);
 #endif
 
     if(runvector)
-      VectorVersion(bench #scalarargs#);
+      VectorVersion(bench#scalarargs#);
 
     bench.endBenchmarking();
 
@@ -372,7 +395,7 @@ void VectorVersion(BenchmarkExt<int>& bench#scalarargdecl#)
         int N = bench.getParameter();
         long iters = bench.getIterations();
 
-        cout << "Vector<T>: N = " << N << endl;
+        cout << bench.currentImplementation() << ": N = " << N << endl;
 
 #vectordeclandfill#
 
@@ -405,7 +428,7 @@ void VectorVersion(BenchmarkExt<int>& bench#scalarargdecl#)
         int N = bench.getParameter();
         long iters = bench.getIterations();
 
-        cout << "Array<T,1>: N = " << N << endl;
+        cout << bench.currentImplementation() << ": N = " << N << endl;
 
 #arraydeclandfill#
 
@@ -413,6 +436,39 @@ void VectorVersion(BenchmarkExt<int>& bench#scalarargdecl#)
         for (long i=0; i < iters; ++i)
         {
             #looparrayexpr#;
+            sink();
+        }
+        bench.stop();
+
+        bench.startOverhead();
+        for (long i=0; i < iters; ++i) {
+            sink();
+	}
+
+        bench.stopOverhead();
+    }
+
+    bench.endImplementation();
+}
+
+
+  void ArrayVersion_index(BenchmarkExt<int>& bench#scalarargdecl#)
+{
+    bench.beginImplementation("Array<T,1> (indexexpr.)");
+
+    while (!bench.doneImplementationBenchmark())
+    {
+        int N = bench.getParameter();
+        long iters = bench.getIterations();
+
+        cout << bench.currentImplementation() << ": N = " << N << endl;
+
+#arraydeclandfill#
+
+        bench.start();
+        for (long i=0; i < iters; ++i)
+        {
+            #looparrayindexexpr#;
             sink();
         }
         bench.stop();
@@ -437,7 +493,7 @@ void VectorVersion(BenchmarkExt<int>& bench#scalarargdecl#)
         int N = bench.getParameter();
         long iters = bench.getIterations();
 
-        cout << "unaligned Array<T,1>: N = " << N << endl;
+        cout << bench.currentImplementation() << ": N = " << N << endl;
 
 #unalignedarraydeclandfill#
 
@@ -469,7 +525,7 @@ void VectorVersion(BenchmarkExt<int>& bench#scalarargdecl#)
         int N = bench.getParameter();
         long iters = bench.getIterations();
 
-        cout << "misaligned Array<T,1>: N = " << N << endl;
+        cout << bench.currentImplementation() << ": N = " << N << endl;
 
 #misalignedarraydeclandfill#
 
@@ -496,7 +552,8 @@ void VectorVersion(BenchmarkExt<int>& bench#scalarargdecl#)
 template<int N>
 void TinyVectorVersion(BenchmarkExt<int>& bench#scalarargdecl#)
 {
-        cout << "Tinyvector<T, " << N << ">" << endl;
+        cout << bench.currentImplementation() << ": N = " << N << endl;
+
         const int sz = bench.getParameter();
         assert(N==sz);
                            
@@ -552,7 +609,7 @@ void ValarrayVersion(BenchmarkExt<int>& bench#scalarargdecl#)
     while (!bench.doneImplementationBenchmark())
     {
         int N = bench.getParameter();
-        cout << "valarray<T>: N = " << N << endl;
+        cout << bench.currentImplementation() << ": N = " << N << endl;
 
         long iters = bench.getIterations();
 
@@ -584,7 +641,7 @@ void F77Version(BenchmarkExt<int>& bench#scalarargdecl#)
     while (!bench.doneImplementationBenchmark())
     {
         int N = bench.getParameter();
-        cout << "Fortran 77: N = " << N << endl;
+        cout << bench.currentImplementation() << ": N = " << N << endl;
 
         int iters = bench.getIterations();
 
@@ -615,7 +672,7 @@ void F90Version(BenchmarkExt<int>& bench#scalarargdecl#)
     while (!bench.doneImplementationBenchmark())
     {
         int N = bench.getParameter();
-        cout << "Fortran 90: N = " << N << endl;
+        cout << bench.currentImplementation() << ": N = " << N << endl;
 
         int iters = bench.getIterations();
 

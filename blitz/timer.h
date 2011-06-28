@@ -108,7 +108,7 @@ private:
 
     enum { uninitialized, running, stopped } state_;
 
-  static const char* const ivar_;
+  static const string const ivar_;
 
 #ifdef BZ_HAVE_RUSAGE
     struct rusage resourceUsage_;
@@ -175,7 +175,7 @@ private:
 
   static const int nevents=3;
   static const int Events[nevents];
-  static const char* const ivar_;
+  static const string ivar_;
 
   TinyVector<long long, nevents> counters_;
 };

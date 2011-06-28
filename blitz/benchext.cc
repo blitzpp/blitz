@@ -139,6 +139,8 @@ void BenchmarkExt<P_parameter>::setOpsPerIteration(Array<double,1>
 template<typename P_parameter>
 void BenchmarkExt<P_parameter>::setDependentVariable(const char* dvar)
 {
+  BZPRECONDITION(Timer::indep_var()!="");
+
   if(timer_.indep_var()=="s") {
     depvar_ = string("G")+dvar+"/s";
     timerconversion_ = 1./1e9;
@@ -163,6 +165,7 @@ void BenchmarkExt<P_parameter>::beginBenchmarking()
 template<typename P_parameter>
 void BenchmarkExt<P_parameter>::beginImplementation(const char* description)
 {
+    // it would really be better if it worked for as many as we give it
     BZPRECONDITION(implementationNumber_ < numImplementations_);
     BZPRECONDITION(state_ == benchmarking);
 
@@ -224,7 +227,6 @@ inline void BenchmarkExt<P_parameter>::stop()
     times_(int(implementationNumber_), int(parameterNumber_)) = timer_.elapsed();
     instr_(int(implementationNumber_), int(parameterNumber_)) = timer_.instr();
     flops_(int(implementationNumber_), int(parameterNumber_)) = timer_.flops();
-
     ++parameterNumber_;
 }
 
@@ -369,7 +371,7 @@ void BenchmarkExt<P_parameter>::saveMatlabGraph(const char* filename, const char
 
     ofs << graphType << "(parm,Mf), title('" << description_ << "'), " << endl
         << "    xlabel('" << parameterDescription_ << "'), "
-        << "ylabel('" << depvar_<<"/"<<Timer::indep_var() << "')\n"
+        << "ylabel('" << depvar_ << "')\n"
         << "legend(";
     
     for (unsigned j=0; j < numImplementations_; ++j)
@@ -455,7 +457,7 @@ void BenchmarkExt<P_parameter>::savePylabGraph(const char* filename, const char*
 
     ofs << graphType << "(parm,Mf)\ntitle('" << description_ << "')\n"
         << "xlabel('" << parameterDescription_ << "')\n"
-        << "ylabel('" << depvar_<<"/"<<Timer::indep_var() << "')\n";
+        << "ylabel('" << depvar_ << "')\n";
 
     ofs << "legend(legnames)\n";
 }
