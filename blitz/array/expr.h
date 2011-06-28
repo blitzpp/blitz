@@ -105,14 +105,6 @@ public:
 			    _bz_ArrayExpr<test> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
 
-  
-  // select tvreturn type
-  typedef typename selectET<typename T_expr::T_tvtypeprop, 
-			    T_numtype,
-			    _bz_ArrayExpr<typename T_expr::T_tvresult> 
-			    >::T_selected T_tvtypeprop;
-  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
-
   typedef typename T_expr::T_optype T_optype;
     typedef T_expr T_ctorArg1;
     typedef int    T_ctorArg2;    // dummy
@@ -508,15 +500,6 @@ public:
 			    _bz_ArrayExprUnaryOp<test, T_op> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
 
-  // select tvreturn type
-  typedef typename selectET<typename T_expr::T_tvtypeprop, 
-			    T_numtype,
-			    _bz_ArrayExprUnaryOp<
-			      typename asExpr<typename T_expr::T_tvresult>::T_expr,
-			      T_op> 
-			    >::T_selected T_tvtypeprop;
-  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
-
   typedef T_numtype T_optype;
 
     typedef T_expr T_ctorArg1;
@@ -795,17 +778,6 @@ public:
 						   typename asExpr<T_unwrapped2>::T_expr, 
 						   T_op> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
-
-  // select tv return type
-  typedef typename selectET2<typename T_expr1::T_tvtypeprop, 
-			     typename T_expr2::T_tvtypeprop, 
-			     T_numtype,
-			     _bz_ArrayExprBinaryOp<typename asExpr<typename T_expr1::T_tvresult>::T_expr,
-						   typename asExpr<typename T_expr2::T_tvresult>::T_expr,
-						   T_op> 
-			     >::T_selected T_tvtypeprop;
-  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
-
   typedef typename T_op::T_numtype T_optype;
 
     typedef T_expr1 T_ctorArg1;
@@ -1140,24 +1112,6 @@ public:
 			   typename asExpr<T_unwrapped3>::T_expr, 
 			   T_op> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
-
-  // select tv return type
-  typedef typename selectET2<typename T_expr1::T_tvtypeprop, 
-			     typename T_expr2::T_tvtypeprop, 
-			     T_numtype, 
-			     char>::T_selected T_tvintermediary;
-  typedef typename selectET2<
-    T_tvintermediary,
-    typename T_expr3::T_tvtypeprop, 
-    T_numtype, 
-    _bz_ArrayExprTernaryOp<typename asExpr<typename T_expr1::T_tvresult>::T_expr,
-			   typename asExpr<typename T_expr2::T_tvresult>::T_expr,
-			   typename asExpr<typename T_expr3::T_tvresult>::T_expr,
-			   T_op
-			   > 
-    >::T_selected T_tvtypeprop;
-  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
-
   typedef typename T_op::T_numtype T_optype;
 
     typedef T_expr1 T_ctorArg1;
@@ -1567,28 +1521,6 @@ public:
 			      typename asExpr<T_unwrapped4>::T_expr, 
 			      T_op> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
-    
-  // select tv return type
-  typedef typename selectET2<typename T_expr1::T_tvtypeprop, 
-			     typename T_expr2::T_tvtypeprop, 
-			     T_numtype, 
-			     char>::T_selected T_tvintermediary1;
-  typedef typename selectET2<T_tvintermediary1,
-			     typename T_expr3::T_tvtypeprop, 
-			     T_numtype, 
-			     char>::T_selected T_tvintermediary2;
-  typedef typename selectET2<
-    T_tvintermediary2,
-    typename T_expr4::T_tvtypeprop, 
-    T_numtype, 
-    _bz_ArrayExprQuaternaryOp<
-      typename asExpr<typename T_expr1::T_tvresult>::T_expr,
-      typename asExpr<typename T_expr2::T_tvresult>::T_expr,
-      typename asExpr<typename T_expr3::T_tvresult>::T_expr,
-      typename asExpr<typename T_expr4::T_tvresult>::T_expr,
-      T_op> >::T_selected T_tvtypeprop;
-  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
-
   typedef typename T_op::T_numtype T_optype;
 
     typedef T_expr1 T_ctorArg1;
@@ -2033,8 +1965,6 @@ public:
   typedef typename opType<T_numtype>::T_optype T_optype;
   typedef typename asET<T_numtype>::T_wrapped T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
-  typedef T_typeprop T_tvtypeprop;
-  typedef T_result T_tvresult;
 
     typedef T_numtype T_ctorArg1;
     typedef int       T_ctorArg2;    // dummy

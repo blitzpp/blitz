@@ -119,17 +119,6 @@ public:
 					    test, 
 					    P_result> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
-
-  // select tvreturn type
-  typedef typename selectET<typename T_expr::T_tvtypeprop, 
-			    T_numtype,
-			    _bz_FunctorExpr<
-			      T_functor,
-			      typename asExpr<typename T_expr::T_tvresult>::T_expr,
-			      P_result> 
-			    >::T_selected T_tvtypeprop;
-  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
-
   typedef T_numtype T_optype;
 
     typedef T_expr    T_ctorArg1;
@@ -386,18 +375,6 @@ public:
 					      typename asExpr<T_unwrapped2>::T_expr, 
 					      T_numtype> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
-
-  // select tv return type
-  typedef typename selectET2<typename T_expr1::T_tvtypeprop, 
-			     typename T_expr2::T_tvtypeprop, 
-			     T_numtype,
-			     _bz_FunctorExpr2<T_functor,
-					      typename asExpr<typename T_expr1::T_tvresult>::T_expr,
-					      typename asExpr<typename T_expr2::T_tvresult>::T_expr,
-					      T_numtype> 
-			     >::T_selected T_tvtypeprop;
-  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
-
   typedef T_numtype T_optype;
 
     typedef T_expr1 T_ctorArg1;
@@ -750,23 +727,6 @@ public:
 					      typename asExpr<T_unwrapped3>::T_expr, 
 					      T_numtype> >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
-
-  // select tv return type
-  typedef typename selectET2<typename T_expr1::T_tvtypeprop, 
-			     typename T_expr2::T_tvtypeprop, 
-			     T_numtype, 
-			     char>::T_selected T_tvintermediary;
-  typedef typename selectET2<
-    T_tvintermediary,
-    typename T_expr3::T_tvtypeprop, 
-    T_numtype, 
-    _bz_FunctorExpr3<P_functor,
-		     typename asExpr<typename T_expr1::T_tvresult>::T_expr,
-		     typename asExpr<typename T_expr2::T_tvresult>::T_expr,
-		     typename asExpr<typename T_expr3::T_tvresult>::T_expr,
-		     T_numtype> >::T_selected T_tvtypeprop;
-  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
-
   typedef T_numtype T_optype;
 
     typedef T_expr1 T_ctorArg1;

@@ -21,10 +21,6 @@ public:
   typedef asET<T_numtype>::T_wrapped T_typeprop;
   typedef unwrapET<T_typeprop>::T_unwrapped T_result;
 
-  // dummy
-  typedef asET<T_numtype>::T_wrapped T_tvtypeprop;
-  typedef unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
-
     typedef void T_ctorArg1;
     typedef char       T_ctorArg2;    // dummy
   typedef TinyVector<int, 3> T_index;

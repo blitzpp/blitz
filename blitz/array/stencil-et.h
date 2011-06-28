@@ -102,11 +102,6 @@ class _bz_StencilExpr {
   typedef P_result T_numtype;
   typedef T_expr T_ctorArg1;
   typedef int    T_ctorArg2;    // dummy
-
-  // tv return type should be a dummy because we can't vectorize
-  // stencils this way
-  typedef typename asExpr<T_numtype>::T_expr T_tvtypeprop;
-  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
   
   static const int 
     numArrayOperands = T_expr::numArrayOperands,
@@ -116,12 +111,6 @@ class _bz_StencilExpr {
       minWidth = T_expr::minWidth,
       maxWidth = T_expr::maxWidth,
     rank_ = T_expr::rank_;
-
-  template<int N> struct tvresult {
-    typedef _bz_StencilExpr<
-      typename T_expr::template tvresult<N>::Type,
-      T_numtype> Type;
-  };
   
  _bz_StencilExpr(const _bz_StencilExpr<T_expr, T_numtype>& a)
    : iter_(a.iter_)
@@ -164,10 +153,6 @@ class _bz_StencilExpr {
     }
 
   //T_numtype first_value() const { return iter_(iter_.lbound()); }
-
-  template<int N>
-  typename tvresult<N>::Type fastRead_tv(int i) const
-  { return iter_.fastRead_tv<N>(i); }
 
   /** Vectorization doesn't make sense for stencils, so we say so. */
   bool isVectorAligned(diffType offset) const {
@@ -259,11 +244,6 @@ class _bz_StencilExpr2 {
   typedef T_expr1 T_ctorArg1;
   typedef T_expr2 T_ctorArg2;
 
-  // tv return type should be a dummy because we can't vectorize
-  // stencils this way
-  typedef typename asExpr<T_numtype>::T_expr T_tvtypeprop;
-  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
-  
   static const int 
   numArrayOperands = T_expr1::numArrayOperands
     + T_expr2::numArrayOperands,
@@ -274,14 +254,6 @@ class _bz_StencilExpr2 {
       minWidth = BZ_MIN(T_expr1::minWidth, T_expr2::minWidth),
       maxWidth = BZ_MAX(T_expr1::maxWidth, T_expr2::maxWidth),
       rank_ = BZ_MAX(T_expr1::rank_, T_expr2::rank_);
-
-  /// dummy
-  template<int N> struct tvresult {
-    typedef _bz_StencilExpr2<
-      typename T_expr1::template tvresult<N>::Type,
-      typename T_expr2::template tvresult<N>::Type,
-      T_numtype> Type; 
-  };
   
   _bz_StencilExpr2(const _bz_StencilExpr2<T_expr1, T_expr2, T_numtype>& a)
     : iter1_(a.iter1_), iter2_(a.iter2_)

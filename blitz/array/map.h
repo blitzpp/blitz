@@ -381,9 +381,6 @@ public:
   typedef typename asET<T_numtype>::T_wrapped T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
 
-  typedef typename asET<T_numtype>::T_wrapped T_tvtypeprop;
-  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
-
   typedef T_expr T_ctorArg1;
     typedef int                            T_ctorArg2;    // dummy
   typedef ArrayIndexMapping<typename T_expr::T_range_result,N_map0,N_map1,N_map2,N_map3,N_map4,N_map5,N_map6,N_map7,N_map8,N_map9,N_map10> T_range_result;

@@ -76,22 +76,6 @@ public:
 					    typename asExpr<T_unwrapped3>::T_expr
 					    > >::T_selected T_typeprop;
   typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
-
-  // select tv return type
-  typedef typename selectET2<typename T_expr1::T_tvtypeprop, 
-			     typename T_expr2::T_tvtypeprop, 
-			     T_numtype, 
-			     char>::T_selected T_tvintermediary;
-  typedef typename selectET2<
-    T_tvintermediary,
-    typename T_expr3::T_tvtypeprop, 
-    T_numtype, 
-    _bz_ArrayWhere<typename asExpr<typename T_expr1::T_tvresult>::T_expr,
-		   typename asExpr<typename T_expr2::T_tvresult>::T_expr,
-		   typename asExpr<typename T_expr3::T_tvresult>::T_expr
-		   > >::T_selected T_tvtypeprop;
-  typedef typename unwrapET<T_tvtypeprop>::T_unwrapped T_tvresult;
-
   typedef T_numtype T_optype;
 
     static const int 

@@ -207,20 +207,24 @@ public:
   const T_vector& array() const 
   {return array_; }
 
-    // void _bz_setData(const T_numtype* ptr)
-    // { data_ = ptr; }
+  void _bz_setData(const T_numtype* ptr)
+  { BZPRECONDITION(0); //data_ = ptr; 
+  }
 
-    // // this is needed for the stencil expression fastRead to work
-    // void _bz_offsetData(sizeType i)
-    // { data_ += i;}
+    // this is needed for the stencil expression fastRead to work
+    void _bz_offsetData(sizeType i)
+  { BZPRECONDITION(0); //data_ += i;
+  }
 
-    // // and these are needed for stencil expression shift to work
-    // void _bz_offsetData(sizeType offset, int dim)
-    // { data_ += offset*array_.stride(dim); }
+    // and these are needed for stencil expression shift to work
+    void _bz_offsetData(sizeType offset, int dim)
+  { BZPRECONDITION(0); //data_ += offset*array_.stride(dim); 
+  }
   
-    // void _bz_offsetData(sizeType offset1, int dim1, sizeType offset2, int dim2)
-    // { data_ += offset1*array_.stride(dim1); 
-    //   data_ += offset2*array_.stride(dim2); }
+    void _bz_offsetData(sizeType offset1, int dim1, sizeType offset2, int dim2)
+  { BZPRECONDITION(0); //data_ += offset1*array_.stride(dim1); 
+    //data_ += offset2*array_.stride(dim2); 
+  }
 
     int stride() const
     { return stride_; }
