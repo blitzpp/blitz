@@ -1,5 +1,5 @@
 
-      SUBROUTINE floop16_F90(N, x, y, a)
+      SUBROUTINE floop16_F90(N, y, x, a, b, c, u)
       INTEGER i, N
       REAL*4 y(N), x(N), a(N), b(N), c(N), u
 
@@ -8,7 +8,7 @@
       END
 
 
-      SUBROUTINE floop16_F90Overhead(N, x, y, a)
+      SUBROUTINE floop16_F90Overhead(N, y, x, a, b, c, u)
       INTEGER i, N
       REAL*4 y(N), x(N), a(N), b(N), c(N), u
 

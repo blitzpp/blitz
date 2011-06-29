@@ -1,5 +1,5 @@
 
-      SUBROUTINE loop14_F90(N, x, y, a)
+      SUBROUTINE loop14_F90(N, y, x, a, b)
       INTEGER i, N
       REAL*8 y(N), x(N), a(N), b(N)
 
@@ -8,7 +8,7 @@
       END
 
 
-      SUBROUTINE loop14_F90Overhead(N, x, y, a)
+      SUBROUTINE loop14_F90Overhead(N, y, x, a, b)
       INTEGER i, N
       REAL*8 y(N), x(N), a(N), b(N)
 

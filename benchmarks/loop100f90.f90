@@ -1,5 +1,5 @@
 
-      SUBROUTINE loop100_F90(N, x, y, a)
+      SUBROUTINE loop100_F90(N, a, b, c, d, x, u, v, w, z)
       INTEGER i, N
       REAL*8 a(N), b(N), c(N), d(N), x(N), u, v, w, z
 
@@ -8,7 +8,7 @@
       END
 
 
-      SUBROUTINE loop100_F90Overhead(N, x, y, a)
+      SUBROUTINE loop100_F90Overhead(N, a, b, c, d, x, u, v, w, z)
       INTEGER i, N
       REAL*8 a(N), b(N), c(N), d(N), x(N), u, v, w, z
 

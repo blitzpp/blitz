@@ -724,7 +724,7 @@ f77_skeleton = """
 """
 
 f90_skeleton = """
-      SUBROUTINE #loopname#_F90(N, x, y, a)
+      SUBROUTINE #loopname#_F90(N#f77args#)
       INTEGER i, N
       REAL*#numtypesize# #f77decls#
 
@@ -733,7 +733,7 @@ f90_skeleton = """
       END
 
 
-      SUBROUTINE #loopname#_F90Overhead(N, x, y, a)
+      SUBROUTINE #loopname#_F90Overhead(N#f77args#)
       INTEGER i, N
       REAL*#numtypesize# #f77decls#
 

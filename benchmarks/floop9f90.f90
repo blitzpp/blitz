@@ -1,5 +1,5 @@
 
-      SUBROUTINE floop9_F90(N, x, y, a)
+      SUBROUTINE floop9_F90(N, a, x)
       INTEGER i, N
       REAL*4 a(N), x(N)
 
@@ -8,7 +8,7 @@
       END
 
 
-      SUBROUTINE floop9_F90Overhead(N, x, y, a)
+      SUBROUTINE floop9_F90Overhead(N, a, x)
       INTEGER i, N
       REAL*4 a(N), x(N)
 
