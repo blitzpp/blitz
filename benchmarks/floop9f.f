@@ -4,7 +4,7 @@
       REAL*4 a(N), x(N)
 
       DO i=1,N
-          x(i) = x(i)+a(i)
+          x(i) = x(i)+a(i);
       END DO
       RETURN
       END

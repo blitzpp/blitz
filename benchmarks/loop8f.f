@@ -4,7 +4,7 @@
       REAL*8 a(N), x(N), u
 
       DO i=1,N
-          x(i) = u/a(i)
+          x(i) = u/a(i);
       END DO
       RETURN
       END

@@ -4,7 +4,7 @@
       REAL*4 x(N), y(N), u
 
       DO i=1,N
-          x(i) = y(i)/u
+          x(i) = y(i)/u;
       END DO
       RETURN
       END

@@ -4,7 +4,7 @@
       REAL*4 y(N), x(N), a(N), b(N), c(N), d(N), u
 
       DO i=1,N
-          x(i) = a(i)+b(i)+c(i)+d(i); y(i) = u+d(i)
+          x(i) = a(i)+b(i)+c(i)+d(i); y(i) = u+d(i);
       END DO
       RETURN
       END

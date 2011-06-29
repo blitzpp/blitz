@@ -5,7 +5,7 @@
 
       DO i=1,N
           x(i)=(1.0-c(i)*c(i))/((4*w)*sin(1.0+c(i)*c(i)-2*v*c(i)))*a(i
-     !)*b(i)*u*exp(-z*d(i))
+     !)*b(i)*u*exp(-z*d(i));
       END DO
       RETURN
       END

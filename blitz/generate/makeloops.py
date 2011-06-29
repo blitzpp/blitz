@@ -148,17 +148,24 @@ def indexexpr(loop, index, sub_lvalue=True):
     by index. sub_lvalue determines wether the lvalue should also have
     the index appended, since that's the case for Fortran but not for
     Blitz index expressions."""
-    indexexpr = loopexpr(loop)
-    if sub_lvalue:
-        asspos=0
-    else:
-        asspos=indexexpr.find("=")
-    lvalue=indexexpr[0:asspos]
-    rvalue=indexexpr[asspos:]
-    for n in looparrays(loop):
-        rvalue=rvalue.replace("$%s"%n,"%s(%s)"%(n,index))
-        lvalue=lvalue.replace("$%s"%n,"%s"%n)
-    return lvalue+rvalue
+
+    # split up expressions
+    indexexpr = loopexpr(loop).split(";")
+    outputexpr=[]
+    for i in indexexpr:
+        # for each expression, find lvalue and rvalue
+        if sub_lvalue:
+            asspos=0
+        else:
+            asspos=i.find("=")
+        lvalue=i[0:asspos]
+        rvalue=i[asspos:]
+        for n in looparrays(loop):
+            rvalue=rvalue.replace("$%s"%n,"%s(%s)"%(n,index))
+            lvalue=lvalue.replace("$%s"%n,"%s"%n)
+        outputexpr.append(lvalue+rvalue)
+    
+    return reduce(lambda x,y: x+y,[o+";" for o in outputexpr])
 
 def gencpp(loop):
     """Generate the C++ loop code from loop data by substituting the

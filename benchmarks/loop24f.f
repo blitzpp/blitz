@@ -4,7 +4,7 @@
       REAL*8 x(N), a(N), b(N), c(N), d(N), y(N)
 
       DO i=1,N
-          x(i) = a(i)*c(i) - b(i)*c(i); y(i) = a(i)*d(i) + b(i)+c(i)
+          x(i) = a(i)*c(i) - b(i)*c(i); y(i) = a(i)*d(i) + b(i)+c(i);
       END DO
       RETURN
       END

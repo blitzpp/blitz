@@ -4,7 +4,7 @@
       REAL*8 x(N), a(N), b(N)
 
       DO i=1,N
-          x(i) = a(i)*b(i)
+          x(i) = a(i)*b(i);
       END DO
       RETURN
       END

@@ -4,7 +4,7 @@
       REAL*4 x(N), y(N), a
 
       DO i=1,N
-          y(i) = y(i) + a*x(i)
+          y(i) = y(i) + a*x(i);
       END DO
       RETURN
       END

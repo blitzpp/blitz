@@ -4,7 +4,7 @@
       REAL*8 x(N), a(N), b(N), c(N), d(N)
 
       DO i=1,N
-          x(i) = (a(i)+b(i))*(c(i)+d(i))
+          x(i) = (a(i)+b(i))*(c(i)+d(i));
       END DO
       RETURN
       END
