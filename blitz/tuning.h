@@ -71,6 +71,11 @@
 #define BZ_NO_INLINE_ET
 #endif
 
+// possibly overridden by specific compilers below
+#define _bz_forceinline inline
+#define _bz_inline_et inline
+
+
 /*
  * Platform-specific tuning
  */
@@ -91,6 +96,10 @@
  // rough empirical value -- seems unlikely anyone would use larger
  // tinyvectors, but...
 //#define BZ_TV_EVALUATE_UNROLL_LENGTH 26
+// defines for inlining
+ #define _bz_forceinline __forceinline
+ #define _bz_inline_et __forceinline
+
 #else // need this since icpc also defines __GNUC__
 #ifdef __GNUC__
  // The egcs compiler does a good job of loop unrolling, if
@@ -119,8 +128,6 @@
 
 #ifdef  BZ_NO_INLINE_ET
  #define _bz_inline_et 
-#else
- #define _bz_inline_et inline
 #endif
 
 #ifdef  BZ_ETPARMS_CONSTREF

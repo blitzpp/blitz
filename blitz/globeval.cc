@@ -51,7 +51,7 @@ template<bool canTryFastTraversal>
 struct _bz_tryFastTraversal {
     template<typename T_numtype, int N_rank, typename T_expr, typename T_update>
     static bool tryFast(Array<T_numtype,N_rank>& array, 
-        BZ_ETPARM(T_expr) expr, T_update)
+        T_expr expr, T_update)
     {
         return false;
     }
@@ -61,7 +61,7 @@ template<>
 struct _bz_tryFastTraversal<true> {
     template<typename T_numtype, int N_rank, typename T_expr, typename T_update>
     static bool tryFast(Array<T_numtype,N_rank>& array, 
-        BZ_ETPARM(T_expr) expr, T_update)
+        T_expr expr, T_update)
     {
         // See if there's an appropriate space filling curve available.
         // Currently fast traversals use an N-1 dimensional curve.  The
@@ -134,7 +134,7 @@ template<> struct _bz_evaluator<1> {
     in two-dimensions. 
  */
 template<typename T_dest, typename T_expr, typename T_update>
-inline void
+_bz_forceinline void
 _bz_evaluate(T_dest& dest, T_expr expr, T_update)
 {
   typedef typename T_dest::T_numtype T_numtype;
@@ -282,13 +282,15 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
 template<typename T_numtype, typename T_expr, typename T_update, int N>
 struct chunked_updater {
 
-  static __forceinline void aligned_update(T_numtype* data, T_expr expr, int i) {
+  static _bz_forceinline void
+  aligned_update(T_numtype* data, T_expr expr, int i) {
 
     TinyVector<T_numtype,N>::_tv_evaluate_aligned
       (data+i, expr.fastRead_tv<N>(i), T_update());
   };
 
-  static __forceinline void unaligned_update(T_numtype* data, T_expr expr, int i) {
+  static _bz_forceinline void
+  unaligned_update(T_numtype* data, T_expr expr, int i) {
     TinyVector<T_numtype,N>::_tv_evaluate_unaligned
       (data+i, expr.fastRead_tv<N>(i), T_update());
   };
@@ -300,9 +302,11 @@ struct chunked_updater {
     instantiation recursion. */
 template<typename T_numtype, typename T_expr, typename T_update>
 struct chunked_updater<T_numtype, T_expr, T_update, 1> {
-  static __forceinline void aligned_update(T_numtype* data, T_expr expr, int i) {
+  static _bz_forceinline void 
+  aligned_update(T_numtype* data, T_expr expr, int i) {
     BZPRECONDITION(0); };
-  static __forceinline void unaligned_update(T_numtype* data, T_expr expr, int i) {
+  static _bz_forceinline void
+  unaligned_update(T_numtype* data, T_expr expr, int i) {
     BZPRECONDITION(0); };
 };
 
@@ -319,7 +323,7 @@ template<int I>
 class _bz_meta_binaryAssign {
 public:
     template<typename T_data, typename T_expr, typename T_update>
-    static inline void assign(T_data* data, T_expr expr,
+    static _bz_forceinline void assign(T_data* data, T_expr expr,
 			      int ubound, int pos, T_update) {
       if(ubound&(1<<I)) {
 	chunked_updater<T_data, T_expr, T_update, 1<<I >::
@@ -336,7 +340,7 @@ template<>
 class _bz_meta_binaryAssign<0> {
 public:
     template<typename T_data, typename T_expr, typename T_update>
-    static inline void assign(T_data* data, T_expr expr,
+    static _bz_forceinline void assign(T_data* data, T_expr expr,
 			      int ubound, int pos, T_update) {
       if(ubound&1) {
 	T_update::update(data[pos], expr.fastRead(pos));
@@ -357,7 +361,7 @@ public:
     it be useful to retain the unrolled loop for scalar
     architectures?  */
 template<typename T_dest, typename T_expr, typename T_update>
-inline void
+_bz_forceinline void
 _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
 			   T_expr expr, int ubound, T_update)
 {
@@ -503,7 +507,7 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
 
 /** Common-stride evaluator. Used for common but non-unit strides. */
 template<typename T_dest, typename T_expr, typename T_update>
-inline void
+_bz_forceinline void
 _bz_evaluateWithCommonStride(T_dest& dest, typename T_dest::T_iterator& iter,
 			     T_expr expr, int ubound, int commonStride, 
 			     T_update)
@@ -546,7 +550,7 @@ _bz_evaluateWithCommonStride(T_dest& dest, typename T_dest::T_iterator& iter,
    or evaluateWithCommonStride, if applicable, otherwise does the slow
    different-stride update. */
 template<typename T_dest, typename T_expr, typename T_update>
-inline void
+_bz_forceinline void
 _bz_evaluator<1>::
 evaluateWithStackTraversal(T_dest& dest, T_expr expr, T_update)
 {
@@ -650,7 +654,7 @@ evaluateWithStackTraversal(T_dest& dest, T_expr expr, T_update)
 
 template<int N>
 template<typename T_dest, typename T_expr, typename T_update>
-inline void
+_bz_forceinline void
 _bz_evaluator<N>::
 evaluateWithStackTraversal(T_dest& dest, T_expr expr, T_update)
  {
@@ -865,7 +869,7 @@ evaluateWithStackTraversal(T_dest& dest, T_expr expr, T_update)
 
 
 template<typename T_dest, typename T_expr, typename T_update>
-inline void
+_bz_forceinline void
 _bz_evaluator<1>::
 evaluateWithIndexTraversal(T_dest& dest, T_expr expr, T_update)
 {
@@ -902,7 +906,7 @@ evaluateWithIndexTraversal(T_dest& dest, T_expr expr, T_update)
 
   template<int N>
 template<typename T_dest, typename T_expr, typename T_update>
-inline void
+_bz_forceinline void
 _bz_evaluator<N>::
 evaluateWithIndexTraversal(T_dest& dest, T_expr expr, T_update)
 {
@@ -984,7 +988,7 @@ evaluateWithIndexTraversal(T_dest& dest, T_expr expr, T_update)
 #ifdef BZ_ARRAY_SPACE_FILLING_TRAVERSAL
 
 template<typename T_dest, typename T_expr, typename T_update>
-inline void
+_bz_forceinline void
 _bz_evaluateWithFastTraversal(T_dest& dest,     
 			      const TraversalOrder<T_dest::rank() - 1>& order, 
 			      T_expr expr, T_update)
@@ -1117,7 +1121,7 @@ _bz_evaluateWithFastTraversal(T_dest& dest,
 
 // what is diff between new and old?
 template<typename T_dest, typename T_expr, typename T_update>
-inline void
+_bz_forceinline void
 _bz_evaluateWithTiled2DTraversal(T_dest& dest, T_expr expr, T_update)
 {
   typedef typename T_dest::T_numtype T_numtype;
@@ -1318,7 +1322,7 @@ _bz_evaluateWithTiled2DTraversal(T_dest& dest, T_expr expr, T_update)
 
 // what is diff between new and old?
 template<typename T_dest, typename T_expr, typename T_update>
-inline void
+_bz_forceinline void
 _bz_evaluateWithTiled2DTraversal(T_dest& dest, T_expr expr, T_update)
 {
   typedef typename T_dest::T_numtype T_numtype;

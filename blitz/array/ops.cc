@@ -60,11 +60,10 @@ Array<P_numtype, N_rank>& Array<P_numtype,N_rank>::initialize(T_numtype x)
 // that operator=(T_numtype) will be the best match for list
 // initializations.
 template<typename P_numtype, int N_rank> template<typename T_expr>
-inline __forceinline 
+inline 
 Array<P_numtype,N_rank>&
 Array<P_numtype,N_rank>::operator=(const ETBase<T_expr>& expr)
 {
-#pragma forceinline recursive
   _bz_evaluate(*this, _bz_typename asExpr<T_expr>::T_expr(expr.unwrap()), 
 	       _bz_update<T_numtype, 
 	       _bz_typename asExpr<T_expr>::T_expr::T_result>());
@@ -73,13 +72,12 @@ Array<P_numtype,N_rank>::operator=(const ETBase<T_expr>& expr)
 
 // do NOT remove this operator. it won't work without it, trust me...
 template<typename P_numtype, int N_rank>
-inline Array<P_numtype, N_rank>&
+inline 
+Array<P_numtype, N_rank>&
 Array<P_numtype, N_rank>::operator=(const Array<T_numtype,N_rank>& x)
 {
   typedef typename asExpr<Array<T_numtype,N_rank> >::T_expr T_expr;
-#pragma forceinline recursive
   _bz_evaluate(*this, asExpr<Array<T_numtype,N_rank> >::getExpr(x),
-	       //T_expr(x),
 	       _bz_update<T_numtype, 
 	       _bz_typename T_expr::T_result>());
     return *this;
@@ -88,10 +86,10 @@ Array<P_numtype, N_rank>::operator=(const Array<T_numtype,N_rank>& x)
 #define BZ_ARRAY_UPDATE(op,name)					\
   template<typename P_numtype, int N_rank>				\
   template<typename T>							\
-  inline Array<P_numtype,N_rank>&					\
+  inline								\
+  Array<P_numtype,N_rank>&						\
   Array<P_numtype,N_rank>::operator op(const T& expr)			\
   {									\
-    _Pragma("forceinline recursive")					\
     _bz_evaluate(*this, _bz_typename asExpr<T>::T_expr(expr),		\
 		 name<T_numtype, _bz_typename asExpr<T>::T_expr::T_numtype>()); \
   return *this;								\

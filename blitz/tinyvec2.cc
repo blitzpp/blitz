@@ -42,20 +42,23 @@ BZ_NAMESPACE(blitz)
  */
 
 template<typename P_numtype, int N_length>
-inline TinyVector<P_numtype, N_length>::TinyVector(const T_numtype initValue) {
+_bz_forceinline
+TinyVector<P_numtype, N_length>::TinyVector(const T_numtype initValue) {
     for (int i=0; i < N_length; ++i)
         data_[i] = initValue;
 }
 
 template<typename P_numtype, int N_length>
-inline TinyVector<P_numtype, N_length>::TinyVector(const TinyVector<T_numtype, N_length>& x) {
+_bz_forceinline 
+TinyVector<P_numtype, N_length>::TinyVector(const TinyVector<T_numtype, N_length>& x) {
     for (int i=0; i < N_length; ++i)
         data_[i] = x.data_[i];
 }
 
 template<typename P_numtype, int N_length>
 template<typename P_numtype2>
-inline TinyVector<P_numtype, N_length>::TinyVector(const TinyVector<P_numtype2, N_length>& x) {
+_bz_forceinline 
+TinyVector<P_numtype, N_length>::TinyVector(const TinyVector<P_numtype2, N_length>& x) {
     for (int i=0; i < N_length; ++i)
         data_[i] = static_cast<P_numtype>(x[i]);
 }
@@ -66,7 +69,9 @@ inline TinyVector<P_numtype, N_length>::TinyVector(const TinyVector<P_numtype2, 
  */
 
 template<typename P_numtype, int N_length>
-TinyVector<P_numtype, N_length>& TinyVector<P_numtype,N_length>::initialize(T_numtype x)
+_bz_forceinline
+TinyVector<P_numtype, N_length>& 
+TinyVector<P_numtype,N_length>::initialize(T_numtype x)
 {
     (*this) = _bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
     return *this;
@@ -77,7 +82,8 @@ TinyVector<P_numtype, N_length>& TinyVector<P_numtype,N_length>::initialize(T_nu
     inlined */
 template<typename P_numtype, int N_length>
 template<typename T_expr, typename T_update>
-inline void
+_bz_forceinline
+void
 TinyVector<P_numtype,N_length>::_tv_evaluate(const T_expr& expr, T_update)
 {
   if ((T_expr::numArrayOperands>0) || 
@@ -128,7 +134,8 @@ TinyVector<P_numtype,N_length>::_tv_evaluate(const T_expr& expr, T_update)
     created using reinterpret_cast in the chunked_updater. */
 template<typename P_numtype, int N_length>
 template<typename T_expr, typename T_update>
-inline void
+_bz_forceinline
+void
 TinyVector<P_numtype,N_length>::
 _tv_evaluate_aligned(T_numtype* data, const T_expr& expr, T_update)
 {
@@ -151,7 +158,8 @@ _tv_evaluate_aligned(T_numtype* data, const T_expr& expr, T_update)
     compiler it is unaligned. */
 template<typename P_numtype, int N_length>
 template<typename T_expr, typename T_update>
-inline void
+_bz_forceinline
+void
 TinyVector<P_numtype,N_length>::
 _tv_evaluate_unaligned(T_numtype* data, const T_expr& expr, T_update)
 {
@@ -169,7 +177,8 @@ _tv_evaluate_unaligned(T_numtype* data, const T_expr& expr, T_update)
 }
 
 template<typename P_numtype, int N_length> template<typename T_expr>
-inline TinyVector<P_numtype,N_length>&
+_bz_forceinline
+TinyVector<P_numtype,N_length>&
 TinyVector<P_numtype,N_length>::operator=(const ETBase<T_expr>& expr)
 {
   _tv_evaluate(_bz_typename asExpr<T_expr>::T_expr(expr.unwrap()), 
@@ -182,7 +191,8 @@ TinyVector<P_numtype,N_length>::operator=(const ETBase<T_expr>& expr)
 #define BZ_TV2_UPDATE(op,name)						\
   template<typename P_numtype, int N_length>				\
   template<typename T>							\
-  inline TinyVector<P_numtype,N_length>&				\
+  _bz_forceinline								\
+  TinyVector<P_numtype,N_length>&					\
   TinyVector<P_numtype,N_length>::operator op(const T& expr)		\
   {									\
     _tv_evaluate(_bz_typename asExpr<T>::T_expr(expr),			\
@@ -209,6 +219,7 @@ BZ_TV2_UPDATE(>>=, _bz_shiftr_update)
 
 template<typename P_numtype, int N_length>
 template<int N0>
+_bz_forceinline
 _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<TinyVector<P_numtype, N_length> >::T_expr, N0> >
 TinyVector<P_numtype, N_length>::operator()(IndexPlaceholder<N0>) const
 { 
