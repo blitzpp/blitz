@@ -311,14 +311,12 @@ void F90Version(BenchmarkExt<int>& bench#scalarargdecl#);
 void ValarrayVersion(BenchmarkExt<int>& bench#scalarargdecl#);
 #endif
 
-const int numSizes = 20;
-const int Nmax=1<<(numSizes-1);
-const int tvNmax=7;
+const int numSizes = 80;
 const bool runvector=false; // no point as long as Vector is Array<1>
 
 int main()
 {
-    int numBenchmarks = 6;
+    int numBenchmarks = 5;
     if (runvector) numBenchmarks++;
 #ifdef BENCHMARK_VALARRAY
     numBenchmarks++;
@@ -335,16 +333,12 @@ int main()
     Array<long,1> iters(numSizes);
     Array<double,1> flops(numSizes);
 
-    for (int i=0; i < numSizes; ++i)
-    {
-      parameters(i) = Nmax>>i;
-      iters(i) = 50000000L / parameters(i);
-	
-        if (iters(i) < 2)
-            iters(i) = 2;
-        flops(i) = #loopflops# * parameters(i);
-    }
-
+    parameters=pow(pow(2.,0.25),tensor::i)+tensor::i;
+    flops = #loopflops# * parameters;
+    iters = 100000000L / flops;
+    iters = where(iters<2, 2, iters);
+    cout << iters << endl;
+    
     bench.setParameterVector(parameters);
     bench.setIterations(iters);
     bench.setOpsPerIteration(flops);
@@ -357,7 +351,7 @@ int main()
     ArrayVersion_unaligned(bench#scalarargs#);
     ArrayVersion_misaligned(bench#scalarargs#);
     ArrayVersion_index(bench#scalarargs#);
-    doTinyVectorVersion(bench#scalarargs#);
+    //doTinyVectorVersion(bench#scalarargs#);
     F77Version(bench#scalarargs#);
 #ifdef FORTRAN_90
     F90Version(bench#scalarargs#);
@@ -555,59 +549,6 @@ void VectorVersion(BenchmarkExt<int>& bench#scalarargdecl#)
     bench.endImplementation();
 }
 
-
-template<int N>
-void TinyVectorVersion(BenchmarkExt<int>& bench#scalarargdecl#)
-{
-        cout << bench.currentImplementation() << ": N = " << N << endl;
-
-        const int sz = bench.getParameter();
-        assert(N==sz);
-                           
-        long iters = bench.getIterations();
-
-#tvdeclandfill#
-
-        bench.start();
-        for (long i=0; i < iters; ++i)
-        {
-            #looparrayexpr#;
-            sink();
-        }
-        bench.stop();
-
-        bench.startOverhead();
-        for (long i=0; i < iters; ++i) {
-            sink();
-	}
-        bench.stopOverhead();
-
-	TinyVectorVersion<N>>1>(bench#scalarargs#);
-}
-
-// end recursion
-template<>
-void TinyVectorVersion<0>(BenchmarkExt<int>& bench#scalarargdecl#)
-{}
-
-void doTinyVectorVersion(BenchmarkExt<int>& bench#scalarargdecl#)
-{
-  bench.beginImplementation("TinyVector<T>");
-  // can't run tinyvector with full length because meta-unrolling
-  // kills compiler...
-  int N=Nmax;
-  while(N> 1<<tvNmax) {
-   bench.getParameter();
-   bench.getIterations();
-   bench.skip();
-   N>>=1;
-  }
-
-  TinyVectorVersion< 1<<tvNmax >(bench#scalarargs#);
-  bench.endImplementation();
-}
-
-
 #ifdef BENCHMARK_VALARRAY
 void ValarrayVersion(BenchmarkExt<int>& bench#scalarargdecl#)
 {
@@ -747,3 +688,55 @@ for l in loops:
     genf77(l)
     genf90(l)
 
+tv_skeleton="""
+template<int N>
+void TinyVectorVersion(BenchmarkExt<int>& bench#scalarargdecl#)
+{
+        cout << bench.currentImplementation() << ": N = " << N << endl;
+
+        const int sz = bench.getParameter();
+        assert(N==sz);
+                           
+        long iters = bench.getIterations();
+
+#tvdeclandfill#
+
+        bench.start();
+        for (long i=0; i < iters; ++i)
+        {
+            #looparrayexpr#;
+            sink();
+        }
+        bench.stop();
+
+        bench.startOverhead();
+        for (long i=0; i < iters; ++i) {
+            sink();
+	}
+        bench.stopOverhead();
+
+	TinyVectorVersion<N>>1>(bench#scalarargs#);
+}
+
+// end recursion
+template<>
+void TinyVectorVersion<0>(BenchmarkExt<int>& bench#scalarargdecl#)
+{}
+
+void doTinyVectorVersion(BenchmarkExt<int>& bench#scalarargdecl#)
+{
+  bench.beginImplementation("TinyVector<T>");
+  // can't run tinyvector with full length because meta-unrolling
+  // kills compiler...
+  int N=Nmax;
+  while(N> 1<<tvNmax) {
+   bench.getParameter();
+   bench.getIterations();
+   bench.skip();
+   N>>=1;
+  }
+
+  TinyVectorVersion< 1<<tvNmax >(bench#scalarargs#);
+  bench.endImplementation();
+}
+"""
