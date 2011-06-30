@@ -110,7 +110,7 @@ inline void MemoryBlock<P_type>::allocate(sizeType length)
         }
     }
 #endif
-    BZASSERT(isVectorAligned(data_))
+    BZASSERT(isVectorAligned(data_));
 }
 
 
