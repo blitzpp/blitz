@@ -117,10 +117,11 @@ public:
 
   void moveTo(int) const { BZPRECONDITION(0); }
 
-  T_numtype shift(int offset, int dim) const { BZPRECONDITION(0); }
+  T_numtype shift(int offset, int dim) const { 
+    BZPRECONDITION(0); return T_numtype(); }
 
     T_numtype shift(int offset1, int dim1,int offset2, int dim2) const 
-  { BZPRECONDITION(0); }
+  { BZPRECONDITION(0); return T_numtype();}
 
     template<int N_rank>
     void moveTo(const TinyVector<int,N_rank>&) const { BZPRECONDITION(0); }

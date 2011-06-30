@@ -1012,7 +1012,7 @@ public:
         int r3=0, int r4=0, int r5=0, int r6=0, int r7=0, int r8=0, int
         r9=0, int r10=0) const;
 
-  static const int                               rank()
+  static int                               rank()
     { return rank_; }
 
     void                              reference(const T_array&);
