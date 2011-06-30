@@ -99,6 +99,8 @@
  // tinyvectors, but...
 //#define BZ_TV_EVALUATE_UNROLL_LENGTH 26
 // defines for inlining
+ #undef _bz_forceinline
+ #undef _bz_inline_et
  #define _bz_forceinline __forceinline
  #define _bz_inline_et __forceinline
 
