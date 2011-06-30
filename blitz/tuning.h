@@ -130,7 +130,9 @@
  #define _bz_inline2
 #endif
 
+// override definitions above
 #ifdef  BZ_NO_INLINE_ET
+ #undef _bz_inline_et
  #define _bz_inline_et 
 #endif
 
