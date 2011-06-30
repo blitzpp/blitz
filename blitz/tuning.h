@@ -33,10 +33,12 @@
 #define BZ_TUNING_H
 
 // These estimates should be conservative (i.e. underestimate the
-// cache sizes).
-#define BZ_L1_CACHE_ESTIMATED_SIZE    8192
-#define BZ_L2_CACHE_ESTIMATED_SIZE    65536
-
+// cache sizes). \todo these can be const ints instead of macros.
+#define BZ_L1_CACHE_ESTIMATED_SIZE    32768
+#define BZ_L2_CACHE_ESTIMATED_SIZE    6291456
+// This will work for 32, 16 also
+#define BZ_L1_CACHE_LINE_SIZE         64 
+#define BZ_CACHE_LINES_TO_ALIGN       16
 
 #undef  BZ_PARTIAL_LOOP_UNROLL
 #define BZ_PASS_EXPR_BY_VALUE
@@ -57,7 +59,7 @@
 #define BZ_ARRAY_2D_STENCIL_TILING
 #define BZ_ARRAY_2D_STENCIL_TILE_SIZE       128
 #undef  BZ_INTERLACE_ARRAYS
-#undef  BZ_ALIGN_BLOCKS_ON_CACHELINE_BOUNDARY
+#define  BZ_ALIGN_BLOCKS_ON_CACHELINE_BOUNDARY
 #define BZ_FAST_COMPILE
 #undef  BZ_TV_EVALUATE_UNROLL_LENGTH
 

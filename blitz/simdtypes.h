@@ -61,6 +61,10 @@ public:
   };
 };
 
+/** General function just forwards to the simdTypes class. */
+template <typename T>
+inline bool isVectorAligned(const T* restrict pointer) {
+  return simdTypes<T>::isVectorAligned(pointer); }
 
 
 BZ_NAMESPACE_END
