@@ -61,7 +61,9 @@
 #undef  BZ_INTERLACE_ARRAYS
 #define  BZ_ALIGN_BLOCKS_ON_CACHELINE_BOUNDARY
 #define BZ_FAST_COMPILE
-#undef  BZ_TV_EVALUATE_UNROLL_LENGTH
+#define BZ_TV_EVALUATE_UNROLL_LENGTH 0
+#define BZ_MAX_BITS_FOR_BINARY_UNROLL 8
+#define BZ_VECTORIZED_LOOP_WIDTH 32
 
 
 #ifndef BZ_DISABLE_NEW_ET
@@ -91,14 +93,10 @@
 #endif
 
 #ifdef __INTEL_COMPILER
-// the intel compiler seems to have a harder time unrolling than gcc
- #undef BZ_PARTIAL_LOOP_UNROLL
- #undef BZ_ARRAY_FAST_TRAVERSAL_UNROLL
- #undef BZ_ARRAY_STACK_TRAVERSAL_UNROLL
- // rough empirical value -- seems unlikely anyone would use larger
- // tinyvectors, but...
-//#define BZ_TV_EVALUATE_UNROLL_LENGTH 26
-// defines for inlining
+ // icpc does not vectorize the unrolled loop so this is def. bad 
+ #define BZ_TV_EVALUATE_UNROLL_LENGTH 0
+
+ // defines for inlining
  #undef _bz_forceinline
  #undef _bz_inline_et
  #define _bz_forceinline __forceinline

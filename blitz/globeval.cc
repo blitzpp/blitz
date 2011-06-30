@@ -31,6 +31,8 @@
 #define BZ_GLOBEVAL_CC
 
 #include <blitz/ranks.h>
+#include <blitz/tvevaluate.h>
+#include <blitz/blitz.h>
 
 BZ_NAMESPACE(blitz)
 
@@ -285,13 +287,15 @@ struct chunked_updater {
   static _bz_forceinline void
   aligned_update(T_numtype* data, T_expr expr, int i) {
 
-    TinyVector<T_numtype,N>::_tv_evaluate_aligned
+    const bool unroll = N < BZ_TV_EVALUATE_UNROLL_LENGTH;
+    _tv_evaluator<unroll, N>::evaluate_aligned
       (data+i, expr.fastRead_tv<N>(i), T_update());
   };
 
   static _bz_forceinline void
   unaligned_update(T_numtype* data, T_expr expr, int i) {
-    TinyVector<T_numtype,N>::_tv_evaluate_unaligned
+    const bool unroll = N < BZ_TV_EVALUATE_UNROLL_LENGTH;
+    _tv_evaluator<unroll, N>::evaluate_unaligned
       (data+i, expr.fastRead_tv<N>(i), T_update());
   };
 
@@ -378,15 +382,7 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
   // that case, we fall through to the scalar loop
   const bool unvectorizable = (T_expr::minWidth==0);
 
-  // if we have mixed widths, we make the loop the widest and let the
-  // compiler sort out how to vectorize. (We can not take the
-  // expression length into account here as that would make this a
-  // runtime computation.)
-  const int loop_width = BZ_MAX(T_expr::maxWidth,
-				simdTypes<T_numtype>::vecWidth);
-
-  const int max_bits_for_unroll=4;
-  if(!unvectorizable && (ubound < 1<<max_bits_for_unroll)) {
+  if(!unvectorizable && (ubound < 1<<BZ_MAX_BITS_FOR_BINARY_UNROLL)) {
     // for short expressions, it's more important to lose
     // overhead. Single-element ones have already been dealt with, but
     // for lengths that are have fewer significant bits than
@@ -398,7 +394,7 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
     BZ_DEBUG_MESSAGE("\tshort expression, using binary meta-unroll assignment.");
 #endif
 
-    _bz_meta_binaryAssign<max_bits_for_unroll-1>::
+    _bz_meta_binaryAssign<BZ_MAX_BITS_FOR_BINARY_UNROLL-1>::
       assign(data, expr, ubound, 0, T_update());
     return;
   }
@@ -439,19 +435,15 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
   }
 #endif
 
-  // For short unaligned expressions, the overhead in doing the
-  // heading and trailing scalar elements outweigh the gain of having
-  // full alignment, so we only do so if the expression is long
-  // enough. The critical length goes down as the simd width goes up.
-  const int min_number_of_vector_per_scalar = 16/loop_width;
+  // When we come out here, we KNOW that expressions shorter than
+  // 1<<BZ_MAX_BITS_FOR_BINARY_UNROLL have been taken care of. At that
+  // point, it is efficient to effectively unroll the loop using a
+  // vector width larger than the simd width.
+  const int loop_width= BZ_VECTORIZED_LOOP_WIDTH;
 
   if(!unvectorizable && (loop_width>1))
-
-    // If the expression is aligned, we do so.  However, if we need to
-    // deal with uneven start/end elements, we only use the aligned
-    // loop if the number of vector operations is large 
-    if(can_align && 
-       ((uneven_start>0?1:0)*min_number_of_vector_per_scalar < ubound)) {
+    // If the expression can be aligned, we do so.
+    if(can_align) {
 #ifdef BZ_DEBUG_TRAVERSE
       if(i<uneven_start) {
 	BZ_DEBUG_MESSAGE("\tscalar loop for " << uneven_start << " unaligned starting elements");
@@ -474,8 +466,9 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
 	  aligned_update(data, expr, i);
     }
     else {
-      // if we can not line up the expressions, we just start using
-      // unaligned vectorized instructions from element 0
+      // if we can not line up the expressions, alignment doesn't
+      // matter and we just start using unaligned vectorized
+      // instructions from element 0
 #ifdef BZ_DEBUG_TRAVERSE
       if(i<=ubound-loop_width) {
 	BZ_DEBUG_MESSAGE("\tunaligned vectorized loop with width " << loop_width << " starting at " << i);
@@ -487,8 +480,8 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
 	  unaligned_update(data, expr, i);
     }
 
-  // now complete the loop with the elements not done in the chunked
-  // loop.
+  // now complete the loop with the tailing scalar elements not done
+  // in the chunked loop.
 #ifdef BZ_DEBUG_TRAVERSE
   if(i<ubound) {
     BZ_DEBUG_MESSAGE("\tscalar loop for " << ubound-i << " trailing elements starting at " << i);
