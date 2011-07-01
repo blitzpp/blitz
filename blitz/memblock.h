@@ -230,12 +230,14 @@ private:   // Data members
  union {
     T_type * restrict     data_;
    typename simdTypes<T_type>::vecType * restrict data_tv_;
+   char * restrict        data_char_;
   };
  union {
    T_type *              dataBlockAddress_;
    typename simdTypes<T_type>::vecType * restrict dBA_tv_;
-  };
-    sizeType              length_;
+   char *                dBA_char_;
+ };
+  sizeType              length_;
 
     BZ_REFCOUNT_DECLARE(references_)
     BZ_MUTEX_DECLARE(mutex)

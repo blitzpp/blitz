@@ -43,7 +43,7 @@ public:
 
   /** Test if a pointer to T is simd aligned. */
   static inline bool isVectorAligned(const T* restrict pointer)
-  { return (uintptr_t)((void*)pointer) % byteWidth == 0; }  
+  { return (uintptr_t)((void*)pointer) % BZ_SIMD_WIDTH == 0; }  
 
   /** Return number of elements from pointer to next simd width
       boundary. This is used to figure out how many scalar operations
