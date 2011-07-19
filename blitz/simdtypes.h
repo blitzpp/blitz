@@ -11,7 +11,7 @@ template<class T,int N> class TinyVector;
     specified number. The metaprogram result for I is obtained as
     _bz_meta_bitwidth<I,0>::width. */
 template<size_t I, size_t L> struct _bz_meta_bitwidth {
-  static const size_t width = _bz_meta_bitwidth<I>>1, L+1>::width;
+  static const size_t width = _bz_meta_bitwidth<(I>>1), L+1>::width;
 };
 
 template<size_t L> struct _bz_meta_bitwidth<0,L> {
