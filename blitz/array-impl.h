@@ -2354,7 +2354,7 @@ public:
 public:
 
   //T_numtype* restrict getInitializationIterator() { return dataFirst(); }
-  iterator restrict getInitializationIterator() { return begin(); }
+  iterator getInitializationIterator() { return begin(); }
 
     bool canCollapse(int outerRank, int innerRank) const { 
 #ifdef BZ_DEBUG_TRAVERSE
