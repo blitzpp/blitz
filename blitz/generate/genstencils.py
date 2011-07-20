@@ -261,7 +261,7 @@ public:
     template<int N>
     typename tvresult<N>::Type fastRead_tv(int i) const {
       BZPRECHECK(0, "Can't vectorize stencils");
-      return typename tvresult<T>::Type(iter1_.fastRead_tv<N>(i),
+      return typename tvresult<N>::Type(iter1_.fastRead_tv<N>(i),
 					iter2_.fastRead_tv<N>(i)); }
   
   T_result shift(int offset, int dim) const				
