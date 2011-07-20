@@ -289,14 +289,14 @@ struct chunked_updater {
 
     const bool unroll = N < BZ_TV_EVALUATE_UNROLL_LENGTH;
     _tv_evaluator<unroll, N>::evaluate_aligned
-      (data+i, expr.fastRead_tv<N>(i), T_update());
+      (data+i, expr.template fastRead_tv<N>(i), T_update());
   };
 
   static _bz_forceinline void
   unaligned_update(T_numtype* data, T_expr expr, int i) {
     const bool unroll = N < BZ_TV_EVALUATE_UNROLL_LENGTH;
     _tv_evaluator<unroll, N>::evaluate_unaligned
-      (data+i, expr.fastRead_tv<N>(i), T_update());
+      (data+i, expr.template fastRead_tv<N>(i), T_update());
   };
 
 };
