@@ -2,6 +2,7 @@
 #define BZ_SIMDTYPES_H
 
 #include <blitz/blitz.h>
+#include <stdint.h>
 
 BZ_NAMESPACE(blitz)
 
