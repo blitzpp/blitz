@@ -255,13 +255,13 @@ struct BzQuaternaryExprResult {
 };
 
 template <template <typename T1, typename T2> class RED, int N, typename O1,
-	  typename T_result = BZ_SUMTYPE(typename asExpr<O1>::T_expr::T_optype)>
+	  typename P_result = BZ_SUMTYPE(typename asExpr<O1>::T_expr::T_optype)>
 struct BzReductionResult {
   typedef _bz_ArrayExpr<
     _bz_ArrayExprReduce<
       typename asExpr<O1>::T_expr,
       N,
-      RED<typename asExpr<O1>::T_expr::T_optype, T_result>
+      RED<typename asExpr<O1>::T_expr::T_optype, P_result>
       > > T_result;
 };
 
@@ -286,13 +286,13 @@ struct BzStencilResult {
 };
 
 template<template <typename T1, typename T2, typename T3> class STENCIL, 
-	 typename O1, typename O2, typename T_result>
+	 typename O1, typename O2, typename P_result>
 struct BzBinaryStencilResult {
   typedef _bz_ArrayExpr<
     STENCIL<
       typename asExpr<O1>::T_expr::T_range_result,
       typename asExpr<O2>::T_expr::T_range_result,
-      T_result
+      P_result
       > > T_result;
 };
 
