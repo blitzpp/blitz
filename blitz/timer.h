@@ -108,7 +108,7 @@ private:
 
     enum { uninitialized, running, stopped } state_;
 
-  static const string const ivar_;
+  static const string ivar_;
 
 #ifdef BZ_HAVE_RUSAGE
     struct rusage resourceUsage_;

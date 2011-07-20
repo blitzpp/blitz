@@ -88,8 +88,8 @@ public:
       TinyVector assignment can not contain index placeholders. In
       fact, since vectorization doesn't work for index expressions
       anyway, we can just set this to a dummy. */
-  template<int N> struct tvresult {
-    typedef FastTV2Iterator<T_numtype, N> Type;
+  template<int M> struct tvresult {
+    typedef FastTV2Iterator<T_numtype, M> Type;
   };
 
     // If you have a precondition failure on this routine, it means
@@ -157,10 +157,10 @@ public:
         return T_numtype();
     }
 
-  template<int N>
-  typename tvresult<N>::Type fastRead_tv(int) const {
+  template<int M>
+  typename tvresult<M>::Type fastRead_tv(int) const {
     BZPRECONDITION(0);
-    return TinyVector<T_numtype, N>();
+    return TinyVector<T_numtype, M>();
     }
 
   /** There are no alignment issues here, so just return true. */
