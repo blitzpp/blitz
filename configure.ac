@@ -114,11 +114,14 @@ AC_ARG_WITH([tbb],
 
 AC_MSG_CHECKING([for SIMD instruction width])
 AC_ARG_ENABLE([simd-width],
-  AS_HELP_STRING([--enable-simd-width=n],[Facilitate compiler vectorization optimizations for SIMD instruction width of n bytes.]),,[
+  AS_HELP_STRING([--enable-simd-width=n],[Facilitate compiler vectorization optimizations for SIMD instruction width of n bytes.]),
+  AC_ALIGNMENT_DIRECTIVE,[
   enable_simd_width=no])
 AC_MSG_RESULT([$enable_simd_width])
 if test "$enable_simd_width" == [no] ; then
    enable_simd_width=1
+   # if not set, also define ALIGN_VARIABLE to just declare a variable
+   AC_DEFINE([ALIGN_VARIABLE(vartype,varname,alignment)],[vartype varname;])
 fi
 AC_DEFINE_UNQUOTED([SIMD_WIDTH],[$enable_simd_width],[Set SIMD instruction width in bytes])
 
@@ -132,9 +135,6 @@ AC_ARG_ENABLE([array-length-padding],
   fi
   AC_DEFINE([PAD_ARRAYS],1,[Pad array lengths to SIMD width.])
   ],AC_MSG_RESULT([no]))
-
-# Figure out how to declare aligned variables
-AC_ALIGNMENT_DIRECTIVE
 
 AC_MSG_CHECKING([whether to enable Blitz 64-bit dimensions])
 AC_ARG_ENABLE(64-bit-dimensions,
