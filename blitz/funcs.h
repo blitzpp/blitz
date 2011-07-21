@@ -40,34 +40,46 @@
 
 BZ_NAMESPACE(blitz)
     
-/* Helper functions */
+/* Helper functions. We use SFINAE to make these apply only for
+   builtin types, because otherwise they match against Array, etc,
+   better than the ET versions that take ETBase parameters. */
     
+template<typename T, bool b> struct _bz_ispod {};
+template<typename T> struct _bz_ispod<T, true> {typedef T T_pod;};
+
 template <typename T>
-inline T blitz_sqr(const T x)
+inline typename _bz_ispod<T, std::numeric_limits<T>::is_specialized>::T_pod 
+pow2(const T x)
 { return x*x; }
 
 template <typename T>
-inline T blitz_cube(const T x)
+inline typename _bz_ispod<T, std::numeric_limits<T>::is_specialized>::T_pod 
+pow3(const T x)
 { return x*x*x; }
 
 template <typename T>
-inline T blitz_pow4(const T x)
+inline typename _bz_ispod<T, std::numeric_limits<T>::is_specialized>::T_pod 
+pow4(const T x)
 { return x*x*x*x; }
 
 template <typename T>
-inline T blitz_pow5(const T x)
+inline typename _bz_ispod<T, std::numeric_limits<T>::is_specialized>::T_pod 
+pow5(const T x)
 { return x*x*x*x*x; }
 
 template <typename T>
-inline T blitz_pow6(const T x)
+inline typename _bz_ispod<T, std::numeric_limits<T>::is_specialized>::T_pod 
+pow6(const T x)
 { return x*x*x*x*x*x; }
 
 template <typename T>
-inline T blitz_pow7(const T x)
+inline typename _bz_ispod<T, std::numeric_limits<T>::is_specialized>::T_pod 
+pow7(const T x)
 { return x*x*x*x*x*x*x; }
 
 template <typename T>
-inline T blitz_pow8(const T x)
+inline typename _bz_ispod<T, std::numeric_limits<T>::is_specialized>::T_pod 
+pow8(const T x)
 { return x*x*x*x*x*x*x*x; }
 
 
@@ -134,13 +146,13 @@ BZ_DEFINE_UNARY_FUNC(Fn_nearest,BZ_IEEEMATHFN_SCOPE(nearest))
 BZ_DEFINE_UNARY_FUNC(Fn_rsqrt,BZ_IEEEMATHFN_SCOPE(rsqrt))
 #endif
     
-BZ_DEFINE_UNARY_FUNC(Fn_sqr,BZ_BLITZ_SCOPE(blitz_sqr))
-BZ_DEFINE_UNARY_FUNC(Fn_cube,BZ_BLITZ_SCOPE(blitz_cube))
-BZ_DEFINE_UNARY_FUNC(Fn_pow4,BZ_BLITZ_SCOPE(blitz_pow4))
-BZ_DEFINE_UNARY_FUNC(Fn_pow5,BZ_BLITZ_SCOPE(blitz_pow5))
-BZ_DEFINE_UNARY_FUNC(Fn_pow6,BZ_BLITZ_SCOPE(blitz_pow6))
-BZ_DEFINE_UNARY_FUNC(Fn_pow7,BZ_BLITZ_SCOPE(blitz_pow7))
-BZ_DEFINE_UNARY_FUNC(Fn_pow8,BZ_BLITZ_SCOPE(blitz_pow8))
+BZ_DEFINE_UNARY_FUNC(Fn_sqr,BZ_BLITZ_SCOPE(pow2))
+BZ_DEFINE_UNARY_FUNC(Fn_cube,BZ_BLITZ_SCOPE(pow3))
+BZ_DEFINE_UNARY_FUNC(Fn_pow4,BZ_BLITZ_SCOPE(pow4))
+BZ_DEFINE_UNARY_FUNC(Fn_pow5,BZ_BLITZ_SCOPE(pow5))
+BZ_DEFINE_UNARY_FUNC(Fn_pow6,BZ_BLITZ_SCOPE(pow6))
+BZ_DEFINE_UNARY_FUNC(Fn_pow7,BZ_BLITZ_SCOPE(pow7))
+BZ_DEFINE_UNARY_FUNC(Fn_pow8,BZ_BLITZ_SCOPE(pow8))
 
 /* Unary functions that return a specified type */
     
@@ -215,13 +227,13 @@ BZ_DEFINE_UNARY_CFUNC(Fn_tan,BZ_CMATHFN_SCOPE(tan))
 BZ_DEFINE_UNARY_CFUNC(Fn_tanh,BZ_CMATHFN_SCOPE(tanh))
 #endif // BZ_HAVE_COMPLEX_MATH1
 
-BZ_DEFINE_UNARY_CFUNC(Fn_sqr,BZ_BLITZ_SCOPE(blitz_sqr))
-BZ_DEFINE_UNARY_CFUNC(Fn_cube,BZ_BLITZ_SCOPE(blitz_cube))
-BZ_DEFINE_UNARY_CFUNC(Fn_pow4,BZ_BLITZ_SCOPE(blitz_pow4))
-BZ_DEFINE_UNARY_CFUNC(Fn_pow5,BZ_BLITZ_SCOPE(blitz_pow5))
-BZ_DEFINE_UNARY_CFUNC(Fn_pow6,BZ_BLITZ_SCOPE(blitz_pow6))
-BZ_DEFINE_UNARY_CFUNC(Fn_pow7,BZ_BLITZ_SCOPE(blitz_pow7))
-BZ_DEFINE_UNARY_CFUNC(Fn_pow8,BZ_BLITZ_SCOPE(blitz_pow8))
+BZ_DEFINE_UNARY_CFUNC(Fn_sqr,BZ_BLITZ_SCOPE(pow2))
+BZ_DEFINE_UNARY_CFUNC(Fn_cube,BZ_BLITZ_SCOPE(pow3))
+BZ_DEFINE_UNARY_CFUNC(Fn_pow4,BZ_BLITZ_SCOPE(pow4))
+BZ_DEFINE_UNARY_CFUNC(Fn_pow5,BZ_BLITZ_SCOPE(pow5))
+BZ_DEFINE_UNARY_CFUNC(Fn_pow6,BZ_BLITZ_SCOPE(pow6))
+BZ_DEFINE_UNARY_CFUNC(Fn_pow7,BZ_BLITZ_SCOPE(pow7))
+BZ_DEFINE_UNARY_CFUNC(Fn_pow8,BZ_BLITZ_SCOPE(pow8))
 
 /* Unary functions that apply only to complex<T> and return T */
     
