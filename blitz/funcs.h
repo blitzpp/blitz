@@ -41,44 +41,46 @@
 BZ_NAMESPACE(blitz)
     
 /* Helper functions. We use SFINAE to make these apply only for
-   builtin types, because otherwise they match against Array, etc,
-   better than the ET versions that take ETBase parameters. */
+   non-blitz numerical types (POD and complex), because otherwise they
+   match against Array, etc, better than the ET versions that take
+   ETBase parameters. */
     
-template<typename T, bool b> struct _bz_ispod {};
-template<typename T> struct _bz_ispod<T, true> {typedef T T_pod;};
+template<typename T, bool b> struct _bz_isnot_blitz {};
+template<typename T> struct _bz_isnot_blitz<T, true> {typedef T Type;};
+template<typename T, bool b> struct _bz_isnot_blitz<std::complex<T>, b> {typedef std::complex<T> Type;};
 
 template <typename T>
-inline typename _bz_ispod<T, std::numeric_limits<T>::is_specialized>::T_pod 
+inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type 
 pow2(const T x)
 { return x*x; }
 
 template <typename T>
-inline typename _bz_ispod<T, std::numeric_limits<T>::is_specialized>::T_pod 
+inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type 
 pow3(const T x)
 { return x*x*x; }
 
 template <typename T>
-inline typename _bz_ispod<T, std::numeric_limits<T>::is_specialized>::T_pod 
+inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type 
 pow4(const T x)
 { return x*x*x*x; }
 
 template <typename T>
-inline typename _bz_ispod<T, std::numeric_limits<T>::is_specialized>::T_pod 
+inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type 
 pow5(const T x)
 { return x*x*x*x*x; }
 
 template <typename T>
-inline typename _bz_ispod<T, std::numeric_limits<T>::is_specialized>::T_pod 
+inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type 
 pow6(const T x)
 { return x*x*x*x*x*x; }
 
 template <typename T>
-inline typename _bz_ispod<T, std::numeric_limits<T>::is_specialized>::T_pod 
+inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type 
 pow7(const T x)
 { return x*x*x*x*x*x*x; }
 
 template <typename T>
-inline typename _bz_ispod<T, std::numeric_limits<T>::is_specialized>::T_pod 
+inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type 
 pow8(const T x)
 { return x*x*x*x*x*x*x*x; }
 
