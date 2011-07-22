@@ -271,7 +271,7 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
 
         // If fast traversal isn't available or appropriate, then just
         // do a stack traversal.
-#pragma forceinline recursive
+//#pragma forceinline recursive
 	_bz_evaluator<T_dest::rank_>::evaluateWithStackTraversal(dest, expr, T_update());
 	return;
     }
@@ -451,7 +451,7 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
 #endif
 #pragma ivdep
       for (; i < uneven_start; ++i)
-#pragma forceinline recursive
+//#pragma forceinline recursive
 	T_update::update(data[i], expr.fastRead(i));
       
       // and then the vecotrized part
@@ -461,7 +461,7 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
       }
 #endif
       for (; i <= ubound-loop_width; i+=loop_width)
-#pragma forceinline recursive
+//#pragma forceinline recursive
 	chunked_updater<T_numtype, T_expr, T_update, loop_width>::
 	  aligned_update(data, expr, i);
     }
@@ -475,7 +475,7 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
       }
 #endif
       for (; i <= ubound-loop_width; i+=loop_width)
-#pragma forceinline recursive
+//#pragma forceinline recursive
 	chunked_updater<T_numtype, T_expr, T_update, loop_width>::
 	  unaligned_update(data, expr, i);
     }
@@ -489,7 +489,7 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
 #endif
 #pragma ivdep
   for (; i < ubound; ++i)
-#pragma forceinline recursive
+//#pragma forceinline recursive
     T_update::update(data[i], expr.fastRead(i));
 
 #ifdef BZ_DEBUG_TRAVERSE
