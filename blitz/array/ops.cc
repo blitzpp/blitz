@@ -44,12 +44,12 @@ BZ_NAMESPACE(blitz)
  */
 
 template<typename P_numtype, int N_rank>
+_bz_forceinline
 Array<P_numtype, N_rank>& Array<P_numtype,N_rank>::initialize(T_numtype x)
 {
   // we can't use asExpr here, because if we are initializing an array
   // whose components are also ETBase, it would parse as an array
   // expression, not as an initialization with a scalar.
-#pragma forceinline recursive
   (*this) = _bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
   return *this;
 }
@@ -60,7 +60,7 @@ Array<P_numtype, N_rank>& Array<P_numtype,N_rank>::initialize(T_numtype x)
 // that operator=(T_numtype) will be the best match for list
 // initializations.
 template<typename P_numtype, int N_rank> template<typename T_expr>
-inline 
+_bz_forceinline 
 Array<P_numtype,N_rank>&
 Array<P_numtype,N_rank>::operator=(const ETBase<T_expr>& expr)
 {
@@ -72,7 +72,7 @@ Array<P_numtype,N_rank>::operator=(const ETBase<T_expr>& expr)
 
 // do NOT remove this operator. it won't work without it, trust me...
 template<typename P_numtype, int N_rank>
-inline 
+_bz_forceinline 
 Array<P_numtype, N_rank>&
 Array<P_numtype, N_rank>::operator=(const Array<T_numtype,N_rank>& x)
 {
@@ -86,7 +86,7 @@ Array<P_numtype, N_rank>::operator=(const Array<T_numtype,N_rank>& x)
 #define BZ_ARRAY_UPDATE(op,name)					\
   template<typename P_numtype, int N_rank>				\
   template<typename T>							\
-  inline								\
+  _bz_forceinline							\
   Array<P_numtype,N_rank>&						\
   Array<P_numtype,N_rank>::operator op(const T& expr)			\
   {									\
