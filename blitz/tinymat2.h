@@ -78,8 +78,8 @@ public:
   typedef FastTM2CopyIterator<P_numtype, N_rows, N_columns> T_range_result;
 
     static const int 
-        numArrayOperands = 1, 
-        numIndexPlaceholders = 0,
+    //numArrayOperands = 1, 
+    //numIndexPlaceholders = 0,
         rank_ = 2;
 
     TinyMatrix() { }
@@ -271,7 +271,7 @@ public:
   /** Since data_ is simd aligned by construction, we just have
       to check the offest. */
   bool isVectorAligned(diffType offset) const 
-  { return (offset%simdTypes<T_numtype>::vecWidth==0) ? true : false; }
+  { return (offset%simdTypes<T_numtype>::vecWidth)==0; }
 
     // T_reference getRef()
     // { return T_reference((T_numtype*)data_); }
@@ -319,8 +319,11 @@ public:
     }
 
 
-protected:
-    BZ_ALIGN_VARIABLE(T_numtype, data_[N_rows * N_columns], BZ_SIMD_WIDTH)
+private:
+  template<typename T_expr, typename T_update>
+  void _tm_evaluate(const T_expr& expr, T_update);
+  
+  BZ_ALIGN_VARIABLE(T_numtype, data_[N_rows * N_columns], BZ_SIMD_WIDTH)
 };
 
 BZ_NAMESPACE_END

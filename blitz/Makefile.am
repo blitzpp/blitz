@@ -18,8 +18,8 @@ listinit.h memblock.cc memblock.h minmax.h numinquire.h numtrait.h     \
 ops.h prettyprint.h promote.h range.h range.cc ranks.h reduce.h	       \
 shapecheck.h simdtypes.h tau.h timer.h tinymat2.h tinymat2.cc	       \
 tinymat2io.cc tinyvec2.cc tinyvec2.h tinyvec2io.cc tm2fastiter.h       \
-tm2ops.cc tv2fastiter.h tvevaluate.h traversal.cc traversal.h tuning.h \
-tvcross.h tvecglobs.h update.h wrap-climits.h $(genheaders)
+tv2fastiter.h tvevaluate.h traversal.cc traversal.h tuning.h tvcross.h \
+tvecglobs.h update.h wrap-climits.h $(genheaders)
 
 EXTRA_HEADERS = apple/bzconfig.h intel/bzconfig.h ibm/bzconfig.h \
 compaq/bzconfig.h hp/bzconfig.h sgi/bzconfig.h gnu/bzconfig.h \

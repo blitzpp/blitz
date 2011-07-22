@@ -361,7 +361,7 @@ public:
   /** Since data_ is simd aligned by construction, we just have
       to check the offest. */
   bool isVectorAligned(diffType offset) const 
-  { return (offset%simdTypes<T_numtype>::vecWidth==0) ? true : false; }
+  { return (offset%simdTypes<T_numtype>::vecWidth)==0; }
 
   bool canCollapse(int outerLoopRank, int innerLoopRank) const
   {
@@ -381,19 +381,6 @@ public:
     }
 
   T_vector& initialize(T_numtype);
-
-  template<typename T_expr, typename T_update>
-  void _tv_evaluate(const T_expr& expr, T_update);
-
-  template<typename T_expr, typename T_update>
-  static void _tv_evaluate_aligned(T_numtype* data, const T_expr& expr, T_update);
-
-  template<typename T_expr, typename T_update>
-  static void _tv_evaluate_unaligned(T_numtype* data, const T_expr& expr, T_update);
-
-  // T_vector& operator=(const TinyVector<T_numtype,N_length>& rhs) {
-  //       _bz_meta_vecAssign<N_length, 0>::
-  // 	  assign(data_, rhs.data_, _bz_update<T_numtype,T_numtype>()); }
 
     template<typename T_expr>
     T_vector& operator=(const ETBase<T_expr>&);
@@ -425,6 +412,9 @@ public:
   // };
 
 private:
+  template<typename T_expr, typename T_update>
+  void _tv_evaluate(const T_expr& expr, T_update);
+
   BZ_ALIGN_VARIABLE(T_numtype, data_[N_length], BZ_SIMD_WIDTH)
 };
 

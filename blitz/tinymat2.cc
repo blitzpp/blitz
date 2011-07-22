@@ -31,7 +31,7 @@
 #ifndef BZ_TINYMAT2_CC
 #define BZ_TINYMAT2_CC
 
-#include <blitz/tm2ops.cc>
+#include <blitz/tmevaluate.h>
 #include <blitz/tinymat2io.cc>
 #include <blitz/array/domain.h>
 
@@ -60,6 +60,63 @@ TinyMatrix<P_numtype, N_rows, N_columns>::TinyMatrix(const TinyMatrix<P_numtype2
     data_[i] = static_cast<P_numtype>(x.data_[i]);
 }
 
+/*
+ * Assignment-type operators
+ */
+
+template<typename P_numtype, int N_rows, int N_columns>
+TinyMatrix<P_numtype, N_rows, N_columns>&
+TinyMatrix<P_numtype, N_rows, N_columns>::initialize(T_numtype x)
+{
+    (*this) = _bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
+    return *this;
+}
+
+template<typename P_numtype, int N_rows, int N_columns>
+template<typename T_expr>
+inline
+TinyMatrix<P_numtype, N_rows, N_columns>&
+TinyMatrix<P_numtype, N_rows, N_columns>::operator=(const ETBase<T_expr>& expr)
+{
+  _tm_evaluate(_bz_typename asExpr<T_expr>::T_expr(expr.unwrap()), 
+	       _bz_update<T_numtype, _bz_typename asExpr<T_expr>::T_expr::T_result>());
+    return *this;
+}
+
+#define BZ_TM2_UPDATE(op,name)						\
+  template<typename P_numtype, int N_rows, int N_columns>		\
+  template<typename T>							\
+  inline TinyMatrix<P_numtype, N_rows, N_columns>&			\
+  TinyMatrix<P_numtype, N_rows, N_columns>::operator op(const T& expr)	\
+  {									\
+    _tm_evaluate(_bz_typename asExpr<T>::T_expr(expr),			\
+		 name<T_numtype, _bz_typename asExpr<T>::T_expr::T_result>()); \
+  return *this;								\
+  }
+
+BZ_TM2_UPDATE(+=, _bz_plus_update)
+BZ_TM2_UPDATE(-=, _bz_minus_update)
+BZ_TM2_UPDATE(*=, _bz_multiply_update)
+BZ_TM2_UPDATE(/=, _bz_divide_update)
+BZ_TM2_UPDATE(%=, _bz_mod_update)
+BZ_TM2_UPDATE(^=, _bz_xor_update)
+BZ_TM2_UPDATE(&=, _bz_bitand_update)
+BZ_TM2_UPDATE(|=, _bz_bitor_update)
+BZ_TM2_UPDATE(<<=, _bz_shiftl_update)
+BZ_TM2_UPDATE(>>=, _bz_shiftr_update)
+
+/*
+ * Other member functions
+ */
+
+
+template<typename P_numtype, int N_rows, int N_columns>
+inline RectDomain<2> 
+TinyMatrix<P_numtype, N_rows, N_columns>::domain()
+{
+  return RectDomain<2>(lbound(), ubound()); 
+}
+
 
 template<typename P_numtype, int N_rows, int N_columns>
 template<int N0, int N1>
@@ -69,14 +126,6 @@ TinyMatrix<P_numtype, N_rows, N_columns>::operator()(IndexPlaceholder<N0>, Index
   return _bz_ArrayExpr<ArrayIndexMapping<typename asExpr<T_matrix>::T_expr, 
 					 N0, N1> >(noConst());
 } 
-
-template<typename P_numtype, int N_rows, int N_columns>
-inline RectDomain<2> 
-TinyMatrix<P_numtype, N_rows, N_columns>::domain()
-{
-  return RectDomain<2>(lbound(), ubound()); 
-}
-
 
 
 BZ_NAMESPACE_END
