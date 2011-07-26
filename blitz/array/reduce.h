@@ -268,7 +268,17 @@ public:
 
 private: 
     _bz_ArrayExprReduce() { }
-// method for properly initializing the ordering values
+
+  /** Method for properly initializing the ordering values. \todo If
+      the expression being reduced consist of arrays with different
+      orderings, the call to iter_.ordering() will fail with a
+      "different orderings" error. But just like it can happen that
+      ordering values are missing from the expression, it seems
+      equally valid that ordering is indefinite in cases where the
+      expression has differing values. This doesn't prevent us from
+      assigning the expression to an array, and it shouldn't prevent
+      the expression from being used in a reduction either. (This is
+      bug 2058441.) */
     void computeOrdering()
     {
         TinyVector<bool,rank_> in_ordering;
