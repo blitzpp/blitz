@@ -43,6 +43,13 @@ if test "$enableval" = yes ; then
 		CXX_DEBUG_FLAGS="-g -qcheck=all -DBZ_DEBUG"
 		CXX_PROFIL_FLAGS="-pg"
 	;;      
+	*clang++) dnl frontend for LLVM http://clang.llvm.org/
+		CXX_VENDOR="LLVM"
+		CXXFLAGS="-ansi"
+		CXX_OPTIMIZE_FLAGS="-O3"
+		CXX_DEBUG_FLAGS="-g -O0 -C -DBZ_DEBUG"
+		CXX_PROFIL_FLAGS="-pg"
+	;;
 	*icpc*|*icc*) dnl Intel icc http://www.intel.com/
 		CXX_VENDOR="Intel"
 		CXXFLAGS="-ansi" dnl -strict_ansi flag causes trouble
