@@ -30,7 +30,7 @@ Configuring $PACKAGE_STRING for $target
 ])
 
 # C++ compiler
-AC_PROG_CXX([xlc++ xlC icpc pathCC pgCC cxx aCC c++ CC g++ KCC FCC])
+AC_PROG_CXX([xlc++ xlC icpc pathCC pgCC cxx aCC c++ CC g++ clang++ KCC FCC])
 AC_LANG(C++)
 AC_CXX_FLAGS_PRESET
 
