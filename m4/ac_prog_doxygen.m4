@@ -3,13 +3,13 @@ dnl
 AC_DEFUN([AC_PROG_DOXYGEN],
 [
 AC_ARG_ENABLE(doxygen,
-AS_HELP_STRING([--enable-doxygen],[enable documentation generation with doxygen (auto)]))
+AS_HELP_STRING([--enable-doxygen],[enable documentation generation with doxygen (no)]),[],[enable_doxygen=no])
 
 AC_ARG_ENABLE(dot,
-AS_HELP_STRING([--enable-dot],[use 'dot' to generate graphs in doxygen (auto)]))              
+AS_HELP_STRING([--enable-dot],[use 'dot' to generate graphs in doxygen (no)]),[],[enable_dot=no])              
 AC_ARG_ENABLE(html-docs,
-AS_HELP_STRING([--enable-html-docs],[enable HTML generation with doxygen (yes)]),
-[],[ enable_html_docs=yes])              
+AS_HELP_STRING([--enable-html-docs],[enable HTML generation with doxygen (no)]),
+[],[ enable_html_docs=no])              
 AC_ARG_ENABLE(latex-docs,
 AS_HELP_STRING([--enable-latex-docs],
 [enable LaTeX documentation generation with doxygen (no)]),[],[enable_latex_docs=no])              
