@@ -4,6 +4,8 @@
 
 noinst_HEADERS = arroperands.h arroptuple.h bzfstream.h operands.h operands2.h optuple.h optuple2.h
 
+EXTRA_DIST = genstencils.py
+
 EXTRA_PROGRAMS = 
 
 $(top_srcdir)/blitz/array/stencil-classes.cc: genstencils.py
