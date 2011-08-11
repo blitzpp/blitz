@@ -713,7 +713,7 @@ evaluateWithStackTraversal(T_dest& dest, T_expr expr, T_update)
      * The "last" array contains a pointer to the last element
      * encountered in each "loop".
      */
-    const T_numtype* last[N_rank];
+    const T_numtype* last[T_dest::rank_];
 
     // Set up the initial state of the "last" array
     for (i=1; i < N_rank; ++i)
