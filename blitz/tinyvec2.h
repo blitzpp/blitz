@@ -86,10 +86,10 @@ public:
     TinyVector()  { }
     ~TinyVector() { }
 
-    inline TinyVector(const TinyVector<T_numtype,N_length>& x);
+  TinyVector(const TinyVector<T_numtype,N_length>& x);
 
     template <typename T_numtype2>
-    inline TinyVector(const TinyVector<T_numtype2,N_length>& x);
+    TinyVector(const TinyVector<T_numtype2,N_length>& x);
 
   /** This constructor creates a TinyVector from another ETBase
       object. It needs to be explicit to avoid all kinds of
