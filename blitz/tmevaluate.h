@@ -46,10 +46,12 @@ struct _tm_evaluator {
 
   /** The select_evaluation function redirects expressions that do not
       contains solely TinyMatrix operands to the general evaluation
-      function. The generic template uses the TinyMatrix-only
-      evaluation. Since TinyMatrixs can't have funny storage,
-      ordering, stride, or anything, it's now just a matter of
-      evaluating it like in the old vecassign. */
+      function. The generic template (for unroll=false, note that
+      "unroll" us the wrong name for this function, the template
+      parameter in this context really means "use_full_eval") uses the
+      TinyMatrix-only evaluation. Since TinyMatrixs can't have funny
+      storage, ordering, stride, or anything, it's now just a matter
+      of evaluating it like in the old vecassign. */
   template<typename T, typename T_expr, typename T_update>
   static _bz_forceinline void
   select_evaluation(TinyMatrix<T, N_rows, N_columns>& dest, 
@@ -77,9 +79,9 @@ struct _tm_evaluator {
   BZPRECHECK(expr.shapeCheck(dest.shape()),
 	     "Shape check failed." << endl << "Expression:");
 
-  // now call the aligned evaluation function
-  const bool unroll = N_rows*N_columns < BZ_TV_EVALUATE_UNROLL_LENGTH;
-  _tm_evaluator<unroll, N_rows, N_columns>::evaluate_aligned(dest.data(), expr, T_update());
+  // now call the aligned (unrolled or not) evaluation function
+  const bool do_unroll = N_rows*N_columns < BZ_TV_EVALUATE_UNROLL_LENGTH;
+  _tm_evaluator<do_unroll, N_rows, N_columns>::evaluate_aligned(dest.data(), expr, T_update());
   }
 
   /** This version of the evaluation function assumes that the

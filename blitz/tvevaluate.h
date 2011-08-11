@@ -46,10 +46,12 @@ struct _tv_evaluator {
 
   /** The select_evaluation function redirects expressions that do not
       contains solely TinyVector operands to the general evaluation
-      function. The generic template uses the TinyVector-only
-      evaluation. Since TinyVectors can't have funny storage,
-      ordering, stride, or anything, it's now just a matter of
-      evaluating it like in the old vecassign. */
+      function. The generic template (for unroll=false, note that
+      "unroll" us the wrong name for this function, the template
+      parameter in this context really means "use_full_eval") uses the
+      TinyVector-only evaluation. Since TinyVectors can't have funny
+      storage, ordering, stride, or anything, it's now just a matter
+      of evaluating it like in the old vecassign. */
   template<typename T, typename T_expr, typename T_update>
   static _bz_forceinline void
   select_evaluation(TinyVector<T, N_length>& dest, 
@@ -81,9 +83,9 @@ struct _tv_evaluator {
   BZPRECONDITION(T_expr::rank_<=1);
   BZPRECONDITION(T_expr::numIndexPlaceholders==0);
 
-  // now call the aligned evaluation function
-  const bool unroll = N_length < BZ_TV_EVALUATE_UNROLL_LENGTH;
-  _tv_evaluator<unroll, N_length>::evaluate_aligned(dest.data(), expr, T_update());
+  // now call the aligned (unrolled or not) evaluation function
+  const bool do_unroll = N_length < BZ_TV_EVALUATE_UNROLL_LENGTH;
+  _tv_evaluator<do_unroll, N_length>::evaluate_aligned(dest.data(), expr, T_update());
   }
 
   /** This version of the evaluation function assumes that the
