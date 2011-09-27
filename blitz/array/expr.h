@@ -238,11 +238,11 @@ public:
     T_result operator[](int i) const
     { return iter_[i]; }
 
-    T_result fastRead(int i) const
+    T_result fastRead(diffType i) const
     { return iter_.fastRead(i); }
 
   template<int N>
-  typename tvresult<N>::Type fastRead_tv(int i) const
+  typename tvresult<N>::Type fastRead_tv(diffType i) const
   { return iter_.fastRead_tv<N>(i); }
 
   bool isVectorAligned(diffType offset) const 
@@ -567,7 +567,7 @@ public:
 
   // For numtypes, apply operator
   template<typename T> struct readHelper {
-    static T_result fastRead(const T_expr& iter, int i) {
+    static T_result fastRead(const T_expr& iter, diffType i) {
       return (T_op::apply(iter.fastRead(i))); };
     static T_result indexop(const T_expr& iter, int i) {
       return (T_op::apply(iter[i])); };
@@ -594,7 +594,7 @@ public:
 
   // For ET types, bypass operator and create expression
     template<typename T> struct readHelper<ETBase<T> > {
-      static T_result fastRead(const T_expr& iter, int i) {
+      static T_result fastRead(const T_expr& iter, diffType i) {
 	return iter.fastRead(i); };
       static T_result indexop(const T_expr& iter, int i) {
 	return iter[i]; };
@@ -619,11 +619,11 @@ public:
       return iter(i); }
     };
 
-    T_result fastRead(int i) const { 
+    T_result fastRead(diffType i) const { 
       return readHelper<T_typeprop>::fastRead(iter_, i); }
 
   template<int N>
-  typename tvresult<N>::Type fastRead_tv(int i) const
+  typename tvresult<N>::Type fastRead_tv(diffType i) const
   { return iter_.fastRead_tv<N>(i); }
 
 
@@ -836,7 +836,8 @@ public:
 
   // For numtypes, apply operator
   template<typename T> struct readHelper {
-    static T_result fastRead(const T_expr1& iter1, const T_expr2& iter2, int i) {
+    static T_result fastRead(const T_expr1& iter1, const T_expr2& iter2, 
+			     diffType i) {
       return T_op::apply(iter1.fastRead(i), iter2.fastRead(i)); }
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, int i) {
       return T_op::apply(iter1[i], iter2[i]); };
@@ -865,7 +866,7 @@ public:
   // For ET types, bypass operator and create expression
     template<typename T> struct readHelper<ETBase<T> > {
       static T_result fastRead(const T_expr1& iter1, const T_expr2& iter2, 
-			       int i) {
+			       diffType i) {
 	return T_result(iter1.fastRead(i), iter2.fastRead(i)); }
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, int i) {
       return T_result(iter1[i], iter2[i]); };
@@ -891,11 +892,11 @@ public:
 	  return T_result(iter1(i), iter2(i)); }
       };
 
-    T_result fastRead(int i) const { 
+    T_result fastRead(diffType i) const { 
       return readHelper<T_typeprop>::fastRead(iter1_, iter2_, i); }
 
   template<int N>
-  typename tvresult<N>::Type fastRead_tv(int i) const
+  typename tvresult<N>::Type fastRead_tv(diffType i) const
       { return typename tvresult<N>::Type(iter1_.fastRead_tv<N>(i),
 					  iter2_.fastRead_tv<N>(i)); }
 
@@ -1179,7 +1180,7 @@ public:
   // For numtypes, apply operator
   template<typename T> struct readHelper {
     static T_result fastRead(const T_expr1& iter1, const T_expr2& iter2, 
-			     const T_expr3& iter3, int i) {
+			     const T_expr3& iter3, diffType i) {
       return T_op::apply(iter1.fastRead(i), iter2.fastRead(i), 
 			 iter3.fastRead(i)); }
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, 
@@ -1218,7 +1219,7 @@ public:
     // For ET types, bypass operator and create expression
     template<typename T> struct readHelper<ETBase<T> > {
     static T_result fastRead(const T_expr1& iter1, const T_expr2& iter2, 
-			     const T_expr3& iter3, int i) {
+			     const T_expr3& iter3, diffType i) {
       return T_result(iter1.fastRead(i), iter2.fastRead(i), 
 		      iter3.fastRead(i)); }
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, 
@@ -1254,11 +1255,11 @@ public:
 	return T_result(iter1(i), iter2(i), iter3(i) ); }
       };
 
-    T_result fastRead(int i) const { 
+    T_result fastRead(diffType i) const { 
       return readHelper<T_typeprop>::fastRead(iter1_, iter2_, iter3_, i); }
 
       template<int N>
-      typename tvresult<N>::Type fastRead_tv(int i) const
+      typename tvresult<N>::Type fastRead_tv(diffType i) const
       { return typename tvresult<N>::Type(iter1_.fastRead_tv<N>(i),
 					  iter2_.fastRead_tv<N>(i),
 					  iter3_.fastRead_tv<N>(i)); }
@@ -1603,7 +1604,7 @@ public:
   template<typename T> struct readHelper {
     static T_result fastRead(const T_expr1& iter1, const T_expr2& iter2, 
 			     const T_expr3& iter3, const T_expr4& iter4, 
-			     int i) {
+			     diffType i) {
       return T_op::apply(iter1.fastRead(i), iter2.fastRead(i), 
 			 iter3.fastRead(i), iter4.fastRead(i)); }
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, 
@@ -1646,7 +1647,7 @@ public:
     template<typename T> struct readHelper<ETBase<T> > {
     static T_result fastRead(const T_expr1& iter1, const T_expr2& iter2, 
 			     const T_expr3& iter3, const T_expr4& iter4, 
-			     int i) {
+			     diffType i) {
       return T_result(iter1.fastRead(i), iter2.fastRead(i),
 		      iter3.fastRead(i), iter4.fastRead(i)); }
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, 
@@ -1685,12 +1686,12 @@ public:
 	return T_result(iter1(i), iter2(i), iter3(i), iter4(i) ); }
       };
 
-    T_result fastRead(int i) const { 
+    T_result fastRead(diffType i) const { 
       return readHelper<T_typeprop>::fastRead(iter1_, iter2_, 
 					      iter3_, iter4_, i); }
 
       template<int N>
-      typename tvresult<N>::Type fastRead_tv(int i) const
+      typename tvresult<N>::Type fastRead_tv(diffType i) const
       { return typename tvresult<N>::Type(iter1_.fastRead_tv<N>(i),
 					  iter2_.fastRead_tv<N>(i),
 					  iter3_.fastRead_tv<N>(i),
@@ -2065,11 +2066,11 @@ public:
 
   // this must return by reference, because for multicomponent arrays
   // it gets turned into an iterator by the containing expression.
-  const T_numtype& fastRead(int) const
+  const T_numtype& fastRead(diffType) const
     { return value_; }
 
   template<int N>
-  typename tvresult<N>::Type fastRead_tv(int i) const
+  typename tvresult<N>::Type fastRead_tv(diffType i) const
   { return value_; }
 
   bool isVectorAligned(diffType offset) const 

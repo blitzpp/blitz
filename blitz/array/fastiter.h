@@ -178,7 +178,7 @@ public:
     T_result operator[](int i) const
     { return data_[i * stride_]; }
 
-    T_result fastRead(sizeType i) const
+    T_result fastRead(diffType i) const
     { return data_[i]; }
 
   /** Returns a TinyVector "view" of the data at i, with a vector
@@ -186,7 +186,7 @@ public:
       possible to convert a small part of an arbitrary expression into
       a TinyVector expression, which is efficiently vectorized. */ 
   template<int N>
-  typename tvresult<N>::Type fastRead_tv(sizeType i) const
+  typename tvresult<N>::Type fastRead_tv(diffType i) const
   {
     return typename tvresult<N>::Type(*reinterpret_cast<const TinyVector<T_numtype,N>*>(&data_[i])); }
 

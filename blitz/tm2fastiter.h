@@ -157,11 +157,11 @@ public:
     T_result operator[](int i) const
     { return data_[i * stride_]; }
 
-    T_result fastRead(sizeType i) const
+    T_result fastRead(diffType i) const
   { return array_.fastRead(i); }
 
   template<int N>
-  typename tvresult<N>::Type fastRead_tv(sizeType i) const
+  typename tvresult<N>::Type fastRead_tv(diffType i) const
   { 
     return typename tvresult<N>::Type(*reinterpret_cast<const TinyVector<T_numtype,N>*>(&data_[i])); }
 

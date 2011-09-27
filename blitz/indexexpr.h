@@ -152,13 +152,13 @@ public:
         return T_numtype();
     }
 
-    T_result fastRead(int) const {
+    T_result fastRead(diffType) const {
         BZPRECONDITION(0);
         return T_numtype();
     }
 
   template<int M>
-  typename tvresult<M>::Type fastRead_tv(int) const {
+  typename tvresult<M>::Type fastRead_tv(diffType) const {
     BZPRECONDITION(0);
     return TinyVector<T_numtype, M>();
     }

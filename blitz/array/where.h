@@ -124,7 +124,7 @@ public:
   // For numtypes, apply operator
   template<typename T> struct readHelper {
     static T_result fastRead(const T_expr1& iter1, const T_expr2& iter2, 
-			     const T_expr3& iter3, int i) {
+			     const T_expr3& iter3, diffType i) {
       return iter1.fastRead(i) ? iter2.fastRead(i) : iter3.fastRead(i); }
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, 
 			    const T_expr3& iter3, int i) {
@@ -159,7 +159,7 @@ public:
     // For ET types, bypass operator and create expression
     template<typename T> struct readHelper<ETBase<T> > {
     static T_result fastRead(const T_expr1& iter1, const T_expr2& iter2, 
-			     const T_expr3& iter3, int i) {
+			     const T_expr3& iter3, diffType i) {
       return T_result(iter1.fastRead(i), iter2.fastRead(i), iter3.fastRead(i)); }
     static T_result indexop(const T_expr1& iter1, const T_expr2& iter2, 
 			    const T_expr3& iter3, int i) {
@@ -191,11 +191,11 @@ public:
 	return T_result(iter1(i), iter2(i), iter3(i) ); }
       };
 
-    T_result fastRead(int i) const { 
+    T_result fastRead(diffType i) const { 
       return readHelper<T_typeprop>::fastRead(iter1_, iter2_, iter3_, i); }
 
       template<int N>
-      typename tvresult<N>::Type fastRead_tv(int i) const
+      typename tvresult<N>::Type fastRead_tv(diffType i) const
       { return typename tvresult<N>::Type(iter1_.fastRead_tv<N>(i),
 					  iter2_.fastRead_tv<N>(i),
 					  iter3_.fastRead_tv<N>(i)); }

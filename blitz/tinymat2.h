@@ -265,7 +265,7 @@ public:
 
   /** Fastread must return reference so the iterator can turn it into an
       iterator for the contained in case we have a multicomponent. */
-  const T_numtype& fastRead(sizeType i) const
+  const T_numtype& fastRead(diffType i) const
   { return data_[i]; }
   
   /** Since data_ is simd aligned by construction, we just have

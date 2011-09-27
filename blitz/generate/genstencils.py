@@ -92,7 +92,7 @@ def BZ_ET_STENCIL(name, result, etresult, MINB, MAXB):
 									
     T_result operator[](int i) const					
     { return #name#_stencilop(iter_[i]); }									
-    T_result fastRead(sizeType i) const				
+    T_result fastRead(diffType i) const				
     {/* this probably isn't very fast... */				
       iter_._bz_offsetData(i);						
       T_result r = #name#_stencilop(iter_);					
@@ -102,7 +102,7 @@ def BZ_ET_STENCIL(name, result, etresult, MINB, MAXB):
 
     /** This way of vectorizing won't work on stencils. */
     template<int N>
-    typename tvresult<N>::Type fastRead_tv(int i) const {
+    typename tvresult<N>::Type fastRead_tv(diffType i) const {
       BZPRECHECK(0, "Can't vectorize stencils");
       return iter_.fastRead_tv<N>(i); }
       
@@ -249,7 +249,7 @@ public:
   T_result operator[](int i) const					
   { return #name#_stencilop(iter1_[i], iter2_[i]); }				
 									
-  T_result fastRead(sizeType i) const					
+  T_result fastRead(diffType i) const					
   {/* this probably isn't very fast... */				
     iter1_._bz_offsetData(i); iter2_._bz_offsetData(i);		
     T_result r = #name#_stencilop (iter1_, iter2_);				
@@ -259,7 +259,7 @@ public:
 
     /** This way of vectorizing won't work on stencils. */
     template<int N>
-    typename tvresult<N>::Type fastRead_tv(int i) const {
+    typename tvresult<N>::Type fastRead_tv(diffType i) const {
       BZPRECHECK(0, "Can't vectorize stencils");
       return typename tvresult<N>::Type(iter1_.fastRead_tv<N>(i),
 					iter2_.fastRead_tv<N>(i)); }
@@ -439,7 +439,7 @@ public:
   T_result operator[](int i) const					
   { return #name#_stencilop(iter_[i]); }						
      									
-  T_result fastRead(sizeType i) const				
+  T_result fastRead(diffType i) const				
   {/* this probably isn't very fast... */				
     iter_._bz_offsetData(i);						
     T_result r = #name#_stencilop (iter_);					
@@ -449,7 +449,7 @@ public:
 
     /** This way of vectorizing won't work on stencils. */
     template<int N>
-    typename tvresult<N>::Type fastRead_tv(int i) const {
+    typename tvresult<N>::Type fastRead_tv(diffType i) const {
       BZPRECHECK(0, "Can't vectorize stencils");
       return iter_.fastRead_tv<N>(i); }
      									
@@ -578,7 +578,7 @@ public:
   T_result operator[](int i) const					
   { return #name#_stencilop(iter_[i]); }						
 									 
-  T_result fastRead(sizeType i) const				
+  T_result fastRead(diffType i) const				
   {/* this probably isn't very fast... */				
     iter_._bz_offsetData(i);						
     T_numtype r = #name#_stencilop (iter_);					
@@ -588,7 +588,7 @@ public:
 									 
     /** This way of vectorizing won't work on stencils. */
     template<int N>
-    typename tvresult<N>::Type fastRead_tv(int i) const {
+    typename tvresult<N>::Type fastRead_tv(diffType i) const {
       BZPRECHECK(0, "Can't vectorize stencils");
       return iter_.fastRead_tv<N>(i); }
 
@@ -716,7 +716,7 @@ public:
   T_numtype operator[](int i) const					
   { return #name#_stencilop(iter_[i]); }						
 									
-  T_numtype fastRead(sizeType i) const				
+  T_numtype fastRead(diffType i) const				
   {/* this probably isn't very fast... */				
     iter_._bz_offsetData(i);						
     T_numtype r = #name#_stencilop (iter_);					
@@ -726,7 +726,7 @@ public:
 									
     /** This way of vectorizing won't work on stencils. */
     template<int N>
-    typename tvresult<N>::Type fastRead_tv(int i) const {
+    typename tvresult<N>::Type fastRead_tv(diffType i) const {
       BZPRECHECK(0, "Can't vectorize stencils");
       return iter_.fastRead_tv<N>(i); }
 
@@ -859,7 +859,7 @@ public:
   T_result operator[](int i) const					
   { return #name#_stencilop(iter_[i], dim_); }					
 									
-  T_result fastRead(sizeType i) const				
+  T_result fastRead(diffType i) const				
   {/* this probably isn't very fast... */				
     iter_._bz_offsetData(i);						
     T_result r = #name#_stencilop (iter_, dim_);					
@@ -869,7 +869,7 @@ public:
 									
     /** This way of vectorizing won't work on stencils. */
     template<int N>
-    typename tvresult<N>::Type fastRead_tv(int i) const {
+    typename tvresult<N>::Type fastRead_tv(diffType i) const {
       BZPRECHECK(0, "Can't vectorize stencils");
       return typename tvresult<N>::Type(iter_.fastRead_tv<N>(i),dim_); }
 
@@ -1011,7 +1011,7 @@ public:
   T_numtype operator[](int i) const					
   { return #name#_stencilop(iter_[i], comp_, dim_); }				
 									
-  T_numtype fastRead(sizeType i) const				
+  T_numtype fastRead(diffType i) const				
   {/* this probably isn't very fast... */				
     iter_._bz_offsetData(i);						
     T_numtype r = #name#_stencilop (iter_, comp_, dim_);				
@@ -1021,7 +1021,7 @@ public:
 									
     /** This way of vectorizing won't work on stencils. */
     template<int N>
-    typename tvresult<N>::Type fastRead_tv(int i) const {
+    typename tvresult<N>::Type fastRead_tv(diffType i) const {
       BZPRECHECK(0, "Can't vectorize stencils");
       return typename tvresult<N>::Type(iter_.fastRead_tv<N>(i),comp_,dim_); }
 
@@ -1172,7 +1172,7 @@ public:
   T_numtype operator[](int i) const					
   { return #name#_stencilop(iter_[i], dim1_, dim2_); }				
 									
-  T_numtype fastRead(sizeType i) const					
+  T_numtype fastRead(diffType i) const					
   {/* this probably isn't very fast... */				
     iter_._bz_offsetData(i);						
     T_numtype r = #name#_stencilop (iter_, dim1_, dim2_);				
@@ -1182,7 +1182,7 @@ public:
 									
     /** This way of vectorizing won't work on stencils. */
     template<int N>
-    typename tvresult<N>::Type fastRead_tv(int i) const {
+    typename tvresult<N>::Type fastRead_tv(diffType i) const {
       BZPRECHECK(0, "Can't vectorize stencils");
       return typename tvresult<N>::Type(iter_.fastRead_tv<N>(i),dim1_,dim2_); }
 

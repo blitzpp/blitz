@@ -168,7 +168,8 @@ public:
 
   // For numtypes, apply operator
   template<typename T> struct readHelper {
-    static T_result fastRead(const T_functor& f, const T_expr& iter, int i) {
+    static T_result fastRead(const T_functor& f, const T_expr& iter, 
+			     diffType i) {
       return f(iter.fastRead(i)); };
     static T_result indexop(const T_functor& f, const T_expr& iter, int i) {
       return f(iter[i]); };
@@ -195,7 +196,8 @@ public:
 
   // For ET types, bypass operator and create expression
     template<typename T> struct readHelper<ETBase<T> > {
-      static T_result fastRead(const T_functor& f, const T_expr& iter, int i) {
+      static T_result fastRead(const T_functor& f, const T_expr& iter, 
+			       diffType i) {
 	return T_result(f,iter.fastRead(i)); };
       static T_result indexop(const T_functor& f, const T_expr& iter, int i) {
 	return T_result(f,iter[i]); };
@@ -220,11 +222,11 @@ public:
       return T_result(f,iter(i)); }
     };
 
-    T_result fastRead(int i) const { 
+    T_result fastRead(diffType i) const { 
       return readHelper<T_typeprop>::fastRead(f_, iter_, i); }
 
   template<int N>
-  typename tvresult<N>::Type fastRead_tv(int i) const
+  typename tvresult<N>::Type fastRead_tv(diffType i) const
       { return typename tvresult<N>::Type(f_,iter_.fastRead_tv<N>(i)); }
 
     T_result operator[](int i) const { 
@@ -426,7 +428,7 @@ public:
   // For numtypes, apply operator
   template<typename T> struct readHelper {
     static T_result fastRead(const T_functor& f, const T_expr1& iter1, 
-			     const T_expr2& iter2, int i) {
+			     const T_expr2& iter2, diffType i) {
       return f(iter1.fastRead(i), iter2.fastRead(i)); }
     static T_result indexop(const T_functor& f, const T_expr1& iter1, 
 			    const T_expr2& iter2, int i) {
@@ -462,7 +464,7 @@ public:
   // For ET types, bypass operator and create expression
     template<typename T> struct readHelper<ETBase<T> > {
       static T_result fastRead(const T_functor& f, const T_expr1& iter1, 
-			       const T_expr2& iter2, int i) {
+			       const T_expr2& iter2, diffType i) {
 	return T_result(f,iter1.fastRead(i), iter2.fastRead(i)); }
     static T_result indexop(const T_functor& f, const T_expr1& iter1, 
 			    const T_expr2& iter2, int i) {
@@ -495,11 +497,11 @@ public:
 	  return T_result(f,iter1(i), iter2(i)); }
       };
 
-    T_result fastRead(int i) const { 
+    T_result fastRead(diffType i) const { 
       return readHelper<T_typeprop>::fastRead(f_, iter1_, iter2_, i); }
 
   template<int N>
-  typename tvresult<N>::Type fastRead_tv(int i) const
+  typename tvresult<N>::Type fastRead_tv(diffType i) const
       { return typename tvresult<N>::Type(f_,
 					  iter1_.fastRead_tv<N>(i),
 					  iter2_.fastRead_tv<N>(i)); }
@@ -791,7 +793,7 @@ public:
   template<typename T> struct readHelper {
     static T_result fastRead(const T_functor& f, const T_expr1& iter1, 
 			     const T_expr2& iter2, const T_expr3& iter3, 
-			     int i) {
+			     diffType i) {
       return f(iter1.fastRead(i), iter2.fastRead(i), 
 	       iter3.fastRead(i)); }
     static T_result indexop(const T_functor& f, const T_expr1& iter1, 
@@ -833,7 +835,7 @@ public:
     template<typename T> struct readHelper<ETBase<T> > {
     static T_result fastRead(const T_functor& f, const T_expr1& iter1, 
 			     const T_expr2& iter2, const T_expr3& iter3, 
-			     int i) {
+			     diffType i) {
       return T_result(f, iter1.fastRead(i), iter2.fastRead(i), 
 		      iter3.fastRead(i)); }
     static T_result indexop(const T_functor& f, const T_expr1& iter1, 
@@ -871,11 +873,11 @@ public:
 	return T_result(f, iter1(i), iter2(i), iter3(i) ); }
       };
 
-    T_result fastRead(int i) const { 
+    T_result fastRead(diffType i) const { 
       return readHelper<T_typeprop>::fastRead(f_, iter1_, iter2_, iter3_, i); }
 
       template<int N>
-      typename tvresult<N>::Type fastRead_tv(int i) const
+      typename tvresult<N>::Type fastRead_tv(diffType i) const
       { return typename tvresult<N>::Type(f_,
 					  iter1_.fastRead_tv<N>(i),
 					  iter2_.fastRead_tv<N>(i),

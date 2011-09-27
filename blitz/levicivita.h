@@ -95,10 +95,10 @@ public:
     T_numtype operator[](int) const
   { BZPRECONDITION(0); return 0; }
 
-    T_numtype fastRead(int) const
+    T_numtype fastRead(diffType) const
   { BZPRECONDITION(0); return 0; }
 
-    T_numtype fastRead_tv(int) const
+    T_numtype fastRead_tv(diffType) const
   { BZPRECONDITION(0); return 0; }
 
   // this is needed for the stencil expression fastRead to work

@@ -176,11 +176,11 @@ public:
     bool canCollapse(int,int) const 
     { return true; }
 
-    T_numtype fastRead(int) const
+    T_numtype fastRead(diffType) const
   { BZPRECONDITION(0); return 0; }
 
   template<int N>
-  typename tvresult<N>::Type fastRead_tv(int) const
+  typename tvresult<N>::Type fastRead_tv(diffType) const
   { BZPRECONDITION(0); return 0; }
 
   // this is needed for the stencil expression fastRead to work
