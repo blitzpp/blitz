@@ -285,7 +285,7 @@ template<typename T_numtype, typename T_expr, typename T_update, int N>
 struct chunked_updater {
 
   static _bz_forceinline void
-  aligned_update(T_numtype* data, T_expr expr, int i) {
+  aligned_update(T_numtype* data, T_expr expr, diffType i) {
 
     const bool unroll = N < BZ_TV_EVALUATE_UNROLL_LENGTH;
     _tv_evaluator<unroll, N>::evaluate_aligned
@@ -293,7 +293,7 @@ struct chunked_updater {
   };
 
   static _bz_forceinline void
-  unaligned_update(T_numtype* data, T_expr expr, int i) {
+  unaligned_update(T_numtype* data, T_expr expr, diffType i) {
     const bool unroll = N < BZ_TV_EVALUATE_UNROLL_LENGTH;
     _tv_evaluator<unroll, N>::evaluate_unaligned
       (data+i, expr.template fastRead_tv<N>(i), T_update());
@@ -307,10 +307,10 @@ struct chunked_updater {
 template<typename T_numtype, typename T_expr, typename T_update>
 struct chunked_updater<T_numtype, T_expr, T_update, 1> {
   static _bz_forceinline void 
-  aligned_update(T_numtype* data, T_expr expr, int i) {
+  aligned_update(T_numtype* data, T_expr expr, diffType i) {
     BZPRECONDITION(0); };
   static _bz_forceinline void
-  unaligned_update(T_numtype* data, T_expr expr, int i) {
+  unaligned_update(T_numtype* data, T_expr expr, diffType i) {
     BZPRECONDITION(0); };
 };
 
@@ -328,7 +328,8 @@ class _bz_meta_binaryAssign {
 public:
     template<typename T_data, typename T_expr, typename T_update>
     static _bz_forceinline void assign(T_data* data, T_expr expr,
-			      int ubound, int pos, T_update) {
+				       diffType ubound, diffType pos, 
+				       T_update) {
       if(ubound&(1<<I)) {
 	chunked_updater<T_data, T_expr, T_update, 1<<I >::
 	  unaligned_update(data, expr, pos); 
@@ -345,7 +346,8 @@ class _bz_meta_binaryAssign<0> {
 public:
     template<typename T_data, typename T_expr, typename T_update>
     static _bz_forceinline void assign(T_data* data, T_expr expr,
-			      int ubound, int pos, T_update) {
+				       diffType ubound, diffType pos, 
+				       T_update) {
       if(ubound&1) {
 	T_update::update(data[pos], expr.fastRead(pos));
 	++pos;
@@ -367,11 +369,11 @@ public:
 template<typename T_dest, typename T_expr, typename T_update>
 _bz_forceinline void
 _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
-			   T_expr expr, int ubound, T_update)
+			   T_expr expr, diffType ubound, T_update)
 {
   typedef typename T_dest::T_numtype T_numtype;
   T_numtype* restrict data = const_cast<T_numtype*>(iter.data());
-  int i=0;
+  diffType i=0;
 
 #ifdef BZ_DEBUG_TRAVERSE
   BZ_DEBUG_MESSAGE("\tunit stride expression with length: "<< ubound << ".");
@@ -498,11 +500,14 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
 }
 
 
-/** Common-stride evaluator. Used for common but non-unit strides. */
+/** Common-stride evaluator. Used for common but non-unit
+    strides. Note that the stride can be negative, so we need to use a
+    signed type. */
 template<typename T_dest, typename T_expr, typename T_update>
 _bz_forceinline void
 _bz_evaluateWithCommonStride(T_dest& dest, typename T_dest::T_iterator& iter,
-			     T_expr expr, int ubound, int commonStride, 
+			     T_expr expr, diffType ubound, 
+			     diffType commonStride, 
 			     T_update)
 {
 #ifdef BZ_DEBUG_TRAVERSE 
