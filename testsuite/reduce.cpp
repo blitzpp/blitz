@@ -62,6 +62,24 @@ void test_1dexpr(const T& B)
     BZTEST(mm.max==5);
 }
 
+void grabner()
+{
+  BZ_USING_NAMESPACE(blitz::tensor)
+  Array<float, 2> a1(2, 2), a2(2, 2), a3(2, 2);
+  Array<float, 4> a4(2, 2, 2, 2);
+  Array<float, 2> a5(2, 2), a6(2, 2);
+  a1 = 1, 0, 0, 1;
+  a2 = a1;
+  a3 = a1;
+  a4 = a1(i, k) * a2(l,k) * a3(j, l);
+  a5 = sum(sum(a4, l), k);
+  a6 = sum(sum(a1(i, k) * a2(l,k) * a3(j, l), l),k);
+  BZTEST(all(a5==a6));
+
+  a4 = (a1(i, k) * a2(k,l) * a3(j, l));
+  sum(a1(i, k) * a2(k,l) * a3(j, l), l);
+}
+
 int main()
 {
     Array<int,2> A(4,3);
@@ -105,7 +123,14 @@ int main()
     BZTEST(!any(C == 8));
     BZTEST(sum(C(k,j,i)) == 7*8/2);
     BZTEST(sum(C(j,k,i)) == 7*8/2);
+
+    // test behavior reported in bug 2058441
     BZTEST(sum(sum(sum(C,k),j)) == 7*8/2);
+    Array<int,1> Cred(2);
+    Cred=sum(sum(C,k),j);
+    BZTEST(sum(Cred) == 7*8/2);
+    grabner();
+
     mm = minmax(C);
     BZTEST(mm.min == 0);
     BZTEST(mm.max == 7);
