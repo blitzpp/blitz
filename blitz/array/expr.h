@@ -541,9 +541,11 @@ public:
         : iter_(a)
     { }
 
+  /*
     _bz_ArrayExprUnaryOp(_bz_typename T_expr::T_ctorArg1 a)
         : iter_(a)
     { }
+  */
 
 #if BZ_TEMPLATE_CTOR_DOESNT_CAUSE_HAVOC
     template<typename T1>

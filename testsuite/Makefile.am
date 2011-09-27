@@ -24,7 +24,7 @@ peter-nordlund-3 preexisting promote pthread qcd reduce reindex	       \
 reverse safeToReturn shapecheck shape slice-iterators stencil-et       \
 stencil-extent storage stub theodore-papadopoulo-1 tinymat tinyvec     \
 transpose troyer-genilloud tvinitialize Ulisses-Mello-1 weakref	       \
-wei-ku-1 where zeek-1
+wei-ku-1 where zeek-1 cast
 
 64bit_SOURCES = 64bit.cpp
 Adnene_Ben_Abdallah_1_SOURCES = Adnene-Ben-Abdallah-1.cpp
@@ -32,6 +32,7 @@ Adnene_Ben_Abdallah_2_SOURCES = Adnene-Ben-Abdallah-2.cpp
 alignment_SOURCES = alignment.cpp
 arrayinitialize_SOURCES = arrayinitialize.cpp
 arrayresize_SOURCES = arrayresize.cpp
+cast_SOURCES = cast.cpp
 chris_jeffery_1_SOURCES = chris-jeffery-1.cpp
 chris_jeffery_2_SOURCES = chris-jeffery-2.cpp
 chris_jeffery_3_SOURCES = chris-jeffery-3.cpp
