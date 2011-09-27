@@ -26,7 +26,10 @@ stencil-extent storage stub theodore-papadopoulo-1 tinymat tinyvec     \
 transpose troyer-genilloud tvinitialize Ulisses-Mello-1 weakref	       \
 wei-ku-1 where zeek-1 cast
 
+# 64bit test is special because it takes forever to run without optimization
 64bit_SOURCES = 64bit.cpp
+64bit_CXXFLAGS = @CXX_OPTIMIZE_FLAGS@ -DBZ_DEBUG
+
 Adnene_Ben_Abdallah_1_SOURCES = Adnene-Ben-Abdallah-1.cpp
 Adnene_Ben_Abdallah_2_SOURCES = Adnene-Ben-Abdallah-2.cpp
 alignment_SOURCES = alignment.cpp

@@ -184,9 +184,13 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
      * went into an infinite loop.
      */
 
-    const int n = dest.numElements();
-    if (n == 0)
+    const sizeType n = dest.numElements();
+    if (n == 0) {
+#ifdef BZ_DEBUG_TRAVERSE
+      BZ_DEBUG_MESSAGE("Evaluating empty array, nothing to do");
+#endif
       return;
+    }
     // \todo this does not alvays compile, so eliminate for now.
     // if (n == 1) {
     //   // shortcut here since it's easy
@@ -411,6 +415,12 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
     (T_expr::minWidth == simdTypes<T_numtype>::vecWidth) &&
     expr.isVectorAligned(uneven_start);
 
+  // When we come out here, we KNOW that expressions shorter than
+  // 1<<BZ_MAX_BITS_FOR_BINARY_UNROLL have been taken care of. At that
+  // point, it is efficient to effectively unroll the loop using a
+  // vector width larger than the simd width.
+  const int loop_width= BZ_VECTORIZED_LOOP_WIDTH;
+
 #ifdef BZ_DEBUG_TRAVERSE
   if(T_expr::minWidth!=T_expr::maxWidth) {
     BZ_DEBUG_MESSAGE("\texpression has mixed width: " << T_expr::minWidth << "-" <<T_expr::maxWidth);
@@ -437,11 +447,6 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
   }
 #endif
 
-  // When we come out here, we KNOW that expressions shorter than
-  // 1<<BZ_MAX_BITS_FOR_BINARY_UNROLL have been taken care of. At that
-  // point, it is efficient to effectively unroll the loop using a
-  // vector width larger than the simd width.
-  const int loop_width= BZ_VECTORIZED_LOOP_WIDTH;
 
   if(!unvectorizable && (loop_width>1))
     // If the expression can be aligned, we do so.
@@ -456,7 +461,7 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
 //#pragma forceinline recursive
 	T_update::update(data[i], expr.fastRead(i));
       
-      // and then the vecotrized part
+      // and then the vectorized part
 #ifdef BZ_DEBUG_TRAVERSE
       if(i<=ubound-loop_width) {
 	BZ_DEBUG_MESSAGE("\taligned vectorized loop with width " << loop_width << " starting at " << i);
@@ -724,7 +729,7 @@ evaluateWithStackTraversal(T_dest& dest, T_expr expr, T_update)
     for (i=1; i < N_rank; ++i)
         last[i] = iter.data() + dest.length(dest.ordering(i)) * dest.stride(dest.ordering(i));
 
-    int lastLength = dest.length(maxRank);
+    diffType lastLength = dest.length(maxRank);
     int firstNoncollapsedLoop = 1;
 
 #ifdef BZ_COLLAPSE_LOOPS
