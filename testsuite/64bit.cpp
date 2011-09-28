@@ -28,6 +28,8 @@ int main(int argc, char** argv)
     unsigned char crap= test(255,255,255,255);
     cerr << int(crap) << endl;
     BZTEST(test(255,255,255,255)==42);
+    test = test + test;
+    BZTEST(test(255,255,255,255)==84);
     test.free();
 
 #ifdef BZ_FULLY64BIT
