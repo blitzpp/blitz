@@ -91,12 +91,16 @@ struct _tv_evaluator {
   /** This version of the evaluation function assumes that the
       TinyVectors have appropriate alignment (as will always be the
       case if they are actual TinyVector objects and not created using
-      reinterpret_cast in the chunked_updater. */
+      reinterpret_cast in the chunked_updater. If no SIMD width is
+      set, however, we can not guarantee alignment and must remove the
+      pragmas. */
   template<typename T_numtype, typename T_expr, typename T_update>
   static _bz_forceinline void
   evaluate_aligned(T_numtype* data, const T_expr& expr, T_update) {
+#ifdef BZ_USE_ALIGNMENT_PRAGMAS
 #pragma ivdep
 #pragma vector aligned
+#endif
     for (int i=0; i < N_length; ++i)
       T_update::update(data[i], expr.fastRead(i));
   }
@@ -136,8 +140,10 @@ struct _tv_evaluator<true, N_length> {
   template<typename T_numtype, typename T_expr, typename T_update>
   static _bz_forceinline void
   evaluate_aligned(T_numtype* data, const T_expr& expr, T_update) {
+#ifdef BZ_USE_ALIGNMENT_PRAGMAS
     //#pragma ivdep
     //#pragma vector aligned
+#endif
   _bz_meta_vecAssign<N_length, 0>::fastAssign(data, expr, T_update());
   }
 

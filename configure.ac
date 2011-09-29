@@ -109,14 +109,16 @@ AC_ARG_WITH([tbb],
     [
     AC_MSG_RESULT([yes])
     AC_CHECK_HEADERS([tbb/atomic.h],,AC_MSG_ERROR([tbb/atomic.h not found]))
-    AC_DEFINE([THREADSAFE_USE_TBB],1,[Use TBB atomic types])
+    AC_DEFINE([THREADSAFE_USE_TBB],[1],[Use TBB atomic types])
     ],AC_MSG_RESULT([no]))
 
 AC_MSG_CHECKING([for SIMD instruction width])
 AC_ARG_ENABLE([simd-width],
   AS_HELP_STRING([--enable-simd-width=n],[Facilitate compiler vectorization optimizations for SIMD instruction width of n bytes.]),
-  AC_ALIGNMENT_DIRECTIVE,[
-  enable_simd_width=no])
+  [ AC_ALIGNMENT_DIRECTIVE
+   AC_DEFINE([USE_ALIGNMENT_PRAGMAS],[1],[Specifies whether compiler alignment pragmas should be used]) ],
+  [enable_simd_width=no]
+  )
 AC_MSG_RESULT([$enable_simd_width])
 if test "$enable_simd_width" == [no] ; then
    enable_simd_width=1

@@ -1,5 +1,6 @@
 #include "testsuite.h"
 #include <blitz/array.h>
+#include <vector>
 
 BZ_USING_NAMESPACE(blitz)
 
@@ -90,8 +91,21 @@ int main()
     B(Range(0,w))=1;
     BZTEST(sum(B)==w+1);
   }
-    
 
+  // This mixed-type vector assignment caused an alignment fault if
+  // simd width was set to one, because then we did not have any
+  // alignment but used aligned instructions. However, it only
+  // segfaulted on O3, so not by default in the testsuite either
+  {    
+    std::vector<TinyVector<double,3> > a;
+    a.resize(10);
+    TinyVector<float,3> b;
+    cout << *reinterpret_cast<long int*>(&a[0])%16 << '\t' << &b << endl;
+    cout << *reinterpret_cast<long int*>(&a[1])%16 << '\t' << &b << endl;
+    a[0]=b;
+    a[1]=b;
+  }
+  
   return 0;
 }
 

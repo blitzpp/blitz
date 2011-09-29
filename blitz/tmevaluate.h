@@ -91,8 +91,10 @@ struct _tm_evaluator {
   template<typename T_numtype, typename T_expr, typename T_update>
   static _bz_forceinline void
   evaluate_aligned(T_numtype* data, const T_expr& expr, T_update) {
+#ifdef BZ_USE_ALIGNMENT_PRAGMAS
 #pragma ivdep
 #pragma vector aligned
+#endif
     for (int i=0; i < N_rows*N_columns; ++i)
       T_update::update(data[i], expr.fastRead(i));
   }
@@ -132,8 +134,10 @@ struct _tm_evaluator<true, N_rows, N_columns> {
   template<typename T_numtype, typename T_expr, typename T_update>
   static _bz_forceinline void
   evaluate_aligned(T_numtype* data, const T_expr& expr, T_update) {
+#ifdef BZ_USE_ALIGNMENT_PRAGMAS
     //#pragma ivdep
     //#pragma vector aligned
+#endif
   _bz_meta_vecAssign<N_rows*N_columns, 0>::fastAssign(data, expr, T_update());
   }
 
