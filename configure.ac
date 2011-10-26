@@ -139,13 +139,18 @@ AC_ARG_ENABLE([array-length-padding],
   ],AC_MSG_RESULT([no]))
 
 AC_MSG_CHECKING([whether to enable Blitz 64-bit dimensions])
-AC_ARG_ENABLE(64-bit-dimensions,
+AC_ARG_ENABLE([64-bit-dimensions],
   AS_HELP_STRING([--enable-64-bit-dimensions],[Enable dimensions with > 2^31 elements (not yet implemented)]),
   AC_MSG_WARN([Dimensions with > 2^31 elements are not yet implemented])
   AC_DEFINE([FULLY64BIT],[1],[Enable dimensions with > 2^31 elements (NOT IMPLEMENTED)]),AC_MSG_RESULT([no]))
 
-AX_BOOST_BASE([1.40.0])
-AX_BOOST_SERIALIZATION
+AC_MSG_CHECKING([whether to enable serialization support])
+AC_ARG_ENABLE([serialization],
+	AS_HELP_STRING([--enable-serialization],[Enable serialization support using Boost::Serialization]), [
+	AC_MSG_RESULT([yes])
+	AX_BOOST_BASE([1.40.0])						       
+	AX_BOOST_SERIALIZATION
+	 ], AC_MSG_RESULT([no]))
   
 # check for PAPI library
 AC_CHECK_LIB([papi],[main])
