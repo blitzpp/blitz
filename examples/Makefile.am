@@ -4,8 +4,8 @@
 
 EXTRA_DIST = stencil4.f profile.cpp tiny2.cpp tiny3.cpp
 
-AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir) -I$(top_builddir)
-LDADD = -L$(top_builddir)/lib -lblitz
+AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir) -I$(top_builddir) $(BOOST_CPPFLAGS)
+LDADD = -L$(top_builddir)/lib -lblitz 
 
 EXTRA_PROGRAMS = array cartesian cast cfd complex-test convolve curldiv \
 deriv diff erf fixed indirect io iter matmult nested numinquire outer pauli \

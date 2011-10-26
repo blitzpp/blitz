@@ -12,7 +12,7 @@ loop4f90.f90 loopstruct.cpp looptest.cpp makelogo.cpp makeloops.cpp  \
 qcd.txt quinlan.cpp stenciln.cpp tiny3.cpp iter.cpp
 
 
-AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir) -I$(top_builddir)
+AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir) -I$(top_builddir) $(BOOST_CPPFLAGS)
 AM_CXXFLAGS = @CXX_OPTIMIZE_FLAGS@ @CXXFFLAGS@ @CXXFCFLAG@
 AM_FFLAGS = @F77_OPTIMIZE_FLAGS@
 AM_FCFLAGS = $(FCFLAGS_f90) @FC_OPTIMIZE_FLAGS@
