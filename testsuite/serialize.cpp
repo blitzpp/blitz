@@ -1,9 +1,10 @@
 #include "testsuite.h"
 #include <blitz/array.h>
+#include <blitz/bzconfig.h>
 
 BZ_USING_NAMESPACE(blitz)
 
-#ifdef BZ_SERIALIZE
+#ifdef BZ_HAVE_BOOST_SERIALIZATION
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <sstream>
@@ -11,7 +12,7 @@ BZ_USING_NAMESPACE(blitz)
 
 int main()
 {
-#ifdef BZ_SERIALIZE
+#ifdef BZ_HAVE_BOOST_SERIALIZATION
 
   stringstream s;
 
@@ -48,9 +49,10 @@ int main()
     BZTEST(aa(3)==bb(3));
 
    }
-
+#else
+  cout << "No serialization support enabled, can't test\n";
 #endif
-
+  
   return 0;
 }
 

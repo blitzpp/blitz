@@ -42,6 +42,10 @@
 //#include <blitz/meta/vecassign.h>
 //#include <blitz/update.h>
 
+#ifdef BZ_HAVE_BOOST_SERIALIZATION
+#include <boost/serialization/serialization.hpp>
+#endif
+
 BZ_NAMESPACE(blitz)
 
 /*****************************************************************************
@@ -323,7 +327,7 @@ private:
   template<typename T_expr, typename T_update>
   void _tm_evaluate(const T_expr& expr, T_update);
 
-#ifdef BZ_SERIALIZE
+#ifdef BZ_HAVE_BOOST_SERIALIZATION
     friend class boost::serialization::access;
 
     template<class T_arch>

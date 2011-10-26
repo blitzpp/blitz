@@ -2425,7 +2425,7 @@ protected:
 
 private:
   // serialization support
-#ifdef BZ_SERIALIZE
+#ifdef BZ_HAVE_BOOST_SERIALIZATION
     friend class boost::serialization::access;
 
     template<class T_arch>

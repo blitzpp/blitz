@@ -39,6 +39,9 @@
 #include <blitz/simdtypes.h>
 #include <blitz/array/slice.h>
 
+#ifdef BZ_HAVE_BOOST_SERIALIZATION
+#include <boost/serialization/serialization.hpp>
+#endif
 
 #ifdef BZ_HAVE_CSTRING
 #include <cstring> // For memcpy
@@ -415,7 +418,7 @@ private:
   template<typename T_expr, typename T_update>
   void _tv_evaluate(const T_expr& expr, T_update);
 
-#ifdef BZ_SERIALIZE
+#ifdef BZ_HAVE_BOOST_SERIALIZATION
     friend class boost::serialization::access;
 
     template<class T_arch>

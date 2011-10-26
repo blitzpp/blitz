@@ -34,7 +34,7 @@
 
 #include <blitz/blitz.h>
 #include <blitz/simdtypes.h>
-#ifdef BZ_SERIALIZE
+#ifdef BZ_HAVE_BOOST_SERIALIZATION
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/base_object.hpp>
 #include <boost/serialization/split_member.hpp>
@@ -220,7 +220,7 @@ private:   // Disabled member functions
 
   /** The default constructor is needed for serialization. */
   MemoryBlock() {};
-#ifdef BZ_SERIALIZE
+#ifdef BZ_HAVE_BOOST_SERIALIZATION
     friend class boost::serialization::access;
 
 
@@ -307,7 +307,7 @@ protected:
 private:
     MemoryBlock<T_type>* block_;
 
-#ifdef BZ_SERIALIZE
+#ifdef BZ_HAVE_BOOST_SERIALIZATION
     friend class boost::serialization::access;
 
     template<class T_arch>

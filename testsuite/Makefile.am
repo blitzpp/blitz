@@ -6,9 +6,10 @@
 
 EXTRA_DIST = testsuite.h
 
-AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir) -I$(top_builddir)
+AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir) -I$(top_builddir) $(BOOST_CPPFLAGS)
 AM_CXXFLAGS = @CXX_DEBUG_FLAGS@ -DBZ_DEBUG
-LDADD = -L$(top_builddir)/lib -lblitz
+AM_LDFLAGS = $(BOOST_LDFLAGS)
+LDADD = -L$(top_builddir)/lib -lblitz $(BOOST_SERIALIZATION_LIB)
 
 EXTRA_PROGRAMS = 64bit Adnene-Ben-Abdallah-1 Adnene-Ben-Abdallah-2     \
 alignment arrayresize arrayinitialize chris-jeffery-1 chris-jeffery-2  \
