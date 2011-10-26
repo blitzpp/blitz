@@ -164,6 +164,19 @@ public:
 
   const paddingPolicy& padding() const { return paddingPolicy_; }
 
+private:
+#ifdef BZ_SERIALIZE
+    friend class boost::serialization::access;
+
+    template<class T_arch>
+    void serialize(T_arch& ar, const unsigned int version) {
+      ar & paddingPolicy_;
+      ar & ascendingFlag_;
+      ar & ordering_;
+      ar & base_;
+    };
+#endif
+
 protected:
     /*
      * ordering_[] specifies the order in which the array is stored in

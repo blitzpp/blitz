@@ -24,7 +24,7 @@ peter-nordlund-3 preexisting promote pthread qcd reduce reindex	       \
 reverse safeToReturn shapecheck shape slice-iterators stencil-et       \
 stencil-extent storage stub theodore-papadopoulo-1 tinymat tinyvec     \
 transpose troyer-genilloud tvinitialize Ulisses-Mello-1 weakref	       \
-wei-ku-1 where zeek-1 cast
+wei-ku-1 where zeek-1 cast serialize
 
 # 64bit test is special because it takes forever to run without optimization
 64bit_SOURCES = 64bit.cpp
@@ -85,6 +85,7 @@ reduce_SOURCES = reduce.cpp
 reindex_SOURCES = reindex.cpp
 reverse_SOURCES = reverse.cpp
 safeToReturn_SOURCES = safeToReturn.cpp
+serialize_SOURCES = serialize.cpp
 shapecheck_SOURCES = shapecheck.cpp
 shape_SOURCES = shape.cpp
 slice_iterators_SOURCES = slice-iterators.cpp

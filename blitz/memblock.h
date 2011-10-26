@@ -34,7 +34,12 @@
 
 #include <blitz/blitz.h>
 #include <blitz/simdtypes.h>
-
+#ifdef BZ_SERIALIZE
+#include <boost/serialization/serialization.hpp>
+#include <boost/serialization/base_object.hpp>
+#include <boost/serialization/split_member.hpp>
+#include <boost/serialization/array.hpp>
+#endif
 #include <stddef.h>     // diffType
 
 BZ_NAMESPACE(blitz)
@@ -72,8 +77,6 @@ public:
     typedef P_type T_type;
 
 protected:
-    // default constructor removed, unused
-
     explicit MemoryBlock(sizeType items)
     {
       // pad the length to vecWidth, if not already done
@@ -94,8 +97,6 @@ protected:
         BZASSERT(dataBlockAddress_ != 0);
 
         references_ = 1;
-	allocatedByUs_ = true;
-
         BZ_MUTEX_INIT(mutex)
     }
 
@@ -213,18 +214,66 @@ protected:
     void deallocate();
 
 private:   // Disabled member functions
-    MemoryBlock(const MemoryBlock<T_type>&)
-    { }
+  MemoryBlock(const MemoryBlock<T_type>&) { };
 
-    void operator=(const MemoryBlock<T_type>&)
-    { }
+  void operator=(const MemoryBlock<T_type>&) {};
+
+  /** The default constructor is needed for serialization. */
+  MemoryBlock() {};
+#ifdef BZ_SERIALIZE
+    friend class boost::serialization::access;
+
+
+  /** Implementation of boost::serialization. It doesn't make sense to
+      save the mutex, the reference count, or the allocation flags,
+      since upon restoring, we must necessarily reallocate. */
+    template<class T_arch>
+    void save(T_arch& ar, const unsigned int version) const {
+#if defined(BZ_THREADSAFE) && !defined(BZ_THREADSAFE_USE_ATOMIC)
+      ar << mutexLocking_;
+#endif
+      ar << length_;
+#ifdef BZ_DEBUG_LOG_ALLOCATIONS
+      cout << "MemoryBlock: serializing " << length_ << " data for MemoryBlock at "
+	   << ((void*)this) << endl;
+#endif
+      ar << boost::serialization::make_array(data_, length_);
+    };
+
+    template<class T_arch>
+    void load(T_arch& ar, const unsigned int version) {
+#if defined(BZ_THREADSAFE) && !defined(BZ_THREADSAFE_USE_ATOMIC)
+      ar >> mutexLocking_;
+#endif
+      ar >> length_;
+#ifdef BZ_DEBUG_LOG_ALLOCATIONS
+      cout << "MemoryBlock: unserializing " << length_ << " data for MemoryBlock at "
+	   << ((void*)this) << endl;
+#endif
+      allocate(length_);
+      ar >> boost::serialization::make_array(data_, length_);
+
+      // initialize the members that are not restored. Note that we
+      // must initialize references_ to 0 here because the
+      // unserialization always adds a reference since the creation of
+      // the MemoryBlock object happens by the boost::serialization
+      // magic.
+      references_ = 0;
+      BZ_MUTEX_INIT(mutex);
+    };
+
+  BOOST_SERIALIZATION_SPLIT_MEMBER()
+#endif
+
 
 private:   // Data members 
 #if defined(BZ_THREADSAFE) && !defined(BZ_THREADSAFE_USE_ATOMIC)
     // with atomic reference counts, there is no locking
     bool    mutexLocking_;
 #endif
-  /// Keeps track of whether the block was preallocated or not.
+  /** Keeps track of whether the block was preallocated or not. This
+      affects potential alignment so must be taken into account when
+      we delete. */
   bool allocatedByUs_;
 
  union {
@@ -257,6 +306,35 @@ protected:
 
 private:
     MemoryBlock<T_type>* block_;
+
+#ifdef BZ_SERIALIZE
+    friend class boost::serialization::access;
+
+    template<class T_arch>
+    void save(T_arch& ar, const unsigned int version) const {
+#ifdef BZ_DEBUG_LOG_ALLOCATIONS
+      cout << "MemoryBlockReference: serializing object at " << ((void*)this) << ", MemoryBlock at "
+	     << ((void*)block_) <<endl;
+#endif
+      ar << block_;
+      ptrdiff_t offset = data_ - block_->data();
+      ar << offset;
+
+    };
+    template<class T_arch>
+    void load(T_arch& ar, const unsigned int version) {
+#ifdef BZ_DEBUG_LOG_ALLOCATIONS
+      cout << "MemoryBlockReference: unserializing at " << ((void*)this) << endl;
+#endif
+      ar >> block_;
+      addReference();
+      ptrdiff_t offset;
+      ar >> offset;
+      data_ = block_->data() + offset;
+    };
+
+  BOOST_SERIALIZATION_SPLIT_MEMBER()
+#endif
 
 public:
 
@@ -391,7 +469,7 @@ private:
         if (refcount == 0)
         {
 #ifdef BZ_DEBUG_LOG_ALLOCATIONS
-	  cout << "MemoryBlock: no more refs, delete MemoryBlock object at "
+	  cout << "MemoryBlockReference: no more refs, delete MemoryBlock object at "
 	       << ((void*)block_) << endl;
 #endif
 
@@ -402,19 +480,28 @@ private:
     void addReference() const 
     {
         if (block_) {
+#ifdef BZ_DEBUG_LOG_REFERENCES
+	  cout << "MemoryBlockReference: reffing block at " << ((void*)block_) 
+	       << endl;
+#endif
             block_->addReference();
         }
         else {
 #ifdef BZ_DEBUG_LOG_REFERENCES
-            cout << "Skipping reference count for data at "<< data_ << endl;
+            cout << "MemoryBlockReference:: Skipping reference count for data at "<< data_ << endl;
 #endif
         }
     };
 
     int removeReference() const 
     {
-        if (block_)
+      if (block_) {
+#ifdef BZ_DEBUG_LOG_REFERENCES
+	  cout << "MemoryBlockReference: dereffing block at " << ((void*)block_) 
+	       << endl;
+#endif
             return block_->removeReference();
+      }
 #ifdef BZ_DEBUG_LOG_REFERENCES
         cout << "Skipping reference count for data at "<< data_ << endl;
 #endif

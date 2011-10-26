@@ -133,6 +133,9 @@ inline void MemoryBlock<P_type>::allocate(sizeType length)
 	  new(&data_[i]) T_type;
       }
     }
+
+    allocatedByUs_ = true;
+
     BZASSERT(isVectorAligned(data_));
 }
 

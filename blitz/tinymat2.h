@@ -322,6 +322,15 @@ public:
 private:
   template<typename T_expr, typename T_update>
   void _tm_evaluate(const T_expr& expr, T_update);
+
+#ifdef BZ_SERIALIZE
+    friend class boost::serialization::access;
+
+    template<class T_arch>
+    void serialize(T_arch& ar, const unsigned int version) {
+      ar & data_;
+    };
+#endif
   
   BZ_ALIGN_VARIABLE(T_numtype, data_[N_rows * N_columns], BZ_SIMD_WIDTH)
 };

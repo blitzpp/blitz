@@ -2423,6 +2423,21 @@ protected:
 
     void doTranspose(int destRank, int sourceRank, T_array& array);
 
+private:
+  // serialization support
+#ifdef BZ_SERIALIZE
+    friend class boost::serialization::access;
+
+    template<class T_arch>
+    void serialize(T_arch& ar, const unsigned int version) {
+      ar & boost::serialization::base_object<MemoryBlockReference<P_numtype> >(*this);
+      ar & storage_;
+      ar & length_;
+      ar & stride_;
+      ar & zeroOffset_;
+    };
+#endif
+
 protected:
     //////////////////////////////////////////////
     // Data members
