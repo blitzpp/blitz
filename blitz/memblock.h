@@ -317,7 +317,9 @@ private:
 	     << ((void*)block_) <<endl;
 #endif
       ar << block_;
-      ptrdiff_t offset = data_ - block_->data();
+      ptrdiff_t offset=0;
+      if(block_)
+	offset = data_ - block_->data();
       ar << offset;
 
     };
@@ -330,7 +332,10 @@ private:
       addReference();
       ptrdiff_t offset;
       ar >> offset;
-      data_ = block_->data() + offset;
+      if(block_)
+	data_ = block_->data() + offset;
+      else
+	data_ = 0;
     };
 
   BOOST_SERIALIZATION_SPLIT_MEMBER()
