@@ -31,6 +31,11 @@
 #ifndef BZ_ARRAY_STORAGE_H
 #define BZ_ARRAY_STORAGE_H
 
+#ifdef BZ_HAVE_BOOST_SERIALIZATION
+#include <boost/serialization/serialization.hpp>
+#include <boost/mpi/datatype.hpp>
+#endif
+
 BZ_NAMESPACE(blitz)
 
 
@@ -166,7 +171,7 @@ public:
 
 private:
 #ifdef BZ_HAVE_BOOST_SERIALIZATION
-    friend class boost::serialization::access;
+  friend class ::boost::serialization::access;
 
     template<class T_arch>
     void serialize(T_arch& ar, const unsigned int version) {
@@ -206,6 +211,13 @@ protected:
     TinyVector<int,  N_rank> ordering_;
     TinyVector<int,  N_rank> base_;
 };
+
+#ifdef BZ_HAVE_BOOST_SERIALIZATION
+namespace boost { namespace mpi {
+  template <int N>
+  struct is_mpi_datatype<GeneralArrayStorage<N> > : ::boost::mpl::true_ { };
+} }
+#endif
 
 
 /** This tag class can be used to provide a nicer notation for

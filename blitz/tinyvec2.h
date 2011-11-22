@@ -41,6 +41,7 @@
 
 #ifdef BZ_HAVE_BOOST_SERIALIZATION
 #include <boost/serialization/serialization.hpp>
+#include <boost/mpi/datatype.hpp>
 #endif
 
 #ifdef BZ_HAVE_CSTRING
@@ -419,18 +420,27 @@ private:
   void _tv_evaluate(const T_expr& expr, T_update);
 
 #ifdef BZ_HAVE_BOOST_SERIALIZATION
-    friend class boost::serialization::access;
-
-    template<class T_arch>
-    void serialize(T_arch& ar, const unsigned int version) {
-      ar & data_;
-    };
+  friend class boost::serialization::access;
+  
+  template<class T_arch>
+  void serialize(T_arch& ar, const unsigned int version) {
+    ar & data_;
+  };
 #endif
 
 
   BZ_ALIGN_VARIABLE(T_numtype, data_[N_length], BZ_SIMD_WIDTH)
 };
 
+#ifdef BZ_HAVE_BOOST_SERIALIZATION
+namespace boost {
+  namespace mpi {
+    template<typename T> struct is_mpi_datatype;
+  template <typename T, std::size_t N>
+  struct is_mpi_datatype<TinyVector<T, N> > 
+    : public is_mpi_datatype<T> { };
+  } };
+#endif
 
 // Specialization for N = 0: KCC is giving some
 // peculiar errors, perhaps this will fix.

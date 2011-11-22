@@ -39,6 +39,8 @@
 #include <boost/serialization/base_object.hpp>
 #include <boost/serialization/split_member.hpp>
 #include <boost/serialization/array.hpp>
+#include <boost/serialization/collection_size_type.hpp>
+#include <boost/serialization/nvp.hpp>
 #endif
 #include <stddef.h>     // diffType
 
@@ -88,11 +90,6 @@ protected:
       
         length_ = items;
         allocate(length_);
-
-#ifdef BZ_DEBUG_LOG_ALLOCATIONS
-    cout << "MemoryBlock: allocated " << setw(8) << length_ 
-         << " at " << ((void *)dataBlockAddress_) << endl;
-#endif
 
         BZASSERT(dataBlockAddress_ != 0);
 
@@ -232,12 +229,14 @@ private:   // Disabled member functions
 #if defined(BZ_THREADSAFE) && !defined(BZ_THREADSAFE_USE_ATOMIC)
       ar << mutexLocking_;
 #endif
-      ar << length_;
+      const boost::serialization::collection_size_type count(length_);
+      ar << BOOST_SERIALIZATION_NVP(count);
 #ifdef BZ_DEBUG_LOG_ALLOCATIONS
       cout << "MemoryBlock: serializing " << length_ << " data for MemoryBlock at "
 	   << ((void*)this) << endl;
 #endif
-      ar << boost::serialization::make_array(data_, length_);
+      if(length_>0)
+	ar << boost::serialization::make_array(data_, length_);
     };
 
     template<class T_arch>
@@ -245,13 +244,18 @@ private:   // Disabled member functions
 #if defined(BZ_THREADSAFE) && !defined(BZ_THREADSAFE_USE_ATOMIC)
       ar >> mutexLocking_;
 #endif
-      ar >> length_;
+      boost::serialization::collection_size_type count(length_);
+      ar >> BOOST_SERIALIZATION_NVP(count);
+      length_=count;
+      allocate(length_);
+
 #ifdef BZ_DEBUG_LOG_ALLOCATIONS
       cout << "MemoryBlock: unserializing " << length_ << " data for MemoryBlock at "
 	   << ((void*)this) << endl;
 #endif
-      allocate(length_);
-      ar >> boost::serialization::make_array(data_, length_);
+
+      if(length_>0)
+	ar >> boost::serialization::make_array(data_, length_);
 
       // initialize the members that are not restored. Note that we
       // must initialize references_ to 0 here because the
@@ -310,6 +314,13 @@ private:
 #ifdef BZ_HAVE_BOOST_SERIALIZATION
     friend class boost::serialization::access;
 
+  /** Serialization operator. This is a bit hacky, because we need to
+      restore the data pointer as part of the skeleton, not
+      content. For this reason, we serialize the offset as a
+      collection_size_item even though it's a signed type. This makes
+      the serialization code treat it as part of the skeleton and not
+      content, which is what we want.
+  */
     template<class T_arch>
     void save(T_arch& ar, const unsigned int version) const {
 #ifdef BZ_DEBUG_LOG_ALLOCATIONS
@@ -317,12 +328,17 @@ private:
 	     << ((void*)block_) <<endl;
 #endif
       ar << block_;
-      ptrdiff_t offset=0;
+      ptrdiff_t ptroffset=0;
       if(block_)
-	offset = data_ - block_->data();
-      ar << offset;
-
+	ptroffset = data_ - block_->data();
+      boost::serialization::collection_size_type
+	offset(*reinterpret_cast<size_t*>(&ptroffset));
+      ar << BOOST_SERIALIZATION_NVP(offset); 
     };
+
+  /** Unserialization operator. See comment for the save method for
+      the reinterpret_cast hack.
+  */
     template<class T_arch>
     void load(T_arch& ar, const unsigned int version) {
 #ifdef BZ_DEBUG_LOG_ALLOCATIONS
@@ -330,10 +346,11 @@ private:
 #endif
       ar >> block_;
       addReference();
-      ptrdiff_t offset;
-      ar >> offset;
+      boost::serialization::collection_size_type offset;
+      ar >> BOOST_SERIALIZATION_NVP(offset);
+      ptrdiff_t ptroffset = *reinterpret_cast<ptrdiff_t*>(&offset);
       if(block_)
-	data_ = block_->data() + offset;
+	data_ = block_->data() + ptroffset;
       else
 	data_ = 0;
     };

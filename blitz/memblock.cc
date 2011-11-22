@@ -136,6 +136,11 @@ inline void MemoryBlock<P_type>::allocate(sizeType length)
 
     allocatedByUs_ = true;
 
+#ifdef BZ_DEBUG_LOG_ALLOCATIONS
+    cout << "MemoryBlock: allocated " << setw(8) << length 
+         << " at " << ((void *)dataBlockAddress_) << endl;
+#endif
+
     BZASSERT(isVectorAligned(data_));
 }
 

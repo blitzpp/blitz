@@ -57,6 +57,11 @@
 #include <blitz/array/domain.h>    // RectDomain class
 #include <blitz/array/storage.h>   // GeneralArrayStorage
 
+#ifdef BZ_HAVE_BOOST_SERIALIZATION
+#include <boost/serialization/serialization.hpp>
+#include <boost/serialization/base_object.hpp>
+#endif
+
 
 BZ_NAMESPACE(blitz)
 
@@ -2426,13 +2431,13 @@ protected:
 private:
   // serialization support
 #ifdef BZ_HAVE_BOOST_SERIALIZATION
-    friend class boost::serialization::access;
+  friend class ::boost::serialization::access;
 
     template<class T_arch>
     void serialize(T_arch& ar, const unsigned int version) {
-      ar & boost::serialization::base_object<MemoryBlockReference<P_numtype> >(*this);
-      ar & storage_;
+      ar & ::boost::serialization::base_object<MemoryBlockReference<P_numtype> >(*this);
       ar & length_;
+      ar & storage_;
       ar & stride_;
       ar & zeroOffset_;
     };
