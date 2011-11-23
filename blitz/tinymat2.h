@@ -329,7 +329,7 @@ private:
   void _tm_evaluate(const T_expr& expr, T_update);
 
 #ifdef BZ_HAVE_BOOST_SERIALIZATION
-  friend class ::boost::serialization::access;
+  friend class boost::serialization::access;
 
   template<class T_arch>
   void serialize(T_arch& ar, const unsigned int version) {
@@ -341,6 +341,16 @@ private:
 };
 
 BZ_NAMESPACE_END
+
+#ifdef BZ_HAVE_BOOST_SERIALIZATION
+namespace boost {
+  namespace mpi {
+    template<typename T> struct is_mpi_datatype;
+    template <typename T, int N, int M>
+    struct is_mpi_datatype<blitz::TinyMatrix<T, N, M> > 
+      : public is_mpi_datatype<T> { };
+  } };
+#endif
 
 #include <blitz/tm2fastiter.h>  // Iterators
 

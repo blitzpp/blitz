@@ -2431,11 +2431,11 @@ protected:
 private:
   // serialization support
 #ifdef BZ_HAVE_BOOST_SERIALIZATION
-  friend class ::boost::serialization::access;
+  friend class boost::serialization::access;
 
     template<class T_arch>
     void serialize(T_arch& ar, const unsigned int version) {
-      ar & ::boost::serialization::base_object<MemoryBlockReference<P_numtype> >(*this);
+      ar & boost::serialization::base_object<MemoryBlockReference<P_numtype> >(*this);
       ar & length_;
       ar & storage_;
       ar & stride_;

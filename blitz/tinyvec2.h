@@ -432,16 +432,6 @@ private:
   BZ_ALIGN_VARIABLE(T_numtype, data_[N_length], BZ_SIMD_WIDTH)
 };
 
-#ifdef BZ_HAVE_BOOST_SERIALIZATION
-namespace boost {
-  namespace mpi {
-    template<typename T> struct is_mpi_datatype;
-  template <typename T, std::size_t N>
-  struct is_mpi_datatype<TinyVector<T, N> > 
-    : public is_mpi_datatype<T> { };
-  } };
-#endif
-
 // Specialization for N = 0: KCC is giving some
 // peculiar errors, perhaps this will fix.
 
@@ -450,6 +440,17 @@ class TinyVector<T,0> {
 };
 
 BZ_NAMESPACE_END
+
+#ifdef BZ_HAVE_BOOST_SERIALIZATION
+namespace boost {
+  namespace mpi {
+    template<typename T> struct is_mpi_datatype;
+    template <typename T, int N>
+    struct is_mpi_datatype<blitz::TinyVector<T, N> > 
+      : public is_mpi_datatype<T> { };
+  } };
+#endif
+
 
 #endif // BZ_TINYVEC_H
 
