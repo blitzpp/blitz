@@ -881,30 +881,27 @@ evaluateWithIndexTraversal(T_dest& dest, T_expr expr, T_update)
 
   TinyVector<int,T_dest::rank_> index;
 
-    if (dest.stride(firstRank) == 1)
-    {
-      T_numtype * restrict iter = dest.data() + dest.lbound(firstRank);
-        int last = dest.ubound(firstRank);
-
-        for (index[0] = dest.lbound(firstRank); index[0] <= last;
-            ++index[0])
-        {
-	  T_update::update(*iter++, expr(index));
-        }
+  if (dest.stride(firstRank) == 1) {
+    T_numtype * restrict iter = dest.data();
+    int last = dest.ubound(firstRank);
+    
+    for (index[0] = dest.lbound(firstRank); index[0] <= last;
+	 ++index[0]) {
+      T_update::update(*iter++, expr(index));
     }
-    else {
-      typename T_dest::T_iterator iter(dest);
-        iter.loadStride(0);
-        int last = iter.ubound(firstRank);
-
-        for (index[0] = iter.lbound(firstRank); index[0] <= last;
-            ++index[0])
-        {
-	  T_update::update(*const_cast<T_numtype*>(iter.data()), 
-                expr(index));
-            iter.advance();
-        }
+  }
+  else {
+    typename T_dest::T_iterator iter(dest);
+    iter.loadStride(0);
+    int last = iter.ubound(firstRank);
+    
+    for (index[0] = iter.lbound(firstRank); index[0] <= last;
+	 ++index[0]) {
+      T_update::update(*const_cast<T_numtype*>(iter.data()), 
+		       expr(index));
+      iter.advance();
     }
+  }
 }
 
   template<int N>
