@@ -1,6 +1,7 @@
 #include "testsuite.h"
-#include <blitz/array.h>
 #include <blitz/bzconfig.h>
+#include <blitz/array.h>
+#include <random/uniform.h>
 
 BZ_USING_NAMESPACE(blitz)
 
@@ -49,6 +50,38 @@ int main()
     BZTEST(aa(3)==bb(3));
 
    }
+  s.clear();
+
+  // test serialization of random states
+  {
+    ranlib::Uniform<float> r;
+    r.seed(42);
+
+    // save state
+    boost::archive::text_oarchive oa(s);
+    {
+      ranlib::MersenneTwister::T_state state(r.getState());
+      oa << state;
+    }
+
+    const float n1 = r.random();
+    cout << n1 << ".... ";
+    const float crap = r.random();
+
+    // restore state
+    boost::archive::text_iarchive ia(s);
+    {
+      ranlib::MersenneTwister::T_state state(r.getState());
+      ia >> state;
+      r.setState(state);
+    }
+
+    const float n2 = r.random();
+    cout << n2 << endl;
+
+    BZTEST(n1 == n2);
+  }
+
 #else
   cout << "No serialization support enabled, can't test\n";
 #endif

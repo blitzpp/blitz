@@ -59,6 +59,11 @@
   #include <limits.h>
 #endif
 
+#ifdef BZ_HAVE_BOOST_SERIALIZATION
+#include <boost/serialization/serialization.hpp>
+#include <boost/serialization/vector.hpp>
+#endif
+
 BZ_NAMESPACE(ranlib)
 
 #if UINT_MAX < 4294967295U
@@ -255,7 +260,7 @@ public:
     friend class MersenneTwister;
   private:
     State S;
-	State::difference_type I;
+    State::difference_type I;
   public: 
     mt_state() { }
 	mt_state(State s, State::difference_type i) : S(s), I(i) { }
@@ -276,6 +281,16 @@ public:
 		std::ostream_iterator<twist_int>(os," "));
       return os.str();
     }
+#ifdef BZ_HAVE_BOOST_SERIALIZATION
+    friend class boost::serialization::access;
+    /** Serialization operator. Relies on the ability to serialize
+	std::vector. */
+    template<class T_arch>
+    void serialize(T_arch& ar, const unsigned int version) {
+      ar & S & I;
+  };
+#endif
+    
   };
   
   typedef mt_state T_state;
