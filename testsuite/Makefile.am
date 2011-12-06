@@ -109,10 +109,14 @@ zeek_1_SOURCES = zeek-1.cpp
 
 check-testsuite:  $(EXTRA_PROGRAMS)
 	@echo Running test suite...
+	@fail=0
 	@for prog in $(EXTRA_PROGRAMS) ; do \
-		echo $$prog && (./$$prog > /dev/null 2>&1) || exit 1; \
-		done
-	@echo All tests passed.
+		if (./$$prog > /dev/null 2>&1); then \
+			echo $$prog... passed; \
+		else \
+			echo TEST FAILED: $$prog; fail=1; fi; \
+	done
+	@if [[ $$fail -eq 1 ]]; then echo There were failing tests; else echo All tests passed; fi
 
 if HAVE_VALGRIND
 valgrind-testsuite:  $(EXTRA_PROGRAMS)
