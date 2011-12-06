@@ -91,7 +91,7 @@ pow8(const T x)
 template<typename T_numtype1>                                        \
 struct name {                                                        \
     typedef T_numtype1 T_numtype;                                    \
-                                                                     \
+								     \
     static inline T_numtype                                          \
     apply(const T_numtype1 a)                                        \
     { return fun(a); }                                               \
@@ -107,6 +107,7 @@ struct name {                                                        \
     }                                                                \
 };
 
+BZ_DEFINE_UNARY_FUNC(Fn_abs,BZ_MATHFN_SCOPE(abs))
 BZ_DEFINE_UNARY_FUNC(Fn_acos,BZ_MATHFN_SCOPE(acos))
 BZ_DEFINE_UNARY_FUNC(Fn_asin,BZ_MATHFN_SCOPE(asin))
 BZ_DEFINE_UNARY_FUNC(Fn_atan,BZ_MATHFN_SCOPE(atan))
@@ -264,6 +265,7 @@ struct name< BZ_STD_SCOPE(complex)<T> > {                            \
 };
 
 #ifdef BZ_HAVE_COMPLEX_FCNS
+BZ_DEFINE_UNARY_CFUNC2(Fn_abs,BZ_CMATHFN_SCOPE(abs))
 BZ_DEFINE_UNARY_CFUNC2(Fn_arg,BZ_CMATHFN_SCOPE(arg))
 BZ_DEFINE_UNARY_CFUNC2(Fn_imag,BZ_CMATHFN_SCOPE(imag))
 BZ_DEFINE_UNARY_CFUNC2(Fn_norm,BZ_CMATHFN_SCOPE(norm))
@@ -548,133 +550,6 @@ struct name {                                                        \
     
 /* These functions don't quite fit the usual patterns */
     
-// abs()    Absolute value
-template<typename T_numtype1>
-struct Fn_abs;
-
-// abs(int)
-template<>
-struct Fn_abs< int > {
-    typedef int T_numtype1;
-    typedef int T_numtype;
-    
-    static inline T_numtype
-    apply(const T_numtype1 a) { return BZ_MATHABSINT_SCOPE(abs)(a); }
-    
-    template<typename T1>
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,
-        prettyPrintFormat& format, const T1& t1)
-    {
-        str += "abs";
-        str += "(";
-        t1.prettyPrint(str, format);
-        str += ")";
-    }
-};
-
-// abs(long)
-template<>
-struct Fn_abs< long int > {
-    typedef long int T_numtype1;
-    typedef long int T_numtype;
-    
-    static inline T_numtype
-    apply(const T_numtype1 a) { return BZ_MATHABSINT_SCOPE(labs)(a); }
-    
-    template<typename T1>
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,
-        prettyPrintFormat& format, const T1& t1)
-    {
-        str += "abs";
-        str += "(";
-        t1.prettyPrint(str, format);
-        str += ")";
-    }
-};
-
-// abs(float)
-template<>
-struct Fn_abs< float > {
-    typedef float T_numtype1;
-    typedef float T_numtype;
-    
-    static inline T_numtype
-    apply(const T_numtype1 a) { return BZ_MATHFN_SCOPE(fabs)(a); }
-    
-    template<typename T1>
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,
-        prettyPrintFormat& format, const T1& t1)
-    {
-        str += "abs";
-        str += "(";
-        t1.prettyPrint(str, format);
-        str += ")";
-    }
-};
-
-// abs(double)
-template<>
-struct Fn_abs< double > {
-    typedef double T_numtype1;
-    typedef double T_numtype;
-    
-    static inline T_numtype
-    apply(const T_numtype1 a) { return BZ_MATHFN_SCOPE(fabs)(a); }
-    
-    template<typename T1>
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,
-        prettyPrintFormat& format, const T1& t1)
-    {
-        str += "abs";
-        str += "(";
-        t1.prettyPrint(str, format);
-        str += ")";
-    }
-};
-
-// abs(long double)
-template<>
-struct Fn_abs< long double > {
-    typedef long double T_numtype1;
-    typedef long double T_numtype;
-    
-    static inline T_numtype
-    apply(const T_numtype1 a) { return BZ_MATHFN_SCOPE(fabs)(a); }
-    
-    template<typename T1>
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,
-        prettyPrintFormat& format, const T1& t1)
-    {
-        str += "abs";
-        str += "(";
-        t1.prettyPrint(str, format);
-        str += ")";
-    }
-};
-
-#ifdef BZ_HAVE_COMPLEX_FCNS
-// abs(complex<T>)
-template<typename T>
-struct Fn_abs< BZ_STD_SCOPE(complex)<T> > {
-    typedef BZ_STD_SCOPE(complex)<T> T_numtype1;
-    typedef T T_numtype;
-    
-    static inline T_numtype
-    apply(const T_numtype1 a) { return BZ_CMATHFN_SCOPE(abs)(a); }
-    
-    template<typename T1>
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,
-        prettyPrintFormat& format, const T1& t1)
-    {
-        str += "abs";
-        str += "(";
-        t1.prettyPrint(str, format);
-        str += ")";
-    }
-};
-#endif // BZ_HAVE_COMPLEX_FCNS
-
-
 #ifdef BZ_HAVE_IEEE_MATH
 // isnan()    Nonzero if NaNS or NaNQ
 template<typename T_numtype1>

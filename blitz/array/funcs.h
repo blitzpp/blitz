@@ -37,9 +37,18 @@
 #include <blitz/levicivita.h>
 
 BZ_NAMESPACE(blitz)
-    
+
+/* This file contains definitions of the math functions for ETBase
+   types. Note that these definitions are in the blitz namespace and
+   will hide the definitions of the builtin math functions in the
+   global namespace. For this reason, the calls to the builtin math
+   functions in the functors' apply() methods must explicitly qualify
+   the namespace.
+*/
+
+
 // unary functions
-    
+
 BZ_DECLARE_ARRAY_ET_UNARY(abs,   Fn_abs)
 BZ_DECLARE_ARRAY_ET_UNARY(acos,  Fn_acos)
 BZ_DECLARE_ARRAY_ET_UNARY(asin,  Fn_asin)
