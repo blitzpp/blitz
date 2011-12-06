@@ -413,7 +413,7 @@ name(const BZ_BLITZ_SCOPE(ETBase)<T1>& d1,                                 \
  */
 
 #define BZ_DECLARE_FUNCTION(name)                                          \
-BZ_DEFINE_UNARY_FUNC(name ## _impl,name)                                   \
+BZ_DEFINE_UNARY_FUNC(name ## _impl,name,true)				\
 BZ_DECLARE_ARRAY_ET_UNARY(name,name ## _impl)
 
 #define BZ_DECLARE_FUNCTION_RET(name,return_type)                          \

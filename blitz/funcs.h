@@ -84,17 +84,29 @@ inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type
 pow8(const T x)
 { return x*x*x*x*x*x*x*x; }
 
+/** This class can be used to select between two types based on a bool. */
+template<bool b, typename T1, typename T2> struct ifthenelse {
+  typedef T1 Type;
+};
+template<typename T1, typename T2> struct ifthenelse<false,T1,T2> {
+  typedef T2 Type;
+};
 
-/* Unary functions that return same type as argument */
+
+/* Unary functions whose return type is the same as the argument (if
+   coerce_int is false) or (if coerce_int is true) returns a double
+   for int arguments. (This is how gcc defines its math functions, so
+   we should do the same.) Coerce_int is true except for the functions
+   that can also meaningfully operate on ints.  */
     
-#define BZ_DEFINE_UNARY_FUNC(name,fun)                               \
+#define BZ_DEFINE_UNARY_FUNC(name,fun,coerce_int)		     \
 template<typename T_numtype1>                                        \
 struct name {                                                        \
-    typedef T_numtype1 T_numtype;                                    \
+  typedef typename ifthenelse<coerce_int,typename ifthenelse<numeric_limits<T_numtype1>::is_integer,double,T_numtype1>::Type,T_numtype1>::Type T_numtype; \
 								     \
     static inline T_numtype                                          \
     apply(const T_numtype1 a)                                        \
-    { return fun(a); }                                               \
+    { return fun(a); }						     \
                                                                      \
     template<typename T1>                                            \
     static inline void prettyPrint(BZ_STD_SCOPE(string) &str,        \
@@ -107,55 +119,55 @@ struct name {                                                        \
     }                                                                \
 };
 
-BZ_DEFINE_UNARY_FUNC(Fn_abs,BZ_MATHFN_SCOPE(abs))
-BZ_DEFINE_UNARY_FUNC(Fn_acos,BZ_MATHFN_SCOPE(acos))
-BZ_DEFINE_UNARY_FUNC(Fn_asin,BZ_MATHFN_SCOPE(asin))
-BZ_DEFINE_UNARY_FUNC(Fn_atan,BZ_MATHFN_SCOPE(atan))
-BZ_DEFINE_UNARY_FUNC(Fn_ceil,BZ_MATHFN_SCOPE(ceil))
-BZ_DEFINE_UNARY_FUNC(Fn_cos,BZ_MATHFN_SCOPE(cos))
-BZ_DEFINE_UNARY_FUNC(Fn_cosh,BZ_MATHFN_SCOPE(cosh))
-BZ_DEFINE_UNARY_FUNC(Fn_exp,BZ_MATHFN_SCOPE(exp))
-BZ_DEFINE_UNARY_FUNC(Fn_fabs,BZ_MATHFN_SCOPE(fabs))
-BZ_DEFINE_UNARY_FUNC(Fn_floor,BZ_MATHFN_SCOPE(floor))
-BZ_DEFINE_UNARY_FUNC(Fn_log,BZ_MATHFN_SCOPE(log))
-BZ_DEFINE_UNARY_FUNC(Fn_log10,BZ_MATHFN_SCOPE(log10))
-BZ_DEFINE_UNARY_FUNC(Fn_sin,BZ_MATHFN_SCOPE(sin))
-BZ_DEFINE_UNARY_FUNC(Fn_sinh,BZ_MATHFN_SCOPE(sinh))
-BZ_DEFINE_UNARY_FUNC(Fn_sqrt,BZ_MATHFN_SCOPE(sqrt))
-BZ_DEFINE_UNARY_FUNC(Fn_tan,BZ_MATHFN_SCOPE(tan))
-BZ_DEFINE_UNARY_FUNC(Fn_tanh,BZ_MATHFN_SCOPE(tanh))
+BZ_DEFINE_UNARY_FUNC(Fn_abs,BZ_MATHFN_SCOPE(abs),false)
+BZ_DEFINE_UNARY_FUNC(Fn_acos,BZ_MATHFN_SCOPE(acos),true)
+BZ_DEFINE_UNARY_FUNC(Fn_asin,BZ_MATHFN_SCOPE(asin),true)
+BZ_DEFINE_UNARY_FUNC(Fn_atan,BZ_MATHFN_SCOPE(atan),true)
+BZ_DEFINE_UNARY_FUNC(Fn_ceil,BZ_MATHFN_SCOPE(ceil),true)
+BZ_DEFINE_UNARY_FUNC(Fn_cos,BZ_MATHFN_SCOPE(cos),true)
+BZ_DEFINE_UNARY_FUNC(Fn_cosh,BZ_MATHFN_SCOPE(cosh),true)
+BZ_DEFINE_UNARY_FUNC(Fn_exp,BZ_MATHFN_SCOPE(exp),true)
+BZ_DEFINE_UNARY_FUNC(Fn_fabs,BZ_MATHFN_SCOPE(fabs),true)
+BZ_DEFINE_UNARY_FUNC(Fn_floor,BZ_MATHFN_SCOPE(floor),true)
+BZ_DEFINE_UNARY_FUNC(Fn_log,BZ_MATHFN_SCOPE(log),true)
+BZ_DEFINE_UNARY_FUNC(Fn_log10,BZ_MATHFN_SCOPE(log10),true)
+BZ_DEFINE_UNARY_FUNC(Fn_sin,BZ_MATHFN_SCOPE(sin),true)
+BZ_DEFINE_UNARY_FUNC(Fn_sinh,BZ_MATHFN_SCOPE(sinh),true)
+BZ_DEFINE_UNARY_FUNC(Fn_sqrt,BZ_MATHFN_SCOPE(sqrt),true)
+BZ_DEFINE_UNARY_FUNC(Fn_tan,BZ_MATHFN_SCOPE(tan),true)
+BZ_DEFINE_UNARY_FUNC(Fn_tanh,BZ_MATHFN_SCOPE(tanh),true)
 
 #ifdef BZ_HAVE_IEEE_MATH
-BZ_DEFINE_UNARY_FUNC(Fn_acosh,BZ_IEEEMATHFN_SCOPE(acosh))
-BZ_DEFINE_UNARY_FUNC(Fn_asinh,BZ_IEEEMATHFN_SCOPE(asinh))
-BZ_DEFINE_UNARY_FUNC(Fn_atanh,BZ_IEEEMATHFN_SCOPE(atanh))
-BZ_DEFINE_UNARY_FUNC(Fn_cbrt,BZ_IEEEMATHFN_SCOPE(cbrt))
-BZ_DEFINE_UNARY_FUNC(Fn_erf,BZ_IEEEMATHFN_SCOPE(erf))
-BZ_DEFINE_UNARY_FUNC(Fn_erfc,BZ_IEEEMATHFN_SCOPE(erfc))
-BZ_DEFINE_UNARY_FUNC(Fn_expm1,BZ_IEEEMATHFN_SCOPE(expm1))
-BZ_DEFINE_UNARY_FUNC(Fn_j0,BZ_IEEEMATHFN_SCOPE(j0))
-BZ_DEFINE_UNARY_FUNC(Fn_j1,BZ_IEEEMATHFN_SCOPE(j1))
-BZ_DEFINE_UNARY_FUNC(Fn_lgamma,BZ_IEEEMATHFN_SCOPE(lgamma))
-BZ_DEFINE_UNARY_FUNC(Fn_logb,BZ_IEEEMATHFN_SCOPE(logb))
-BZ_DEFINE_UNARY_FUNC(Fn_log1p,BZ_IEEEMATHFN_SCOPE(log1p))
-BZ_DEFINE_UNARY_FUNC(Fn_rint,BZ_IEEEMATHFN_SCOPE(rint))
-BZ_DEFINE_UNARY_FUNC(Fn_y0,BZ_IEEEMATHFN_SCOPE(y0))
-BZ_DEFINE_UNARY_FUNC(Fn_y1,BZ_IEEEMATHFN_SCOPE(y1))
+BZ_DEFINE_UNARY_FUNC(Fn_acosh,BZ_IEEEMATHFN_SCOPE(acosh),true)
+BZ_DEFINE_UNARY_FUNC(Fn_asinh,BZ_IEEEMATHFN_SCOPE(asinh),true)
+BZ_DEFINE_UNARY_FUNC(Fn_atanh,BZ_IEEEMATHFN_SCOPE(atanh),true)
+BZ_DEFINE_UNARY_FUNC(Fn_cbrt,BZ_IEEEMATHFN_SCOPE(cbrt),true)
+BZ_DEFINE_UNARY_FUNC(Fn_erf,BZ_IEEEMATHFN_SCOPE(erf),true)
+BZ_DEFINE_UNARY_FUNC(Fn_erfc,BZ_IEEEMATHFN_SCOPE(erfc),true)
+BZ_DEFINE_UNARY_FUNC(Fn_expm1,BZ_IEEEMATHFN_SCOPE(expm1),true)
+BZ_DEFINE_UNARY_FUNC(Fn_j0,BZ_IEEEMATHFN_SCOPE(j0),true)
+BZ_DEFINE_UNARY_FUNC(Fn_j1,BZ_IEEEMATHFN_SCOPE(j1),true)
+BZ_DEFINE_UNARY_FUNC(Fn_lgamma,BZ_IEEEMATHFN_SCOPE(lgamma),true)
+BZ_DEFINE_UNARY_FUNC(Fn_logb,BZ_IEEEMATHFN_SCOPE(logb),true)
+BZ_DEFINE_UNARY_FUNC(Fn_log1p,BZ_IEEEMATHFN_SCOPE(log1p),true)
+BZ_DEFINE_UNARY_FUNC(Fn_rint,BZ_IEEEMATHFN_SCOPE(rint),true)
+BZ_DEFINE_UNARY_FUNC(Fn_y0,BZ_IEEEMATHFN_SCOPE(y0),true)
+BZ_DEFINE_UNARY_FUNC(Fn_y1,BZ_IEEEMATHFN_SCOPE(y1),true)
 #endif
     
 #ifdef BZ_HAVE_SYSTEM_V_MATH
-BZ_DEFINE_UNARY_FUNC(Fn__class,BZ_IEEEMATHFN_SCOPE(_class))
-BZ_DEFINE_UNARY_FUNC(Fn_nearest,BZ_IEEEMATHFN_SCOPE(nearest))
-BZ_DEFINE_UNARY_FUNC(Fn_rsqrt,BZ_IEEEMATHFN_SCOPE(rsqrt))
+BZ_DEFINE_UNARY_FUNC(Fn__class,BZ_IEEEMATHFN_SCOPE(_class),true)
+BZ_DEFINE_UNARY_FUNC(Fn_nearest,BZ_IEEEMATHFN_SCOPE(nearest),true)
+BZ_DEFINE_UNARY_FUNC(Fn_rsqrt,BZ_IEEEMATHFN_SCOPE(rsqrt),true)
 #endif
     
-BZ_DEFINE_UNARY_FUNC(Fn_sqr,BZ_BLITZ_SCOPE(pow2))
-BZ_DEFINE_UNARY_FUNC(Fn_cube,BZ_BLITZ_SCOPE(pow3))
-BZ_DEFINE_UNARY_FUNC(Fn_pow4,BZ_BLITZ_SCOPE(pow4))
-BZ_DEFINE_UNARY_FUNC(Fn_pow5,BZ_BLITZ_SCOPE(pow5))
-BZ_DEFINE_UNARY_FUNC(Fn_pow6,BZ_BLITZ_SCOPE(pow6))
-BZ_DEFINE_UNARY_FUNC(Fn_pow7,BZ_BLITZ_SCOPE(pow7))
-BZ_DEFINE_UNARY_FUNC(Fn_pow8,BZ_BLITZ_SCOPE(pow8))
+BZ_DEFINE_UNARY_FUNC(Fn_sqr,BZ_BLITZ_SCOPE(pow2),false)
+BZ_DEFINE_UNARY_FUNC(Fn_cube,BZ_BLITZ_SCOPE(pow3),false)
+BZ_DEFINE_UNARY_FUNC(Fn_pow4,BZ_BLITZ_SCOPE(pow4),false)
+BZ_DEFINE_UNARY_FUNC(Fn_pow5,BZ_BLITZ_SCOPE(pow5),false)
+BZ_DEFINE_UNARY_FUNC(Fn_pow6,BZ_BLITZ_SCOPE(pow6),false)
+BZ_DEFINE_UNARY_FUNC(Fn_pow7,BZ_BLITZ_SCOPE(pow7),false)
+BZ_DEFINE_UNARY_FUNC(Fn_pow8,BZ_BLITZ_SCOPE(pow8),false)
 
 /* Unary functions that return a specified type */
     
@@ -214,7 +226,7 @@ struct name< BZ_STD_SCOPE(complex)<T> > {                            \
 };
 
 #ifdef BZ_HAVE_COMPLEX_FCNS
-BZ_DEFINE_UNARY_FUNC(Fn_conj,BZ_CMATHFN_SCOPE(conj))
+BZ_DEFINE_UNARY_FUNC(Fn_conj,BZ_CMATHFN_SCOPE(conj),false)
 #endif
 
 #ifdef BZ_HAVE_COMPLEX_MATH1

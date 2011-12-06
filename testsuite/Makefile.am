@@ -11,20 +11,20 @@ AM_CXXFLAGS = @CXX_DEBUG_FLAGS@ -DBZ_DEBUG
 AM_LDFLAGS = $(BOOST_LDFLAGS)
 LDADD = -L$(top_builddir)/lib -lblitz $(BOOST_SERIALIZATION_LIB)
 
-EXTRA_PROGRAMS = 64bit Adnene-Ben-Abdallah-1 Adnene-Ben-Abdallah-2	\
-alignment arrayresize arrayinitialize chris-jeffery-1 chris-jeffery-2	\
-chris-jeffery-3 complex-test constarray contiguous copy ctors		\
-derrick-bass-1 derrick-bass-3 exprctor expression-slicing extract free	\
-gary-huber-1 indexexpr-base initialize interlace iter Josef-Wagenhuber	\
-levicivita loop1 matthias-troyer-1 matthias-troyer-2			\
-mattias-lindstroem-1 member_function minmax minsumpow module		\
-multicomponent multicomponent-2 newet Olaf-Ronneberger-1		\
-patrik-jonsson-1 peter-bienstman-1 peter-bienstman-2 peter-bienstman-3	\
-peter-bienstman-4 peter-bienstman-5 peter-nordlund-1 peter-nordlund-2	\
-peter-nordlund-3 preexisting promote pthread qcd reduce reindex		\
-reverse safeToReturn shapecheck shape slice-iterators stencil-et	\
-stencil-extent storage stub theodore-papadopoulo-1 tinymat tinyvec	\
-transpose troyer-genilloud tvinitialize Ulisses-Mello-1 weakref		\
+EXTRA_PROGRAMS = 64bit Adnene-Ben-Abdallah-1 Adnene-Ben-Abdallah-2     \
+alignment arrayresize arrayinitialize chris-jeffery-1 chris-jeffery-2  \
+chris-jeffery-3 complex-test constarray contiguous copy ctors	       \
+derrick-bass-1 derrick-bass-3 exprctor expression-slicing extract free \
+gary-huber-1 indexexpr-base initialize int-math-func interlace iter    \
+Josef-Wagenhuber levicivita loop1 matthias-troyer-1 matthias-troyer-2  \
+mattias-lindstroem-1 member_function minmax minsumpow module	       \
+multicomponent multicomponent-2 newet Olaf-Ronneberger-1	       \
+patrik-jonsson-1 peter-bienstman-1 peter-bienstman-2 peter-bienstman-3 \
+peter-bienstman-4 peter-bienstman-5 peter-nordlund-1 peter-nordlund-2  \
+peter-nordlund-3 preexisting promote pthread qcd reduce reindex	       \
+reverse safeToReturn shapecheck shape slice-iterators stencil-et       \
+stencil-extent storage stub theodore-papadopoulo-1 tinymat tinyvec     \
+transpose troyer-genilloud tvinitialize Ulisses-Mello-1 weakref	       \
 wei-ku-1 where zeek-1 cast serialize
 
 # 64bit test is special because it takes forever to run without optimization
@@ -54,6 +54,7 @@ free_SOURCES = free.cpp
 gary_huber_1_SOURCES = gary-huber-1.cpp
 indexexpr_base_SOURCES = indexexpr-base.cpp
 initialize_SOURCES = initialize.cpp
+int_math_func_SOURCES = int-math-func.cpp
 interlace_SOURCES = interlace.cpp
 iter_SOURCES = iter.cpp
 Josef_Wagenhuber_SOURCES = Josef-Wagenhuber.cpp
