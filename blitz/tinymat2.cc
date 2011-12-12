@@ -40,14 +40,14 @@ BZ_NAMESPACE(blitz)
 template<typename P_numtype, int N_rows, int N_columns>
 inline TinyMatrix<P_numtype, N_rows, N_columns>::TinyMatrix(T_numtype initValue) 
 {
-  for (int i=0; i < numElements(); ++i)
+  for (sizeType i=0; i < numElements(); ++i)
     data_[i] = initValue;
 }
 
 template<typename P_numtype, int N_rows, int N_columns>
 inline TinyMatrix<P_numtype, N_rows, N_columns>::TinyMatrix(const T_matrix& x) 
 {
-  for (int i=0; i < numElements(); ++i)
+  for (sizeType i=0; i < numElements(); ++i)
     data_[i] = x.data_[i];
 }
 
@@ -56,7 +56,7 @@ template<typename P_numtype2>
 inline
 TinyMatrix<P_numtype, N_rows, N_columns>::TinyMatrix(const TinyMatrix<P_numtype2, N_rows, N_columns>& x)
 {
-  for (int i=0; i < numElements(); ++i)
+  for (sizeType i=0; i < numElements(); ++i)
     data_[i] = static_cast<P_numtype>(x.data_[i]);
 }
 
