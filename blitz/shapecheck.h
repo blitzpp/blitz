@@ -65,7 +65,7 @@ inline bool areShapesConformable(const T_shape& a, const T_shape& b)
     // use it.
     // return all(a == b);
 
-    for (unsigned i=0; i < a.length(); ++i)
+    for (int i=0; i < a.length(); ++i)
     {
         if (a[i] != b[i])
         {

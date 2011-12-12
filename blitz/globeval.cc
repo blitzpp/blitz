@@ -412,7 +412,7 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
   // width and are not mutually misaligned
   const bool can_align = 
     (T_expr::minWidth == T_expr::maxWidth) &&
-    (T_expr::minWidth == simdTypes<T_numtype>::vecWidth) &&
+    (T_expr::minWidth == int(simdTypes<T_numtype>::vecWidth)) &&
     expr.isVectorAligned(uneven_start);
 
   // When we come out here, we KNOW that expressions shorter than
@@ -448,7 +448,7 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
 #endif
 
 
-  if(!unvectorizable && (loop_width>1))
+  if(!unvectorizable && (loop_width>1)) {
     // If the expression can be aligned, we do so.
     if(can_align) {
 #ifdef BZ_DEBUG_TRAVERSE
@@ -486,6 +486,7 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
 	chunked_updater<T_numtype, T_expr, T_update, loop_width>::
 	  unaligned_update(data, expr, i);
     }
+  }
 
   // now complete the loop with the tailing scalar elements not done
   // in the chunked loop.
@@ -877,7 +878,6 @@ _bz_evaluator<1>::
 evaluateWithIndexTraversal(T_dest& dest, T_expr expr, T_update)
 {
   typedef typename T_dest::T_numtype T_numtype;
-  const int N_rank = T_dest::rank();
 
   TinyVector<int,T_dest::rank_> index;
 
@@ -1326,7 +1326,6 @@ _bz_forceinline void
 _bz_evaluateWithTiled2DTraversal(T_dest& dest, T_expr expr, T_update)
 {
   typedef typename T_dest::T_numtype T_numtype;
-  const int N_rank = T_dest::rank();
 
     typename T_dest::T_iterator iter(dest);
 

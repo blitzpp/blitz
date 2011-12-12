@@ -37,7 +37,6 @@ BZ_NAMESPACE(blitz)
 template<typename P_type>
 void MemoryBlock<P_type>::deallocate()
 {  
-  const sizeType vecWidth= simdTypes<P_type>::vecWidth;
   const sizeType byteWidth= simdTypes<P_type>::byteWidth;
   const int cacheLineSize = BZ_L1_CACHE_LINE_SIZE;    
   
@@ -67,7 +66,7 @@ void MemoryBlock<P_type>::deallocate()
     else {
       // block was cache line shifted, manually call destructors
       if (!NumericTypeTraits<T_type>::hasTrivialCtor)
-	for (int i=0; i < length_; ++i)
+	for (sizeType i=0; i < length_; ++i)
 	  data_[i].~T_type();
       delete [] dBA_char_;
     }
@@ -129,7 +128,7 @@ inline void MemoryBlock<P_type>::allocate(sizeType length)
       
       // Use placement new to construct types with nontrival ctors
       if (!NumericTypeTraits<T_type>::hasTrivialCtor) {
-	for (int i=0; i < length; ++i)
+	for (sizeType i=0; i < length; ++i)
 	  new(&data_[i]) T_type;
       }
     }

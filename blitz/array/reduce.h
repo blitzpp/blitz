@@ -225,7 +225,8 @@ public:
 
   // Unclear how to define this, and stencils don't work anyway
   T_range_result operator()(RectDomain<rank_> d) const
-  { BZPRECHECK(0,"Stencils of reductions are not implemented"); }
+  { BZPRECHECK(0,"Stencils of reductions are not implemented");
+    return T_range_result();  }
 
     void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format) const
     {

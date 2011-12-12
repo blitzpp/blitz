@@ -94,16 +94,16 @@ public:
     }
 
     GeneralArrayStorage(const GeneralArrayStorage<N_rank>& x)
-        : ordering_(x.ordering_), ascendingFlag_(x.ascendingFlag_),
-          base_(x.base_), paddingPolicy_(x.paddingPolicy_)
+      : paddingPolicy_(x.paddingPolicy_), ascendingFlag_(x.ascendingFlag_),
+	ordering_(x.ordering_), base_(x.base_)
     { 
     }
 
     GeneralArrayStorage(TinyVector<int,N_rank> ordering,
 			TinyVector<bool,N_rank> ascendingFlag,
 			paddingPolicy pp = defaultPadding)
-      : ordering_(ordering), ascendingFlag_(ascendingFlag),
-	paddingPolicy_(pp)
+      : paddingPolicy_(pp), ascendingFlag_(ascendingFlag),
+	ordering_(ordering)
     {
         base_ = 0;
     }
