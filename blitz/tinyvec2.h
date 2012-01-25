@@ -239,7 +239,7 @@ public:
   { return 0; }
 
   static int                               base(int rank) 
-  { return 0; }
+  { BZPRECONDITION(rank==0); return 0; }
 
 
     T_iterator      beginFast() const       { return T_iterator(*this);      }
@@ -269,14 +269,17 @@ public:
     { return N_length; }
 
   static int                               lbound(int rank) 
-  { return 0; }
+  { BZPRECONDITION(rank==0); return 0; }
   static int            lbound() 
   { return 0; }
 
   static int                               length(int rank) 
-  { return N_length; }
+  { BZPRECONDITION(rank==0); return N_length; }
   static int    length() 
   { return N_length; }
+
+  static int                               extent(int rank)
+  { BZPRECONDITION(rank==0); return N_length; }
 
   static int                               ordering(int storageRankIndex) 
   { return 0; }
@@ -294,10 +297,10 @@ public:
     { return 1; }
 
   static diffType                               stride(int rank) 
-    { return 1; }
+    { BZPRECONDITION(rank==0); return 1; }
 
   static int                               ubound(int rank) 
-  { return length()-1; }
+  { BZPRECONDITION(rank==0); return length()-1; }
 
   static int           ubound() 
   { return length()-1; }
