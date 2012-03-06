@@ -46,10 +46,6 @@ BZ_DECLARE_ARRAY_ET_UNARY(operator-, UnaryMinus)
 
 // binary operators
     
-// operator<< has been commented out because it causes ambiguity
-// with statements like "cout << A".  NEEDS_WORK
-// ditto operator<<
-
 BZ_DECLARE_ARRAY_ET_BINARY(operator+,  Add)
 BZ_DECLARE_ARRAY_ET_BINARY(operator-,  Subtract)
 BZ_DECLARE_ARRAY_ET_BINARY(operator*,  Multiply)
@@ -58,8 +54,8 @@ BZ_DECLARE_ARRAY_ET_BINARY(operator%,  Modulo)
 BZ_DECLARE_ARRAY_ET_BINARY(operator^,  BitwiseXor)
 BZ_DECLARE_ARRAY_ET_BINARY(operator&,  BitwiseAnd)
 BZ_DECLARE_ARRAY_ET_BINARY(operator|,  BitwiseOr)
-// BZ_DECLARE_ARRAY_ET_BINARY(operator>>, ShiftRight)
-// BZ_DECLARE_ARRAY_ET_BINARY(operator<<, ShiftLeft)
+BZ_DECLARE_ARRAY_ET_BINARY(operator>>, ShiftRight)
+BZ_DECLARE_ARRAY_ET_BINARY(operator<<, ShiftLeft)
 BZ_DECLARE_ARRAY_ET_BINARY(operator>,  Greater)
 BZ_DECLARE_ARRAY_ET_BINARY(operator<,  Less)
 BZ_DECLARE_ARRAY_ET_BINARY(operator>=, GreaterOrEqual)
@@ -101,6 +97,8 @@ BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator%,  Modulo, sca)             \
 BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator^,  BitwiseXor, sca)         \
 BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator&,  BitwiseAnd, sca)         \
 BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator|,  BitwiseOr, sca)          \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator>>, ShiftRight, sca)	       \
+BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator<<, ShiftLeft, sca)	       \
 BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator>,  Greater, sca)            \
 BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator<,  Less, sca)               \
 BZ_DECLARE_ARRAY_ET_BINARY_SCALAR(operator>=, GreaterOrEqual, sca)     \
