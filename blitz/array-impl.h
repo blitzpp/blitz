@@ -2279,16 +2279,27 @@ public:
   //template<typename T> T_array& operator=(const T&);
   template<typename T_expr> T_array& operator=(const ETBase<T_expr>&);
 
-    template<typename T> T_array& operator+=(const T&);
-    template<typename T> T_array& operator-=(const T&);
-    template<typename T> T_array& operator*=(const T&);
-    template<typename T> T_array& operator/=(const T&);
-    template<typename T> T_array& operator%=(const T&);
-    template<typename T> T_array& operator^=(const T&);
-    template<typename T> T_array& operator&=(const T&);
-    template<typename T> T_array& operator|=(const T&);
-    template<typename T> T_array& operator>>=(const T&);
-    template<typename T> T_array& operator<<=(const T&);
+  T_array& operator+=(const T_array&);
+  T_array& operator-=(const T_array&);
+  T_array& operator*=(const T_array&);
+  T_array& operator/=(const T_array&);
+  T_array& operator%=(const T_array&);
+  T_array& operator^=(const T_array&);
+  T_array& operator&=(const T_array&);
+  T_array& operator|=(const T_array&);
+  T_array& operator>>=(const T_array&);
+  T_array& operator<<=(const T_array&);
+
+  template<typename T_expr> T_array& operator+=(const ETBase<T_expr>&);
+  template<typename T_expr> T_array& operator-=(const ETBase<T_expr>&);
+  template<typename T_expr> T_array& operator*=(const ETBase<T_expr>&);
+  template<typename T_expr> T_array& operator/=(const ETBase<T_expr>&);
+  template<typename T_expr> T_array& operator%=(const ETBase<T_expr>&);
+  template<typename T_expr> T_array& operator^=(const ETBase<T_expr>&);
+  template<typename T_expr> T_array& operator&=(const ETBase<T_expr>&);
+  template<typename T_expr> T_array& operator|=(const ETBase<T_expr>&);
+  template<typename T_expr> T_array& operator>>=(const ETBase<T_expr>&);
+  template<typename T_expr> T_array& operator<<=(const ETBase<T_expr>&);
 
 #else
     T_array& operator+=(T_numtype);

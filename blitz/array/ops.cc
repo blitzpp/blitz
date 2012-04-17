@@ -85,14 +85,24 @@ Array<P_numtype, N_rank>::operator=(const Array<T_numtype,N_rank>& x)
 
 #define BZ_ARRAY_UPDATE(op,name)					\
   template<typename P_numtype, int N_rank>				\
-  template<typename T>							\
+  template<typename T_expr>						\
   _bz_forceinline							\
   Array<P_numtype,N_rank>&						\
-  Array<P_numtype,N_rank>::operator op(const T& expr)			\
+  Array<P_numtype,N_rank>::operator op(const ETBase<T_expr>& expr)	\
   {									\
-    _bz_evaluate(*this, _bz_typename asExpr<T>::T_expr(expr),		\
-		 name<T_numtype, _bz_typename asExpr<T>::T_expr::T_numtype>()); \
-  return *this;								\
+    _bz_evaluate(*this, _bz_typename asExpr<T_expr>::T_expr(expr.unwrap()), \
+		 name<T_numtype, _bz_typename asExpr<T_expr>::T_expr::T_result>()); \
+    return *this;							\
+  }									\
+  template<typename P_numtype, int N_rank>				\
+  _bz_forceinline							\
+  Array<P_numtype,N_rank>&						\
+  Array<P_numtype,N_rank>::operator op(const Array<T_numtype, N_rank>& x) \
+  {									\
+    typedef typename asExpr<Array<T_numtype,N_rank> >::T_expr T_expr;	\
+    _bz_evaluate(*this, asExpr<Array<T_numtype, N_rank> >::getExpr(x),	\
+		 name<T_numtype, _bz_typename T_expr::T_result>());	\
+    return *this;							\
   }
 
 BZ_ARRAY_UPDATE(+=, _bz_plus_update)

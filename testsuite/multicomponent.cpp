@@ -4,15 +4,6 @@
 #include <blitz/tinyvec2.cc>
 #include <blitz/tinymat2.h>
 #include <blitz/tinymat2.cc>
-// #include <blitz/array/asexpr.cc>
-// #include <blitz/array/ops.h>
-// #include <blitz/array/ops.cc>
-// #include <blitz/array/fastiter.h>
-// #include <blitz/array/methods.cc>
-// #include <blitz/array/methods.cc>
-// #include <blitz/array/io.cc>
-// #include <blitz/ops.h>
-// #include <blitz/array/funcs.h>
 
 BZ_USING_NAMESPACE(blitz)
 
@@ -119,6 +110,34 @@ int main()
 	}
 	for(int l=0; l<2; ++l) {
 	  ISCLOSE(a1mvB(i)(j,k)(l),a1mvA(i)(j,k)(l)>0?-a1mvA(i)(j,k)(l):-3*a1mvA(i)(j,k)(l));
+	}
+      }
+    }
+  }
+
+  // also test that the update versions of the operators work
+  a1B -= 2*(-a1A)+sqrt(a1A*a1A);
+  a1vB -= 2*(-a1vA)+sqrt(a1vA*a1vA);
+  a1mB -= 2*(-a1mA)+sqrt(a1mA*a1mA);
+  tvvB -= 2*(-tvvA)+sqrt(tvvA*tvvA);
+  tmvB -= 2*(-tmvA)+sqrt(tmvA*tmvA);
+  a1vvB -= 2*(-a1vvA)+sqrt(a1vvA*a1vvA);
+  a1mvB -= 2*(-a1mvA)+sqrt(a1mvA*a1mvA);
+
+  for(int i=0; i<sz; ++i) {
+    ISCLOSE ( a1B(i), 0 );
+
+    for(int j=0; j<2; ++j) {
+      ISCLOSE(a1vB(i)(j), 0);
+      ISCLOSE(tvvB(i)(j), 0);
+      for(int k=0; k<2; ++k) {
+	ISCLOSE(a1mB(i)(j,k), 0);
+	ISCLOSE(a1vvB(i)(j)(k), 0);
+	if(i<2) {
+	  ISCLOSE(tmvB(j,k)(i), 0 );
+	}
+	for(int l=0; l<2; ++l) {
+	  ISCLOSE(a1mvB(i)(j,k)(l), 0);
 	}
       }
     }
