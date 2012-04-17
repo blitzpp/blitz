@@ -2290,6 +2290,17 @@ public:
   T_array& operator>>=(const T_array&);
   T_array& operator<<=(const T_array&);
 
+  T_array& operator+=(const T_numtype&);
+  T_array& operator-=(const T_numtype&);
+  T_array& operator*=(const T_numtype&);
+  T_array& operator/=(const T_numtype&);
+  T_array& operator%=(const T_numtype&);
+  T_array& operator^=(const T_numtype&);
+  T_array& operator&=(const T_numtype&);
+  T_array& operator|=(const T_numtype&);
+  T_array& operator>>=(const T_numtype&);
+  T_array& operator<<=(const T_numtype&);
+
   template<typename T_expr> T_array& operator+=(const ETBase<T_expr>&);
   template<typename T_expr> T_array& operator-=(const ETBase<T_expr>&);
   template<typename T_expr> T_array& operator*=(const ETBase<T_expr>&);

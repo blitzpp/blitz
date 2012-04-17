@@ -103,6 +103,16 @@ Array<P_numtype, N_rank>::operator=(const Array<T_numtype,N_rank>& x)
     _bz_evaluate(*this, asExpr<Array<T_numtype, N_rank> >::getExpr(x),	\
 		 name<T_numtype, _bz_typename T_expr::T_result>());	\
     return *this;							\
+  }									\
+  template<typename P_numtype, int N_rank>				\
+  _bz_forceinline							\
+  Array<P_numtype,N_rank>&						\
+  Array<P_numtype,N_rank>::operator op(const T_numtype& x)		\
+  {									\
+    typedef typename asExpr<T_numtype>::T_expr T_expr;			\
+    _bz_evaluate(*this, asExpr<T_numtype>::getExpr(x),			\
+		 name<T_numtype, _bz_typename T_expr::T_result>());	\
+    return *this;							\
   }
 
 BZ_ARRAY_UPDATE(+=, _bz_plus_update)

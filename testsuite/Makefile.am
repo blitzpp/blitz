@@ -25,7 +25,7 @@ peter-nordlund-3 preexisting promote pthread qcd reduce reindex	       \
 reverse safeToReturn shapecheck shape slice-iterators stencil-et       \
 stencil-extent storage stub theodore-papadopoulo-1 tinymat tinyvec     \
 transpose troyer-genilloud tvinitialize Ulisses-Mello-1 weakref	       \
-wei-ku-1 where zeek-1 cast serialize
+wei-ku-1 where zeek-1 cast serialize update
 
 # 64bit test is special because it takes forever to run without optimization
 64bit_SOURCES = 64bit.cpp
@@ -104,6 +104,7 @@ transpose_SOURCES = transpose.cpp
 troyer_genilloud_SOURCES = troyer-genilloud.cpp
 tvinitialize_SOURCES = tvinitialize.cpp
 Ulisses_Mello_1_SOURCES = Ulisses-Mello-1.cpp
+update_SOURCES = update.cpp
 weakref_SOURCES = weakref.cpp
 wei_ku_1_SOURCES = wei-ku-1.cpp
 where_SOURCES = where.cpp
