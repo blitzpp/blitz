@@ -151,7 +151,6 @@ AC_ARG_ENABLE([serialization],
 	AX_BOOST_BASE([1.40.0])						       
 	AX_BOOST_SERIALIZATION
 	AC_CHECK_HEADERS([boost/mpi.hpp])
-	AC_CHECK_LIB([boost_mpi],[main],,AC_MSG_WARN([Could not find Boost::MPI library.]))
 	 ], AC_MSG_RESULT([no]))
   
 # check for PAPI library
