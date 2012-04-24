@@ -33,6 +33,8 @@
 
 #ifdef BZ_HAVE_BOOST_SERIALIZATION
 #include <boost/serialization/serialization.hpp>
+#endif
+#ifdef BZ_HAVE_BOOST_MPI
 #include <boost/mpi/datatype.hpp>
 #endif
 
@@ -466,7 +468,7 @@ _bz_global _bz_columnMajorTag columnMajorArray;
 
 BZ_NAMESPACE_END
 
-#ifdef BZ_HAVE_BOOST_SERIALIZATION
+#ifdef BZ_HAVE_BOOST_MPI
 namespace boost { namespace mpi {
   template <int N>
   struct is_mpi_datatype<blitz::GeneralArrayStorage<N> > : boost::mpl::true_ { };
