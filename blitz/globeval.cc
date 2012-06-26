@@ -406,7 +406,7 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
   }
 
   // calculate uneven elements at the beginning of dest
-  const int uneven_start=simdTypes<T_numtype>::offsetToAlignment(data);
+  const diffType uneven_start=simdTypes<T_numtype>::offsetToAlignment(data);
 
   // we can only guarantee alignment if all operands have the same
   // width and are not mutually misaligned
@@ -456,7 +456,9 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
 	BZ_DEBUG_MESSAGE("\tscalar loop for " << uneven_start << " unaligned starting elements");
       }
 #endif
+#ifdef BZ_USE_ALIGNMENT_PRAGMAS
 #pragma ivdep
+#endif
       for (; i < uneven_start; ++i)
 //#pragma forceinline recursive
 	T_update::update(data[i], expr.fastRead(i));
@@ -495,7 +497,9 @@ _bz_evaluateWithUnitStride(T_dest& dest, typename T_dest::T_iterator& iter,
     BZ_DEBUG_MESSAGE("\tscalar loop for " << ubound-i << " trailing elements starting at " << i);
   }
 #endif
+#ifdef BZ_USE_ALIGNMENT_PRAGMAS
 #pragma ivdep
+#endif
   for (; i < ubound; ++i)
 //#pragma forceinline recursive
     T_update::update(data[i], expr.fastRead(i));
@@ -524,7 +528,9 @@ _bz_evaluateWithCommonStride(T_dest& dest, typename T_dest::T_iterator& iter,
   T_numtype* restrict data = const_cast<T_numtype*>(iter.data());
 
 #ifndef BZ_ARRAY_STACK_TRAVERSAL_UNROLL
-#pragma ivdep
+# ifdef BZ_USE_ALIGNMENT_PRAGMAS
+# pragma ivdep
+# endif
   for (diffType i=0; i != ubound; i += commonStride)
     T_update::update(data[i], expr.fastRead(i));
 #else
@@ -1405,11 +1411,11 @@ _bz_evaluateWithTiled2DTraversal(T_dest& dest, T_expr expr, T_update)
 #ifdef BZ_ARRAY_EXPR_USE_COMMON_STRIDE
                 else if (useCommonStride)
                 {
-                    int ubound = (nj-bj) * commonStride;
+                    const diffType ubound = (nj-bj) * commonStride;
                     T_numtype* restrict data = const_cast<T_numtype*>
                         (iter.data());
 
-                    for (int j=0; j < ubound; j += commonStride)
+                    for (diffType j=0; j < ubound; j += commonStride)
                         T_update::update(data[j], expr.fastRead(j));
                 }
 #endif

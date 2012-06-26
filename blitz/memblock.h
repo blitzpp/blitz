@@ -150,15 +150,19 @@ protected:
        upon creating it. (The creator obviously does have to call
        removeReference, though.) This avoids the initial mutex lock. */
     void          addReference()
-    { 
-        BZ_MUTEX_LOCK(mutex)
-        const int refcount = ++references_; 
-	BZ_MUTEX_UNLOCK(mutex)
-
+    {       
 #ifdef BZ_DEBUG_LOG_REFERENCES
-	  cout << "MemoryBlock:    reffed " << setw(8) << length_ 
+        BZ_MUTEX_LOCK(mutex)
+        const int refcount = ++references_;
+        BZ_MUTEX_UNLOCK(mutex)
+
+        cout << "MemoryBlock:    reffed " << setw(8) << length_ 
 	       << " at " << ((void *)dataBlockAddress_) << " (r=" 
 	       << refcount << ")" << endl;
+#else
+        BZ_MUTEX_LOCK(mutex)
+        ++references_;
+        BZ_MUTEX_UNLOCK(mutex)
 #endif
     }
 
