@@ -75,9 +75,6 @@ void grabner()
   a5 = sum(sum(a4, l), k);
   a6 = sum(sum(a1(i, k) * a2(l,k) * a3(j, l), l),k);
   BZTEST(all(a5==a6));
-
-  a4 = (a1(i, k) * a2(k,l) * a3(j, l));
-  sum(a1(i, k) * a2(k,l) * a3(j, l), l);
 }
 
 int main()
