@@ -2251,14 +2251,10 @@ public:
       Scalar operand assignment.  \todo Need a precondition check on
       isStorageContiguous when operator, is used. \todo We should do
       bounds checking, right now we will buffer overrun if the number
-      of initializers in the list is larger than numElements.
-      
-      Changed to use an iterator instead of a POD pointer. This should
-      work as long as the iterators work correctly (which is
-      questionable...) */
-    ListInitializationSwitch<T_array,iterator> operator=(T_numtype x)
+      of initializers in the list is larger than numElements. */
+    ListInitializationSwitch<T_array> operator=(T_numtype x)
     {
-      return ListInitializationSwitch<T_array,iterator>(*this, x);
+      return ListInitializationSwitch<T_array>(*this, x);
     }
 
     T_array& initialize(T_numtype);
@@ -2380,8 +2376,8 @@ public:
 
 public:
 
-  //T_numtype* restrict getInitializationIterator() { return dataFirst(); }
-  iterator getInitializationIterator() { return begin(); }
+  T_numtype* restrict getInitializationIterator() { return dataFirst(); }
+//iterator getInitializationIterator() { return begin(); }
 
     bool canCollapse(int outerRank, int innerRank) const { 
 #ifdef BZ_DEBUG_TRAVERSE
