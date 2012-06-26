@@ -1,22 +1,25 @@
 /*****************************************************************************
- * where.cpp     Blitz++ Vector<T> example, illustrating where(X,Y,Z)
+ * where.cpp     Blitz++ 1D Array example, illustrating where(X,Y,Z)
  *               expressions.
  *****************************************************************************/
 
-#include <blitz/vector-et.h>
-#include <blitz/vecwhere.h>
+#include <blitz/array.h>
 
 BZ_USING_NAMESPACE(blitz)
 
 int main()
 {
-    Vector<int> x = Range(-3,+3);   // [ -3 -2 -1  0  1  2  3 ]
+//  Vector<int> x = Range(-3,+3);   // [ -3 -2 -1  0  1  2  3 ]
+    Array<int,1> x(Range(-3,+3));
+    x = tensor::i;
 
     // The where(X,Y,Z) function is similar to the X ? Y : Z operator.
     // If X is logical true, then Y is returned; otherwise, Z is
     // returned.
 
-    Vector<int> y = where(abs(x) > 2, x+10, x-10);
+//  Vector<int> y = where(abs(x) > 2, x+10, x-10);
+    Array<int,1> y(x.shape());
+    y = where(abs(x) > 2, x+10, x-10);
 
     // The above statement is transformed into something resembling:
     //
