@@ -127,6 +127,7 @@ public:
      *            templates
      * iterator   is a STL-style iterator
      * const_iterator is an STL-style const iterator
+     * T_default_storage is the default storage class type for the array
      */
 
     typedef P_numtype                T_numtype;
@@ -137,6 +138,22 @@ public:
     typedef ArrayIterator<T_numtype,N_rank> iterator;
     typedef ConstArrayIterator<T_numtype,N_rank> const_iterator;
 
+    /**
+     * Set default storage order. This is configurable
+     * via #defines as it is can be beneficial to set a 
+     * specific storage for an entire project/file.
+     *
+     * First check for the Fortan flag and then the column
+     * major flag, since Fortran arrays are column major.
+     */
+#if defined(BZ_FORTRAN_ARRAY)
+    typedef FortranArray<N_rank> T_default_storage;
+#elif defined(BZ_COLUMN_MAJOR_ARRAY)
+    typedef ColumnMajorArray<N_rank> T_default_storage;
+#else
+    typedef GeneralArrayStorage<N_rank> T_default_storage;
+#endif
+    
     static const int rank_ = N_rank;
 
     //////////////////////////////////////////////
@@ -158,7 +175,7 @@ public:
      * will create a 32x64x64 array.  This is handled by setupStorage().
      */
 
-    Array(GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+    Array(GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         length_ = 0;
@@ -167,7 +184,7 @@ public:
     }
 
     explicit Array(int length0, 
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         length_[0] = length0;
@@ -175,7 +192,7 @@ public:
     }
 
     Array(int length0, int length1,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         BZPRECONDITION(N_rank >= 2);
@@ -189,7 +206,7 @@ public:
     }
 
     Array(int length0, int length1, int length2,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         BZPRECONDITION(N_rank >= 3);
@@ -200,7 +217,7 @@ public:
     }
 
     Array(int length0, int length1, int length2, int length3,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         BZPRECONDITION(N_rank >= 4);
@@ -212,7 +229,7 @@ public:
     }
 
     Array(int length0, int length1, int length2, int length3, int length4,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         BZPRECONDITION(N_rank >= 5);
@@ -226,7 +243,7 @@ public:
 
     Array(int length0, int length1, int length2, int length3, int length4,
         int length5,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         BZPRECONDITION(N_rank >= 6);
@@ -241,7 +258,7 @@ public:
 
     Array(int length0, int length1, int length2, int length3, int length4,
         int length5, int length6,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         BZPRECONDITION(N_rank >= 7);
@@ -257,7 +274,7 @@ public:
 
     Array(int length0, int length1, int length2, int length3, int length4,
         int length5, int length6, int length7,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         BZPRECONDITION(N_rank >= 8);
@@ -274,7 +291,7 @@ public:
 
     Array(int length0, int length1, int length2, int length3, int length4,
         int length5, int length6, int length7, int length8,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         BZPRECONDITION(N_rank >= 9);
@@ -292,7 +309,7 @@ public:
 
     Array(int length0, int length1, int length2, int length3, int length4,
         int length5, int length6, int length7, int length8, int length9,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         BZPRECONDITION(N_rank >= 10);
@@ -312,7 +329,7 @@ public:
     Array(int length0, int length1, int length2, int length3, int length4,
         int length5, int length6, int length7, int length8, int length9,
         int length10,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         BZPRECONDITION(N_rank >= 11);
@@ -336,7 +353,7 @@ public:
      */
     Array(T_numtype* restrict dataFirst, TinyVector<int, N_rank> shape,
         GeneralArrayStorage<N_rank> storage = 
-	  GeneralArrayStorage<N_rank>(contiguousData))
+	  T_default_storage(contiguousData))
       : MemoryBlockReference<T_numtype>(_bz_returntype<sizeType>::product(shape), dataFirst, 
           neverDeleteData),
         storage_(storage)
@@ -363,7 +380,7 @@ public:
     Array(T_numtype* restrict dataFirst, TinyVector<int, N_rank> shape,
         TinyVector<diffType, N_rank> stride, 
         GeneralArrayStorage<N_rank> storage = 
-	  GeneralArrayStorage<N_rank>(contiguousData))
+	  T_default_storage(contiguousData))
       : MemoryBlockReference<T_numtype>(_bz_returntype<sizeType>::product(shape), dataFirst, 
           neverDeleteData),
         storage_(storage)
@@ -386,7 +403,7 @@ public:
     Array(T_numtype* restrict dataFirst, TinyVector<int, N_rank> shape,
         preexistingMemoryPolicy deletionPolicy,
         GeneralArrayStorage<N_rank> storage = 
-	  GeneralArrayStorage<N_rank>(contiguousData))
+	  T_default_storage(contiguousData))
       : MemoryBlockReference<T_numtype>(_bz_returntype<sizeType>::product(shape), dataFirst, 
             deletionPolicy),
         storage_(storage)
@@ -414,7 +431,7 @@ public:
         TinyVector<diffType, N_rank> stride,
         preexistingMemoryPolicy deletionPolicy,
         GeneralArrayStorage<N_rank> storage = 
-	  GeneralArrayStorage<N_rank>(contiguousData))
+	  T_default_storage(contiguousData))
       : MemoryBlockReference<T_numtype>(_bz_returntype<sizeType>::product(shape), dataFirst, 
           deletionPolicy),
         storage_(storage)
@@ -437,7 +454,7 @@ public:
      */
 
     Array(const TinyVector<int, N_rank>& extent, 
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         length_ = extent;
@@ -452,7 +469,7 @@ public:
     Array(const TinyVector<int, N_rank>& lbounds,
         const TinyVector<int, N_rank>& extent,
         const GeneralArrayStorage<N_rank>& storage 
-           = GeneralArrayStorage<N_rank>());
+           = T_default_storage());
 
     /*
      * These constructors allow arbitrary bases (starting indices) to be set.
@@ -460,7 +477,7 @@ public:
      * will create an 11x11 array whose indices are 10..20 and 20..30
      */
     Array(Range r0, 
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         BZPRECONDITION(r0.isAscendingContiguous());
@@ -471,7 +488,7 @@ public:
     }
 
     Array(Range r0, Range r1,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         BZPRECONDITION(r0.isAscendingContiguous() && 
@@ -486,7 +503,7 @@ public:
     }
 
     Array(Range r0, Range r1, Range r2,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         BZPRECONDITION(r0.isAscendingContiguous() &&
@@ -503,7 +520,7 @@ public:
     }
 
     Array(Range r0, Range r1, Range r2, Range r3,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         BZPRECONDITION(r0.isAscendingContiguous() &&
@@ -523,7 +540,7 @@ public:
     }
 
     Array(Range r0, Range r1, Range r2, Range r3, Range r4,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         BZPRECONDITION(r0.isAscendingContiguous() &&
@@ -545,7 +562,7 @@ public:
     }
 
     Array(Range r0, Range r1, Range r2, Range r3, Range r4, Range r5,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         BZPRECONDITION(r0.isAscendingContiguous() &&
@@ -571,7 +588,7 @@ public:
 
     Array(Range r0, Range r1, Range r2, Range r3, Range r4, Range r5,
         Range r6,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         BZPRECONDITION(r0.isAscendingContiguous() &&
@@ -599,7 +616,7 @@ public:
 
     Array(Range r0, Range r1, Range r2, Range r3, Range r4, Range r5,
         Range r6, Range r7,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         BZPRECONDITION(r0.isAscendingContiguous() &&
@@ -630,7 +647,7 @@ public:
 
     Array(Range r0, Range r1, Range r2, Range r3, Range r4, Range r5,
         Range r6, Range r7, Range r8,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         BZPRECONDITION(r0.isAscendingContiguous() &&
@@ -663,7 +680,7 @@ public:
 
     Array(Range r0, Range r1, Range r2, Range r3, Range r4, Range r5,
         Range r6, Range r7, Range r8, Range r9,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         BZPRECONDITION(r0.isAscendingContiguous() &&
@@ -699,7 +716,7 @@ public:
 
     Array(Range r0, Range r1, Range r2, Range r3, Range r4, Range r5,
         Range r6, Range r7, Range r8, Range r9, Range r10,
-        GeneralArrayStorage<N_rank> storage = GeneralArrayStorage<N_rank>())
+        GeneralArrayStorage<N_rank> storage = T_default_storage())
         : storage_(storage)
     {
         BZPRECONDITION(r0.isAscendingContiguous() &&
