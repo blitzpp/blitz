@@ -19,7 +19,11 @@ int main()
 
     Vector<int> b = a(Range(0,4,2));
     cout << b << endl;
-    b = -1, -2, -3;
+//  b = -1, -2, -3;
+//  workaround: use list initialization with Vector that has own storage
+    Vector<int> bb(3);
+    bb = -1, -2, -3;
+    b = bb;
     cout << a << endl;
     cout << b << endl;
     BZTEST(a(0) == -1);
@@ -37,8 +41,11 @@ int main()
     BZTEST(a(3) == 0);
     BZTEST(a(4) == 0);
     BZTEST(a(5) == 0);
-
-    c = 8, 7, 3, 6, 4, 1;
+//  c = 8, 7, 3, 6, 4, 1;
+//  workaround: use list initialization with Vector that has own storage
+    Vector<int> cc(6);
+    cc = 8, 7, 3, 6, 4, 1;
+    c = cc;
     BZTEST(a(0) == 1);
     BZTEST(a(1) == 4);
     BZTEST(a(2) == 6);
