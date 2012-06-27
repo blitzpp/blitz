@@ -243,7 +243,7 @@ public:
 
   template<int N>
   typename tvresult<N>::Type fastRead_tv(diffType i) const
-  { return iter_.fastRead_tv<N>(i); }
+  { return iter_.template fastRead_tv<N>(i); }
 
   bool isVectorAligned(diffType offset) const 
   { return iter_.isVectorAligned(offset); }
@@ -624,7 +624,7 @@ public:
 
   template<int N>
   typename tvresult<N>::Type fastRead_tv(diffType i) const
-  { return iter_.fastRead_tv<N>(i); }
+  { return iter_.template fastRead_tv<N>(i); }
 
 
     T_result operator[](int i) const { 
@@ -897,8 +897,8 @@ public:
 
   template<int N>
   typename tvresult<N>::Type fastRead_tv(diffType i) const
-      { return typename tvresult<N>::Type(iter1_.fastRead_tv<N>(i),
-					  iter2_.fastRead_tv<N>(i)); }
+      { return typename tvresult<N>::Type(iter1_.template fastRead_tv<N>(i),
+					  iter2_.template fastRead_tv<N>(i)); }
 
     T_result operator[](int i) const { 
       return readHelper<T_typeprop>::indexop(iter1_, iter2_, i); }
@@ -1260,9 +1260,9 @@ public:
 
       template<int N>
       typename tvresult<N>::Type fastRead_tv(diffType i) const
-      { return typename tvresult<N>::Type(iter1_.fastRead_tv<N>(i),
-					  iter2_.fastRead_tv<N>(i),
-					  iter3_.fastRead_tv<N>(i)); }
+      { return typename tvresult<N>::Type(iter1_.template fastRead_tv<N>(i),
+					  iter2_.template fastRead_tv<N>(i),
+					  iter3_.template fastRead_tv<N>(i)); }
       
     T_result operator[](int i) const { 
       return readHelper<T_typeprop>::indexop(iter1_, iter2_, iter3_, i); }
@@ -1692,10 +1692,10 @@ public:
 
       template<int N>
       typename tvresult<N>::Type fastRead_tv(diffType i) const
-      { return typename tvresult<N>::Type(iter1_.fastRead_tv<N>(i),
-					  iter2_.fastRead_tv<N>(i),
-					  iter3_.fastRead_tv<N>(i),
-					  iter4_.fastRead_tv<N>(i)); }
+      { return typename tvresult<N>::Type(iter1_.template fastRead_tv<N>(i),
+					  iter2_.template fastRead_tv<N>(i),
+					  iter3_.template fastRead_tv<N>(i),
+					  iter4_.template fastRead_tv<N>(i)); }
 
     T_result operator[](int i) const { 
       return readHelper<T_typeprop>::indexop(iter1_, iter2_, 

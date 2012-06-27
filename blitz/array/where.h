@@ -196,9 +196,9 @@ public:
 
       template<int N>
       typename tvresult<N>::Type fastRead_tv(diffType i) const
-      { return typename tvresult<N>::Type(iter1_.fastRead_tv<N>(i),
-					  iter2_.fastRead_tv<N>(i),
-					  iter3_.fastRead_tv<N>(i)); }
+      { return typename tvresult<N>::Type(iter1_.template fastRead_tv<N>(i),
+					  iter2_.template fastRead_tv<N>(i),
+					  iter3_.template fastRead_tv<N>(i)); }
 
     T_result operator[](int i) const { 
       return readHelper<T_typeprop>::indexop(iter1_, iter2_, iter3_, i); }
