@@ -95,7 +95,7 @@ int main()
 
     bench.setParameterVector(parameters);
     bench.setIterations(iters);
-    bench.setFlopsPerIteration(flops);
+    bench.setOpsPerIteration(flops);
 
     bench.beginBenchmarking();
 

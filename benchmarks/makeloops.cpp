@@ -397,7 +397,7 @@ void cppVersion(loop& lp)
 	"\n"
 	"    bench.setParameterVector(parameters);\n"
 	"    bench.setIterations(iters);\n"
-	"    bench.setFlopsPerIteration(flops);\n"
+	"    bench.setOpsPerIteration(flops);\n"
 	"\n"
 	"    bench.beginBenchmarking();" << endl << endl;
 
