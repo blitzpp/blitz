@@ -1,22 +1,21 @@
-Blitz++ is distributed under a Perl-like "artistic license" (see LICENSE),
-the simplified BSD license (see below), or the GNU LGPL (see COPYING).  
-Please choose whichever license best suites your needs.
+Blitz++ is distributed under the Perl Artistic License 2.0 (see LICENSE),
+the simplified BSD license (see below), and the GNU LGPL v3 (see COPYING and
+COPYING.LESSER).  Please choose whichever license best suits your needs.
 --
 The Blitz++ BSD License
 
-Copyright (C) 1997-2008, Todd Veldhuizen. 
+Copyright (C) 1997-2012, Todd Veldhuizen. 
 All rights reserved.
 
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions 
-are met:
-
-Redistributions of source code must retain the above copyright notice, 
+1. Redistributions of source code must retain the above copyright notice, 
 this list of conditions and the following disclaimer.
 
-Redistributions in binary form must reproduce the above copyright notice, 
+2. Redistributions in binary form must reproduce the above copyright notice, 
 this list of conditions and the following disclaimer in the documentation 
 and/or other materials provided with the distribution.
+
+3. The name of the author may not be used to endorse or promote products 
+derived from this software without specific prior written permission.
 
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS "AS IS" AND ANY EXPRESS 

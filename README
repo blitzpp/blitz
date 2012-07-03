@@ -1,15 +1,17 @@
 Blitz++ is a C++ template class library which provides array objects
 for scientific computing.  It is not a linear algebra or fft library;
-see http://oonumerics.org/oon for libraries that will do those things.
+see http://oonumerics.org/oon or http://www.math.unipd.it/~michela/OP.htm
+for libraries that will do those things.
 
-The original Blitz website is at http://oonumerics.org/blitz.  The Blitz
-project is now hosted by SourceForge and can be found on the web at 
+The original Blitz website was located at http://oonumerics.org/blitz.  
+The Blitz project is now hosted by SourceForge and can be found on the web at 
 http://www.sourceforge.net/projects/blitz.
 
-Licensing information is at http://oonumerics.org/legal.
+Licensing information is detailed in the LEGAL file.
 Summary: you can do anything except sell this library in source
-form.  Blitz is licensed under both the GPL (see COPYING)
-and a less restrictive (non-viral) "artistic license" (see LICENSE).
+form.  Blitz is licensed under either the Lesser GPL version 3 license
+(see COPYING and COPYING.LESSER), the BSD license (see COPYRIGHT), and
+the less restrictive Perl "artistic license" version 2.0 (see LICENSE).
 
 
 1.  Directories
@@ -49,11 +51,12 @@ INSTALL for details.
 
 3.  Email addresses
 
-Please report bugs to <blitz-bugs@oonumerics.org> or submit a bug report
-on the SourceForge website at http://www.sourceforge.net/projects/blitz.
+Please report bugs to <blitz-support@lists.sourceforge.net> 
+or submit a bug report on the SourceForge website at 
+http://www.sourceforge.net/projects/blitz.
 
-Please send suggestions and feature requests to <blitz-dev@oonumerics.org>
-or submit them at the Blitz++ SourceForge website.
+Please send ideas or feature requests to <blitz-devel@lists.sourceforge.net>
+or submit them on the Blitz++ SourceForge website.
 
 
 4.  Legal mumbo-jumbo
