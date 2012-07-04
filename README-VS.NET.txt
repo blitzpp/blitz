@@ -1,3 +1,11 @@
+The Blitz configuration file and Microsoft Visual Studio solution files
+have now been updated for MS Visual Studio 2010. Please use the zip 
+archive file Blitz-VS2010.zip and follow the directions below.
+
+Julian C. Cummings
+07-03-12
+
+
 If you are interested in using Blitz with Microsoft's VS .NET 2003 C++
 compiler, we have provided a Zip archive containing a Blitz configuration 
 header file and project files for building the Blitz library and the 
