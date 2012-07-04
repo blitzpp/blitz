@@ -364,7 +364,6 @@ public:
         computeStrides();
         data_ += zeroOffset_;
 
-	BZPRECHECK(isStorageContiguous(), "Non-contiguous storage used with pre-existing memory");
     }
 
   /**
@@ -414,7 +413,7 @@ public:
         computeStrides();
         data_ += zeroOffset_;
 
-	BZPRECHECK(isStorageContiguous(), "Non-contiguous storage used with pre-existing memory");
+	BZPRECHECK(deletionPolicy!=deleteDataWhenDone || isStorageContiguous(), "Non-contiguous storage used with owned pre-existing memory");
 
         if (deletionPolicy == duplicateData)
             reference(copy());
@@ -443,7 +442,7 @@ public:
         calculateZeroOffset();
         data_ += zeroOffset_;
 
-	BZPRECHECK(isStorageContiguous(), "Non-contiguous storage used with pre-existing memory");
+	BZPRECHECK(deletionPolicy!=deleteDataWhenDone || isStorageContiguous(), "Non-contiguous storage used with owned pre-existing memory");
 
         if (deletionPolicy == duplicateData)
             reference(copy());
