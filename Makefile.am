@@ -12,7 +12,8 @@ SUBDIRS = bin blitz random lib testsuite \
 	examples $(FORTRAN_DIRS) doc
 
 EXTRA_DIST = COPYRIGHT LEGAL LICENSE README.binutils README-VS.NET.txt \
-	Blitz-VS.NET.zip Blitz-VS2005.NET.zip Blitz-VS2010.zip ChangeLog.1 
+	Blitz-VS.NET.zip Blitz-VS2005.NET.zip Blitz-VS2010.zip \
+	ChangeLog.0 ChangeLog.1 ChangeLog.2
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = blitz.pc
