@@ -4,8 +4,6 @@
 
 SUBDIRS = examples stencils doxygen
 
-# docdir directory to install the doc (pdf ps html) 
-docdir = $(datadir)/doc/$(PACKAGE)-$(VERSION)
 
 DVIPS=export TEXPICTS=$(srcdir); dvips
 AM_MAKEINFOFLAGS = --no-split -I$(srcdir)
@@ -78,7 +76,7 @@ blitz.html: $(info_TEXINFOS) $(blitz_TEXINFOS)
 # Install also the images into the directory html 
 install-html-local:
 	test -z "$(htmldir)" || $(MKDIR_P) "$(DESTDIR)$(htmldir)"
-	$(INSTALL_DATA) *.gif *.jpg $(DESTDIR)$(htmldir)
+	$(INSTALL_DATA) $(srcdir)/*.gif $(srcdir)/*.jpg $(DESTDIR)$(htmldir)
 
 .PHONY: html
 
@@ -86,7 +84,7 @@ else
 
 # Install also the images into the directory containing the html files
 install-html-local:
-	$(INSTALL_DATA) *.gif *.jpg blitz.html
+	$(INSTALL_DATA) $(srcdir)/*.gif $(srcdir)/*.jpg $(top_builddir)/doc/blitz.html
 
 endif
 

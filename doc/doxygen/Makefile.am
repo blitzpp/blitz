@@ -2,7 +2,6 @@
 
 # Support doxygen documentation ?
 
-docdir = $(datadir)/doc/$(PACKAGE)-$(VERSION)/doxygen
 
 DISTCLEANFILES = Doxyfile doxygen-warning 
 
@@ -84,29 +83,27 @@ clean-local:
 		$(RM) -rf latex; \
 	fi
 
-# Install hooks
-make-install-dirs:
-	@if test '!' -d $(DESTDIR)$(docdir) ; \
-		then mkdir -p $(DESTDIR)$(docdir) ; \
-	fi
 
-install-data-hook: make-install-dirs
+install-data-hook:
 	@if test -d html; then \
-		echo Installing HTML documentation into $(DESTDIR)$(docdir) ; \
-		$(INSTALL_DATA) html/* $(DESTDIR)$(docdir) ; \
+		echo Installing HTML documentation into $(DESTDIR)$(htmldir) ; \
+		$(MKDIR_P) $(DESTDIR)$(htmldir) ; \
+		cp -r html/* $(DESTDIR)$(htmldir) ; \
 	fi
 	@if test -f $(PACKAGE).pdf; then \
-		echo Installing PDF manual into $(DESTDIR)$(docdir) ; \
-		$(INSTALL_DATA) $(PACKAGE).pdf $(DESTDIR)$(docdir) ; \
+		echo Installing PDF manual into $(DESTDIR)$(pdfdir) ; \
+		$(MKDIR_P) $(DESTDIR)$(pdfdir) ; \
+		$(INSTALL_DATA) $(PACKAGE).pdf $(DESTDIR)$(pdfdir) ; \
 	fi
 	@if test -f $(PACKAGE).ps; then \
-		echo Installing PS manual into $(DESTDIR)$(docdir) ; \
-		$(INSTALL_DATA) $(PACKAGE).ps $(DESTDIR)$(docdir) ; \
+		echo Installing PS manual into $(DESTDIR)$(psdir) ; \
+		$(MKDIR_P) $(DESTDIR)$(psdir) ; \
+		$(INSTALL_DATA) $(PACKAGE).ps $(DESTDIR)$(psdir) ; \
 	fi
 
 uninstall-hook: 
 	@echo Uninstalling doxygen documentation directory ; \
-	rm -rf "$(DESTDIR)$(docdir)";
+	rm -rf "$(DESTDIR)$(htmldir)" "$(DESTDIR)$(psdir)" "$(DESTDIR)$(pdfdir)" ;
 
 
 
