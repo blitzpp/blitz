@@ -37,6 +37,10 @@
 #include <blitz/prettyprint.h>
 
 #include <cstdlib>
+#include <boost/multiprecision/float128.hpp>
+
+using namespace std;
+using namespace boost::multiprecision;
 
 BZ_NAMESPACE(blitz)
     
