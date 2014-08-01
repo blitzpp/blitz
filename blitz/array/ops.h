@@ -34,6 +34,7 @@
 #include <blitz/ops.h>
 #include <blitz/funcs.h>
 #include <blitz/array/newet-macros.h>
+#include <boost/multiprecision/float128.hpp>
 
 BZ_NAMESPACE(blitz)
     
@@ -121,6 +122,7 @@ BZ_DECLARE_ARRAY_ET_SCALAR_OPS(unsigned long)
 BZ_DECLARE_ARRAY_ET_SCALAR_OPS(float)
 BZ_DECLARE_ARRAY_ET_SCALAR_OPS(double)
 BZ_DECLARE_ARRAY_ET_SCALAR_OPS(long double)
+BZ_DECLARE_ARRAY_ET_SCALAR_OPS(boost::multiprecision::float128)
 #ifdef BZ_HAVE_COMPLEX
 BZ_DECLARE_ARRAY_ET_SCALAR_OPS(complex<float>)
 BZ_DECLARE_ARRAY_ET_SCALAR_OPS(complex<double>)
