@@ -127,6 +127,7 @@ BZ_DECLARE_ARRAY_ET_SCALAR_OPS(boost::multiprecision::float128)
 BZ_DECLARE_ARRAY_ET_SCALAR_OPS(complex<float>)
 BZ_DECLARE_ARRAY_ET_SCALAR_OPS(complex<double>)
 BZ_DECLARE_ARRAY_ET_SCALAR_OPS(complex<long double>)
+BZ_DECLARE_ARRAY_ET_SCALAR_OPS(complex<boost::multiprecision::float128>)
 #endif
 
 
