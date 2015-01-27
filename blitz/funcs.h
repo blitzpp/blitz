@@ -8,7 +8,7 @@
  *
  * This file is a part of Blitz.
  *
- * Blitz is free software: you can redistribute it and/or modify 
+ * Blitz is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation, either version 3
  * of the License, or (at your option) any later version.
@@ -18,11 +18,11 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public 
+ * You should have received a copy of the GNU Lesser General Public
  * License along with Blitz.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Suggestions:          blitz-devel@lists.sourceforge.net
- * Bugs:                 blitz-support@lists.sourceforge.net    
+ * Bugs:                 blitz-support@lists.sourceforge.net
  *
  * For more information, please see the Blitz++ Home Page:
  *    https://sourceforge.net/projects/blitz/
@@ -37,54 +37,57 @@
 #include <blitz/prettyprint.h>
 
 #include <cstdlib>
-#include <boost/multiprecision/float128.hpp>
+
+#ifdef QUADMATH
+    #include <boost/multiprecision/float128.hpp>
+    using namespace boost::multiprecision;
+#endif //QUADMATH
 
 using namespace std;
-using namespace boost::multiprecision;
 
 BZ_NAMESPACE(blitz)
-    
+
 /* Helper functions. We use SFINAE to make these apply only for
    non-blitz numerical types (POD and complex), because otherwise they
    match against Array, etc, better than the ET versions that take
    ETBase parameters. */
-    
+
 template<typename T, bool b> struct _bz_isnot_blitz {};
 template<typename T> struct _bz_isnot_blitz<T, true> {typedef T Type;};
 template<typename T, bool b> struct _bz_isnot_blitz<std::complex<T>, b> {typedef std::complex<T> Type;};
 
 template <typename T>
-inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type 
+inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type
 pow2(const T x)
 { return x*x; }
 
 template <typename T>
-inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type 
+inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type
 pow3(const T x)
 { return x*x*x; }
 
 template <typename T>
-inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type 
+inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type
 pow4(const T x)
 { return x*x*x*x; }
 
 template <typename T>
-inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type 
+inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type
 pow5(const T x)
 { return x*x*x*x*x; }
 
 template <typename T>
-inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type 
+inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type
 pow6(const T x)
 { return x*x*x*x*x*x; }
 
 template <typename T>
-inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type 
+inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type
 pow7(const T x)
 { return x*x*x*x*x*x*x; }
 
 template <typename T>
-inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type 
+inline typename _bz_isnot_blitz<T, std::numeric_limits<T>::is_specialized>::Type
 pow8(const T x)
 { return x*x*x*x*x*x*x*x; }
 
@@ -102,7 +105,7 @@ template<typename T1, typename T2> struct ifthenelse<false,T1,T2> {
    for int arguments. (This is how gcc defines its math functions, so
    we should do the same.) Coerce_int is true except for the functions
    that can also meaningfully operate on ints.  */
-    
+
 #define BZ_DEFINE_UNARY_FUNC(name,fun,coerce_int)		     \
 template<typename T_numtype1>                                        \
 struct name {                                                        \
@@ -158,13 +161,13 @@ BZ_DEFINE_UNARY_FUNC(Fn_rint,BZ_IEEEMATHFN_SCOPE(rint),true)
 BZ_DEFINE_UNARY_FUNC(Fn_y0,BZ_IEEEMATHFN_SCOPE(y0),true)
 BZ_DEFINE_UNARY_FUNC(Fn_y1,BZ_IEEEMATHFN_SCOPE(y1),true)
 #endif
-    
+
 #ifdef BZ_HAVE_SYSTEM_V_MATH
 BZ_DEFINE_UNARY_FUNC(Fn__class,BZ_IEEEMATHFN_SCOPE(_class),true)
 BZ_DEFINE_UNARY_FUNC(Fn_nearest,BZ_IEEEMATHFN_SCOPE(nearest),true)
 BZ_DEFINE_UNARY_FUNC(Fn_rsqrt,BZ_IEEEMATHFN_SCOPE(rsqrt),true)
 #endif
-    
+
 BZ_DEFINE_UNARY_FUNC(Fn_sqr,BZ_BLITZ_SCOPE(pow2),false)
 BZ_DEFINE_UNARY_FUNC(Fn_cube,BZ_BLITZ_SCOPE(pow3),false)
 BZ_DEFINE_UNARY_FUNC(Fn_pow4,BZ_BLITZ_SCOPE(pow4),false)
@@ -174,7 +177,7 @@ BZ_DEFINE_UNARY_FUNC(Fn_pow7,BZ_BLITZ_SCOPE(pow7),false)
 BZ_DEFINE_UNARY_FUNC(Fn_pow8,BZ_BLITZ_SCOPE(pow8),false)
 
 /* Unary functions that return a specified type */
-    
+
 #define BZ_DEFINE_UNARY_FUNC_RET(name,fun,ret)                       \
 template<typename T_numtype1>                                        \
 struct name {                                                        \
@@ -198,16 +201,16 @@ struct name {                                                        \
 #ifdef BZ_HAVE_IEEE_MATH
 BZ_DEFINE_UNARY_FUNC_RET(Fn_ilogb,BZ_IEEEMATHFN_SCOPE(ilogb),int)
 #endif
-    
+
 #ifdef BZ_HAVE_SYSTEM_V_MATH
 BZ_DEFINE_UNARY_FUNC_RET(Fn_itrunc,BZ_IEEEMATHFN_SCOPE(itrunc),int)
 BZ_DEFINE_UNARY_FUNC_RET(Fn_uitrunc,BZ_IEEEMATHFN_SCOPE(uitrunc),unsigned int)
 #endif
-    
-    
+
+
 #ifdef BZ_HAVE_COMPLEX
 /* Specialization of unary functor for complex type */
-    
+
 #define BZ_DEFINE_UNARY_CFUNC(name,fun)                              \
 template<typename T>                                                 \
 struct name< BZ_STD_SCOPE(complex)<T> > {                            \
@@ -255,7 +258,7 @@ BZ_DEFINE_UNARY_CFUNC(Fn_pow7,BZ_BLITZ_SCOPE(pow7))
 BZ_DEFINE_UNARY_CFUNC(Fn_pow8,BZ_BLITZ_SCOPE(pow8))
 
 /* Unary functions that apply only to complex<T> and return T */
-    
+
 #define BZ_DEFINE_UNARY_CFUNC2(name,fun)                             \
 template<typename T_numtype1>                                        \
 struct name;                                                         \
@@ -287,11 +290,11 @@ BZ_DEFINE_UNARY_CFUNC2(Fn_imag,BZ_CMATHFN_SCOPE(imag))
 BZ_DEFINE_UNARY_CFUNC2(Fn_norm,BZ_CMATHFN_SCOPE(norm))
 BZ_DEFINE_UNARY_CFUNC2(Fn_real,BZ_CMATHFN_SCOPE(real))
 #endif // BZ_HAVE_COMPLEX_FCNS
-    
+
 #endif // BZ_HAVE_COMPLEX
-    
+
 /* Binary functions that return type based on type promotion */
-    
+
 #define BZ_DEFINE_BINARY_FUNC(name,fun)                              \
 template<typename T_numtype1, typename T_numtype2>                   \
 struct name {                                                        \
@@ -318,7 +321,7 @@ struct name {                                                        \
 BZ_DEFINE_BINARY_FUNC(Fn_atan2,BZ_MATHFN_SCOPE(atan2))
 BZ_DEFINE_BINARY_FUNC(Fn_fmod,BZ_MATHFN_SCOPE(fmod))
 BZ_DEFINE_BINARY_FUNC(Fn_pow,BZ_MATHFN_SCOPE(pow))
-    
+
 #ifdef BZ_HAVE_SYSTEM_V_MATH
 BZ_DEFINE_BINARY_FUNC(Fn_copysign,BZ_IEEEMATHFN_SCOPE(copysign))
 BZ_DEFINE_BINARY_FUNC(Fn_drem,BZ_IEEEMATHFN_SCOPE(drem))
@@ -327,9 +330,9 @@ BZ_DEFINE_BINARY_FUNC(Fn_nextafter,BZ_IEEEMATHFN_SCOPE(nextafter))
 BZ_DEFINE_BINARY_FUNC(Fn_remainder,BZ_IEEEMATHFN_SCOPE(remainder))
 BZ_DEFINE_BINARY_FUNC(Fn_scalb,BZ_IEEEMATHFN_SCOPE(scalb))
 #endif
-    
+
 /* Binary functions that return a specified type */
-    
+
 #define BZ_DEFINE_BINARY_FUNC_RET(name,fun,ret)                      \
 template<typename T_numtype1, typename T_numtype2>                   \
 struct name {                                                        \
@@ -356,10 +359,10 @@ struct name {                                                        \
 #ifdef BZ_HAVE_SYSTEM_V_MATH
 BZ_DEFINE_BINARY_FUNC_RET(Fn_unordered,BZ_IEEEMATHFN_SCOPE(unordered),int)
 #endif
-    
+
 #ifdef BZ_HAVE_COMPLEX
 /* Specialization of binary functor for complex type */
-    
+
 #define BZ_DEFINE_BINARY_CFUNC(name,fun)                             \
 template<typename T>                                                 \
 struct name< BZ_STD_SCOPE(complex)<T>, BZ_STD_SCOPE(complex)<T> > {  \
@@ -438,7 +441,7 @@ BZ_DEFINE_BINARY_CFUNC(Fn_pow,BZ_CMATHFN_SCOPE(pow))
 #endif
 
 /* Binary functions that apply only to T and return complex<T> */
-    
+
 #define BZ_DEFINE_BINARY_FUNC_CRET(name,fun)                         \
 template<typename T_numtype1, typename T_numtype2>                   \
 struct name;                                                         \
@@ -470,11 +473,11 @@ struct name<T, T> {                                                  \
 #ifdef BZ_HAVE_COMPLEX_FCNS
 BZ_DEFINE_BINARY_FUNC_CRET(Fn_polar,BZ_CMATHFN_SCOPE(polar))
 #endif
-    
+
 #endif // BZ_HAVE_COMPLEX
-    
+
 /* Ternary functions that return type based on type promotion */
-    
+
 #define BZ_DEFINE_TERNARY_FUNC(name,fun)                             \
 template <typename P_numtype1, typename P_numtype2,                  \
           typename P_numtype3>                                       \
@@ -503,7 +506,7 @@ struct name {                                                        \
 };
 
 /* Ternary functions that return a specified type */
-    
+
 #define BZ_DEFINE_TERNARY_FUNC_RET(name,fun,ret)                     \
 template <typename P_numtype1, typename P_numtype2,                  \
           typename P_numtype3>                                       \
@@ -563,15 +566,15 @@ struct name {                                                        \
     }									\
   };
 
-    
+
 /* These functions don't quite fit the usual patterns */
-    
+
 #ifdef BZ_HAVE_IEEE_MATH
 // isnan()    Nonzero if NaNS or NaNQ
 template<typename T_numtype1>
 struct Fn_isnan {
     typedef int T_numtype;
-    
+
     static inline T_numtype
     apply(T_numtype1 a)
     {
@@ -581,7 +584,7 @@ struct Fn_isnan {
         return BZ_IEEEMATHFN_SCOPE(isnan)(a);
 #endif
     }
-    
+
     template<typename T1>
     static inline void prettyPrint(BZ_STD_SCOPE(string) &str,
         prettyPrintFormat& format, const T1& t1)
@@ -599,7 +602,7 @@ struct Fn_isnan {
 template<typename T_numtype1, typename T_cast>
 struct Cast {
     typedef T_cast T_numtype;
-    
+
     static inline T_numtype
     apply(T_numtype1 a)
     { return T_numtype(a); }

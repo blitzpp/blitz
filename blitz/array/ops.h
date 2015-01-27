@@ -8,7 +8,7 @@
  *
  * This file is a part of Blitz.
  *
- * Blitz is free software: you can redistribute it and/or modify 
+ * Blitz is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation, either version 3
  * of the License, or (at your option) any later version.
@@ -18,11 +18,11 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public 
+ * You should have received a copy of the GNU Lesser General Public
  * License along with Blitz.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * Suggestions:          blitz-devel@lists.sourceforge.net
- * Bugs:                 blitz-support@lists.sourceforge.net    
+ * Bugs:                 blitz-support@lists.sourceforge.net
  *
  * For more information, please see the Blitz++ Home Page:
  *    https://sourceforge.net/projects/blitz/
@@ -34,19 +34,21 @@
 #include <blitz/ops.h>
 #include <blitz/funcs.h>
 #include <blitz/array/newet-macros.h>
-#include <boost/multiprecision/float128.hpp>
+#ifdef QUADMATH
+    #include <boost/multiprecision/float128.hpp>
+#endif //QUADMATH
 
 BZ_NAMESPACE(blitz)
-    
+
 // unary operators
-    
+
 BZ_DECLARE_ARRAY_ET_UNARY(operator~, BitwiseNot)
 BZ_DECLARE_ARRAY_ET_UNARY(operator!, LogicalNot)
 BZ_DECLARE_ARRAY_ET_UNARY(operator+, UnaryPlus)
 BZ_DECLARE_ARRAY_ET_UNARY(operator-, UnaryMinus)
 
 // binary operators
-    
+
 BZ_DECLARE_ARRAY_ET_BINARY(operator+,  Add)
 BZ_DECLARE_ARRAY_ET_BINARY(operator-,  Subtract)
 BZ_DECLARE_ARRAY_ET_BINARY(operator*,  Multiply)
@@ -68,7 +70,7 @@ BZ_DECLARE_ARRAY_ET_BINARY(operator||, LogicalOr)
 
 // \todo are these for Arrays of TinyVectors? How do we distinguish these from element-wise operations? they must now be done using the scalar() function
 /*
-// Declare binary ops between Array and "scalar-like" TinyVector 
+// Declare binary ops between Array and "scalar-like" TinyVector
 BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator+,  Add)
 BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator-,  Subtract)
 BZ_DECLARE_ARRAY_ET_BINARY_TINYVEC(operator*,  Multiply)
@@ -122,12 +124,16 @@ BZ_DECLARE_ARRAY_ET_SCALAR_OPS(unsigned long)
 BZ_DECLARE_ARRAY_ET_SCALAR_OPS(float)
 BZ_DECLARE_ARRAY_ET_SCALAR_OPS(double)
 BZ_DECLARE_ARRAY_ET_SCALAR_OPS(long double)
-BZ_DECLARE_ARRAY_ET_SCALAR_OPS(boost::multiprecision::float128)
+#ifdef QUADMATH
+    BZ_DECLARE_ARRAY_ET_SCALAR_OPS(boost::multiprecision::float128)
+#endif //QUADMATH
 #ifdef BZ_HAVE_COMPLEX
 BZ_DECLARE_ARRAY_ET_SCALAR_OPS(complex<float>)
 BZ_DECLARE_ARRAY_ET_SCALAR_OPS(complex<double>)
 BZ_DECLARE_ARRAY_ET_SCALAR_OPS(complex<long double>)
+#ifdef QUADMATH
 BZ_DECLARE_ARRAY_ET_SCALAR_OPS(complex<boost::multiprecision::float128>)
+#endif //QUADMATH
 #endif
 
 
