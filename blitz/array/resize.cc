@@ -974,6 +974,10 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
                ubound(9)));
             Range overlap10 = Range(fromStart, (extrema::min)(B.ubound(10), 
                ubound(10)));
+            B(overlap0, overlap1, overlap2, overlap3, overlap4, overlap5,
+              overlap6, overlap7, overlap8, overlap9, overlap10)
+                = (*this)(overlap0, overlap1, overlap2, overlap3, overlap4,
+                          overlap5, overlap6, overlap7, overlap8, overlap9, overlap10);
         }
         reference(B);
     }
