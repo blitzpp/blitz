@@ -37,6 +37,7 @@
 #include <blitz/array/domain.h>
 #include <blitz/array/slice.h>
 #include <blitz/bounds.h>
+#include <blitz/tv2fastiter.h> 
 
 /*
  * The array expression templates iterator interface is followed by

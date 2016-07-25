@@ -29,7 +29,7 @@
  *
  ***************************************************************************/
 #ifndef BZ_ASEXPR_CC
-#define BZ_ASEXPR_cc
+#define BZ_ASEXPR_CC
 
 #include <blitz/array/asexpr.h>
 #include <blitz/array-impl.h>
