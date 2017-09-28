@@ -7,14 +7,14 @@ EXTRA_DIST = stencil4.f profile.cpp tiny2.cpp tiny3.cpp
 AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir) -I$(top_builddir) $(BOOST_CPPFLAGS)
 LDADD = -L$(top_builddir)/lib -lblitz 
 
-EXTRA_PROGRAMS = array cartesian cast complex-test convolve \
+EXTRA_PROGRAMS = arrayx cartesian cast complex-test convolve \
 deriv fixed io iter matmult nested numinquire outer \
 polymorph prettyprint rand2 random reduce simple \
 slicing stencil2 storage tiny \
 useret where whitt 
 # cfd curldiv diff erf indirect pauli pick qcd rangexpr stencil3 stencil stencilet transform 
 
-array_SOURCES = array.cpp
+arrayx_SOURCES = array.cpp
 cartesian_SOURCES = cartesian.cpp
 cast_SOURCES = cast.cpp
 #cfd_SOURCES = cfd.cpp
