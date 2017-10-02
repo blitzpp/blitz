@@ -3,9 +3,13 @@ for scientific computing.  It is not a linear algebra or fft library;
 see http://oonumerics.org/oon or http://www.math.unipd.it/~michela/OP.htm
 for libraries that will do those things.
 
-The original Blitz website was located at http://oonumerics.org/blitz.  
-The Blitz project is now hosted by SourceForge and can be found on the web at 
-http://www.sourceforge.net/projects/blitz.
+Blitz has gone through some changes in location:
+
+ 1. The original Blitz website was located at http://oonumerics.org/blitz.  
+
+ 2. Blitz then moved to SourceForge, at http://www.sourceforge.net/projects/blitz.
+
+ 3. The latest maintained version of Blitz is now on GitHub, at  https://github.com/blitzpp/blitz
 
 Licensing information is detailed in the LEGAL file.
 Summary: you can do anything except sell this library in source
