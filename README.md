@@ -1,4 +1,4 @@
-Blitz++ is a C++ template class library which provides array objects
+Blitz++ is a C++ template class library that provides array objects
 for scientific computing.  It is not a linear algebra or fft library;
 see http://oonumerics.org/oon or http://www.math.unipd.it/~michela/OP.htm
 for libraries that will do those things.
@@ -14,7 +14,17 @@ form.  Blitz is licensed under either the Lesser GPL version 3 license
 the less restrictive Perl "artistic license" version 2.0 (see LICENSE).
 
 
-1.  Directories
+Downloading Blitz
+-----------------
+
+The latest version of Blitz++ is 1.0.1.  The tarball may be downloaded
+at:
+
+   https://codeload.github.com/blitzpp/blitz/legacy.tar.gz/1.0.1
+
+
+Directories
+-----------
 
 blitz         Blitz++ headers and source files
 blitz/meta    Blitz++ template metaprogramming headers
@@ -31,7 +41,8 @@ benchmarks    Benchmark programs
 lib           Build area for Blitz++ library
 
 
-2.  Compiling programs
+Compiling programs
+------------------
 
 All Blitz++ header files are referred to with a prefix of "blitz/".
 For example, to use the Array<T,N> class, one needs to include
@@ -48,8 +59,8 @@ g++ foo.cpp -o foo -I/software/Blitz++ -L/software/Blitz++/lib -lblitz
 To avoid the -I and -L options, you can set up symbolic links -- see
 INSTALL for details.
 
-
-3.  Email addresses
+Email addresses
+---------------
 
 Please report bugs to <blitz-support@lists.sourceforge.net> 
 or submit a bug report on the SourceForge website at 
@@ -59,7 +70,8 @@ Please send ideas or feature requests to <blitz-devel@lists.sourceforge.net>
 or submit them on the Blitz++ SourceForge website.
 
 
-4.  Legal mumbo-jumbo
+Legal mumbo-jumbo
+-----------------
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
