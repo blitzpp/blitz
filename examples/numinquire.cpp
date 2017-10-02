@@ -31,7 +31,7 @@ int main()
          << endl;
 
     cout << endl << "More obscure properties:" << endl
-         << "is_signed(z) = " << is_signed(z) << endl
+         << "is_signed(z) = " << blitz::is_signed(z) << endl
          << "is_integer(z) = " << is_integer(z) << endl
          << "is_exact(z) = " << is_exact(z) << endl
          << "round_error(z) = " << round_error(z) << endl

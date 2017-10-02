@@ -117,15 +117,15 @@ _bz_global int  assertSuccessCount BZ_GLOBAL_INIT(0);
     }
   }
 
-    #define BZASSERT(X)        checkAssert(X, __FILE__, __LINE__)
-    #define BZPRECONDITION(X)  checkAssert(X, __FILE__, __LINE__)
-    #define BZPOSTCONDITION(X) checkAssert(X, __FILE__, __LINE__)
-    #define BZSTATECHECK(X,Y)  checkAssert(X == Y, __FILE__, __LINE__)
+    #define BZASSERT(X)        blitz::checkAssert(X, __FILE__, __LINE__)
+    #define BZPRECONDITION(X)  blitz::checkAssert(X, __FILE__, __LINE__)
+    #define BZPOSTCONDITION(X) blitz::checkAssert(X, __FILE__, __LINE__)
+    #define BZSTATECHECK(X,Y)  blitz::checkAssert(X == Y, __FILE__, __LINE__)
     #define BZPRECHECK(X,Y)                                    \
         {                                                      \
             if ((assertFailMode == false) && (!(X)))           \
                 BZ_STD_SCOPE(cerr) << Y << BZ_STD_SCOPE(endl); \
-            checkAssert(X, __FILE__, __LINE__);                \
+            blitz::checkAssert(X, __FILE__, __LINE__);         \
         }
 
     #define BZ_DEBUG_MESSAGE(X)                                          \
@@ -138,7 +138,7 @@ _bz_global int  assertSuccessCount BZ_GLOBAL_INIT(0);
         }
 
     #define BZ_DEBUG_PARAM(X) X
-    #define BZ_PRE_FAIL        checkAssert(0)
+    #define BZ_PRE_FAIL        blitz::checkAssert(0)
     #define BZ_ASM_DEBUG_MARKER
 
 #elif defined(BZ_DEBUG)

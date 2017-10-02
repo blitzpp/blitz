@@ -47,7 +47,7 @@ if test "$enableval" = yes ; then
 		CXX_VENDOR="LLVM"
 		CXXFLAGS="-ansi"
 		CXX_OPTIMIZE_FLAGS="-O3"
-		CXX_DEBUG_FLAGS="-g -O0 -C -DBZ_DEBUG"
+		CXX_DEBUG_FLAGS="-g -O0 -DBZ_DEBUG"
 		CXX_PROFIL_FLAGS="-pg"
 	;;
 	*icpc*|*icc*) dnl Intel icc http://www.intel.com/
