@@ -9,7 +9,7 @@ EXTRA_DIST = $(doc_DATA)
 
 AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir) -I$(top_builddir)
 AM_CXXFLAGS = @CXX_DEBUG_FLAGS@
-LDADD = -L$(top_builddir)/lib -lblitz
+LDADD = $(top_builddir)/lib/libblitz.la
 
 EXAMPLES = 	simple slicing debug xor cast dump output outer \
 		strideslice range storage

@@ -16,7 +16,7 @@ AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir) -I$(top_builddir) $(BOOST_CPPFLAGS)
 AM_CXXFLAGS = @CXX_OPTIMIZE_FLAGS@ @CXXFFLAGS@ @CXXFCFLAG@
 AM_FFLAGS = @F77_OPTIMIZE_FLAGS@
 AM_FCFLAGS = $(FCFLAGS_f90) @FC_OPTIMIZE_FLAGS@
-LDADD = -L$(top_builddir)/lib -lblitz @BLASLIB@ @FCLIBS@ @FLIBS@
+LDADD = $(top_builddir)/lib/libblitz.la @BLASLIB@ @FCLIBS@ @FLIBS@
 
 
 ############################################################################
