@@ -37,10 +37,10 @@ AC_CXX_FLAGS_PRESET
 # Option to disable Fortran (benchmarks will not compile)
 AC_MSG_CHECKING([whether to enable Fortran compilation for benchmark codes])
 AC_ARG_ENABLE(fortran,
-  AS_HELP_STRING([--enable-fortran],[Enable Fortran compilation]),,[
-  enable_fortran="yes"])
+  AS_HELP_STRING([--disable-fortran],[Disable Fortran compilation (used for benchmark codes)]),
+  [], [enable_fortran=yes])
 AC_MSG_RESULT([$enable_fortran])
-AM_CONDITIONAL(FORTRAN_ENABLED, [test $enable_fortran = yes])
+AM_CONDITIONAL(FORTRAN_ENABLED, [test "$enable_fortran" != no])
 
 # Fortran compiler
 if test $enable_fortran = yes; then
@@ -96,31 +96,36 @@ AC_CXX_ENABLE_DEBUG
 # Option to enable thread-safety (requires thread support or OpenMP)
 AC_MSG_CHECKING([whether to enable Blitz thread-safety features])
 AC_ARG_ENABLE(threadsafe,
-  AS_HELP_STRING([--enable-threadsafe],[Enable thread-safety features]),,[
-  enable_threadsafe="no"])
+  AS_HELP_STRING([--enable-threadsafe],[Enable thread-safety features]),
+  [],[enable_threadsafe=no])
 AC_MSG_RESULT([$enable_threadsafe])
-if test "$enable_threadsafe" = yes; then
+if test "$enable_threadsafe" != no; then
   AC_DEFINE([THREADSAFE],[1],[Enable Blitz thread-safety features])
 fi
 
 AC_MSG_CHECKING([if we are using Intel Threading Building Blocks])
 AC_ARG_WITH([tbb],
   AS_HELP_STRING([--with-tbb],[Use Intel Threading Building Blocks atomic types]),
-    [
+  [], [with_tbb=no])
+if test "x$with_tbb" != xno; then
     AC_MSG_RESULT([yes])
     AC_CHECK_HEADERS([tbb/atomic.h],,AC_MSG_ERROR([tbb/atomic.h not found]))
     AC_DEFINE([THREADSAFE_USE_TBB],[1],[Use TBB atomic types])
-    ],AC_MSG_RESULT([no]))
+else
+    AC_MSG_RESULT([no])
+fi
 
 AC_MSG_CHECKING([for SIMD instruction width])
 AC_ARG_ENABLE([simd-width],
   AS_HELP_STRING([--enable-simd-width=n],[Facilitate compiler vectorization optimizations for SIMD instruction width of n bytes.]),
-  [ AC_ALIGNMENT_DIRECTIVE
-   AC_DEFINE([USE_ALIGNMENT_PRAGMAS],[1],[Specifies whether compiler alignment pragmas should be used]) ],
+  [if test "x$enableval" != xno; then
+   AC_ALIGNMENT_DIRECTIVE
+   AC_DEFINE([USE_ALIGNMENT_PRAGMAS],[1],[Specifies whether compiler alignment pragmas should be used])
+   fi ],
   [enable_simd_width=no]
   )
 AC_MSG_RESULT([$enable_simd_width])
-if test "$enable_simd_width" == [no] ; then
+if test "$enable_simd_width" = no ; then
    enable_simd_width=1
    # if not set, also define ALIGN_VARIABLE to just declare a variable
    AC_DEFINE([ALIGN_VARIABLE(vartype,varname,alignment)],[vartype varname;])
@@ -130,12 +135,15 @@ AC_DEFINE_UNQUOTED([SIMD_WIDTH],[$enable_simd_width],[Set SIMD instruction width
 AC_MSG_CHECKING([whether to pad array lengths to SIMD instruction width])
 AC_ARG_ENABLE([array-length-padding],
   AS_HELP_STRING([--enable-array-length-padding],[Sets the default array padding policy to pad all lowest-rank lengths to nearest larger SIMD width. Caution: This means that arrays will in general be non-contiguous.]),
-  [
+  [if test "x$enableval" != xno; then
   AC_MSG_RESULT([yes])
-  if test "$enable_simd_width" == [1] ; then
+  if test "$enable_simd_width" = 1 ; then
      AC_MSG_WARN([This option is useless without a SIMD width >1.])
   fi
   AC_DEFINE([PAD_ARRAYS],1,[Pad array lengths to SIMD width.])
+  else
+  AC_MSG_RESULT([no])
+  fi
   ],AC_MSG_RESULT([no]))
 
 AC_MSG_CHECKING([whether to enable Blitz 64-bit dimensions])
@@ -147,10 +155,14 @@ AC_ARG_ENABLE([64-bit-dimensions],
 AC_MSG_CHECKING([whether to enable serialization support])
 AC_ARG_ENABLE([serialization],
 	AS_HELP_STRING([--enable-serialization],[Enable serialization support using Boost::Serialization]), [
+	if test "x$enableval" != xno; then
 	AC_MSG_RESULT([yes])
 	AX_BOOST_BASE([1.40.0])						       
 	AX_BOOST_SERIALIZATION
 	AC_CHECK_HEADERS([boost/mpi.hpp])
+	else
+	AC_MSG_RESULT([no])
+	fi
 	 ], AC_MSG_RESULT([no]))
   
 # check for PAPI library
