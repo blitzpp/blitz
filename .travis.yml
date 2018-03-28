@@ -1,14 +1,17 @@
 language: cpp
-#dist:
-#  - trusty
+
 os:
   - linux
-#  - osx
+#  - osx TODO
+
 compiler:
   - gcc
   - clang
 
 # TODO: Debug & Release modes
+
+install:
+  - sudo apt-get install texinfo
 
 script:
   - aclocal
@@ -17,17 +20,16 @@ script:
   - autoreconf
   - ./configure
   - make lib
-  - make lib              # Check the compiler and create libblitz.a
-  - make check-testsuite  # Build and check the testsuite
-  - make check-examples   # Build and check the examples
-  #make check-benchmarks # Build and check the benchmarks (takes a long time)
-  - sudo make install          # Install Blitz++
-  #make info             # Build Blitz++ texinfo documentation
-  #make ps               # Build Blitz++ ps documentation
-  - make pdf              # Build Blitz++ pdf documentation
-  #make html             # Build Blitz++ html documentation
-  #make install-info     # Install Blitz++ texinfo documentation
-  #make install-ps       # Install Blitz++ ps documentation
-  - sudo make install-pdf      # Install Blitz++ pdf documentation
-  #make install-html     # Install Blitz++ html documentation
-
+  - make lib                 # Check the compiler and create libblitz.a
+  - make check-testsuite     # Build and check the testsuite
+  - make check-examples      # Build and check the examples
+  - make check-benchmarks    # Build and check the benchmarks (takes a long time)
+  - sudo make install        # Install Blitz++
+  - make info                # Build Blitz++ texinfo documentation
+  - make ps                  # Build Blitz++ ps documentation
+  - make pdf                 # Build Blitz++ pdf documentation
+  - make html                # Build Blitz++ html documentation
+  - sudo make install-info   # Install Blitz++ texinfo documentation
+  - sudo make install-ps     # Install Blitz++ ps documentation
+  - sudo make install-pdf    # Install Blitz++ pdf documentation
+  - sudo make install-html   # Install Blitz++ html documentation
