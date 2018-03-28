@@ -16,10 +16,9 @@ install:
 script:
   - aclocal
   - libtoolize
-  # TODO: (fails with configure.ac:10: error: required file 'blitz/config.h.in' not found)
-  - autoconf
+  - autoheader
   - automake --add-missing
-  #- autoreconf
+  - autoreconf
   - ./configure
   - make lib
   - make lib                 # Check the compiler and create libblitz.a
