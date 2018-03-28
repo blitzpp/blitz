@@ -11,6 +11,7 @@ compiler:
 # TODO: Debug & Release modes
 
 script:
+  - aclocal
   - automake --add-missing
   - libtoolize
   - autoreconf
