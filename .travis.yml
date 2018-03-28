@@ -16,7 +16,6 @@ install:
 script:
   - aclocal
   - libtoolize
-  - automake --add-missing
   - autoreconf
   - ./configure
   - make lib
