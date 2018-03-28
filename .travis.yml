@@ -12,8 +12,8 @@ compiler:
 
 script:
   - aclocal
-  - automake --add-missing
   - libtoolize
+  - automake --add-missing
   - autoreconf
   - ./configure
   - make lib
@@ -21,7 +21,7 @@ script:
   - make check-testsuite  # Build and check the testsuite
   #make check-examples   Build and check the examples
   #make check-benchmarks Build and check the benchmarks (takes a long time)
-  - make install          # Install Blitz++
+  - sudo make install          # Install Blitz++
   #make info             Build Blitz++ texinfo documentation
   #make ps               Build Blitz++ ps documentation
   #make pdf              Build Blitz++ pdf documentation
