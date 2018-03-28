@@ -2,8 +2,8 @@ language: cpp
 #dist:
 #  - trusty
 os:
-#  - linux
-  - osx
+  - linux
+#  - osx
 compiler:
   - gcc
   - clang
