@@ -1,8 +1,8 @@
 language: cpp
 
 os:
-  - linux
-#  - osx TODO
+#  - linux
+  - osx
 
 compiler:
   - gcc
@@ -11,7 +11,7 @@ compiler:
 # TODO: Debug & Release modes
 
 install:
-  - sudo apt-get --no-install-recommends install texinfo texlive-base
+  - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then sudo apt-get --no-install-recommends install texinfo texlive-base; fi
 
 script:
   - aclocal
