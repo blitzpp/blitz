@@ -1,0 +1,6 @@
+platform: 
+  - x86
+  - x64
+
+before_build:
+  - 7z x Blitz-VS2010.zip
