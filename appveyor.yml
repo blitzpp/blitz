@@ -4,3 +4,9 @@ platform:
 
 before_build:
   - 7z x Blitz-VS2010.zip
+
+build:
+  project: Blitz-Library.sln
+
+after_build:
+  project: Blitz-Examples.sln
