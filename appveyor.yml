@@ -7,7 +7,7 @@ configuration:
   - Release
 
 init:
-  - dir C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib\x64
+  - where /r c:\ kernel32.lib
   - set path=%path%;C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib\x64
 
 before_build:
