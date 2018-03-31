@@ -7,8 +7,9 @@ configuration:
   - Release
 
 init:
-  - where /r c:\ kernel32.lib
-  - set path=%path%;C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib\x64
+  #- where /r c:\ kernel32.lib
+  - set path=%path%;c:\Program Files (x86)\Windows Kits\10\Lib\10.0.14393.0\um\x64
+  - cmd: ECHO %path%
 
 before_build:
   - 7z x Blitz-VS2010.zip
