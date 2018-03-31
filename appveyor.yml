@@ -8,8 +8,8 @@ configuration:
 
 init:
   #- where /r c:\ kernel32.lib
-  - set path=%path%;"c:\Program Files (x86)\Windows Kits\10\Lib\10.0.14393.0\um\x64"
-  - cmd: ECHO %path%
+  - set LIB=%LIB%;"c:\Program Files (x86)\Windows Kits\10\Lib\10.0.14393.0\um\x64"
+  - cmd: ECHO %LIB%
 
 before_build:
   - 7z x Blitz-VS2010.zip
