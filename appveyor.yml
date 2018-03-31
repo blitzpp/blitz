@@ -1,13 +1,13 @@
 platform: 
-  - x86
+#  - x86
   - x64
 
 configuration:
-  - Debug
+#  - Debug
   - Release
 
 init:
-  - cmd: C:/"Program Files (x86)"/"Microsoft Visual Studio 12.0"/VC/vcvarsall.bat
+  - set path=%path%;"C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib\x64"
 
 before_build:
   - 7z x Blitz-VS2010.zip
