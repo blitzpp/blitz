@@ -21,7 +21,6 @@ script:
   - automake --add-missing
   - autoreconf
   - ./configure
-  - make lib
   - make lib                 # Check the compiler and create libblitz.a
   # TODO: make a failure result in non-zero exit code! (see https://travis-ci.org/slayoo/blitz/builds/359545927)
   - make check-testsuite     # Build and check the testsuite
