@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/blitzpp/blitz.svg?branch=master)](https://travis-ci.org/blitzpp/blitz)
+[![Windows Build status](http://ci.appveyor.com/api/projects/status/github/blitzpp/blitz?branch=master&svg=true)](https://ci.appveyor.com/project/blitzpp/blitz/branch/master)
+
 Blitz++ is a C++ template class library that provides array objects
 for scientific computing.  It is not a linear algebra or fft library;
 see http://oonumerics.org/oon or http://www.math.unipd.it/~michela/OP.htm
