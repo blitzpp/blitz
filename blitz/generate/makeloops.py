@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 # python version of the makeloops.cpp that generates the benchmark
 # loops.
