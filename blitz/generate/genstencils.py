@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/bin/env python2
 
 # Generates stencil code. This replaces the macros in stencil-et.h,
 # which make it impossible to debug the generated code.
