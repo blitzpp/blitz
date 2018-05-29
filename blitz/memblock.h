@@ -41,8 +41,15 @@
 #include <boost/serialization/array.hpp>
 #include <boost/serialization/collection_size_type.hpp>
 #include <boost/serialization/nvp.hpp>
+#include <boost/version.hpp>
+
+#  if BOOST_VERSION >= 106000
+#    include <boost/serialization/array_wrapper.hpp>
+#    include <boost/archive/detail/iserializer.hpp>
+#  endif
 #endif
 #include <stddef.h>     // diffType
+
 
 BZ_NAMESPACE(blitz)
 
@@ -79,6 +86,12 @@ public:
     typedef P_type T_type;
 
 protected:
+#ifdef BZ_HAVE_BOOST_SERIALIZATION
+#  if BOOST_VERSION >= 106000
+    friend class boost::serialization::access ;
+    template<class T> friend class boost::archive::detail::heap_allocation;
+#  endif
+#endif
     explicit MemoryBlock(sizeType items)
     {
       // pad the length to vecWidth, if not already done
