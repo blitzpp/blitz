@@ -4,14 +4,14 @@
 
 # Blitz++ test suite makefile
 
-EXTRA_DIST = testsuite.h
-
 AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir) -I$(top_builddir) $(BOOST_CPPFLAGS)
 AM_CXXFLAGS = @CXX_DEBUG_FLAGS@ -DBZ_DEBUG
 AM_LDFLAGS = $(BOOST_LDFLAGS)
-LDADD = -L$(top_builddir)/lib -lblitz $(BOOST_SERIALIZATION_LIB)
+LDADD = $(top_builddir)/lib/libblitz.la $(BOOST_SERIALIZATION_LIB)
 
-EXTRA_PROGRAMS = 64bit Adnene-Ben-Abdallah-1 Adnene-Ben-Abdallah-2     \
+check_HEADERS = testsuite.h
+
+check_PROGRAMS = 64bit Adnene-Ben-Abdallah-1 Adnene-Ben-Abdallah-2     \
 alignment arrayresize arrayinitialize bitwise chris-jeffery-1 chris-jeffery-2  \
 chris-jeffery-3 complex-test constarray contiguous copy ctors	       \
 derrick-bass-1 derrick-bass-3 exprctor expression-slicing extract free \
@@ -26,6 +26,9 @@ reverse safeToReturn shapecheck shape slice-iterators stencil-et       \
 stencil-extent storage stub theodore-papadopoulo-1 tinymat tinyvec     \
 transpose troyer-genilloud tvinitialize Ulisses-Mello-1 weakref	       \
 wei-ku-1 where zeek-1 cast serialize update
+
+TESTS = $(check_PROGRAMS)
+#TESTS_ENVIRONMENT = $(VALGRIND)
 
 # 64bit test is special because it takes forever to run without optimization
 64bit_SOURCES = 64bit.cpp
@@ -110,26 +113,7 @@ wei_ku_1_SOURCES = wei-ku-1.cpp
 where_SOURCES = where.cpp
 zeek_1_SOURCES = zeek-1.cpp
 
-check-testsuite:  $(EXTRA_PROGRAMS)
-	@echo Running test suite...
-	@fail=0; for prog in $(EXTRA_PROGRAMS) ; do \
-		if (./$$prog > /dev/null 2>&1); then \
-			echo $$prog... passed; \
-		else \
-			echo TEST FAILED: $$prog; fail=1; fi; \
-	done; \
-	if [[ $$fail -eq 1 ]]; then echo There were failing tests; else echo All tests passed; fi
-
-if HAVE_VALGRIND
-valgrind-testsuite:  $(EXTRA_PROGRAMS)
-	@echo Running test suite through valgrind...
-	@for prog in $(EXTRA_PROGRAMS) ; do \
-		echo -en "$$prog\t" && (valgrind --log-file-exactly=$$prog.val ./$$prog > /dev/null 2>&1 ;\
-                grep "ERROR SUMMARY" $$prog.val) || exit 1; \
-	done
-	@echo All tests run.
-endif
+check-testsuite: check
 
 clean-local:
-	-rm -rf *.ii *.ti cxx_repository Template.dir ii_files ti_files $(EXTRA_PROGRAMS)
-
+	-rm -rf *.ii *.ti cxx_repository Template.dir ii_files ti_files
