@@ -5,14 +5,17 @@
 EXTRA_DIST = stencil4.f profile.cpp tiny2.cpp tiny3.cpp
 
 AM_CPPFLAGS = -I$(srcdir) -I$(top_srcdir) -I$(top_builddir) $(BOOST_CPPFLAGS)
-LDADD = -L$(top_builddir)/lib -lblitz 
+LDADD = $(top_builddir)/lib/libblitz.la
 
-EXTRA_PROGRAMS = arrayx cartesian cast complex-test convolve \
+check_PROGRAMS = arrayx cartesian cast complex-test convolve \
 deriv fixed io iter matmult nested numinquire outer \
 polymorph prettyprint rand2 random reduce simple \
 slicing stencil2 storage tiny \
-useret where whitt 
-# cfd curldiv diff erf indirect pauli pick qcd rangexpr stencil3 stencil stencilet transform 
+useret where whitt
+# cfd curldiv diff erf indirect pauli pick qcd rangexpr stencil3 stencil stencilet transform
+
+TESTS = $(check_PROGRAMS)
+#TESTS_ENVIRONMENT =
 
 arrayx_SOURCES = array.cpp
 cartesian_SOURCES = cartesian.cpp
@@ -57,18 +60,9 @@ useret_SOURCES = useret.cpp
 where_SOURCES = where.cpp
 whitt_SOURCES = whitt.cpp
 
-#compile: $(EXTRA_PROGRAMS)
-
-check-examples: $(EXTRA_PROGRAMS)
-	@echo Running examples...
-	@for prog in $(EXTRA_PROGRAMS) ; do \
-		echo $$prog && (./$$prog > /dev/null 2>&1) || exit 1; \
-	done
-	@echo All tests passed.
+check-examples: check
 
 #all:
 
 clean-local:
-	-rm -rf *.ii *.ti cxx_repository Template.dir ii_files ti_files $(EXTRA_PROGRAMS)
-
-
+	-rm -rf *.ii *.ti cxx_repository Template.dir ii_files ti_files

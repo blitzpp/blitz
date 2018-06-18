@@ -86,7 +86,7 @@ else
 
 # Install also the images into the directory containing the html files
 install-html-local:
-	$(INSTALL_DATA) *.gif *.jpg blitz.html
+	$(INSTALL_DATA) $(srcdir)/*.gif $(srcdir)/*.jpg blitz.html
 
 endif
 
