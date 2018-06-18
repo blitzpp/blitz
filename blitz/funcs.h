@@ -102,7 +102,7 @@ template<typename T1, typename T2> struct ifthenelse<false,T1,T2> {
 #define BZ_DEFINE_UNARY_FUNC(name,fun,coerce_int)		     \
 template<typename T_numtype1>                                        \
 struct name {                                                        \
-  typedef typename ifthenelse<coerce_int,typename ifthenelse<numeric_limits<T_numtype1>::is_integer,double,T_numtype1>::Type,T_numtype1>::Type T_numtype; \
+  typedef typename BZ_BLITZ_SCOPE(ifthenelse)<coerce_int,typename BZ_BLITZ_SCOPE(ifthenelse)<BZ_STD_SCOPE(numeric_limits)<T_numtype1>::is_integer,double,T_numtype1>::Type,T_numtype1>::Type T_numtype; \
 								     \
     static inline T_numtype                                          \
     apply(const T_numtype1 a)                                        \
