@@ -1733,7 +1733,7 @@ public:
   { return iter1_.isVectorAligned(offset) &&
       iter2_.isVectorAligned(offset) &&
       iter3_.isVectorAligned(offset) &&
-      iter3_.isVectorAligned(offset); }
+      iter4_.isVectorAligned(offset); }
 
   template<int N>
   T_range_result operator()(const RectDomain<rank_>& d) const

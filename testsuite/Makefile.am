@@ -25,7 +25,7 @@ peter-nordlund-3 preexisting promote pthread qcd reduce reindex	       \
 reverse safeToReturn shapecheck shape slice-iterators stencil-et       \
 stencil-extent storage stub theodore-papadopoulo-1 tinymat tinyvec     \
 transpose troyer-genilloud tvinitialize Ulisses-Mello-1 weakref	       \
-wei-ku-1 where zeek-1 cast serialize update
+wei-ku-1 where zeek-1 cast serialize update declfunc
 
 TESTS = $(check_PROGRAMS)
 #TESTS_ENVIRONMENT = $(VALGRIND)
@@ -49,6 +49,7 @@ constarray_SOURCES = constarray.cpp
 contiguous_SOURCES = contiguous.cpp
 copy_SOURCES = copy.cpp
 ctors_SOURCES = ctors.cpp
+declfunc_SOURCES = declfunc.cpp
 derrick_bass_1_SOURCES = derrick-bass-1.cpp
 derrick_bass_3_SOURCES = derrick-bass-3.cpp
 exprctor_SOURCES = exprctor.cpp
