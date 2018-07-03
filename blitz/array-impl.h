@@ -40,6 +40,8 @@
  *  - apply<T func(T)>
  */
 
+#if !BOOST_PP_IS_ITERATING
+
 #ifndef BZ_ARRAY_H
 #define BZ_ARRAY_H
 
@@ -61,6 +63,12 @@
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/base_object.hpp>
 #endif
+
+
+#include <boost/preprocessor/iteration/iterate.hpp>
+#include <boost/preprocessor/repetition/enum_trailing.hpp>
+#include <boost/preprocessor/repetition/enum_params.hpp>
+#include <boost/preprocessor/repetition/enum_binary_params.hpp>
 
 
 BZ_NAMESPACE(blitz)
@@ -866,12 +874,11 @@ public:
      * a combination of integer and Range arguments.  It's not intended
      * for end-user use.
      */
-    template<int N_rank2, typename R0, typename R1, typename R2, typename R3, typename R4,
-        typename R5, typename R6, typename R7, typename R8, typename R9, typename R10>
-    Array(Array<T_numtype,N_rank2>& array, R0 r0, R1 r1, R2 r2,
-        R3 r3, R4 r4, R5 r5, R6 r6, R7 r7, R8 r8, R9 r9, R10 r10)
+
+    template<int N_rank2, BOOST_PP_ENUM_PARAMS(BLITZ_ARRAY_LARGEST_RANK,typename R)>
+    Array(Array<T_numtype,N_rank2>& array, BOOST_PP_ENUM_BINARY_PARAMS(BLITZ_ARRAY_LARGEST_RANK,R,r))
     {
-        constructSlice(array, r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10);
+        constructSlice(array, BOOST_PP_ENUM_PARAMS(BLITZ_ARRAY_LARGEST_RANK,r));
     }
 
     //////////////////////////////////////////////
@@ -1026,12 +1033,12 @@ public:
     const TinyVector<int, N_rank>&    ordering() const
     { return storage_.ordering(); }
 
-    void                              transposeSelf(int r0, int r1, int r2=0, 
-        int r3=0, int r4=0, int r5=0, int r6=0, int r7=0, int r8=0, int 
-        r9=0, int r10=0);
-    T_array                           transpose(int r0, int r1, int r2=0,
-        int r3=0, int r4=0, int r5=0, int r6=0, int r7=0, int r8=0, int
-        r9=0, int r10=0) const;
+#define ARGUMENTS_here BOOST_PP_ENUM_PARAMS(BOOST_PP_SUB(BLITZ_ARRAY_LARGEST_RANK,2), int=0 BOOST_PP_INTERCEPT ) 
+
+    void                              transposeSelf(int r0, int r1, ARGUMENTS_here);
+    T_array                           transpose    (int r0, int r1, ARGUMENTS_here) const;
+
+#undef  ARGUMENTS_here
 
   static int                               rank()
     { return rank_; }
@@ -1981,101 +1988,15 @@ public:
 
 #ifdef BZ_HAVE_PARTIAL_ORDERING
 
-    template<typename T1, typename T2>
-    typename SliceInfo<T_numtype,T1,T2>::T_slice
-    operator()(T1 r1, T2 r2) const
-    {
-        typedef typename SliceInfo<T_numtype,T1,T2>::T_slice slice;
-        return slice(noConst(), r1, r2, nilArraySection(), nilArraySection(), nilArraySection(),
-            nilArraySection(), nilArraySection(), nilArraySection(),
-            nilArraySection(), nilArraySection(), nilArraySection());
-    }
+#define DEFAULT_print(z, n, data) nilArraySection()
+#define BOOST_PP_ITERATION_LIMITS (2,BLITZ_ARRAY_LARGEST_RANK)
+#define BOOST_PP_FILENAME_1 "blitz/array-impl.h"
 
-    template<typename T1, typename T2, typename T3>
-    typename SliceInfo<T_numtype,T1,T2,T3>::T_slice 
-    operator()(T1 r1, T2 r2, T3 r3) const
-    {
-        typedef typename SliceInfo<T_numtype,T1,T2,T3>::T_slice slice;
-        return slice(noConst(), r1, r2, r3, nilArraySection(), nilArraySection(), nilArraySection(),
-            nilArraySection(), nilArraySection(), nilArraySection(),
-            nilArraySection(), nilArraySection());
-    }
+#include BOOST_PP_ITERATE()
 
-    template<typename T1, typename T2, typename T3, typename T4>
-    typename SliceInfo<T_numtype,T1,T2,T3,T4>::T_slice
-    operator()(T1 r1, T2 r2, T3 r3, T4 r4) const
-    {
-        typedef typename SliceInfo<T_numtype,T1,T2,T3,T4>::T_slice slice;
-        return slice(noConst(), r1, r2, r3, r4, nilArraySection(), nilArraySection(),
-            nilArraySection(), nilArraySection(), nilArraySection(),
-            nilArraySection(), nilArraySection());
-    }
-
-    template<typename T1, typename T2, typename T3, typename T4, typename T5>
-    typename SliceInfo<T_numtype,T1,T2,T3,T4,T5>::T_slice
-    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5) const
-    {
-        typedef typename SliceInfo<T_numtype,T1,T2,T3,T4,T5>::T_slice slice;
-        return slice(noConst(), r1, r2, r3, r4, r5, nilArraySection(),
-            nilArraySection(), nilArraySection(), nilArraySection(),
-            nilArraySection(), nilArraySection());
-    }
-
-    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-    typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6>::T_slice
-    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6) const
-    {
-        typedef typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6>::T_slice slice;
-        return slice(noConst(), r1, r2, r3, r4, r5, r6, nilArraySection(), nilArraySection(), nilArraySection(),
-            nilArraySection(), nilArraySection());
-    }
-
-    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
-        typename T7>
-    typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7>::T_slice
-    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7) const
-    {
-        typedef typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7>::T_slice slice;
-        return slice(noConst(), r1, r2, r3, r4, r5, r6, r7, nilArraySection(), nilArraySection(),
-            nilArraySection(), nilArraySection());
-    }
-
-    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
-        typename T7, typename T8>
-    typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8>::T_slice
-    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8) const
-    {
-        typedef typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8>::T_slice slice;
-        return slice(noConst(), r1, r2, r3, r4, r5, r6, r7, r8,
-            nilArraySection(), nilArraySection(), nilArraySection());
-    }
-
-    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
-        typename T7, typename T8, typename T9>
-    typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8,T9>::T_slice
-    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9) const
-    {
-        typedef typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8,T9>::T_slice slice;
-        return slice(noConst(), r1, r2, r3, r4, r5, r6, r7, r8, r9, nilArraySection(), nilArraySection());
-    }
-
-    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
-        typename T7, typename T8, typename T9, typename T10>
-    typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>::T_slice
-    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9, T10 r10) const
-    {
-        typedef typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>::T_slice slice;
-        return slice(noConst(), r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, nilArraySection());
-    }
-
-    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
-        typename T7, typename T8, typename T9, typename T10, typename T11>
-    typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice
-    operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9, T10 r10, T11 r11) const
-    {
-        typedef typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice slice;
-        return slice(noConst(), r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11);
-    }
+#undef BOOST_PP_FILENAME_1
+#undef BOOST_PP_ITERATION_LIMITS
+#undef DEFAULT_print
 
 #endif // BZ_HAVE_PARTIAL_ORDERING
 
@@ -2442,10 +2363,9 @@ protected:
 
     void calculateZeroOffset();
 
-    template<int N_rank2, typename R0, typename R1, typename R2, typename R3, typename R4, 
-        typename R5, typename R6, typename R7, typename R8, typename R9, typename R10>
-    void constructSlice(Array<T_numtype, N_rank2>& array, R0 r0, R1 r1, R2 r2, 
-        R3 r3, R4 r4, R5 r5, R6 r6, R7 r7, R8 r8, R9 r9, R10 r10);
+
+    template<int N_rank2, BOOST_PP_ENUM_PARAMS(BLITZ_ARRAY_LARGEST_RANK,typename R)>
+    void constructSlice(Array<T_numtype, N_rank2>& array, BOOST_PP_ENUM_PARAMS(BLITZ_ARRAY_LARGEST_RANK,R));
 
     template<int N_rank2>
     void slice(int& setRank, Range r, Array<T_numtype,N_rank2>& array,
@@ -2561,3 +2481,23 @@ BZ_NAMESPACE_END
 
 
 #endif // BZ_ARRAY_H
+
+
+#else  // BOOST_PP_IS_ITERATING
+
+
+#define N BOOST_PP_ITERATION()
+
+template<BOOST_PP_ENUM_PARAMS(N,typename T)>
+typename SliceInfo<T_numtype,BOOST_PP_ENUM_PARAMS(N,T)>::T_slice
+operator()(BOOST_PP_ENUM_BINARY_PARAMS(N,T,r)) const
+{
+  typedef typename SliceInfo<T_numtype,BOOST_PP_ENUM_PARAMS(N,T)>::T_slice slice;
+  return slice(noConst(), BOOST_PP_ENUM_PARAMS(N,r) BOOST_PP_ENUM_TRAILING(BOOST_PP_SUB(BLITZ_ARRAY_LARGEST_RANK,N),DEFAULT_print,~) );
+}
+
+
+#undef N
+
+
+#endif // BOOST_PP_IS_ITERATING
