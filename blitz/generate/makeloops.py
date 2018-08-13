@@ -3,6 +3,8 @@
 # python version of the makeloops.cpp that generates the benchmark
 # loops.
 
+from __future__ import print_function
+
 import time, pdb
 
 # definitions of the loops (from loops.data)
