@@ -6,7 +6,6 @@
 @setchapternewpage odd
 @finalout
 @iftex
-@setcontentsaftertitlepage
 @afourpaper
 @end iftex
 @c %**end of header
