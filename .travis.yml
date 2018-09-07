@@ -38,6 +38,5 @@ script:
   #- sudo make install-pdf    # Install Blitz++ pdf documentation
   - sudo make install-html   # Install Blitz++ html documentation
 
-after_script:
-  - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then sudo apt-get --no-install-recommends install python3-git; fi
-  - if [[ $TRAVIS_OS_NAME == 'linux' ]]; ./travis-ci/check-wiki-examples.py; fi
+  - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then sudo apt-get --no-install-recommends install python-git; fi
+  - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then ./travis-ci/check-wiki-examples.py; fi

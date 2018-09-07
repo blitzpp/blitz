@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 
 def retrieve_from_wiki():
   import git, tempfile, shutil, os
