@@ -39,6 +39,7 @@ def compile_and_check(examples):
   path = os.getcwd()
   errcnt = 0
   for exno, example in enumerate(examples):
+    print('--', 'example', exno)
     try:
       # writing src to example.cpp
       t = tempfile.mkdtemp()
@@ -46,11 +47,12 @@ def compile_and_check(examples):
         f.writelines(example['src'])
       
       # executing commands from cmd
-      print('--', 'compiling example', exno)
       os.chdir(t)
       with open(os.path.join(t, 'output.log'), 'w') as f:
         for cmd in example['cmd']:
-          subprocess.call(cmd[2:].strip().split(' '), stderr=subprocess.STDOUT, stdout=f)
+          cmd = cmd[2:].strip()
+          print('--', 'calling', cmd)
+          subprocess.call(cmd.split(' '), stderr=subprocess.STDOUT, stdout=f)
 
       # comparing with out
       with open(os.path.join(t, 'output.log'), 'r') as f:
