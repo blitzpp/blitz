@@ -48,19 +48,22 @@ def compile_and_check(examples):
       
       # executing commands from cmd
       os.chdir(t)
-      with open(os.path.join(t, 'output.log'), 'w') as f:
+      logfile = os.path.join(t, 'output.log')
+      with open(logfile, 'w') as f:
         for cmd in example['cmd']:
           cmd = cmd[2:].strip()
           print('--', 'calling', cmd)
           subprocess.call(cmd.split(' '), stderr=subprocess.STDOUT, stdout=f)
 
       # comparing with out
-      with open(os.path.join(t, 'output.log'), 'r') as f:
+      with open(logfile, 'r') as f:
         for i, line in enumerate(f.readlines()):
           if example['out'][i] != line:
             print('--', 'error')
             errcnt += 1
-
+    except:
+      print('--', 'error')
+      with open(logfile, 'r') as fin: print fin.read()
     finally:
       os.chdir(path)
       shutil.rmtree(t)
