@@ -1107,41 +1107,53 @@ public:
  
 
     void                              resizeAndPreserve(const TinyVector<int,
-                                                                   N_rank>&);
-    void                              resizeAndPreserve(int extent);
+                                        N_rank>&,
+                                        bool zeroInitialize=false);
+    void                              resizeAndPreserve(int extent,
+                                        bool zeroInitialize=false);
     void                              resizeAndPreserve(int extent1, 
-                                        int extent2);
+                                        int extent2,
+                                        bool zeroInitialize=false);
     void                              resizeAndPreserve(int extent1, 
-                                        int extent2, int extent3);
-    void                              resizeAndPreserve(int extent1,
-                                        int extent2, int extent3, int extent4);
-    void                              resizeAndPreserve(int extent1,
-                                        int extent2, int extent3, int extent4,
-                                        int extent5);
+                                        int extent2, int extent3,
+                                        bool zeroInitialize=false);
     void                              resizeAndPreserve(int extent1,
                                         int extent2, int extent3, int extent4,
-                                        int extent5, int extent6);
+                                        bool zeroInitialize=false);
     void                              resizeAndPreserve(int extent1,
                                         int extent2, int extent3, int extent4,
-                                        int extent5, int extent6, int extent7);
+                                        int extent5,
+                                        bool zeroInitialize=false);
+    void                              resizeAndPreserve(int extent1,
+                                        int extent2, int extent3, int extent4,
+                                        int extent5, int extent6,
+                                        bool zeroInitialize=false);
     void                              resizeAndPreserve(int extent1,
                                         int extent2, int extent3, int extent4,
                                         int extent5, int extent6, int extent7,
-                                        int extent8);
+                                        bool zeroInitialize=false);
     void                              resizeAndPreserve(int extent1,
                                         int extent2, int extent3, int extent4,
                                         int extent5, int extent6, int extent7,
-                                        int extent8, int extent9);
+                                        int extent8,
+                                        bool zeroInitialize=false);
+    void                              resizeAndPreserve(int extent1,
+                                        int extent2, int extent3, int extent4,
+                                        int extent5, int extent6, int extent7,
+                                        int extent8, int extent9,
+                                        bool zeroInitialize=false);
     void                              resizeAndPreserve(int extent1,
                                         int extent2, int extent3, int extent4,
                                         int extent5, int extent6, int extent7,
                                         int extent8, int extent9, 
-                                        int extent10);
+                                        int extent10,
+                                        bool zeroInitialize=false);
     void                              resizeAndPreserve(int extent1,
                                         int extent2, int extent3, int extent4,
                                         int extent5, int extent6, int extent7,
                                         int extent8, int extent9, int extent10,
-                                        int extent11);
+                                        int extent11,
+                                        bool zeroInitialize=false);
 
     // NEEDS_WORK -- resizeAndPreserve(Range,...)
     // NEEDS_WORK -- resizeAndPreserve(const Domain<N_rank>&);
