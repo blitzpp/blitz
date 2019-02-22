@@ -120,13 +120,7 @@
     #error In <blitz/config.h>: Your compiler does not support enum computations.  You may have to rerun compiler/bzconfig.
 #endif
 
-#if defined(BZ_MATH_FN_IN_NAMESPACE_STD)
-  #define BZ_MATHFN_SCOPE(x) std::x
-#elif defined(BZ_HAVE_NAMESPACES)
-  #define BZ_MATHFN_SCOPE(x) ::x
-#else
-  #define BZ_MATHFN_SCOPE(x) x
-#endif
+#define BZ_MATHFN_SCOPE(x) x
 
 #if defined(BZ_MATH_ABSINT_IN_NAMESPACE_STD)
 #include <cstdlib>
@@ -134,21 +128,9 @@
 #include <stdlib.h>
 #endif
 
-#if defined(BZ_MATH_ABSINT_IN_NAMESPACE_STD)
-  #define BZ_MATHABSINT_SCOPE(x) std::x
-#elif defined(BZ_HAVE_NAMESPACES)
-  #define BZ_MATHABSINT_SCOPE(x) ::x
-#else
-  #define BZ_MATHABSINT_SCOPE(x) x
-#endif
+#define BZ_MATHABSINT_SCOPE(x) x
 
-#if defined(BZ_HAVE_COMPLEX_MATH_IN_NAMESPACE_STD)
-  #define BZ_CMATHFN_SCOPE(x) std::x
-#elif defined(BZ_HAVE_NAMESPACES)
-  #define BZ_CMATHFN_SCOPE(x) ::x
-#else
-  #define BZ_CMATHFN_SCOPE(x) x
-#endif
+#define BZ_CMATHFN_SCOPE(x) x
 
 #if defined(BZ_HAVE_NAMESPACES)
   #define BZ_IEEEMATHFN_SCOPE(x) ::x
