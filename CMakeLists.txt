@@ -38,7 +38,6 @@ add_custom_target(generated-headers ALL)
 
 set(PKGCONFIG_LIBS -lblitz)
 
-add_subdirectory(bin) 
 add_subdirectory(blitz) 
 add_subdirectory(random) 
 add_subdirectory(lib) 
