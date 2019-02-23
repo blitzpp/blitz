@@ -1,5 +1,4 @@
 # Old examples that have been removed... Add then again ?
-#TESTS(example
 #      cfd curldiv diff erf indirect pauli pick profile qcd rangexpr stencil3 stencil stencilet tiny2 tiny3 transform)
 
 add_custom_target(examples)
@@ -22,4 +21,3 @@ foreach (example ${ALL_EXAMPLES})
 endforeach()
 
 install(FILES ${EXAMPLES} DESTINATION ${CMAKE_INSTALL_DOCDIR}/examples)
-

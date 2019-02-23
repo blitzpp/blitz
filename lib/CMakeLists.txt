@@ -13,16 +13,6 @@ if (NOT WIN32)
     add_library(blitz-static STATIC ${blitz_LIB_SRCS})
     add_dependencies(blitz-static generated-headers)
     set(BLITZ_LIBS ${BLITZ_LIBS} blitz-static)
-
-    #SET(BLITZ-STATIC-DEFS)
-    #IF (NOT WIN32)
-    #    GET_TARGET_PROPERTY(BLITZ-STATIC-DEFS blitz-static COMPILE_DEFINITIONS)
-    #    IF (NOT BLITZ-STATIC-DEFS)
-    #        SET(BLITZ-STATIC-DEFS)
-    #    ENDIF()
-    #    SET(BLITZ-STATIC-DEFS COMPILE_DEFINITIONS "${BLITZ-STATIC-DEFS};BLITZ_STATIC_LIBRARY")
-    #ENDIF()
-
     set_target_properties(blitz-static PROPERTIES
                           OUTPUT_NAME blitz
                           ${BLITZ-STATIC-DEFS}

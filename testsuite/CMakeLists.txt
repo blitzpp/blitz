@@ -1,5 +1,4 @@
-ADD_DEFINITIONS(-DBZ_DEBUG)
-
+add_definitions(-DBZ_DEBUG)
 
 add_custom_target(testsuite)
 

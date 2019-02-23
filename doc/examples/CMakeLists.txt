@@ -39,6 +39,8 @@ macro(GENERATE_EXAMPLES var)
     set(GENERATED_FILES ${GENERATED_FILES} ${ll})
 endmacro()
 
+#TODO: Handle fixed-class.cpp fixed-point.h makefile.example io.data
+
 set(EXAMPLES simple.cpp storage.cpp outer.cpp strideslice.cpp slicing.cpp debug.cpp
              output.cpp io.cpp dump.cpp xor.cpp cast.cpp range.cpp fixed.cpp)
 
@@ -53,8 +55,5 @@ target_link_libraries(io blitz)
 
 #   Per the documentation this should not be needed as OUTPUT of
 #   ADD_CUSTOM_COMMAND should be automatically cleaned...
+
 set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${GENERATED_FILES}")
-
-########### install files ###############
-
-#EXTRA_DIST = fixed-class.cpp fixed-point.h makefile.example io.data
