@@ -101,24 +101,6 @@ protected:
     mutable T_resulttype sum_;
 };
 
-#define _bz_DefaultValue(P_sourcetype)\
-template<>\
-class DefaultValue<P_sourcetype> {\
-public:\
-	inline static P_sourcetype min() { return quiet_NaN(P_sourcetype()); }\
-	inline static P_sourcetype max() { return quiet_NaN(P_sourcetype()); }\
-};
-
-template<typename P_sourcetype>
-class DefaultValue {
-public:
-	inline static P_sourcetype min() { return neghuge(P_sourcetype()); }
-	inline static P_sourcetype max() { return huge(P_sourcetype()); }
-};
-
-_bz_DefaultValue(double)
-_bz_DefaultValue(float)
-
 template<typename P_sourcetype>
 class ReduceMin {
 public:
@@ -132,14 +114,14 @@ public:
     ReduceMin() { }
 
     bool operator()(const T_sourcetype& x,const int=0) const {
-        if ((x < min_) || (min_ != min_))
+        if (!(x >= min_) && (min_ == min_))
             min_ = x;
         return true;
     }
 
     T_resulttype result(const int) const { return min_; }
 
-    void reset() const { min_ = DefaultValue<P_sourcetype>::max(); }
+    void reset() const { min_ = huge(P_sourcetype()); }
 
     static const char* name() { return "min"; }
 
@@ -161,14 +143,14 @@ public:
     ReduceMax() { }
 
     bool operator()(const T_sourcetype& x,const int=0) const {
-        if ((x > max_) || (max_ != max_))
+        if (!(x <= max_) && (max_ == max_))
             max_ = x;
         return true;
     }
 
     T_resulttype result(const int) const { return max_; }
 
-    void reset() const { max_ = DefaultValue<P_sourcetype>::min(); }
+    void reset() const { max_ = neghuge(P_sourcetype()); }
 
     static const char* name() { return "max"; }
 
