@@ -1,12 +1,14 @@
-#!/bin/env python
+#!/bin/env python2
 
 # Generates stencil code. This replaces the macros in stencil-et.h,
 # which make it impossible to debug the generated code.
 
+from __future__ import print_function
+
 import sys
 
 os=open(sys.argv[1],'w')
-print "Generating file %s"%sys.argv[1]
+print("Generating file %s"%sys.argv[1])
 
 def BZ_ET_STENCIL_REDIRECT(name):
     stub="""

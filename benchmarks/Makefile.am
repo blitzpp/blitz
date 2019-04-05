@@ -7,7 +7,7 @@ chunky.cpp compiletime.cpp ctime-results ctime1.cpp ctime1v.cpp	     \
 ctime2.cpp ctime2v.cpp ctime3.cpp ctime3v.cpp ctime4.cpp ctime4v.cpp \
 ctime5.cpp ctime5c.cpp ctime5v.cpp daxpy2.cpp daxpyf90-2.f90 dot.cpp \
 dot2.cpp echof2-back.f echotune.cpp echotune.m echotunef.f frek.m    \
-hao-he-mark.cpp kepler.cpp loop1-bug.cpp loop4.cpp loop4f.f	     \
+hao-he-mark.cpp kepler.cpp loop1-bug.cpp loop4.cpp loop4f.f   	     \
 loop4f90.f90 loopstruct.cpp looptest.cpp makelogo.cpp makeloops.cpp  \
 qcd.txt quinlan.cpp stenciln.cpp tiny3.cpp iter.cpp
 
@@ -37,7 +37,7 @@ ctime2v ctime3v ctime4v ctime5v
 
 EXTRA_PROGRAMS = $(BENCHMARKS)
 
-#compile: $(EXTRA_PROGRAMS) 
+#compile: $(EXTRA_PROGRAMS)
 
 run:	$(OTHER_BENCH)
 	@for benchmark in $(OTHER_BENCH) ; do \
@@ -60,6 +60,8 @@ ctime:
 	done
 
 check-benchmarks: run run-loops ctime
+
+check: check-benchmarks
 
 ############################################################################
 
@@ -86,7 +88,7 @@ daxpy_SOURCES = daxpy.cpp fdaxpy.f fidaxpy.f
 stencil_SOURCES = stencil.cpp stencilf.f stencilf2.f
 acoustic_SOURCES = acoustic.cpp acousticf.f acousticf2.f
 acou3d_SOURCES = acou3db1.cpp acou3db2.cpp acou3db3.cpp acou3db4.cpp \
-acou3d.cpp acou3df.f acou3df2.f 
+acou3d.cpp acou3df.f acou3df2.f
 
 endif
 
@@ -205,5 +207,5 @@ endif
 
 clean-local:
 	-rm -rf *.ii *.ti *.int.c *.s work.pc* cxx_repository Template.dir ii_files ti_files core.[0-9]* \
-		$(BENCHMARKS) $(COMPILE_TIME_BENCHMARKS) 
+		$(BENCHMARKS) $(COMPILE_TIME_BENCHMARKS)
 

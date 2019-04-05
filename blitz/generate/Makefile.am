@@ -9,7 +9,7 @@ EXTRA_DIST = genstencils.py
 EXTRA_PROGRAMS = 
 
 $(top_srcdir)/blitz/array/stencil-classes.cc: genstencils.py
-	python $< $@
+	python2 $< $@
 
 generate-headers: $(top_srcdir)/blitz/array/stencil-classes.cc
 
