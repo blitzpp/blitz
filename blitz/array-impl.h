@@ -62,6 +62,7 @@
 #include <boost/serialization/base_object.hpp>
 #endif
 
+#include <type_traits>
 
 BZ_NAMESPACE(blitz)
 
@@ -2268,6 +2269,13 @@ public:
       isStorageContiguous when operator, is used. \todo We should do
       bounds checking, right now we will buffer overrun if the number
       of initializers in the list is larger than numElements. */
+    template <typename T_expr, typename = typename std::enable_if<std::is_convertible<
+                               typename T_expr::T_type, T_numtype>::value>::type>
+    ListInitializationSwitch<T_array> operator=(const T_expr &expr)
+    {
+      return ListInitializationSwitch<T_array>(*this, T_numtype(expr));
+    }
+
     ListInitializationSwitch<T_array> operator=(T_numtype x)
     {
       return ListInitializationSwitch<T_array>(*this, x);

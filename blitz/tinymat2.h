@@ -75,12 +75,13 @@ public:
     typedef P_numtype T_numtype;
     // typedef _bz_tinyMatrixRef<T_numtype, N_rows, N_columns, N_columns, 1> 
     //     T_reference;
-    typedef TinyVector<int, 2>  T_index;
-    typedef TinyMatrix<T_numtype, N_rows, N_columns> T_matrix;
-  typedef FastTM2Iterator<T_numtype,N_rows, N_columns> T_iterator;
-    typedef T_numtype*                                   iterator;
-    typedef const T_numtype*                             const_iterator;
-  typedef FastTM2CopyIterator<P_numtype, N_rows, N_columns> T_range_result;
+    typedef TinyVector<int, 2>                                T_index;
+    typedef TinyMatrix<T_numtype, N_rows, N_columns>          T_matrix;
+    typedef T_matrix                                          T_type;
+    typedef FastTM2Iterator<T_numtype,N_rows, N_columns>      T_iterator;
+    typedef T_numtype*                                        iterator;
+    typedef const T_numtype*                                  const_iterator;
+    typedef FastTM2CopyIterator<P_numtype, N_rows, N_columns> T_range_result;
 
     static const int 
     //numArrayOperands = 1, 

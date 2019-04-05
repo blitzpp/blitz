@@ -77,12 +77,13 @@ public:
     // Public Types
     //////////////////////////////////////////////
 
-    typedef P_numtype                                    T_numtype;
-    typedef TinyVector<T_numtype,N_length>               T_vector;
-    typedef FastTV2Iterator<T_numtype,N_length>         T_iterator;
-    typedef T_numtype*                                   iterator;
-    typedef const T_numtype*                             const_iterator;
-  typedef FastTV2CopyIterator<P_numtype, N_length> T_range_result;
+    typedef P_numtype                                  T_numtype;
+    typedef TinyVector<T_numtype,N_length>             T_vector;
+    typedef T_vector                                   T_type;
+    typedef FastTV2Iterator<T_numtype,N_length>        T_iterator;
+    typedef T_numtype*                                 iterator;
+    typedef const T_numtype*                           const_iterator;
+    typedef FastTV2CopyIterator<P_numtype, N_length>   T_range_result;
 
     static const int 
     //numArrayOperands = 1, 
