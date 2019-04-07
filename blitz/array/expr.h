@@ -70,129 +70,129 @@ BZ_NAMESPACE(blitz)
 
 template <typename T_expr1, typename T_expr2> struct TypeSwitch { typedef void Type; };
 
-template <typename T_expr1, typename T_expr2, int R1, int R2, int C1, int C2>
-struct TypeSwitch<TinyMatrix<T_expr1, R1, C1>, TinyMatrix<T_expr2, R2, C2> > {
+template <typename T_expr1, typename T_expr2, int N_rows1, int N_rows2, int N_columns1, int N_columns2>
+struct TypeSwitch<TinyMatrix<T_expr1, N_rows1, N_columns1>, TinyMatrix<T_expr2, N_rows2, N_columns2> > {
 	typedef void Type;
 };
 
-template <typename T_expr1, typename T_expr2, int RM, int CM, int LV>
-struct TypeSwitch<TinyMatrix<T_expr1, RM, CM>, TinyVector<T_expr2, LV> > {
+template <typename T_expr1, typename T_expr2, int N_rows, int N_columns, int N_length>
+struct TypeSwitch<TinyMatrix<T_expr1, N_rows, N_columns>, TinyVector<T_expr2, N_length> > {
 	typedef void Type;
 };
 
-template <typename T_expr1, typename T_expr2, int RM, int CM, int LV>
-struct TypeSwitch<TinyVector<T_expr2, LV>, TinyMatrix<T_expr1, RM, CM> > {
+template <typename T_expr1, typename T_expr2, int N_rows, int N_columns, int N_length>
+struct TypeSwitch<TinyVector<T_expr2, N_length>, TinyMatrix<T_expr1, N_rows, N_columns> > {
 	typedef void Type;
 };
 
-template <typename T_expr1, typename T_expr2, int L1, int L2>
-struct TypeSwitch<TinyVector<T_expr1, L1>, TinyVector<T_expr2, L2> > {
+template <typename T_expr1, typename T_expr2, int N_length1, int N_length2>
+struct TypeSwitch<TinyVector<T_expr1, N_length1>, TinyVector<T_expr2, N_length2> > {
 	typedef void Type;
 };
 
 //TinyMatrix:
 
-template <typename T_expr1, typename T_expr2, int RM, int CM, int RA>
-struct TypeSwitch<TinyMatrix<T_expr1, RM, CM>, Array<TinyMatrix<T_expr2, RM, CM>, RA> > {
-	typedef Array<TinyMatrix<T_expr2, RM, CM>, RA> Type;
+template <typename T_expr1, typename T_expr2, int N_rows, int N_columns, int N_rank>
+struct TypeSwitch<TinyMatrix<T_expr1, N_rows, N_columns>, Array<TinyMatrix<T_expr2, N_rows, N_columns>, N_rank> > {
+	typedef Array<TinyMatrix<T_expr2, N_rows, N_columns>, N_rank> Type;
 };
 
-template <typename T_expr1, typename T_expr2, int RM, int CM, int RA>
-struct TypeSwitch<Array<TinyMatrix<T_expr1, RM, CM>, RA>, TinyMatrix<T_expr2, RM, CM> > {
-	typedef Array<TinyMatrix<T_expr1, RM, CM>, RA> Type;
+template <typename T_expr1, typename T_expr2, int N_rows, int N_columns, int N_rank>
+struct TypeSwitch<Array<TinyMatrix<T_expr1, N_rows, N_columns>, N_rank>, TinyMatrix<T_expr2, N_rows, N_columns> > {
+	typedef Array<TinyMatrix<T_expr1, N_rows, N_columns>, N_rank> Type;
 };
 
-template <typename T_expr1, typename T_expr2, int RM, int CM>
-struct TypeSwitch<TinyMatrix<T_expr1, RM, CM>, TinyMatrix<T_expr2, RM, CM> > {
-	typedef TinyMatrix<T_expr1, RM, CM> Type;
+template <typename T_expr1, typename T_expr2, int N_rows, int N_columns>
+struct TypeSwitch<TinyMatrix<T_expr1, N_rows, N_columns>, TinyMatrix<T_expr2, N_rows, N_columns> > {
+	typedef TinyMatrix<T_expr1, N_rows, N_columns> Type;
 };
 
-template <typename T_expr1, typename T_expr2, int RM, int CM>
-struct TypeSwitch<T_expr1, TinyMatrix<T_expr2, RM, CM> > {
-	typedef TinyMatrix<T_expr2, RM, CM> Type;
+template <typename T_expr1, typename T_expr2, int N_rows, int N_columns>
+struct TypeSwitch<T_expr1, TinyMatrix<T_expr2, N_rows, N_columns> > {
+	typedef TinyMatrix<T_expr2, N_rows, N_columns> Type;
 };
 
-template <typename T_expr1, typename T_expr2, int RM, int CM>
-struct TypeSwitch<TinyMatrix<T_expr1, RM, CM>, T_expr2> {
-	typedef TinyMatrix<T_expr1, RM, CM> Type;
+template <typename T_expr1, typename T_expr2, int N_rows, int N_columns>
+struct TypeSwitch<TinyMatrix<T_expr1, N_rows, N_columns>, T_expr2> {
+	typedef TinyMatrix<T_expr1, N_rows, N_columns> Type;
 };
 
 //TinyVector:
 
-template <typename T_expr1, typename T_expr2, int LV, int RA>
-struct TypeSwitch<TinyVector<T_expr1, LV>, Array<TinyVector<T_expr2, LV>, RA> > {
-	typedef Array<TinyVector<T_expr2, LV>, RA> Type;
+template <typename T_expr1, typename T_expr2, int N_length, int N_rank>
+struct TypeSwitch<TinyVector<T_expr1, N_length>, Array<TinyVector<T_expr2, N_length>, N_rank> > {
+	typedef Array<TinyVector<T_expr2, N_length>, N_rank> Type;
 };
 
-template <typename T_expr1, typename T_expr2, int LV, int RA>
-struct TypeSwitch<Array<TinyVector<T_expr1, LV>, RA>, TinyVector<T_expr2, LV> > {
-	typedef Array<TinyVector<T_expr1, LV>, RA> Type;
+template <typename T_expr1, typename T_expr2, int N_length, int N_rank>
+struct TypeSwitch<Array<TinyVector<T_expr1, N_length>, N_rank>, TinyVector<T_expr2, N_length> > {
+	typedef Array<TinyVector<T_expr1, N_length>, N_rank> Type;
 };
 
-template <typename T_expr1, typename T_expr2, int LV>
-struct TypeSwitch<TinyVector<T_expr1, LV>, TinyVector<T_expr2, LV> > {
-	typedef TinyVector<T_expr1, LV> Type;
+template <typename T_expr1, typename T_expr2, int N_length>
+struct TypeSwitch<TinyVector<T_expr1, N_length>, TinyVector<T_expr2, N_length> > {
+	typedef TinyVector<T_expr1, N_length> Type;
 };
 
-template <typename T_expr1, typename T_expr2, int LV>
-struct TypeSwitch<T_expr1, TinyVector<T_expr2, LV> > {
-	typedef TinyVector<T_expr2, LV> Type;
+template <typename T_expr1, typename T_expr2, int N_length>
+struct TypeSwitch<T_expr1, TinyVector<T_expr2, N_length> > {
+	typedef TinyVector<T_expr2, N_length> Type;
 };
 
-template <typename T_expr1, typename T_expr2, int LV>
-struct TypeSwitch<TinyVector<T_expr1, LV>, T_expr2> {
-	typedef TinyVector<T_expr1, LV> Type;
+template <typename T_expr1, typename T_expr2, int N_length>
+struct TypeSwitch<TinyVector<T_expr1, N_length>, T_expr2> {
+	typedef TinyVector<T_expr1, N_length> Type;
 };
 
 //Array:
 
-template <typename T_expr1, typename T_expr2, int RA>
-struct TypeSwitch<Array<T_expr1, RA>, Array<T_expr2, RA> > {
-	typedef Array<T_expr2, RA> Type;
+template <typename T_expr1, typename T_expr2, int N_rank>
+struct TypeSwitch<Array<T_expr1, N_rank>, Array<T_expr2, N_rank> > {
+	typedef Array<T_expr2, N_rank> Type;
 };
 
-template <typename T_expr1, typename T_expr2, int RA>
-struct TypeSwitch<Array<T_expr1, RA>, T_expr2> {
-	typedef Array<T_expr1, RA> Type;
+template <typename T_expr1, typename T_expr2, int N_rank>
+struct TypeSwitch<Array<T_expr1, N_rank>, T_expr2> {
+	typedef Array<T_expr1, N_rank> Type;
 };
 
-template <typename T_expr1, typename T_expr2, int RA>
-struct TypeSwitch<T_expr1, Array<T_expr2, RA> > {
-	typedef Array<T_expr2, RA> Type;
+template <typename T_expr1, typename T_expr2, int N_rank>
+struct TypeSwitch<T_expr1, Array<T_expr2, N_rank> > {
+	typedef Array<T_expr2, N_rank> Type;
 };
 
 //NOTE: These template structures define final type of an array expression
 
 template <typename T_expr> struct TypeInfo { typedef T_expr Type; };
 
-template <typename T_expr, int N, int M>
-struct TypeInfo<FastTM2CopyIterator<T_expr, N, M> > {
-	typedef typename FastTM2CopyIterator<T_expr, N, M>::T_matrix Type;
+template <typename T_expr, int N_rows, int N_columns>
+struct TypeInfo<FastTM2CopyIterator<T_expr, N_rows, N_columns> > {
+	typedef typename FastTM2CopyIterator<T_expr, N_rows, N_columns>::T_matrix Type;
 };
 
-template <typename T_expr, int N, int M>
-struct TypeInfo<FastTM2Iterator<T_expr, N, M> > {
-	typedef typename FastTM2Iterator<T_expr, N, M>::T_matrix Type;
+template <typename T_expr, int N_rows, int N_columns>
+struct TypeInfo<FastTM2Iterator<T_expr, N_rows, N_columns> > {
+	typedef typename FastTM2Iterator<T_expr, N_rows, N_columns>::T_matrix Type;
 };
 
-template <typename T_expr, int N>
-struct TypeInfo<FastTV2CopyIterator<T_expr, N> > {
-	typedef typename FastTV2CopyIterator<T_expr, N>::T_vector Type;
+template <typename T_expr, int N_length>
+struct TypeInfo<FastTV2CopyIterator<T_expr, N_length> > {
+	typedef typename FastTV2CopyIterator<T_expr, N_length>::T_vector Type;
 };
 
-template <typename T_expr, int N>
-struct TypeInfo<FastTV2Iterator<T_expr, N> > {
-	typedef typename FastTV2Iterator<T_expr, N>::T_vector Type;
+template <typename T_expr, int N_length>
+struct TypeInfo<FastTV2Iterator<T_expr, N_length> > {
+	typedef typename FastTV2Iterator<T_expr, N_length>::T_vector Type;
 };
 
-template <typename T_expr, int N>
-struct TypeInfo<FastArrayCopyIterator<T_expr, N> > {
-	typedef typename FastArrayCopyIterator<T_expr, N>::T_array Type;
+template <typename T_expr, int N_rank>
+struct TypeInfo<FastArrayCopyIterator<T_expr, N_rank> > {
+	typedef typename FastArrayCopyIterator<T_expr, N_rank>::T_array Type;
 };
 
-template <typename T_expr, int N>
-struct TypeInfo<FastArrayIterator<T_expr, N> > {
-	typedef typename FastArrayIterator<T_expr, N>::T_array Type;
+template <typename T_expr, int N_rank>
+struct TypeInfo<FastArrayIterator<T_expr, N_rank> > {
+	typedef typename FastArrayIterator<T_expr, N_rank>::T_array Type;
 };
 
 template <typename T_expr1, typename T_expr2, typename OP>
