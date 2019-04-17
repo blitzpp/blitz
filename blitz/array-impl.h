@@ -62,6 +62,7 @@
 #include <boost/serialization/base_object.hpp>
 #endif
 
+#include <type_traits>
 
 BZ_NAMESPACE(blitz)
 
@@ -110,6 +111,36 @@ class Array : public MemoryBlockReference<P_numtype>
 {
 
 private:
+
+    template <typename T1, typename ... Ti>
+    struct TypeIndex {
+        static const bool value = std::is_convertible<T1, int>::value && TypeIndex<Ti ...>::value;
+    };
+    template <typename T1>
+    struct TypeIndex<T1> {
+        static const bool value = std::is_convertible<T1, int>::value;
+    };
+
+    template <typename T1, typename ... Ti>
+    struct TypeRange {
+        static const bool value = std::is_same<T1, Range>::value && TypeRange<Ti ...>::value;
+    };
+    template <typename T1>
+    struct TypeRange<T1> {
+        static const bool value = std::is_same<T1, Range>::value;
+    };
+
+    template <typename T1, typename T2, typename ... Ti>
+    struct TypePart {
+        static const bool value = TypePart<T1, T2>::value || TypePart<T2, Ti ...>::value;
+    };
+    template <typename T1, typename T2>
+    struct TypePart<T1, T2> {
+        static const bool value =
+        (!std::is_same<T1, Range>::value && std::is_same<T2, Range>::value) ||
+        (!std::is_same<T2, Range>::value && std::is_same<T1, Range>::value);
+    };
+
     typedef MemoryBlockReference<P_numtype> T_base;
     using T_base::data_;
 
@@ -1981,7 +2012,8 @@ public:
 
 #ifdef BZ_HAVE_PARTIAL_ORDERING
 
-    template<typename T1, typename T2>
+    template<typename T1, typename T2,
+        typename = typename std::enable_if<TypePart<T1, T2>::value>::type>
     typename SliceInfo<T_numtype,T1,T2>::T_slice
     operator()(T1 r1, T2 r2) const
     {
@@ -1991,7 +2023,8 @@ public:
             nilArraySection(), nilArraySection(), nilArraySection());
     }
 
-    template<typename T1, typename T2, typename T3>
+    template<typename T1, typename T2, typename T3,
+        typename = typename std::enable_if<TypePart<T1, T2, T3>::value>::type>
     typename SliceInfo<T_numtype,T1,T2,T3>::T_slice 
     operator()(T1 r1, T2 r2, T3 r3) const
     {
@@ -2001,7 +2034,8 @@ public:
             nilArraySection(), nilArraySection());
     }
 
-    template<typename T1, typename T2, typename T3, typename T4>
+    template<typename T1, typename T2, typename T3, typename T4,
+        typename = typename std::enable_if<TypePart<T1, T2, T3, T4>::value>::type>
     typename SliceInfo<T_numtype,T1,T2,T3,T4>::T_slice
     operator()(T1 r1, T2 r2, T3 r3, T4 r4) const
     {
@@ -2011,7 +2045,8 @@ public:
             nilArraySection(), nilArraySection());
     }
 
-    template<typename T1, typename T2, typename T3, typename T4, typename T5>
+    template<typename T1, typename T2, typename T3, typename T4, typename T5,
+        typename = typename std::enable_if<TypePart<T1, T2, T3, T4, T5>::value>::type>
     typename SliceInfo<T_numtype,T1,T2,T3,T4,T5>::T_slice
     operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5) const
     {
@@ -2021,7 +2056,8 @@ public:
             nilArraySection(), nilArraySection());
     }
 
-    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+    template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
+        typename = typename std::enable_if<TypePart<T1, T2, T3, T4, T5, T6>::value>::type>
     typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6>::T_slice
     operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6) const
     {
@@ -2031,7 +2067,8 @@ public:
     }
 
     template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
-        typename T7>
+        typename T7,
+        typename = typename std::enable_if<TypePart<T1, T2, T3, T4, T5, T6, T7>::value>::type>
     typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7>::T_slice
     operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7) const
     {
@@ -2041,7 +2078,8 @@ public:
     }
 
     template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
-        typename T7, typename T8>
+        typename T7, typename T8,
+        typename = typename std::enable_if<TypePart<T1, T2, T3, T4, T5, T6, T7, T8>::value>::type>
     typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8>::T_slice
     operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8) const
     {
@@ -2051,7 +2089,8 @@ public:
     }
 
     template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
-        typename T7, typename T8, typename T9>
+        typename T7, typename T8, typename T9,
+        typename = typename std::enable_if<TypePart<T1, T2, T3, T4, T5, T6, T7, T8, T9>::value>::type>
     typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8,T9>::T_slice
     operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9) const
     {
@@ -2060,7 +2099,8 @@ public:
     }
 
     template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
-        typename T7, typename T8, typename T9, typename T10>
+        typename T7, typename T8, typename T9, typename T10,
+        typename = typename std::enable_if<TypePart<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::value>::type>
     typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>::T_slice
     operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9, T10 r10) const
     {
@@ -2069,7 +2109,8 @@ public:
     }
 
     template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6,
-        typename T7, typename T8, typename T9, typename T10, typename T11>
+        typename T7, typename T8, typename T9, typename T10, typename T11,
+        typename = typename std::enable_if<TypePart<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::value>::type>
     typename SliceInfo<T_numtype,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_slice
     operator()(T1 r1, T2 r2, T3 r3, T4 r4, T5 r5, T6 r6, T7 r7, T8 r8, T9 r9, T10 r10, T11 r11) const
     {
