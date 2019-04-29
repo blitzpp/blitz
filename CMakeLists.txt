@@ -1,12 +1,7 @@
-cmake_minimum_required(VERSION 2.4)
+cmake_minimum_required(VERSION 3.0)
 cmake_policy(VERSION 3.1)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
-
-project(blitz CXX)
-
-option(BUILD_DOC "Build documentation" OFF)
-option(BUILD_TESTING "Build tests, examples and benchmarks" OFF)
 
 #   Blitz version and release date.
 
@@ -16,6 +11,13 @@ set(blitz_PATCH 0)
 set(blitz_VERSION ${blitz_MAJOR}.${blitz_MINOR}.${blitz_PATCH})
 set(blitz_Release "2013-08-24")
 set(BZ_PACKAGE_STRING "${CMAKE_PROJECT_NAME} ${blitz_MAJOR}.${blitz_MINOR}")
+
+#   Set the project
+
+project(blitz VERSION ${blitz_VERSION} LANGUAGES CXX)
+
+option(BUILD_DOC "Build documentation" OFF)
+option(BUILD_TESTING "Build tests, examples and benchmarks" OFF)
 
 #   Packaging
 
@@ -30,10 +32,10 @@ set(CPACK_SOURCE_IGNORE_FILES ".*.swp$" ".*.swo$" "~$" ".bz2$" ".gz$")
 include(CPack)
 include(UnitTests)
 include(BlitzConfigFileName)
-include(GenerateConfigFile)
 include(Win32Compat)
 include(CreatePkgConfig)
 include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
 
 include_directories(BEFORE SYSTEM ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
 
@@ -57,10 +59,31 @@ endif()
 #   Configuration files.
 
 CreatePkgConfigInfo(blitz)
-Dependencies(blitz ${DEPS})
-GenerateConfigFile(blitz LIBRARIES blitz ${EXTRA_LIBS})
+
+write_basic_package_version_file(
+    cmake/${PROJECT_NAME}ConfigVersion.cmake
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY AnyNewerVersion)
+configure_package_config_file(
+    cmake/${PROJECT_NAME}Config.cmake.in
+    cmake/${PROJECT_NAME}Config.cmake
+    INSTALL_DESTINATION lib/cmake/)
 
 #   Installation
 
-install(EXPORT blitz DESTINATION ${CMAKE_INSTALL_LIBDIR}/blitz)
-install(FILES ${CMAKE_BINARY_DIR}/blitz.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+install(TARGETS ${PROJECT_NAME} ${STACK_UNWINDING_PROJECT_NAME}
+    EXPORT ${PROJECT_NAME}Targets
+    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION lib
+    RUNTIME DESTINATION bin
+    INCLUDES DESTINATION include)
+install(EXPORT ${PROJECT_NAME}Targets
+        DESTINATION lib/cmake)
+install(FILES
+        ${CMAKE_BINARY_DIR}/blitz.pc
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+
+install(FILES
+        ${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}Config.cmake
+        ${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}ConfigVersion.cmake
+        DESTINATION lib/cmake/)
