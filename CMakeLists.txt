@@ -5,6 +5,9 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 project(blitz CXX)
 
+option(BUILD_DOC "Build documentation" OFF)
+option(BUILD_TESTING "Build tests, examples and benchmarks" OFF)
+
 #   Blitz version and release date.
 
 set(blitz_MAJOR 0)
@@ -38,15 +41,17 @@ add_custom_target(generated-headers ALL)
 
 set(PKGCONFIG_LIBS -lblitz)
 
-add_subdirectory(blitz) 
-add_subdirectory(random) 
-add_subdirectory(lib) 
-add_subdirectory(doc) 
+add_subdirectory(blitz)
+add_subdirectory(random)
+add_subdirectory(lib)
+if (BUILD_DOC)
+    add_subdirectory(doc)
+endif()
 
 if (BUILD_TESTING)
-    add_subdirectory(testsuite) 
-    add_subdirectory(examples) 
-    add_subdirectory(benchmarks) 
+    add_subdirectory(testsuite)
+    add_subdirectory(examples)
+    add_subdirectory(benchmarks)
 endif()
 
 #   Configuration files.
