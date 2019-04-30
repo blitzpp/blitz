@@ -2,7 +2,7 @@
 
 AC_PREREQ(2.59)
 
-AC_INIT(blitz, 0.10, blitz-support@lists.sourceforge.net)
+AC_INIT(blitz, 1.0.2, blitz-support@lists.sourceforge.net)
 
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_MACRO_DIR([m4])
