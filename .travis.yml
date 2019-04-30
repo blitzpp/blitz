@@ -41,20 +41,20 @@ script:
     fi
 
     make lib                 # Check the compiler and create libblitz.a
-  # TODO: make a failure result in non-zero exit code! (see https://travis-ci.org/slayoo/blitz/builds/359545927)
+    # TODO: make a failure result in non-zero exit code! (see https://travis-ci.org/slayoo/blitz/builds/359545927)
     make check-testsuite     # Build and check the testsuite
     make check-examples      # Build and check the examples
-  # TODO! (fails with error: no such file or directory: 'arrdaxpyf.o')
-  # - make check-benchmarks    # Build and check the benchmarks (takes a long time)
+    # TODO! (fails with error: no such file or directory: 'arrdaxpyf.o')
+    # - make check-benchmarks    # Build and check the benchmarks (takes a long time)
     sudo make install        # Install Blitz++
     make info                # Build Blitz++ texinfo documentation
-  # TODO: fails with /usr/bin/texi2dvi: texinfo.tex appears to be broken.
-  #- make ps                  # Build Blitz++ ps documentation
-  # - make pdf                 # Build Blitz++ pdf documentation
+    # TODO: fails with /usr/bin/texi2dvi: texinfo.tex appears to be broken.
+    #- make ps                  # Build Blitz++ ps documentation
+    # - make pdf                 # Build Blitz++ pdf documentation
     make html                # Build Blitz++ html documentation
     sudo make install-info   # Install Blitz++ texinfo documentation
-  #- sudo make install-ps     # Install Blitz++ ps documentation
-  #- sudo make install-pdf    # Install Blitz++ pdf documentation
+    #- sudo make install-ps     # Install Blitz++ ps documentation
+    #- sudo make install-pdf    # Install Blitz++ pdf documentation
     sudo make install-html   # Install Blitz++ html documentation
 
   - |
