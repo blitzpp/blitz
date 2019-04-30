@@ -1,0 +1,21 @@
+#   Config file for the @ConfigName@ package
+#   It defines the following variables
+#       @ConfigName@_INCLUDE_DIRS - include directories for FooBar
+#       @ConfigName@_LIBRARIES    - libraries to link against
+#       @ConfigName@_EXECUTABLE   - the executable
+ 
+#   Tell the user project where to find our headers and libraries
+
+#   Our library dependencies (contains definitions for IMPORTED targets)
+
+set(@ConfigName@_LIBRARY_DEPENDS_FILE "@CONFIG_DIR@/@ConfigName@Dependencies.cmake")
+if (NOT @ConfigName@_NO_LIBRARY_DEPENDS AND
+    EXISTS "${@ConfigName@_LIBRARY_DEPENDS_FILE}")
+    include(${@ConfigName@_LIBRARY_DEPENDS_FILE})
+endif()
+ 
+#   These are IMPORTED targets created by @ConfigName@LibraryDepends.cmake
+
+set(@ConfigName@_LIBRARY_DIRS         "@LIB_DIRS@")
+set(@ConfigName@_INCLUDE_DIRS         "@INCLUDE_DIRS@;@DEPINCS@")
+set(@ConfigName@_LIBRARIES            "@LIBRARIES@;@DEPLIBS@")

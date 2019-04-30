@@ -77,12 +77,10 @@ install(TARGETS ${PROJECT_NAME} ${STACK_UNWINDING_PROJECT_NAME}
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin
     INCLUDES DESTINATION include)
-install(EXPORT ${PROJECT_NAME}Targets
-        DESTINATION lib/cmake)
+install(EXPORT ${PROJECT_NAME}Targets DESTINATION lib/cmake)
 install(FILES
         ${CMAKE_BINARY_DIR}/blitz.pc
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
-
 install(FILES
         ${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}Config.cmake
         ${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}ConfigVersion.cmake
