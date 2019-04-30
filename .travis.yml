@@ -20,7 +20,7 @@ matrix:
 
 install:
   - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then
-      sudo apt-get --no-install-recommends install texinfo texlive-base
+      sudo apt-get --no-install-recommends install texinfo texlive-base;
     fi
 
 script:
@@ -37,7 +37,7 @@ script:
   - if [[ "$BLDSYS" = "cmake" ]]; then
       mkdir build;
       cd build;
-      cmake ..
+      cmake ..;
     fi
 
   - make lib                 # Check the compiler and create libblitz.a
