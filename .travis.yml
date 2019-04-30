@@ -24,7 +24,7 @@ install:
     fi
 
 script:
-  - if [[ "$BUILDSYS" = "autotools" ]]; then
+  - if [[ "$BUILDSYS" == "autotools" ]]; then
       aclocal;
       if [[ $TRAVIS_OS_NAME == 'osx' ]]; then glibtoolize; fi;
       if [[ $TRAVIS_OS_NAME == 'linux' ]]; then libtoolize; fi;
@@ -34,7 +34,7 @@ script:
       ./configure;
     fi
 
-  - if [[ "$BUILDSYS" = "cmake" ]]; then
+  - if [[ "$BUILDSYS" == "cmake" ]]; then
       mkdir build;
       cd build;
       cmake ..;
