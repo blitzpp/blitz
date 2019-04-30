@@ -19,25 +19,29 @@ matrix:
 # TODO: Debug & Release modes
 
 install:
-  - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then
-      sudo apt-get --no-install-recommends install texinfo texlive-base;
+  - if [[ ${TRAVIS_OS_NAME} == 'linux' ]]; then
+      sudo apt-get --no-install-recommends install texinfo texlive-base
     fi
 
 script:
-  - if [[ "$BUILDSYS" == "autotools" ]]; then
-      aclocal;
-      if [[ $TRAVIS_OS_NAME == 'osx' ]]; then glibtoolize; fi;
-      if [[ $TRAVIS_OS_NAME == 'linux' ]]; then libtoolize; fi;
-      autoheader;
-      automake --add-missing;
-      autoreconf; 
-      ./configure;
+  - if [[ "${BUILDSYS}" == "autotools" ]]; then
+      aclocal
+      if [[ ${TRAVIS_OS_NAME} == 'osx' ]]; then
+        glibtoolize
+      fi
+      if [[ ${TRAVIS_OS_NAME} == 'linux' ]]; then
+        libtoolize
+      fi
+      autoheader
+      automake --add-missing
+      autoreconf
+      ./configure
     fi
 
-  - if [[ "$BUILDSYS" == "cmake" ]]; then
-      mkdir build;
-      cd build;
-      cmake ..;
+  - if [[ "${BUILDSYS}" == "cmake" ]]; then
+      mkdir build
+      cd build
+      cmake -DBUILD_DOC=ON -DBUILD_TESTING=ON ..
     fi
 
   - make lib                 # Check the compiler and create libblitz.a
@@ -57,5 +61,9 @@ script:
   #- sudo make install-pdf    # Install Blitz++ pdf documentation
   - sudo make install-html   # Install Blitz++ html documentation
 
-  - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then sudo apt-get --no-install-recommends install python-git; fi
-  - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then LD_LIBRARY_PATH=/usr/local/lib ./travis-ci/check-wiki-examples.py; fi
+  - if [[ ${TRAVIS_OS_NAME} == 'linux' ]]; then
+       sudo apt-get --no-install-recommends install python-git
+    fi
+  - if [[ ${TRAVIS_OS_NAME} == 'linux' ]]; then
+       LD_LIBRARY_PATH=/usr/local/lib ./travis-ci/check-wiki-examples.py
+    fi
