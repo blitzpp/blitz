@@ -19,10 +19,12 @@ matrix:
 # TODO: Debug & Release modes
 
 install:
-  - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then sudo apt-get --no-install-recommends install texinfo texlive-base; fi
+  - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then
+      sudo apt-get --no-install-recommends install texinfo texlive-base
+    fi
 
 script:
-  - if [ "$BLDSYS" = "autotools" ]; then
+  - if [[ "$BLDSYS" = "autotools" ]]; then
       aclocal;
       if [[ $TRAVIS_OS_NAME == 'osx' ]]; then glibtoolize; fi;
       if [[ $TRAVIS_OS_NAME == 'linux' ]]; then libtoolize; fi;
@@ -32,7 +34,7 @@ script:
       ./configure;
     fi
 
-  - if [ "$BLDSYS" = "cmake" ]; then
+  - if [[ "$BLDSYS" = "cmake" ]]; then
       mkdir build;
       cd build;
       cmake ..
