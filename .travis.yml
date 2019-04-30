@@ -28,8 +28,8 @@ script:
   - |
     if [[ "${BUILDSYS}" == "autotools" ]]; then
       aclocal
-      if [ ${TRAVIS_OS_NAME} == 'osx' ]; then glibtoolize; fi
-      if [ ${TRAVIS_OS_NAME} == 'linux' ]; then libtoolize; fi
+      if [[ ${TRAVIS_OS_NAME} == 'osx' ]]; then glibtoolize; fi
+      if [[ ${TRAVIS_OS_NAME} == 'linux' ]]; then libtoolize; fi
       autoheader
       automake --add-missing
       autoreconf
@@ -65,4 +65,3 @@ script:
     if [[ ${TRAVIS_OS_NAME} == 'linux' ]]; then
        LD_LIBRARY_PATH=/usr/local/lib ./travis-ci/check-wiki-examples.py
     fi
-
