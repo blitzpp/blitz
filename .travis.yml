@@ -10,8 +10,8 @@ compiler:
 
 env:
   matrix:
-    - BLDSYS=cmake
-    - BLDSYS=autotools
+    - BUILDSYS=cmake
+    - BUILDSYS=autotools
 
 matrix:
   fast_finish: true
@@ -24,7 +24,7 @@ install:
     fi
 
 script:
-  - if [[ "$BLDSYS" = "autotools" ]]; then
+  - if [[ "$BUILDSYS" = "autotools" ]]; then
       aclocal;
       if [[ $TRAVIS_OS_NAME == 'osx' ]]; then glibtoolize; fi;
       if [[ $TRAVIS_OS_NAME == 'linux' ]]; then libtoolize; fi;
@@ -34,7 +34,7 @@ script:
       ./configure;
     fi
 
-  - if [[ "$BLDSYS" = "cmake" ]]; then
+  - if [[ "$BUILDSYS" = "cmake" ]]; then
       mkdir build;
       cd build;
       cmake ..;
