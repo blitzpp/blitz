@@ -26,11 +26,9 @@ install:
 
 script:
   - |
-    if [ $BUILDSYS == "cmake" ]; then
-      mkdir build
-      cd build
-      cmake -DBUILD_DOC=ON -DBUILD_TESTING=ON ..
-    fi
+    mkdir build
+    cd build
+    cmake -DBUILD_DOC=ON -DBUILD_TESTING=ON ..
 
   - make lib                 # Check the compiler and create libblitz.a
     # TODO: make a failure result in non-zero exit code! (see https://travis-ci.org/slayoo/blitz/builds/359545927)
