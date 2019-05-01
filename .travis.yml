@@ -26,15 +26,7 @@ install:
 
 script:
   - |
-    if [ "${BUILDSYS}" == "autotools" ]; then
-      aclocal
-      if [ "${TRAVIS_OS_NAME}" == 'osx' ]; then glibtoolize; fi
-      if [ "${TRAVIS_OS_NAME}" == 'linux' ]; then libtoolize; fi
-      autoheader
-      automake --add-missing
-      autoreconf
-      ./configure
-    elif [ "${BUILDSYS}" == "cmake" ]; then
+    if [ $BUILDSYS == "cmake" ]; then
       mkdir build
       cd build
       cmake -DBUILD_DOC=ON -DBUILD_TESTING=ON ..
