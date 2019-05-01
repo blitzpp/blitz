@@ -21,14 +21,24 @@ matrix:
 install:
   - |
     if [ ${TRAVIS_OS_NAME} == 'linux' ]; then
-      sudo apt-get --no-install-recommends install texinfo texlive-base
+      sudo apt-get --no-install-recommends install texinfo texlive-base doxygen
     fi
 
 script:
   - |
-    mkdir build
-    cd build
-    cmake -DBUILD_DOC=ON -DBUILD_TESTING=ON ..
+    if [ $BUILDSYS == "autotools" ]; then
+      aclocal
+      if [ $TRAVIS_OS_NAME == 'osx' ]; then glibtoolize; fi
+      if [ $TRAVIS_OS_NAME == 'linux' ]; then libtoolize; fi
+      autoheader
+      automake --add-missing
+      autoreconf
+      ./configure
+    elif [ $BUILDSYS == "cmake" ]; then
+      mkdir build
+      cd build
+      cmake -DBUILD_DOC=ON -DBUILD_TESTING=ON ..
+    fi
 
   - make lib                 # Check the compiler and create libblitz.a
     # TODO: make a failure result in non-zero exit code! (see https://travis-ci.org/slayoo/blitz/builds/359545927)
