@@ -56,6 +56,10 @@ if (BUILD_TESTING)
     add_subdirectory(benchmarks)
 endif()
 
+#   Add a custom target to mimic autotools "make lib"
+
+add_custom_target(lib DEPENDS blitz)
+
 #   Configuration files.
 
 CreatePkgConfigInfo(blitz)
