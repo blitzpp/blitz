@@ -12,7 +12,7 @@ if (DOXYGEN_FOUND)
 
     add_custom_target(doxygen_outputs
                       COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
-                      COMMAND ${CMAKE_COMMAND} -E chdir latex; ${CMAKE_MAKE_PROGRAM}
+                      COMMAND ${CMAKE_COMMAND} -E chdir latex; ${CMAKE_MAKE_PROGRAM} -d
                       DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 
     install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html/ DESTINATION ${CMAKE_INSTALL_DOCDIR}/reference)
