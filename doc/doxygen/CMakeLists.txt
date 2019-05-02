@@ -7,9 +7,8 @@ if (DOXYGEN_FOUND)
         get_filename_component(DOT_PATH ${DOT} PATH)
     endif()
 
+    set(top_srcdir ${CMAKE_SOURCE_DIR})
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
-
-    add_dependencies(blitz-doc doxygen_outputs)
 
     add_custom_target(doxygen_outputs
                       COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile

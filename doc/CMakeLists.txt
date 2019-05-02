@@ -1,8 +1,8 @@
-add_custom_target(blitz-doc ALL DEPENDS stencils doc-examples)
-
 add_subdirectory(examples)
 add_subdirectory(stencils)
 add_subdirectory(doxygen)
+
+add_custom_target(blitz-doc-prep DEPENDS stencils doc-examples doxygen_outputs)
 
 set(STENCILS
     backward11.texi backward12.texi backward21.texi backward22.texi backward31.texi backward32.texi backward41.texi backward42.texi
@@ -37,9 +37,10 @@ set(TEXI_PROG_ARGS -I ${CMAKE_CURRENT_SOURCE_DIR} -I ${CMAKE_CURRENT_BINARY_DIR}
 
 find_program(MAKEINFO makeinfo)
 if (MAKEINFO)
-    add_custom_command(COMMAND ${MAKEINFO} --no-split ${TEXI_PROG_ARGS}  ${TEXI_SRC}
-                       TARGET  blitz-doc
-                       OUTPUTS blitz.info)
+    add_custom_target(info ${MAKEINFO} --no-split ${TEXI_PROG_ARGS} ${TEXI_SRC}
+                      DEPENDS blitz-doc-prep
+                      SOURCES ${TEXI_SRC})
+    install(FILES blitz.info DESTINATION ${CMAKE_INSTALL_INFODIR})
 endif()
 mark_as_advanced(MAKEINFO)
 
@@ -49,10 +50,10 @@ mark_as_advanced(TEXI2HTML)
 
 if (TEXI2HTML)
     file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html)
-    add_custom_command(COMMAND ${TEXI2HTML} ${TEXI_PROG_ARGS} --split=chapter ${TEXI_SRC}
-                       TARGET  blitz-doc
-                       OUTPUTS html)
-    install(DIRECTORY html DESTINATION ${CMAKE_INSTALL_DOCDIR})
+    add_custom_target(html ${TEXI2HTML} ${TEXI_PROG_ARGS} --split=chapter ${TEXI_SRC}
+                      DEPENDS blitz-doc-prep
+                      SOURCES ${TEXI_SRC})
+    install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/blitz DESTINATION ${CMAKE_INSTALL_DOCDIR})
 endif()
 
 find_program(TEXI2PDF texi2pdf
@@ -61,14 +62,16 @@ mark_as_advanced(TEXI2PDF)
 
 if (TEXI2PDF)
     find_path(TEXINFO_TEX_DIR "texinfo.tex" HINTS "/usr/share/texmf/tex/texinfo/")
-    add_custom_command(COMMAND TEXINPUTS=:${TEXINFO_TEX_DIR}:; ${TEXI2PDF} ${TEXI_PROG_ARGS} ${TEXI_SRC}
-                       TARGET  blitz-doc
-                       OUTPUTS blitz.pdf)
+    add_custom_target(pdf TEXINPUTS=:${TEXINFO_TEX_DIR}:; ${TEXI2PDF} ${TEXI_PROG_ARGS} ${TEXI_SRC}
+                      DEPENDS blitz-doc-prep
+                      SOURCES ${TEXI_SRC})
     install(FILES blitz.pdf DESTINATION ${CMAKE_INSTALL_DOCDIR})
 endif()
 
 set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
     "blitz.html;blitz.pdf;blitz.aux;blitz.cp;blitz.cps;blitz.fn;blitz.fns;blitz.ky;blitz.log;blitz.pg;blitz.toc;blitz.tp;blitz.vr")
+
+add_custom_target(blitz-doc DEPENDS info html pdf)
 
 foreach(i AUTHORS COPYING COPYING.LESSER COPYRIGHT LEGAL LICENSE NEWS README)
     set(BLITZ_INFORMATION ${BLITZ_INFORMATION} ${CMAKE_SOURCE_DIR}/${i})
