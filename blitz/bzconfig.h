@@ -34,7 +34,10 @@
 #define BZCONFIG_H
 
 #if defined(__APPLE__)
-#if defined(__GNUC__)
+#if defined(__clang__)
+/* clang compiler */
+#include <blitz/llvm/bzconfig.h>
+#elif defined(__GNUC__)
 /* GNU gcc compiler for newer Mac OS X Darwin */
 #include <blitz/gnu/bzconfig.h>
 #else
