@@ -21,7 +21,7 @@ matrix:
 install:
   - |
     if [ ${TRAVIS_OS_NAME} == 'linux' ]; then
-      sudo apt-get --no-install-recommends install texinfo texlive-base doxygen graphviz
+      sudo apt-get --no-install-recommends install texinfo texlive-base doxygen graphviz pdflatex
     fi
 
 script:
