@@ -97,7 +97,7 @@ GENERATE_BLITZ_HEADER(mathfunc.h    genmathfunc GENERATED_HEADERS)
 GENERATE_BLITZ_HEADER(promote-old.h genpromote  GENERATED_HEADERS)
 
 set(BLITZ_HEADERS
-    array-impl.h array.cc array.h bench.cc bench.h benchext.cc benchext.h blitz.h bounds.h bzdebug.h
+    array-impl.h array.cc array.h bench.cc bench.h benchext.cc benchext.h blitz.h bounds.h bzdebug.h bzconfig.h
     compiler.h constpointerstack.h etbase.h et-forward.h funcs.h globeval.cc indexexpr.h indexmap-forward.h
     levicivita.h limits-hack.h listinit.h memblock.cc memblock.h minmax.h numinquire.h numtrait.h ops.h
     prettyprint.h promote.h range.h range.cc ranks.h reduce.h shapecheck.h simdtypes.h tau.h timer.h tinymat2.h
