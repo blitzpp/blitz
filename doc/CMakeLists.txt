@@ -36,13 +36,14 @@ set(TEXI_SRC ${CMAKE_CURRENT_SOURCE_DIR}/blitz.texi)
 set(TEXI_PROG_ARGS -I ${CMAKE_CURRENT_SOURCE_DIR} -I ${CMAKE_CURRENT_BINARY_DIR})
 
 find_program(MAKEINFO makeinfo)
+mark_as_advanced(MAKEINFO)
 if (MAKEINFO)
+    message("[[${MAKEINFO} -v --no-split ${TEXI_PROG_ARGS} ${TEXI_SRC}]]")
     add_custom_target(info ${MAKEINFO} --no-split ${TEXI_PROG_ARGS} ${TEXI_SRC}
                       DEPENDS blitz-doc-prep
                       SOURCES ${TEXI_SRC})
     install(FILES blitz.info DESTINATION ${CMAKE_INSTALL_INFODIR})
 endif()
-mark_as_advanced(MAKEINFO)
 
 find_program(TEXI2HTML texi2html
              ${CYGWIN_INSTALL_PATH}/bin /bin /usr/bin /usr/local/bin /sbin)
