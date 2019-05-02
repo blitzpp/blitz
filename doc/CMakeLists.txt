@@ -79,5 +79,4 @@ endforeach()
 
 # Install files
 
-install(FILES blitz.info DESTINATION ${CMAKE_INSTALL_INFODIR})
 install(FILES ${BLITZ_INFORMATION} DESTINATION ${CMAKE_INSTALL_DOCDIR})
