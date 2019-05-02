@@ -1,3 +1,8 @@
+environment:
+  matrix:
+    - BUILDSYS=cmake
+    - BUILDSYS=ms
+
 platform: 
 #  - x86 # TODO!
   - x64
