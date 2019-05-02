@@ -16,6 +16,8 @@ case "$CXX" in
                 COMPILER_SPECIFIC_HEADER="intel/bzconfig.h" ;;
   *xlC*)        AX_PREFIX_CONFIG_H([blitz/ibm/bzconfig.h],[BZ])
                 COMPILER_SPECIFIC_HEADER="ibm/bzconfig.h" ;;
+  *clang++)     AX_PREFIX_CONFIG_H([blitz/llvm/bzconfig.h],[BZ])
+                COMPILER_SPECIFIC_HEADER="llvm/bzconfig.h" ;;
   *cxx*)        AX_PREFIX_CONFIG_H([blitz/compaq/bzconfig.h],[BZ])
                 COMPILER_SPECIFIC_HEADER="compaq/bzconfig.h" ;;
   *aCC*)        AX_PREFIX_CONFIG_H([blitz/hp/bzconfig.h],[BZ])
