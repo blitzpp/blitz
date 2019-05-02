@@ -1,4 +1,4 @@
-set(blitz_LIB_SRCS ../src/globals.cpp)
+set(blitz_LIB_SRCS globals.cpp)
 
 add_library(blitz SHARED ${blitz_LIB_SRCS})
 add_dependencies(blitz generated-headers)
@@ -20,7 +20,7 @@ if (NOT WIN32)
 endif()
 
 install(TARGETS ${BLITZ_LIBS}
-        EXPORT  blitz
+        EXPORT  ${PROJECT_NAME}Targets
         #RUNTIME DESTINATION bin COMPONENT runtime
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT devel
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT devel
