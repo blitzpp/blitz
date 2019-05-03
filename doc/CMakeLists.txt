@@ -50,11 +50,13 @@ find_program(TEXI2HTML texi2html
 mark_as_advanced(TEXI2HTML)
 
 if (TEXI2HTML)
+    set(HTML_DIR ${CMAKE_CURRENT_BINARY_DIR}/html)
     file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html)
     add_custom_target(html ${TEXI2HTML} ${TEXI_PROG_ARGS} --split=chapter ${TEXI_SRC}
+                      WORKING_DIRECTORY ${HTML_DIR}
                       DEPENDS blitz-doc-prep
                       SOURCES ${TEXI_SRC})
-    install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/blitz DESTINATION ${CMAKE_INSTALL_DOCDIR})
+    install(DIRECTORY ${HTML_DIR} DESTINATION ${CMAKE_INSTALL_DOCDIR})
 endif()
 
 find_program(TEXI2PDF texi2pdf
