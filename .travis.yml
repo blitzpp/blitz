@@ -26,6 +26,9 @@ install:
 
 script:
   - |
+    if [ $TRAVIS_OS_NAME == 'osx' and $CC_FOR_BUILD == 'gcc' ]; then
+        export CXX=g++-6
+    fi
     if [ $BUILDSYS == "autotools" ]; then
       aclocal
       if [ $TRAVIS_OS_NAME == 'osx' ]; then glibtoolize; fi
@@ -39,7 +42,7 @@ script:
       srcdir='..'
       mkdir build
       cd build
-      cmake -DBUILD_DOC=ON -DBUILD_TESTING=ON ..
+      cmake -DCMAKE_CXX_COMPILER=${CXX} -DBUILD_DOC=ON -DBUILD_TESTING=ON ..
     fi
 
   - make lib
