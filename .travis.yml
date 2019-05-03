@@ -21,7 +21,7 @@ matrix:
 install:
   - |
     if [ "${TRAVIS_OS_NAME}" == 'linux' ]; then
-      sudo apt-get --no-install-recommends install texinfo texi2html texlive-base texlive-generic-recommended doxygen graphviz texlive-latex-base texlive-latex-recommended python-git
+      sudo apt-get --no-install-recommends install texinfo texi2html texlive-base texlive-generic-recommended doxygen graphviz texlive-latex-base texlive-latex-recommended texlive-latex-extra python-git
     fi
 
 script:
