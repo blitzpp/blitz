@@ -19,7 +19,7 @@ if (DOXYGEN_FOUND)
     add_custom_target(doxygen ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
                       DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 
-    add_custom_target(doxygen-latex make -d
+    add_custom_target(doxygen-latex make
                       WORKING_DIRECTORY latex
                       DEPENDS doxygen)
 
