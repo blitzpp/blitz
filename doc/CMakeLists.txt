@@ -2,7 +2,7 @@ add_subdirectory(examples)
 add_subdirectory(stencils)
 add_subdirectory(doxygen)
 
-add_custom_target(blitz-doc-prep DEPENDS stencils doc-examples doxygen_outputs)
+add_custom_target(blitz-doc-prep DEPENDS stencils doc-examples doxygen)
 
 set(STENCILS
     backward11.texi backward12.texi backward21.texi backward22.texi backward31.texi backward32.texi backward41.texi backward42.texi
@@ -73,7 +73,7 @@ endif()
 set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
     "blitz.html;blitz.pdf;blitz.aux;blitz.cp;blitz.cps;blitz.fn;blitz.fns;blitz.ky;blitz.log;blitz.pg;blitz.toc;blitz.tp;blitz.vr")
 
-add_custom_target(blitz-doc DEPENDS info html pdf)
+add_custom_target(blitz-doc DEPENDS info html pdf doxygen-latex)
 
 foreach(i AUTHORS COPYING COPYING.LESSER COPYRIGHT LEGAL LICENSE NEWS README.md)
     set(BLITZ_INFORMATION ${BLITZ_INFORMATION} ${CMAKE_SOURCE_DIR}/${i})
