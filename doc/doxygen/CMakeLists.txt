@@ -24,7 +24,7 @@ if (DOXYGEN_FOUND)
                       DEPENDS doxygen)
 
     install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html/ DESTINATION ${CMAKE_INSTALL_DOCDIR}/reference)
-    install(FILES latex/refman.pdf DESTINATION ${CMAKE_INSTALL_DOCDIR})
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/latex/refman.pdf DESTINATION ${CMAKE_INSTALL_DOCDIR})
 
     set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "html;latex;doxygen-warning")
 endif()
