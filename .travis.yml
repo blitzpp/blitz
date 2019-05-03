@@ -26,7 +26,7 @@ install:
 
 script:
   - |
-    if [ $TRAVIS_OS_NAME == 'osx' && $CC_FOR_BUILD == 'gcc' ]; then
+    if [ $TRAVIS_OS_NAME == 'osx'] && [$CC_FOR_BUILD == 'gcc' ]; then
         export CXX=g++-6
     fi
     if [ $BUILDSYS == "autotools" ]; then
