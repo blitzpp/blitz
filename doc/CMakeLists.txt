@@ -2,7 +2,7 @@ add_subdirectory(examples)
 add_subdirectory(stencils)
 add_subdirectory(doxygen)
 
-add_custom_target(blitz-doc-prep DEPENDS stencils doc-examples doxygen)
+add_custom_target(blitz-doc-prep DEPENDS stencils doc-examples)
 
 set(STENCILS
     backward11.texi backward12.texi backward21.texi backward22.texi backward31.texi backward32.texi backward41.texi backward42.texi
