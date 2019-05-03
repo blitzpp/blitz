@@ -21,14 +21,18 @@ matrix:
 install:
   - |
     if [ ${TRAVIS_OS_NAME} == 'linux' ]; then
-      sudo apt-get --no-install-recommends install texinfo texi2html texlive-full doxygen graphviz texlive-latex-base python-git
+      sudo apt-get --no-install-recommends install texinfo texi2html texlive-full doxygen graphviz python-git
     fi
 
 script:
   - |
-    if [ $TRAVIS_OS_NAME == 'osx'] && [$CC_FOR_BUILD == 'gcc' ]; then
+    echo "[[" "$CC_FOR_BUILD"
+    if [ $TRAVIS_OS_NAME == 'osx']; then
+      if ["$CC_FOR_BUILD" == 'gcc' ]; then
         export CXX=g++-6
+      fi
     fi
+    echo $CXX
     if [ $BUILDSYS == "autotools" ]; then
       aclocal
       if [ $TRAVIS_OS_NAME == 'osx' ]; then glibtoolize; fi
