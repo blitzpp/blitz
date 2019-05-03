@@ -23,7 +23,13 @@ case "$CXX" in
   *aCC*)        AX_PREFIX_CONFIG_H([blitz/hp/bzconfig.h],[BZ])
                 COMPILER_SPECIFIC_HEADER="hp/bzconfig.h" ;;
   *g++*|*c++*)  AX_PREFIX_CONFIG_H([blitz/gnu/bzconfig.h],[BZ])
-                COMPILER_SPECIFIC_HEADER="gnu/bzconfig.h" ;;
+                case "$target" in
+                  *LLVM*)
+                    COMPILER_SPECIFIC_HEADER="llvm/bzconfig.h" ;;
+                  *)
+                    COMPILER_SPECIFIC_HEADER="gnu/bzconfig.h" ;;
+                esac
+                ;;
   *KCC*)        AX_PREFIX_CONFIG_H([blitz/kai/bzconfig.h],[BZ])
                 COMPILER_SPECIFIC_HEADER="kai/bzconfig.h" ;;
   *pgCC*)       AX_PREFIX_CONFIG_H([blitz/pgi/bzconfig.h],[BZ])
