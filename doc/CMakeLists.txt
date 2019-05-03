@@ -38,7 +38,6 @@ set(TEXI_PROG_ARGS -I ${CMAKE_CURRENT_SOURCE_DIR} -I ${CMAKE_CURRENT_BINARY_DIR}
 find_program(MAKEINFO makeinfo)
 mark_as_advanced(MAKEINFO)
 if (MAKEINFO)
-    message("[[${MAKEINFO} -v --no-split ${TEXI_PROG_ARGS} ${TEXI_SRC}]]")
     add_custom_target(info ${MAKEINFO} --no-split ${TEXI_PROG_ARGS} ${TEXI_SRC}
                       DEPENDS blitz-doc-prep
                       SOURCES ${TEXI_SRC})
@@ -76,7 +75,7 @@ set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
 
 add_custom_target(blitz-doc DEPENDS info html pdf)
 
-foreach(i AUTHORS COPYING COPYING.LESSER COPYRIGHT LEGAL LICENSE NEWS README)
+foreach(i AUTHORS COPYING COPYING.LESSER COPYRIGHT LEGAL LICENSE NEWS README.md)
     set(BLITZ_INFORMATION ${BLITZ_INFORMATION} ${CMAKE_SOURCE_DIR}/${i})
 endforeach()
 
