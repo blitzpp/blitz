@@ -37,7 +37,9 @@ set(TEXI_PROG_ARGS -I ${CMAKE_CURRENT_SOURCE_DIR} -I ${CMAKE_CURRENT_BINARY_DIR}
 
 find_program(MAKEINFO makeinfo)
 mark_as_advanced(MAKEINFO)
+message("[[${MAKEINFO}]]")
 if (MAKEINFO)
+    message("HERE")
     add_custom_target(info ${MAKEINFO} --no-split ${TEXI_PROG_ARGS} ${TEXI_SRC}
                       COMMAND ls -lR
                       DEPENDS blitz-doc-prep
