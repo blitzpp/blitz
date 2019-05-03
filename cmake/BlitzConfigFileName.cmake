@@ -1,4 +1,5 @@
 if (NOT BLITZ_CONFIG_FILE)
+    message("[[${CMAKE_CXX_COMPILER}]]")
     if (${CMAKE_CXX_COMPILER} MATCHES ".*xlc[+][+].*")
         set(BZ_CONFIG_FILE "apple")
     elseif (${CMAKE_CXX_COMPILER} MATCHES ".*clang[+][+].*")
