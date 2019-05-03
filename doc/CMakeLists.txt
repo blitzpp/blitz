@@ -42,7 +42,7 @@ if (MAKEINFO)
     add_custom_target(info ${MAKEINFO} --no-split ${TEXI_PROG_ARGS} ${TEXI_SRC}
                       DEPENDS blitz-doc-prep
                       SOURCES ${TEXI_SRC})
-    install(FILES blitz.info DESTINATION ${CMAKE_INSTALL_INFODIR})
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/blitz.info DESTINATION ${CMAKE_INSTALL_INFODIR})
 endif()
 
 find_program(TEXI2HTML texi2html
@@ -66,7 +66,7 @@ if (TEXI2PDF)
     add_custom_target(pdf TEXINPUTS=:${TEXINFO_TEX_DIR}:; ${TEXI2PDF} ${TEXI_PROG_ARGS} ${TEXI_SRC}
                       DEPENDS blitz-doc-prep
                       SOURCES ${TEXI_SRC})
-    install(FILES blitz.pdf DESTINATION ${CMAKE_INSTALL_DOCDIR})
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/blitz.pdf DESTINATION ${CMAKE_INSTALL_DOCDIR})
 endif()
 
 set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
