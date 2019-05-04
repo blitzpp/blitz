@@ -76,7 +76,7 @@ endif()
 set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
     "blitz.html;blitz.pdf;blitz.aux;blitz.cp;blitz.cps;blitz.fn;blitz.fns;blitz.ky;blitz.log;blitz.pg;blitz.toc;blitz.tp;blitz.vr")
 
-add_custom_target(blitz-doc DEPENDS info html pdf ${DOXYGEN_LATEX})
+add_custom_target(blitz-doc DEPENDS info html pdf doxygen ${DOXYGEN_LATEX})
 
 foreach(i AUTHORS COPYING COPYING.LESSER COPYRIGHT LEGAL LICENSE NEWS README.md)
     set(BLITZ_INFORMATION ${BLITZ_INFORMATION} ${CMAKE_SOURCE_DIR}/${i})
