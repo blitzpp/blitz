@@ -19,9 +19,12 @@ if (DOXYGEN_FOUND)
     add_custom_target(doxygen ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
                       DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 
-    add_custom_target(doxygen-latex make
-                      WORKING_DIRECTORY latex
-                      DEPENDS doxygen)
+    add_custom_command(OUTPUT latex/refman.pdf
+                       COMMAND make
+                       WORKING_DIRECTORY latex
+                       DEPENDS doxygen)
+
+    add_custom_target(doxygen-latex DEPENDS latex/refman.pdf)
 
     install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html/ DESTINATION ${CMAKE_INSTALL_DOCDIR}/reference)
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/latex/refman.pdf DESTINATION ${CMAKE_INSTALL_DOCDIR})

@@ -39,11 +39,11 @@ find_program(MAKEINFO makeinfo)
 mark_as_advanced(MAKEINFO)
 message("[[${MAKEINFO}]]")
 if (MAKEINFO)
-    add_custom_target(info ${MAKEINFO} --no-split ${TEXI_PROG_ARGS} ${TEXI_SRC}
-                      COMMAND ls -lR
-                      COMMAND echo "Makeinfo DONE"
-                      DEPENDS blitz-doc-prep
-                      SOURCES ${TEXI_SRC})
+    add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/blitz.info
+                       COMMAND ${MAKEINFO} --no-split ${TEXI_PROG_ARGS} ${TEXI_SRC}
+                       DEPENDS blitz-doc-prep ${TEXI_SRC})
+    add_custom_target(info ls -lR
+                      DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/blitz.info)
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/blitz.info DESTINATION ${CMAKE_INSTALL_INFODIR})
 endif()
 
@@ -67,9 +67,10 @@ mark_as_advanced(TEXI2PDF)
 
 if (TEXI2PDF)
     find_path(TEXINFO_TEX_DIR "texinfo.tex" HINTS "/usr/share/texmf/tex/texinfo/")
-    add_custom_target(pdf TEXINPUTS=:${TEXINFO_TEX_DIR}:; ${TEXI2PDF} ${TEXI_PROG_ARGS} ${TEXI_SRC}
-                      DEPENDS blitz-doc-prep
-                      SOURCES ${TEXI_SRC})
+    add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/blitz.pdf
+                       COMMAND TEXINPUTS=:${TEXINFO_TEX_DIR}:; ${TEXI2PDF} ${TEXI_PROG_ARGS} ${TEXI_SRC}
+                       DEPENDS blitz-doc-prep ${TEXI_SRC})
+    add_custom_target(pdf DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/blitz.pdf)
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/blitz.pdf DESTINATION ${CMAKE_INSTALL_DOCDIR})
 endif()
 
