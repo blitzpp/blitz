@@ -41,7 +41,6 @@ script:
       mkdir build
       cd build
       cmake -DBUILD_DOC=ON -DBUILD_TESTING=ON ..
-      cat doc/doxygen/latex/refman.log
     fi
 
   - make lib
@@ -62,6 +61,7 @@ script:
       sudo make install-html   # Install Blitz++ html documentation
     elif [ $BUILDSYS == "cmake" ]; then
       make blitz-doc
+      cat doc/doxygen/latex/refman.log
     fi
 
   - sudo make install        # Install Blitz++
