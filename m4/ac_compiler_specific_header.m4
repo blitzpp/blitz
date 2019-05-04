@@ -10,51 +10,34 @@ See also file blitz/bzconfig.h
 AC_MSG_CHECKING(compiler specific header)
 
 case "$CXX" in
-  *xlc++*)      AX_PREFIX_CONFIG_H([blitz/apple/bzconfig.h],[BZ])
-                COMPILER_SPECIFIC_HEADER="apple/bzconfig.h" ;;
-  *icpc*|*icc*) AX_PREFIX_CONFIG_H([blitz/intel/bzconfig.h],[BZ])
-                COMPILER_SPECIFIC_HEADER="intel/bzconfig.h" ;;
-  *xlC*)        AX_PREFIX_CONFIG_H([blitz/ibm/bzconfig.h],[BZ])
-                COMPILER_SPECIFIC_HEADER="ibm/bzconfig.h" ;;
-  *clang++)     AX_PREFIX_CONFIG_H([blitz/llvm/bzconfig.h],[BZ])
-                COMPILER_SPECIFIC_HEADER="llvm/bzconfig.h" ;;
-  *cxx*)        AX_PREFIX_CONFIG_H([blitz/compaq/bzconfig.h],[BZ])
-                COMPILER_SPECIFIC_HEADER="compaq/bzconfig.h" ;;
-  *aCC*)        AX_PREFIX_CONFIG_H([blitz/hp/bzconfig.h],[BZ])
-                COMPILER_SPECIFIC_HEADER="hp/bzconfig.h" ;;
-  *g++*|*c++*)  AX_PREFIX_CONFIG_H([blitz/gnu/bzconfig.h],[BZ])
-                case "$target" in
+  *xlc++*)      COMPILER_SPECIFIC_HEADER="apple/bzconfig.h" ;;
+  *icpc*|*icc*) COMPILER_SPECIFIC_HEADER="intel/bzconfig.h" ;;
+  *xlC*)        COMPILER_SPECIFIC_HEADER="ibm/bzconfig.h" ;;
+  *clang++)     COMPILER_SPECIFIC_HEADER="llvm/bzconfig.h" ;;
+  *cxx*)        COMPILER_SPECIFIC_HEADER="compaq/bzconfig.h" ;;
+  *aCC*)        COMPILER_SPECIFIC_HEADER="hp/bzconfig.h" ;;
+  *g++*|*c++*)  case "$target" in
                   *apple*) COMPILER_SPECIFIC_HEADER="llvm/bzconfig.h" ;;
                   *)       COMPILER_SPECIFIC_HEADER="gnu/bzconfig.h" ;;
                 esac
-                echo "::$target::"
-                echo ${COMPILER_SPECIFIC_HEADER}
                 ;;
-  *KCC*)        AX_PREFIX_CONFIG_H([blitz/kai/bzconfig.h],[BZ])
-                COMPILER_SPECIFIC_HEADER="kai/bzconfig.h" ;;
-  *pgCC*)       AX_PREFIX_CONFIG_H([blitz/pgi/bzconfig.h],[BZ])
-                COMPILER_SPECIFIC_HEADER="pgi/bzconfig.h" ;;
-dnl  *FCC*)        AX_PREFIX_CONFIG_H([blitz/fujitsu/bzconfig.h],[BZ])
-dnl                COMPILER_SPECIFIC_HEADER="fujitsu/bzconfig.h" ;;
-  *pathCC*)     AX_PREFIX_CONFIG_H([blitz/pathscale/bzconfig.h],[BZ])
-                COMPILER_SPECIFIC_HEADER="pathscale/bzconfig.h" ;;
+  *KCC*)        COMPILER_SPECIFIC_HEADER="kai/bzconfig.h" ;;
+  *pgCC*)       COMPILER_SPECIFIC_HEADER="pgi/bzconfig.h" ;;
+dnl  *FCC*)        COMPILER_SPECIFIC_HEADER="fujitsu/bzconfig.h" ;;
+  *pathCC*)     COMPILER_SPECIFIC_HEADER="pathscale/bzconfig.h" ;;
   *CC*)
     case "$target" in
-    *sgi*)      AX_PREFIX_CONFIG_H([blitz/sgi/bzconfig.h],[BZ])
-                COMPILER_SPECIFIC_HEADER="sgi/bzconfig.h" ;;
-    *solaris*)  AX_PREFIX_CONFIG_H([blitz/sun/bzconfig.h],[BZ])
-                COMPILER_SPECIFIC_HEADER="sun/bzconfig.h" ;;
-    *cray*)     AX_PREFIX_CONFIG_H([blitz/cray/bzconfig.h],[BZ])
-                COMPILER_SPECIFIC_HEADER="cray/bzconfig.h" ;;
-    *fujitsu*)  AX_PREFIX_CONFIG_H([blitz/fujitsu/bzconfig.h],[BZ])
-                COMPILER_SPECIFIC_HEADER="fujitsu/bzconfig.h" ;;
+    *sgi*)      COMPILER_SPECIFIC_HEADER="sgi/bzconfig.h" ;;
+    *solaris*)  COMPILER_SPECIFIC_HEADER="sun/bzconfig.h" ;;
+    *cray*)     COMPILER_SPECIFIC_HEADER="cray/bzconfig.h" ;;
+    *fujitsu*)  COMPILER_SPECIFIC_HEADER="fujitsu/bzconfig.h" ;;
     esac
   ;;
 esac
 
+AX_PREFIX_CONFIG_H([blitz/${COMPILER_SPECIFIC_HEADER}],[BZ])
+
 AC_MSG_RESULT($COMPILER_SPECIFIC_HEADER)
 
 AC_SUBST(COMPILER_SPECIFIC_HEADER,$COMPILER_SPECIFIC_HEADER)
-
-
 ])
