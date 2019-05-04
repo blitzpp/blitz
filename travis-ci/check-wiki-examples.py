@@ -62,6 +62,7 @@ def compile_and_check(examples):
             print('--', 'error')
             errcnt += 1
     except:
+      errcnt += 1
       print('--', 'error')
       with open(logfile, 'r') as fin: print fin.read()
     finally:
