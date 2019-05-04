@@ -20,7 +20,7 @@ script:
   - autoheader
   - automake --add-missing
   - autoreconf
-  - ./configure
+  - ./configure --prefix=/usr/
   - make lib                 # Check the compiler and create libblitz.a
   # TODO: make a failure result in non-zero exit code! (see https://travis-ci.org/slayoo/blitz/builds/359545927)
   - make check-testsuite     # Build and check the testsuite
@@ -39,4 +39,4 @@ script:
   - sudo make install-html   # Install Blitz++ html documentation
 
   - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then sudo apt-get --no-install-recommends install python-git; fi
-  - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then LD_LIBRARY_PATH=/usr/local/lib ./travis-ci/check-wiki-examples.py; fi
+  - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then ./travis-ci/check-wiki-examples.py; fi
