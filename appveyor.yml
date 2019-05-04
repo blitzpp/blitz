@@ -11,7 +11,7 @@ init:
           $env:CMAKE_GEN_PLAT="x64"
           $env:PYTHON_ROOT="C:\Python27-x64"
         }
-- cmd: C:/"Program Files (x86)"/"Microsoft Visual Studio 12.0"/VC/vcvarsall.bat
+  - cmd: C:/"Program Files (x86)"/"Microsoft Visual Studio 12.0"/VC/vcvarsall.bat
 
 install:
   #- choco upgrade cmake 
