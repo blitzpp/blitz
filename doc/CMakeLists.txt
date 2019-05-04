@@ -42,8 +42,7 @@ if (MAKEINFO)
     add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/blitz.info
                        COMMAND ${MAKEINFO} --no-split ${TEXI_PROG_ARGS} ${TEXI_SRC}
                        DEPENDS blitz-doc-prep ${TEXI_SRC})
-    add_custom_target(info ls -lR
-                      DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/blitz.info)
+    add_custom_target(info DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/blitz.info)
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/blitz.info DESTINATION ${CMAKE_INSTALL_INFODIR})
 endif()
 
@@ -77,7 +76,7 @@ endif()
 set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
     "blitz.html;blitz.pdf;blitz.aux;blitz.cp;blitz.cps;blitz.fn;blitz.fns;blitz.ky;blitz.log;blitz.pg;blitz.toc;blitz.tp;blitz.vr")
 
-add_custom_target(blitz-doc DEPENDS info html pdf doxygen-latex)
+add_custom_target(blitz-doc DEPENDS info html pdf ${DOXYGEN_LATEX})
 
 foreach(i AUTHORS COPYING COPYING.LESSER COPYRIGHT LEGAL LICENSE NEWS README.md)
     set(BLITZ_INFORMATION ${BLITZ_INFORMATION} ${CMAKE_SOURCE_DIR}/${i})
