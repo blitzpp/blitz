@@ -61,7 +61,7 @@ script:
       sudo make install-html   # Install Blitz++ html documentation
     elif [ $BUILDSYS == "cmake" ]; then
       make blitz-doc
-      fgrep -r "operator\%=(" *.tex
+      fgrep -r "operator\%=(" doc/doxygen/latex/*.tex
       ls -l doc
     fi
 

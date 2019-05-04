@@ -20,7 +20,7 @@ if (DOXYGEN_FOUND)
                       DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 
     add_custom_command(OUTPUT latex/refman.pdf
-                       COMMAND make
+                       COMMAND make -k
                        WORKING_DIRECTORY latex
                        DEPENDS doxygen)
 
