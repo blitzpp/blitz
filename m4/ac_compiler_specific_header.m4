@@ -9,35 +9,30 @@ See also file blitz/bzconfig.h
 
 AC_MSG_CHECKING(compiler specific header)
 
-case "$CXX" in
-  *xlc++*)      COMPILER_SPECIFIC_HEADER="apple/bzconfig.h" ;;
-  *icpc*|*icc*) COMPILER_SPECIFIC_HEADER="intel/bzconfig.h" ;;
-  *xlC*)        COMPILER_SPECIFIC_HEADER="ibm/bzconfig.h" ;;
-  *clang++)     COMPILER_SPECIFIC_HEADER="llvm/bzconfig.h" ;;
-  *cxx*)        COMPILER_SPECIFIC_HEADER="compaq/bzconfig.h" ;;
-  *aCC*)        COMPILER_SPECIFIC_HEADER="hp/bzconfig.h" ;;
-  *g++*|*c++*)  case "$target" in
-                  *apple*) COMPILER_SPECIFIC_HEADER="llvm/bzconfig.h" ;;
-                  *)       COMPILER_SPECIFIC_HEADER="gnu/bzconfig.h" ;;
-                esac
-                ;;
-  *KCC*)        COMPILER_SPECIFIC_HEADER="kai/bzconfig.h" ;;
-  *pgCC*)       COMPILER_SPECIFIC_HEADER="pgi/bzconfig.h" ;;
-dnl  *FCC*)        COMPILER_SPECIFIC_HEADER="fujitsu/bzconfig.h" ;;
-  *pathCC*)     COMPILER_SPECIFIC_HEADER="pathscale/bzconfig.h" ;;
-  *CC*)
-    case "$target" in
-    *sgi*)      COMPILER_SPECIFIC_HEADER="sgi/bzconfig.h" ;;
-    *solaris*)  COMPILER_SPECIFIC_HEADER="sun/bzconfig.h" ;;
-    *cray*)     COMPILER_SPECIFIC_HEADER="cray/bzconfig.h" ;;
-    *fujitsu*)  COMPILER_SPECIFIC_HEADER="fujitsu/bzconfig.h" ;;
-    esac
-  ;;
-esac
-
-AX_PREFIX_CONFIG_H([blitz/${COMPILER_SPECIFIC_HEADER}],[BZ])
+AS_CASE([$CXX],
+  [*xlc++*],      [COMPILER_VENDOR="apple"],
+  [*icpc*|*icc*], [COMPILER_VENDOR="intel"],
+  [*xlC*],        [COMPILER_VENDOR="ibm"],
+  [*clang++],     [COMPILER_VENDOR="llvm"],
+  [*cxx*],        [COMPILER_VENDOR="compaq"],
+  [*aCC*],        [COMPILER_VENDOR="hp"],
+  [*g++*|*c++*],  [AS_CASE([$target],
+                           [*apple*], [COMPILER_VENDOR="llvm"],
+                                      [COMPILER_VENDOR="gnu"])],
+  [*KCC*],        [COMPILER_VENDOR="kai"],
+  [*pgCC*],       [COMPILER_VENDOR="pgi"],
+dnl  [*FCC*],        [COMPILER_VENDOR="fujitsu"],
+  [*pathCC*],     [COMPILER_VENDOR="pathscale"],
+  [*CC*],         [AS_CASE([$target],
+                      [*sgi*],      [COMPILER_VENDOR="sgi"],
+                      [*solaris*],  [COMPILER_VENDOR="sun"],
+                      [*cray*],     [COMPILER_VENDOR="cray"],
+                      [*fujitsu*],  [COMPILER_VENDOR="fujitsu"])]
+)
+export COMPILER_VENDOR
+AX_PREFIX_CONFIG_H([blitz/$COMPILER_VENDOR/bzconfig.h],[BZ])
+AC_SUBST(COMPILER_SPECIFIC_HEADER,$COMPILER_VENDOR/bzconfig.h)
 
 AC_MSG_RESULT($COMPILER_SPECIFIC_HEADER)
 
-AC_SUBST(COMPILER_SPECIFIC_HEADER,$COMPILER_SPECIFIC_HEADER)
 ])
