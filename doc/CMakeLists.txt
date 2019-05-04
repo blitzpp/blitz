@@ -39,9 +39,9 @@ find_program(MAKEINFO makeinfo)
 mark_as_advanced(MAKEINFO)
 message("[[${MAKEINFO}]]")
 if (MAKEINFO)
-    message("HERE")
     add_custom_target(info ${MAKEINFO} --no-split ${TEXI_PROG_ARGS} ${TEXI_SRC}
                       COMMAND ls -lR
+                      COMMAND echo "Makeinfo DONE"
                       DEPENDS blitz-doc-prep
                       SOURCES ${TEXI_SRC})
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/blitz.info DESTINATION ${CMAKE_INSTALL_INFODIR})
