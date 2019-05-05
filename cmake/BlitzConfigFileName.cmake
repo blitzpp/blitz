@@ -1,5 +1,4 @@
 if (NOT BLITZ_CONFIG_FILE)
-    message("[[${CMAKE_CXX_COMPILER_ID}]]")
     if (${CMAKE_CXX_COMPILER_ID} EQUAL "AppleClang")
         set(BZ_CONFIG_FILE "llvm")
     elseif (${CMAKE_CXX_COMPILER_ID} EQUAL "ARMCC")
