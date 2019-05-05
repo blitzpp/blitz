@@ -24,7 +24,7 @@ if (DOXYGEN_FOUND)
 
     if (NOT DISABLE_REFMAN_PDF)
         add_custom_command(OUTPUT latex/refman.pdf
-                           COMMAND make -k
+                           COMMAND make
                            WORKING_DIRECTORY latex
                            DEPENDS doxygen)
 

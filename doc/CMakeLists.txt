@@ -37,7 +37,6 @@ set(TEXI_PROG_ARGS -I ${CMAKE_CURRENT_SOURCE_DIR} -I ${CMAKE_CURRENT_BINARY_DIR}
 
 find_program(MAKEINFO makeinfo)
 mark_as_advanced(MAKEINFO)
-message("[[${MAKEINFO}]]")
 if (MAKEINFO)
     add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/blitz.info
                        COMMAND ${MAKEINFO} --no-split ${TEXI_PROG_ARGS} ${TEXI_SRC}
