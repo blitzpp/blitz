@@ -66,8 +66,10 @@ endif()
 find_program(TEXI2PDF texi2pdf
              ${CYGWIN_INSTALL_PATH}/bin /bin /usr/bin /usr/local/bin /sbin)
 mark_as_advanced(TEXI2PDF)
+find_program(PDFLATEX pdflatex
+             ${CYGWIN_INSTALL_PATH}/bin /bin /usr/bin /usr/local/bin /sbin)
 
-if (TEXI2PDF)
+if (TEXI2PDF AND PDFLATEX)
     find_path(TEXINFO_TEX_DIR "texinfo.tex" HINTS "/usr/share/texmf/tex/texinfo/")
     add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/blitz.pdf
                        COMMAND TEXINPUTS=:${TEXINFO_TEX_DIR}:; ${TEXI2PDF} ${TEXI_PROG_ARGS} ${TEXI_SRC}
