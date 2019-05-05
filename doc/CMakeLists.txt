@@ -1,8 +1,10 @@
 add_subdirectory(examples)
 add_subdirectory(stencils)
-add_subdirectory(doxygen)
 
 add_custom_target(blitz-doc-prep DEPENDS stencils doc-examples)
+add_custom_target(blitz-doc)
+
+add_subdirectory(doxygen)
 
 set(STENCILS
     backward11.texi backward12.texi backward21.texi backward22.texi backward31.texi backward32.texi backward41.texi backward42.texi
@@ -42,6 +44,7 @@ if (MAKEINFO)
                        COMMAND ${MAKEINFO} --no-split ${TEXI_PROG_ARGS} ${TEXI_SRC}
                        DEPENDS blitz-doc-prep ${TEXI_SRC})
     add_custom_target(info DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/blitz.info)
+    add_dependencies(blitz-doc info)
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/blitz.info DESTINATION ${CMAKE_INSTALL_INFODIR})
 endif()
 
@@ -56,6 +59,7 @@ if (TEXI2HTML)
                       WORKING_DIRECTORY ${HTML_DIR}
                       DEPENDS blitz-doc-prep
                       SOURCES ${TEXI_SRC})
+    add_dependencies(blitz-doc html)
     install(DIRECTORY ${HTML_DIR} DESTINATION ${CMAKE_INSTALL_DOCDIR})
 endif()
 
@@ -69,13 +73,12 @@ if (TEXI2PDF)
                        COMMAND TEXINPUTS=:${TEXINFO_TEX_DIR}:; ${TEXI2PDF} ${TEXI_PROG_ARGS} ${TEXI_SRC}
                        DEPENDS blitz-doc-prep ${TEXI_SRC})
     add_custom_target(pdf DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/blitz.pdf)
+    add_dependencies(blitz-doc pdf)
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/blitz.pdf DESTINATION ${CMAKE_INSTALL_DOCDIR})
 endif()
 
 set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
     "blitz.html;blitz.pdf;blitz.aux;blitz.cp;blitz.cps;blitz.fn;blitz.fns;blitz.ky;blitz.log;blitz.pg;blitz.toc;blitz.tp;blitz.vr")
-
-add_custom_target(blitz-doc DEPENDS info html pdf doxygen ${DOXYGEN_LATEX})
 
 foreach(i AUTHORS COPYING COPYING.LESSER COPYRIGHT LEGAL LICENSE NEWS README.md)
     set(BLITZ_INFORMATION ${BLITZ_INFORMATION} ${CMAKE_SOURCE_DIR}/${i})

@@ -21,6 +21,7 @@ if (DOXYGEN_FOUND)
     add_custom_target(doxygen ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
                       DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
     install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html/ DESTINATION ${CMAKE_INSTALL_DOCDIR}/reference)
+    add_dependencies(blitz-doc doxygen)
 
     if (NOT DISABLE_REFMAN_PDF)
         add_custom_command(OUTPUT latex/refman.pdf
@@ -30,7 +31,7 @@ if (DOXYGEN_FOUND)
 
         add_custom_target(doxygen-latex DEPENDS latex/refman.pdf)
         install(FILES ${CMAKE_CURRENT_BINARY_DIR}/latex/refman.pdf DESTINATION ${CMAKE_INSTALL_DOCDIR})
-        set(DOXYGEN_LATEX doxygen-latex)
+        add_dependencies(blitz-doc doxygen-latex)
     endif()
 
     set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "html;latex;doxygen-warning")
