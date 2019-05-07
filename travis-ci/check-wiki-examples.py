@@ -59,7 +59,9 @@ def compile_and_check(examples):
       with open(logfile, 'r') as f:
         for i, line in enumerate(f.readlines()):
           if example['out'][i] != line:
-            print('--', 'error')
+            print('--', 'output mismatch')
+            print('--    ', example['out'][i])
+            print('--    ', line)
             errcnt += 1
     except:
       errcnt += 1
