@@ -32,7 +32,7 @@
 
 #include <blitz/numtrait.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename P_type>
 void MemoryBlock<P_type>::deallocate()
@@ -144,6 +144,6 @@ inline void MemoryBlock<P_type>::allocate(sizeType length)
 }
 
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_MEMBLOCK_CC

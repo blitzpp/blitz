@@ -48,7 +48,7 @@
 // NEEDS_WORK: replace use of const char* with <string>, once standard
 // library is widely supported.
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 // Declaration of class BenchmarkExt<T>
 // The template parameter T is the parameter type which is varied in
@@ -130,7 +130,7 @@ protected:
     unsigned parameterNumber_;
 };
 
-BZ_NAMESPACE_END
+}
 
 #include <blitz/benchext.cc>  
 

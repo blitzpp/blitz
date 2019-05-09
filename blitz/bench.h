@@ -41,7 +41,7 @@
 #include <math.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 // Forward declaration
 template<typename P_parameter = unsigned>
@@ -136,7 +136,7 @@ public:
     { return 0; }
 };
 
-BZ_NAMESPACE_END
+}
 
 #include <blitz/bench.cc>  
 

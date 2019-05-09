@@ -1,8 +1,8 @@
 #include <blitz/array.h>
 #include <stdio.h>
 
-BZ_USING_NAMESPACE(blitz)
-BZ_USING_NAMESPACE(blitz::tensor)
+using namespace blitz;
+using namespace blitz::tensor;
 
 BZ_DECLARE_STENCIL3(deriv14,A,dA,h)
   dA = central14n(A) / h;

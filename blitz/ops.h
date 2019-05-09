@@ -36,7 +36,7 @@
 #include <blitz/promote.h>
 #include <blitz/prettyprint.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /*
  * Originally these function objects had no template arguments, e.g.
@@ -82,7 +82,7 @@ struct name {                                                  \
     { return op a; }                                           \
 							       \
     template<typename T1>                                      \
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,  \
+    static inline void prettyPrint(std::string &str,  \
         prettyPrintFormat& format, const T1& t1)               \
     {                                                          \
         str += #op;                                            \
@@ -106,7 +106,7 @@ struct name {                                                  \
     { return op a; }                                           \
                                                                \
     template<typename T1>                                      \
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,  \
+    static inline void prettyPrint(std::string &str,  \
         prettyPrintFormat& format, const T1& t1)               \
     {                                                          \
         str += #op;                                            \
@@ -129,7 +129,7 @@ struct name {                                                     \
     { return a op b; }                                            \
 							          \
     template<typename T1, typename T2>                            \
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,     \
+    static inline void prettyPrint(std::string &str,     \
         prettyPrintFormat& format, const T1& t1,                  \
         const T2& t2)                                             \
     {                                                             \
@@ -164,7 +164,7 @@ struct name {                                                     \
     { return a op b; }                                            \
                                                                   \
     template<typename T1, typename T2>                            \
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,     \
+    static inline void prettyPrint(std::string &str,     \
         prettyPrintFormat& format, const T1& t1,                  \
         const T2& t2)                                             \
     {                                                             \
@@ -211,7 +211,7 @@ public:
 */
 
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_OPS_H
 

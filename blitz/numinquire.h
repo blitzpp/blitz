@@ -59,7 +59,7 @@
  #include <blitz/range.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /*
  * This traits class provides zero and one values for numeric
@@ -301,12 +301,12 @@ inline bool tinyness_before(T) {
 }
 
 template<typename T>
-inline BZ_STD_SCOPE(float_round_style) round_style(T)
+inline std::float_round_style round_style(T)
 {
     return numeric_limits<T>::round_style;
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_NUMINQUIRE_H
 

@@ -60,16 +60,6 @@
   #error In <blitz/config.h>: Your compiler does not support partial specialization (you may need to rerun the compiler/bzconfig script)
 #endif
 
-#ifdef BZ_HAVE_NAMESPACES
-    #define BZ_NAMESPACE(X)        namespace X {
-    #define BZ_NAMESPACE_END       }
-    #define BZ_USING_NAMESPACE(X)  using namespace X;
-#else
-    #define BZ_NAMESPACE(X)
-    #define BZ_NAMESPACE_END
-    #define BZ_USING_NAMESPACE(X)
-#endif
-
 #ifdef BZ_HAVE_TEMPLATE_QUALIFIED_RETURN_TYPE
   #define BZ_USE_NUMTRAIT
 #endif
@@ -122,10 +112,8 @@
 
 #if defined(BZ_MATH_FN_IN_NAMESPACE_STD)
   #define BZ_MATHFN_SCOPE(x) std::x
-#elif defined(BZ_HAVE_NAMESPACES)
-  #define BZ_MATHFN_SCOPE(x) ::x
 #else
-  #define BZ_MATHFN_SCOPE(x) x
+  #define BZ_MATHFN_SCOPE(x) ::x
 #endif
 
 #if defined(BZ_MATH_ABSINT_IN_NAMESPACE_STD)
@@ -136,37 +124,17 @@
 
 #if defined(BZ_MATH_ABSINT_IN_NAMESPACE_STD)
   #define BZ_MATHABSINT_SCOPE(x) std::x
-#elif defined(BZ_HAVE_NAMESPACES)
-  #define BZ_MATHABSINT_SCOPE(x) ::x
 #else
-  #define BZ_MATHABSINT_SCOPE(x) x
+  #define BZ_MATHABSINT_SCOPE(x) ::x
 #endif
 
 #if defined(BZ_HAVE_COMPLEX_MATH_IN_NAMESPACE_STD)
   #define BZ_CMATHFN_SCOPE(x) std::x
-#elif defined(BZ_HAVE_NAMESPACES)
+#else
   #define BZ_CMATHFN_SCOPE(x) ::x
-#else
-  #define BZ_CMATHFN_SCOPE(x) x
 #endif
 
-#if defined(BZ_HAVE_NAMESPACES)
-  #define BZ_IEEEMATHFN_SCOPE(x) ::x
-#else
-  #define BZ_IEEEMATHFN_SCOPE(x) x
-#endif
-
-#if defined(BZ_HAVE_NAMESPACES)
-  #define BZ_BLITZ_SCOPE(x) blitz::x
-#else
-  #define BZ_BLITZ_SCOPE(x) ::x
-#endif
-
-#if defined(BZ_HAVE_NAMESPACES) && defined(BZ_HAVE_STD)
-  #define BZ_STD_SCOPE(x) std::x
-#else
-  #define BZ_STD_SCOPE(x) ::x
-#endif
+#define BZ_IEEEMATHFN_SCOPE(x) ::x
 
 //  These macros are just markers to document the code in the places
 //  where playing with the processor branch prediction scheme might

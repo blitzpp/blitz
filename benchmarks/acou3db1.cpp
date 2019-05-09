@@ -1,6 +1,6 @@
 #include <blitz/array.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 void setupInitialConditions(Array<float,3>& P1, Array<float,3>& P2,
     Array<float,3>& P3, Array<float,3>& c, int N);

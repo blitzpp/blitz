@@ -80,10 +80,10 @@
 // don't recognize <> as parentheses.
 #define bzCC(...) __VA_ARGS__
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 #ifdef BZ_HAVE_STD
- BZ_USING_NAMESPACE(std)
+ using namespace std;
 #endif
 
 #ifdef BZ_GENERATE_GLOBAL_INSTANCES
@@ -117,7 +117,7 @@ typedef ptrdiff_t diffType; // Used for memory index differences, ie strides
 #define BZ_PADDING_DEFAULT contiguousData
 #endif
 
-BZ_NAMESPACE_END
+}
 
 /*
  * Thread safety issues.  Compiling with -pthread under gcc, or -mt

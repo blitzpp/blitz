@@ -5,7 +5,7 @@
 
 #ifdef BZ_HAVE_COMPLEX
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 #if defined(BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES)
   #define qcdf  qcdf_

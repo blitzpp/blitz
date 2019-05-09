@@ -5,7 +5,7 @@
 
 #include <blitz/vector.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 template<class T> void sink(T&) { }
 

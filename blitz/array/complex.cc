@@ -36,7 +36,7 @@
  #error <blitz/array/complex.cc> must be included via <blitz/array/array.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 #ifdef BZ_HAVE_COMPLEX
 
@@ -55,7 +55,7 @@ inline Array<T_numtype, N_rank> imag(const Array<complex<T_numtype>,N_rank>& A)
 
 #endif
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAYCOMPLEX_CC
 

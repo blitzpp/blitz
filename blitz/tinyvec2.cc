@@ -36,7 +36,7 @@
 #include <blitz/tvevaluate.h>
 #include <blitz/array/asexpr.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /*
  * Constructors
@@ -130,7 +130,7 @@ TinyVector<P_numtype, N_length>::operator()(IndexPlaceholder<N0>) const
 }
 
 
-BZ_NAMESPACE_END
+}
 
 #include <blitz/tv2fastiter.h>  // Iterators
 //#include <blitz/tv2assign.h> unused now?

@@ -271,12 +271,12 @@ cpp_skeleton = """
 #include <valarray>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 extern void sink();
-BZ_NAMESPACE_END
+}
 
-BZ_USING_NAMESPACE(blitz)
-BZ_USING_NAMESPACE(std)
+using namespace blitz;
+using namespace std;
 
 #if defined(BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES)
  #define #loopname#_f77 #loopname#_f77_

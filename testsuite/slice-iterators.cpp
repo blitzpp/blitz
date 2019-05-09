@@ -1,7 +1,7 @@
 #include "testsuite.h"
 #include <blitz/array.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 int main(int argc, char* argv[]) {
     Array<float,2> image(100, 200);

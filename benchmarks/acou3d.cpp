@@ -10,7 +10,7 @@
   #include <fstream.h>
 #endif
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 #if defined(BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES)
  #define acoustic3d_f90 acoustic3d_f90_
@@ -147,7 +147,7 @@ void setupInitialConditions(Array<float,3>& P1, Array<float,3>& P2,
         Range(cavityFront,cavityBack)) = 0.001;
 
     // Initial pressure distribution
-    BZ_USING_NAMESPACE(blitz::tensor);
+    using namespace blitz::tensor;;
       
     float NN = N;
     float ci = N/2-1;

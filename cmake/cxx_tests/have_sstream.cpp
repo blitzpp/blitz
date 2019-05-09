@@ -15,9 +15,7 @@
 //AC_CACHE_CHECK(whether the compiler has stringstream,
 
 #include <sstream>
-#ifdef HAVE_NAMESPACES
 using namespace std;
-#endif
 
 int main() {
     stringstream message;

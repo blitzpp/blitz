@@ -16,7 +16,7 @@
 #include <valarray>
 #endif
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 #if defined(BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES)
  #define loop4_f77 loop4_f77_

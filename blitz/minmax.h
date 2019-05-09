@@ -34,14 +34,14 @@
 
 #include <blitz/promote.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /*
  * These functions are in their own namespace (blitz::minmax) to avoid
  * conflicts with the array reduction operations min and max.
  */
 
-BZ_NAMESPACE(extrema)
+namespace extrema {
 
 template<typename T1, typename T2>
 BZ_PROMOTE(T1,T2) (min)(const T1& a, const T2& b)
@@ -65,8 +65,8 @@ BZ_PROMOTE(T1,T2) (max)(const T1& a, const T2& b)
         return T_promote(b);
 }
 
-BZ_NAMESPACE_END
+}
 
-BZ_NAMESPACE_END
+}
 
 #endif

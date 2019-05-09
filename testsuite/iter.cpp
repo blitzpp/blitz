@@ -4,10 +4,10 @@
 #ifdef BZ_HAVE_STL
 #include <iterator>
 #include <algorithm>
-BZ_USING_NAMESPACE(std)
+using namespace std;
 #endif
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 void check(const Array<int,2>& A, const Array<int,1>& b)
 {

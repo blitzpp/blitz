@@ -14,9 +14,7 @@
 //   and this notice are preserved.
 
 #include <limits>
-#ifdef HAVE_NAMESPACES
 using namespace std;
-#endif
 
 int main() {
     double e = numeric_limits<double>::epsilon();

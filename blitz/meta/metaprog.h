@@ -32,7 +32,7 @@
 #ifndef BZ_META_METAPROG_H
 #define BZ_META_METAPROG_H
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 // Null Operand
 
@@ -62,6 +62,6 @@ public:
     static const int min = (N1 < N2) ? N1 : N2;
 };
 
-BZ_NAMESPACE_END 
+} 
 
 #endif // BZ_META_METAPROG_H

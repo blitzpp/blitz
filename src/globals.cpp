@@ -16,7 +16,7 @@
 #include <random/mtparam.cc>      // MT19937 parameter sets
 #include <string>
 
-BZ_NAMESPACE(blitz);
+namespace blitz {;
 
 // used to avoid loop elimination in the benchmarks
 void sink() {};
@@ -31,4 +31,4 @@ const string Timer::ivar_="c";
 const string Timer::ivar_="s";
 #endif
 
-BZ_NAMESPACE_END
+}

@@ -3,7 +3,7 @@
 
 #include <blitz/blitz.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 struct bounds {
     static int compute_ascending(const int BZ_DEBUG_PARAM(rank),
@@ -96,6 +96,6 @@ struct bounds {
     }
 };
 
-BZ_NAMESPACE_END
+}
 
 #endif

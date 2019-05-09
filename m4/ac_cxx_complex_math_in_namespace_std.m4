@@ -4,8 +4,7 @@ dnl
 AC_DEFUN([AC_CXX_COMPLEX_MATH_IN_NAMESPACE_STD],
 [AC_CACHE_CHECK(whether complex math functions are in namespace std,
 ac_cv_cxx_complex_math_in_namespace_std,
-[AC_REQUIRE([AC_CXX_NAMESPACES])
- AC_LANG_SAVE
+[AC_LANG_SAVE
  AC_LANG_CPLUSPLUS
  AC_TRY_COMPILE([#include <complex>
 namespace S { using namespace std;

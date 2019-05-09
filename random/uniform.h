@@ -38,7 +38,7 @@
  #include <float.h>
 #endif
 
-BZ_NAMESPACE(ranlib)
+namespace ranlib {
 
 /*****************************************************************************
  * UniformClosedOpen generator: uniform random numbers in [0,1).
@@ -426,6 +426,6 @@ public:
     { return random(); }
 };
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_RANDOM_UNIFORM_H

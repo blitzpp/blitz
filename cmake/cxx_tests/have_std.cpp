@@ -18,8 +18,6 @@
 #include <map>
 #include <iomanip>
 #include <cmath>
-#ifdef HAVE_NAMESPACES
 using namespace std;
-#endif
 
 int main() { return 0; }

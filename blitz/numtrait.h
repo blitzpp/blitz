@@ -36,7 +36,7 @@
  #include <blitz/blitz.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 #ifndef BZ_USE_NUMTRAIT
   #define BZ_SUMTYPE(X)    X
@@ -94,6 +94,6 @@ BZDECLNUMTRAIT(double, double, double, double, double);
 
 #endif // BZ_USE_NUMTRAIT
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_NUMTRAIT_H

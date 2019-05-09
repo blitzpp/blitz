@@ -32,7 +32,7 @@
 #ifndef BZ_ETBASE_H
 #define BZ_ETBASE_H
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename T>
 class ETBase { 
@@ -54,7 +54,7 @@ public:
     const ETBase<T>& wrap() const { return static_cast<const ETBase<T>&>(*this); }
 };
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ETBASE_H
 

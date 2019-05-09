@@ -5,7 +5,7 @@
 #include <blitz/tinymat2.h>
 #include <blitz/tinymat2.cc>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 // Tests that operations on multicomponent arrays work as
 // expected. This is a bit tricky because now they involve two

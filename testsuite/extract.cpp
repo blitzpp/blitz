@@ -1,7 +1,7 @@
 #include "testsuite.h"
 #include <blitz/array.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 class RGB24 {
 public:
@@ -67,7 +67,7 @@ int main()
 
     BZTEST(count(D == complex<float>(5,6)) == 16);
 
-    BZ_USING_NAMESPACE(blitz::tensor)
+    using namespace blitz::tensor;
 
     D = zip(i, j, complex<float>());
     BZTEST(D(1,2) == complex<float>(1,2));

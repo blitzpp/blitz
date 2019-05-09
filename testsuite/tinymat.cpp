@@ -4,7 +4,7 @@
 #include <blitz/tinymat2.h>
 #include <blitz/tinymat2.cc>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 int main()
 {

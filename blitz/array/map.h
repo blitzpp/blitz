@@ -53,7 +53,7 @@
 #include <blitz/tinyvec2.h>
 #include <blitz/array/domain.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /*
  * _bz_doArrayIndexMapping is a helper class that does the index
@@ -721,7 +721,7 @@ public:
     return T_range_result(iter_(newd));
   }
 
-    void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat&) const
+    void prettyPrint(std::string &str, prettyPrintFormat&) const
     {
         // NEEDS_WORK-- do real formatting for reductions
         str += "map[NEEDS_WORK]";
@@ -768,7 +768,7 @@ private:
     T_expr iter_;
 };
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAYMAP_H
 

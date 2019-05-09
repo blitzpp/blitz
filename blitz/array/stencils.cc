@@ -34,7 +34,7 @@
  #error <blitz/array/stencil.cc> must be included via <blitz/array/stencils.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 // NEEDS_WORK:
 // o Need to allow scalar arguments as well as arrays
@@ -609,6 +609,6 @@ inline void applyStencil(const T_stencil& stencil, Array<T_numtype1,N_rank>& A,
     applyStencil_imp(stencil, A, B, C, D, E, F, G, H, I, J, K);
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAYSTENCIL_CC

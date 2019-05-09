@@ -34,7 +34,7 @@
  #error <blitz/array/slicing.cc> must be included via <blitz/array.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /*
  * These routines make the array a view of a portion of another array.
@@ -358,6 +358,6 @@ void Array<P_numtype, N_rank>::slice(int rank, Range r)
         storage_.setAscendingFlag(rank, !isRankStoredAscending(rank));
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAYSLICING_CC

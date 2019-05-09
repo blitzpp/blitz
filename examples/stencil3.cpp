@@ -1,8 +1,8 @@
 #include <blitz/array.h>
 #include <blitz/array/stencil-et.h>
 
-BZ_USING_NAMESPACE(blitz)
-BZ_USING_NAMESPACE(blitz::tensor)
+using namespace blitz;
+using namespace blitz::tensor;
 
 typedef Array<float,2> Array2D;
 

@@ -5,7 +5,7 @@
 	#include <fstream.h>
 #endif
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 const char* filename = "io.data";
 

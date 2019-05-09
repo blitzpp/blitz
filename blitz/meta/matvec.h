@@ -44,7 +44,7 @@
  #include <blitz/meta/metaprog.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 // Forward declarations
 template<int N_rows, int N_columns, int N_rowStride, int N_colStride,
@@ -187,7 +187,7 @@ public:
     { }
 };
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_META_MATVEC_H
 

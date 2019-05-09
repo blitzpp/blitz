@@ -15,9 +15,7 @@
 //   and this notice are preserved.
 
 #include <complex>
-#ifdef HAVE_NAMESPACES
 using namespace std;
-#endif
 
 int main() {
     complex<double> x(1.0,1.0),y(1.0,1.0);

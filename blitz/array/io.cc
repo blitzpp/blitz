@@ -34,7 +34,7 @@
  #error <blitz/array/io.cc> must be included via <blitz/array.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 // NEEDS_WORK???
 // This version of operator<< is updated on August 2005
@@ -210,6 +210,6 @@ Array \n (expected ']' after end of Array data)");
   return is;
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAYIO_CC

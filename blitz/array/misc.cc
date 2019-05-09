@@ -34,7 +34,7 @@
  #error <blitz/array/misc.cc> must be included via <blitz/array.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 #define BZ_ARRAY_DECLARE_UOP(fn, fnobj)                                \
 template<typename T_numtype, int N_rank>                                  \
@@ -85,7 +85,7 @@ cast(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr, T_cast)
         Cast<_bz_typename T_expr::T_numtype,T_cast> >(expr);                 
 }                                                                      
                                                                        
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAYMISC_CC
 

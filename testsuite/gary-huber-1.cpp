@@ -2,7 +2,7 @@
 
 #include <blitz/array.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 Array< double, 1> a(100); 
 

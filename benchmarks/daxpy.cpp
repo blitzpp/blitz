@@ -11,11 +11,11 @@
 #include <valarray>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 extern void sink();
-BZ_NAMESPACE_END
+}
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 #if defined(BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES)
  #define fdaxpy   fdaxpy_

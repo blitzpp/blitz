@@ -9,7 +9,7 @@
 //#include <blitz/tinymatexpr.h>
 #include <random/uniform.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 // Tests that the various stencil operators work with
 // expressions. Does NOT test that the stencils produce the correct

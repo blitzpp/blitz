@@ -32,7 +32,7 @@
 
 #include <blitz/tinymat2.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 // NEEDS_WORK???
 // This version of operator<< is updated on August 2005
@@ -97,7 +97,7 @@ istream& operator>>(istream& is,
     return is;
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_TINYMATIO_CC
 

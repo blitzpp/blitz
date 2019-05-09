@@ -1,7 +1,7 @@
 #ifndef BZ_RANKS_H
 #define BZ_RANKS_H
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /*
  * Rank numbers start with zero, which may be confusing to users coming
@@ -39,6 +39,6 @@ const int ninthDim    = 8;
 const int tenthDim    = 9;
 const int eleventhDim = 10;
 
-BZ_NAMESPACE_END
+}
 
 #endif

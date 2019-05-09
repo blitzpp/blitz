@@ -1,6 +1,6 @@
 #include <blitz/array.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 //declaration of the stencil kinEnergy
 BZ_DECLARE_STENCIL2(kinEnergy,A,B)

@@ -6,7 +6,7 @@
 
 #include <random/mt.h>
 
-BZ_NAMESPACE(ranlib)
+namespace ranlib {
 
 const twist_int MersenneTwisterCreator::a_[] = {
   0xcc420000, 0xabbe0001, 0xdabf0002, 0xbe010003, 0xd6db0004,
@@ -44,5 +44,5 @@ const twist_int MersenneTwisterCreator::c_[] = {
   0xddd58000, 0xf7558000, 0x7b558000, 0xee758000, 0xee778000,
   0xe6d78000, 0xf7d48000, 0xf3f48000 };
 
-BZ_NAMESPACE_END
+}
 

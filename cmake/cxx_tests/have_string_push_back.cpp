@@ -14,9 +14,7 @@
 //   and this notice are preserved.
 
 #include <string>
-#ifdef HAVE_NAMESPACES
 using namespace std;
-#endif
 
 int main() {
     string message;

@@ -24,7 +24,7 @@
 #include <blitz/wrap-climits.h> 
 #include <float.h>
 
-BZ_NAMESPACE(std)
+namespace std {
 
 enum float_round_style {
   round_indeterminate       = -1,
@@ -395,5 +395,5 @@ public:
   static long double round_error()  { return 4; } // Units: ulps.
 };
 
-BZ_NAMESPACE_END
+}
 

@@ -31,7 +31,7 @@
  #error <blitz/array/reduce.cc> must be included via <blitz/array/reduce.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename T_expr, typename T_reduction>
 _bz_typename T_reduction::T_resulttype
@@ -40,7 +40,7 @@ _bz_ArrayExprFullReduce(T_expr expr, T_reduction reduction)
 #ifdef BZ_TAU_PROFILING
     // Tau profiling code.  Provide Tau with a pretty-printed version of
     // the expression.
-    static BZ_STD_SCOPE(string) exprDescription;
+    static std::string exprDescription;
     if (!exprDescription.length())      // faked static initializer
     {
         exprDescription = T_reduction::name();
@@ -150,5 +150,5 @@ _bz_reduceWithIndexVectorTraversal(T_expr expr, T_reduction reduction)
     return _bz_reduceWithIndexTraversalGeneric<TinyVector<int,T_expr::rank_> >(expr,reduction);
 }
 
-BZ_NAMESPACE_END
+}
 

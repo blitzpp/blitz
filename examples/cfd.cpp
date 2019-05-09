@@ -41,7 +41,7 @@
 	#include <fstream.h>
 #endif
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 /*
  * The current implementation of stencil objects forces these variables
@@ -192,11 +192,7 @@ void setup(const int N, vectorField& V, vectorField& nextV, scalarField& P,
 #else
     gravityPressureGradient = spatialStep * gravity * rho;
 
-#ifdef BZ_HAVE_NAMESPACES
     P = airPressure + tensor::k * gravityPressureGradient;
-#else
-    P = airPressure + k * gravityPressureGradient;
-#endif
 
 #endif
 

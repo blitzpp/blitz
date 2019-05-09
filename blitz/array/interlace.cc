@@ -38,7 +38,7 @@
  #include <blitz/array/shape.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /*
  * This header provides two collections of routines:
@@ -544,7 +544,7 @@ Array<T_numtype,N_rank>::Array(const TinyVector<Range,N_rank-1>& shape,
 }
 #endif
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAYINTER_CC
 

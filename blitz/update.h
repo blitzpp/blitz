@@ -34,7 +34,7 @@
 
 #include <blitz/blitz.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 class _bz_updater_base { };
 
@@ -48,7 +48,7 @@ class _bz_updater_base { };
   									\
   static inline void update(T_dest& restrict x, T_source y)		\
     { x op y; }								\
-  static void prettyPrint(BZ_STD_SCOPE(string) &str)			\
+  static void prettyPrint(std::string &str)			\
     { str += symbol; }							\
   }
 
@@ -64,7 +64,7 @@ class _bz_update : public _bz_updater_base {
     static inline void update(T_dest& restrict x, T_source y)
   { x = /*(X)*/y; }
 
-    static void prettyPrint(BZ_STD_SCOPE(string) &str)
+    static void prettyPrint(std::string &str)
     { str += "="; }
 };
 
@@ -79,7 +79,7 @@ BZ_DECL_UPDATER(_bz_bitor_update, |=, "|=");
 BZ_DECL_UPDATER(_bz_shiftl_update, <<=, "<<=");
 BZ_DECL_UPDATER(_bz_shiftr_update, >>=, ">>=");
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_UPDATE_H
 

@@ -3,7 +3,7 @@
 
 //#undef BZ_FAST_COMPILE
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 // test that member function functors work. (There was a bug where
 // they would use an out-of-scope temporary copy of the class itself

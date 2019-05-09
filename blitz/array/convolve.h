@@ -35,12 +35,12 @@
  #error <blitz/array/convolve.h> must be included after <blitz/array.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename T>
 Array<T,1> convolve(const Array<T,1>& B, const Array<T,1>& C);
 
-BZ_NAMESPACE_END
+}
 
 #include <blitz/array/convolve.cc>
 

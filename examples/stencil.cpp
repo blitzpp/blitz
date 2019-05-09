@@ -1,6 +1,6 @@
 #include <blitz/array.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 /*
  * This example program illustrates the "stencil objects", which provide

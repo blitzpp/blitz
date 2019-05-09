@@ -113,7 +113,7 @@ int main()
 
     ofs << "#ifndef BZ_MATUOPS_H" << std::endl
         << "#define BZ_MATUOPS_H" << std::endl
-        << std::endl << "BZ_NAMESPACE(blitz)" << std::endl << std::endl
+        << std::endl << "namespace blitz {" << std::endl << std::endl
         << "#ifndef BZ_MATEXPR_H" << std::endl
         << " #error <blitz/matuops.h> must be included via <blitz/matexpr.h>" 
         << std::endl << "#endif" << std::endl << std::endl;
@@ -171,7 +171,7 @@ int main()
     one("y0", ieeeflag);
     one("y1", ieeeflag);
 
-    ofs << std::endl << "BZ_NAMESPACE_END" << std::endl << std::endl
+    ofs << std::endl << "}" << std::endl << std::endl
         << "#endif // BZ_MATUOPS_H" << std::endl;
 
     return 0;

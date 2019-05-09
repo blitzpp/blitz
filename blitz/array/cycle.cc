@@ -34,7 +34,7 @@
  #error <blitz/array/cycle.cc> must be included via <blitz/array.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename T_numtype, int N_rank>
 void cycleArrays(Array<T_numtype, N_rank>& a, Array<T_numtype, N_rank>& b)
@@ -78,6 +78,6 @@ void cycleArrays(Array<T_numtype, N_rank>& a, Array<T_numtype, N_rank>& b,
     e.reference(tmp);
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAYCYCLE_CC

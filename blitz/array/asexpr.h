@@ -34,7 +34,7 @@
 #include <blitz/et-forward.h>
 #include <blitz/numtrait.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 // The traits class asExpr converts arbitrary things to
 // expression templatable operands.
@@ -299,6 +299,6 @@ struct BzBinaryStencilResult {
 
 #endif /* BZ_HAVE_TEMPLATES_AS_TEMPLATE_ARGUMENTS */
 
-BZ_NAMESPACE_END
+}
 
 #endif
