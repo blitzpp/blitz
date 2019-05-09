@@ -1,19 +1,34 @@
 platform: 
-#  - x86 # TODO!
+  - x86 
   - x64
 
-configuration:
-#  - Debug # TODO!
-  - Release
-
 init:
-  - set _LINK_=/LIBPATH:"c:\Program Files (x86)\Windows Kits\10\Lib\10.0.14393.0\um\x64"
+  - ps: |
+        If ($env:platform -Match "x86") {
+          $env:CMAKE_GEN_PLAT="Win32"
+          $env:PYTHON_ROOT="C:\Python27"
+        } Else {
+          $env:CMAKE_GEN_PLAT="x64"
+          $env:PYTHON_ROOT="C:\Python27-x64"
+        }
+  - cmd: C:/"Program Files (x86)"/"Microsoft Visual Studio 12.0"/VC/vcvarsall.bat
+
+install:
+  #- choco upgrade cmake 
+  #- set path=C:\Program Files\CMake\bin;%path%
 
 before_build:
-  - 7z x Blitz-VS2010.zip
+  - del "C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets"
 
-build:
-  project: Blitz-Library.sln
+build_script:
+  - md build
+  - cd build
+  - cmake .. -DCMAKE_GENERATOR_PLATFORM="%CMAKE_GEN_PLAT%" 
 
-after_build:
-  project: Blitz-Examples.sln
+  - cmake --build . --config Debug
+  - cmake --build . --config Release
+
+  - ctest -C Debug --output-on-failure
+  - ctest -C Release --output-on-failure
+
+  - cmake --build . --target install
