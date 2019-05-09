@@ -34,7 +34,10 @@
 #define BZCONFIG_H
 
 #if defined(__APPLE__)
-#if defined(__GNUC__)
+#if defined(__clang__)
+/* clang compiler */
+#include <blitz/llvm/bzconfig.h>
+#elif defined(__GNUC__)
 /* GNU gcc compiler for newer Mac OS X Darwin */
 #include <blitz/gnu/bzconfig.h>
 #else
@@ -73,6 +76,10 @@
 #elif defined(__PATHCC__)
 /* Pathscale pathCC compiler */
 #include <blitz/pathscale/bzconfig.h>
+
+#elif defined(__clang__)
+/* clang compiler */
+#include <blitz/llvm/bzconfig.h>
 
 #elif defined(__GNUC__)
 /* GNU gcc compiler */

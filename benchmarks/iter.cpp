@@ -19,7 +19,7 @@ int main() {
     }
     timer.stop();
     double flops = 10.0*512*512*512*2;
-    double seconds = timer.elapsedSeconds();
+    double seconds = timer.elapsed();
 
     double timePerOp = seconds / flops;
 

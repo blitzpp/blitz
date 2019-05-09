@@ -10,7 +10,6 @@ lib_LTLIBRARIES = libblitz.la
 libblitz_la_SOURCES = $(top_srcdir)/src/globals.cpp
 libblitz_la_LIBADD = $(LIBS) $(CXX_LIBS)
 
-
 clean-local:
 	-rm -rf *.ii *.ti cxx_repository Template.dir ii_files ti_files
 
