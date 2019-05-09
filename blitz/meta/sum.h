@@ -36,7 +36,7 @@
  #include <blitz/meta/metaprog.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<int N, int I>
 class _bz_meta_vectorSum {
@@ -84,6 +84,6 @@ public:
 
 };
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_META_SUM_H

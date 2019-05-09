@@ -34,7 +34,7 @@
 
 #include <random/mt.h>
 
-BZ_NAMESPACE(ranlib)
+namespace ranlib {
 
 // Some terminology:
 // IRNG = Integer Random Number Generator.  IRNGs generate random
@@ -119,7 +119,7 @@ protected:
 
 typedef MersenneTwister defaultIRNG;
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_RANDOM_DEFAULT_H
 

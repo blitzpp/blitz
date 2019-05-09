@@ -12,7 +12,7 @@
 #include <valarray>
 #endif
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 #ifdef BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES
  #define fdaxpy   fdaxpy_

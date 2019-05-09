@@ -36,7 +36,7 @@
 
 #include <blitz/minmax.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resize(int extent0)
@@ -591,7 +591,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0)
  */
         T_array B(length0, storage_);
 #else
-        T_array B(base(), BZ_BLITZ_SCOPE(shape)(length0), storage_);  // line 273
+        T_array B(base(), blitz::shape(length0), storage_);  // line 273
 #endif
         if (numElements())
         {
@@ -611,7 +611,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1)
 
     if ((length0 != length_[0]) || (length1 != length_[1]))
     {
-        T_array B(base(), BZ_BLITZ_SCOPE(shape)(length0, length1), storage_);
+        T_array B(base(), blitz::shape(length0, length1), storage_);
 
         if (numElements())
         {
@@ -635,7 +635,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
     if ((length0 != length_[0]) || (length1 != length_[1])
         || (length2 != length_[2]))
     {
-        T_array B(base(), BZ_BLITZ_SCOPE(shape)(length0, length1, length2), 
+        T_array B(base(), blitz::shape(length0, length1, length2), 
             storage_);
         if (numElements())
         {
@@ -663,7 +663,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
     if ((length0 != length_[0]) || (length1 != length_[1])
         || (length2 != length_[2]) || (length3 != length_[3]))
     {
-        T_array B(base(), BZ_BLITZ_SCOPE(shape)(length0, length1,
+        T_array B(base(), blitz::shape(length0, length1,
             length2, length3), storage_);
 
         if (numElements())
@@ -691,7 +691,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
         || (length2 != length_[2]) || (length3 != length_[3])
         || (length4 != length_[4]))
     {
-        T_array B(base(), BZ_BLITZ_SCOPE(shape)(length0, length1, 
+        T_array B(base(), blitz::shape(length0, length1, 
             length2, length3, length4), storage_);
 
         if (numElements())
@@ -720,7 +720,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
         || (length2 != length_[2]) || (length3 != length_[3])
         || (length4 != length_[4]) || (length5 != length_[5]))
     {
-        T_array B(base(), BZ_BLITZ_SCOPE(shape)(length0, length1, length2, 
+        T_array B(base(), blitz::shape(length0, length1, length2, 
             length3, length4, length5), storage_);
 
         if (numElements())
@@ -753,7 +753,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
         || (length4 != length_[4]) || (length5 != length_[5])
         || (length6 != length_[6]))
     {
-        T_array B(base(), BZ_BLITZ_SCOPE(shape)(length0, length1, length2,
+        T_array B(base(), blitz::shape(length0, length1, length2,
             length3, length4, length5, length6), storage_);
 
         if (numElements())
@@ -797,7 +797,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
         || (length4 != length_[4]) || (length5 != length_[5])
         || (length6 != length_[6]) || (length7 != length_[7]))
     {
-        T_array B(base(), BZ_BLITZ_SCOPE(shape)(length0, length1, length2,
+        T_array B(base(), blitz::shape(length0, length1, length2,
             length3, length4, length5, length6, length7), storage_);
 
         if (numElements())
@@ -844,7 +844,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
         || (length6 != length_[6]) || (length7 != length_[7])
         || (length8 != length_[8]))
     {
-        T_array B(base(), BZ_BLITZ_SCOPE(shape)(length0, length1, length2,
+        T_array B(base(), blitz::shape(length0, length1, length2,
             length3, length4, length5, length6, length7, length8), storage_);
 
         if (numElements())
@@ -893,7 +893,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
         || (length6 != length_[6]) || (length7 != length_[7])
         || (length8 != length_[8]) || (length9 != length_[9]))
     {
-        T_array B(base(), BZ_BLITZ_SCOPE(shape)(length0, length1, length2,
+        T_array B(base(), blitz::shape(length0, length1, length2,
             length3, length4, length5, length6, length7, length8, length9),
             storage_);
 
@@ -946,7 +946,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
         || (length8 != length_[8]) || (length9 != length_[9])
         || (length10 != length_[10]))
     {
-        T_array B(base(), BZ_BLITZ_SCOPE(shape)(length0, length1, length2,
+        T_array B(base(), blitz::shape(length0, length1, length2,
             length3, length4, length5, length6, length7, length8, length9,
             length10), storage_);
 
@@ -1018,6 +1018,6 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(
 //    }
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAYRESIZE_CC

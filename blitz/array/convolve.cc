@@ -31,7 +31,7 @@
 #ifndef BZ_ARRAY_CONVOLVE_CC
 #define BZ_ARRAY_CONVOLVE_CC
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename T>
 Array<T,1> convolve(const Array<T,1>& B, const Array<T,1>& C)
@@ -65,7 +65,7 @@ Array<T,1> convolve(const Array<T,1>& B, const Array<T,1>& C)
     return A;
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAY_CONVOLVE_CC
 

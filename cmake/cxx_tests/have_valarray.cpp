@@ -14,9 +14,7 @@
 //   and this notice are preserved.
 
 #include <valarray>
-#ifdef HAVE_NAMESPACES
 using namespace std;
-#endif
 
 int main() {
     valarray<float> x(100);

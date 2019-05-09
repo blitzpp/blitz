@@ -35,7 +35,7 @@
  #error <blitz/traversal.cc> must be included via <blitz/traversal.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 // Next line is a workaround for Intel C++ V4.0 oddity, due
 // to Allan Stokes.
@@ -129,6 +129,6 @@ void generateFastTraversalOrder(const TinyVector<int,N_dimensions>& size)
     travCol.insert(TraversalOrder<2>(size, ordering));
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_TRAVERSAL_CC

@@ -35,7 +35,7 @@
 #include <blitz/tinymat2io.cc>
 #include <blitz/array/domain.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename P_numtype, int N_rows, int N_columns>
 inline TinyMatrix<P_numtype, N_rows, N_columns>::TinyMatrix(T_numtype initValue) 
@@ -128,6 +128,6 @@ TinyMatrix<P_numtype, N_rows, N_columns>::operator()(IndexPlaceholder<N0>, Index
 } 
 
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_TINYVEC_CC

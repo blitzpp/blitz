@@ -5,7 +5,7 @@
 #include <blitz/range.h>
 #include <blitz/array/ops.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 
 inline Range::T_numtype Range::operator[](int i) const
@@ -28,6 +28,6 @@ inline bool Range::assertInRange(const T_index& BZ_DEBUG_PARAM(index)) const
   return true;
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif

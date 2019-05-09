@@ -43,9 +43,7 @@
 #include <sstream>
 #endif
 
-#ifdef HAVE_NAMESPACES
 using namespace std;
-#endif
 
 int main() {
     ostream str((streambuf *)0);

@@ -24,8 +24,8 @@
 
 #include <blitz/array.h>
 
-BZ_USING_NAMESPACE(std)
-BZ_USING_NAMESPACE(blitz)
+using namespace std;
+using namespace blitz;
 
 int assignCount = 0;
 

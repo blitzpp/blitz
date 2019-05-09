@@ -16,9 +16,7 @@
 
 #include <list>
 #include <deque>
-#ifdef HAVE_NAMESPACES
 using namespace std;
-#endif
 
 int main() {
     list<int> x;

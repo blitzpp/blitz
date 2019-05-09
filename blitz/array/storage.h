@@ -38,7 +38,7 @@
 #include <boost/mpi/datatype.hpp>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 
 /// Enum for specifying whether padding for alignment should be done.
@@ -466,7 +466,7 @@ public:
 _bz_global _bz_columnMajorTag columnMajorArray;
 
 
-BZ_NAMESPACE_END
+}
 
 #ifdef BZ_HAVE_BOOST_MPI
 namespace boost { namespace mpi {

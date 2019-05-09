@@ -1,7 +1,7 @@
 #include "testsuite.h"
 #include <blitz/array.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 template <typename T>
 void subsample(Array<T, 2>& in, Array<T, 2>& sub1)
@@ -19,7 +19,7 @@ int main()
 {
     Array<float,2> A(9,5), B;
 
-    BZ_USING_NAMESPACE(blitz::tensor)
+    using namespace blitz::tensor;
 
     A = 20*i+j;
 

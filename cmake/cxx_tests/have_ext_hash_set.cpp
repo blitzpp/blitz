@@ -35,9 +35,7 @@
 //   special exception to the GPL to apply to your modified version as well.
 
 #include <ext/hash_set>
-#ifdef HAVE_NAMESPACES
 using namespace std;
-#endif
 
 int main() {
     hash_set<int> t;

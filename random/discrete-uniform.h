@@ -34,7 +34,7 @@
 
 #include <random/default.h>
 
-BZ_NAMESPACE(ranlib)
+namespace ranlib {
 
 template<typename T = unsigned int, typename IRNG = defaultIRNG,
     typename stateTag = defaultState>
@@ -65,6 +65,6 @@ private:
     T n_;
 };
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_RANDOM_DISCRETE_UNIFORM_H

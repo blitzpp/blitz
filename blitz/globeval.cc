@@ -34,7 +34,7 @@
 #include <blitz/tvevaluate.h>
 #include <blitz/blitz.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 
 // Fast traversals require <set> from the ISO/ANSI C++ standard library
@@ -152,7 +152,7 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
              << " line " << __LINE__ << endl
              << "          Expression: ";
         prettyPrintFormat format(true);   // Use terse formatting
-        BZ_STD_SCOPE(string) str;
+        std::string str;
         expr.prettyPrint(str, format);
         cerr << str << endl ;
       }
@@ -207,7 +207,7 @@ _bz_evaluate(T_dest& dest, T_expr expr, T_update)
     // NEEDS_WORK-- use a static initializer somehow.
 
 #ifdef BZ_TAU_PROFILING
-    static BZ_STD_SCOPE(string) exprDescription;
+    static std::string exprDescription;
     if (!exprDescription.length())   // faked static initializer
     {
         exprDescription = "A";
@@ -1446,7 +1446,7 @@ _bz_evaluateWithTiled2DTraversal(T_dest& dest, T_expr expr, T_update)
 #endif // BZ_ARRAY_2D_STENCIL_TILING
 #endif // BZ_ARRAY_2D_NEW_STENCIL_TILING
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAYEVAL_CC
 

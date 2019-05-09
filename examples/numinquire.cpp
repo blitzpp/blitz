@@ -8,7 +8,7 @@
 #include <blitz/blitz.h>
 #include <blitz/numinquire.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 int main()
 {

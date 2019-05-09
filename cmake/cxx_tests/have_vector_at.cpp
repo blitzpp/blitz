@@ -14,9 +14,7 @@
 //   and this notice are preserved.
 
 #include <vector>
-#ifdef HAVE_NAMESPACES
 using namespace std;
-#endif
 
 int main() {
     vector v(1);

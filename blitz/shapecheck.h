@@ -35,7 +35,7 @@
 #include <iostream>
 #include <blitz/blitz.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /*
  * The function areShapesConformable(A,B) checks that the shapes 
@@ -78,6 +78,6 @@ inline bool areShapesConformable(const T_shape& a, const T_shape& b)
     return true;
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif

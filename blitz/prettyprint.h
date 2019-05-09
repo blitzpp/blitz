@@ -35,7 +35,7 @@
 
 #include <blitz/blitz.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 class prettyPrintFormat {
 
@@ -68,6 +68,6 @@ private:
     int scalarOperandCounter_;
 };
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_PRETTYPRINT_H

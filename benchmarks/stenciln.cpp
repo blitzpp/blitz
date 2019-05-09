@@ -1,7 +1,7 @@
 #include <blitz/array.h>
 #include <blitz/timer.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 BZ_DECLARE_STENCIL4(acoustic2D_stencil,P1,P2,P3,c)
   P3 = 2 * P2 + c * Laplacian2D(P2) - P1;

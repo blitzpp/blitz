@@ -3,7 +3,7 @@
 #include <blitz/array.h>
 #include <random/uniform.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 #ifdef BZ_HAVE_BOOST_SERIALIZATION
 #include <boost/archive/text_oarchive.hpp>

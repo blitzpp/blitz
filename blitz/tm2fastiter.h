@@ -42,7 +42,7 @@
 #include <blitz/shapecheck.h>
 #include <blitz/prettyprint.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 // forward declaration
 template<typename, int, int> class FastTM2Iterator;
@@ -307,7 +307,7 @@ public:
     		   + offset2*T_matrix::stride(dim2)];
     }
 
-    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+    void prettyPrint(std::string &str, 
         prettyPrintFormat& format) const
     {
         if (format.tersePrintingSelected())
@@ -315,7 +315,7 @@ public:
         else if (format.dumpArrayShapesMode())
         {
 #ifdef BZ_HAVE_STD
-	    BZ_STD_SCOPE(ostringstream) ostr;
+	    std::ostringstream ostr;
 #else
             ostrstream ostr;
 #endif
@@ -476,6 +476,6 @@ public:
 };
 
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAY_FASTITER_H

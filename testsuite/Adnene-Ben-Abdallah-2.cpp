@@ -1,11 +1,11 @@
 #include "testsuite.h"
 #include <blitz/array.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 int main() 
 {
-  BZ_USING_NAMESPACE(tensor)
+  using namespace tensor;
 
   Array<double,1> X(4), Y1(4), Y2(4);
   X = 1, 2, 3, 4;

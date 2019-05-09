@@ -5,11 +5,11 @@
 #include <blitz/vector2.h>
 #include <random/uniform.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 extern void sink();
-BZ_NAMESPACE_END
+}
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 #ifdef BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES
   #define arrdaxpyf arrdaxpyf_

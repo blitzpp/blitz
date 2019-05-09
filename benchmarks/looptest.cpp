@@ -1,6 +1,6 @@
 #include <blitz/timer.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 void initialize(double& c, double& d, double* a, double* b, int& N);
 

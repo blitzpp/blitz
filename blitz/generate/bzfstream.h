@@ -73,12 +73,12 @@ public:
 
     void beginNamespace()
     {
-        (*this) << "BZ_NAMESPACE(blitz)" << std::endl << std::endl;
+        (*this) << "namespace blitz {" << std::endl << std::endl;
     }
 
     ~bzofstream()
     {
-        (*this) << "BZ_NAMESPACE_END" << std::endl << std::endl
+        (*this) << "}" << std::endl << std::endl
                 << "#endif" << std::endl;
     }
 

@@ -6,7 +6,7 @@
 #include <blitz/rand-uniform.h>
 #include <blitz/array/stencil-et.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 #if defined(BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES)
   #define stencilf stencilf_

@@ -40,7 +40,7 @@
 #include <blitz/array/domain.h>
 #include <blitz/array/asexpr.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename P_expr1, typename P_expr2, typename P_expr3>
 class _bz_ArrayWhere {
@@ -364,7 +364,7 @@ public:
             && iter3_.isStride(rank,stride);
     }
 
-    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+    void prettyPrint(std::string &str, 
         prettyPrintFormat& format) const
     {
         str += "where(";
@@ -432,7 +432,7 @@ where(const T1& a, const T2& b, const T3& c)
        _bz_typename asExpr<T3>::T_expr> >(a,b,c);
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAYWHERE_H
 

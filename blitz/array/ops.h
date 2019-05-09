@@ -35,7 +35,7 @@
 #include <blitz/funcs.h>
 #include <blitz/array/newet-macros.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
     
 // unary operators
     
@@ -128,6 +128,6 @@ BZ_DECLARE_ARRAY_ET_SCALAR_OPS(complex<long double>)
 #endif
 
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAY_OPS_H

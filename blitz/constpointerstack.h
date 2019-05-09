@@ -3,7 +3,7 @@
 
 #include <blitz/blitz.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 // helper class ConstPointerStack
 template<typename P_numtype, int N_rank>
@@ -26,6 +26,6 @@ private:
     const T_numtype *                stack_[N_rank];
 };
 
-BZ_NAMESPACE_END
+}
 
 #endif

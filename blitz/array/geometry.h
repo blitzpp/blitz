@@ -36,7 +36,7 @@
  #error <blitz/array/geometry.h> must be included after <blitz/array.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 typedef double T_defaultSpatialCoordinate;
 
@@ -107,6 +107,6 @@ class TensorProductGeometry {
 public:
 };
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_GEOMETRY_H

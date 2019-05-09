@@ -15,9 +15,7 @@
 
 #include <complex>
 
-#ifdef HAVE_NAMESPACES
 using namespace std;
-#endif
 
 int main() {
     complex<float> a;

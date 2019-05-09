@@ -35,7 +35,7 @@
  #error <blitz/array/multi.h> must be included via <blitz/array.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /*
  * The multicomponent_traits class provides a mapping from multicomponent
@@ -82,14 +82,14 @@ struct multicomponent_traits<complex<T> > {
 // multicomponent types.
 
 #define BZ_DECLARE_MULTICOMPONENT_TYPE(T_tuple,T,N)          \
-  BZ_NAMESPACE(blitz)                                        \
+  namespace blitz {                                        \
   template<>                                                 \
   struct multicomponent_traits<T_tuple > {                   \
     typedef T T_element;                                     \
     static const int numComponents = N;                      \
   };                                                         \
-  BZ_NAMESPACE_END
+  }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAYMULTI_H

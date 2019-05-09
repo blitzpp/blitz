@@ -37,7 +37,7 @@
 #include <blitz/update.h>
 #include <blitz/globeval.cc>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /*
  * Constant operands
@@ -411,6 +411,6 @@ Array<P_numtype, N_rank>::operator<<=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 
 #endif // BZ_NEW_EXPRESSION_TEMPLATES
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAYOPS_CC

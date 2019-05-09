@@ -1,7 +1,7 @@
 #include <blitz/array.h>
 #include <blitz/array/stencil-et.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 // This example illustrates a simple use of stencils.
 // It applies a Laplacian operator to an array which is

@@ -8,7 +8,7 @@
 
 void initializeRandomDouble(double* data, int numElements);
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 int QCDBlitzVersion(BenchmarkExt<int>& bench);
 int QCDBlitzTunedVersion(BenchmarkExt<int>& bench);

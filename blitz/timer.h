@@ -46,7 +46,7 @@
  #include <time.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 #ifndef BZ_HAVE_LIBPAPI
 
@@ -185,7 +185,7 @@ private:
 
 
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_TIMER_H
 

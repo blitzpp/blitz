@@ -117,9 +117,6 @@
 // define if the compiler supports the mutable keyword
 #cmakedefine BZ_HAVE_MUTABLE
 
-// define if the compiler implements namespaces
-#cmakedefine BZ_HAVE_NAMESPACES
-
 // define if the compiler supports the Numerical C Extensions Group restrict
 // keyword
 #cmakedefine BZ_HAVE_NCEG_RESTRICT

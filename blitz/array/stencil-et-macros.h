@@ -31,7 +31,7 @@
 #ifndef BZ_ARRAY_STENCIL_ET_MACROS_H
 #define BZ_ARRAY_STENCIL_ET_MACROS_H
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /* This file contains the macros that used to declare all
    stencils. They are now declared in the generated file
@@ -51,11 +51,11 @@ BZ_NAMESPACE(blitz)
    this slightly less painful for the majority of the stencil classes. */
 #define BZ_ET_STENCIL_REDIRECT(name)					\
   template<typename T, int N>						\
-   inline _bz_ArrayExpr<name ## _et<_bz_typename BZ_BLITZ_SCOPE(asExpr)<Array<T,N> >::T_expr::T_range_result> > \
+   inline _bz_ArrayExpr<name ## _et<_bz_typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> > \
    name(const Array<T,N>& d1)						\
    { return name(d1.wrap()); }						\
    template<typename T, int N>						\
-   inline _bz_ArrayExpr<name ## _et<_bz_typename BZ_BLITZ_SCOPE(asExpr)<Array<T,N> >::T_expr::T_range_result> > \
+   inline _bz_ArrayExpr<name ## _et<_bz_typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> > \
    name(Array<T,N>& d1)							\
    { return name(d1.wrap()); }
 
@@ -153,7 +153,7 @@ BZ_NAMESPACE(blitz)
       return r;								\
     }									\
 									\
-    void prettyPrint(BZ_STD_SCOPE(string) &str,				\
+    void prettyPrint(std::string &str,				\
 		     prettyPrintFormat& format) const			\
     {									\
       str += "name (stencil)";						\
@@ -199,20 +199,20 @@ BZ_NAMESPACE(blitz)
   };									\
   /* generate an ET object from an expression */			\
   template<typename T1>							\
-  inline _bz_ArrayExpr<name ## _et<typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_range_result, etresult> > \
-  name(const BZ_BLITZ_SCOPE(ETBase)<T1>& d1)				\
+  inline _bz_ArrayExpr<name ## _et<typename blitz::asExpr<T1>::T_expr::T_range_result, etresult> > \
+  name(const blitz::ETBase<T1>& d1)				\
   {									\
-    return _bz_ArrayExpr<name ## _et<typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_range_result, etresult> > \
-      (BZ_BLITZ_SCOPE(asExpr)<T1>::getExpr(d1.unwrap())(_bz_shrinkDomain(d1.unwrap().domain(),MINB, MAXB))); \
+    return _bz_ArrayExpr<name ## _et<typename blitz::asExpr<T1>::T_expr::T_range_result, etresult> > \
+      (blitz::asExpr<T1>::getExpr(d1.unwrap())(_bz_shrinkDomain(d1.unwrap().domain(),MINB, MAXB))); \
   }									\
   /* redirect calls with bare arrays to the main function */		\
   template<typename T, int N>						\
-  inline _bz_ArrayExpr<name ## _et<typename BZ_BLITZ_SCOPE(asExpr)<Array<T,N> >::T_expr::T_range_result, result> > \
+  inline _bz_ArrayExpr<name ## _et<typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result, result> > \
   name(const Array<T,N>& d1)						\
   { return name(d1.wrap()); }						\
 									\
   template<typename T, int N>						\
-  inline _bz_ArrayExpr<name ## _et<typename BZ_BLITZ_SCOPE(asExpr)<Array<T,N> >::T_expr::T_range_result, result> > \
+  inline _bz_ArrayExpr<name ## _et<typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result, result> > \
   name(Array<T,N>& d1)							\
   { return name(d1.wrap()); }
   
@@ -312,7 +312,7 @@ BZ_NAMESPACE(blitz)
       return r;								\
     }									\
 									\
-    void prettyPrint(BZ_STD_SCOPE(string) &str,				\
+    void prettyPrint(std::string &str,				\
 		     prettyPrintFormat& format) const			\
     {									\
       str += "name (stencil)";						\
@@ -356,55 +356,55 @@ BZ_NAMESPACE(blitz)
 									\
   /* create ET object from application to expression */			\
   template<typename T1, typename T2>					\
-  inline _bz_ArrayExpr<name ## _et2<typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_range_result, typename BZ_BLITZ_SCOPE(asExpr)<T2>::T_expr::T_range_result, etresult> > \
-  name(const BZ_BLITZ_SCOPE(ETBase)<T1>& d1,				\
-       const BZ_BLITZ_SCOPE(ETBase)<T2>& d2)				\
+  inline _bz_ArrayExpr<name ## _et2<typename blitz::asExpr<T1>::T_expr::T_range_result, typename blitz::asExpr<T2>::T_expr::T_range_result, etresult> > \
+  name(const blitz::ETBase<T1>& d1,				\
+       const blitz::ETBase<T2>& d2)				\
   {									\
-    return _bz_ArrayExpr<name ## _et2<typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_range_result, typename BZ_BLITZ_SCOPE(asExpr)<T2>::T_expr::T_range_result, etresult> > \
-      (BZ_BLITZ_SCOPE(asExpr)<T1>::getExpr(d1.unwrap())(_bz_shrinkDomain(d1.unwrap().domain(),MINB, MAXB)), \
-       BZ_BLITZ_SCOPE(asExpr)<T2>::getExpr(d2.unwrap())(_bz_shrinkDomain(d2.unwrap().domain(),MINB, MAXB))); \
+    return _bz_ArrayExpr<name ## _et2<typename blitz::asExpr<T1>::T_expr::T_range_result, typename blitz::asExpr<T2>::T_expr::T_range_result, etresult> > \
+      (blitz::asExpr<T1>::getExpr(d1.unwrap())(_bz_shrinkDomain(d1.unwrap().domain(),MINB, MAXB)), \
+       blitz::asExpr<T2>::getExpr(d2.unwrap())(_bz_shrinkDomain(d2.unwrap().domain(),MINB, MAXB))); \
   }									\
   /* matches to calls involving bare arrays (this is very annoying	\
      because we have to exactly match every possible call combination	\
      to ensure that this matches instead of the operator in		\
      stencilops.h) */							\
   template<typename T1, typename T2, int N2>				\
-  inline _bz_ArrayExpr<name ## _et2<typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_range_result, typename BZ_BLITZ_SCOPE(asExpr)<Array<T2,N2> >::T_expr::T_range_result, result> > \
-  name(const BZ_BLITZ_SCOPE(ETBase)<T1>& d1, Array<T2,N2>& d2)		\
+  inline _bz_ArrayExpr<name ## _et2<typename blitz::asExpr<T1>::T_expr::T_range_result, typename blitz::asExpr<Array<T2,N2> >::T_expr::T_range_result, result> > \
+  name(const blitz::ETBase<T1>& d1, Array<T2,N2>& d2)		\
   { return name(d1.wrap(), d2.wrap()); }				\
 									\
   template<typename T1, typename T2, int N2>				\
-  inline _bz_ArrayExpr<name ## _et2<typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_range_result, typename BZ_BLITZ_SCOPE(asExpr)<Array<T2,N2> >::T_expr::T_range_result, result> > \
-  name(const BZ_BLITZ_SCOPE(ETBase)<T1>& d1, const Array<T2,N2>& d2)	\
+  inline _bz_ArrayExpr<name ## _et2<typename blitz::asExpr<T1>::T_expr::T_range_result, typename blitz::asExpr<Array<T2,N2> >::T_expr::T_range_result, result> > \
+  name(const blitz::ETBase<T1>& d1, const Array<T2,N2>& d2)	\
   { return name(d1.wrap(), d2.wrap()); }				\
 									\
   template<typename T1, int N1, typename T2>				\
-  inline _bz_ArrayExpr<name ## _et2<typename BZ_BLITZ_SCOPE(asExpr)<Array<T1,N1> >::T_expr::T_range_result, typename BZ_BLITZ_SCOPE(asExpr)<T2>::T_expr::T_range_result, result> > \
-  name(Array<T1,N1>& d1, const BZ_BLITZ_SCOPE(ETBase)<T2>& d2)		\
+  inline _bz_ArrayExpr<name ## _et2<typename blitz::asExpr<Array<T1,N1> >::T_expr::T_range_result, typename blitz::asExpr<T2>::T_expr::T_range_result, result> > \
+  name(Array<T1,N1>& d1, const blitz::ETBase<T2>& d2)		\
   { return name(d1.wrap(), d2.wrap()); }				\
 									\
   template<typename T1, int N1, typename T2>				\
-  inline _bz_ArrayExpr<name ## _et2<typename BZ_BLITZ_SCOPE(asExpr)<Array<T1,N1> >::T_expr::T_range_result, typename BZ_BLITZ_SCOPE(asExpr)<T2>::T_expr::T_range_result, result> > \
-  name(const Array<T1,N1>& d1, const BZ_BLITZ_SCOPE(ETBase)<T2>& d2)	\
+  inline _bz_ArrayExpr<name ## _et2<typename blitz::asExpr<Array<T1,N1> >::T_expr::T_range_result, typename blitz::asExpr<T2>::T_expr::T_range_result, result> > \
+  name(const Array<T1,N1>& d1, const blitz::ETBase<T2>& d2)	\
   { return name(d1.wrap(), d2.wrap()); }				\
 									\
   template<typename T1, int N1, typename T2, int N2>			\
-  inline _bz_ArrayExpr<name ## _et2<typename BZ_BLITZ_SCOPE(asExpr)<Array<T1,N1> >::T_expr::T_range_result, typename BZ_BLITZ_SCOPE(asExpr)<Array<T2,N2> >::T_expr::T_range_result, result> > \
+  inline _bz_ArrayExpr<name ## _et2<typename blitz::asExpr<Array<T1,N1> >::T_expr::T_range_result, typename blitz::asExpr<Array<T2,N2> >::T_expr::T_range_result, result> > \
   name(const Array<T1,N1>& d1, Array<T2,N2>& d2)				\
   { return name(d1.wrap(), d2.wrap()); }				\
 									\
   template<typename T1, int N1, typename T2, int N2>			\
-  inline _bz_ArrayExpr<name ## _et2<typename BZ_BLITZ_SCOPE(asExpr)<Array<T1,N1> >::T_expr::T_range_result, typename BZ_BLITZ_SCOPE(asExpr)<Array<T2,N2> >::T_expr::T_range_result, result> > \
+  inline _bz_ArrayExpr<name ## _et2<typename blitz::asExpr<Array<T1,N1> >::T_expr::T_range_result, typename blitz::asExpr<Array<T2,N2> >::T_expr::T_range_result, result> > \
   name(Array<T1,N1>& d1, const Array<T2,N2>& d2)			\
   { return name(d1.wrap(), d2.wrap()); }				\
   									\
   template<typename T, int N>						\
-  inline _bz_ArrayExpr<name ## _et2<typename BZ_BLITZ_SCOPE(asExpr)<Array<T,N> >::T_expr::T_range_result, typename BZ_BLITZ_SCOPE(asExpr)<Array<T,N> >::T_expr::T_range_result, result> > \
+  inline _bz_ArrayExpr<name ## _et2<typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result, typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result, result> > \
   name(Array<T,N>& d1, Array<T,N>& d2)					\
   { return name(d1.wrap(), d2.wrap()); }				\
 									\
   template<typename T, int N>						\
-  inline _bz_ArrayExpr<name ## _et2<typename BZ_BLITZ_SCOPE(asExpr)<Array<T,N> >::T_expr::T_range_result, typename BZ_BLITZ_SCOPE(asExpr)<Array<T,N> >::T_expr::T_range_result, result> > \
+  inline _bz_ArrayExpr<name ## _et2<typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result, typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result, result> > \
   name(const Array<T,N>& d1, const Array<T,N>& d2)			\
   { return name(d1.wrap(), d2.wrap()); }
 
@@ -493,7 +493,7 @@ BZ_NAMESPACE(blitz)
        return r;							\
      }									\
 									 \
-     void prettyPrint(BZ_STD_SCOPE(string) &str,			\
+     void prettyPrint(std::string &str,			\
 		      prettyPrintFormat& format) const			\
      {									\
        str += "name (stencil)";						\
@@ -534,11 +534,11 @@ BZ_NAMESPACE(blitz)
    };									\
    /* create ET from application to expression */			\
    template<typename T1>						\
-   inline _bz_ArrayExpr<name ## _et<_bz_typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_range_result> > \
-   name(const BZ_BLITZ_SCOPE(ETBase)<T1>& d1)				\
+   inline _bz_ArrayExpr<name ## _et<_bz_typename blitz::asExpr<T1>::T_expr::T_range_result> > \
+   name(const blitz::ETBase<T1>& d1)				\
    {									\
-     return _bz_ArrayExpr<name ## _et<_bz_typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_range_result> >	\
-       (BZ_BLITZ_SCOPE(asExpr)<T1>::getExpr(d1.unwrap())(_bz_shrinkDomain(d1.unwrap().domain(),MINB, MAXB))); \
+     return _bz_ArrayExpr<name ## _et<_bz_typename blitz::asExpr<T1>::T_expr::T_range_result> >	\
+       (blitz::asExpr<T1>::getExpr(d1.unwrap())(_bz_shrinkDomain(d1.unwrap().domain(),MINB, MAXB))); \
        }								\
    BZ_ET_STENCIL_REDIRECT(name)						\
 
@@ -628,7 +628,7 @@ BZ_NAMESPACE(blitz)
        return r;								\
      }									\
 									 \
-     void prettyPrint(BZ_STD_SCOPE(string) &str,				\
+     void prettyPrint(std::string &str,				\
 		      prettyPrintFormat& format) const			\
      {									\
        str += "name (stencil)";						\
@@ -669,11 +669,11 @@ BZ_NAMESPACE(blitz)
    };									\
   /* create ET from application to expression */				\
    template<typename T1>							\
-   inline _bz_ArrayExpr<name ## _et<_bz_typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_range_result> >	\
-   name(const BZ_BLITZ_SCOPE(ETBase)<T1>& d1)				\
+   inline _bz_ArrayExpr<name ## _et<_bz_typename blitz::asExpr<T1>::T_expr::T_range_result> >	\
+   name(const blitz::ETBase<T1>& d1)				\
    {									\
-     return _bz_ArrayExpr<name ## _et<_bz_typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_range_result> >	\
-       (BZ_BLITZ_SCOPE(asExpr)<T1>::getExpr(d1.unwrap())(_bz_shrinkDomain(d1.unwrap().domain(),MINB, MAXB))); \
+     return _bz_ArrayExpr<name ## _et<_bz_typename blitz::asExpr<T1>::T_expr::T_range_result> >	\
+       (blitz::asExpr<T1>::getExpr(d1.unwrap())(_bz_shrinkDomain(d1.unwrap().domain(),MINB, MAXB))); \
    }									\
    BZ_ET_STENCIL_REDIRECT(name)
 
@@ -761,7 +761,7 @@ BZ_NAMESPACE(blitz)
       return r;								\
     }									\
 									\
-    void prettyPrint(BZ_STD_SCOPE(string) &str,				\
+    void prettyPrint(std::string &str,				\
 		     prettyPrintFormat& format) const			\
     {									\
       str += "name (stencil)";						\
@@ -802,11 +802,11 @@ BZ_NAMESPACE(blitz)
   };									\
   /* create ET from application to expression */			\
   template<typename T1>							\
-  inline _bz_ArrayExpr<name ## _et<_bz_typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_range_result> >	\
-  name(const BZ_BLITZ_SCOPE(ETBase)<T1>& d1)				\
+  inline _bz_ArrayExpr<name ## _et<_bz_typename blitz::asExpr<T1>::T_expr::T_range_result> >	\
+  name(const blitz::ETBase<T1>& d1)				\
   {									\
-    return _bz_ArrayExpr<name ## _et<_bz_typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_range_result> >	\
-      (BZ_BLITZ_SCOPE(asExpr)<T1>::getExpr(d1.unwrap())(_bz_shrinkDomain(d1.unwrap().domain(),MINB, MAXB))); \
+    return _bz_ArrayExpr<name ## _et<_bz_typename blitz::asExpr<T1>::T_expr::T_range_result> >	\
+      (blitz::asExpr<T1>::getExpr(d1.unwrap())(_bz_shrinkDomain(d1.unwrap().domain(),MINB, MAXB))); \
   }									\
    BZ_ET_STENCIL_REDIRECT(name)
 
@@ -900,7 +900,7 @@ BZ_NAMESPACE(blitz)
       return r;								\
     }									\
 									\
-    void prettyPrint(BZ_STD_SCOPE(string) &str,				\
+    void prettyPrint(std::string &str,				\
 		     prettyPrintFormat& format) const			\
     {									\
       str += "name (stencil)";						\
@@ -944,21 +944,21 @@ BZ_NAMESPACE(blitz)
   };									\
  /* create ET from application to expression */				\
   template<typename T1>							\
-  inline _bz_ArrayExpr<name ## _et<typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_range_result> >	\
-  name(const BZ_BLITZ_SCOPE(ETBase)<T1>& d1, int dim)			\
+  inline _bz_ArrayExpr<name ## _et<typename blitz::asExpr<T1>::T_expr::T_range_result> >	\
+  name(const blitz::ETBase<T1>& d1, int dim)			\
   {									\
-    TinyVector<int, BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::rank_> minb(0), maxb(0); \
+    TinyVector<int, blitz::asExpr<T1>::T_expr::rank_> minb(0), maxb(0); \
     minb[dim]=MINB; maxb[dim]=MAXB;					\
-    return _bz_ArrayExpr<name ## _et<typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_range_result> >	\
-      (BZ_BLITZ_SCOPE(asExpr)<T1>::getExpr(d1.unwrap())(_bz_shrinkDomain(d1.unwrap().domain(),minb, maxb)), dim); \
+    return _bz_ArrayExpr<name ## _et<typename blitz::asExpr<T1>::T_expr::T_range_result> >	\
+      (blitz::asExpr<T1>::getExpr(d1.unwrap())(_bz_shrinkDomain(d1.unwrap().domain(),minb, maxb)), dim); \
   }									\
   /* forward operations on arrays to main function */			\
   template<typename T, int N>						\
-   inline _bz_ArrayExpr<name ## _et<_bz_typename BZ_BLITZ_SCOPE(asExpr)<Array<T,N> >::T_expr::T_range_result> > \
+   inline _bz_ArrayExpr<name ## _et<_bz_typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> > \
   name(const Array<T,N>& d1, int dim)					\
   { return name(d1.wrap(), dim); }					\
    template<typename T, int N>						\
-   inline _bz_ArrayExpr<name ## _et<_bz_typename BZ_BLITZ_SCOPE(asExpr)<Array<T,N> >::T_expr::T_range_result> > \
+   inline _bz_ArrayExpr<name ## _et<_bz_typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> > \
    name(Array<T,N>& d1, int dim)					\
    { return name(d1.wrap(), dim); }
 
@@ -1048,7 +1048,7 @@ BZ_NAMESPACE(blitz)
       return r;								\
     }									\
 									\
-    void prettyPrint(BZ_STD_SCOPE(string) &str,				\
+    void prettyPrint(std::string &str,				\
 		     prettyPrintFormat& format) const			\
     {									\
       str += "name (stencil)";						\
@@ -1093,22 +1093,22 @@ BZ_NAMESPACE(blitz)
     };									\
   /* create ET from application to expression */			\
   template<typename T1>							\
-  inline _bz_ArrayExpr<name ## _et_multi<typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_range_result> >	\
-  name(const BZ_BLITZ_SCOPE(ETBase)<T1>& d1, int comp, int dim)		\
+  inline _bz_ArrayExpr<name ## _et_multi<typename blitz::asExpr<T1>::T_expr::T_range_result> >	\
+  name(const blitz::ETBase<T1>& d1, int comp, int dim)		\
   {									\
-    TinyVector<int, BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::rank_> minb(0), maxb(0); \
+    TinyVector<int, blitz::asExpr<T1>::T_expr::rank_> minb(0), maxb(0); \
     minb[dim]=MINB; maxb[dim]=MAXB;					\
-    return _bz_ArrayExpr<name ## _et_multi<typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_range_result> > \
-      (BZ_BLITZ_SCOPE(asExpr)<T1>::getExpr(d1.unwrap())(_bz_shrinkDomain(d1.unwrap().domain(),minb, maxb)), comp, dim); \
+    return _bz_ArrayExpr<name ## _et_multi<typename blitz::asExpr<T1>::T_expr::T_range_result> > \
+      (blitz::asExpr<T1>::getExpr(d1.unwrap())(_bz_shrinkDomain(d1.unwrap().domain(),minb, maxb)), comp, dim); \
   }									\
   /* forward operations on arrays to main function */			\
   template<typename T, int N>						\
-  inline _bz_ArrayExpr<name ## _et_multi<_bz_typename BZ_BLITZ_SCOPE(asExpr)<Array<T,N> >::T_expr::T_range_result> > \
+  inline _bz_ArrayExpr<name ## _et_multi<_bz_typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> > \
   name(const Array<T,N>& d1, int comp, int dim)				\
   { return name(d1.wrap(), comp, dim); }				\
 									\
   template<typename T, int N>						\
-  inline _bz_ArrayExpr<name ## _et_multi<_bz_typename BZ_BLITZ_SCOPE(asExpr)<Array<T,N> >::T_expr::T_range_result> > \
+  inline _bz_ArrayExpr<name ## _et_multi<_bz_typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> > \
   name(Array<T,N>& d1, int comp, int dim)				\
   { return name(d1.wrap(), comp, dim); }
 
@@ -1203,7 +1203,7 @@ BZ_NAMESPACE(blitz)
       return r;								\
     }									\
 									\
-    void prettyPrint(BZ_STD_SCOPE(string) &str,				\
+    void prettyPrint(std::string &str,				\
 		     prettyPrintFormat& format) const			\
     {									\
       str += "name (stencil)";						\
@@ -1248,26 +1248,26 @@ private:								\
  									\
  /* create ET from application to expression */				\
 template<typename T1>							\
- inline _bz_ArrayExpr<name ## _et<typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_range_result> >	\
- name(const BZ_BLITZ_SCOPE(ETBase)<T1>& d1, int dim1, int dim2)		\
+ inline _bz_ArrayExpr<name ## _et<typename blitz::asExpr<T1>::T_expr::T_range_result> >	\
+ name(const blitz::ETBase<T1>& d1, int dim1, int dim2)		\
  {									\
-   TinyVector<int, BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::rank_> minb(0), maxb(0);	\
+   TinyVector<int, blitz::asExpr<T1>::T_expr::rank_> minb(0), maxb(0);	\
    minb[dim1]=MINB1; maxb[dim1]=MAXB1;					\
    minb[dim2]=MINB2; maxb[dim2]=MAXB2;					\
-   return _bz_ArrayExpr<name ## _et<typename BZ_BLITZ_SCOPE(asExpr)<T1>::T_expr::T_range_result> >	\
-     (BZ_BLITZ_SCOPE(asExpr)<T1>::getExpr(d1.unwrap())(_bz_shrinkDomain(d1.unwrap().domain(),minb, maxb)), dim1, dim2); \
+   return _bz_ArrayExpr<name ## _et<typename blitz::asExpr<T1>::T_expr::T_range_result> >	\
+     (blitz::asExpr<T1>::getExpr(d1.unwrap())(_bz_shrinkDomain(d1.unwrap().domain(),minb, maxb)), dim1, dim2); \
  }									\
   /* forward operations on arrays to main function */			\
   template<typename T, int N>						\
-  inline _bz_ArrayExpr<name ## _et<_bz_typename BZ_BLITZ_SCOPE(asExpr)<Array<T,N> >::T_expr::T_range_result> > \
+  inline _bz_ArrayExpr<name ## _et<_bz_typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> > \
   name(const Array<T,N>& d1, int dim1, int dim2)			\
   { return name(d1.wrap(), dim1, dim2); }				\
 									\
   template<typename T, int N>						\
-  inline _bz_ArrayExpr<name ## _et<_bz_typename BZ_BLITZ_SCOPE(asExpr)<Array<T,N> >::T_expr::T_range_result> > \
+  inline _bz_ArrayExpr<name ## _et<_bz_typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> > \
   name(Array<T,N>& d1, int dim1, int dim2)				\
   { return name(d1.wrap(), dim1, dim2); }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAY_STENCIL_ET_MACROS_H

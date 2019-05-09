@@ -1,7 +1,7 @@
 #include <blitz/array.h>
 #include <blitz/tinyvec-et.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 /*
  * The current implementation of stencil objects forces these variables

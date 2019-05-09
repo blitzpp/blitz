@@ -33,7 +33,7 @@
 #ifndef BZ_META_MATASSIGN_H
 #define BZ_META_MATASSIGN_H
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<int N_rows, int N_columns, int I, int J>
 class _bz_meta_matAssign2 {
@@ -80,6 +80,6 @@ public:
 };
 
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_META_ASSIGN_H

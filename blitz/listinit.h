@@ -42,7 +42,7 @@
 #ifndef BZ_LISTINIT_H
 #define BZ_LISTINIT_H
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename T_numtype, typename T_iterator>
 class ListInitializer {
@@ -116,7 +116,7 @@ protected:
     mutable bool wipeOnDestruct_;
 };
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_LISTINIT_H
 

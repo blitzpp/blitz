@@ -63,7 +63,7 @@
 #endif
 
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /*
  * Forward declarations
@@ -2550,7 +2550,7 @@ void find(Array<TinyVector<int,N_rank>,1>& indices,
 }
 
 
-BZ_NAMESPACE_END
+}
 
 /*
  * Removed the "kitchen-sink inclusion" here because it made

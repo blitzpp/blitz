@@ -2,8 +2,8 @@
 #include <iostream>
 #include <fstream>
 
-BZ_USING_NAMESPACE(blitz)
-BZ_USING_NAMESPACE(std)
+using namespace blitz;
+using namespace std;
 
 extern "C" {
     void echo_f77tuned(int& N, int& niters, float& check, int& blockSize);

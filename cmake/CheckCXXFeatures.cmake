@@ -24,7 +24,6 @@ macro(CHECK_CXX_FEATURE feature file message)
 endmacro()
 
 macro(CHECK_CXX_GENERAL)
-    CHECK_CXX_FEATURE(HAVE_NAMESPACES namespaces.cpp "implements namespaces")
     CHECK_CXX_FEATURE(HAVE_EXCEPTIONS exceptions.cpp "supports exceptions")
     CHECK_CXX_FEATURE(HAVE_RTTI rtti.cpp "supports Run-Time Type Identification")
     CHECK_CXX_FEATURE(HAVE_MEMBER_CONSTANTS member_constants.cpp "supports member constants")

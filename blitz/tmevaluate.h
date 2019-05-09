@@ -36,7 +36,7 @@
 #include <blitz/blitz.h>
 #include <blitz/meta/vecassign.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 
 /** The _tm_evaluator class has a bool template argument that is used
@@ -69,7 +69,7 @@ struct _tm_evaluator {
 		 << " line " << __LINE__ << endl
 		 << "          Expression: ";
         prettyPrintFormat format(true);   // Use terse formatting
-        BZ_STD_SCOPE(string) str;
+        std::string str;
         expr.prettyPrint(str, format);
         cerr << str << endl ;
       }
@@ -174,6 +174,6 @@ TinyMatrix<P_numtype,N_rows, N_columns>::_tm_evaluate(const T_expr& expr, T_upda
 }
 
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_TVEVALUATE_H

@@ -1,8 +1,7 @@
 AC_DEFUN([AC_CXX_MATH_ABSINT_IN_NAMESPACE_STD],
 [AC_CACHE_CHECK(whether the compiler has C math abs(integer type) in namespace std,
 ac_cv_cxx_mathabsint_std,
-[AC_REQUIRE([AC_CXX_NAMESPACES])
- AC_REQUIRE([AC_CXX_MATH_FN_IN_NAMESPACE_STD])
+[AC_REQUIRE([AC_CXX_MATH_FN_IN_NAMESPACE_STD])
  AC_LANG_SAVE
  AC_LANG_CPLUSPLUS
  AC_TRY_COMPILE([#include <cstdlib>],[

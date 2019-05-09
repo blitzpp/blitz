@@ -35,7 +35,7 @@
  #error <blitz/array/zip.h> must be included via <blitz/array.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename P_component, typename T1, typename T2>
 struct Zip2 {
@@ -45,7 +45,7 @@ struct Zip2 {
     { return T_numtype(a,b); }
 
     template<typename T_left, typename T_right>
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,
+    static inline void prettyPrint(std::string &str,
         prettyPrintFormat& format, const T_left& t1,
         const T_right& t2)
     {
@@ -74,7 +74,7 @@ zip(const T1& a, const T2& b, T_component)
              _bz_typename asExpr<T2>::T_expr::T_numtype> > >(a,b);
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAYZIP_H
 

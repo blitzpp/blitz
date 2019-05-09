@@ -4,7 +4,7 @@
 
 #include <blitz/array.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 const double pi = 3.14159265358979323846264338327950288;
 
@@ -25,7 +25,7 @@ int main()
     Array<complex<double>,1> A(N);
     Array<double,1> theta(N);
 
-    BZ_USING_NAMESPACE(blitz::tensor);
+    using namespace blitz::tensor;;
 
     // Fill the theta array with angles from 0..2 Pi, evenly spaced
     theta = (2 * pi * i) / N;

@@ -3,8 +3,8 @@
 #include <list>
 #include <vector>
 
-BZ_USING_NAMESPACE(blitz)
-BZ_USING_NAMESPACE(std)
+using namespace blitz;
+using namespace std;
 
 void example1()
 {

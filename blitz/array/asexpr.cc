@@ -39,7 +39,7 @@
 
 // implementations of asexpr functions.
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 // default to scalar
 template <typename T>
@@ -86,6 +86,6 @@ inline asExpr<Range>::T_expr
 asExpr<Range>::getExpr(T_expr x) 
 { return T_expr(x); }
 
-BZ_NAMESPACE_END
+}
 
 #endif

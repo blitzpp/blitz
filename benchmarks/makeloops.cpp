@@ -308,7 +308,7 @@ void cppVersion(loop& lp)
 	"#include <valarray>\n"
 	"#endif\n"
 	"\n"
-	"BZ_USING_NAMESPACE(blitz)\n"
+	"using namespace blitz;\n"
 	"\n"
 	"#if defined(BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES)\n"
 	" #define " << lp.loopName() << "_f77 " << lp.loopName() << "_f77_\n"

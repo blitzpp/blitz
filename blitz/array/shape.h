@@ -35,7 +35,7 @@
  #error <blitz/array/shape.h> must be included via <blitz/array.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /*
  * These routines make it easier to create shape parameters on
@@ -88,7 +88,7 @@ inline TinyVector<int,11> shape(int n1, int n2, int n3, int n4,
     int n5, int n6, int n7, int n8, int n9, int n10, int n11)
 { return TinyVector<int,11>(n1,n2,n3,n4,n5,n6,n7,n8,n9,n10,n11); }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAYSHAPE_H
 

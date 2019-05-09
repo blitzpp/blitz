@@ -40,7 +40,7 @@
 
 #include <set>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<int N_dimensions>
 class TraversalOrder {
@@ -155,7 +155,7 @@ public:
     { return 0; }
 };
 
-BZ_NAMESPACE_END
+}
 
 #include <blitz/traversal.cc>
 

@@ -40,7 +40,7 @@
 #include <blitz/tinyvec2.h>
 #include <climits>                  // for INT_MIN, INT_MAX
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 // A Range object is an ET that generates the specified sequence.
 
@@ -208,11 +208,11 @@ public:
     template<int N_rank>
     void moveTo(const TinyVector<int,N_rank>&) const { BZPRECONDITION(0); }
 
-    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+    void prettyPrint(std::string &str, 
         prettyPrintFormat& format) const
     {
 #ifdef BZ_HAVE_STD
-	    BZ_STD_SCOPE(ostringstream) ostr;
+	    std::ostringstream ostr;
 #else
             ostrstream ostr;
 #endif
@@ -321,6 +321,6 @@ private:
   diffType stride_;
 };
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_RANGE_H

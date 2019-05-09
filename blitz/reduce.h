@@ -43,7 +43,7 @@
 //  The prototype of the reset method is mandated by the class _bz_ReduceReset
 //  in file array/reduce.h
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename P_sourcetype, typename P_resulttype = BZ_SUMTYPE(P_sourcetype)>
 class ReduceSum {
@@ -519,6 +519,6 @@ protected:
     mutable T_resulttype all_;
 }; 
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_REDUCE_H

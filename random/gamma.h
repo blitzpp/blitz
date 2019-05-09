@@ -38,7 +38,7 @@
  #include <blitz/numinquire.h>
 #endif
 
-BZ_NAMESPACE(ranlib)
+namespace ranlib {
 
 template<typename T = double, typename IRNG = defaultIRNG, 
     typename stateTag = defaultState>
@@ -311,6 +311,6 @@ S140:
 
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_RANDOM_GAMMA

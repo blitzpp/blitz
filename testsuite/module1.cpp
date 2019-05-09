@@ -5,13 +5,13 @@
 
 #include <blitz/array.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 int module2();
 
 int main()
 {
-    BZ_USING_NAMESPACE(blitz::tensor)
+    using namespace blitz::tensor;
 
     Array<float,2> A(4,4);
     A = 1.0 / (1 + i + j);

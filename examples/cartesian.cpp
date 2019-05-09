@@ -2,7 +2,7 @@
 #include <blitz/array/cartesian.h>
 #include <list>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 int main()
 {

@@ -1,7 +1,7 @@
 #include <blitz/array.h>
 #include <iostream>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 
 BZ_DECLARE_STENCIL2(footprint,A,B)

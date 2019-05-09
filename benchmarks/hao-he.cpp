@@ -8,7 +8,7 @@
 #include <blitz/array.h>
 #include <blitz/timer.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 #include <blitz/vector.h>
 

@@ -32,7 +32,7 @@
 #ifndef BZ_META_TV2ASSIGN_H
 #define BZ_META_TV2ASSIGN_H
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<int N, int I> 
 class _bz_meta_tv2Assign {
@@ -88,6 +88,6 @@ public:
     }
 };
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_META_ASSIGN_H

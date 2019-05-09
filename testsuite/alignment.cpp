@@ -2,7 +2,7 @@
 #include <blitz/array.h>
 #include <vector>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 template<typename T_numtype, int N, int M>
 void testalign() {
