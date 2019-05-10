@@ -25,7 +25,7 @@ int main()
     Array<complex<double>,1> A(N);
     Array<double,1> theta(N);
 
-    using namespace blitz::tensor;;
+    using namespace blitz::tensor;
 
     // Fill the theta array with angles from 0..2 Pi, evenly spaced
     theta = (2 * pi * i) / N;

@@ -147,7 +147,7 @@ void setupInitialConditions(Array<float,3>& P1, Array<float,3>& P2,
         Range(cavityFront,cavityBack)) = 0.001;
 
     // Initial pressure distribution
-    using namespace blitz::tensor;;
+    using namespace blitz::tensor;
       
     float NN = N;
     float ci = N/2-1;
