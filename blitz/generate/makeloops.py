@@ -405,7 +405,7 @@ void VectorVersion(BenchmarkExt<int>& bench#scalarargdecl#)
         bench.start();
         for (long i=0; i < iters; ++i)
         {
-            #looparrayexpr#;
+            #looparrayexpr#
             sink();
         }
         bench.stop();
