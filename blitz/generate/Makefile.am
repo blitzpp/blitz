@@ -21,9 +21,8 @@ clean-local:
 
 
 %.h: 
-	./$(patsubst %.cpp,%$(EXEEXT),$<)
-
+	$(patsubst %.cpp,%$(EXEEXT),$(subst $(top_srcdir),$(top_builddir),$<))
 %.cc: 
-	./$(patsubst %.cpp,%$(EXEEXT),$<)
+	$(patsubst %.cpp,%$(EXEEXT),$(subst $(top_srcdir),$(top_builddir),$<))
 
 
