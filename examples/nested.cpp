@@ -14,7 +14,7 @@ int main()
     A(1).resize(5);
     A(1) = 5, 7, 18, 2, 1;
 
-    using namespace blitz::tensor;;
+    using namespace blitz::tensor;
 
     A(2).resize(4);
     A(2) = pow2(i+1);
