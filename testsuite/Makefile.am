@@ -18,7 +18,7 @@ derrick-bass-1 derrick-bass-3 exprctor expression-slicing extract free \
 gary-huber-1 indexexpr-base initialize int-math-func interlace iter    \
 Josef-Wagenhuber levicivita loop1 matthias-troyer-1 matthias-troyer-2  \
 mattias-lindstroem-1 member_function minmax minsumpow module	       \
-multicomponent multicomponent-2 newet Olaf-Ronneberger-1	       \
+multicomponent multicomponent-1 multicomponent-2 newet Olaf-Ronneberger-1	       \
 patrik-jonsson-1 peter-bienstman-1 peter-bienstman-2 peter-bienstman-3 \
 peter-bienstman-4 peter-bienstman-5 peter-nordlund-1 peter-nordlund-2  \
 peter-nordlund-3 preexisting promote pthread qcd reduce reindex	       \
@@ -73,6 +73,7 @@ minmax_SOURCES = minmax.cpp
 minsumpow_SOURCES = minsumpow.cpp
 module_SOURCES = module1.cpp module2.cpp
 multicomponent_SOURCES = multicomponent.cpp
+multicomponent_1_SOURCES = multicomponent-1.cpp
 multicomponent_2_SOURCES = multicomponent-2.cpp
 newet_SOURCES = newet.cpp
 Olaf_Ronneberger_1_SOURCES = Olaf-Ronneberger-1.cpp

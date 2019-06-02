@@ -75,12 +75,13 @@ public:
     typedef P_numtype T_numtype;
     // typedef _bz_tinyMatrixRef<T_numtype, N_rows, N_columns, N_columns, 1> 
     //     T_reference;
-    typedef TinyVector<int, 2>  T_index;
-    typedef TinyMatrix<T_numtype, N_rows, N_columns> T_matrix;
-  typedef FastTM2Iterator<T_numtype,N_rows, N_columns> T_iterator;
-    typedef T_numtype*                                   iterator;
-    typedef const T_numtype*                             const_iterator;
-  typedef FastTM2CopyIterator<P_numtype, N_rows, N_columns> T_range_result;
+    typedef TinyVector<int, 2>                                 T_index;
+    typedef TinyMatrix<T_numtype, N_rows, N_columns>           T_matrix;
+    typedef T_matrix                                           T_type;
+    typedef FastTM2Iterator<T_numtype,N_rows, N_columns>       T_iterator;
+    typedef T_numtype*                                         iterator;
+    typedef const T_numtype*                                   const_iterator;
+    typedef FastTM2CopyIterator<P_numtype, N_rows, N_columns>  T_range_result;
 
     static const int 
     //numArrayOperands = 1, 
@@ -94,6 +95,22 @@ public:
   template <typename T_numtype2>
   inline TinyMatrix(const TinyMatrix<T_numtype2, N_rows, N_columns>& x);
   
+  /** This constructor creates a TinyMatrix from another ETBase
+      object. It needs to be explicit to avoid all kinds of
+      ambiguities. */
+  template <typename T_expr>
+  inline explicit TinyMatrix(const ETBase<T_expr>& expr) {
+    *this = expr; }
+
+  /** This constructor creates a TinyMatrix specifically from an
+      expression. This one we do NOT want to be explicit because that
+      breaks simple construction assignments like "TinyMatrix<double,
+      1, 2> v = a+b;", forcing the user to explicitly write it like a
+      construction. */
+  template <typename T_expr>
+  inline TinyMatrix(const _bz_ArrayExpr<T_expr>& expr) {
+    *this = expr; }
+
   inline TinyMatrix(T_numtype initValue);
   
   static TinyVector<int, 2>    base() 

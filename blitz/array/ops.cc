@@ -50,7 +50,11 @@ Array<P_numtype, N_rank>& Array<P_numtype,N_rank>::initialize(T_numtype x)
   // we can't use asExpr here, because if we are initializing an array
   // whose components are also ETBase, it would parse as an array
   // expression, not as an initialization with a scalar.
-  (*this) = _bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
+
+  //(*this) = _bz_ArrayExpr<_bz_ArrayExprConstant<T_numtype> >(x);
+  iterator iter, last = end();
+  for (iter = begin(); iter != last; ++ iter) *iter = x;
+
   return *this;
 }
 

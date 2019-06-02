@@ -65,6 +65,168 @@ namespace blitz {
 #define BZ_MAX(a,b) (a)>(b) ? (a) : (b)
 #define BZ_MIN(a,b) (a)<(b) ? (a) : (b)
 
+//NOTE: These template structures make to choose type of result binary operation between left and right side
+//TODO: It's necessary to consider the cases of expressions with ArrayIndexMapping and/or IndexPlaceholder
+
+template <typename T_expr1, typename T_expr2> struct TypeSwitch { typedef void Type; };
+
+template <typename T_expr1, typename T_expr2, int N_rows1, int N_rows2, int N_columns1, int N_columns2>
+struct TypeSwitch<TinyMatrix<T_expr1, N_rows1, N_columns1>, TinyMatrix<T_expr2, N_rows2, N_columns2> > {
+	typedef void Type;
+};
+
+template <typename T_expr1, typename T_expr2, int N_rows, int N_columns, int N_length>
+struct TypeSwitch<TinyMatrix<T_expr1, N_rows, N_columns>, TinyVector<T_expr2, N_length> > {
+	typedef void Type;
+};
+
+template <typename T_expr1, typename T_expr2, int N_rows, int N_columns, int N_length>
+struct TypeSwitch<TinyVector<T_expr2, N_length>, TinyMatrix<T_expr1, N_rows, N_columns> > {
+	typedef void Type;
+};
+
+template <typename T_expr1, typename T_expr2, int N_length1, int N_length2>
+struct TypeSwitch<TinyVector<T_expr1, N_length1>, TinyVector<T_expr2, N_length2> > {
+	typedef void Type;
+};
+
+//TinyMatrix:
+
+template <typename T_expr1, typename T_expr2, int N_rows, int N_columns, int N_rank>
+struct TypeSwitch<TinyMatrix<T_expr1, N_rows, N_columns>, Array<TinyMatrix<T_expr2, N_rows, N_columns>, N_rank> > {
+	typedef Array<TinyMatrix<T_expr2, N_rows, N_columns>, N_rank> Type;
+};
+
+template <typename T_expr1, typename T_expr2, int N_rows, int N_columns, int N_rank>
+struct TypeSwitch<Array<TinyMatrix<T_expr1, N_rows, N_columns>, N_rank>, TinyMatrix<T_expr2, N_rows, N_columns> > {
+	typedef Array<TinyMatrix<T_expr1, N_rows, N_columns>, N_rank> Type;
+};
+
+template <typename T_expr1, typename T_expr2, int N_rows, int N_columns>
+struct TypeSwitch<TinyMatrix<T_expr1, N_rows, N_columns>, TinyMatrix<T_expr2, N_rows, N_columns> > {
+	typedef TinyMatrix<T_expr1, N_rows, N_columns> Type;
+};
+
+template <typename T_expr1, typename T_expr2, int N_rows, int N_columns>
+struct TypeSwitch<T_expr1, TinyMatrix<T_expr2, N_rows, N_columns> > {
+	typedef TinyMatrix<T_expr2, N_rows, N_columns> Type;
+};
+
+template <typename T_expr1, typename T_expr2, int N_rows, int N_columns>
+struct TypeSwitch<TinyMatrix<T_expr1, N_rows, N_columns>, T_expr2> {
+	typedef TinyMatrix<T_expr1, N_rows, N_columns> Type;
+};
+
+//TinyVector:
+
+template <typename T_expr1, typename T_expr2, int N_length, int N_rank>
+struct TypeSwitch<TinyVector<T_expr1, N_length>, Array<TinyVector<T_expr2, N_length>, N_rank> > {
+	typedef Array<TinyVector<T_expr2, N_length>, N_rank> Type;
+};
+
+template <typename T_expr1, typename T_expr2, int N_length, int N_rank>
+struct TypeSwitch<Array<TinyVector<T_expr1, N_length>, N_rank>, TinyVector<T_expr2, N_length> > {
+	typedef Array<TinyVector<T_expr1, N_length>, N_rank> Type;
+};
+
+template <typename T_expr1, typename T_expr2, int N_length>
+struct TypeSwitch<TinyVector<T_expr1, N_length>, TinyVector<T_expr2, N_length> > {
+	typedef TinyVector<T_expr1, N_length> Type;
+};
+
+template <typename T_expr1, typename T_expr2, int N_length>
+struct TypeSwitch<T_expr1, TinyVector<T_expr2, N_length> > {
+	typedef TinyVector<T_expr2, N_length> Type;
+};
+
+template <typename T_expr1, typename T_expr2, int N_length>
+struct TypeSwitch<TinyVector<T_expr1, N_length>, T_expr2> {
+	typedef TinyVector<T_expr1, N_length> Type;
+};
+
+//Array:
+
+template <typename T_expr1, typename T_expr2, int N_rank>
+struct TypeSwitch<Array<T_expr1, N_rank>, Array<T_expr2, N_rank> > {
+	typedef Array<T_expr2, N_rank> Type;
+};
+
+template <typename T_expr1, typename T_expr2, int N_rank>
+struct TypeSwitch<Array<T_expr1, N_rank>, T_expr2> {
+	typedef Array<T_expr1, N_rank> Type;
+};
+
+template <typename T_expr1, typename T_expr2, int N_rank>
+struct TypeSwitch<T_expr1, Array<T_expr2, N_rank> > {
+	typedef Array<T_expr2, N_rank> Type;
+};
+
+//NOTE: These template structures define final type of an array expression
+
+template <typename T_expr> struct TypeInfo { typedef T_expr Type; };
+
+template <typename T_expr, int N_rows, int N_columns>
+struct TypeInfo<FastTM2CopyIterator<T_expr, N_rows, N_columns> > {
+	typedef typename FastTM2CopyIterator<T_expr, N_rows, N_columns>::T_matrix Type;
+};
+
+template <typename T_expr, int N_rows, int N_columns>
+struct TypeInfo<FastTM2Iterator<T_expr, N_rows, N_columns> > {
+	typedef typename FastTM2Iterator<T_expr, N_rows, N_columns>::T_matrix Type;
+};
+
+template <typename T_expr, int N_length>
+struct TypeInfo<FastTV2CopyIterator<T_expr, N_length> > {
+	typedef typename FastTV2CopyIterator<T_expr, N_length>::T_vector Type;
+};
+
+template <typename T_expr, int N_length>
+struct TypeInfo<FastTV2Iterator<T_expr, N_length> > {
+	typedef typename FastTV2Iterator<T_expr, N_length>::T_vector Type;
+};
+
+template <typename T_expr, int N_rank>
+struct TypeInfo<FastArrayCopyIterator<T_expr, N_rank> > {
+	typedef typename FastArrayCopyIterator<T_expr, N_rank>::T_array Type;
+};
+
+template <typename T_expr, int N_rank>
+struct TypeInfo<FastArrayIterator<T_expr, N_rank> > {
+	typedef typename FastArrayIterator<T_expr, N_rank>::T_array Type;
+};
+
+template <typename T_expr1, typename T_expr2, typename OP>
+struct TypeInfo<_bz_ArrayExprBinaryOp<T_expr1, T_expr2, OP> > {
+	typedef typename TypeSwitch<
+	typename TypeInfo<T_expr1>::Type,
+	typename TypeInfo<T_expr2>::Type
+	>::Type Type;
+};
+
+template <typename T_expr, typename OP>
+struct TypeInfo<_bz_ArrayExprUnaryOp<T_expr, OP> > {
+	typedef
+	typename TypeInfo<T_expr>::Type
+	Type;
+};
+
+template <typename T_expr>
+struct TypeInfo<_bz_ArrayExprConstant<T_expr> > {
+	typedef
+	typename TypeInfo<T_expr>::Type
+	Type;
+};
+
+template <typename T_expr>
+struct TypeInfo<_bz_ArrayExpr<T_expr> > {
+	typedef
+	typename TypeInfo<T_expr>::Type
+	Type;
+};
+
+//...
+
+
 template<typename T1, typename T2>
 class _bz_ExprPair {
 public:
@@ -108,6 +270,7 @@ class _bz_ArrayExpr
 {
 
 public:
+    typedef typename TypeInfo<_bz_ArrayExpr<P_expr> >::Type T_type;
     typedef P_expr T_expr;
     typedef _bz_typename T_expr::T_numtype T_numtype;
   // select return type
@@ -500,6 +663,7 @@ protected:
 template<typename P_expr, typename P_op>
 class _bz_ArrayExprUnaryOp {
 public:
+    typedef typename TypeInfo<_bz_ArrayExprUnaryOp<P_expr, P_op> >::Type T_type;
     typedef P_expr T_expr;
     typedef P_op T_op;
     typedef _bz_typename T_expr::T_numtype T_numtype1;
@@ -775,6 +939,7 @@ protected:
 template<typename P_expr1, typename P_expr2, typename P_op>
 class _bz_ArrayExprBinaryOp {
 public:
+    typedef typename TypeInfo<_bz_ArrayExprBinaryOp<P_expr1, P_expr2, P_op> >::Type T_type;
     typedef P_expr1 T_expr1;
     typedef P_expr2 T_expr2;
     typedef P_op T_op;
@@ -1976,14 +2141,15 @@ protected:
 template<typename P_numtype>
 class _bz_ArrayExprConstant {
 public:
+    typedef typename TypeInfo<_bz_ArrayExprConstant<P_numtype> >::Type T_type;
     typedef P_numtype T_numtype;
-  typedef typename opType<T_numtype>::T_optype T_optype;
-  typedef typename asET<T_numtype>::T_wrapped T_typeprop;
-  typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
+    typedef typename opType<T_numtype>::T_optype T_optype;
+    typedef typename asET<T_numtype>::T_wrapped T_typeprop;
+    typedef typename unwrapET<T_typeprop>::T_unwrapped T_result;
 
     typedef T_numtype T_ctorArg1;
     typedef int       T_ctorArg2;    // dummy
-  typedef _bz_ArrayExprConstant<P_numtype> T_range_result;
+    typedef _bz_ArrayExprConstant<P_numtype> T_range_result;
     static const int 
         numArrayOperands = 0, 
         numTVOperands = 0, 
@@ -1996,7 +2162,7 @@ public:
   /** For the purpose of vectorizing across the container (as opposed
       to for operating on multicomponent types), a constant is always
       a constant. */
-  template<int N> struct tvresult {
+    template<int N> struct tvresult {
     typedef _bz_ArrayExprConstant<T_numtype> Type;
   };
 
