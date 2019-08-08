@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 
 # python version of the makeloops.cpp that generates the benchmark
 # loops.
@@ -107,7 +107,7 @@ def sub_skeleton(skeleton, subs):
         try:
             skeleton=skeleton.replace("#%s#"%s[0],s[1])
         except:
-            print "Error subbing %s with %s in skeleton"%s
+            print("Error subbing %s with %s in skeleton"%s)
             raise
     return skeleton
 
@@ -685,7 +685,7 @@ f90_skeleton = """
 """
 
 for l in loops:
-    print "generating code for %s"%loopname(l)
+    print("generating code for %s"%loopname(l))
     gencpp(l)
     genf77(l)
     genf90(l)
