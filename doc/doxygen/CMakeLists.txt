@@ -16,7 +16,7 @@ if (DOXYGEN_FOUND)
     set(enable_dot YES)
     set(PACKAGE_NAME ${CMAKE_PROJECT_NAME})
     set(PACKAGE_VERSION ${blitz_VERSION})
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
 
     add_custom_target(doxygen ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
                       DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
