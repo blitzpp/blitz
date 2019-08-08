@@ -11,8 +11,10 @@ endforeach()
 GENERATE_BLITZ_HEADER(bops.cc genarrbops BLITZ_ARRAY_GENERATED_HEADERS)
 GENERATE_BLITZ_HEADER(uops.cc genarruops BLITZ_ARRAY_GENERATED_HEADERS)
 
+find_package (Python COMPONENTS Interpreter)
+
 add_custom_target(stencil-classes.cc ALL
-                  COMMAND python  ${CMAKE_CURRENT_SOURCE_DIR}/../generate/genstencils.py stencil-classes.cc
+                  COMMAND ${Python_EXECUTABLE}  ${CMAKE_CURRENT_SOURCE_DIR}/../generate/genstencils.py stencil-classes.cc
                   MAIN_DEPENDENCY ${CMAKE_CURRENT_SOURCE_DIR}/../generate/genstencils.py)
 add_dependencies(generated-headers stencil-classes.cc)
 
