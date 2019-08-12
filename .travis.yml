@@ -25,7 +25,7 @@ install:
     else
       brew install texinfo
       brew ln texinfo --force
-      brew install cmake
+      brew upgrade cmake
     fi
 
 script:
