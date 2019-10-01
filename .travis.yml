@@ -8,11 +8,6 @@ compiler:
   - gcc
   - clang
 
-env:
-  matrix:
-    - BUILDSYS=cmake
-    - BUILDSYS=autotools
-
 matrix:
   fast_finish: true
 
@@ -30,41 +25,17 @@ install:
 
 script:
   - |
-    if [ $BUILDSYS == "autotools" ]; then
-      srcdir='.'
-      aclocal
-      if [ $TRAVIS_OS_NAME == 'osx' ]; then glibtoolize; fi
-      if [ $TRAVIS_OS_NAME == 'linux' ]; then libtoolize; fi
-      autoheader
-      automake --add-missing
-      autoreconf
-      ./configure
-    elif [ $BUILDSYS == "cmake" ]; then
-      srcdir='..'
-      mkdir build
-      cd build
-      cmake -DBUILD_DOC=ON -DBUILD_TESTING=ON -DDISABLE_REFMAN_PDF=ON ..
-    fi
+    srcdir='..'
+    mkdir build
+    cd build
+    cmake -DBUILD_DOC=ON -DBUILD_TESTING=ON -DDISABLE_REFMAN_PDF=ON ..
 
   - make lib
   - make check-testsuite     # Build and check the testsuite
   - make check-examples      # Build and check the examples
     # TODO! (fails with error: no such file or directory: 'arrdaxpyf.o')
     # - make check-benchmarks    # Build and check the benchmarks (takes a long time)
-  - |
-    if [ $BUILDSYS == "autotools" ]; then
-      make info # Build Blitz++ texinfo documentation
-      # TODO: fails with /usr/bin/texi2dvi: texinfo.tex appears to be broken.
-      #- make ps                  # Build Blitz++ ps documentation
-      # - make pdf                 # Build Blitz++ pdf documentation
-      make html                # Build Blitz++ html documentation
-      sudo make install-info   # Install Blitz++ texinfo documentation
-      #- sudo make install-ps     # Install Blitz++ ps documentation
-      #- sudo make install-pdf    # Install Blitz++ pdf documentation
-      sudo make install-html   # Install Blitz++ html documentation
-    elif [ $BUILDSYS == "cmake" ]; then
-      make blitz-doc
-    fi
+  - make blitz-doc
 
   - sudo make install        # Install Blitz++
 

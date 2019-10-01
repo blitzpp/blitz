@@ -7,9 +7,8 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 set(blitz_MAJOR 1)
 set(blitz_MINOR 0)
-set(blitz_PATCH 2)
+set(blitz_PATCH 3)
 set(blitz_VERSION ${blitz_MAJOR}.${blitz_MINOR}.${blitz_PATCH})
-set(blitz_Release "2017-10-2")
 set(BZ_PACKAGE_STRING "${CMAKE_PROJECT_NAME} ${blitz_MAJOR}.${blitz_MINOR}")
 
 #   Set the project
