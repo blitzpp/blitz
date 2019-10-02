@@ -19,8 +19,7 @@ matrix:
     - os: osx
       env: COMPILER=clang CMAKE_BUILD_TYPE=Release
 
-matrix:
-  fast_finish: true
+fast_finish: true
 
 install:
   - |
