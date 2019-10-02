@@ -50,6 +50,8 @@ script:
     cmake $CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DBUILD_DOC=ON -DBUILD_TESTING=ON -DDISABLE_REFMAN_PDF=ON ..
 
   - make lib
+  
+  - export CTEST_OUTPUT_ON_FAILURE=1
   - make check-testsuite     # Build and check the testsuite
   - make check-examples      # Build and check the examples
     # TODO! (fails with error: no such file or directory: 'arrdaxpyf.o')
