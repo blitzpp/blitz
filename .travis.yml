@@ -4,14 +4,27 @@ os:
   - linux
   - osx
 
-compiler:
-  - gcc
-  - clang
+matrix:
+  include:
+    - os: linux
+      env: COMPILER=icc   CMAKE_BUILD_TYPE=Debug
+    - os: linux
+      env: COMPILER=gcc   CMAKE_BUILD_TYPE=Debug
+    - os: linux
+      env: COMPILER=clang CMAKE_BUILD_TYPE=Debug
+    - os: osx
+      env: COMPILER=clang CMAKE_BUILD_TYPE=Debug
+    - os: linux
+      env: COMPILER=icc   CMAKE_BUILD_TYPE=Release
+    - os: linux
+      env: COMPILER=gcc   CMAKE_BUILD_TYPE=Release
+    - os: linux
+      env: COMPILER=clang CMAKE_BUILD_TYPE=Release
+    - os: osx
+      env: COMPILER=clang CMAKE_BUILD_TYPE=Release
 
 matrix:
   fast_finish: true
-
-# TODO: Debug & Release modes
 
 install:
   - |
@@ -22,13 +35,20 @@ install:
       brew ln texinfo --force
       brew upgrade cmake
     fi
+  - |
+    if [ $COMPILER == icc ]; then 
+      wget "https://raw.githubusercontent.com/nemequ/icc-travis/master/install-icc.sh"
+      sudo sh install-icc.sh
+      source ~/.bashrc
+      export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_CXX_COMPILER=icpc -DCMAKE_C_COMPILER=icc"
+    fi
 
 script:
   - |
     srcdir='..'
     mkdir build
     cd build
-    cmake -DBUILD_DOC=ON -DBUILD_TESTING=ON -DDISABLE_REFMAN_PDF=ON ..
+    cmake $CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DBUILD_DOC=ON -DBUILD_TESTING=ON -DDISABLE_REFMAN_PDF=ON ..
 
   - make lib
   - make check-testsuite     # Build and check the testsuite
@@ -43,3 +63,7 @@ script:
     if [ "${TRAVIS_OS_NAME}" == 'linux' ]; then
        LD_LIBRARY_PATH=/usr/local/lib ${srcdir}/travis-ci/check-wiki-examples.py
     fi
+
+
+after_script:
+  - if [ $COMPILER == icc ]; then '[[ ! -z "${INTEL_INSTALL_PATH}" ]] && uninstall_intel_software'; fi
