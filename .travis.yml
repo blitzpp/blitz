@@ -37,7 +37,8 @@ install:
       source ~/.bashrc
       export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_CXX_COMPILER=icpc -DCMAKE_C_COMPILER=icc"
     fi
-  - if [ $COMPILER == clang ]; then 
+  - |
+    if [ $COMPILER == clang ]; then
       export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang"
     fi
 
