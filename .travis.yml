@@ -52,11 +52,14 @@ script:
   - make lib
   
   - export CTEST_OUTPUT_ON_FAILURE=1
-  - if [ $COMPILER != icc ]; then make check-testsuite; fi     # Build and check the testsuite
-  - if [ $COMPILER != icc ]; then make check-examples; fi      # Build and check the examples
-    # TODO! (fails with error: no such file or directory: 'arrdaxpyf.o')
-    # - make check-benchmarks    # Build and check the benchmarks (takes a long time)
-  - make blitz-doc
+  - |
+    if [ $COMPILER != icc ]; then 
+      make check-testsuite     # Build and check the testsuite
+      make check-examples      # Build and check the examples
+      # TODO! (fails with error: no such file or directory: 'arrdaxpyf.o')
+      # - make check-benchmarks    # Build and check the benchmarks (takes a long time)
+      make blitz-doc
+    fi
 
   - sudo make install        # Install Blitz++
 
