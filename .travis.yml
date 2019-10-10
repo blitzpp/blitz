@@ -59,9 +59,8 @@ script:
       # TODO! (fails with error: no such file or directory: 'arrdaxpyf.o')
       # - make check-benchmarks    # Build and check the benchmarks (takes a long time)
       make blitz-doc
+      sudo make install        # Install Blitz++
     fi
-
-  - sudo make install        # Install Blitz++
 
   - |
     if [ "${TRAVIS_OS_NAME}" == 'linux' ]; then
