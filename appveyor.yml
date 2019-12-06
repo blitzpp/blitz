@@ -7,11 +7,11 @@ init:
         If ($env:platform -Match "x86") {
           $env:CMAKE_GEN_PLAT="Win32"
           $env:PYTHON_ROOT="C:\Python27"
-		  $env:BOOST_DIR="C:\Libraries\boost_1_69_0"
+          $env:BOOST_DIR="C:\Libraries\boost_1_69_0"
         } Else {
           $env:CMAKE_GEN_PLAT="x64"
           $env:PYTHON_ROOT="C:\Python27-x64"
-		  $env:BOOST_DIR="C:\Libraries\boost_1_69_0"
+          $env:BOOST_DIR="C:\Libraries\boost_1_69_0"
         }
   - cmd: C:/"Program Files (x86)"/"Microsoft Visual Studio 12.0"/VC/vcvarsall.bat
 
