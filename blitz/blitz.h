@@ -86,7 +86,7 @@ namespace blitz {
  using namespace std;
 #endif
 
-#ifdef WIN32
+#ifdef _WIN32
 #ifdef BZ_GENERATE_GLOBAL_INSTANCES
 #define _bz_global __declspec(dllexport)
 #define BZ_GLOBAL_INIT(X)   =X
