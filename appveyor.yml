@@ -7,9 +7,11 @@ init:
         If ($env:platform -Match "x86") {
           $env:CMAKE_GEN_PLAT="Win32"
           $env:PYTHON_ROOT="C:\Python27"
+		  $env:BOOST_DIR="C:\Libraries\boost_1_69_0"
         } Else {
           $env:CMAKE_GEN_PLAT="x64"
           $env:PYTHON_ROOT="C:\Python27-x64"
+		  $env:BOOST_DIR="C:\Libraries\boost_1_69_0"
         }
   - cmd: C:/"Program Files (x86)"/"Microsoft Visual Studio 12.0"/VC/vcvarsall.bat
 
@@ -33,7 +35,7 @@ build_script:
 
   - cmake --build . --target install
 
-  - cmake .. -DCMAKE_GENERATOR_PLATFORM="%CMAKE_GEN_PLAT%" -DENABLE_SERIALISATION=1
+  - cmake .. -DCMAKE_GENERATOR_PLATFORM="%CMAKE_GEN_PLAT%" -DENABLE_SERIALISATION=1 -DBOOST_DIR="%BOOST_DIR%"
   - cmake --build . --config Debug
   - cmake --build . --config Release
  
