@@ -33,6 +33,6 @@ build_script:
 
   - cmake --build . --target install
 
-  - cmake --build . -DENABLE_SERIALISATION=1 --config Debug
-  - cmake --build . -DENABLE_SERIALISATION=1 --config Release
+  - cmake --build . [-D ENABLE_SERIALISATION=1] --config Debug
+  - cmake --build . [-D ENABLE_SERIALISATION=1] --config Release
  
