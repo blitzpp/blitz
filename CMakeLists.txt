@@ -70,15 +70,15 @@ write_basic_package_version_file(
 configure_package_config_file(
     cmake/${PROJECT_NAME}Config.cmake.in
     cmake/${PROJECT_NAME}Config.cmake
-    INSTALL_DESTINATION lib/cmake/)
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/)
 
 #   Installation
 
-install(EXPORT ${PROJECT_NAME}Targets DESTINATION lib/cmake)
+install(EXPORT ${PROJECT_NAME}Targets DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake)
 install(FILES
         ${CMAKE_BINARY_DIR}/blitz.pc
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 install(FILES
         ${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}Config.cmake
         ${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}ConfigVersion.cmake
-        DESTINATION lib/cmake/)
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/)
