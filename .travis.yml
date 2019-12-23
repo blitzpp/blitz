@@ -2,16 +2,16 @@ language: cpp
 
 matrix:
   include:
-    - os: linux
-      env: COMPILER=icc   CMAKE_BUILD_TYPE=Debug
+#    - os: linux
+#      env: COMPILER=icc   CMAKE_BUILD_TYPE=Debug
     - os: linux
       env: COMPILER=gcc   CMAKE_BUILD_TYPE=Debug
     - os: linux
       env: COMPILER=clang CMAKE_BUILD_TYPE=Debug
     - os: osx
       env: COMPILER=clang CMAKE_BUILD_TYPE=Debug
-    - os: linux
-      env: COMPILER=icc   CMAKE_BUILD_TYPE=Release
+#    - os: linux
+#      env: COMPILER=icc   CMAKE_BUILD_TYPE=Release
     - os: linux
       env: COMPILER=gcc   CMAKE_BUILD_TYPE=Release
     - os: linux
