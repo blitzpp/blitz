@@ -5,6 +5,9 @@
  *
  * The fix is to add an empty constructor for StridedDomain in the above file.
  *
+ * If this code compiles without error, the bug is fixed.
+ * As such, it doesn't use the testsuite header.
+ *
  */
 
 #include <blitz/array.h>
@@ -21,3 +24,20 @@ int main()
     return 0;
 }
 
+/*
+ * To test this code, a shell script can be written as below:
+ *
+
+mkdir install
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=../install/ ../
+make install
+cd ../testsuite/
+g++ -I../install/include/ -L../install/lib/ strided-domain.cpp
+./a.out
+
+ *
+ * The above script must be run from the root directory of the repo.
+ * If the script executes without error, the bug is fixed.
+ */
