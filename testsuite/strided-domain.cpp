@@ -12,15 +12,24 @@
 
 #include <blitz/array.h>
 
-using namespace blitz;
-
 int main() 
 {
-    blitz::StridedDomain<3> testSD;
+    blitz::firstIndex i;
+    blitz::secondIndex j;
+
+    blitz::StridedDomain<2> testSD;
   
-    testSD = blitz::StridedDomain<3>(blitz::TinyVector<int, 3>(0, 0, 0),
-                                     blitz::TinyVector<int, 3>(9, 9, 9),
-                                     blitz::TinyVector<int, 3>(2, 2, 2));
+    testSD = blitz::StridedDomain<2>(blitz::TinyVector<int, 2>(0, 0),
+                                     blitz::TinyVector<int, 2>(8, 8),
+                                     blitz::TinyVector<int, 2>(2, 2));
+
+    blitz::Array<int, 2> A;
+    A.resize(9, 9);
+    A = i*10 + j;
+
+    // The below line should output 44
+    std::cout << A(testSD)(2,2) << std::endl;
+
     return 0;
 }
 
