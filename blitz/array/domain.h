@@ -112,6 +112,7 @@ class StridedDomain {
 
 public:
 
+    StridedDomain() { }
     StridedDomain(const Bounds& lbound,const Bounds& ubound,const Strides& stride):
         lbound_(lbound),ubound_(ubound),stride_(stride) { }
 
