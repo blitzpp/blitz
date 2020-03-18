@@ -23,17 +23,21 @@ set_target_properties(blitz PROPERTIES
                       VERSION ${blitz_VERSION}
                       SOVERSION 0
                       CLEAN_DIRECT_OUTPUT 1)
+if (WIN32 AND NOT MINGW)
+	set_target_properties(blitz PROPERTIES
+						  IMPORT_SUFFIX ".dll.lib")
+endif()
 
 set(BLITZ_LIBS blitz)
-if (NOT WIN32)
-    add_library(blitz-static STATIC ${blitz_LIB_SRCS})
-    add_dependencies(blitz-static generated-headers)
-    set(BLITZ_LIBS ${BLITZ_LIBS} blitz-static)
-    set_target_properties(blitz-static PROPERTIES
-                          OUTPUT_NAME blitz
-                          ${BLITZ-STATIC-DEFS}
-                          CLEAN_DIRECT_OUTPUT 1)
-endif()
+
+add_library(blitz-static STATIC ${blitz_LIB_SRCS})
+add_dependencies(blitz-static generated-headers)
+set(BLITZ_LIBS ${BLITZ_LIBS} blitz-static)
+set_target_properties(blitz-static PROPERTIES
+					  OUTPUT_NAME blitz
+					  ${BLITZ-STATIC-DEFS}
+					  CLEAN_DIRECT_OUTPUT 1)
+
 
 install(TARGETS ${BLITZ_LIBS}
         EXPORT  ${PROJECT_NAME}Targets
