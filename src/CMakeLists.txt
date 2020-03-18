@@ -23,7 +23,7 @@ set_target_properties(blitz PROPERTIES
                       VERSION ${blitz_VERSION}
                       SOVERSION 0
                       CLEAN_DIRECT_OUTPUT 1)
-if (WIN32)
+if (WIN32 AND NOT MINGW)
 	set_target_properties(blitz PROPERTIES
 						  IMPORT_SUFFIX ".dll.lib")
 endif()
