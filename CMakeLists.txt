@@ -61,7 +61,8 @@ add_custom_target(lib DEPENDS blitz)
 
 #   Configuration files.
 
-CreatePkgConfigInfo(blitz)
+CreatePkgConfigInfo(blitz "")
+CreatePkgConfigInfo(blitz-static static)
 
 write_basic_package_version_file(
     cmake/${PROJECT_NAME}ConfigVersion.cmake
@@ -77,6 +78,7 @@ configure_package_config_file(
 install(EXPORT ${PROJECT_NAME}Targets DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake)
 install(FILES
         ${CMAKE_BINARY_DIR}/blitz.pc
+		${CMAKE_BINARY_DIR}/blitz-static.pc 
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 install(FILES
         ${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}Config.cmake

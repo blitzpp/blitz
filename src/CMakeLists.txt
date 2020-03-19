@@ -38,9 +38,9 @@ set_target_properties(blitz-static PROPERTIES
 					  ${BLITZ-STATIC-DEFS}
 					  CLEAN_DIRECT_OUTPUT 1)
 
-# Under Windows and MinGW, set BZ_STATIC_LIB flag
+# Under Windows and MinGW, set BZ_STATIC_LIB flag during compilation
 if (WIN32 OR MINGW)
-	set_property(TARGET blitz-static PROPERTY COMPILE_FLAGS -DBZ_STATIC_LIB)
+	target_compile_options(blitz-static PUBLIC -DBZ_STATIC_LIB)
 endif()
 
 install(TARGETS ${BLITZ_LIBS}
