@@ -86,22 +86,22 @@ namespace blitz {
  using namespace std;
 #endif
 
-#ifdef _WIN32
-#ifdef BZ_GENERATE_GLOBAL_INSTANCES
-#define _bz_global __declspec(dllexport)
-#define BZ_GLOBAL_INIT(X)   =X
+#if defined(_WIN32) && !defined(BZ_STATIC_LIB)
+#  ifdef BZ_GENERATE_GLOBAL_INSTANCES
+#    define _bz_global __declspec(dllexport)
+#    define BZ_GLOBAL_INIT(X)   =X
+#  else
+#    define _bz_global __declspec(dllimport)
+#    define BZ_GLOBAL_INIT(X) 
+#  endif
 #else
-#define _bz_global __declspec(dllimport)
-#define BZ_GLOBAL_INIT(X) 
-#endif
-#else
-#ifdef BZ_GENERATE_GLOBAL_INSTANCES
- #define _bz_global
- #define BZ_GLOBAL_INIT(X)   =X
-#else
- #define _bz_global extern
- #define BZ_GLOBAL_INIT(X) 
-#endif
+#  ifdef BZ_GENERATE_GLOBAL_INSTANCES
+#    define _bz_global
+#    define BZ_GLOBAL_INIT(X)   =X
+#  else
+#    define _bz_global extern
+#    define BZ_GLOBAL_INIT(X) 
+#  endif
 #endif
 
 /* Define types for indexing, depending on whether 64- or 32-bit
