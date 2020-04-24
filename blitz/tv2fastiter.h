@@ -45,7 +45,7 @@
 #include <blitz/prettyprint.h>
 #include <blitz/tinyvec2.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 // forward declaration
 template<typename, int> class FastTV2Iterator;
@@ -327,7 +327,7 @@ public:
     		   + offset2*array_.stride(dim2)];
     }
 
-    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+    void prettyPrint(std::string &str, 
         prettyPrintFormat& format) const
     {
         if (format.tersePrintingSelected())
@@ -335,7 +335,7 @@ public:
         else if (format.dumpArrayShapesMode())
         {
 #ifdef BZ_HAVE_STD
-	    BZ_STD_SCOPE(ostringstream) ostr;
+	    std::ostringstream ostr;
 #else
             ostrstream ostr;
 #endif
@@ -489,6 +489,6 @@ public:
 };
 
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAY_FASTITER_H

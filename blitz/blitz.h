@@ -84,18 +84,28 @@
 // don't recognize <> as parentheses.
 #define bzCC(...) __VA_ARGS__
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 #ifdef BZ_HAVE_STD
- BZ_USING_NAMESPACE(std)
+ using namespace std;
 #endif
 
-#ifdef BZ_GENERATE_GLOBAL_INSTANCES
- #define _bz_global
- #define BZ_GLOBAL_INIT(X)   =X
+#if defined(_WIN32) && !defined(BZ_STATIC_LIB)
+#  ifdef BZ_GENERATE_GLOBAL_INSTANCES
+#    define _bz_global __declspec(dllexport)
+#    define BZ_GLOBAL_INIT(X)   =X
+#  else
+#    define _bz_global __declspec(dllimport)
+#    define BZ_GLOBAL_INIT(X) 
+#  endif
 #else
- #define _bz_global extern
- #define BZ_GLOBAL_INIT(X) 
+#  ifdef BZ_GENERATE_GLOBAL_INSTANCES
+#    define _bz_global
+#    define BZ_GLOBAL_INIT(X)   =X
+#  else
+#    define _bz_global extern
+#    define BZ_GLOBAL_INIT(X) 
+#  endif
 #endif
 
 /* Define types for indexing, depending on whether 64- or 32-bit
@@ -121,7 +131,7 @@ typedef ptrdiff_t diffType; // Used for memory index differences, ie strides
 #define BZ_PADDING_DEFAULT contiguousData
 #endif
 
-BZ_NAMESPACE_END
+}
 
 /*
  * Thread safety issues.  Compiling with -pthread under gcc, or -mt

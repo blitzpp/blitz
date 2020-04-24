@@ -17,7 +17,7 @@
 #include <blitz/tinymat.h>
 #include <blitz/vector-et.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 /*
  * This example is drawn from a technical report by Stephen Booth of
@@ -240,7 +240,7 @@ __L740:                                 # 0x00000740 (H.10.NO_SYMBOL+0x740)
 
 #include <iostream>
 
-BZ_USING_NAMESPACE(std)
+using namespace std;
 
 int main()
 {

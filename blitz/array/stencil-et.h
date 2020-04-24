@@ -36,7 +36,7 @@
 #include <blitz/prettyprint.h>
 #include <blitz/array/domain.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /* Stencils as currently implemented rely on being able to give an
    iterator type to the operator. Some methods have been implemented
@@ -214,7 +214,7 @@ class _bz_StencilExpr {
 
   void _bz_offsetData(sizeType i) { iter_._bz_offsetData(i); }
 
-  void prettyPrint(BZ_STD_SCOPE(string) &str) const
+  void prettyPrint(std::string &str) const
   {
     prettyPrintFormat format(true);  /* Terse formatting by default */
     iter_.prettyPrint(str, format);
@@ -392,7 +392,7 @@ class _bz_StencilExpr2 {
   mutable P_expr2 iter2_;
 };
 
-BZ_NAMESPACE_END
+}
 
 // now include the generated file containing all the implementation classes.
 #include <blitz/array/stencil-classes.cc>

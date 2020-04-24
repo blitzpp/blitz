@@ -12,7 +12,7 @@
   #include <fstream.h>
 #endif
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 #if defined(BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES)
  #define echo_f90           echo_f90_
@@ -286,7 +286,7 @@ void setInitialConditions(Array<float,2>& c, Array<float,2>& P1,
     c(channel2Height,Range(channelLeft,channelRight)) = 0.0;
 
     // Initial pressure distribution: gaussian pulse inside the channel
-    BZ_USING_NAMESPACE(blitz::tensor)
+    using namespace blitz::tensor;
     int cr = int(N/2-1);
     int cc = int(7.0*N/8.0-1);
     // pow2 is not defined for pod types.

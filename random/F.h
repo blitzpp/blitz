@@ -22,7 +22,7 @@
  #include <random/gamma.h>
 #endif
 
-BZ_NAMESPACE(ranlib)
+namespace ranlib {
 
 template<typename T = double, typename IRNG = defaultIRNG, 
     typename stateTag = defaultState>
@@ -87,6 +87,6 @@ protected:
     T dfn, dfd, mindenom;
 };
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_RANDOM_F

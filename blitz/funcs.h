@@ -38,7 +38,7 @@
 
 #include <cstdlib>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
     
 /* Helper functions. We use SFINAE to make these apply only for
    non-blitz numerical types (POD and complex), because otherwise they
@@ -102,15 +102,15 @@ template<typename T1, typename T2> struct ifthenelse<false,T1,T2> {
 #define BZ_DEFINE_UNARY_FUNC(name,fun,coerce_int)		     \
 template<typename T_numtype1>                                        \
 struct name {                                                        \
-  typedef typename BZ_BLITZ_SCOPE(ifthenelse)<coerce_int,typename BZ_BLITZ_SCOPE(ifthenelse)<BZ_STD_SCOPE(numeric_limits)<T_numtype1>::is_integer,double,T_numtype1>::Type,T_numtype1>::Type T_numtype; \
+  typedef typename blitz::ifthenelse<coerce_int,typename blitz::ifthenelse<std::numeric_limits<T_numtype1>::is_integer,double,T_numtype1>::Type,T_numtype1>::Type T_numtype; \
 								     \
     static inline T_numtype                                          \
     apply(const T_numtype1 a)                                        \
     { return fun(a); }						     \
                                                                      \
     template<typename T1>                                            \
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,        \
-        BZ_BLITZ_SCOPE(prettyPrintFormat) &format, const T1& t1)     \
+    static inline void prettyPrint(std::string &str,        \
+        blitz::prettyPrintFormat &format, const T1& t1)     \
     {                                                                \
         str += #fun;                                                 \
         str += "(";                                                  \
@@ -161,13 +161,13 @@ BZ_DEFINE_UNARY_FUNC(Fn_nearest,BZ_IEEEMATHFN_SCOPE(nearest),true)
 BZ_DEFINE_UNARY_FUNC(Fn_rsqrt,BZ_IEEEMATHFN_SCOPE(rsqrt),true)
 #endif
     
-BZ_DEFINE_UNARY_FUNC(Fn_sqr,BZ_BLITZ_SCOPE(pow2),false)
-BZ_DEFINE_UNARY_FUNC(Fn_cube,BZ_BLITZ_SCOPE(pow3),false)
-BZ_DEFINE_UNARY_FUNC(Fn_pow4,BZ_BLITZ_SCOPE(pow4),false)
-BZ_DEFINE_UNARY_FUNC(Fn_pow5,BZ_BLITZ_SCOPE(pow5),false)
-BZ_DEFINE_UNARY_FUNC(Fn_pow6,BZ_BLITZ_SCOPE(pow6),false)
-BZ_DEFINE_UNARY_FUNC(Fn_pow7,BZ_BLITZ_SCOPE(pow7),false)
-BZ_DEFINE_UNARY_FUNC(Fn_pow8,BZ_BLITZ_SCOPE(pow8),false)
+BZ_DEFINE_UNARY_FUNC(Fn_sqr,blitz::pow2,false)
+BZ_DEFINE_UNARY_FUNC(Fn_cube,blitz::pow3,false)
+BZ_DEFINE_UNARY_FUNC(Fn_pow4,blitz::pow4,false)
+BZ_DEFINE_UNARY_FUNC(Fn_pow5,blitz::pow5,false)
+BZ_DEFINE_UNARY_FUNC(Fn_pow6,blitz::pow6,false)
+BZ_DEFINE_UNARY_FUNC(Fn_pow7,blitz::pow7,false)
+BZ_DEFINE_UNARY_FUNC(Fn_pow8,blitz::pow8,false)
 
 /* Unary functions that return a specified type */
     
@@ -181,8 +181,8 @@ struct name {                                                        \
     { return fun(a); }                                               \
                                                                      \
     template<typename T1>                                            \
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,        \
-        BZ_BLITZ_SCOPE(prettyPrintFormat) &format, const T1& t1)     \
+    static inline void prettyPrint(std::string &str,        \
+        blitz::prettyPrintFormat &format, const T1& t1)     \
     {                                                                \
         str += #fun;                                                 \
         str += "(";                                                  \
@@ -206,17 +206,17 @@ BZ_DEFINE_UNARY_FUNC_RET(Fn_uitrunc,BZ_IEEEMATHFN_SCOPE(uitrunc),unsigned int)
     
 #define BZ_DEFINE_UNARY_CFUNC(name,fun)                              \
 template<typename T>                                                 \
-struct name< BZ_STD_SCOPE(complex)<T> > {                            \
-    typedef BZ_STD_SCOPE(complex)<T> T_numtype1;                     \
-    typedef BZ_STD_SCOPE(complex)<T> T_numtype;                      \
+struct name< std::complex<T> > {                            \
+    typedef std::complex<T> T_numtype1;                     \
+    typedef std::complex<T> T_numtype;                      \
                                                                      \
     static inline T_numtype                                          \
     apply(const T_numtype1 a)                                        \
     { return fun(a); }                                               \
                                                                      \
     template<typename T1>                                            \
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,        \
-        BZ_BLITZ_SCOPE(prettyPrintFormat) &format, const T1& t1)     \
+    static inline void prettyPrint(std::string &str,        \
+        blitz::prettyPrintFormat &format, const T1& t1)     \
     {                                                                \
         str += #fun;                                                 \
         str += "(";                                                  \
@@ -242,13 +242,13 @@ BZ_DEFINE_UNARY_CFUNC(Fn_tan,BZ_CMATHFN_SCOPE(tan))
 BZ_DEFINE_UNARY_CFUNC(Fn_tanh,BZ_CMATHFN_SCOPE(tanh))
 #endif // BZ_HAVE_COMPLEX_MATH1
 
-BZ_DEFINE_UNARY_CFUNC(Fn_sqr,BZ_BLITZ_SCOPE(pow2))
-BZ_DEFINE_UNARY_CFUNC(Fn_cube,BZ_BLITZ_SCOPE(pow3))
-BZ_DEFINE_UNARY_CFUNC(Fn_pow4,BZ_BLITZ_SCOPE(pow4))
-BZ_DEFINE_UNARY_CFUNC(Fn_pow5,BZ_BLITZ_SCOPE(pow5))
-BZ_DEFINE_UNARY_CFUNC(Fn_pow6,BZ_BLITZ_SCOPE(pow6))
-BZ_DEFINE_UNARY_CFUNC(Fn_pow7,BZ_BLITZ_SCOPE(pow7))
-BZ_DEFINE_UNARY_CFUNC(Fn_pow8,BZ_BLITZ_SCOPE(pow8))
+BZ_DEFINE_UNARY_CFUNC(Fn_sqr,blitz::pow2)
+BZ_DEFINE_UNARY_CFUNC(Fn_cube,blitz::pow3)
+BZ_DEFINE_UNARY_CFUNC(Fn_pow4,blitz::pow4)
+BZ_DEFINE_UNARY_CFUNC(Fn_pow5,blitz::pow5)
+BZ_DEFINE_UNARY_CFUNC(Fn_pow6,blitz::pow6)
+BZ_DEFINE_UNARY_CFUNC(Fn_pow7,blitz::pow7)
+BZ_DEFINE_UNARY_CFUNC(Fn_pow8,blitz::pow8)
 
 /* Unary functions that apply only to complex<T> and return T */
     
@@ -257,8 +257,8 @@ template<typename T_numtype1>                                        \
 struct name;                                                         \
                                                                      \
 template<typename T>                                                 \
-struct name< BZ_STD_SCOPE(complex)<T> > {                            \
-    typedef BZ_STD_SCOPE(complex)<T> T_numtype1;                     \
+struct name< std::complex<T> > {                            \
+    typedef std::complex<T> T_numtype1;                     \
     typedef T T_numtype;                                             \
                                                                      \
     static inline T_numtype                                          \
@@ -266,8 +266,8 @@ struct name< BZ_STD_SCOPE(complex)<T> > {                            \
     { return fun(a); }                                               \
                                                                      \
     template<typename T1>                                            \
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,        \
-        BZ_BLITZ_SCOPE(prettyPrintFormat) &format, const T1& t1)     \
+    static inline void prettyPrint(std::string &str,        \
+        blitz::prettyPrintFormat &format, const T1& t1)     \
     {                                                                \
         str += #fun;                                                 \
         str += "(";                                                  \
@@ -298,8 +298,8 @@ struct name {                                                        \
     { return fun(a,b); }                                             \
                                                                      \
     template<typename T1, typename T2>                               \
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,        \
-        BZ_BLITZ_SCOPE(prettyPrintFormat) &format, const T1& t1,     \
+    static inline void prettyPrint(std::string &str,        \
+        blitz::prettyPrintFormat &format, const T1& t1,     \
         const T2& t2)                                                \
     {                                                                \
         str += #fun;                                                 \
@@ -336,8 +336,8 @@ struct name {                                                        \
     { return fun(a,b); }                                             \
                                                                      \
     template<typename T1, typename T2>                               \
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,        \
-        BZ_BLITZ_SCOPE(prettyPrintFormat) &format, const T1& t1,     \
+    static inline void prettyPrint(std::string &str,        \
+        blitz::prettyPrintFormat &format, const T1& t1,     \
         const T2& t2)                                                \
     {                                                                \
         str += #fun;                                                 \
@@ -358,18 +358,18 @@ BZ_DEFINE_BINARY_FUNC_RET(Fn_unordered,BZ_IEEEMATHFN_SCOPE(unordered),int)
     
 #define BZ_DEFINE_BINARY_CFUNC(name,fun)                             \
 template<typename T>                                                 \
-struct name< BZ_STD_SCOPE(complex)<T>, BZ_STD_SCOPE(complex)<T> > {  \
-    typedef BZ_STD_SCOPE(complex)<T> T_numtype1;                     \
-    typedef BZ_STD_SCOPE(complex)<T> T_numtype2;                     \
-    typedef BZ_STD_SCOPE(complex)<T> T_numtype;                      \
+struct name< std::complex<T>, std::complex<T> > {  \
+    typedef std::complex<T> T_numtype1;                     \
+    typedef std::complex<T> T_numtype2;                     \
+    typedef std::complex<T> T_numtype;                      \
                                                                      \
     static inline T_numtype                                          \
     apply(T_numtype1 a, T_numtype2 b)                                \
     { return fun(a,b); }                                             \
                                                                      \
     template<typename T1, typename T2>                               \
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,        \
-        BZ_BLITZ_SCOPE(prettyPrintFormat) &format, const T1& t1,     \
+    static inline void prettyPrint(std::string &str,        \
+        blitz::prettyPrintFormat &format, const T1& t1,     \
         const T2& t2)                                                \
     {                                                                \
         str += #fun;                                                 \
@@ -382,18 +382,18 @@ struct name< BZ_STD_SCOPE(complex)<T>, BZ_STD_SCOPE(complex)<T> > {  \
 };                                                                   \
                                                                      \
 template<typename T>                                                 \
-struct name< BZ_STD_SCOPE(complex)<T>, T > {                         \
-    typedef BZ_STD_SCOPE(complex)<T> T_numtype1;                     \
+struct name< std::complex<T>, T > {                         \
+    typedef std::complex<T> T_numtype1;                     \
     typedef T T_numtype2;                                            \
-    typedef BZ_STD_SCOPE(complex)<T> T_numtype;                      \
+    typedef std::complex<T> T_numtype;                      \
                                                                      \
     static inline T_numtype                                          \
     apply(T_numtype1 a, T_numtype2 b)                                \
     { return fun(a,b); }                                             \
                                                                      \
     template<typename T1, typename T2>                               \
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,        \
-        BZ_BLITZ_SCOPE(prettyPrintFormat) &format, const T1& t1,     \
+    static inline void prettyPrint(std::string &str,        \
+        blitz::prettyPrintFormat &format, const T1& t1,     \
         const T2& t2)                                                \
     {                                                                \
         str += #fun;                                                 \
@@ -406,18 +406,18 @@ struct name< BZ_STD_SCOPE(complex)<T>, T > {                         \
 };                                                                   \
                                                                      \
 template<typename T>                                                 \
-struct name< T, BZ_STD_SCOPE(complex)<T> > {                         \
+struct name< T, std::complex<T> > {                         \
     typedef T T_numtype1;                                            \
-    typedef BZ_STD_SCOPE(complex)<T> T_numtype2;                     \
-    typedef BZ_STD_SCOPE(complex)<T> T_numtype;                      \
+    typedef std::complex<T> T_numtype2;                     \
+    typedef std::complex<T> T_numtype;                      \
                                                                      \
     static inline T_numtype                                          \
     apply(T_numtype1 a, T_numtype2 b)                                \
     { return fun(a,b); }                                             \
                                                                      \
     template<typename T1, typename T2>                               \
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,        \
-        BZ_BLITZ_SCOPE(prettyPrintFormat) &format, const T1& t1,     \
+    static inline void prettyPrint(std::string &str,        \
+        blitz::prettyPrintFormat &format, const T1& t1,     \
         const T2& t2)                                                \
     {                                                                \
         str += #fun;                                                 \
@@ -443,15 +443,15 @@ template<typename T>                                                 \
 struct name<T, T> {                                                  \
     typedef T T_numtype1;                                            \
     typedef T T_numtype2;                                            \
-    typedef BZ_STD_SCOPE(complex)<T> T_numtype;                      \
+    typedef std::complex<T> T_numtype;                      \
                                                                      \
     static inline T_numtype                                          \
     apply(T_numtype1 a, T_numtype2 b)                                \
     { return fun(a,b); }                                             \
                                                                      \
     template<typename T1, typename T2>                               \
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,        \
-        BZ_BLITZ_SCOPE(prettyPrintFormat) &format, const T1& t1,     \
+    static inline void prettyPrint(std::string &str,        \
+        blitz::prettyPrintFormat &format, const T1& t1,     \
         const T2& t2)                                                \
     {                                                                \
         str += #fun;                                                 \
@@ -483,8 +483,8 @@ struct name {                                                        \
     { return fun(x,y,z); }                                           \
                                                                      \
     template <typename T1, typename T2, typename T3>                 \
-    static void prettyPrint(BZ_STD_SCOPE(string) &str,               \
-        BZ_BLITZ_SCOPE(prettyPrintFormat) &format,                   \
+    static void prettyPrint(std::string &str,               \
+        blitz::prettyPrintFormat &format,                   \
         const T1& a,const T2& b, const T3& c)                        \
     {                                                                \
         str += #fun;                                                 \
@@ -511,8 +511,8 @@ struct name {                                                        \
     { return fun(x,y,z); }                                           \
                                                                      \
     template <typename T1, typename T2, typename T3>                 \
-    static void prettyPrint(BZ_STD_SCOPE(string) &str,               \
-        BZ_BLITZ_SCOPE(prettyPrintFormat) &format,                   \
+    static void prettyPrint(std::string &str,               \
+        blitz::prettyPrintFormat &format,                   \
         const T1& a,const T2& b, const T3& c)                        \
     {                                                                \
         str += #fun;                                                 \
@@ -542,8 +542,8 @@ struct name {                                                        \
 									\
     template<typename T1, typename T2,					\
 	     typename T3, typename T4>					\
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,		\
-				   BZ_BLITZ_SCOPE(prettyPrintFormat) &format, \
+    static inline void prettyPrint(std::string &str,		\
+				   blitz::prettyPrintFormat &format, \
 				   const T1& t1,const T2& t2, const T3& t3, const T4& t4) \
     {									\
       str += #fun;							\
@@ -572,14 +572,14 @@ struct Fn_isnan {
     apply(T_numtype1 a)
     {
 #ifdef BZ_ISNAN_IN_NAMESPACE_STD
-        return BZ_STD_SCOPE(isnan)(a);
+        return std::isnan(a);
 #else
         return BZ_IEEEMATHFN_SCOPE(isnan)(a);
 #endif
     }
     
     template<typename T1>
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,
+    static inline void prettyPrint(std::string &str,
         prettyPrintFormat& format, const T1& t1)
     {
         str += "isnan";
@@ -601,7 +601,7 @@ struct Cast {
     { return T_numtype(a); }
 
     template<typename T1>
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,
+    static inline void prettyPrint(std::string &str,
         prettyPrintFormat& format, const T1& t1)
     {
         str += BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_cast);
@@ -621,7 +621,7 @@ struct Min {
     { return (a < b ? a : b); }
 
     template<typename T1, typename T2>
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,
+    static inline void prettyPrint(std::string &str,
         prettyPrintFormat& format, const T1& t1, const T2& t2)
     {
         str += "min(";
@@ -641,7 +641,7 @@ struct Max {
     { return (a > b ? a : b); }
 
     template<typename T1, typename T2>
-    static inline void prettyPrint(BZ_STD_SCOPE(string) &str,
+    static inline void prettyPrint(std::string &str,
         prettyPrintFormat& format, const T1& t1, const T2& t2)
     {
         str += "max(";
@@ -652,6 +652,6 @@ struct Max {
     }
 };
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_FUNCS_H

@@ -42,7 +42,7 @@
  #include <string.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename P_parameter>
 Benchmark<P_parameter>::Benchmark(unsigned numImplementations)
@@ -254,6 +254,6 @@ void Benchmark<P_parameter>::savePylabGraph(const char* filename) const
     ofs << "])\n";
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_BENCH_CC

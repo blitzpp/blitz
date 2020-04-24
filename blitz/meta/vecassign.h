@@ -34,7 +34,7 @@
 
 #include <blitz/blitz.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<int N, int I> 
 class _bz_meta_vecAssign {
@@ -92,6 +92,6 @@ public:
 
 
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_META_ASSIGN_H

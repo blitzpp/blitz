@@ -5,7 +5,7 @@
 
 #include <blitz/array.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 #ifndef BZ_HAVE_COMPLEX_FCNS
 

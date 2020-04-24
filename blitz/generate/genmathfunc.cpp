@@ -153,7 +153,7 @@ void one(const char* applicName, const char* specialization, const char* funcNam
         ofs << "#elif defined(BZ_ISNAN_IN_NAMESPACE_STD)" << std::endl 
             << "// on Mac OS X Darwin, isnan is only in namespace std"
             << std::endl;
-        ofs << "        return BZ_STD_SCOPE(isnan)(x);" << std::endl;
+        ofs << "        return std::isnan(x);" << std::endl;
         ofs << "#else" << std::endl;
         ofs << "        return BZ_IEEEMATHFN_SCOPE(isnan)(x);" << std::endl;
         ofs << "#endif" << std::endl << "    }" << std::endl;
@@ -191,7 +191,7 @@ void one(const char* applicName, const char* specialization, const char* funcNam
     }
 
     ofs << std::endl << "    template<typename T1>" << std::endl
-        << "    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,"
+        << "    static void prettyPrint(std::string &str, prettyPrintFormat& format,"
         << std::endl
         << "        const T1& a)" << std::endl
         << "    {" << std::endl
@@ -302,7 +302,7 @@ void two(const char* applicName, const char* specialization, const char* funcNam
     ofs << "y); }" << std::endl;
 
     ofs << std::endl << "    template<typename T1, typename T2>" << std::endl
-        << "    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,"
+        << "    static void prettyPrint(std::string &str, prettyPrintFormat& format,"
         << std::endl
         << "        const T1& a, const T2& b)" << std::endl
         << "    {" << std::endl
@@ -341,7 +341,7 @@ int main()
 "#ifndef BZ_PRETTYPRINT_H\n"
 " #include <blitz/prettyprint.h>\n"
 "#endif\n\n"
-"BZ_NAMESPACE(blitz)\n\n";
+"namespace blitz {\n\n";
 
     one("abs", 0, "abs", 0, "Absolute value");
     one("abs","int", "abs", "int", 0);
@@ -459,7 +459,7 @@ ofs <<
 "    { return -x; }\n\n"
 "        template<typename T1>\n"
 "        "
-"static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format, const T1& a)\n"
+"static void prettyPrint(std::string &str, prettyPrintFormat& format, const T1& a)\n"
 "        {\n"
 "                str += \"-(\";\n"
 "                       a.prettyPrint(str,format);\n"
@@ -511,7 +511,7 @@ ofs <<
 "    static inline T_numtype apply(T_numtype x)\n"
 "    { return x*x; }\n"
 "    template<typename T1>\n"
-"    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,\n"
+"    static void prettyPrint(std::string &str, prettyPrintFormat& format,\n"
 "        const T1& a)\n"
 "    {\n"
 "        str += \"sqr(\";\n"
@@ -531,7 +531,7 @@ ofs <<
 "        return T_numtype(r*r-i*i, 2*r*i);\n"
 "    }\n"
 "    template<typename T1>\n"
-"    static void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat& format,\n"
+"    static void prettyPrint(std::string &str, prettyPrintFormat& format,\n"
 "        const T1& a)\n"
 "    {\n"
 "        str += \"sqr(\";\n"
@@ -576,7 +576,7 @@ one("y0"     ,""            ,"y0"      ,"double"       ,"Bessel function of the 
 one("y1"     ,""            ,"y1"      ,"double"       ,"Bessel function of the second kind, order one", ieeeflag);
 
     ofs << std::endl << std::endl <<
-"BZ_NAMESPACE_END\n\n"
+"}\n\n"
 "#endif // BZ_MATHFUNC_H\n";
 
     return 0;

@@ -46,7 +46,7 @@
  #include <strstream.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 // Wrapper to turn expressions with FAIs to FACIs so they can be
 // returned from a function.
@@ -265,7 +265,7 @@ public:
     bool canCollapse(int outerLoopRank, int innerLoopRank) const
     { return array_.canCollapse(outerLoopRank, innerLoopRank); }
 
-    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+    void prettyPrint(std::string &str, 
         prettyPrintFormat& format) const
     {
         if (format.tersePrintingSelected())
@@ -273,7 +273,7 @@ public:
         else if (format.dumpArrayShapesMode())
         {
 #ifdef BZ_HAVE_STD
-	    BZ_STD_SCOPE(ostringstream) ostr;
+	    std::ostringstream ostr;
 #else
             ostrstream ostr;
 #endif
@@ -484,6 +484,6 @@ public:
 };
 
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAY_FASTITER_H

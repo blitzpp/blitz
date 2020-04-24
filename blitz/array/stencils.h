@@ -60,8 +60,8 @@
 
 #define BZ_END_STENCIL_WITH_SHAPE(MINS,MAXS) } \
     template<int N> \
-    void getExtent(BZ_BLITZ_SCOPE(TinyVector)<int,N>& minb, \
-                   BZ_BLITZ_SCOPE(TinyVector)<int,N>& maxb) const \
+    void getExtent(blitz::TinyVector<int,N>& minb, \
+                   blitz::TinyVector<int,N>& maxb) const \
     { \
         minb = MINS; \
         maxb = MAXS; \
@@ -147,7 +147,7 @@
     {
 
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 
 /*
@@ -340,7 +340,7 @@ inline bool areShapesConformable(const T_shape1&, const dummyArray&) {
     return true;
 }
 
-BZ_NAMESPACE_END
+}
 
 #include <blitz/array/stencils.cc>
 

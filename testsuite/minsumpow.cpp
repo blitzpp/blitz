@@ -1,8 +1,8 @@
 #include "testsuite.h"
 #include <blitz/array.h>
 
-BZ_USING_NAMESPACE(blitz)
-BZ_USING_NAMESPACE(blitz::tensor)
+using namespace blitz;
+using namespace blitz::tensor;
 
 int main()
 {

@@ -40,7 +40,7 @@
  * provided by the Titanium language (UC Berkeley).
  */
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<int N_rank>
 class RectDomain {
@@ -112,6 +112,7 @@ class StridedDomain {
 
 public:
 
+    StridedDomain() { }
     StridedDomain(const Bounds& lbound,const Bounds& ubound,const Strides& stride):
         lbound_(lbound),ubound_(ubound),stride_(stride) { }
 
@@ -168,6 +169,6 @@ strip(const TinyVector<int,N_rank>& startPosition,const int stripDimension,const
     return RectDomain<N_rank>(startPosition, endPosition);
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_DOMAIN_H

@@ -7,7 +7,7 @@
 #include <blitz/array.h>
 #include <blitz/tinyvec2.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 int main()
 {

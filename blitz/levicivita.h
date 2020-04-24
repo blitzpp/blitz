@@ -8,7 +8,7 @@
 #include <blitz/etbase.h>
 #include <blitz/tinyvec2io.cc>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /* Defines an object which represents the 3-dimensional
    levi-civita symbol used for cross products. That way the cross
@@ -126,7 +126,7 @@ public:
     template<int N_rank>
     void moveTo(const TinyVector<int,N_rank>&) const { BZPRECONDITION(0); }
 
-    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+    void prettyPrint(std::string &str, 
         prettyPrintFormat& format) const
     {
 	  str += "epsilon_ijk";
@@ -158,6 +158,6 @@ public:
     }
 };
 
-BZ_NAMESPACE_END
+}
 
 #endif

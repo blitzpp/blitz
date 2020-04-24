@@ -1,7 +1,7 @@
 #include "testsuite.h"
 #include <blitz/array.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 // test that vectorization routines do sensible things in weird situations.
 

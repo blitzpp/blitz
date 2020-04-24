@@ -3,7 +3,7 @@
 #include <blitz/array.h>
 #include <blitz/benchext.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 void blitzVersion(BenchmarkExt<int>& bench);
 void CVersion(BenchmarkExt<int>& bench);

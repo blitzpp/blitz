@@ -2,7 +2,7 @@
 #include <blitz/array.h>
 #include <random/discrete-uniform.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 int main()
 {

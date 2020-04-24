@@ -34,7 +34,7 @@
  #error <blitz/array/methods.cc> must be included via <blitz/array.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename P_numtype, int N_rank> template<typename T_expr>
 Array<P_numtype,N_rank>::Array(_bz_ArrayExpr<T_expr> expr)
@@ -499,7 +499,7 @@ Array<P_numtype, N_rank>::reindex(const TinyVector<int, N_rank>& newBase)
     return B;
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAY_CC
 

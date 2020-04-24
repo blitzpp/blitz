@@ -3,7 +3,7 @@
 #include "testsuite.h"
 #include <blitz/array.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 struct A {
     Array<double,2> a,b,c;

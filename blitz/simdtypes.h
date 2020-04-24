@@ -4,7 +4,7 @@
 #include <blitz/blitz.h>
 #include <stdint.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<class T,int N> class TinyVector;
 
@@ -68,6 +68,6 @@ inline bool isVectorAligned(const T* restrict pointer) {
   return simdTypes<T>::isVectorAligned(pointer); }
 
 
-BZ_NAMESPACE_END
+}
 
 #endif

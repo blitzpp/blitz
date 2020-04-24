@@ -38,7 +38,7 @@
 #include <blitz/array/domain.h>
 #include <blitz/array/slice.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<int N>
 class IndexPlaceholder 
@@ -192,7 +192,7 @@ public:
   { BZPRECHECK(0,"Stencils of index expressions are not implemented"); 
     return T_range_result(); }
 
-    void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat&) const {
+    void prettyPrint(std::string &str, prettyPrintFormat&) const {
         // NEEDS_WORK-- do real formatting for reductions
         str += "index-expr[NEEDS_WORK]";
     }
@@ -252,7 +252,7 @@ typedef IndexPlaceholder<10> eleventhIndex;
 
 #ifndef BZ_NO_TENSOR_INDEX_OBJECTS
 
-BZ_NAMESPACE(tensor)
+namespace tensor {
     _bz_global blitz::IndexPlaceholder<0> i;
     _bz_global blitz::IndexPlaceholder<1> j;
     _bz_global blitz::IndexPlaceholder<2> k;
@@ -265,11 +265,11 @@ BZ_NAMESPACE(tensor)
     _bz_global blitz::IndexPlaceholder<9> r;
     _bz_global blitz::IndexPlaceholder<10> s;
     _bz_global blitz::IndexPlaceholder<11> t;
-BZ_NAMESPACE_END // tensor
+} // tensor
 
 #endif
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_INDEXEXPR_H
 

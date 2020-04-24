@@ -41,7 +41,7 @@
 #include <blitz/array/geometry.h>
 #include <blitz/tinymat2.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /* These operators aren't really meant to be applied by the user and
    they being named the same as the stencil operators applied to
@@ -1199,7 +1199,7 @@ inline TinyVector<_bz_typename T::T_numtype,3> grad3D4_stencilop(const T& A,
     central14_stencilop(A,thirdDim) * recip_12 * geom.recipSpatialStep());
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAYSTENCILOPS_H
 

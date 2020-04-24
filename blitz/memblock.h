@@ -44,7 +44,7 @@
 #endif
 #include <stddef.h>     // diffType
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 enum preexistingMemoryPolicy { 
   duplicateData, 
@@ -539,7 +539,7 @@ private:
 };
 
 
-BZ_NAMESPACE_END
+}
 
 #include <blitz/memblock.cc>
 

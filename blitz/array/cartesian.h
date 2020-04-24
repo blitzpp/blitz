@@ -31,7 +31,7 @@
 #ifndef BZ_ARRAY_CARTESIAN_H
 #define BZ_ARRAY_CARTESIAN_H
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /*
  * CartesianProduct<T_tuple,T_container> is an adaptor which represents
@@ -341,7 +341,7 @@ void CartesianProductIterator<T_tuple, T_container,
     }
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAY_CARTESIAN_H
 

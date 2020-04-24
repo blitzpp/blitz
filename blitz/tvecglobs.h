@@ -40,7 +40,7 @@
 #include <blitz/meta/product.h>
 #include <blitz/meta/sum.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename T_numtype1, typename T_numtype2, int N_length>
 inline BZ_PROMOTE(T_numtype1, T_numtype2)
@@ -94,7 +94,7 @@ sum(const TinyVector<T_numtype, N_length>& a)
 
 };
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_TVECGLOBS_H
 

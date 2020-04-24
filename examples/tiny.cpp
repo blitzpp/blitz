@@ -13,7 +13,7 @@
 #include <blitz/array.h>
 #include <blitz/tinyvec2.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 void reflect(TinyVector<double,3>& reflection, const TinyVector<double,3>& ray,
     const TinyVector<double,3>& surfaceNormal)

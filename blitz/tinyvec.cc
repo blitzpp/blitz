@@ -36,7 +36,7 @@
 #include <blitz/range.h>
 #include <blitz/meta/vecassign.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename P_numtype, int N_length>
 inline TinyVector<P_numtype, N_length>::TinyVector(const T_numtype initValue) {
@@ -630,6 +630,6 @@ TinyVector<P_numtype, N_length>::operator>>=(const VectorPick<P_numtype2>& x)
     return *this;
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_TINYVEC_CC

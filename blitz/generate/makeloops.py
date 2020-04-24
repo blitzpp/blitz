@@ -1,7 +1,9 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 
 # python version of the makeloops.cpp that generates the benchmark
 # loops.
+
+from __future__ import print_function
 
 import time, pdb
 
@@ -105,7 +107,7 @@ def sub_skeleton(skeleton, subs):
         try:
             skeleton=skeleton.replace("#%s#"%s[0],s[1])
         except:
-            print "Error subbing %s with %s in skeleton"%s
+            print("Error subbing %s with %s in skeleton"%s)
             raise
     return skeleton
 
@@ -269,12 +271,12 @@ cpp_skeleton = """
 #include <valarray>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 extern void sink();
-BZ_NAMESPACE_END
+}
 
-BZ_USING_NAMESPACE(blitz)
-BZ_USING_NAMESPACE(std)
+using namespace blitz;
+using namespace std;
 
 #if defined(BZ_FORTRAN_SYMBOLS_WITH_TRAILING_UNDERSCORES)
  #define #loopname#_f77 #loopname#_f77_
@@ -403,7 +405,7 @@ void VectorVersion(BenchmarkExt<int>& bench#scalarargdecl#)
         bench.start();
         for (long i=0; i < iters; ++i)
         {
-            #looparrayexpr#;
+            #looparrayexpr#
             sink();
         }
         bench.stop();
@@ -683,7 +685,7 @@ f90_skeleton = """
 """
 
 for l in loops:
-    print "generating code for %s"%loopname(l)
+    print("generating code for %s"%loopname(l))
     gencpp(l)
     genf77(l)
     genf90(l)

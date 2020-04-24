@@ -1,6 +1,6 @@
 #include <blitz/timer.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 double dot(const double* a, const double* b, int n)
 {

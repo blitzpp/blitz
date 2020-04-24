@@ -2,7 +2,7 @@
 
 #include <blitz/promote.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 #ifndef BZ_HAVE_PARTIAL_SPECIALIZATION
 int main() { return 0; }

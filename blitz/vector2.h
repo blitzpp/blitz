@@ -45,7 +45,7 @@
 #include <blitz/blitz.h>
 #include <blitz/array.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 // Forward declarations
 // template<typename P_numtype> class VectorIter;
@@ -104,6 +104,6 @@ class Vector : public Array<P_numtype,1>
 };
 
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_VECTOR_H

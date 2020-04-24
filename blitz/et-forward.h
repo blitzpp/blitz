@@ -5,7 +5,7 @@
 
 // forward declarations of ET classes
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename T> class ETBase;
 
@@ -65,7 +65,7 @@ class LeviCivita;
 
 class Range;
 
-BZ_NAMESPACE_END
+}
 
 
 #endif

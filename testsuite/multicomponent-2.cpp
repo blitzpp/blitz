@@ -14,7 +14,7 @@
 // #include <blitz/ops.h>
 // #include <blitz/array/funcs.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 // Tests functors on multicomponent arrays.
 

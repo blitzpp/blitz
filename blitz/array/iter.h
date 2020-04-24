@@ -49,7 +49,7 @@
 #define CheckIteratorValidity(X,Y)
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename T, int N>
 class ConstArrayIterator {
@@ -291,15 +291,15 @@ ConstArrayIterator<T,N>& ConstArrayIterator<T,N>::operator--() {
     return *this;
 }
 
-BZ_NAMESPACE_END
+}
 
 
 #ifdef BZ_HAVE_STL
 // support for std::iterator_traits
-BZ_NAMESPACE(std)
+namespace std {
 
 template <typename T, int N>
-struct iterator_traits< BZ_BLITZ_SCOPE(ConstArrayIterator)<T,N> > {
+struct iterator_traits< blitz::ConstArrayIterator<T,N> > {
     typedef bidirectional_iterator_tag         iterator_category;
     typedef T                                  value_type;
     typedef blitz::diffType                    difference_type;
@@ -308,7 +308,7 @@ struct iterator_traits< BZ_BLITZ_SCOPE(ConstArrayIterator)<T,N> > {
 };
 
 template <typename T, int N>
-struct iterator_traits< BZ_BLITZ_SCOPE(ArrayIterator)<T,N> > {
+struct iterator_traits< blitz::ArrayIterator<T,N> > {
     typedef bidirectional_iterator_tag         iterator_category;
     typedef T                                  value_type;
     typedef blitz::diffType                    difference_type;
@@ -316,7 +316,7 @@ struct iterator_traits< BZ_BLITZ_SCOPE(ArrayIterator)<T,N> > {
     typedef T&                                 reference;
 };
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_HAVE_STL
 

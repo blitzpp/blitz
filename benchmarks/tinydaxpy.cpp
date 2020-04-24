@@ -6,7 +6,7 @@
 #include <blitz/timer.h>
 #include <random/uniform.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 ranlib::Uniform<double> rnd;
 

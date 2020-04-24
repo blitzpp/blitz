@@ -39,7 +39,7 @@
 #include <blitz/meta/metaprog.h>
 #include <blitz/tinymatexpr.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 // Template metaprogram for matrix-matrix multiplication
 template<int N_rows1, int N_columns, int N_columns2, int N_rowStride1,
@@ -122,7 +122,7 @@ product(const TinyMatrix<T_numtype1, N_rows1, N_columns1>& a,
     return _bz_tinyMatExpr<T_expr>(T_expr(a.data(), b.data()));
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_META_MATMAT_H
 

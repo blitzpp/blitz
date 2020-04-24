@@ -4,7 +4,7 @@
 #include <blitz/array.h>
 #include <blitz/array.cc>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 int main()
 {

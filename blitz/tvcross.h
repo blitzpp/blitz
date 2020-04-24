@@ -36,7 +36,7 @@
  #error <blitz/tvcross.h> must be included via <blitz/tinyvec.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /*
  * cross product.
@@ -54,6 +54,6 @@ TinyVector<T_numtype,3> cross(const TinyVector<T_numtype,3>& x,
 }
 
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_TVCROSS_H

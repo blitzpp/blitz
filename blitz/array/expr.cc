@@ -3,7 +3,7 @@
 
 #include <blitz/array/expr.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename P_numtype>
 inline RectDomain<12>
@@ -13,6 +13,6 @@ _bz_ArrayExprConstant<P_numtype>::domain() const
   return RectDomain<12>(lb,ub);
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif

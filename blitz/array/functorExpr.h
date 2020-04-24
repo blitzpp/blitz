@@ -101,7 +101,7 @@
 #include <blitz/shapecheck.h>
 #include <blitz/tinyvec2.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename P_functor, typename P_expr, typename P_result>
 class _bz_FunctorExpr {
@@ -307,7 +307,7 @@ public:
     bool isStride(const int rank,const diffType stride) const
     { return iter_.isStride(rank,stride); }
 
-    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+    void prettyPrint(std::string &str, 
         prettyPrintFormat& format) const
     {
         str += BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_functor);
@@ -643,7 +643,7 @@ public:
         return iter1_.isStride(rank,stride) && iter2_.isStride(rank,stride);
     }
   
-    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+    void prettyPrint(std::string &str, 
         prettyPrintFormat& format) const
     {
         str += BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_functor);
@@ -1039,7 +1039,7 @@ public:
             && iter3_.isStride(rank,stride);
     }
   
-    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+    void prettyPrint(std::string &str, 
         prettyPrintFormat& format) const
     {
         str += BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_functor);
@@ -1154,7 +1154,7 @@ applyFunctor(const P_functor& f, const ETBase<P_expr1>& a,
     return _bz_ArrayExpr<f3>(f, a.unwrap(), b.unwrap(), c.unwrap());
 }
 
-BZ_NAMESPACE_END // End of stuff in namespace
+} // End of stuff in namespace
 
 
 #define _BZ_MAKE_FUNCTOR(classname, funcname)                             \
@@ -1247,125 +1247,125 @@ private:                                                                  \
 
 #define BZ_DECLARE_FUNCTOR(classname)                                     \
 template<typename P_expr>                                                 \
-BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr)<            \
+blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr<            \
     classname,                                                            \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr,                  \
-  _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr::T_optype> >	\
-operator()(const BZ_BLITZ_SCOPE(ETBase)<P_expr>& a) const                 \
+    _bz_typename blitz::asExpr<P_expr>::T_expr,                  \
+  _bz_typename blitz::asExpr<P_expr>::T_expr::T_optype> >	\
+operator()(const blitz::ETBase<P_expr>& a) const                 \
 {                                                                         \
-    return BZ_BLITZ_SCOPE(_bz_ArrayExpr)<                                 \
-        BZ_BLITZ_SCOPE(_bz_FunctorExpr)<classname,                        \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr,              \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr::T_optype> > \
+    return blitz::_bz_ArrayExpr<                                 \
+        blitz::_bz_FunctorExpr<classname,                        \
+        _bz_typename blitz::asExpr<P_expr>::T_expr,              \
+        _bz_typename blitz::asExpr<P_expr>::T_expr::T_optype> > \
         (*this, a.unwrap());                                              \
 }
 
 #define BZ_DECLARE_FUNCTOR2(classname)                                    \
 template<typename P_expr1, typename P_expr2>                              \
-BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr2)<           \
+blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr2<           \
     classname,                                                            \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,                 \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,                 \
+    _bz_typename blitz::asExpr<P_expr1>::T_expr,                 \
+    _bz_typename blitz::asExpr<P_expr2>::T_expr,                 \
     BZ_PROMOTE(_bz_typename                                               \
-               BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_optype,        \
+               blitz::asExpr<P_expr1>::T_expr::T_optype,        \
                _bz_typename                                               \
-               BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_optype)> >     \
-operator()(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                      \
-           const BZ_BLITZ_SCOPE(ETBase)<P_expr2>& b) const                \
+               blitz::asExpr<P_expr2>::T_expr::T_optype)> >     \
+operator()(const blitz::ETBase<P_expr1>& a,                      \
+           const blitz::ETBase<P_expr2>& b) const                \
 {                                                                         \
-    return BZ_BLITZ_SCOPE(_bz_ArrayExpr)<                                 \
-        BZ_BLITZ_SCOPE(_bz_FunctorExpr2)<classname,                       \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,             \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,             \
+    return blitz::_bz_ArrayExpr<                                 \
+        blitz::_bz_FunctorExpr2<classname,                       \
+        _bz_typename blitz::asExpr<P_expr1>::T_expr,             \
+        _bz_typename blitz::asExpr<P_expr2>::T_expr,             \
         BZ_PROMOTE(_bz_typename                                           \
-                   BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_optype,    \
+                   blitz::asExpr<P_expr1>::T_expr::T_optype,    \
                    _bz_typename                                           \
-                   BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_optype)> > \
+                   blitz::asExpr<P_expr2>::T_expr::T_optype)> > \
         (*this, a.unwrap(), b.unwrap());                                  \
 }
 
 #define BZ_DECLARE_FUNCTOR3(classname)                                    \
 template<typename P_expr1, typename P_expr2, typename P_expr3>            \
-BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr3)<           \
+blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr3<           \
     classname,                                                            \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,                 \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,                 \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr,                 \
+    _bz_typename blitz::asExpr<P_expr1>::T_expr,                 \
+    _bz_typename blitz::asExpr<P_expr2>::T_expr,                 \
+    _bz_typename blitz::asExpr<P_expr3>::T_expr,                 \
     BZ_PROMOTE(_bz_typename                                               \
-               BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_optype,        \
+               blitz::asExpr<P_expr1>::T_expr::T_optype,        \
     BZ_PROMOTE(_bz_typename                                               \
-               BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_optype,        \
+               blitz::asExpr<P_expr2>::T_expr::T_optype,        \
                _bz_typename                                               \
-               BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr::T_optype))> >    \
-operator()(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                      \
-           const BZ_BLITZ_SCOPE(ETBase)<P_expr2>& b,                      \
-           const BZ_BLITZ_SCOPE(ETBase)<P_expr3>& c) const                \
+               blitz::asExpr<P_expr3>::T_expr::T_optype))> >    \
+operator()(const blitz::ETBase<P_expr1>& a,                      \
+           const blitz::ETBase<P_expr2>& b,                      \
+           const blitz::ETBase<P_expr3>& c) const                \
 {                                                                         \
-    return BZ_BLITZ_SCOPE(_bz_ArrayExpr)<                                 \
-        BZ_BLITZ_SCOPE(_bz_FunctorExpr3)<classname,                       \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,             \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,             \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr,             \
+    return blitz::_bz_ArrayExpr<                                 \
+        blitz::_bz_FunctorExpr3<classname,                       \
+        _bz_typename blitz::asExpr<P_expr1>::T_expr,             \
+        _bz_typename blitz::asExpr<P_expr2>::T_expr,             \
+        _bz_typename blitz::asExpr<P_expr3>::T_expr,             \
         BZ_PROMOTE(_bz_typename                                           \
-                   BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_optype,    \
+                   blitz::asExpr<P_expr1>::T_expr::T_optype,    \
         BZ_PROMOTE(_bz_typename                                           \
-                   BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_optype,    \
+                   blitz::asExpr<P_expr2>::T_expr::T_optype,    \
                    _bz_typename                                           \
-                   BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr::T_optype))> >\
+                   blitz::asExpr<P_expr3>::T_expr::T_optype))> >\
         (*this, a.unwrap(), b.unwrap(), c.unwrap());                      \
 }
 
 
 #define BZ_DECLARE_FUNCTOR_RET(classname, ret)                            \
 template<typename P_expr>                                                 \
-BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr)<            \
+blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr<            \
     classname,                                                            \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr,                  \
+    _bz_typename blitz::asExpr<P_expr>::T_expr,                  \
     ret> >                                                                \
-operator()(const BZ_BLITZ_SCOPE(ETBase)<P_expr>& a) const                 \
+operator()(const blitz::ETBase<P_expr>& a) const                 \
 {                                                                         \
-    return BZ_BLITZ_SCOPE(_bz_ArrayExpr)<                                 \
-        BZ_BLITZ_SCOPE(_bz_FunctorExpr)<classname,                        \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr,              \
+    return blitz::_bz_ArrayExpr<                                 \
+        blitz::_bz_FunctorExpr<classname,                        \
+        _bz_typename blitz::asExpr<P_expr>::T_expr,              \
         ret> >                                                            \
         (*this, a.unwrap());                                              \
 }
 
 #define BZ_DECLARE_FUNCTOR2_RET(classname, ret)                           \
 template<typename P_expr1, typename P_expr2>                              \
-BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr2)<           \
+blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr2<           \
     classname,                                                            \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,                 \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,                 \
+    _bz_typename blitz::asExpr<P_expr1>::T_expr,                 \
+    _bz_typename blitz::asExpr<P_expr2>::T_expr,                 \
     ret> >                                                                \
-operator()(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                      \
-           const BZ_BLITZ_SCOPE(ETBase)<P_expr2>& b) const                \
+operator()(const blitz::ETBase<P_expr1>& a,                      \
+           const blitz::ETBase<P_expr2>& b) const                \
 {                                                                         \
-    return BZ_BLITZ_SCOPE(_bz_ArrayExpr)<                                 \
-        BZ_BLITZ_SCOPE(_bz_FunctorExpr2)<classname,                       \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,             \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,             \
+    return blitz::_bz_ArrayExpr<                                 \
+        blitz::_bz_FunctorExpr2<classname,                       \
+        _bz_typename blitz::asExpr<P_expr1>::T_expr,             \
+        _bz_typename blitz::asExpr<P_expr2>::T_expr,             \
         ret> >                                                            \
         (*this, a.unwrap(), b.unwrap());                                  \
 }
 
 #define BZ_DECLARE_FUNCTOR3_RET(classname, ret)                           \
 template<typename P_expr1, typename P_expr2, typename P_expr3>            \
-BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr3)<           \
+blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr3<           \
     classname,                                                            \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,                 \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,                 \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr,                 \
+    _bz_typename blitz::asExpr<P_expr1>::T_expr,                 \
+    _bz_typename blitz::asExpr<P_expr2>::T_expr,                 \
+    _bz_typename blitz::asExpr<P_expr3>::T_expr,                 \
     ret> >                                                                \
-operator()(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                      \
-           const BZ_BLITZ_SCOPE(ETBase)<P_expr2>& b,                      \
-           const BZ_BLITZ_SCOPE(ETBase)<P_expr3>& c) const                \
+operator()(const blitz::ETBase<P_expr1>& a,                      \
+           const blitz::ETBase<P_expr2>& b,                      \
+           const blitz::ETBase<P_expr3>& c) const                \
 {                                                                         \
-    return BZ_BLITZ_SCOPE(_bz_ArrayExpr)<                                 \
-        BZ_BLITZ_SCOPE(_bz_FunctorExpr3)<classname,                       \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,             \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,             \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr,             \
+    return blitz::_bz_ArrayExpr<                                 \
+        blitz::_bz_FunctorExpr3<classname,                       \
+        _bz_typename blitz::asExpr<P_expr1>::T_expr,             \
+        _bz_typename blitz::asExpr<P_expr2>::T_expr,             \
+        _bz_typename blitz::asExpr<P_expr3>::T_expr,             \
         ret> >                                                            \
         (*this, a.unwrap(), b.unwrap(), c.unwrap());                      \
 }
@@ -1374,76 +1374,76 @@ operator()(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                      \
 #define BZ_DECLARE_MEMBER_FUNCTION(classname, funcname)                   \
 _BZ_MAKE_FUNCTOR(classname, funcname)                                     \
 template<typename P_expr>                                                 \
-BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr)<            \
+blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr<            \
     _bz_Functor ## classname ## funcname,                                 \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr,                  \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr::T_optype> >     \
-funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr>& a) const                   \
+    _bz_typename blitz::asExpr<P_expr>::T_expr,                  \
+    _bz_typename blitz::asExpr<P_expr>::T_expr::T_optype> >     \
+funcname(const blitz::ETBase<P_expr>& a) const                   \
 {                                                                         \
-    return BZ_BLITZ_SCOPE(_bz_ArrayExpr)<                                 \
-        BZ_BLITZ_SCOPE(_bz_FunctorExpr)<                                  \
+    return blitz::_bz_ArrayExpr<                                 \
+        blitz::_bz_FunctorExpr<                                  \
         _bz_Functor ## classname ## funcname,                             \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr,              \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr::T_optype> > \
+        _bz_typename blitz::asExpr<P_expr>::T_expr,              \
+        _bz_typename blitz::asExpr<P_expr>::T_expr::T_optype> > \
       (_bz_Functor ## classname ## funcname(*this), a.unwrap());	\
 }
 
 #define BZ_DECLARE_MEMBER_FUNCTION2(classname, funcname)                  \
 _BZ_MAKE_FUNCTOR2(classname, funcname)                                    \
 template<typename P_expr1, typename P_expr2>                              \
-BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr2)<           \
+blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr2<           \
     _bz_Functor ## classname ## funcname,                                 \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,                 \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,                 \
+    _bz_typename blitz::asExpr<P_expr1>::T_expr,                 \
+    _bz_typename blitz::asExpr<P_expr2>::T_expr,                 \
     BZ_PROMOTE(_bz_typename                                               \
-               BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_optype,        \
+               blitz::asExpr<P_expr1>::T_expr::T_optype,        \
                _bz_typename                                               \
-               BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_optype)> >     \
-funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                        \
-         const BZ_BLITZ_SCOPE(ETBase)<P_expr2>& b) const                  \
+               blitz::asExpr<P_expr2>::T_expr::T_optype)> >     \
+funcname(const blitz::ETBase<P_expr1>& a,                        \
+         const blitz::ETBase<P_expr2>& b) const                  \
 {                                                                         \
-    return BZ_BLITZ_SCOPE(_bz_ArrayExpr)<                                 \
-        BZ_BLITZ_SCOPE(_bz_FunctorExpr2)<                                 \
+    return blitz::_bz_ArrayExpr<                                 \
+        blitz::_bz_FunctorExpr2<                                 \
         _bz_Functor ## classname ## funcname,                             \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,             \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,             \
+        _bz_typename blitz::asExpr<P_expr1>::T_expr,             \
+        _bz_typename blitz::asExpr<P_expr2>::T_expr,             \
         BZ_PROMOTE(_bz_typename                                           \
-                   BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_optype,    \
+                   blitz::asExpr<P_expr1>::T_expr::T_optype,    \
                    _bz_typename                                           \
-                   BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_optype)> > \
+                   blitz::asExpr<P_expr2>::T_expr::T_optype)> > \
       (_bz_Functor ## classname ## funcname(*this), a.unwrap(), b.unwrap()); \
 }
 
 #define BZ_DECLARE_MEMBER_FUNCTION3(classname, funcname)                  \
 _BZ_MAKE_FUNCTOR3(classname, funcname)                                    \
 template<typename P_expr1, typename P_expr2, typename P_expr3>            \
-BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr3)<           \
+blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr3<           \
     _bz_Functor ## classname ## funcname,                                 \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,                 \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,                 \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr,                 \
+    _bz_typename blitz::asExpr<P_expr1>::T_expr,                 \
+    _bz_typename blitz::asExpr<P_expr2>::T_expr,                 \
+    _bz_typename blitz::asExpr<P_expr3>::T_expr,                 \
     BZ_PROMOTE(_bz_typename                                               \
-               BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_optype,        \
+               blitz::asExpr<P_expr1>::T_expr::T_optype,        \
     BZ_PROMOTE(_bz_typename                                               \
-               BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_optype,        \
+               blitz::asExpr<P_expr2>::T_expr::T_optype,        \
                _bz_typename                                               \
-               BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr::T_optype))> >    \
-funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                        \
-         const BZ_BLITZ_SCOPE(ETBase)<P_expr2>& b,                        \
-         const BZ_BLITZ_SCOPE(ETBase)<P_expr3>& c) const                  \
+               blitz::asExpr<P_expr3>::T_expr::T_optype))> >    \
+funcname(const blitz::ETBase<P_expr1>& a,                        \
+         const blitz::ETBase<P_expr2>& b,                        \
+         const blitz::ETBase<P_expr3>& c) const                  \
 {                                                                         \
-    return BZ_BLITZ_SCOPE(_bz_ArrayExpr)<                                 \
-        BZ_BLITZ_SCOPE(_bz_FunctorExpr3)<                                 \
+    return blitz::_bz_ArrayExpr<                                 \
+        blitz::_bz_FunctorExpr3<                                 \
         _bz_Functor ## classname ## funcname,                             \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,             \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,             \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr,             \
+        _bz_typename blitz::asExpr<P_expr1>::T_expr,             \
+        _bz_typename blitz::asExpr<P_expr2>::T_expr,             \
+        _bz_typename blitz::asExpr<P_expr3>::T_expr,             \
         BZ_PROMOTE(_bz_typename                                           \
-                   BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr::T_optype,    \
+                   blitz::asExpr<P_expr1>::T_expr::T_optype,    \
         BZ_PROMOTE(_bz_typename                                           \
-                   BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr::T_optype,    \
+                   blitz::asExpr<P_expr2>::T_expr::T_optype,    \
                    _bz_typename                                           \
-                   BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr::T_optype))> >\
+                   blitz::asExpr<P_expr3>::T_expr::T_optype))> >\
       (_bz_Functor ## classname ## funcname(*this),			\
        a.unwrap(), b.unwrap(), c.unwrap());				\
 }
@@ -1452,35 +1452,35 @@ funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                        \
 #define BZ_DECLARE_MEMBER_FUNCTION_RET(classname, funcname, ret)          \
 _BZ_MAKE_FUNCTOR_RET(classname, funcname, ret)                            \
 template<typename P_expr>                                                 \
-BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr)<            \
+blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr<            \
     _bz_Functor ## classname ## funcname,                                 \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr,                  \
+    _bz_typename blitz::asExpr<P_expr>::T_expr,                  \
     ret> >                                                                \
-funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr>& a) const                   \
+funcname(const blitz::ETBase<P_expr>& a) const                   \
 {                                                                         \
-    return BZ_BLITZ_SCOPE(_bz_ArrayExpr)<                                 \
-        BZ_BLITZ_SCOPE(_bz_FunctorExpr)<                                  \
+    return blitz::_bz_ArrayExpr<                                 \
+        blitz::_bz_FunctorExpr<                                  \
         _bz_Functor ## classname ## funcname,                             \
-      _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr>::T_expr, ret> >	\
+      _bz_typename blitz::asExpr<P_expr>::T_expr, ret> >	\
       (_bz_Functor ## classname ## funcname(*this), a.unwrap());	\
 }
 
 #define BZ_DECLARE_MEMBER_FUNCTION2_RET(classname, funcname, ret)         \
 _BZ_MAKE_FUNCTOR2_RET(classname, funcname, ret)                           \
 template<typename P_expr1, typename P_expr2>                              \
-BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr2)<           \
+blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr2<           \
     _bz_Functor ## classname ## funcname,                                 \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,                 \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,                 \
+    _bz_typename blitz::asExpr<P_expr1>::T_expr,                 \
+    _bz_typename blitz::asExpr<P_expr2>::T_expr,                 \
     ret> >                                                                \
-funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                        \
-         const BZ_BLITZ_SCOPE(ETBase)<P_expr2>& b) const                  \
+funcname(const blitz::ETBase<P_expr1>& a,                        \
+         const blitz::ETBase<P_expr2>& b) const                  \
 {                                                                         \
-    return BZ_BLITZ_SCOPE(_bz_ArrayExpr)<                                 \
-        BZ_BLITZ_SCOPE(_bz_FunctorExpr2)<                                 \
+    return blitz::_bz_ArrayExpr<                                 \
+        blitz::_bz_FunctorExpr2<                                 \
         _bz_Functor ## classname ## funcname,                             \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,             \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,             \
+        _bz_typename blitz::asExpr<P_expr1>::T_expr,             \
+        _bz_typename blitz::asExpr<P_expr2>::T_expr,             \
         ret> >                                                            \
       (_bz_Functor ## classname ## funcname(*this), a.unwrap(), b.unwrap()); \
 }
@@ -1488,22 +1488,22 @@ funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                        \
 #define BZ_DECLARE_MEMBER_FUNCTION3_RET(classname, funcname, ret)         \
 _BZ_MAKE_FUNCTOR3_RET(classname, funcname, ret)                           \
 template<typename P_expr1, typename P_expr2, typename P_expr3>            \
-BZ_BLITZ_SCOPE(_bz_ArrayExpr)<BZ_BLITZ_SCOPE(_bz_FunctorExpr3)<           \
+blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr3<           \
     _bz_Functor ## classname ## funcname,                                 \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,                 \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,                 \
-    _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr,                 \
+    _bz_typename blitz::asExpr<P_expr1>::T_expr,                 \
+    _bz_typename blitz::asExpr<P_expr2>::T_expr,                 \
+    _bz_typename blitz::asExpr<P_expr3>::T_expr,                 \
     ret> >                                                                \
-funcname(const BZ_BLITZ_SCOPE(ETBase)<P_expr1>& a,                        \
-         const BZ_BLITZ_SCOPE(ETBase)<P_expr2>& b,                        \
-         const BZ_BLITZ_SCOPE(ETBase)<P_expr3>& c) const                  \
+funcname(const blitz::ETBase<P_expr1>& a,                        \
+         const blitz::ETBase<P_expr2>& b,                        \
+         const blitz::ETBase<P_expr3>& c) const                  \
 {                                                                         \
-    return BZ_BLITZ_SCOPE(_bz_ArrayExpr)<                                 \
-        BZ_BLITZ_SCOPE(_bz_FunctorExpr3)<                                 \
+    return blitz::_bz_ArrayExpr<                                 \
+        blitz::_bz_FunctorExpr3<                                 \
         _bz_Functor ## classname ## funcname,                             \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr1>::T_expr,             \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr2>::T_expr,             \
-        _bz_typename BZ_BLITZ_SCOPE(asExpr)<P_expr3>::T_expr,             \
+        _bz_typename blitz::asExpr<P_expr1>::T_expr,             \
+        _bz_typename blitz::asExpr<P_expr2>::T_expr,             \
+        _bz_typename blitz::asExpr<P_expr3>::T_expr,             \
         ret> >                                                            \
       (_bz_Functor ## classname ## funcname(*this),			\
        a.unwrap(), b.unwrap(), c.unwrap());				\

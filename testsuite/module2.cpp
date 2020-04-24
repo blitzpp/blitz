@@ -1,10 +1,10 @@
 #include <blitz/array.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 int module2()
 {
-    BZ_USING_NAMESPACE(blitz::tensor)
+    using namespace blitz::tensor;
 
     Array<int,1> A(4);
     A = pow2(i);

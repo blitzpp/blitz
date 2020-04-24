@@ -47,7 +47,7 @@
 #endif
 
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /*****************************************************************************
  * Forward declarations
@@ -340,7 +340,7 @@ private:
   BZ_ALIGN_VARIABLE(T_numtype, data_[N_rows * N_columns], BZ_SIMD_WIDTH)
 };
 
-BZ_NAMESPACE_END
+}
 
 #ifdef BZ_HAVE_BOOST_SERIALIZATION
 namespace boost {

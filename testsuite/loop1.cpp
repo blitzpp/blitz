@@ -7,11 +7,11 @@
 #include <random/uniform.h>
 #include <blitz/benchext.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 extern void sink();
-BZ_NAMESPACE_END
+}
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 void VectorVersion(BenchmarkExt<int>& bench);
 void ArrayVersion(BenchmarkExt<int>& bench);

@@ -44,7 +44,7 @@
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 // Forward declarations
 template<typename T, int N>
@@ -114,6 +114,6 @@ public:
 };
 
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAYSLICE_H

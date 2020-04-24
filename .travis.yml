@@ -1,39 +1,72 @@
 language: cpp
 
-os:
-  - linux
-  - osx
+matrix:
+  include:
+#    - os: linux
+#      env: COMPILER=icc   CMAKE_BUILD_TYPE=Debug
+    - os: linux
+      env: COMPILER=gcc   CMAKE_BUILD_TYPE=Debug
+    - os: linux
+      env: COMPILER=clang CMAKE_BUILD_TYPE=Debug
+    - os: osx
+      env: COMPILER=clang CMAKE_BUILD_TYPE=Debug
+#    - os: linux
+#      env: COMPILER=icc   CMAKE_BUILD_TYPE=Release
+    - os: linux
+      env: COMPILER=gcc   CMAKE_BUILD_TYPE=Release
+    - os: linux
+      env: COMPILER=clang CMAKE_BUILD_TYPE=Release
+    - os: osx
+      env: COMPILER=clang CMAKE_BUILD_TYPE=Release
 
-compiler:
-  - gcc
-  - clang
-
-# TODO: Debug & Release modes
+fast_finish: true
 
 install:
-  - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then sudo apt-get --no-install-recommends install texinfo texlive-base; fi
+  - |
+    if [ "${TRAVIS_OS_NAME}" == 'linux' ]; then
+      sudo apt-get --no-install-recommends install texinfo texi2html texlive-base texlive-generic-recommended texlive-fonts-recommended doxygen graphviz texlive-latex-base texlive-latex-recommended texlive-latex-extra python-git
+    else
+      brew install texinfo
+      brew ln texinfo --force
+      brew upgrade cmake
+    fi
+  - |
+    if [ $COMPILER == icc ]; then 
+      wget "https://raw.githubusercontent.com/nemequ/icc-travis/master/install-icc.sh"
+      sudo sh install-icc.sh
+      source ~/.bashrc
+      export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_CXX_COMPILER=icpc -DCMAKE_C_COMPILER=icc"
+    fi
+  - |
+    if [ $COMPILER == clang ]; then
+      export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang"
+    fi
 
 script:
-  - aclocal
-  - if [[ $TRAVIS_OS_NAME == 'osx' ]]; then glibtoolize; fi
-  - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then libtoolize; fi
-  - autoheader
-  - automake --add-missing
-  - autoreconf
-  - ./configure
-  - make lib                 # Check the compiler and create libblitz.a
-  # TODO: make a failure result in non-zero exit code! (see https://travis-ci.org/slayoo/blitz/builds/359545927)
-  - make check-testsuite     # Build and check the testsuite
-  - make check-examples      # Build and check the examples
-  # TODO! (fails with error: no such file or directory: 'arrdaxpyf.o')
-  # - make check-benchmarks    # Build and check the benchmarks (takes a long time)
-  - sudo make install        # Install Blitz++
-  - make info                # Build Blitz++ texinfo documentation
-  # TODO: fails with /usr/bin/texi2dvi: texinfo.tex appears to be broken.
-  #- make ps                  # Build Blitz++ ps documentation
-  # - make pdf                 # Build Blitz++ pdf documentation
-  - make html                # Build Blitz++ html documentation
-  - sudo make install-info   # Install Blitz++ texinfo documentation
-  #- sudo make install-ps     # Install Blitz++ ps documentation
-  #- sudo make install-pdf    # Install Blitz++ pdf documentation
-  - sudo make install-html   # Install Blitz++ html documentation
+  - |
+    srcdir='..'
+    mkdir build
+    cd build
+    cmake $CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DBUILD_DOC=ON -DBUILD_TESTING=ON -DDISABLE_REFMAN_PDF=ON ..
+
+  - make lib
+  
+  - export CTEST_OUTPUT_ON_FAILURE=1
+  - |
+    if [ $COMPILER != icc ]; then 
+      make check-testsuite     # Build and check the testsuite
+      make check-examples      # Build and check the examples
+      # TODO! (fails with error: no such file or directory: 'arrdaxpyf.o')
+      # - make check-benchmarks    # Build and check the benchmarks (takes a long time)
+      make blitz-doc
+      sudo make install        # Install Blitz++
+    fi
+
+  - |
+    if [ "${TRAVIS_OS_NAME}" == 'linux' ]; then
+       LD_LIBRARY_PATH=/usr/local/lib ${srcdir}/travis-ci/check-wiki-examples.py
+    fi
+
+
+after_script:
+  - if [ $COMPILER == icc ]; then '[[ ! -z "${INTEL_INSTALL_PATH}" ]] && uninstall_intel_software'; fi

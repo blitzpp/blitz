@@ -18,7 +18,7 @@
 // Explicitly include <math.h> header to get declaration of non-standard erf()
 #include <math.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 int main()
 {
@@ -83,7 +83,7 @@ int main()
 
 #include <iostream>
 
-BZ_USING_NAMESPACE(std)
+using namespace std;
 
 int main()
 {

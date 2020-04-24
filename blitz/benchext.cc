@@ -44,7 +44,7 @@
  #include <string.h>
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename P_parameter>
 BenchmarkExt<P_parameter>::BenchmarkExt(const char* name, 
@@ -462,6 +462,6 @@ void BenchmarkExt<P_parameter>::savePylabGraph(const char* filename, const char*
     ofs << "legend(legnames)\n";
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_BENCHEXT_CC

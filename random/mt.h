@@ -64,7 +64,7 @@
 #include <boost/serialization/vector.hpp>
 #endif
 
-BZ_NAMESPACE(ranlib)
+namespace ranlib {
 
 #if UINT_MAX < 4294967295U
   typedef unsigned long twist_int;  // must be at least 32 bits
@@ -78,11 +78,7 @@ public:
 
 private:
 
-#if defined(BZ_HAVE_NAMESPACES) && defined(BZ_HAVE_STD)
   typedef std::vector<twist_int> State;
-#else
-  typedef vector<twist_int> State;
-#endif
   typedef State::size_type SizeType;
   typedef State::iterator Iter;
 
@@ -339,6 +335,6 @@ private:
   static const twist_int c_[n];
 };
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_RAND_MT

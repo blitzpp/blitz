@@ -36,7 +36,7 @@
 #include <blitz/array/reduce.h>
 #include <blitz/levicivita.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /* This file contains definitions of the math functions for ETBase
    types. Note that these definitions are in the blitz namespace and
@@ -211,7 +211,7 @@ pow(const complex<T1> d1, const ETBase<T2>& d2)
 // we define a generalized dot product for all classes as sum(a*b)
 template<typename T1, typename T2>
 inline
-_bz_typename ReduceSum<_bz_typename BZ_BLITZ_SCOPE(BzBinaryExprResult)<Multiply,T1,T2>::T_result::T_numtype
+_bz_typename ReduceSum<_bz_typename blitz::BzBinaryExprResult<Multiply,T1,T2>::T_result::T_numtype
 >::T_resulttype
 dot(const ETBase<T1>& d1, const ETBase<T2>& d2)
 {
@@ -308,6 +308,6 @@ scalar(const T& x) {
 
 #endif
     
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_ARRAY_FUNCS_H

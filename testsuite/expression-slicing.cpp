@@ -2,7 +2,7 @@
 #include <blitz/array.h>
 #include <blitz/array/stencil-et.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 typedef blitz::Array<double,1> array_1;
 typedef blitz::Array<double,2> array_2;

@@ -2,7 +2,7 @@
 #include <blitz/array.h>
 #include <blitz/tinyvec2.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 class crap {
 public:
@@ -64,7 +64,7 @@ void test_1dexpr(const T& B)
 
 void grabner()
 {
-  BZ_USING_NAMESPACE(blitz::tensor)
+  using namespace blitz::tensor;
   Array<float, 2> a1(2, 2), a2(2, 2), a3(2, 2);
   Array<float, 4> a4(2, 2, 2, 2);
   Array<float, 2> a5(2, 2), a6(2, 2);
@@ -101,7 +101,7 @@ int main()
     BZTEST(count(A > 1 && A < 5) == 3);
     BZTEST(sum(pow2(A)) == 506);
 
-    BZ_USING_NAMESPACE(blitz::tensor)
+    using namespace blitz::tensor;
 
     BZTEST(sum(min(A,j)) == 0+3+6+9);
     BZTEST(sum(max(A(j,i),j)) == 9+10+11);

@@ -50,7 +50,7 @@
 #include <cstring> // For memcpy
 #endif
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 /*****************************************************************************
  * Forward declarations
@@ -444,7 +444,7 @@ template<typename T>
 class TinyVector<T,0> {
 };
 
-BZ_NAMESPACE_END
+}
 
 #ifdef BZ_HAVE_BOOST_SERIALIZATION
 namespace boost {

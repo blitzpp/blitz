@@ -1,7 +1,7 @@
 #include <blitz/vector.h>
 #include <blitz/tinyvec.h>
 
-BZ_USING_NAMESPACE(blitz)
+using namespace blitz;
 
 /*
  * Test a 12th order symmetric multistep method for solving the equations

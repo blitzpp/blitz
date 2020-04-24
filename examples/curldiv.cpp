@@ -3,8 +3,8 @@
 #include <blitz/array.h>
 #include <blitz/tinyvec.h>
 
-BZ_USING_NAMESPACE(blitz)
-BZ_USING_NAMESPACE(blitz::tensor)
+using namespace blitz;
+using namespace blitz::tensor;
 
 BZ_DECLARE_STENCIL8(test,Ax,Ay,Az,curlA,divA,gradAx,gradAy,gradAz)
     curlA = curl(Ax,Ay,Az);

@@ -34,10 +34,10 @@
 
 #include <blitz/blitz.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 #ifdef BZ_HAVE_TEMPLATE_QUALIFIED_RETURN_TYPE
-    #define BZ_PROMOTE(A,B) _bz_typename BZ_BLITZ_SCOPE(promote_trait)<A,B>::T_promote
+    #define BZ_PROMOTE(A,B) _bz_typename blitz::promote_trait<A,B>::T_promote
 #else
     #define BZ_PROMOTE(A,B) A
 #endif
@@ -167,6 +167,6 @@ struct promote_trait {
 
 #endif // !BZ_HAVE_PARTIAL_SPECIALIZATION
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_PROMOTE_H

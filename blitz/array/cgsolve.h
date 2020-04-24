@@ -31,7 +31,7 @@
 #ifndef BZ_CGSOLVE_H
 #define BZ_CGSOLVE_H
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<typename T_numtype>
 void dump(const char* name, Array<T_numtype,3>& A)
@@ -151,6 +151,6 @@ cout << "Interior: " << interior.lbound() << ", " << interior.ubound()
     return iteration;
 }
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_CGSOLVE_H
