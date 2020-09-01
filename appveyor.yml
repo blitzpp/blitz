@@ -35,7 +35,7 @@ build_script:
 
   - cmake --build . --target install
 
-  - cmake .. -DCMAKE_GENERATOR_PLATFORM="%CMAKE_GEN_PLAT%" -DENABLE_SERIALISATION=1
+  - cmake .. -DCMAKE_GENERATOR_PLATFORM="%CMAKE_GEN_PLAT%"
   - cmake --build . --config Debug
   - cmake --build . --config Release
   - cmake --build . --target install
