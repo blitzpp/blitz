@@ -15,8 +15,7 @@ set(BZ_PACKAGE_STRING "${CMAKE_PROJECT_NAME} ${blitz_MAJOR}.${blitz_MINOR}")
 
 project(blitz VERSION ${blitz_VERSION} LANGUAGES CXX)
 
-option(BUILD_DOC "Build documentation" OFF)
-option(BUILD_TESTING "Build tests, examples and benchmarks" OFF)
+option(BUILD_TESTING "Build tests" OFF)
 
 #   Packaging
 
@@ -43,16 +42,10 @@ add_custom_target(generated-headers ALL)
 set(PKGCONFIG_LIBS -lblitz)
 
 add_subdirectory(blitz)
-add_subdirectory(random)
 add_subdirectory(src)
-if (BUILD_DOC)
-    add_subdirectory(doc)
-endif()
 
 if (BUILD_TESTING)
     add_subdirectory(testsuite)
-    add_subdirectory(examples)
-    add_subdirectory(benchmarks)
 endif()
 
 #   Add a custom target to mimic autotools "make lib"

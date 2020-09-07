@@ -1,4 +1,15 @@
-include(CheckCXXFeatures)
+# Ubuntu 20.04LTS versions for compilers
+
+set(GCC_MINIMAL 9.3)
+set(CLANG_MINIMAL 10.0)
+
+if (${CMAKE_CXX_COMPILER_ID} STREQUAL GNU AND ${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS ${GCC_MINIMAL})
+  message(FATAL_ERROR "GCC g++ version >= ${GCC_MINIMAL} needed.")
+endif ()
+
+if (${CMAKE_CXX_COMPILER_ID} STREQUAL Clang AND ${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS ${CLANG_MINIMAL})
+  message(FATAL_ERROR "Clang version >= ${CLANG_MINIMAL} needed.")
+endif ()
 
 option(BZ_FULLY64BIT "Enable 64 dimensions with > 2^31 elements (NOT IMPLEMENTED)" OFF)
 option(BZ_THREADSAFE "Enable Blitz thread-safety features" OFF)
@@ -55,16 +66,7 @@ endif()
 set(BLITZ_EXTRA_LIBRARIES ${EXTRA_LIBS} PARENT_SCOPE)
 set(DEPS ${DEP_PKGS} LIBRARIES ${DEP_LIBS} PARENT_SCOPE)
 
-if (NOT CHECKED_COMPILER_CXX_FEATURES)
-    CHECK_ALL_CXX_FEATURES(BZ_)
-    CHECK_HEADER(HAVE_INTTYPES_H inttypes.h)
-    set(BZ_MATH_ABSINT_IN_NAMESPACE_STD ${BZ_HAVE_MATH_ABSINT_IN_NAMESPACE_STD})
-    set(BZ_MATH_FN_IN_NAMESPACE_STD     ${BZ_HAVE_MATH_FN_IN_NAMESPACE_STD})
-    set(BZ_ISNAN_IN_NAMESPACE_STD       ${BZ_HAVE_ISNAN_IN_NAMESPACE_STD})
-    set(BZ_HAVE_NCEG_RESTRICT_EGCS      ${BZ_HAVE_RESTRICT_EGCS})
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.cmake.h.in ${BLITZ_CONFIG_FILE})
-    set(CHECKED_COMPILER_CXX_FEATURES TRUE CACHE INTERNAL "Gating variable to avoid checking compiler features multiple times")
-endif()
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.cmake.h.in ${BLITZ_CONFIG_FILE})
 
 macro(GENERATE_BLITZ_HEADER header prog var)
     add_custom_target(${header} ALL)
