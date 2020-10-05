@@ -49,7 +49,7 @@
  #endif
 #endif
 
-#include <blitz/bzconfig.h>
+#include <blitz/config.h>
 #include <blitz/compiler.h>          // Compiler-specific directives
 #include <blitz/tuning.h>            // Performance tuning
 #include <blitz/tau.h>               // Profiling
