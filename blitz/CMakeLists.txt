@@ -1,7 +1,7 @@
 add_library(BlitzHeaders INTERFACE)
 add_library(Blitz::BlitzHeaders ALIAS BlitzHeaders)
 
-target_include_directories(BlitzHeaders INTERFACE . ${CMAKE_CURRENT_BINARY_DIR}/..)
+target_include_directories(BlitzHeaders INTERFACE ${CMAKE_CURRENT_BINARY_DIR}/..)
 
 
 option(BZ_FULLY64BIT "Enable 64 dimensions with > 2^31 elements (NOT IMPLEMENTED)" OFF)

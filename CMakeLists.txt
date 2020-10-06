@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.16) # FindPython
 
+set(CMAKE_INCLUDE_CURRENT_DIR_IN_INTERFACE ON)
+
 #   Blitz version and release date.
 
 set(blitz_MAJOR 1)
