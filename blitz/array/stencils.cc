@@ -99,16 +99,16 @@ void calcStencilExtent(T_extent& At, const T_stencil& stencil,
     const T_array10&, const T_array11&)
 {
     // Interrogate the stencil to find out its extent
-    _bz_typename stencilExtent_traits<T_array2>::T_stencilExtent Bt;
-    _bz_typename stencilExtent_traits<T_array3>::T_stencilExtent Ct;
-    _bz_typename stencilExtent_traits<T_array4>::T_stencilExtent Dt;
-    _bz_typename stencilExtent_traits<T_array5>::T_stencilExtent Et;
-    _bz_typename stencilExtent_traits<T_array6>::T_stencilExtent Ft;
-    _bz_typename stencilExtent_traits<T_array7>::T_stencilExtent Gt;
-    _bz_typename stencilExtent_traits<T_array8>::T_stencilExtent Ht;
-    _bz_typename stencilExtent_traits<T_array9>::T_stencilExtent It;
-    _bz_typename stencilExtent_traits<T_array10>::T_stencilExtent Jt;
-    _bz_typename stencilExtent_traits<T_array11>::T_stencilExtent Kt;
+    typename stencilExtent_traits<T_array2>::T_stencilExtent Bt;
+    typename stencilExtent_traits<T_array3>::T_stencilExtent Ct;
+    typename stencilExtent_traits<T_array4>::T_stencilExtent Dt;
+    typename stencilExtent_traits<T_array5>::T_stencilExtent Et;
+    typename stencilExtent_traits<T_array6>::T_stencilExtent Ft;
+    typename stencilExtent_traits<T_array7>::T_stencilExtent Gt;
+    typename stencilExtent_traits<T_array8>::T_stencilExtent Ht;
+    typename stencilExtent_traits<T_array9>::T_stencilExtent It;
+    typename stencilExtent_traits<T_array10>::T_stencilExtent Jt;
+    typename stencilExtent_traits<T_array11>::T_stencilExtent Kt;
 
     stencil.apply(At, Bt, Ct, Dt, Et, Ft, Gt, Ht, It, Jt, Kt);
     At.combine(Bt);
@@ -243,16 +243,16 @@ void applyStencil_imp(const T_stencil& stencil, Array<T_numtype1,3>& A,
 
     // Now do the actual loop
     FastArrayIterator<T_numtype1,3> Aiter(A);
-    _bz_typename T_array2::T_iterator Biter(B);
-    _bz_typename T_array3::T_iterator Citer(C);
-    _bz_typename T_array4::T_iterator Diter(D);
-    _bz_typename T_array5::T_iterator Eiter(E);
-    _bz_typename T_array6::T_iterator Fiter(F);
-    _bz_typename T_array7::T_iterator Giter(G);
-    _bz_typename T_array8::T_iterator Hiter(H);
-    _bz_typename T_array9::T_iterator Iiter(I);
-    _bz_typename T_array10::T_iterator Jiter(J);
-    _bz_typename T_array11::T_iterator Kiter(K);
+    typename T_array2::T_iterator Biter(B);
+    typename T_array3::T_iterator Citer(C);
+    typename T_array4::T_iterator Diter(D);
+    typename T_array5::T_iterator Eiter(E);
+    typename T_array6::T_iterator Fiter(F);
+    typename T_array7::T_iterator Giter(G);
+    typename T_array8::T_iterator Hiter(H);
+    typename T_array9::T_iterator Iiter(I);
+    typename T_array10::T_iterator Jiter(J);
+    typename T_array11::T_iterator Kiter(K);
 
     // Load the strides for the innermost loop
     Aiter.loadStride(2);
@@ -346,16 +346,16 @@ void applyStencil_imp(const T_stencil& stencil, Array<T_numtype1,2>& A,
 
     // Now do the actual loop
     FastArrayIterator<T_numtype1,2> Aiter(A);
-    _bz_typename T_array2::T_iterator Biter(B);
-    _bz_typename T_array3::T_iterator Citer(C);
-    _bz_typename T_array4::T_iterator Diter(D);
-    _bz_typename T_array5::T_iterator Eiter(E);
-    _bz_typename T_array6::T_iterator Fiter(F);
-    _bz_typename T_array7::T_iterator Giter(G);
-    _bz_typename T_array8::T_iterator Hiter(H);
-    _bz_typename T_array9::T_iterator Iiter(I);
-    _bz_typename T_array10::T_iterator Jiter(J);
-    _bz_typename T_array11::T_iterator Kiter(K);
+    typename T_array2::T_iterator Biter(B);
+    typename T_array3::T_iterator Citer(C);
+    typename T_array4::T_iterator Diter(D);
+    typename T_array5::T_iterator Eiter(E);
+    typename T_array6::T_iterator Fiter(F);
+    typename T_array7::T_iterator Giter(G);
+    typename T_array8::T_iterator Hiter(H);
+    typename T_array9::T_iterator Iiter(I);
+    typename T_array10::T_iterator Jiter(J);
+    typename T_array11::T_iterator Kiter(K);
 
     // Load the strides for the innermost loop
     Aiter.loadStride(1);
@@ -439,16 +439,16 @@ void applyStencil_imp(const T_stencil& stencil, Array<T_numtype1,1>& A,
 
     // Now do the actual loop
     FastArrayIterator<T_numtype1,1> Aiter(A);
-    _bz_typename T_array2::T_iterator Biter(B);
-    _bz_typename T_array3::T_iterator Citer(C);
-    _bz_typename T_array4::T_iterator Diter(D);
-    _bz_typename T_array5::T_iterator Eiter(E);
-    _bz_typename T_array6::T_iterator Fiter(F);
-    _bz_typename T_array7::T_iterator Giter(G);
-    _bz_typename T_array8::T_iterator Hiter(H);
-    _bz_typename T_array9::T_iterator Iiter(I);
-    _bz_typename T_array10::T_iterator Jiter(J);
-    _bz_typename T_array11::T_iterator Kiter(K);
+    typename T_array2::T_iterator Biter(B);
+    typename T_array3::T_iterator Citer(C);
+    typename T_array4::T_iterator Diter(D);
+    typename T_array5::T_iterator Eiter(E);
+    typename T_array6::T_iterator Fiter(F);
+    typename T_array7::T_iterator Giter(G);
+    typename T_array8::T_iterator Hiter(H);
+    typename T_array9::T_iterator Iiter(I);
+    typename T_array10::T_iterator Jiter(J);
+    typename T_array11::T_iterator Kiter(K);
 
     // Load the strides for the innermost loop
     Aiter.loadStride(0);

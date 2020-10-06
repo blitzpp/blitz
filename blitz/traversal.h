@@ -113,9 +113,9 @@ template<int N_dimensions>
 class TraversalOrderCollection {
 public:
     typedef TraversalOrder<N_dimensions>        T_traversal;
-    typedef _bz_typename T_traversal::T_coord   T_coord;
+    typedef typename T_traversal::T_coord   T_coord;
     typedef set<T_traversal>                    T_set;
-    typedef _bz_typename set<T_traversal>::const_iterator T_iterator;
+    typedef typename set<T_traversal>::const_iterator T_iterator;
 
     const T_traversal* find(const T_coord& size)
     {
@@ -135,7 +135,7 @@ protected:
 };
 
 template<int N_dimensions>
-_bz_typename TraversalOrderCollection<N_dimensions>::T_set
+typename TraversalOrderCollection<N_dimensions>::T_set
     TraversalOrderCollection<N_dimensions>::traversals_;
 
 /*

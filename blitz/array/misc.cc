@@ -50,11 +50,11 @@ fn(const Array<T_numtype,N_rank>& array)                               \
 template<typename T_expr>                                                 \
 inline                                                                 \
 _bz_ArrayExpr<_bz_ArrayExprUnaryOp<_bz_ArrayExpr<T_expr>,              \
-    fnobj<_bz_typename T_expr::T_numtype> > >                          \
+    fnobj<typename T_expr::T_numtype> > >                          \
 fn(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)                              \
 {                                                                      \
     return _bz_ArrayExprUnaryOp<_bz_ArrayExpr<T_expr>,                 \
-        fnobj<_bz_typename T_expr::T_numtype> >(expr);                 \
+        fnobj<typename T_expr::T_numtype> >(expr);                 \
 }                                                                      
                                                                        
 BZ_ARRAY_DECLARE_UOP(operator!, LogicalNot)
@@ -78,11 +78,11 @@ cast(const Array<T_numtype,N_rank>& array, T_cast)
 template<typename T_expr, typename T_cast>
 inline                                                                 
 _bz_ArrayExpr<_bz_ArrayExprUnaryOp<_bz_ArrayExpr<T_expr>,              
-    Cast<_bz_typename T_expr::T_numtype,T_cast> > >                          
+    Cast<typename T_expr::T_numtype,T_cast> > >                          
 cast(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr, T_cast)
 {                                                                      
     return _bz_ArrayExprUnaryOp<_bz_ArrayExpr<T_expr>,                 
-        Cast<_bz_typename T_expr::T_numtype,T_cast> >(expr);                 
+        Cast<typename T_expr::T_numtype,T_cast> >(expr);                 
 }                                                                      
                                                                        
 }

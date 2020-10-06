@@ -79,7 +79,7 @@ template<typename T_expr, int N_index, typename T_reduction>
 class _bz_ArrayExprReduce {
 
 public:   
-    typedef _bz_typename T_reduction::T_numtype T_numtype;
+    typedef typename T_reduction::T_numtype T_numtype;
 
   // select return type
   typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
@@ -312,15 +312,15 @@ private:
 #define BZ_DECL_ARRAY_PARTIAL_REDUCE(fn,reduction)                      \
 template<typename T_expr, int N_index>                                  \
 inline                                                                  \
- _bz_ArrayExpr<_bz_ArrayExprReduce<_bz_typename blitz::asExpr<T_expr>::T_expr, \
+ _bz_ArrayExpr<_bz_ArrayExprReduce<typename blitz::asExpr<T_expr>::T_expr, \
 				   N_index,				\
-				   reduction<_bz_typename T_expr::T_numtype> > > \
+				   reduction<typename T_expr::T_numtype> > > \
  fn(const blitz::ETBase<T_expr>& expr,				\
     const IndexPlaceholder<N_index>&)					\
 {                                                                       \
-  return _bz_ArrayExprReduce<_bz_typename blitz::asExpr<T_expr>::T_expr, \
+  return _bz_ArrayExprReduce<typename blitz::asExpr<T_expr>::T_expr, \
 			     N_index,					\
-			     reduction<_bz_typename T_expr::T_numtype> > \
+			     reduction<typename T_expr::T_numtype> > \
     (blitz::asExpr<T_expr>::getExpr(expr.unwrap()));		\
 }
 
@@ -343,26 +343,26 @@ BZ_DECL_ARRAY_PARTIAL_REDUCE(last,     ReduceLast)
 
 // Prototype of reduction functions
 template<typename T_expr, typename T_reduction>
-_bz_typename T_reduction::T_resulttype
+typename T_reduction::T_resulttype
 _bz_ArrayExprFullReduce(T_expr expr, T_reduction reduction);
 
 template<typename T_expr, typename T_reduction>
-_bz_typename T_reduction::T_resulttype
+typename T_reduction::T_resulttype
 _bz_reduceWithIndexTraversal(T_expr expr, T_reduction reduction);
 
 template<typename T_expr, typename T_reduction>
-_bz_typename T_reduction::T_resulttype
+typename T_reduction::T_resulttype
 _bz_reduceWithIndexVectorTraversal(T_expr expr, T_reduction reduction);
 
 #define BZ_DECL_ARRAY_FULL_REDUCE(fn,reduction)				\
 template<typename T_expr>                                               \
  _bz_inline_et								\
-_bz_typename reduction<_bz_typename T_expr::T_numtype>::T_resulttype    \
+typename reduction<typename T_expr::T_numtype>::T_resulttype    \
  fn(const blitz::ETBase<T_expr>& expr)				\
 {                                                                       \
   return _bz_ArrayExprFullReduce					\
     (blitz::asExpr<T_expr>::getExpr(expr.unwrap()),		\
-     reduction<_bz_typename T_expr::T_numtype>());			\
+     reduction<typename T_expr::T_numtype>());			\
 }                                                                       \
 
 BZ_DECL_ARRAY_FULL_REDUCE(sum,      ReduceSum)
@@ -383,13 +383,13 @@ BZ_DECL_ARRAY_FULL_REDUCE(last,     ReduceLast)
 #define BZ_DECL_ARRAY_FULL_REDUCE_INDEXVECTOR(fn,reduction)             \
 template<typename T_expr>                                               \
  _bz_inline_et								\
- _bz_typename reduction<_bz_typename T_expr::T_numtype,			\
+ typename reduction<typename T_expr::T_numtype,			\
 			T_expr::rank_>::T_resulttype			\
  fn(const blitz::ETBase<T_expr>& expr)				\
 {                                                                       \
   return _bz_reduceWithIndexVectorTraversal				\
     (blitz::asExpr<T_expr>::getExpr(expr.unwrap()),		\
-     reduction<_bz_typename T_expr::T_numtype, T_expr::rank_>());	\
+     reduction<typename T_expr::T_numtype, T_expr::rank_>());	\
 }
 
 BZ_DECL_ARRAY_FULL_REDUCE_INDEXVECTOR(minIndex, ReduceMinIndexVector)

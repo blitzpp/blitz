@@ -67,11 +67,11 @@ protected:
     T_iterator iter_;
 };
 
-template<typename T_array, typename T_iterator = _bz_typename T_array::T_numtype*>
+template<typename T_array, typename T_iterator = typename T_array::T_numtype*>
 class ListInitializationSwitch {
 
 public:
-    typedef _bz_typename T_array::T_numtype T_numtype;
+    typedef typename T_array::T_numtype T_numtype;
 
     ListInitializationSwitch(const ListInitializationSwitch<T_array>& lis)
         : array_(lis.array_), value_(lis.value_), 

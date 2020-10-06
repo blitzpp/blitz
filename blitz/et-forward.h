@@ -43,7 +43,7 @@ template<typename P_expr, int N_map0, int N_map1=0, int N_map2=0,
 template<typename T_expr, int N_index, 
 	 typename T_reduction> class _bz_ArrayExprReduce;
 
-template<typename P_expr, _bz_typename P_result> class _bz_StencilExpr;
+template<typename P_expr, typename P_result> class _bz_StencilExpr;
 
 template<int N> class IndexPlaceholder;
 

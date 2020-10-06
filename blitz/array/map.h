@@ -436,7 +436,7 @@ public:
     { }
 
   // this is ambiguous with the above
-  // ArrayIndexMapping(_bz_typename T_expr::T_ctorArg1 a)
+  // ArrayIndexMapping(typename T_expr::T_ctorArg1 a)
   //       : iter_(a)
   //   { }
 
