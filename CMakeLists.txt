@@ -34,19 +34,19 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 #   Packaging
 
-set(CPACK_GENERATOR "TGZ")
-set(CPACK_PACKAGE_VERSION_MAJOR ${blitz_MAJOR})
-set(CPACK_PACKAGE_VERSION_MINOR ${blitz_MINOR})
-set(CPACK_PACKAGE_VERSION_PATCH ${blitz_PATCH})
-set(CPACK_SOURCE_GENERATOR "TBZ2")
-set(CPACK_SOURCE_PACKAGE_FILE_NAME blitz-${blitz_VERSION})
-set(CPACK_SOURCE_IGNORE_FILES ".*.swp$" ".*.swo$" "~$" ".bz2$" ".gz$")
+#set(CPACK_GENERATOR "TGZ")
+#set(CPACK_PACKAGE_VERSION_MAJOR ${blitz_MAJOR})
+#set(CPACK_PACKAGE_VERSION_MINOR ${blitz_MINOR})
+#set(CPACK_PACKAGE_VERSION_PATCH ${blitz_PATCH})
+#set(CPACK_SOURCE_GENERATOR "TBZ2")
+#set(CPACK_SOURCE_PACKAGE_FILE_NAME blitz-${blitz_VERSION})
+#set(CPACK_SOURCE_IGNORE_FILES ".*.swp$" ".*.swo$" "~$" ".bz2$" ".gz$")
 
-include(CPack)
-include(UnitTests)
-include(GNUInstallDirs)
-include(CreatePkgConfig)
-include(CMakePackageConfigHelpers)
+#include(CPack)
+#include(UnitTests)
+#include(GNUInstallDirs)
+#include(CreatePkgConfig)
+#include(CMakePackageConfigHelpers)
 
 add_subdirectory(blitz)
 add_subdirectory(src)
@@ -61,17 +61,17 @@ add_subdirectory(testsuite)
 
 #   Configuration files.
 
-CreatePkgConfigInfo(blitz "")
-CreatePkgConfigInfo(blitz-static static)
+#CreatePkgConfigInfo(blitz "")
+#CreatePkgConfigInfo(blitz-static static)
 
-write_basic_package_version_file(
-    cmake/${PROJECT_NAME}ConfigVersion.cmake
-    VERSION ${PROJECT_VERSION}
-    COMPATIBILITY AnyNewerVersion)
-configure_package_config_file(
-    cmake/${PROJECT_NAME}Config.cmake.in
-    cmake/${PROJECT_NAME}Config.cmake
-    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/)
+#write_basic_package_version_file(
+    #cmake/${PROJECT_NAME}ConfigVersion.cmake
+    #VERSION ${PROJECT_VERSION}
+    #COMPATIBILITY AnyNewerVersion)
+#configure_package_config_file(
+    #cmake/${PROJECT_NAME}Config.cmake.in
+    #cmake/${PROJECT_NAME}Config.cmake
+    #INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/)
 
 #   Installation
 

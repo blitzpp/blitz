@@ -4,9 +4,9 @@ target_link_libraries(peter-nordlund-1 Blitz::Blitz)
 
 add_definitions(-DBZ_DEBUG)
 
-add_custom_target(testsuite)
+#add_custom_target(testsuite)
 
-UNITTEST(testsuite module module1.cpp module2.cpp)
+#UNITTEST(testsuite module module1.cpp module2.cpp)
 
 #TESTS(testsuite
       #Adnene-Ben-Abdallah-1 Adnene-Ben-Abdallah-2 arrayresize chris-jeffery-1 chris-jeffery-2
