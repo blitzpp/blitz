@@ -35,6 +35,12 @@ if (Boost_SERIALIZATION_FOUND)
     target_link_libraries(BlitzHeaders INTERFACE Boost::serialization)
 endif()
 
+string(TOLOWER ${CMAKE_BUILD_TYPE} cmake_build_type_tolower)
+if (cmake_build_type_tolower STREQUAL "debug")
+    message(STATUS "Blitz debugging flag on")
+    target_compile_definitions(BlitzHeaders INTERFACE BZ_DEBUG)
+endif()
+
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in config.h)
 
 macro(GENERATE_BLITZ_HEADER header prog var)
