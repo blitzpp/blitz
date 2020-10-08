@@ -57,7 +57,9 @@ add_library(Blitz::Blitz ALIAS Blitz)
 target_include_directories(Blitz INTERFACE .)
 target_link_libraries(Blitz INTERFACE Blitz::BlitzHeaders Blitz::BlitzLib)
 
-add_subdirectory(testsuite)
+if (CMAKE_PROJECT_NAME STREQUAL "blitz") # check whether the current file is top-level CMakeLists.txt
+  add_subdirectory(testsuite)
+endif()
 
 #   Configuration files.
 
