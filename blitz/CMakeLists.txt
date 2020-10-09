@@ -43,31 +43,9 @@ endif()
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in config.h)
 
-macro(GENERATE_BLITZ_HEADER header prog var)
-    add_custom_target(${header} ALL)
-    add_dependencies(${header} ${prog})
-#    add_dependencies(generated-headers ${header})
-    add_custom_command(
-        COMMAND $<TARGET_FILE:${prog}>
-        TARGET  ${header}
-        WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/blitz/generate
-        OUTPUTS ${header}
-    )
-    list(APPEND ${var} ${CMAKE_CURRENT_BINARY_DIR}/${header})
-endmacro()
-
 add_subdirectory(generate) 
 add_subdirectory(meta) 
 add_subdirectory(array)
-
-GENERATE_BLITZ_HEADER(vecbops.cc    genvecbops  GENERATED_HEADERS)
-GENERATE_BLITZ_HEADER(vecuops.cc    genvecuops  GENERATED_HEADERS)
-GENERATE_BLITZ_HEADER(vecwhere.cc   genvecwhere GENERATED_HEADERS)
-GENERATE_BLITZ_HEADER(vecbfn.cc     genvecbfn   GENERATED_HEADERS)
-GENERATE_BLITZ_HEADER(matbops.h     genmatbops  GENERATED_HEADERS)
-GENERATE_BLITZ_HEADER(matuops.h     genmatuops  GENERATED_HEADERS)
-GENERATE_BLITZ_HEADER(mathfunc.h    genmathfunc GENERATED_HEADERS)
-GENERATE_BLITZ_HEADER(promote-old.h genpromote  GENERATED_HEADERS)
 
 target_link_libraries(BlitzHeaders INTERFACE Blitz::Array Blitz::Meta Boost::serialization)
 

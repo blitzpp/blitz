@@ -1,6 +1,3 @@
-GENERATE_BLITZ_HEADER(bops.cc genarrbops BLITZ_ARRAY_GENERATED_HEADERS)
-GENERATE_BLITZ_HEADER(uops.cc genarruops BLITZ_ARRAY_GENERATED_HEADERS)
-
 add_library(Array INTERFACE)
 add_library(Blitz::Array ALIAS Array)
 
