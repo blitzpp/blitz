@@ -1,6 +1,8 @@
 add_library(Array INTERFACE)
 add_library(Blitz::Array ALIAS Array)
 
+target_include_directories(Array INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/../..")
+
 #install(FILES
         #asexpr.h asexpr.cc cartesian.h cgsolve.h complex.cc convolve.cc convolve.h cycle.cc domain.h et.h expr.h expr.cc
         #fastiter.h funcs.h functorExpr.h geometry.h indirect.h interlace.cc io.cc iter.h map.h methods.cc misc.cc multi.h
