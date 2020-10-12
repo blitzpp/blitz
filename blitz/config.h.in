@@ -4,6 +4,8 @@
 // This file (if named config.h) was generated automatically when running cmake
 // from the file config.cmake.h.in.
 
+extern const char blitz_GIT_SHA1[];
+
 // Macro for declaring aligned variables.
 /* #undef BZ_HAVE_ALIGNEMENT_DIRECTIVE_WINDOWS_STYLE */
 #ifdef BZ_HAVE_ALIGNEMENT_DIRECTIVE_WINDOWS_STYLE

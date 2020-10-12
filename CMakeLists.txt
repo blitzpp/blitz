@@ -49,6 +49,16 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 #include(CMakePackageConfigHelpers)
 
 add_subdirectory(blitz)
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/")
+
+include(GetGitRevisionDescription)
+get_git_head_revision(BLITZ_GIT_REFSPEC BLITZ_GIT_SHA1)
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/blitzGitSHA1.cc.in" "${CMAKE_CURRENT_BINARY_DIR}/blitzGitSHA1.cc" @ONLY)
+
+add_library(blitzGitSHA1 OBJECT "${CMAKE_CURRENT_BINARY_DIR}/blitzGitSHA1.cc")
+
+
 add_subdirectory(src)
 
 add_library(Blitz INTERFACE)

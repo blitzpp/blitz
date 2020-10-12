@@ -1,4 +1,4 @@
-add_library(BlitzLib SHARED globals.cpp)
+add_library(BlitzLib SHARED globals.cpp "$<TARGET_OBJECTS:blitzGitSHA1>")
 add_library(Blitz::BlitzLib ALIAS BlitzLib)
 
 target_link_libraries(BlitzLib PUBLIC BlitzHeaders)
