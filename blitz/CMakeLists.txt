@@ -30,7 +30,7 @@ endif()
 
 find_package(Boost 1.71 COMPONENTS serialization)
 
-if (Boost_SERIALIZATION_FOUND)
+if (TARGET Boost::serialization)
     target_compile_definitions(BlitzHeaders INTERFACE BZ_HAVE_BOOST_SERIALIZATION)
     target_link_libraries(BlitzHeaders INTERFACE Boost::serialization)
 endif()
