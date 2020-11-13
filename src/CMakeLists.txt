@@ -1,12 +1,7 @@
-add_library(BlitzLib SHARED globals.cpp "$<TARGET_OBJECTS:blitzGitSHA1>")
-add_library(Blitz::BlitzLib ALIAS BlitzLib)
+add_library(BlitzSrc OBJECT globals.cpp)
+add_library(Blitz::BlitzSrc ALIAS BlitzSrc)
 
-target_link_libraries(BlitzLib PUBLIC BlitzHeaders)
-
-set_target_properties(BlitzLib PROPERTIES
-                      VERSION ${blitz_VERSION}
-                      SOVERSION 0
-                      CLEAN_DIRECT_OUTPUT 1)
+target_link_libraries(BlitzSrc PUBLIC BlitzHeaders)
 
 #install(TARGETS ${BLITZ_LIBS}
         #EXPORT  ${PROJECT_NAME}Targets

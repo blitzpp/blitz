@@ -59,14 +59,22 @@ add_library(blitzGitSHA1 OBJECT "${CMAKE_CURRENT_BINARY_DIR}/blitzGitSHA1.cc")
 
 add_subdirectory(src)
 
-add_library(Blitz INTERFACE)
+add_library(Blitz SHARED $<TARGET_OBJECTS:Blitz::BlitzSrc> $<TARGET_OBJECTS:blitzGitSHA1>)
 add_library(Blitz::Blitz ALIAS Blitz)
 
-target_link_libraries(Blitz INTERFACE Blitz::BlitzHeaders Blitz::BlitzLib)
+target_link_libraries(Blitz PUBLIC Blitz::BlitzHeaders)
+
+set_target_properties(Blitz PROPERTIES
+                      VERSION ${blitz_VERSION}
+                      SOVERSION 0
+                      CLEAN_DIRECT_OUTPUT 1)
+
 
 if (CMAKE_PROJECT_NAME STREQUAL "blitz") # check whether the current file is top-level CMakeLists.txt
   add_subdirectory(testsuite)
 endif()
+
+install(TARGETS Blitz DESTINATION lib)
 
 #   Configuration files.
 
