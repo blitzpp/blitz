@@ -328,11 +328,11 @@ public:
             str += ",";
 
             char tmpBuf[10];
-            sprintf(tmpBuf, "%d", N_rows);
+            snprintf(tmpBuf, 10, "%d", N_rows);
 
             str += tmpBuf;
             str += ",";
-            sprintf(tmpBuf, "%d", N_columns);
+            snprintf(tmpBuf, 10, "%d", N_columns);
 
             str += tmpBuf;
             str += ">";

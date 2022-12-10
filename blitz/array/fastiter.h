@@ -286,7 +286,7 @@ public:
             str += ",";
 
             char tmpBuf[10];
-            sprintf(tmpBuf, "%d", N_rank);
+            snprintf(tmpBuf, 10, "%d", N_rank);
 
             str += tmpBuf;
             str += ">";

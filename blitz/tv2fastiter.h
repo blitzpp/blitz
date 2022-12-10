@@ -348,7 +348,7 @@ public:
             str += ",";
 
             char tmpBuf[10];
-            sprintf(tmpBuf, "%d", N_length);
+            snprintf(tmpBuf, 10, "%d", N_length);
 
             str += tmpBuf;
             str += ">";
