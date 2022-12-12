@@ -35,6 +35,8 @@
 
 #include <blitz/blitz.h>
 
+#define BUFFER_SIZE 10
+
 namespace blitz {
 
 class prettyPrintFormat {
