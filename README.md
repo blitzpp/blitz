@@ -1,6 +1,20 @@
 [![Build Status](https://travis-ci.org/blitzpp/blitz.svg?branch=master)](https://travis-ci.org/blitzpp/blitz)
 [![Windows Build status](http://ci.appveyor.com/api/projects/status/github/blitzpp/blitz?branch=master&svg=true)](https://ci.appveyor.com/project/blitzpp/blitz/branch/master)
 
+# IMPORTANT NOTICE
+
+Blitz++ written for the C++98 standard, and is not able to make use of the substantial benefits that came with C++11.  Although it works as well as ever, as of 2024, Blitz++ is thoroughly obsolete, which results in a number of annoyances when using it in modern C++ code.
+
+In the meantime, Fortran-90 / NumPy style arrays have received high-level thought in the C++ Standards community, resulting in `std::mdspan`.  I highly recommend anyone starting a new project to consider this alternative before using Blitz++.  MDSpan is part of C++23 and in theory should be supported by popular compilers "out of the box."  If your C++ compiler does not (yet) support MDSpan, I would try using the publicly available [Reference Implemenation](https://github.com/kokkos/mdspan).  Here is more information on MDSpan:
+
+* https://en.cppreference.com/w/cpp/container/mdspan
+* https://www.studyplan.dev/pro-cpp/mdspan
+* https://www.osti.gov/servlets/purl/1646434
+
+Blitz++ has not received new features for many years, and will not going forward either.  However, it is likely to be required for many years by a number of existing projects, and is provided here for users and developers of those projects.
+
+# Overview
+
 Blitz++ is a C++ template class library that provides high-performance multidimensional array containers
 for scientific computing. 
 
