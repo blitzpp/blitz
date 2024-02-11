@@ -417,7 +417,7 @@ garbage.  See also tt(resizeAndPreserve()).
 bzindex(resizeAndPreserve())
 bzindex(Array!member functions!resizeAndPreserve())
 bf(bzverb(\
-void                              resizeAndPreserve(int extent1, ...);
+void                              resizeAndPreserve(int extent1, ..., bool zeroInitialize=false);
 void                              resizeAndPreserve(const TinyVector<int,N_rank>&)));
 These functions resize an array to the specified size.  If
 the array is already the size specified, then no change
@@ -425,7 +425,7 @@ occurs (the array is not reallocated and copied).
 The contents of the array are preserved whenever possible;
 if the new array size is smaller, then some data will be
 lost.  Any new elements created by resizing the array
-are left uninitialized.
+are left uninitialized unless zeroInitialize is set to true.
 
 bzindex(reverse(), reverseSelf())
 bzindex(Array!member functions!reverse())
