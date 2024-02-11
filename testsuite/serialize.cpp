@@ -1,5 +1,5 @@
 #include "testsuite.h"
-#include <blitz/bzconfig.h>
+#include <blitz/config.h>
 #include <blitz/array.h>
 #include <random/uniform.h>
 

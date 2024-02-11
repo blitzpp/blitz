@@ -186,7 +186,7 @@ public:
     template<typename T2>
     void operator=(T2) { }
 
-    _bz_typename multicomponent_traits<T>::T_element operator[](int i) const
+    typename multicomponent_traits<T>::T_element operator[](int i) const
     { return value_[i]; }
 
     void loadStride(int) { }
@@ -254,10 +254,10 @@ public:
         return dummy<T_numtype>(1);
     }
  
-    dummy<_bz_typename multicomponent_traits<T_numtype>::T_element> 
+    dummy<typename multicomponent_traits<T_numtype>::T_element> 
         operator[](int) const
     {
-        return dummy<_bz_typename multicomponent_traits<T_numtype>::T_element>
+        return dummy<typename multicomponent_traits<T_numtype>::T_element>
             (1);
     }
  

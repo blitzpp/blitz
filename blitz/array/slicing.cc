@@ -30,6 +30,8 @@
 #ifndef BZ_ARRAYSLICING_CC
 #define BZ_ARRAYSLICING_CC
 
+#include <boost/preprocessor/repetition/repeat.hpp>
+
 #ifndef BZ_ARRAY_H
  #error <blitz/array/slicing.cc> must be included via <blitz/array.h>
 #endif
@@ -214,12 +216,8 @@ void Array<P_numtype, N_rank>::constructSubarray(
  * combination of int and Range parameters.  There's room for up
  * to 11 parameters, but any unused parameters have no effect.
  */
-template<typename P_numtype, int N_rank> template<int N_rank2, typename R0,
-    class R1, typename R2, typename R3, typename R4, typename R5, typename R6, typename R7,
-    class R8, typename R9, typename R10>
-void Array<P_numtype, N_rank>::constructSlice(Array<T_numtype, N_rank2>& array,
-    R0 r0, R1 r1, R2 r2, R3 r3, R4 r4, R5 r5, R6 r6, R7 r7, R8 r8, R9 r9,
-    R10 r10)
+template<typename P_numtype, int N_rank> template<int N_rank2, BOOST_PP_ENUM_PARAMS(BLITZ_ARRAY_LARGEST_RANK,typename R)>
+void Array<P_numtype, N_rank>::constructSlice(Array<T_numtype, N_rank2>& array, BOOST_PP_ENUM_BINARY_PARAMS(BLITZ_ARRAY_LARGEST_RANK,R,r))
 {
     MemoryBlockReference<T_numtype>::changeBlock(array);
 
@@ -227,17 +225,11 @@ void Array<P_numtype, N_rank>::constructSlice(Array<T_numtype, N_rank2>& array,
 
     TinyVector<int, N_rank2> rankMap;
 
-    slice(setRank, r0, array, rankMap, 0);
-    slice(setRank, r1, array, rankMap, 1);
-    slice(setRank, r2, array, rankMap, 2);
-    slice(setRank, r3, array, rankMap, 3);
-    slice(setRank, r4, array, rankMap, 4);
-    slice(setRank, r5, array, rankMap, 5);
-    slice(setRank, r6, array, rankMap, 6);
-    slice(setRank, r7, array, rankMap, 7);
-    slice(setRank, r8, array, rankMap, 8);
-    slice(setRank, r9, array, rankMap, 9);
-    slice(setRank, r10, array, rankMap, 10);
+#define DEFAULT_print(z, n, data) slice(setRank, r##n, array, rankMap, n); 
+
+    BOOST_PP_REPEAT(BLITZ_ARRAY_LARGEST_RANK,DEFAULT_print,~)
+
+#undef  DEFAULT_print
 
     // Redo the ordering_ array to account for dimensions which
     // have been sliced away.

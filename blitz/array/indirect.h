@@ -65,17 +65,17 @@ inline void applyOverSubdomain(const T_array& array, T_arrayiter& arrayIter,
 template<typename T_array, typename T_index> template<typename T_rhs>
 void IndirectArray<T_array, T_index>::operator=(T_rhs rhs)
 {
-    typedef _bz_typename asExpr<T_rhs>::T_expr T_expr;
+    typedef typename asExpr<T_rhs>::T_expr T_expr;
     T_expr expr(rhs);
 
-    _bz_typename T_array::T_iterator arrayIter(array_);
+    typename T_array::T_iterator arrayIter(array_);
 
-    _bz_typename T_index::iterator iter = index_.begin(),
+    typename T_index::iterator iter = index_.begin(),
                        end = index_.end();
 
     for (; iter != end; ++iter)
     {
-        _bz_typename T_index::value_type subdomain = *iter;
+        typename T_index::value_type subdomain = *iter;
         applyOverSubdomain(array_, arrayIter, subdomain, expr);
     }
 }
@@ -94,7 +94,7 @@ inline void applyOverSubdomain(const T_array& BZ_DEBUG_PARAM(array), T_arrayiter
     arrayIter.moveTo(subdomain);
     expr.moveTo(subdomain);
 
-    *const_cast<_bz_typename T_arrayiter::T_numtype*>(arrayIter.data()) = *expr;
+    *const_cast<typename T_arrayiter::T_numtype*>(arrayIter.data()) = *expr;
 }
 
 // Specialization for RectDomain<N>
@@ -103,7 +103,7 @@ inline void applyOverSubdomain(const T_array& BZ_DEBUG_PARAM(array), T_arrayiter
     RectDomain<N_rank> subdomain,
     T_expr expr)
 {
-    typedef _bz_typename T_array::T_numtype T_numtype;
+    typedef typename T_array::T_numtype T_numtype;
 
     // Assume that the RectDomain<N_rank> is a 1-D strip.
     // Find the dimension in which the strip is oriented.  This
@@ -182,7 +182,7 @@ inline void applyOverSubdomain(const T_array& BZ_DEBUG_PARAM(array), T_arrayiter
 
     for (int i=lbound; i <= ubound; ++i)
     {
-        *const_cast<_bz_typename T_arrayiter::T_numtype*>(arrayIter.data()) 
+        *const_cast<typename T_arrayiter::T_numtype*>(arrayIter.data()) 
             = *expr;
         expr.advance();
         arrayIter.advance();
@@ -375,7 +375,7 @@ struct cp_findContainerType {
 template<typename T2, typename T3, typename T4, typename T5, typename T6,
          typename T7, typename T8, typename T9, typename T10, typename T11>
 struct cp_findContainerType<int,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11> {
-    typedef _bz_typename
+    typedef typename
         cp_findContainerType<T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_container
         T_container;
 };
@@ -415,11 +415,11 @@ struct cp_traits<int,T2> {
 // specified.
 
 template<typename T1, typename T2>
-CartesianProduct<TinyVector<int,2>, _bz_typename 
+CartesianProduct<TinyVector<int,2>, typename 
     cp_findContainerType<T1,T2>::T_container,2> 
 indexSet(const T1& c1, const T2& c2)
 {
-    typedef _bz_typename cp_findContainerType<T1,T2>::T_container
+    typedef typename cp_findContainerType<T1,T2>::T_container
         T_container;
 
     return CartesianProduct<TinyVector<int,2>, T_container, 2>(
@@ -428,11 +428,11 @@ indexSet(const T1& c1, const T2& c2)
 }
 
 template<typename T1, typename T2, typename T3>
-CartesianProduct<TinyVector<int,3>, _bz_typename
+CartesianProduct<TinyVector<int,3>, typename
     cp_findContainerType<T1,T2,T3>::T_container, 3>
 indexSet(const T1& c1, const T2& c2, const T3& c3)
 {
-    typedef _bz_typename cp_findContainerType<T1,T2,T3>::T_container
+    typedef typename cp_findContainerType<T1,T2,T3>::T_container
         T_container;
 
     return CartesianProduct<TinyVector<int,3>, T_container, 3>(
@@ -442,11 +442,11 @@ indexSet(const T1& c1, const T2& c2, const T3& c3)
 }
 
 template<typename T1, typename T2, typename T3, typename T4>
-CartesianProduct<TinyVector<int,4>, _bz_typename
+CartesianProduct<TinyVector<int,4>, typename
     cp_findContainerType<T1,T2,T3,T4>::T_container, 4>
 indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4)
 {
-    typedef _bz_typename cp_findContainerType<T1,T2,T3,T4>::T_container
+    typedef typename cp_findContainerType<T1,T2,T3,T4>::T_container
         T_container;
 
     return CartesianProduct<TinyVector<int,4>, T_container, 4>(
@@ -457,11 +457,11 @@ indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4)
 }
 
 template<typename T1, typename T2, typename T3, typename T4, typename T5>
-CartesianProduct<TinyVector<int,5>, _bz_typename
+CartesianProduct<TinyVector<int,5>, typename
     cp_findContainerType<T1,T2,T3,T4,T5>::T_container, 5>
 indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4, const T5& c5)
 {
-    typedef _bz_typename cp_findContainerType<T1,T2,T3,T4,T5>::T_container
+    typedef typename cp_findContainerType<T1,T2,T3,T4,T5>::T_container
         T_container;
 
     return CartesianProduct<TinyVector<int,5>, T_container, 5>(
@@ -474,12 +474,12 @@ indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4, const T5& c5)
 
 template<typename T1, typename T2, typename T3, typename T4, typename T5,
          typename T6>
-CartesianProduct<TinyVector<int,6>, _bz_typename
+CartesianProduct<TinyVector<int,6>, typename
     cp_findContainerType<T1,T2,T3,T4,T5,T6>::T_container, 6>
 indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4, const T5& c5,
     const T6& c6)
 {
-    typedef _bz_typename cp_findContainerType<T1,T2,T3,T4,T5,T6>::T_container
+    typedef typename cp_findContainerType<T1,T2,T3,T4,T5,T6>::T_container
         T_container;
 
     return CartesianProduct<TinyVector<int,6>, T_container, 6>(
@@ -493,12 +493,12 @@ indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4, const T5& c5,
 
 template<typename T1, typename T2, typename T3, typename T4, typename T5,
          typename T6, typename T7>
-CartesianProduct<TinyVector<int,7>, _bz_typename
+CartesianProduct<TinyVector<int,7>, typename
     cp_findContainerType<T1,T2,T3,T4,T5,T6,T7>::T_container, 7>
 indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4, const T5& c5,
     const T6& c6, const T7& c7)
 {
-    typedef _bz_typename
+    typedef typename
         cp_findContainerType<T1,T2,T3,T4,T5,T6,T7>::T_container
         T_container;
 
@@ -514,12 +514,12 @@ indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4, const T5& c5,
 
 template<typename T1, typename T2, typename T3, typename T4, typename T5,
          typename T6, typename T7, typename T8>
-CartesianProduct<TinyVector<int,8>, _bz_typename
+CartesianProduct<TinyVector<int,8>, typename
     cp_findContainerType<T1,T2,T3,T4,T5,T6,T7,T8>::T_container, 8>
 indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4, const T5& c5,
     const T6& c6, const T7& c7, const T8& c8)
 {
-    typedef _bz_typename
+    typedef typename
         cp_findContainerType<T1,T2,T3,T4,T5,T6,T7,T8>::T_container
         T_container;
 
@@ -536,12 +536,12 @@ indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4, const T5& c5,
 
 template<typename T1, typename T2, typename T3, typename T4, typename T5,
          typename T6, typename T7, typename T8, typename T9>
-CartesianProduct<TinyVector<int,9>, _bz_typename
+CartesianProduct<TinyVector<int,9>, typename
     cp_findContainerType<T1,T2,T3,T4,T5,T6,T7,T8,T9>::T_container, 9>
 indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4, const T5& c5,
     const T6& c6, const T7& c7, const T8& c8, const T9& c9)
 {
-    typedef _bz_typename
+    typedef typename
         cp_findContainerType<T1,T2,T3,T4,T5,T6,T7,T8,T9>::T_container
         T_container;
 
@@ -559,12 +559,12 @@ indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4, const T5& c5,
 
 template<typename T1, typename T2, typename T3, typename T4, typename T5,
          typename T6, typename T7, typename T8, typename T9, typename T10>
-CartesianProduct<TinyVector<int,10>, _bz_typename
+CartesianProduct<TinyVector<int,10>, typename
     cp_findContainerType<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>::T_container, 10>
 indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4, const T5& c5,
     const T6& c6, const T7& c7, const T8& c8, const T9& c9, const T10& c10)
 {
-    typedef _bz_typename
+    typedef typename
         cp_findContainerType<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>::T_container
         T_container;
 
@@ -584,13 +584,13 @@ indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4, const T5& c5,
 template<typename T1, typename T2, typename T3, typename T4, typename T5,
          typename T6, typename T7, typename T8, typename T9, typename T10,
          typename T11>
-CartesianProduct<TinyVector<int,11>, _bz_typename
+CartesianProduct<TinyVector<int,11>, typename
     cp_findContainerType<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_container, 11>
 indexSet(const T1& c1, const T2& c2, const T3& c3, const T4& c4, const T5& c5,
     const T6& c6, const T7& c7, const T8& c8, const T9& c9, const T10& c10,
     const T11& c11)
 {
-    typedef _bz_typename
+    typedef typename
         cp_findContainerType<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>::T_container
         T_container;
 

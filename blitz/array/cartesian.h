@@ -244,7 +244,7 @@ void CartesianProduct<T_tuple,T_container,N_containers>::debugDump()
     for (int i=0; i < N_containers; ++i)
     {
         cout << "Container " << (i+1) << ": ";
-        _bz_typename T_container::const_iterator iter = containers_[i]->begin(),
+        typename T_container::const_iterator iter = containers_[i]->begin(),
             end = containers_[i]->end();
         for (; iter != end; ++iter)
             cout << (*iter) << '\t'; 
@@ -254,7 +254,7 @@ void CartesianProduct<T_tuple,T_container,N_containers>::debugDump()
 template<typename T_tuple, typename T_container, int N_containers>
 class CartesianProductIterator {
 public:
-    typedef _bz_typename T_container::const_iterator citerator;
+    typedef typename T_container::const_iterator citerator;
     typedef CartesianProductIterator<T_tuple,T_container,N_containers> iterator;
     typedef CartesianProduct<T_tuple,T_container,N_containers> T_cp;
 

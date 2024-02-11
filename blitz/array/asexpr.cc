@@ -43,36 +43,36 @@ namespace blitz {
 
 // default to scalar
 template <typename T>
-_bz_typename asExpr<T>::T_expr asExpr<T>::getExpr(const T& x)
+typename asExpr<T>::T_expr asExpr<T>::getExpr(const T& x)
 { return T_expr(x); }
 
 // expression template term just returns itself
 template <typename T>
-const _bz_typename asExpr<_bz_ArrayExpr<T> >::T_expr& 
+const typename asExpr<_bz_ArrayExpr<T> >::T_expr& 
 asExpr<_bz_ArrayExpr<T> >::getExpr(const T_expr& x) 
 { return x; }
 
 // array operand returns iterator
 template <typename T,int N>
-_bz_typename asExpr<Array<T,N> >::T_expr 
+typename asExpr<Array<T,N> >::T_expr 
 asExpr<Array<T,N> >::getExpr(const Array<T,N>& x) 
 { return x.beginFast(); }
 
 //  tinyvector operand returns iterator
 template <typename T,int N>
-_bz_typename asExpr<TinyVector<T,N> >::T_expr
+typename asExpr<TinyVector<T,N> >::T_expr
 asExpr<TinyVector<T,N> >::getExpr(const TinyVector<T,N>& x)
 { return x.beginFast(); }
 
 //  tinymatrix operands returns iterator
 template <typename T,int Nr, int Nc>
-_bz_typename asExpr<TinyMatrix<T,Nr, Nc> >::T_expr
+typename asExpr<TinyMatrix<T,Nr, Nc> >::T_expr
 asExpr<TinyMatrix<T,Nr, Nc> >::getExpr(const TinyMatrix<T,Nr,Nc>& x) 
 { return x.beginFast(); }
 
 //  Index placeholder returns itself
 template <int N>
-_bz_typename asExpr<IndexPlaceholder<N> >::T_expr
+typename asExpr<IndexPlaceholder<N> >::T_expr
 asExpr<IndexPlaceholder<N> >::getExpr(const T_expr& x)
  { return x; }
 

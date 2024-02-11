@@ -48,8 +48,8 @@ public:
     static const int loopFlag = (I < N-1) ? 1 : 0;
 
     template<typename T_expr1, typename T_expr2>
-    static inline BZ_PROMOTE(_bz_typename T_expr1::T_numtype,
-        _bz_typename T_expr2::T_numtype)
+    static inline BZ_PROMOTE(typename T_expr1::T_numtype,
+        typename T_expr2::T_numtype)
     f(const T_expr1& a, const T_expr2& b)
     {
         return a[I] * b[I]
@@ -57,8 +57,8 @@ public:
     }
 
     template<typename T_expr1, typename T_expr2>
-    static inline BZ_PROMOTE(_bz_typename T_expr1::T_numtype,
-        _bz_typename T_expr2::T_numtype)
+    static inline BZ_PROMOTE(typename T_expr1::T_numtype,
+        typename T_expr2::T_numtype)
     f_value_ref(T_expr1 a, const T_expr2& b)
     {
         return a[I] * b[I]
@@ -66,8 +66,8 @@ public:
     }
 
     template<typename T_expr1, typename T_expr2>
-    static inline BZ_PROMOTE(_bz_typename T_expr1::T_numtype,
-        _bz_typename T_expr2::T_numtype)
+    static inline BZ_PROMOTE(typename T_expr1::T_numtype,
+        typename T_expr2::T_numtype)
     f_ref_value(const T_expr1& a, T_expr2 b)
     {
         return a[I] * b[I]
@@ -75,7 +75,7 @@ public:
     }
 
     template<typename T_expr1, typename P_numtype2>
-    static inline BZ_PROMOTE(_bz_typename T_expr1::T_numtype,
+    static inline BZ_PROMOTE(typename T_expr1::T_numtype,
         P_numtype2)
     dotWithArgs(const T_expr1& a, P_numtype2 i1, P_numtype2 i2=0,
         P_numtype2 i3=0, P_numtype2 i4=0, P_numtype2 i5=0, P_numtype2 i6=0,

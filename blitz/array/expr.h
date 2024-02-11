@@ -109,7 +109,7 @@ class _bz_ArrayExpr
 
 public:
     typedef P_expr T_expr;
-    typedef _bz_typename T_expr::T_numtype T_numtype;
+    typedef typename T_expr::T_numtype T_numtype;
   // select return type
   typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
   typedef typename selectET<typename T_expr::T_typeprop, 
@@ -120,7 +120,7 @@ public:
   typedef typename T_expr::T_optype T_optype;
     typedef T_expr T_ctorArg1;
     typedef int    T_ctorArg2;    // dummy
-  typedef _bz_ArrayExpr<_bz_typename P_expr::T_range_result> T_range_result;
+  typedef _bz_ArrayExpr<typename P_expr::T_range_result> T_range_result;
 
     static const int 
         numArrayOperands = T_expr::numArrayOperands,
@@ -156,7 +156,7 @@ public:
         : iter_(a)
     { }
 #if !defined(__MWERKS__)
-    _bz_ArrayExpr(BZ_ETPARM(_bz_typename T_expr::T_ctorArg1) a)
+    _bz_ArrayExpr(BZ_ETPARM(typename T_expr::T_ctorArg1) a)
         : iter_(a)
     { }
 #endif
@@ -502,8 +502,8 @@ class _bz_ArrayExprUnaryOp {
 public:
     typedef P_expr T_expr;
     typedef P_op T_op;
-    typedef _bz_typename T_expr::T_numtype T_numtype1;
-    typedef _bz_typename T_op::T_numtype T_numtype;
+    typedef typename T_expr::T_numtype T_numtype1;
+    typedef typename T_op::T_numtype T_numtype;
 
   // select return type
   typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
@@ -516,7 +516,7 @@ public:
 
     typedef T_expr T_ctorArg1;
     typedef int    T_ctorArg2;    // dummy
-  typedef _bz_ArrayExprUnaryOp<_bz_typename P_expr::T_range_result,
+  typedef _bz_ArrayExprUnaryOp<typename P_expr::T_range_result,
 			       P_op> T_range_result;
 
     static const int 
@@ -543,7 +543,7 @@ public:
     { }
 
   /*
-    _bz_ArrayExprUnaryOp(_bz_typename T_expr::T_ctorArg1 a)
+    _bz_ArrayExprUnaryOp(typename T_expr::T_ctorArg1 a)
         : iter_(a)
     { }
   */
@@ -778,9 +778,9 @@ public:
     typedef P_expr1 T_expr1;
     typedef P_expr2 T_expr2;
     typedef P_op T_op;
-    typedef _bz_typename T_expr1::T_numtype T_numtype1;
-    typedef _bz_typename T_expr2::T_numtype T_numtype2;
-    typedef _bz_typename T_op::T_numtype T_numtype;
+    typedef typename T_expr1::T_numtype T_numtype1;
+    typedef typename T_expr2::T_numtype T_numtype2;
+    typedef typename T_op::T_numtype T_numtype;
 
   // select return type
   typedef typename unwrapET<typename T_expr1::T_result>::T_unwrapped T_unwrapped1;
@@ -796,8 +796,8 @@ public:
 
     typedef T_expr1 T_ctorArg1;
     typedef T_expr2 T_ctorArg2;
-  typedef _bz_ArrayExprBinaryOp<_bz_typename P_expr1::T_range_result, 
-				_bz_typename P_expr2::T_range_result, 
+  typedef _bz_ArrayExprBinaryOp<typename P_expr1::T_range_result, 
+				typename P_expr2::T_range_result, 
 				P_op> T_range_result;
 
     static const int 
@@ -1101,10 +1101,10 @@ public:
     typedef P_expr2 T_expr2;
     typedef P_expr3 T_expr3;
     typedef P_op T_op;
-    typedef _bz_typename T_expr1::T_numtype T_numtype1;
-    typedef _bz_typename T_expr2::T_numtype T_numtype2;
-    typedef _bz_typename T_expr3::T_numtype T_numtype3;
-    typedef _bz_typename T_op::T_numtype T_numtype;
+    typedef typename T_expr1::T_numtype T_numtype1;
+    typedef typename T_expr2::T_numtype T_numtype2;
+    typedef typename T_expr3::T_numtype T_numtype3;
+    typedef typename T_op::T_numtype T_numtype;
 
   // select return type
   typedef typename unwrapET<
@@ -1132,9 +1132,9 @@ public:
     typedef T_expr1 T_ctorArg1;
     typedef T_expr2 T_ctorArg2;
     typedef T_expr3 T_ctorArg3;
-  typedef _bz_ArrayExprTernaryOp<_bz_typename P_expr1::T_range_result, 
-				 _bz_typename P_expr2::T_range_result, 
-				 _bz_typename P_expr3::T_range_result, P_op> T_range_result;
+  typedef _bz_ArrayExprTernaryOp<typename P_expr1::T_range_result, 
+				 typename P_expr2::T_range_result, 
+				 typename P_expr3::T_range_result, P_op> T_range_result;
 
     static const int 
         numArrayOperands = T_expr1::numArrayOperands
@@ -1507,11 +1507,11 @@ public:
     typedef P_expr3 T_expr3;
     typedef P_expr4 T_expr4;
     typedef P_op T_op;
-    typedef _bz_typename T_expr1::T_numtype T_numtype1;
-    typedef _bz_typename T_expr2::T_numtype T_numtype2;
-    typedef _bz_typename T_expr3::T_numtype T_numtype3;
-    typedef _bz_typename T_expr4::T_numtype T_numtype4;
-    typedef _bz_typename T_op::T_numtype T_numtype;
+    typedef typename T_expr1::T_numtype T_numtype1;
+    typedef typename T_expr2::T_numtype T_numtype2;
+    typedef typename T_expr3::T_numtype T_numtype3;
+    typedef typename T_expr4::T_numtype T_numtype4;
+    typedef typename T_op::T_numtype T_numtype;
 
   // select return type
   typedef typename unwrapET<typename T_expr1::T_result>::T_unwrapped T_unwrapped1;
@@ -1542,10 +1542,10 @@ public:
     typedef T_expr2 T_ctorArg2;
     typedef T_expr3 T_ctorArg3;
     typedef T_expr4 T_ctorArg4;
-  typedef _bz_ArrayExprQuaternaryOp<_bz_typename P_expr1::T_range_result, 
-				    _bz_typename P_expr2::T_range_result, 
-				    _bz_typename P_expr3::T_range_result, 
-				    _bz_typename P_expr4::T_range_result, 
+  typedef _bz_ArrayExprQuaternaryOp<typename P_expr1::T_range_result, 
+				    typename P_expr2::T_range_result, 
+				    typename P_expr3::T_range_result, 
+				    typename P_expr4::T_range_result, 
 				    P_op> T_range_result;
 
   static const int 

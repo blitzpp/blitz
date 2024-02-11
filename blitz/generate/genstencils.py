@@ -16,12 +16,12 @@ def BZ_ET_STENCIL_REDIRECT(name):
 
 /* Explicit operators for arrays for stencil name. */
 template<typename T, int N>						
-inline _bz_ArrayExpr<#name#_et<_bz_typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> >
+inline _bz_ArrayExpr<#name#_et<typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> >
 #name#(const Array<T,N>& d1)
 { return #name#(d1.wrap()); }
 
 template<typename T, int N>
-inline _bz_ArrayExpr<#name#_et<_bz_typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> >
+inline _bz_ArrayExpr<#name#_et<typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> >
 #name#(Array<T,N>& d1)
 { return #name#(d1.wrap()); }
 """
@@ -41,13 +41,13 @@ def BZ_ET_STENCIL(name, result, etresult, MINB, MAXB):
    differently. The stencil ET calls the stencil operator
    name_stencilop, defined in stencilops.h. **/
 
-  template<typename P_expr, _bz_typename P_numtype>			
+  template<typename P_expr, typename P_numtype>			
   class #name#_et : public _bz_StencilExpr<P_expr, P_numtype>		
   {									
   public:								
     typedef _bz_StencilExpr<P_expr, P_numtype> T_base;			
-    typedef _bz_typename T_base::T_numtype T_numtype;			
-    typedef _bz_typename T_base::T_expr T_expr;				
+    typedef typename T_base::T_numtype T_numtype;			
+    typedef typename T_base::T_expr T_expr;				
 
   // if P_numtype is an ET-type, we need to return an expr
   typedef typename selectET<P_numtype,
@@ -62,7 +62,7 @@ def BZ_ET_STENCIL(name, result, etresult, MINB, MAXB):
       T_numtype> Type;
   };
 
-    typedef  #name#_et<_bz_typename P_expr::T_range_result, T_numtype> T_range_result; 
+    typedef  #name#_et<typename P_expr::T_range_result, T_numtype> T_range_result; 
 									
     using T_base::iter_;						
     using T_base::rank_;							
@@ -75,7 +75,7 @@ def BZ_ET_STENCIL(name, result, etresult, MINB, MAXB):
     _bz_StencilExpr<P_expr, T_numtype>(a)				
       { }								
 									
-    #name#_et(_bz_typename T_expr::T_ctorArg1 a) :			
+    #name#_et(typename T_expr::T_ctorArg1 a) :			
     _bz_StencilExpr<P_expr, T_numtype>(a)				
       { }								
 									
@@ -200,14 +200,14 @@ def BZ_ET_STENCIL2(name, result, etresult, MINB, MAXB):
    of the expression, set result="P_numtype" and etresult="typename
    T1::T_numtype". Sorry for that ugliness, but they define types
    differently. */
-template<typename P_expr1, typename P_expr2, _bz_typename P_numtype>	
+template<typename P_expr1, typename P_expr2, typename P_numtype>	
 class #name#_et2 : public _bz_StencilExpr2<P_expr1, P_expr2, P_numtype> 
 {									
 public:								
   typedef _bz_StencilExpr2<P_expr1, P_expr2, P_numtype> T_base;	
-  typedef _bz_typename T_base::T_numtype T_numtype;			
-  typedef _bz_typename T_base::T_expr1 T_expr1;			
-  typedef _bz_typename T_base::T_expr2 T_expr2;			
+  typedef typename T_base::T_numtype T_numtype;			
+  typedef typename T_base::T_expr1 T_expr1;			
+  typedef typename T_base::T_expr2 T_expr2;			
 
   // if P_numtype is an ET-type, we need to return an expr
   typedef typename selectET<P_numtype,
@@ -224,7 +224,7 @@ public:
       T_numtype> Type; 
   };
 
-  typedef  #name#_et2<_bz_typename P_expr1::T_range_result, _bz_typename P_expr2::T_range_result, T_numtype> T_range_result; 
+  typedef  #name#_et2<typename P_expr1::T_range_result, typename P_expr2::T_range_result, T_numtype> T_range_result; 
 									
   using T_base::iter1_;						
   using T_base::iter2_;						
@@ -241,7 +241,7 @@ public:
   T_result operator*() const						
   { return #name#_stencilop(iter1_, iter2_); }					
 									
-  T_result operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
+  T_result operator()(typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
   { iter1_.moveTo(i); iter2_.moveTo(i);
     return #name#_stencilop(iter1_, iter2_); } 
 									
@@ -393,12 +393,12 @@ def BZ_ET_STENCILM(name, result_rank, MINB, MAXB):
    N_rank>. P_numtype can be a TinyVector or a scalar, I think. */
 
 template<typename P_expr>						
-class #name#_et : public _bz_StencilExpr<P_expr, TinyMatrix<_bz_typename multicomponent_traits<typename P_expr::T_numtype>::T_element, result_rank, result_rank> > 
+class #name#_et : public _bz_StencilExpr<P_expr, TinyMatrix<typename multicomponent_traits<typename P_expr::T_numtype>::T_element, result_rank, result_rank> > 
 {									
 public:									
-  typedef _bz_StencilExpr<P_expr, TinyMatrix<_bz_typename multicomponent_traits<typename P_expr::T_numtype>::T_element, result_rank, result_rank> > T_base; 
-  typedef _bz_typename T_base::T_numtype T_numtype;			
-  typedef _bz_typename T_base::T_expr T_expr;				
+  typedef _bz_StencilExpr<P_expr, TinyMatrix<typename multicomponent_traits<typename P_expr::T_numtype>::T_element, result_rank, result_rank> > T_base; 
+  typedef typename T_base::T_numtype T_numtype;			
+  typedef typename T_base::T_expr T_expr;				
 
   // there is no return type selection, as we are returning a
   // TinyMatrix. This must be returned as a FastTMCopyIterator since the
@@ -412,7 +412,7 @@ public:
       typename T_expr::template tvresult<N>::Type> Type;
   };
 
-  typedef  #name#_et<_bz_typename P_expr::T_range_result> T_range_result; 
+  typedef  #name#_et<typename P_expr::T_range_result> T_range_result; 
 									 
   using T_base::iter_;						
   using T_base::rank_;						
@@ -425,14 +425,14 @@ public:
   _bz_StencilExpr<P_expr, T_numtype>(a)				
   { }								
 									 
-  #name#_et(_bz_typename T_expr::T_ctorArg1 a) :			
+  #name#_et(typename T_expr::T_ctorArg1 a) :			
   _bz_StencilExpr<P_expr, T_numtype>(a)				
   { }								
      									
   T_result operator*() const					
   { return #name#_stencilop(iter_); }						
 
-  T_result operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
+  T_result operator()(typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
   { iter_.moveTo(i); return #name#_stencilop(iter_); }				
      									
   T_range_result operator()(const RectDomain<rank_>& d) const		
@@ -512,10 +512,10 @@ public:
 };									
 /* create ET from application to expression */			
 template<typename T1>						
-inline _bz_ArrayExpr<#name#_et<_bz_typename blitz::asExpr<T1>::T_expr::T_range_result> > 
+inline _bz_ArrayExpr<#name#_et<typename blitz::asExpr<T1>::T_expr::T_range_result> > 
 #name#(const blitz::ETBase<T1>& d1)				
 {									
-  return _bz_ArrayExpr<#name#_et<_bz_typename blitz::asExpr<T1>::T_expr::T_range_result> >	
+  return _bz_ArrayExpr<#name#_et<typename blitz::asExpr<T1>::T_expr::T_range_result> >	
     (blitz::asExpr<T1>::getExpr(d1.unwrap())(_bz_shrinkDomain(d1.unwrap().domain(),MINB, MAXB))); 
 }								
 """
@@ -535,8 +535,8 @@ class #name#_et : public _bz_StencilExpr<P_expr, TinyVector<typename P_expr::T_n
 {									
 public:									
   typedef _bz_StencilExpr<P_expr, TinyVector<typename P_expr::T_numtype,result_rank> > T_base; 
-  typedef _bz_typename T_base::T_numtype T_numtype;			
-  typedef _bz_typename T_base::T_expr T_expr;				
+  typedef typename T_base::T_numtype T_numtype;			
+  typedef typename T_base::T_expr T_expr;				
 
   // there is no return type selection, we assume P_numtype is scalar
   // and that we are returning a TinyVector. This needs to be returned
@@ -551,7 +551,7 @@ public:
       typename T_expr::template tvresult<N>::Type> Type;
   };
 
-  typedef  #name#_et<_bz_typename P_expr::T_range_result> T_range_result; 
+  typedef  #name#_et<typename P_expr::T_range_result> T_range_result; 
 									 
   using T_base::iter_;						
   using T_base::rank_;							
@@ -564,14 +564,14 @@ public:
   _bz_StencilExpr<P_expr, T_numtype>(a)				
   { }								
 									 
-  #name#_et(_bz_typename T_expr::T_ctorArg1 a) :			
+  #name#_et(typename T_expr::T_ctorArg1 a) :			
   _bz_StencilExpr<P_expr, T_numtype>(a)				
   { }								
 									 
   T_result operator*() const					
   { return #name#_stencilop(iter_); }						
 
-  T_result operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
+  T_result operator()(typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
   { iter_.moveTo(i); return #name#_stencilop(iter_); }				
 									 
   T_range_result operator()(const RectDomain<rank_>& d) const		
@@ -651,10 +651,10 @@ public:
 };									
 /* create ET from application to expression */				
 template<typename T1>							
-inline _bz_ArrayExpr<#name#_et<_bz_typename blitz::asExpr<T1>::T_expr::T_range_result> >	
+inline _bz_ArrayExpr<#name#_et<typename blitz::asExpr<T1>::T_expr::T_range_result> >	
 #name#(const blitz::ETBase<T1>& d1)				
 {									
-  return _bz_ArrayExpr<#name#_et<_bz_typename blitz::asExpr<T1>::T_expr::T_range_result> >	
+  return _bz_ArrayExpr<#name#_et<typename blitz::asExpr<T1>::T_expr::T_range_result> >	
     (blitz::asExpr<T1>::getExpr(d1.unwrap())(_bz_shrinkDomain(d1.unwrap().domain(),MINB, MAXB))); 
 }									
 """
@@ -671,13 +671,13 @@ def BZ_ET_STENCIL_SCA(name, MINB, MAXB):
    array<P_numtype::T_element, N_rank>. */
 
 template<typename P_expr>						
-class #name#_et : public _bz_StencilExpr<P_expr, _bz_typename multicomponent_traits<typename P_expr::T_numtype>::T_element> 
+class #name#_et : public _bz_StencilExpr<P_expr, typename multicomponent_traits<typename P_expr::T_numtype>::T_element> 
 {									
 public:									
-  typedef _bz_typename multicomponent_traits<typename P_expr::T_numtype>::T_element T_result; 
+  typedef typename multicomponent_traits<typename P_expr::T_numtype>::T_element T_result; 
   typedef _bz_StencilExpr<P_expr, T_result> T_base;			
-  typedef _bz_typename T_base::T_numtype T_numtype;			
-  typedef _bz_typename T_base::T_expr T_expr;				
+  typedef typename T_base::T_numtype T_numtype;			
+  typedef typename T_base::T_expr T_expr;				
 
   // there is no selecting return type here. because we *know* it is
   // scalar T_result, there's no question of whether we could be doing
@@ -690,7 +690,7 @@ public:
       typename T_expr::template tvresult<N>::Type> Type;
   };
 
-typedef  #name#_et<_bz_typename P_expr::T_range_result> T_range_result; 
+typedef  #name#_et<typename P_expr::T_range_result> T_range_result; 
 									 
   using T_base::iter_;						
   using T_base::rank_;							
@@ -703,13 +703,13 @@ public:
   _bz_StencilExpr<P_expr, T_numtype>(a)				
   { }								
 									 
-  #name#_et(_bz_typename T_expr::T_ctorArg1 a) :			
+  #name#_et(typename T_expr::T_ctorArg1 a) :			
   _bz_StencilExpr<P_expr, T_numtype>(a)				
   { }								
     									
   T_numtype operator*() const						
   { return #name#_stencilop(iter_); }						
-  T_numtype operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
+  T_numtype operator()(typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
   { iter_.moveTo(i); return #name#_stencilop(iter_); }				
 									
   T_range_result operator()(const RectDomain<rank_>& d) const		
@@ -789,10 +789,10 @@ public:
 };									
 /* create ET from application to expression */			
 template<typename T1>							
-inline _bz_ArrayExpr<#name#_et<_bz_typename blitz::asExpr<T1>::T_expr::T_range_result> >	
+inline _bz_ArrayExpr<#name#_et<typename blitz::asExpr<T1>::T_expr::T_range_result> >	
 #name#(const blitz::ETBase<T1>& d1)				
 {									
-  return _bz_ArrayExpr<#name#_et<_bz_typename blitz::asExpr<T1>::T_expr::T_range_result> >	
+  return _bz_ArrayExpr<#name#_et<typename blitz::asExpr<T1>::T_expr::T_range_result> >	
     (blitz::asExpr<T1>::getExpr(d1.unwrap())(_bz_shrinkDomain(d1.unwrap().domain(),MINB, MAXB))); 
 }									
 """
@@ -813,12 +813,12 @@ def BZ_ET_STENCIL_DIFF(name, MINB, MAXB):
    dimension. */
 
 template<typename P_expr>						
-class #name#_et : public _bz_StencilExpr<P_expr, _bz_typename P_expr::T_numtype>	
+class #name#_et : public _bz_StencilExpr<P_expr, typename P_expr::T_numtype>	
 {									
 public:								
-  typedef _bz_StencilExpr<P_expr, _bz_typename P_expr::T_numtype> T_base; 
-  typedef _bz_typename T_base::T_numtype T_numtype;			
-  typedef _bz_typename T_base::T_expr T_expr;				
+  typedef _bz_StencilExpr<P_expr, typename P_expr::T_numtype> T_base; 
+  typedef typename T_base::T_numtype T_numtype;			
+  typedef typename T_base::T_expr T_expr;				
 
     // select return type
   typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
@@ -833,7 +833,7 @@ public:
       typename T_expr::template tvresult<N>::Type> Type;
   };
 
-typedef  #name#_et<_bz_typename P_expr::T_range_result> T_range_result; 
+typedef  #name#_et<typename P_expr::T_range_result> T_range_result; 
 									
   using T_base::iter_;						
   using T_base::rank_;							
@@ -846,13 +846,13 @@ public:
   _bz_StencilExpr<P_expr, T_numtype>(a), dim_(dim)		
   { }								
 									
-  #name#_et(_bz_typename T_expr::T_ctorArg1 a, int dim) :	
+  #name#_et(typename T_expr::T_ctorArg1 a, int dim) :	
   _bz_StencilExpr<P_expr, T_numtype>(a), dim_(dim)		
   { }								
 									
   T_result operator*() const						
   { return #name#_stencilop(iter_, dim_); }					
-  T_result operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
+  T_result operator()(typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
   { iter_.moveTo(i); return #name#_stencilop(iter_, dim_); }			
 									
   T_range_result operator()(const RectDomain<rank_>& d) const		
@@ -945,11 +945,11 @@ inline _bz_ArrayExpr<#name#_et<typename blitz::asExpr<T1>::T_expr::T_range_resul
 }									
 /* forward operations on arrays to main function */			
 template<typename T, int N>						
-inline _bz_ArrayExpr<#name#_et<_bz_typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> > 
+inline _bz_ArrayExpr<#name#_et<typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> > 
 #name#(const Array<T,N>& d1, int dim)					
 { return #name#(d1.wrap(), dim); }					
 template<typename T, int N>						
-inline _bz_ArrayExpr<#name#_et<_bz_typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> > 
+inline _bz_ArrayExpr<#name#_et<typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> > 
 #name#(Array<T,N>& d1, int dim)						
 { return #name#(d1.wrap(), dim); }
 """
@@ -964,13 +964,13 @@ def BZ_ET_STENCIL_MULTIDIFF(name, MINB, MAXB):
    multicomponent array<P_numtype, N_rank> and returns an
    array<P_numtype::T_element, N_rank>. */
 template<typename P_expr>						
-class #name#_et_multi : public _bz_StencilExpr<P_expr, _bz_typename multicomponent_traits<typename P_expr::T_numtype>::T_element> 
+class #name#_et_multi : public _bz_StencilExpr<P_expr, typename multicomponent_traits<typename P_expr::T_numtype>::T_element> 
 {									
 public:								
-  typedef _bz_typename multicomponent_traits<typename P_expr::T_numtype>::T_element T_result; 
+  typedef typename multicomponent_traits<typename P_expr::T_numtype>::T_element T_result; 
   typedef _bz_StencilExpr<P_expr, T_result> T_base;		
-  typedef _bz_typename T_base::T_numtype T_numtype;			
-  typedef _bz_typename T_base::T_expr T_expr;				
+  typedef typename T_base::T_numtype T_numtype;			
+  typedef typename T_base::T_expr T_expr;				
 
   // there is no selecting return type here. because we *know* it is
   // T_result, there's no question of whether we could be doing
@@ -983,7 +983,7 @@ public:
       typename T_expr::template tvresult<N>::Type> Type;
   };
 
-typedef  #name#_et_multi<_bz_typename P_expr::T_range_result> T_range_result; 
+typedef  #name#_et_multi<typename P_expr::T_range_result> T_range_result; 
 									
   using T_base::iter_;						
   using T_base::rank_;							
@@ -997,14 +997,14 @@ public:
     comp_(comp), dim_(dim)						
   { }								
 									
-  #name#_et_multi(_bz_typename T_expr::T_ctorArg1 a, int comp, int dim) : 
+  #name#_et_multi(typename T_expr::T_ctorArg1 a, int comp, int dim) : 
   _bz_StencilExpr<P_expr, T_numtype>(a),			
     comp_(comp), dim_(dim)						
   { }								
 									
   T_numtype operator*() const						
   { return #name#_stencilop(iter_, comp_, dim_); }				
-  T_numtype operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
+  T_numtype operator()(typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
   { iter_.moveTo(i); return #name#_stencilop(iter_, comp_, dim_); }		
 									
   T_range_result operator()(const RectDomain<rank_>& d) const		
@@ -1098,12 +1098,12 @@ inline _bz_ArrayExpr<#name#_et_multi<typename blitz::asExpr<T1>::T_expr::T_range
 }									
 /* forward operations on arrays to main function */			
 template<typename T, int N>						
-inline _bz_ArrayExpr<#name#_et_multi<_bz_typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> > 
+inline _bz_ArrayExpr<#name#_et_multi<typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> > 
 #name#(const Array<T,N>& d1, int comp, int dim)				
 { return #name#(d1.wrap(), comp, dim); }				
 									
 template<typename T, int N>						
-inline _bz_ArrayExpr<#name#_et_multi<_bz_typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> > 
+inline _bz_ArrayExpr<#name#_et_multi<typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> > 
 #name#(Array<T,N>& d1, int comp, int dim)				
 { return #name#(d1.wrap(), comp, dim); }
 """
@@ -1122,12 +1122,12 @@ def BZ_ET_STENCIL_DIFF2(name, MINB1, MAXB1, MINB2, MAXB2):
    are the dimensions to do the differences in). */
 
 template<typename P_expr>						
-class #name#_et : public _bz_StencilExpr<P_expr, _bz_typename P_expr::T_numtype> 
+class #name#_et : public _bz_StencilExpr<P_expr, typename P_expr::T_numtype> 
 {									
 public:								
-  typedef _bz_StencilExpr<P_expr, _bz_typename P_expr::T_numtype> T_base;	
-  typedef _bz_typename T_base::T_numtype T_numtype;			
-  typedef _bz_typename T_base::T_expr T_expr;				
+  typedef _bz_StencilExpr<P_expr, typename P_expr::T_numtype> T_base;	
+  typedef typename T_base::T_numtype T_numtype;			
+  typedef typename T_base::T_expr T_expr;				
 
     // select return type
   typedef typename unwrapET<typename T_expr::T_result>::T_unwrapped test;
@@ -1142,7 +1142,7 @@ public:
       typename T_expr::template tvresult<N>::Type> Type;
   };
 
-typedef  #name#_et<_bz_typename P_expr::T_range_result> T_range_result; 
+typedef  #name#_et<typename P_expr::T_range_result> T_range_result; 
    									
   using T_base::iter_;							
   using T_base::rank_;							
@@ -1157,7 +1157,7 @@ public:
     dim1_(dim1), dim2_(dim2)						
   { }									
    									
-  #name#_et(_bz_typename T_expr::T_ctorArg1 a,			
+  #name#_et(typename T_expr::T_ctorArg1 a,			
 	      int dim1, int dim2) :					
   _bz_StencilExpr<P_expr, T_numtype>(a),				
     dim1_(dim1), dim2_(dim2)						
@@ -1165,7 +1165,7 @@ public:
    									
   T_numtype operator*() const						
   { return #name#_stencilop(iter_, dim1_, dim2_); }				
-  T_numtype operator()(_bz_typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
+  T_numtype operator()(typename _bz_IndexParameter<TinyVector<int, rank_> >::type i) const 
   { iter_.moveTo(i); return #name#_stencilop(iter_, dim1_, dim2_); }		
 									
   T_range_result operator()(const RectDomain<rank_>& d) const		
@@ -1260,12 +1260,12 @@ inline _bz_ArrayExpr<#name#_et<typename blitz::asExpr<T1>::T_expr::T_range_resul
 }									
 /* forward operations on arrays to main function */			
 template<typename T, int N>						
-inline _bz_ArrayExpr<#name#_et<_bz_typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> > 
+inline _bz_ArrayExpr<#name#_et<typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> > 
 #name#(const Array<T,N>& d1, int dim1, int dim2)			
 { return #name#(d1.wrap(), dim1, dim2); }				
 									
 template<typename T, int N>						
-inline _bz_ArrayExpr<#name#_et<_bz_typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> > 
+inline _bz_ArrayExpr<#name#_et<typename blitz::asExpr<Array<T,N> >::T_expr::T_range_result> > 
 #name#(Array<T,N>& d1, int dim1, int dim2)				
 { return #name#(d1.wrap(), dim1, dim2); }
 """

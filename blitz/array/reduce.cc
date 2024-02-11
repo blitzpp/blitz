@@ -34,7 +34,7 @@
 namespace blitz {
 
 template<typename T_expr, typename T_reduction>
-_bz_typename T_reduction::T_resulttype
+typename T_reduction::T_resulttype
 _bz_ArrayExprFullReduce(T_expr expr, T_reduction reduction)
 {
 #ifdef BZ_TAU_PROFILING
@@ -86,7 +86,7 @@ struct _bz_IndexingVariant<TinyVector<int,N> > {
 };
 
 template<typename T_index, typename T_expr, typename T_reduction>
-_bz_typename T_reduction::T_resulttype
+typename T_reduction::T_resulttype
 _bz_reduceWithIndexTraversalGeneric(T_expr expr, T_reduction reduction)
 {
     // This is optimized assuming C-style arrays.
@@ -134,7 +134,7 @@ _bz_reduceWithIndexTraversalGeneric(T_expr expr, T_reduction reduction)
 }
 
 template<typename T_expr, typename T_reduction>
-_bz_typename T_reduction::T_resulttype
+typename T_reduction::T_resulttype
 _bz_reduceWithIndexTraversal(T_expr expr, T_reduction reduction)
 {
     return _bz_reduceWithIndexTraversalGeneric<int>(expr,reduction);
@@ -143,7 +143,7 @@ _bz_reduceWithIndexTraversal(T_expr expr, T_reduction reduction)
 // This version is for reductions that require a vector of index positions.
 
 template<typename T_expr, typename T_reduction>
-_bz_typename T_reduction::T_resulttype
+typename T_reduction::T_resulttype
 _bz_reduceWithIndexVectorTraversal(T_expr expr, T_reduction reduction)
 {
     // We are doing minIndex/maxIndex, so initialize with lower bound

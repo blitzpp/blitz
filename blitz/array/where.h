@@ -49,15 +49,15 @@ public:
     typedef P_expr1 T_expr1;
     typedef P_expr2 T_expr2;
     typedef P_expr3 T_expr3;
-    typedef _bz_typename T_expr2::T_numtype T_numtype2;
-    typedef _bz_typename T_expr3::T_numtype T_numtype3;
+    typedef typename T_expr2::T_numtype T_numtype2;
+    typedef typename T_expr3::T_numtype T_numtype3;
     typedef BZ_PROMOTE(T_numtype2, T_numtype3) T_numtype;
     typedef T_expr1 T_ctorArg1;
     typedef T_expr2 T_ctorArg2;
     typedef T_expr3 T_ctorArg3;
-  typedef _bz_ArrayWhere<_bz_typename P_expr1::T_range_result,
-			 _bz_typename P_expr2::T_range_result,
-			 _bz_typename P_expr3::T_range_result> T_range_result;
+  typedef _bz_ArrayWhere<typename P_expr1::T_range_result,
+			 typename P_expr2::T_range_result,
+			 typename P_expr3::T_range_result> T_range_result;
 
   // select return type
   typedef typename unwrapET<typename T_expr1::T_result>::T_unwrapped T_unwrapped1;
@@ -423,13 +423,13 @@ private:
 
 template<typename T1, typename T2, typename T3>
 inline
-_bz_ArrayExpr<_bz_ArrayWhere<_bz_typename asExpr<T1>::T_expr,
-    _bz_typename asExpr<T2>::T_expr, _bz_typename asExpr<T3>::T_expr> >
+_bz_ArrayExpr<_bz_ArrayWhere<typename asExpr<T1>::T_expr,
+    typename asExpr<T2>::T_expr, typename asExpr<T3>::T_expr> >
 where(const T1& a, const T2& b, const T3& c)
 {
-    return _bz_ArrayExpr<_bz_ArrayWhere<_bz_typename asExpr<T1>::T_expr,
-       _bz_typename asExpr<T2>::T_expr, 
-       _bz_typename asExpr<T3>::T_expr> >(a,b,c);
+    return _bz_ArrayExpr<_bz_ArrayWhere<typename asExpr<T1>::T_expr,
+       typename asExpr<T2>::T_expr, 
+       typename asExpr<T3>::T_expr> >(a,b,c);
 }
 
 }

@@ -324,7 +324,7 @@ template<int N_rank>
 class FortranArray : public GeneralArrayStorage<N_rank> {
 private:
     typedef GeneralArrayStorage<N_rank> T_base;
-    typedef _bz_typename T_base::noInitializeFlag noInitializeFlag;
+    typedef typename T_base::noInitializeFlag noInitializeFlag;
     using T_base::ordering_;
     using T_base::ascendingFlag_;
     using T_base::base_;
@@ -400,7 +400,7 @@ template<int N_rank>
 class ColumnMajorArray : public GeneralArrayStorage<N_rank> {
 private:
     typedef GeneralArrayStorage<N_rank> T_base;
-    typedef _bz_typename T_base::noInitializeFlag noInitializeFlag;
+    typedef typename T_base::noInitializeFlag noInitializeFlag;
     using T_base::ordering_;
     using T_base::ascendingFlag_;
     using T_base::base_;

@@ -13,7 +13,7 @@
 #include <blitz/indexexpr.h>      // Tensor index objects
 #include <blitz/bzdebug.h>        // Test suite globals
 #include <blitz/timer.h>          // Timer instances
-#include <random/mtparam.cc>      // MT19937 parameter sets
+// #include <random/mtparam.cc>      // MT19937 parameter sets
 #include <string>
 
 namespace blitz {;

@@ -64,9 +64,9 @@ _bz_forceinline
 Array<P_numtype,N_rank>&
 Array<P_numtype,N_rank>::operator=(const ETBase<T_expr>& expr)
 {
-  _bz_evaluate(*this, _bz_typename asExpr<T_expr>::T_expr(expr.unwrap()), 
+  _bz_evaluate(*this, typename asExpr<T_expr>::T_expr(expr.unwrap()), 
 	       _bz_update<T_numtype, 
-	       _bz_typename asExpr<T_expr>::T_expr::T_result>());
+	       typename asExpr<T_expr>::T_expr::T_result>());
     return *this;
 }
 
@@ -79,7 +79,7 @@ Array<P_numtype, N_rank>::operator=(const Array<T_numtype,N_rank>& x)
   typedef typename asExpr<Array<T_numtype,N_rank> >::T_expr T_expr;
   _bz_evaluate(*this, asExpr<Array<T_numtype,N_rank> >::getExpr(x),
 	       _bz_update<T_numtype, 
-	       _bz_typename T_expr::T_result>());
+	       typename T_expr::T_result>());
     return *this;
 }
 
@@ -90,8 +90,8 @@ Array<P_numtype, N_rank>::operator=(const Array<T_numtype,N_rank>& x)
   Array<P_numtype,N_rank>&						\
   Array<P_numtype,N_rank>::operator op(const ETBase<T_expr>& expr)	\
   {									\
-    _bz_evaluate(*this, _bz_typename asExpr<T_expr>::T_expr(expr.unwrap()), \
-		 name<T_numtype, _bz_typename asExpr<T_expr>::T_expr::T_result>()); \
+    _bz_evaluate(*this, typename asExpr<T_expr>::T_expr(expr.unwrap()), \
+		 name<T_numtype, typename asExpr<T_expr>::T_expr::T_result>()); \
     return *this;							\
   }									\
   template<typename P_numtype, int N_rank>				\
@@ -101,7 +101,7 @@ Array<P_numtype, N_rank>::operator=(const Array<T_numtype,N_rank>& x)
   {									\
     typedef typename asExpr<Array<T_numtype,N_rank> >::T_expr T_expr;	\
     _bz_evaluate(*this, asExpr<Array<T_numtype, N_rank> >::getExpr(x),	\
-		 name<T_numtype, _bz_typename T_expr::T_result>());	\
+		 name<T_numtype, typename T_expr::T_result>());	\
     return *this;							\
   }									\
   template<typename P_numtype, int N_rank>				\
@@ -111,7 +111,7 @@ Array<P_numtype, N_rank>::operator=(const Array<T_numtype,N_rank>& x)
   {									\
     typedef typename asExpr<T_numtype>::T_expr T_expr;			\
     _bz_evaluate(*this, asExpr<T_numtype>::getExpr(x),			\
-		 name<T_numtype, _bz_typename T_expr::T_result>());	\
+		 name<T_numtype, typename T_expr::T_result>());	\
     return *this;							\
   }
 
@@ -316,7 +316,7 @@ template<typename P_numtype, int N_rank> template<typename T_expr>
 inline Array<P_numtype, N_rank>&
 Array<P_numtype, N_rank>::operator=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
-    evaluate(expr, _bz_update<T_numtype, _bz_typename T_expr::T_numtype>());
+    evaluate(expr, _bz_update<T_numtype, typename T_expr::T_numtype>());
     return *this;
 }
 
@@ -324,7 +324,7 @@ template<typename P_numtype, int N_rank> template<typename T_expr>
 inline Array<P_numtype, N_rank>&
 Array<P_numtype, N_rank>::operator+=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
-    evaluate(expr, _bz_plus_update<T_numtype, _bz_typename T_expr::T_numtype>());
+    evaluate(expr, _bz_plus_update<T_numtype, typename T_expr::T_numtype>());
     return *this;
 }
 
@@ -333,7 +333,7 @@ inline Array<P_numtype, N_rank>&
 Array<P_numtype, N_rank>::operator-=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
     evaluate(expr, _bz_minus_update<T_numtype, 
-        _bz_typename T_expr::T_numtype>());
+        typename T_expr::T_numtype>());
     return *this;
 }
 
@@ -342,7 +342,7 @@ inline Array<P_numtype, N_rank>&
 Array<P_numtype, N_rank>::operator*=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
     evaluate(expr, _bz_multiply_update<T_numtype,
-        _bz_typename T_expr::T_numtype>());
+        typename T_expr::T_numtype>());
     return *this;
 }
 
@@ -351,7 +351,7 @@ inline Array<P_numtype, N_rank>&
 Array<P_numtype, N_rank>::operator/=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
     evaluate(expr, _bz_divide_update<T_numtype,
-        _bz_typename T_expr::T_numtype>());
+        typename T_expr::T_numtype>());
     return *this;
 }
 
@@ -360,7 +360,7 @@ inline Array<P_numtype, N_rank>&
 Array<P_numtype, N_rank>::operator%=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
     evaluate(expr, _bz_mod_update<T_numtype,
-        _bz_typename T_expr::T_numtype>());
+        typename T_expr::T_numtype>());
     return *this;
 }
 
@@ -369,7 +369,7 @@ inline Array<P_numtype, N_rank>&
 Array<P_numtype, N_rank>::operator^=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
     evaluate(expr, _bz_xor_update<T_numtype,
-        _bz_typename T_expr::T_numtype>());
+        typename T_expr::T_numtype>());
     return *this;
 }
 
@@ -378,7 +378,7 @@ inline Array<P_numtype, N_rank>&
 Array<P_numtype, N_rank>::operator&=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
     evaluate(expr, _bz_bitand_update<T_numtype,
-        _bz_typename T_expr::T_numtype>());
+        typename T_expr::T_numtype>());
     return *this;
 }
 
@@ -387,7 +387,7 @@ inline Array<P_numtype, N_rank>&
 Array<P_numtype, N_rank>::operator|=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
     evaluate(expr, _bz_bitor_update<T_numtype,
-        _bz_typename T_expr::T_numtype>());
+        typename T_expr::T_numtype>());
     return *this;
 }
 
@@ -396,7 +396,7 @@ inline Array<P_numtype, N_rank>&
 Array<P_numtype, N_rank>::operator>>=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
     evaluate(expr, _bz_shiftr_update<T_numtype,
-        _bz_typename T_expr::T_numtype>());
+        typename T_expr::T_numtype>());
     return *this;
 }
 
@@ -405,7 +405,7 @@ inline Array<P_numtype, N_rank>&
 Array<P_numtype, N_rank>::operator<<=(BZ_ETPARM(_bz_ArrayExpr<T_expr>) expr)
 {
     evaluate(expr, _bz_shiftl_update<T_numtype,
-        _bz_typename T_expr::T_numtype>());
+        typename T_expr::T_numtype>());
     return *this;
 }
 

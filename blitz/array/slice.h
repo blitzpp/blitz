@@ -37,6 +37,13 @@
 
 #include <blitz/range.h>
 
+
+#include <boost/preprocessor/repetition/enum_shifted_binary_params.hpp>
+#include <boost/preprocessor/repetition/repeat_from_to.hpp>
+#include <boost/preprocessor/facilities/intercept.hpp>
+#include <boost/preprocessor/arithmetic/sub.hpp>
+
+
 namespace blitz {
 
 // Forward declarations
@@ -77,52 +84,30 @@ public:
 	static const int isPick = 0;
 };
 
-template<typename T_numtype, typename T1, typename T2 = nilArraySection, 
-    class T3 = nilArraySection, typename T4 = nilArraySection, 
-    class T5 = nilArraySection, typename T6 = nilArraySection, 
-    class T7 = nilArraySection, typename T8 = nilArraySection, 
-    class T9 = nilArraySection, typename T10 = nilArraySection, 
-    class T11 = nilArraySection>
+
+// #define NUMBER_OF_PARAMS BOOST_PP_SUB(BLITZ_ARRAY_LARGEST_RANK,1)
+
+template<typename T_numtype, typename T0, BOOST_PP_ENUM_SHIFTED_BINARY_PARAMS(BLITZ_ARRAY_LARGEST_RANK,typename T,=nilArraySection BOOST_PP_INTERCEPT)>
 class SliceInfo {
 public:
-    static const int 
-        numValidTypes = ArraySectionInfo<T1>::isValidType
-                      + ArraySectionInfo<T2>::isValidType
-                      + ArraySectionInfo<T3>::isValidType
-                      + ArraySectionInfo<T4>::isValidType
-                      + ArraySectionInfo<T5>::isValidType
-                      + ArraySectionInfo<T6>::isValidType
-                      + ArraySectionInfo<T7>::isValidType
-                      + ArraySectionInfo<T8>::isValidType
-                      + ArraySectionInfo<T9>::isValidType
-                      + ArraySectionInfo<T10>::isValidType
-                      + ArraySectionInfo<T11>::isValidType;
+#define DEFAULT_print(z, n, data) + ArraySectionInfo<T##n>::isValidType
+
+  static const int 
+        numValidTypes = ArraySectionInfo<T0>::isValidType BOOST_PP_REPEAT_FROM_TO(1,BLITZ_ARRAY_LARGEST_RANK,DEFAULT_print,~);
+
+#undef  DEFAULT_print
+#define DEFAULT_print(z, n, data) + ArraySectionInfo<T##n>::rank
 
 	static const int 
-        rank          = ArraySectionInfo<T1>::rank
-                      + ArraySectionInfo<T2>::rank
-                      + ArraySectionInfo<T3>::rank
-                      + ArraySectionInfo<T4>::rank
-                      + ArraySectionInfo<T5>::rank
-                      + ArraySectionInfo<T6>::rank
-                      + ArraySectionInfo<T7>::rank
-                      + ArraySectionInfo<T8>::rank
-                      + ArraySectionInfo<T9>::rank
-                      + ArraySectionInfo<T10>::rank
-                      + ArraySectionInfo<T11>::rank;
+        rank          = ArraySectionInfo<T0>::rank BOOST_PP_REPEAT_FROM_TO(1,BLITZ_ARRAY_LARGEST_RANK,DEFAULT_print,~);
+
+#undef  DEFAULT_print
+#define DEFAULT_print(z, n, data) + ArraySectionInfo<T##n>::isPick
 
 	static const int 
-        isPick        = ArraySectionInfo<T1>::isPick
-                      + ArraySectionInfo<T2>::isPick
-                      + ArraySectionInfo<T3>::isPick
-                      + ArraySectionInfo<T4>::isPick
-                      + ArraySectionInfo<T5>::isPick
-                      + ArraySectionInfo<T6>::isPick
-                      + ArraySectionInfo<T7>::isPick
-                      + ArraySectionInfo<T8>::isPick
-                      + ArraySectionInfo<T9>::isPick
-                      + ArraySectionInfo<T10>::isPick
-                      + ArraySectionInfo<T11>::isPick;
+        isPick        = ArraySectionInfo<T0>::isPick BOOST_PP_REPEAT_FROM_TO(1,BLITZ_ARRAY_LARGEST_RANK,DEFAULT_print,~);
+
+#undef  DEFAULT_print
 
     typedef Array<T_numtype,numValidTypes> T_array;
     typedef Array<T_numtype,rank> T_slice;

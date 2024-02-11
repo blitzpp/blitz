@@ -95,7 +95,7 @@ template<typename T> struct _bz_IndexParameter {
    the general ETBase function would work. */
 
 /** ET base class for applying a stencil to an expression. */
-template<typename P_expr, _bz_typename P_result>
+template<typename P_expr, typename P_result>
 class _bz_StencilExpr {
  public:
   typedef P_expr T_expr;
@@ -121,7 +121,7 @@ class _bz_StencilExpr {
    : iter_(a)
   { }
 
- _bz_StencilExpr(_bz_typename T_expr::T_ctorArg1 a)
+ _bz_StencilExpr(typename T_expr::T_ctorArg1 a)
    : iter_(a)
   { }
 
@@ -234,13 +234,13 @@ class _bz_StencilExpr {
 };
 
 /** ET base class for applying a stencil to an expression. */
-template<typename P_expr1, typename P_expr2, _bz_typename P_result>
+template<typename P_expr1, typename P_expr2, typename P_result>
 class _bz_StencilExpr2 {
  public:
   typedef P_expr1 T_expr1;
   typedef P_expr2 T_expr2;
-  typedef _bz_typename T_expr1::T_numtype T_numtype1;
-  typedef _bz_typename T_expr2::T_numtype T_numtype2;
+  typedef typename T_expr1::T_numtype T_numtype1;
+  typedef typename T_expr2::T_numtype T_numtype2;
   typedef P_result T_numtype;
   typedef T_expr1 T_ctorArg1;
   typedef T_expr2 T_ctorArg2;
@@ -267,7 +267,7 @@ class _bz_StencilExpr2 {
 
   /*
   // what is this for?
- _bz_StencilExpr2(_bz_typename T_expr1::T_ctorArg1 a)
+ _bz_StencilExpr2(typename T_expr1::T_ctorArg1 a)
    : iter_(a)
   { }
   */
