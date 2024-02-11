@@ -103,10 +103,10 @@ public:
   { return 0; }
 
     iterator                          begin() 
-    { return iterator(*this); }
+    { return data_; }
 
     const_iterator                    begin() const
-    { return const_iterator(*this); }
+    { return data_; }
 
     T_iterator                        beginFast() const
     { return T_iterator(*this); }
