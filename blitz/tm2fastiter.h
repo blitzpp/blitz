@@ -327,12 +327,12 @@ public:
             str += BZ_DEBUG_TEMPLATE_AS_STRING_LITERAL(T_numtype);
             str += ",";
 
-            char tmpBuf[10];
-            sprintf(tmpBuf, "%d", N_rows);
+            char tmpBuf[BUFFER_SIZE];
+            snprintf(tmpBuf, BUFFER_SIZE, "%d", N_rows);
 
             str += tmpBuf;
             str += ",";
-            sprintf(tmpBuf, "%d", N_columns);
+            snprintf(tmpBuf, BUFFER_SIZE, "%d", N_columns);
 
             str += tmpBuf;
             str += ">";
