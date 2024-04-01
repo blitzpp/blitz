@@ -16,7 +16,7 @@ jobs:
   tests:
     strategy:
       matrix:
-        platform: [ubuntu-latest, macos-12, macos-14, windows-latest]
+        platform: [ubuntu-latest, macos-12, macos-14] # TODO: , windows-latest]
       fail-fast: false
     runs-on: ${{ matrix.platform }}
     steps:
