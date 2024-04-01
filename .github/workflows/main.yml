@@ -21,7 +21,7 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v4.1.1
-      - uses: jwlawson/actions-setup-cmake@v1.13
+      - uses: jwlawson/actions-setup-cmake@v2.0.1
       - run: | 
           mkdir build
           cd build
