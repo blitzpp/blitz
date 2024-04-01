@@ -13,29 +13,30 @@ on:
     - cron: '0 13 * * 4'
 
 jobs:
-  strategy:
-    matrix:
-      platform: [ubuntu-latest, macos-12, macos-14, windows-latest]
-    fail-fast: false
-  runs-on: ${{ matrix.platform }}
-  steps:
-    - uses: actions/checkout@v4.1.1
-    - uses: jwlawson/actions-setup-cmake@v1.13
-    - run: | 
-        mkdir build
-        cd build
-        cmake $CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DBUILD_DOC=ON -DBUILD_TESTING=ON -DDISABLE_REFMAN_PDF=ON ..
-        make lib 
+  tests:
+    strategy:
+      matrix:
+        platform: [ubuntu-latest, macos-12, macos-14, windows-latest]
+      fail-fast: false
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v4.1.1
+      - uses: jwlawson/actions-setup-cmake@v1.13
+      - run: | 
+          mkdir build
+          cd build
+          cmake $CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DBUILD_DOC=ON -DBUILD_TESTING=ON -DDISABLE_REFMAN_PDF=ON ..
+          make lib 
   
-    - run: |
-        cd build
-        export CTEST_OUTPUT_ON_FAILURE=1
-        make check-testsuite     # Build and check the testsuite
-        make check-examples      # Build and check the examples
-        # TODO! (fails with error: no such file or directory: 'arrdaxpyf.o')
-        # - make check-benchmarks    # Build and check the benchmarks (takes a long time)
-        make blitz-doc
-        sudo make install        # Install Blitz++
+      - run: |
+          cd build
+          export CTEST_OUTPUT_ON_FAILURE=1
+          make check-testsuite     # Build and check the testsuite
+          make check-examples      # Build and check the examples
+          # TODO! (fails with error: no such file or directory: 'arrdaxpyf.o')
+          # - make check-benchmarks    # Build and check the benchmarks (takes a long time)
+          make blitz-doc
+          sudo make install        # Install Blitz++
 
-        # TODO: LD_LIBRARY_PATH=/usr/local/lib ${srcdir}/travis-ci/check-wiki-examples.py
+          # TODO: LD_LIBRARY_PATH=/usr/local/lib ${srcdir}/travis-ci/check-wiki-examples.py
 
