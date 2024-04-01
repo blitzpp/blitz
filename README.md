@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/blitzpp/blitz.svg?branch=master)](https://travis-ci.org/blitzpp/blitz)
-[![Windows Build status](http://ci.appveyor.com/api/projects/status/github/blitzpp/blitz?branch=master&svg=true)](https://ci.appveyor.com/project/blitzpp/blitz/branch/master)
+[![Github Actions Build Status](https://github.com/blitzpp/blitz/workflows/main/badge.svg?branch=main)](https://github.com/blitzpp/blitz/actions)
+[![Windows Build status](http://ci.appveyor.com/api/projects/status/github/blitzpp/blitz?branch=main&svg=true)](https://ci.appveyor.com/project/blitzpp/blitz/branch/main)
 
 # IMPORTANT NOTICE
 
