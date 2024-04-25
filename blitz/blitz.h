@@ -49,10 +49,14 @@
  #endif
 #endif
 
-#include <blitz/bzconfig.h>
+#include <blitz/config.h>
 #include <blitz/compiler.h>          // Compiler-specific directives
 #include <blitz/tuning.h>            // Performance tuning
 #include <blitz/tau.h>               // Profiling
+
+#ifndef   BLITZ_ARRAY_LARGEST_RANK
+#define   BLITZ_ARRAY_LARGEST_RANK 11
+#endif // BLITZ_ARRAY_LARGEST_RANK
 
 #ifdef BZ_HAVE_STL
   #include <string>

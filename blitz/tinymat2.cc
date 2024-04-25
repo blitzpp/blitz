@@ -78,8 +78,8 @@ inline
 TinyMatrix<P_numtype, N_rows, N_columns>&
 TinyMatrix<P_numtype, N_rows, N_columns>::operator=(const ETBase<T_expr>& expr)
 {
-  _tm_evaluate(_bz_typename asExpr<T_expr>::T_expr(expr.unwrap()), 
-	       _bz_update<T_numtype, _bz_typename asExpr<T_expr>::T_expr::T_result>());
+  _tm_evaluate(typename asExpr<T_expr>::T_expr(expr.unwrap()), 
+	       _bz_update<T_numtype, typename asExpr<T_expr>::T_expr::T_result>());
     return *this;
 }
 
@@ -89,8 +89,8 @@ TinyMatrix<P_numtype, N_rows, N_columns>::operator=(const ETBase<T_expr>& expr)
   inline TinyMatrix<P_numtype, N_rows, N_columns>&			\
   TinyMatrix<P_numtype, N_rows, N_columns>::operator op(const T& expr)	\
   {									\
-    _tm_evaluate(_bz_typename asExpr<T>::T_expr(expr),			\
-		 name<T_numtype, _bz_typename asExpr<T>::T_expr::T_result>()); \
+    _tm_evaluate(typename asExpr<T>::T_expr(expr),			\
+		 name<T_numtype, typename asExpr<T>::T_expr::T_result>()); \
   return *this;								\
   }
 

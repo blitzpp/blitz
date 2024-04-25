@@ -31,34 +31,11 @@
 #ifndef BZ_COMPILER_H
 #define BZ_COMPILER_H
 
-// The file <blitz/bzconfig.h> is used to select a compiler-specific
-// config.h file that is generated automatically by configure.
-
-#include <blitz/bzconfig.h>
+#include <blitz/config.h>
 
 /*
  * Define some kludges.
  */
-
-#ifndef BZ_HAVE_TEMPLATES
-    #error  In <blitz/config.h>: A working template implementation is required by Blitz++ (you may need to rerun the compiler/bzconfig script)
-#endif
-
-#ifndef BZ_HAVE_MEMBER_TEMPLATES
-  #error  In <blitz/config.h>: Your compiler does not support member templates.  (you may need to rerun the compiler/bzconfig script)
-#endif
-
-#ifndef BZ_HAVE_FULL_SPECIALIZATION_SYNTAX
-  #error In <blitz/config.h>: Your compiler does not support template<> full specialization syntax.  You may need to rerun the compiler/bzconfig script.
-#endif
-
-#ifndef BZ_HAVE_PARTIAL_ORDERING
-  #error In <blitz/config.h>: Your compiler does not support partial ordering (you may need to rerun the compiler/bzconfig script)
-#endif
-
-#ifndef BZ_HAVE_PARTIAL_SPECIALIZATION
-  #error In <blitz/config.h>: Your compiler does not support partial specialization (you may need to rerun the compiler/bzconfig script)
-#endif
 
 #ifdef BZ_HAVE_TEMPLATE_QUALIFIED_RETURN_TYPE
   #define BZ_USE_NUMTRAIT
@@ -68,20 +45,6 @@
     #define BZ_TEMPLATE_DEFAULT(X)   = X
 #else
     #define BZ_TEMPLATE_DEFAULT(X) 
-#endif
-
-#ifndef BZ_HAVE_EXPLICIT
-    #define explicit   
-#endif
-
-#ifdef BZ_HAVE_TYPENAME
-    #define _bz_typename     typename
-#else
-    #define _bz_typename
-#endif
-
-#ifndef BZ_HAVE_MUTABLE
-    #define mutable
 #endif
 
 #ifdef BZ_DISABLE_RESTRICT
@@ -94,12 +57,6 @@
     #else
         #define restrict
     #endif
-#endif
-
-#if !defined(BZ_HAVE_BOOL) && !defined(BZ_NO_BOOL_KLUDGE)
-    #define bool    int
-    #define true    1
-    #define false   0
 #endif
 
 #ifdef BZ_HAVE_ENUM_COMPUTATIONS_WITH_CAST

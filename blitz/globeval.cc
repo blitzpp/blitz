@@ -1217,7 +1217,7 @@ _bz_evaluateWithTiled2DTraversal(T_dest& dest, T_expr expr, T_update)
 
                     for (int i=bi; i < ni; ++i)
                     {
-                        _bz_typename T_expr::T_numtype tmp1, tmp2, tmp3;
+                        typename T_expr::T_numtype tmp1, tmp2, tmp3;
 
                         // Common subexpression elimination -- compilers
                         // won't necessarily do this on their own.

@@ -45,10 +45,10 @@ namespace blitz {
   #define BZ_SIGNEDTYPE(X) X
 #else
 
-#define BZ_SUMTYPE(X)   _bz_typename NumericTypeTraits<X>::T_sumtype
-#define BZ_DIFFTYPE(X)  _bz_typename NumericTypeTraits<X>::T_difftype
-#define BZ_FLOATTYPE(X) _bz_typename NumericTypeTraits<X>::T_floattype
-#define BZ_SIGNEDTYPE(X) _bz_typename NumericTypeTraits<X>::T_signedtype
+#define BZ_SUMTYPE(X)   typename NumericTypeTraits<X>::T_sumtype
+#define BZ_DIFFTYPE(X)  typename NumericTypeTraits<X>::T_difftype
+#define BZ_FLOATTYPE(X) typename NumericTypeTraits<X>::T_floattype
+#define BZ_SIGNEDTYPE(X) typename NumericTypeTraits<X>::T_signedtype
 
 template<typename P_numtype>
 class NumericTypeTraits {

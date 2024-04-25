@@ -354,27 +354,36 @@ void Array<P_numtype, N_rank>::makeUnique()
 }
 
 template<typename P_numtype, int N_rank>
-Array<P_numtype, N_rank> Array<P_numtype, N_rank>::transpose(int r0, int r1, 
-    int r2, int r3, int r4, int r5, int r6, int r7, int r8, int r9, int r10) const
+Array<P_numtype, N_rank> Array<P_numtype, N_rank>::transpose(BOOST_PP_ENUM_PARAMS(BLITZ_ARRAY_LARGEST_RANK,int r)) const
 {
     T_array B(*this);
-    B.transposeSelf(r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10);
+    B.transposeSelf(BOOST_PP_ENUM_PARAMS(BLITZ_ARRAY_LARGEST_RANK,r));
     return B;
 }
 
 template<typename P_numtype, int N_rank>
-void Array<P_numtype, N_rank>::transposeSelf(int r0, int r1, int r2, int r3,
-    int r4, int r5, int r6, int r7, int r8, int r9, int r10)
+void Array<P_numtype, N_rank>::transposeSelf(BOOST_PP_ENUM_PARAMS(BLITZ_ARRAY_LARGEST_RANK,int r))
 {
-    BZPRECHECK(r0+r1+r2+r3+r4+r5+r6+r7+r8+r9+r10 == N_rank * (N_rank-1) / 2,
+#define DEFAULT_print(z, n, data) +r##n
+
+    BZPRECHECK(r0+BOOST_PP_REPEAT_FROM_TO(1,BLITZ_ARRAY_LARGEST_RANK,DEFAULT_print,~) == N_rank * (N_rank-1) / 2,
         "Invalid array transpose() arguments." << endl
         << "Arguments must be a permutation of the numerals (0,...,"
         << (N_rank - 1) << ")");
+
+#undef  DEFAULT_print
 
     // Create a temporary reference copy of this array
     Array<T_numtype, N_rank> x(*this);
 
     // Now reorder the dimensions using the supplied permutation
+#define DEFAULT_print(z, n, data) doTranspose(n, r##n, x);
+
+    BOOST_PP_REPEAT(BLITZ_ARRAY_LARGEST_RANK,DEFAULT_print,~)
+
+#undef  DEFAULT_print
+
+
     doTranspose(0, r0, x);
     doTranspose(1, r1, x);
     doTranspose(2, r2, x);

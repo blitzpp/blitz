@@ -194,14 +194,14 @@ name(const blitz::ETBase<T1>& d1,                                 \
 template<typename T1>                                                      \
 _bz_inline_et                                                              \
 blitz::_bz_ArrayExpr<blitz::_bz_ArrayExprUnaryOp<        \
-    _bz_typename blitz::asExpr<T1>::T_expr,                       \
-    functor<_bz_typename blitz::asExpr<T1>::T_expr::T_numtype> > >\
+    typename blitz::asExpr<T1>::T_expr,                       \
+    functor<typename blitz::asExpr<T1>::T_expr::T_numtype> > >\
 name(const blitz::ETBase<T1>& d1)                                 \
 {                                                                          \
     return blitz::_bz_ArrayExpr<                                  \
         blitz::_bz_ArrayExprUnaryOp<                              \
-        _bz_typename blitz::asExpr<T1>::T_expr,                   \
-        functor<_bz_typename                                               \
+        typename blitz::asExpr<T1>::T_expr,                   \
+        functor<typename                                               \
         blitz::asExpr<T1>::T_expr::T_numtype> > >(                \
         blitz::asExpr<T1>::getExpr(d1.unwrap()));                 \
 }
@@ -218,19 +218,19 @@ name(const blitz::ETBase<T1>& d1)                                 \
 template<typename T1, typename T2>                                         \
 _bz_inline_et                                                              \
 blitz::_bz_ArrayExpr<blitz::_bz_ArrayExprBinaryOp<       \
-    _bz_typename blitz::asExpr<T1>::T_expr,                       \
-    _bz_typename blitz::asExpr<T2>::T_expr,                       \
-    applic<_bz_typename blitz::asExpr<T1>::T_expr::T_numtype,     \
-    _bz_typename blitz::asExpr<T2>::T_expr::T_numtype> > >        \
+    typename blitz::asExpr<T1>::T_expr,                       \
+    typename blitz::asExpr<T2>::T_expr,                       \
+    applic<typename blitz::asExpr<T1>::T_expr::T_numtype,     \
+    typename blitz::asExpr<T2>::T_expr::T_numtype> > >        \
 name(const blitz::ETBase<T1>& d1,                                 \
      const blitz::ETBase<T2>& d2)                                 \
 {                                                                          \
     return blitz::_bz_ArrayExpr<                                  \
         blitz::_bz_ArrayExprBinaryOp<                             \
-        _bz_typename blitz::asExpr<T1>::T_expr,                   \
-        _bz_typename blitz::asExpr<T2>::T_expr,                   \
-        applic<_bz_typename blitz::asExpr<T1>::T_expr::T_numtype, \
-        _bz_typename blitz::asExpr<T2>::T_expr::T_numtype> > >(   \
+        typename blitz::asExpr<T1>::T_expr,                   \
+        typename blitz::asExpr<T2>::T_expr,                   \
+        applic<typename blitz::asExpr<T1>::T_expr::T_numtype, \
+        typename blitz::asExpr<T2>::T_expr::T_numtype> > >(   \
         blitz::asExpr<T1>::getExpr(d1.unwrap()),                  \
         blitz::asExpr<T2>::getExpr(d2.unwrap()));                 \
 }
@@ -240,20 +240,20 @@ name(const blitz::ETBase<T1>& d1,                                 \
 template <typename T1, typename T2, int N>                                 \
 _bz_inline_et                                                              \
 blitz::_bz_ArrayExprBinaryOp<                                     \
-    _bz_typename blitz::asExpr<                                   \
+    typename blitz::asExpr<                                   \
     blitz::TinyVector<T2,N> >::T_expr,                            \
-    _bz_typename blitz::asExpr<T1>::T_expr,                       \
+    typename blitz::asExpr<T1>::T_expr,                       \
     applic<blitz::TinyVector<T2,N>,                               \
-    _bz_typename blitz::asExpr<T1>::T_expr::T_numtype> >          \
+    typename blitz::asExpr<T1>::T_expr::T_numtype> >          \
 name(const blitz::TinyVector<T2,N> d1,                            \
      const blitz::ETBase<T1>& d2)                                 \
 {                                                                          \
     return blitz::_bz_ArrayExprBinaryOp<                          \
-        _bz_typename blitz::asExpr<                               \
+        typename blitz::asExpr<                               \
         blitz::TinyVector<T2,N> >::T_expr,                        \
-        _bz_typename blitz::asExpr<T1>::T_expr,                   \
+        typename blitz::asExpr<T1>::T_expr,                   \
         applic<blitz::TinyVector<T2,N>,                           \
-        _bz_typename blitz::asExpr<T1>::T_expr::T_numtype> >(     \
+        typename blitz::asExpr<T1>::T_expr::T_numtype> >(     \
         blitz::asExpr<                                            \
         blitz::TinyVector<T2,N> >::getExpr(d1),                   \
         blitz::asExpr<T1>::getExpr(d2.unwrap()));                 \
@@ -262,19 +262,19 @@ name(const blitz::TinyVector<T2,N> d1,                            \
 template <typename T1, typename T2, int N>                                 \
 _bz_inline_et                                                              \
 blitz::_bz_ArrayExprBinaryOp<                                     \
-    _bz_typename blitz::asExpr<T1>::T_expr,                       \
-    _bz_typename blitz::asExpr<                                   \
+    typename blitz::asExpr<T1>::T_expr,                       \
+    typename blitz::asExpr<                                   \
     blitz::TinyVector<T2,N> >::T_expr,                            \
-    applic<_bz_typename blitz::asExpr<T1>::T_expr::T_numtype,     \
+    applic<typename blitz::asExpr<T1>::T_expr::T_numtype,     \
     blitz::TinyVector<T2,N> > >                                   \
 name(const blitz::ETBase<T1>& d1,                                 \
      const blitz::TinyVector<T2,N> d2)                            \
 {                                                                          \
     return blitz::_bz_ArrayExprBinaryOp<                          \
-        _bz_typename blitz::asExpr<T1>::T_expr,                   \
-        _bz_typename blitz::asExpr<                               \
+        typename blitz::asExpr<T1>::T_expr,                   \
+        typename blitz::asExpr<                               \
         blitz::TinyVector<T2,N> >::T_expr,                        \
-        applic<_bz_typename blitz::asExpr<T1>::T_expr::T_numtype, \
+        applic<typename blitz::asExpr<T1>::T_expr::T_numtype, \
         blitz::TinyVector<T2,N> > >(                              \
         blitz::asExpr<T1>::getExpr(d1.unwrap()),                  \
         blitz::asExpr<                                            \
@@ -287,15 +287,15 @@ template<typename T>                                                       \
 _bz_inline_et                                                              \
 blitz::_bz_ArrayExprBinaryOp<                                     \
     blitz::asExpr<sca >::T_expr,                                  \
-    _bz_typename blitz::asExpr<T>::T_expr,                        \
-    applic<sca,_bz_typename blitz::asExpr<T>::T_expr::T_numtype> >\
+    typename blitz::asExpr<T>::T_expr,                        \
+    applic<sca,typename blitz::asExpr<T>::T_expr::T_numtype> >\
 name(const sca d1, const blitz::ETBase<T>& d2)                    \
 {                                                                          \
     return blitz::_bz_ArrayExprBinaryOp<                          \
         blitz::asExpr<sca >::T_expr,                              \
-        _bz_typename blitz::asExpr<T>::T_expr,                    \
+        typename blitz::asExpr<T>::T_expr,                    \
         applic<sca,                                                        \
-        _bz_typename blitz::asExpr<T>::T_expr::T_numtype> >(      \
+        typename blitz::asExpr<T>::T_expr::T_numtype> >(      \
         blitz::asExpr<sca >::getExpr(d1),                         \
         blitz::asExpr<T>::getExpr(d2.unwrap()));                  \
 }                                                                          \
@@ -303,16 +303,16 @@ name(const sca d1, const blitz::ETBase<T>& d2)                    \
 template<typename T>                                                       \
 _bz_inline_et                                                              \
 blitz::_bz_ArrayExprBinaryOp<                                     \
-    _bz_typename blitz::asExpr<T>::T_expr,                        \
+    typename blitz::asExpr<T>::T_expr,                        \
     blitz::asExpr<sca >::T_expr,                                  \
-    applic<_bz_typename blitz::asExpr<T>::T_expr::T_numtype,      \
+    applic<typename blitz::asExpr<T>::T_expr::T_numtype,      \
            sca > >                                                         \
 name(const blitz::ETBase<T>& d1, const sca d2)                    \
 {                                                                          \
     return blitz::_bz_ArrayExprBinaryOp<                          \
-        _bz_typename blitz::asExpr<T>::T_expr,                    \
+        typename blitz::asExpr<T>::T_expr,                    \
         blitz::asExpr<sca >::T_expr,                              \
-        applic<_bz_typename blitz::asExpr<T>::T_expr::T_numtype,  \
+        applic<typename blitz::asExpr<T>::T_expr::T_numtype,  \
                sca > >(                                                    \
         blitz::asExpr<T>::getExpr(d1.unwrap()),                   \
         blitz::asExpr<sca >::getExpr(d2));                        \
@@ -330,24 +330,24 @@ name(const blitz::ETBase<T>& d1, const sca d2)                    \
 template<typename T1, typename T2, typename T3>                            \
 _bz_inline_et                                                              \
 blitz::_bz_ArrayExpr<blitz::_bz_ArrayExprTernaryOp<      \
-    _bz_typename blitz::asExpr<T1>::T_expr,                       \
-    _bz_typename blitz::asExpr<T2>::T_expr,                       \
-    _bz_typename blitz::asExpr<T3>::T_expr,                       \
-    applic<_bz_typename blitz::asExpr<T1>::T_expr::T_numtype,     \
-           _bz_typename blitz::asExpr<T2>::T_expr::T_numtype,     \
-           _bz_typename blitz::asExpr<T3>::T_expr::T_numtype> > > \
+    typename blitz::asExpr<T1>::T_expr,                       \
+    typename blitz::asExpr<T2>::T_expr,                       \
+    typename blitz::asExpr<T3>::T_expr,                       \
+    applic<typename blitz::asExpr<T1>::T_expr::T_numtype,     \
+           typename blitz::asExpr<T2>::T_expr::T_numtype,     \
+           typename blitz::asExpr<T3>::T_expr::T_numtype> > > \
 name(const blitz::ETBase<T1>& d1,                                 \
      const blitz::ETBase<T2>& d2,                                 \
      const blitz::ETBase<T3>& d3)                                 \
 {                                                                          \
     return blitz::_bz_ArrayExpr<                                  \
         blitz::_bz_ArrayExprTernaryOp<                            \
-        _bz_typename blitz::asExpr<T1>::T_expr,                   \
-        _bz_typename blitz::asExpr<T2>::T_expr,                   \
-        _bz_typename blitz::asExpr<T3>::T_expr,                   \
-        applic<_bz_typename blitz::asExpr<T1>::T_expr::T_numtype, \
-        _bz_typename blitz::asExpr<T2>::T_expr::T_numtype,        \
-        _bz_typename blitz::asExpr<T3>::T_expr::T_numtype> > >(   \
+        typename blitz::asExpr<T1>::T_expr,                   \
+        typename blitz::asExpr<T2>::T_expr,                   \
+        typename blitz::asExpr<T3>::T_expr,                   \
+        applic<typename blitz::asExpr<T1>::T_expr::T_numtype, \
+        typename blitz::asExpr<T2>::T_expr::T_numtype,        \
+        typename blitz::asExpr<T3>::T_expr::T_numtype> > >(   \
         blitz::asExpr<T1>::getExpr(d1.unwrap()),                  \
         blitz::asExpr<T2>::getExpr(d2.unwrap()),                  \
         blitz::asExpr<T3>::getExpr(d3.unwrap()));                 \
@@ -369,15 +369,15 @@ name(const blitz::ETBase<T1>& d1,                                 \
     <									\
     blitz::_bz_ArrayExprQuaternaryOp				\
     <									\
-    _bz_typename blitz::asExpr<T1>::T_expr,			\
-    _bz_typename blitz::asExpr<T2>::T_expr,			\
-    _bz_typename blitz::asExpr<T3>::T_expr,			\
-    _bz_typename blitz::asExpr<T4>::T_expr,			\
+    typename blitz::asExpr<T1>::T_expr,			\
+    typename blitz::asExpr<T2>::T_expr,			\
+    typename blitz::asExpr<T3>::T_expr,			\
+    typename blitz::asExpr<T4>::T_expr,			\
     functor<								\
-    _bz_typename blitz::asExpr<T1>::T_expr::T_numtype,		\
-    _bz_typename blitz::asExpr<T2>::T_expr::T_numtype,		\
-    _bz_typename blitz::asExpr<T3>::T_expr::T_numtype,		\
-    _bz_typename blitz::asExpr<T4>::T_expr::T_numtype		\
+    typename blitz::asExpr<T1>::T_expr::T_numtype,		\
+    typename blitz::asExpr<T2>::T_expr::T_numtype,		\
+    typename blitz::asExpr<T3>::T_expr::T_numtype,		\
+    typename blitz::asExpr<T4>::T_expr::T_numtype		\
     > > >								\
 									\
     name(const blitz::ETBase<T1>& d1,				\
@@ -389,14 +389,14 @@ name(const blitz::ETBase<T1>& d1,                                 \
       <									\
       blitz::_bz_ArrayExprBinaryOp				\
       <									\
-      _bz_typename blitz::asExpr<T1>::T_expr,			\
-      _bz_typename blitz::asExpr<T2>::T_expr,			\
+      typename blitz::asExpr<T1>::T_expr,			\
+      typename blitz::asExpr<T2>::T_expr,			\
       functor								\
       <									\
-      _bz_typename blitz::asExpr<T1>::T_expr::T_numtype,	\
-      _bz_typename blitz::asExpr<T2>::T_expr::T_numtype,	\
-      _bz_typename blitz::asExpr<T3>::T_expr::T_numtype,	\
-      _bz_typename blitz::asExpr<T4>::T_expr::T_numtype	\
+      typename blitz::asExpr<T1>::T_expr::T_numtype,	\
+      typename blitz::asExpr<T2>::T_expr::T_numtype,	\
+      typename blitz::asExpr<T3>::T_expr::T_numtype,	\
+      typename blitz::asExpr<T4>::T_expr::T_numtype	\
       > > >								\
       (									\
        blitz::asExpr<T1>::getExpr(d1.unwrap()),		\

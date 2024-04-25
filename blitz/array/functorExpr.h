@@ -108,7 +108,7 @@ class _bz_FunctorExpr {
 public:
     typedef P_functor T_functor;
     typedef P_expr T_expr;
-    typedef _bz_typename T_expr::T_numtype T_numtype1;
+    typedef typename T_expr::T_numtype T_numtype1;
     typedef P_result T_numtype;
 
   // select return type
@@ -124,7 +124,7 @@ public:
     typedef T_expr    T_ctorArg1;
     typedef int       T_ctorArg2;    // dummy
     typedef int       T_ctorArg3;    // dummy
-  typedef _bz_FunctorExpr<P_functor, _bz_typename P_expr::T_range_result, 
+  typedef _bz_FunctorExpr<P_functor, typename P_expr::T_range_result, 
 			  P_result> T_range_result;
 
     static const int 
@@ -152,7 +152,7 @@ public:
     { }
 
   // this is identical to the above constructor
-  //_bz_FunctorExpr(BZ_ETPARM(T_functor) f, _bz_typename T_expr::T_ctorArg1 a)
+  //_bz_FunctorExpr(BZ_ETPARM(T_functor) f, typename T_expr::T_ctorArg1 a)
   //: f_(f), iter_(a)  { }
 
 #if BZ_TEMPLATE_CTOR_DOESNT_CAUSE_HAVOC
@@ -362,8 +362,8 @@ public:
     typedef P_functor T_functor;
     typedef P_expr1 T_expr1;
     typedef P_expr2 T_expr2;
-    typedef _bz_typename T_expr1::T_numtype T_numtype1;
-    typedef _bz_typename T_expr2::T_numtype T_numtype2;
+    typedef typename T_expr1::T_numtype T_numtype1;
+    typedef typename T_expr2::T_numtype T_numtype2;
     typedef P_result T_numtype;
 
   // select return type
@@ -383,8 +383,8 @@ public:
     typedef T_expr1 T_ctorArg2;
     typedef int T_ctorArg3;  // dummy
   typedef _bz_FunctorExpr2<P_functor, 
-			  _bz_typename P_expr1::T_range_result, 
-			  _bz_typename P_expr2::T_range_result, 
+			  typename P_expr1::T_range_result, 
+			  typename P_expr2::T_range_result, 
 			  P_result> T_range_result;
 
     static const int 
@@ -706,9 +706,9 @@ public:
     typedef P_expr1 T_expr1;
     typedef P_expr2 T_expr2;
     typedef P_expr3 T_expr3;
-    typedef _bz_typename T_expr1::T_numtype T_numtype1;
-    typedef _bz_typename T_expr2::T_numtype T_numtype2;
-    typedef _bz_typename T_expr3::T_numtype T_numtype3;
+    typedef typename T_expr1::T_numtype T_numtype1;
+    typedef typename T_expr2::T_numtype T_numtype2;
+    typedef typename T_expr3::T_numtype T_numtype3;
     typedef P_result T_numtype;
 
   // select return type
@@ -735,9 +735,9 @@ public:
     typedef T_expr2 T_ctorArg2;
     typedef T_expr3 T_ctorArg3;
   typedef _bz_FunctorExpr3<P_functor, 
-			  _bz_typename P_expr1::T_range_result, 
-			  _bz_typename P_expr2::T_range_result, 
-			  _bz_typename P_expr3::T_range_result, 
+			  typename P_expr1::T_range_result, 
+			  typename P_expr2::T_range_result, 
+			  typename P_expr3::T_range_result, 
 			  P_result> T_range_result;
 
     static const int 
@@ -1104,53 +1104,53 @@ protected:
 
 template<typename P_functor, typename P_expr>
 _bz_inline_et
-_bz_ArrayExpr<_bz_FunctorExpr<P_functor, _bz_typename asExpr<P_expr>::T_expr,
-    _bz_typename asExpr<P_expr>::T_expr::T_numtype> >
+_bz_ArrayExpr<_bz_FunctorExpr<P_functor, typename asExpr<P_expr>::T_expr,
+    typename asExpr<P_expr>::T_expr::T_numtype> >
 applyFunctor(const P_functor& f, const ETBase<P_expr>& a)
 {
     typedef _bz_FunctorExpr<P_functor,
-        _bz_typename asExpr<P_expr>::T_expr,
-        _bz_typename asExpr<P_expr>::T_expr::T_numtype> f1;
+        typename asExpr<P_expr>::T_expr,
+        typename asExpr<P_expr>::T_expr::T_numtype> f1;
     return _bz_ArrayExpr<f1>(f, a.unwrap());
 }
 
 template<typename P_functor, typename P_expr1, typename P_expr2>
 _bz_inline_et
 _bz_ArrayExpr<_bz_FunctorExpr2<P_functor,
-    _bz_typename asExpr<P_expr1>::T_expr,
-    _bz_typename asExpr<P_expr2>::T_expr,
-    BZ_PROMOTE(_bz_typename asExpr<P_expr1>::T_expr::T_numtype,
-               _bz_typename asExpr<P_expr2>::T_expr::T_numtype)> >
+    typename asExpr<P_expr1>::T_expr,
+    typename asExpr<P_expr2>::T_expr,
+    BZ_PROMOTE(typename asExpr<P_expr1>::T_expr::T_numtype,
+               typename asExpr<P_expr2>::T_expr::T_numtype)> >
 applyFunctor(const P_functor& f,
     const ETBase<P_expr1>& a, const ETBase<P_expr2>& b)
 {
     typedef _bz_FunctorExpr2<P_functor,
-        _bz_typename asExpr<P_expr1>::T_expr,
-        _bz_typename asExpr<P_expr2>::T_expr,
-        BZ_PROMOTE(_bz_typename asExpr<P_expr1>::T_expr::T_numtype,
-                   _bz_typename asExpr<P_expr2>::T_expr::T_numtype)> f2;
+        typename asExpr<P_expr1>::T_expr,
+        typename asExpr<P_expr2>::T_expr,
+        BZ_PROMOTE(typename asExpr<P_expr1>::T_expr::T_numtype,
+                   typename asExpr<P_expr2>::T_expr::T_numtype)> f2;
     return _bz_ArrayExpr<f2>(f, a.unwrap(), b.unwrap());
 }
 
 template<typename P_functor, typename P_expr1, typename P_expr2, typename P_expr3>
 _bz_inline_et
 _bz_ArrayExpr<_bz_FunctorExpr3<P_functor,
-    _bz_typename asExpr<P_expr1>::T_expr,
-    _bz_typename asExpr<P_expr2>::T_expr, 
-    _bz_typename asExpr<P_expr3>::T_expr,
-    BZ_PROMOTE(_bz_typename asExpr<P_expr1>::T_expr::T_numtype,
-	       BZ_PROMOTE(_bz_typename asExpr<P_expr2>::T_expr::T_numtype,
-	                  _bz_typename asExpr<P_expr3>::T_expr::T_numtype))> >
+    typename asExpr<P_expr1>::T_expr,
+    typename asExpr<P_expr2>::T_expr, 
+    typename asExpr<P_expr3>::T_expr,
+    BZ_PROMOTE(typename asExpr<P_expr1>::T_expr::T_numtype,
+	       BZ_PROMOTE(typename asExpr<P_expr2>::T_expr::T_numtype,
+	                  typename asExpr<P_expr3>::T_expr::T_numtype))> >
 applyFunctor(const P_functor& f, const ETBase<P_expr1>& a,
     const ETBase<P_expr2>& b, const ETBase<P_expr3>& c)
 {
     typedef _bz_FunctorExpr3<P_functor,
-        _bz_typename asExpr<P_expr1>::T_expr,
-        _bz_typename asExpr<P_expr2>::T_expr,
-        _bz_typename asExpr<P_expr3>::T_expr,
-        BZ_PROMOTE(_bz_typename asExpr<P_expr1>::T_expr::T_numtype,
-	    BZ_PROMOTE(_bz_typename asExpr<P_expr2>::T_expr::T_numtype,
-	               _bz_typename asExpr<P_expr3>::T_expr::T_numtype))> f3;
+        typename asExpr<P_expr1>::T_expr,
+        typename asExpr<P_expr2>::T_expr,
+        typename asExpr<P_expr3>::T_expr,
+        BZ_PROMOTE(typename asExpr<P_expr1>::T_expr::T_numtype,
+	    BZ_PROMOTE(typename asExpr<P_expr2>::T_expr::T_numtype,
+	               typename asExpr<P_expr3>::T_expr::T_numtype))> f3;
     return _bz_ArrayExpr<f3>(f, a.unwrap(), b.unwrap(), c.unwrap());
 }
 
@@ -1249,14 +1249,14 @@ private:                                                                  \
 template<typename P_expr>                                                 \
 blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr<            \
     classname,                                                            \
-    _bz_typename blitz::asExpr<P_expr>::T_expr,                  \
-  _bz_typename blitz::asExpr<P_expr>::T_expr::T_optype> >	\
+    typename blitz::asExpr<P_expr>::T_expr,                  \
+  typename blitz::asExpr<P_expr>::T_expr::T_optype> >	\
 operator()(const blitz::ETBase<P_expr>& a) const                 \
 {                                                                         \
     return blitz::_bz_ArrayExpr<                                 \
         blitz::_bz_FunctorExpr<classname,                        \
-        _bz_typename blitz::asExpr<P_expr>::T_expr,              \
-        _bz_typename blitz::asExpr<P_expr>::T_expr::T_optype> > \
+        typename blitz::asExpr<P_expr>::T_expr,              \
+        typename blitz::asExpr<P_expr>::T_expr::T_optype> > \
         (*this, a.unwrap());                                              \
 }
 
@@ -1264,22 +1264,22 @@ operator()(const blitz::ETBase<P_expr>& a) const                 \
 template<typename P_expr1, typename P_expr2>                              \
 blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr2<           \
     classname,                                                            \
-    _bz_typename blitz::asExpr<P_expr1>::T_expr,                 \
-    _bz_typename blitz::asExpr<P_expr2>::T_expr,                 \
-    BZ_PROMOTE(_bz_typename                                               \
+    typename blitz::asExpr<P_expr1>::T_expr,                 \
+    typename blitz::asExpr<P_expr2>::T_expr,                 \
+    BZ_PROMOTE(typename                                               \
                blitz::asExpr<P_expr1>::T_expr::T_optype,        \
-               _bz_typename                                               \
+               typename                                               \
                blitz::asExpr<P_expr2>::T_expr::T_optype)> >     \
 operator()(const blitz::ETBase<P_expr1>& a,                      \
            const blitz::ETBase<P_expr2>& b) const                \
 {                                                                         \
     return blitz::_bz_ArrayExpr<                                 \
         blitz::_bz_FunctorExpr2<classname,                       \
-        _bz_typename blitz::asExpr<P_expr1>::T_expr,             \
-        _bz_typename blitz::asExpr<P_expr2>::T_expr,             \
-        BZ_PROMOTE(_bz_typename                                           \
+        typename blitz::asExpr<P_expr1>::T_expr,             \
+        typename blitz::asExpr<P_expr2>::T_expr,             \
+        BZ_PROMOTE(typename                                           \
                    blitz::asExpr<P_expr1>::T_expr::T_optype,    \
-                   _bz_typename                                           \
+                   typename                                           \
                    blitz::asExpr<P_expr2>::T_expr::T_optype)> > \
         (*this, a.unwrap(), b.unwrap());                                  \
 }
@@ -1288,14 +1288,14 @@ operator()(const blitz::ETBase<P_expr1>& a,                      \
 template<typename P_expr1, typename P_expr2, typename P_expr3>            \
 blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr3<           \
     classname,                                                            \
-    _bz_typename blitz::asExpr<P_expr1>::T_expr,                 \
-    _bz_typename blitz::asExpr<P_expr2>::T_expr,                 \
-    _bz_typename blitz::asExpr<P_expr3>::T_expr,                 \
-    BZ_PROMOTE(_bz_typename                                               \
+    typename blitz::asExpr<P_expr1>::T_expr,                 \
+    typename blitz::asExpr<P_expr2>::T_expr,                 \
+    typename blitz::asExpr<P_expr3>::T_expr,                 \
+    BZ_PROMOTE(typename                                               \
                blitz::asExpr<P_expr1>::T_expr::T_optype,        \
-    BZ_PROMOTE(_bz_typename                                               \
+    BZ_PROMOTE(typename                                               \
                blitz::asExpr<P_expr2>::T_expr::T_optype,        \
-               _bz_typename                                               \
+               typename                                               \
                blitz::asExpr<P_expr3>::T_expr::T_optype))> >    \
 operator()(const blitz::ETBase<P_expr1>& a,                      \
            const blitz::ETBase<P_expr2>& b,                      \
@@ -1303,14 +1303,14 @@ operator()(const blitz::ETBase<P_expr1>& a,                      \
 {                                                                         \
     return blitz::_bz_ArrayExpr<                                 \
         blitz::_bz_FunctorExpr3<classname,                       \
-        _bz_typename blitz::asExpr<P_expr1>::T_expr,             \
-        _bz_typename blitz::asExpr<P_expr2>::T_expr,             \
-        _bz_typename blitz::asExpr<P_expr3>::T_expr,             \
-        BZ_PROMOTE(_bz_typename                                           \
+        typename blitz::asExpr<P_expr1>::T_expr,             \
+        typename blitz::asExpr<P_expr2>::T_expr,             \
+        typename blitz::asExpr<P_expr3>::T_expr,             \
+        BZ_PROMOTE(typename                                           \
                    blitz::asExpr<P_expr1>::T_expr::T_optype,    \
-        BZ_PROMOTE(_bz_typename                                           \
+        BZ_PROMOTE(typename                                           \
                    blitz::asExpr<P_expr2>::T_expr::T_optype,    \
-                   _bz_typename                                           \
+                   typename                                           \
                    blitz::asExpr<P_expr3>::T_expr::T_optype))> >\
         (*this, a.unwrap(), b.unwrap(), c.unwrap());                      \
 }
@@ -1320,13 +1320,13 @@ operator()(const blitz::ETBase<P_expr1>& a,                      \
 template<typename P_expr>                                                 \
 blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr<            \
     classname,                                                            \
-    _bz_typename blitz::asExpr<P_expr>::T_expr,                  \
+    typename blitz::asExpr<P_expr>::T_expr,                  \
     ret> >                                                                \
 operator()(const blitz::ETBase<P_expr>& a) const                 \
 {                                                                         \
     return blitz::_bz_ArrayExpr<                                 \
         blitz::_bz_FunctorExpr<classname,                        \
-        _bz_typename blitz::asExpr<P_expr>::T_expr,              \
+        typename blitz::asExpr<P_expr>::T_expr,              \
         ret> >                                                            \
         (*this, a.unwrap());                                              \
 }
@@ -1335,16 +1335,16 @@ operator()(const blitz::ETBase<P_expr>& a) const                 \
 template<typename P_expr1, typename P_expr2>                              \
 blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr2<           \
     classname,                                                            \
-    _bz_typename blitz::asExpr<P_expr1>::T_expr,                 \
-    _bz_typename blitz::asExpr<P_expr2>::T_expr,                 \
+    typename blitz::asExpr<P_expr1>::T_expr,                 \
+    typename blitz::asExpr<P_expr2>::T_expr,                 \
     ret> >                                                                \
 operator()(const blitz::ETBase<P_expr1>& a,                      \
            const blitz::ETBase<P_expr2>& b) const                \
 {                                                                         \
     return blitz::_bz_ArrayExpr<                                 \
         blitz::_bz_FunctorExpr2<classname,                       \
-        _bz_typename blitz::asExpr<P_expr1>::T_expr,             \
-        _bz_typename blitz::asExpr<P_expr2>::T_expr,             \
+        typename blitz::asExpr<P_expr1>::T_expr,             \
+        typename blitz::asExpr<P_expr2>::T_expr,             \
         ret> >                                                            \
         (*this, a.unwrap(), b.unwrap());                                  \
 }
@@ -1353,9 +1353,9 @@ operator()(const blitz::ETBase<P_expr1>& a,                      \
 template<typename P_expr1, typename P_expr2, typename P_expr3>            \
 blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr3<           \
     classname,                                                            \
-    _bz_typename blitz::asExpr<P_expr1>::T_expr,                 \
-    _bz_typename blitz::asExpr<P_expr2>::T_expr,                 \
-    _bz_typename blitz::asExpr<P_expr3>::T_expr,                 \
+    typename blitz::asExpr<P_expr1>::T_expr,                 \
+    typename blitz::asExpr<P_expr2>::T_expr,                 \
+    typename blitz::asExpr<P_expr3>::T_expr,                 \
     ret> >                                                                \
 operator()(const blitz::ETBase<P_expr1>& a,                      \
            const blitz::ETBase<P_expr2>& b,                      \
@@ -1363,9 +1363,9 @@ operator()(const blitz::ETBase<P_expr1>& a,                      \
 {                                                                         \
     return blitz::_bz_ArrayExpr<                                 \
         blitz::_bz_FunctorExpr3<classname,                       \
-        _bz_typename blitz::asExpr<P_expr1>::T_expr,             \
-        _bz_typename blitz::asExpr<P_expr2>::T_expr,             \
-        _bz_typename blitz::asExpr<P_expr3>::T_expr,             \
+        typename blitz::asExpr<P_expr1>::T_expr,             \
+        typename blitz::asExpr<P_expr2>::T_expr,             \
+        typename blitz::asExpr<P_expr3>::T_expr,             \
         ret> >                                                            \
         (*this, a.unwrap(), b.unwrap(), c.unwrap());                      \
 }
@@ -1376,15 +1376,15 @@ _BZ_MAKE_FUNCTOR(classname, funcname)                                     \
 template<typename P_expr>                                                 \
 blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr<            \
     _bz_Functor ## classname ## funcname,                                 \
-    _bz_typename blitz::asExpr<P_expr>::T_expr,                  \
-    _bz_typename blitz::asExpr<P_expr>::T_expr::T_optype> >     \
+    typename blitz::asExpr<P_expr>::T_expr,                  \
+    typename blitz::asExpr<P_expr>::T_expr::T_optype> >     \
 funcname(const blitz::ETBase<P_expr>& a) const                   \
 {                                                                         \
     return blitz::_bz_ArrayExpr<                                 \
         blitz::_bz_FunctorExpr<                                  \
         _bz_Functor ## classname ## funcname,                             \
-        _bz_typename blitz::asExpr<P_expr>::T_expr,              \
-        _bz_typename blitz::asExpr<P_expr>::T_expr::T_optype> > \
+        typename blitz::asExpr<P_expr>::T_expr,              \
+        typename blitz::asExpr<P_expr>::T_expr::T_optype> > \
       (_bz_Functor ## classname ## funcname(*this), a.unwrap());	\
 }
 
@@ -1393,11 +1393,11 @@ _BZ_MAKE_FUNCTOR2(classname, funcname)                                    \
 template<typename P_expr1, typename P_expr2>                              \
 blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr2<           \
     _bz_Functor ## classname ## funcname,                                 \
-    _bz_typename blitz::asExpr<P_expr1>::T_expr,                 \
-    _bz_typename blitz::asExpr<P_expr2>::T_expr,                 \
-    BZ_PROMOTE(_bz_typename                                               \
+    typename blitz::asExpr<P_expr1>::T_expr,                 \
+    typename blitz::asExpr<P_expr2>::T_expr,                 \
+    BZ_PROMOTE(typename                                               \
                blitz::asExpr<P_expr1>::T_expr::T_optype,        \
-               _bz_typename                                               \
+               typename                                               \
                blitz::asExpr<P_expr2>::T_expr::T_optype)> >     \
 funcname(const blitz::ETBase<P_expr1>& a,                        \
          const blitz::ETBase<P_expr2>& b) const                  \
@@ -1405,11 +1405,11 @@ funcname(const blitz::ETBase<P_expr1>& a,                        \
     return blitz::_bz_ArrayExpr<                                 \
         blitz::_bz_FunctorExpr2<                                 \
         _bz_Functor ## classname ## funcname,                             \
-        _bz_typename blitz::asExpr<P_expr1>::T_expr,             \
-        _bz_typename blitz::asExpr<P_expr2>::T_expr,             \
-        BZ_PROMOTE(_bz_typename                                           \
+        typename blitz::asExpr<P_expr1>::T_expr,             \
+        typename blitz::asExpr<P_expr2>::T_expr,             \
+        BZ_PROMOTE(typename                                           \
                    blitz::asExpr<P_expr1>::T_expr::T_optype,    \
-                   _bz_typename                                           \
+                   typename                                           \
                    blitz::asExpr<P_expr2>::T_expr::T_optype)> > \
       (_bz_Functor ## classname ## funcname(*this), a.unwrap(), b.unwrap()); \
 }
@@ -1419,14 +1419,14 @@ _BZ_MAKE_FUNCTOR3(classname, funcname)                                    \
 template<typename P_expr1, typename P_expr2, typename P_expr3>            \
 blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr3<           \
     _bz_Functor ## classname ## funcname,                                 \
-    _bz_typename blitz::asExpr<P_expr1>::T_expr,                 \
-    _bz_typename blitz::asExpr<P_expr2>::T_expr,                 \
-    _bz_typename blitz::asExpr<P_expr3>::T_expr,                 \
-    BZ_PROMOTE(_bz_typename                                               \
+    typename blitz::asExpr<P_expr1>::T_expr,                 \
+    typename blitz::asExpr<P_expr2>::T_expr,                 \
+    typename blitz::asExpr<P_expr3>::T_expr,                 \
+    BZ_PROMOTE(typename                                               \
                blitz::asExpr<P_expr1>::T_expr::T_optype,        \
-    BZ_PROMOTE(_bz_typename                                               \
+    BZ_PROMOTE(typename                                               \
                blitz::asExpr<P_expr2>::T_expr::T_optype,        \
-               _bz_typename                                               \
+               typename                                               \
                blitz::asExpr<P_expr3>::T_expr::T_optype))> >    \
 funcname(const blitz::ETBase<P_expr1>& a,                        \
          const blitz::ETBase<P_expr2>& b,                        \
@@ -1435,14 +1435,14 @@ funcname(const blitz::ETBase<P_expr1>& a,                        \
     return blitz::_bz_ArrayExpr<                                 \
         blitz::_bz_FunctorExpr3<                                 \
         _bz_Functor ## classname ## funcname,                             \
-        _bz_typename blitz::asExpr<P_expr1>::T_expr,             \
-        _bz_typename blitz::asExpr<P_expr2>::T_expr,             \
-        _bz_typename blitz::asExpr<P_expr3>::T_expr,             \
-        BZ_PROMOTE(_bz_typename                                           \
+        typename blitz::asExpr<P_expr1>::T_expr,             \
+        typename blitz::asExpr<P_expr2>::T_expr,             \
+        typename blitz::asExpr<P_expr3>::T_expr,             \
+        BZ_PROMOTE(typename                                           \
                    blitz::asExpr<P_expr1>::T_expr::T_optype,    \
-        BZ_PROMOTE(_bz_typename                                           \
+        BZ_PROMOTE(typename                                           \
                    blitz::asExpr<P_expr2>::T_expr::T_optype,    \
-                   _bz_typename                                           \
+                   typename                                           \
                    blitz::asExpr<P_expr3>::T_expr::T_optype))> >\
       (_bz_Functor ## classname ## funcname(*this),			\
        a.unwrap(), b.unwrap(), c.unwrap());				\
@@ -1454,14 +1454,14 @@ _BZ_MAKE_FUNCTOR_RET(classname, funcname, ret)                            \
 template<typename P_expr>                                                 \
 blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr<            \
     _bz_Functor ## classname ## funcname,                                 \
-    _bz_typename blitz::asExpr<P_expr>::T_expr,                  \
+    typename blitz::asExpr<P_expr>::T_expr,                  \
     ret> >                                                                \
 funcname(const blitz::ETBase<P_expr>& a) const                   \
 {                                                                         \
     return blitz::_bz_ArrayExpr<                                 \
         blitz::_bz_FunctorExpr<                                  \
         _bz_Functor ## classname ## funcname,                             \
-      _bz_typename blitz::asExpr<P_expr>::T_expr, ret> >	\
+      typename blitz::asExpr<P_expr>::T_expr, ret> >	\
       (_bz_Functor ## classname ## funcname(*this), a.unwrap());	\
 }
 
@@ -1470,8 +1470,8 @@ _BZ_MAKE_FUNCTOR2_RET(classname, funcname, ret)                           \
 template<typename P_expr1, typename P_expr2>                              \
 blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr2<           \
     _bz_Functor ## classname ## funcname,                                 \
-    _bz_typename blitz::asExpr<P_expr1>::T_expr,                 \
-    _bz_typename blitz::asExpr<P_expr2>::T_expr,                 \
+    typename blitz::asExpr<P_expr1>::T_expr,                 \
+    typename blitz::asExpr<P_expr2>::T_expr,                 \
     ret> >                                                                \
 funcname(const blitz::ETBase<P_expr1>& a,                        \
          const blitz::ETBase<P_expr2>& b) const                  \
@@ -1479,8 +1479,8 @@ funcname(const blitz::ETBase<P_expr1>& a,                        \
     return blitz::_bz_ArrayExpr<                                 \
         blitz::_bz_FunctorExpr2<                                 \
         _bz_Functor ## classname ## funcname,                             \
-        _bz_typename blitz::asExpr<P_expr1>::T_expr,             \
-        _bz_typename blitz::asExpr<P_expr2>::T_expr,             \
+        typename blitz::asExpr<P_expr1>::T_expr,             \
+        typename blitz::asExpr<P_expr2>::T_expr,             \
         ret> >                                                            \
       (_bz_Functor ## classname ## funcname(*this), a.unwrap(), b.unwrap()); \
 }
@@ -1490,9 +1490,9 @@ _BZ_MAKE_FUNCTOR3_RET(classname, funcname, ret)                           \
 template<typename P_expr1, typename P_expr2, typename P_expr3>            \
 blitz::_bz_ArrayExpr<blitz::_bz_FunctorExpr3<           \
     _bz_Functor ## classname ## funcname,                                 \
-    _bz_typename blitz::asExpr<P_expr1>::T_expr,                 \
-    _bz_typename blitz::asExpr<P_expr2>::T_expr,                 \
-    _bz_typename blitz::asExpr<P_expr3>::T_expr,                 \
+    typename blitz::asExpr<P_expr1>::T_expr,                 \
+    typename blitz::asExpr<P_expr2>::T_expr,                 \
+    typename blitz::asExpr<P_expr3>::T_expr,                 \
     ret> >                                                                \
 funcname(const blitz::ETBase<P_expr1>& a,                        \
          const blitz::ETBase<P_expr2>& b,                        \
@@ -1501,9 +1501,9 @@ funcname(const blitz::ETBase<P_expr1>& a,                        \
     return blitz::_bz_ArrayExpr<                                 \
         blitz::_bz_FunctorExpr3<                                 \
         _bz_Functor ## classname ## funcname,                             \
-        _bz_typename blitz::asExpr<P_expr1>::T_expr,             \
-        _bz_typename blitz::asExpr<P_expr2>::T_expr,             \
-        _bz_typename blitz::asExpr<P_expr3>::T_expr,             \
+        typename blitz::asExpr<P_expr1>::T_expr,             \
+        typename blitz::asExpr<P_expr2>::T_expr,             \
+        typename blitz::asExpr<P_expr3>::T_expr,             \
         ret> >                                                            \
       (_bz_Functor ## classname ## funcname(*this),			\
        a.unwrap(), b.unwrap(), c.unwrap());				\

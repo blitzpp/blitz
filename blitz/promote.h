@@ -37,7 +37,7 @@
 namespace blitz {
 
 #ifdef BZ_HAVE_TEMPLATE_QUALIFIED_RETURN_TYPE
-    #define BZ_PROMOTE(A,B) _bz_typename blitz::promote_trait<A,B>::T_promote
+    #define BZ_PROMOTE(A,B) typename blitz::promote_trait<A,B>::T_promote
 #else
     #define BZ_PROMOTE(A,B) A
 #endif
@@ -110,8 +110,8 @@ struct _bz_promote2<T1,T2,false> {
 template<typename T1_orig, typename T2_orig>
 struct promote_trait {
     // Handle promotion of small integers to int/unsigned int
-    typedef _bz_typename autopromote_trait<T1_orig>::T_numtype T1;
-    typedef _bz_typename autopromote_trait<T2_orig>::T_numtype T2;
+    typedef typename autopromote_trait<T1_orig>::T_numtype T1;
+    typedef typename autopromote_trait<T2_orig>::T_numtype T2;
 
     // True if T1 is higher ranked
     static const bool
@@ -157,7 +157,7 @@ struct promote_trait {
 //     static const bool
 //         promoteToT1 = knowBothRanks ? T1IsBetter : defaultPromotion;
 
-    typedef _bz_typename _bz_promote2<T1,T2,promoteToT1>::T_promote T_promote;
+    typedef typename _bz_promote2<T1,T2,promoteToT1>::T_promote T_promote;
 };
 
 #else  // !BZ_HAVE_PARTIAL_SPECIALIZATION

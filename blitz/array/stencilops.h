@@ -49,23 +49,23 @@ namespace blitz {
    operators are defined with _stencilop appended to their name. */
 #define BZ_DECLARE_STENCIL_OPERATOR1(name,A)				\
   template<typename T>							\
-  inline _bz_typename T::T_numtype name ## _stencilop(const T& A)		\
+  inline typename T::T_numtype name ## _stencilop(const T& A)		\
   {
 
 #define BZ_END_STENCIL_OPERATOR   }
 
 #define BZ_DECLARE_STENCIL_OPERATOR2(name,A,B)				\
   template<typename T1, typename T2>					\
-  inline BZ_PROMOTE(_bz_typename T1::T_numtype,				\
-		    _bz_typename T2::T_numtype) name ## _stencilop(const T1& A, \
+  inline BZ_PROMOTE(typename T1::T_numtype,				\
+		    typename T2::T_numtype) name ## _stencilop(const T1& A, \
 								   const T2& B) \
   {
 
 #define BZ_DECLARE_STENCIL_OPERATOR3(name,A,B,C)			\
   template<typename T1, typename T2, typename T3>			\
-  inline BZ_PROMOTE(BZ_PROMOTE(_bz_typename T1::T_numtype,		\
-			       _bz_typename T2::T_numtype),		\
-		    _bz_typename T3::T_numtype) name ## _stencilop(const T1& A,	\
+  inline BZ_PROMOTE(BZ_PROMOTE(typename T1::T_numtype,		\
+			       typename T2::T_numtype),		\
+		    typename T3::T_numtype) name ## _stencilop(const T1& A,	\
 								   const T2& B,	\
 								   const T3& C) \
   {
@@ -123,11 +123,11 @@ BZ_END_STENCIL_OPERATOR
 
 #define BZ_DECLARE_DIFF(name)                                                 \
   template<typename T>                                                        \
-  inline _bz_typename T::T_numtype name ## _stencilop(const T& A, int dim = firstDim)
+  inline typename T::T_numtype name ## _stencilop(const T& A, int dim = firstDim)
 
 #define BZ_DECLARE_MULTIDIFF(name)                                            \
   template<typename T>                                                        \
-  inline _bz_typename multicomponent_traits<_bz_typename                      \
+  inline typename multicomponent_traits<typename                      \
      T::T_numtype>::T_element name ## _stencilop(const T& A, int comp, int dim)
 
 /****************************************************************************
@@ -575,60 +575,60 @@ BZ_DECLARE_MULTIDIFF(forward42n) { return forward42_stencilop(A,comp,dim); }
  ****************************************************************************/
 
 template<typename T>
-inline TinyVector<_bz_typename T::T_numtype,2> grad2D_stencilop(const T& A) {
-  return TinyVector<_bz_typename T::T_numtype,2>(
+inline TinyVector<typename T::T_numtype,2> grad2D_stencilop(const T& A) {
+  return TinyVector<typename T::T_numtype,2>(
     central12_stencilop(A,firstDim),
     central12_stencilop(A,secondDim));
 }
 
 template<typename T>
-inline TinyVector<_bz_typename T::T_numtype,2> grad2D4_stencilop(const T& A) {
-  return TinyVector<_bz_typename T::T_numtype,2>(
+inline TinyVector<typename T::T_numtype,2> grad2D4_stencilop(const T& A) {
+  return TinyVector<typename T::T_numtype,2>(
     central14_stencilop(A,firstDim),
     central14_stencilop(A,secondDim));
 }
 
 template<typename T>
-inline TinyVector<_bz_typename T::T_numtype,3> grad3D_stencilop(const T& A) {
-  return TinyVector<_bz_typename T::T_numtype,3>(
+inline TinyVector<typename T::T_numtype,3> grad3D_stencilop(const T& A) {
+  return TinyVector<typename T::T_numtype,3>(
     central12_stencilop(A,firstDim),
     central12_stencilop(A,secondDim),
     central12_stencilop(A,thirdDim));
 }
 
 template<typename T>
-inline TinyVector<_bz_typename T::T_numtype,3> grad3D4_stencilop(const T& A) {
-  return TinyVector<_bz_typename T::T_numtype,3>(
+inline TinyVector<typename T::T_numtype,3> grad3D4_stencilop(const T& A) {
+  return TinyVector<typename T::T_numtype,3>(
     central14_stencilop(A,firstDim),
     central14_stencilop(A,secondDim),
     central14_stencilop(A,thirdDim));
 }
 
 template<typename T>
-inline TinyVector<_bz_typename T::T_numtype,2> grad2Dn_stencilop(const T& A) {
-  return TinyVector<_bz_typename T::T_numtype,2>(
+inline TinyVector<typename T::T_numtype,2> grad2Dn_stencilop(const T& A) {
+  return TinyVector<typename T::T_numtype,2>(
     central12n_stencilop(A,firstDim),
     central12n_stencilop(A,secondDim));
 }
 
 template<typename T>
-inline TinyVector<_bz_typename T::T_numtype,2> grad2D4n_stencilop(const T& A) {
-  return TinyVector<_bz_typename T::T_numtype,2>(
+inline TinyVector<typename T::T_numtype,2> grad2D4n_stencilop(const T& A) {
+  return TinyVector<typename T::T_numtype,2>(
     central14n_stencilop(A,firstDim),
     central14n_stencilop(A,secondDim));
 }
 
 template<typename T>
-inline TinyVector<_bz_typename T::T_numtype,3> grad3Dn_stencilop(const T& A) {
-  return TinyVector<_bz_typename T::T_numtype,3>(
+inline TinyVector<typename T::T_numtype,3> grad3Dn_stencilop(const T& A) {
+  return TinyVector<typename T::T_numtype,3>(
     central12n_stencilop(A,firstDim),
     central12n_stencilop(A,secondDim),
     central12n_stencilop(A,thirdDim));
 }
 
 template<typename T>
-inline TinyVector<_bz_typename T::T_numtype,3> grad3D4n_stencilop(const T& A) {
-  return TinyVector<_bz_typename T::T_numtype,3>(
+inline TinyVector<typename T::T_numtype,3> grad3D4n_stencilop(const T& A) {
+  return TinyVector<typename T::T_numtype,3>(
     central14n_stencilop(A,firstDim),
     central14n_stencilop(A,secondDim),
     central14n_stencilop(A,thirdDim));
@@ -639,30 +639,30 @@ inline TinyVector<_bz_typename T::T_numtype,3> grad3D4n_stencilop(const T& A) {
  ****************************************************************************/
 
 template<typename T>
-inline TinyVector<_bz_typename T::T_numtype,2> gradSqr2D_stencilop(const T& A) {
-  return TinyVector<_bz_typename T::T_numtype,2>(
+inline TinyVector<typename T::T_numtype,2> gradSqr2D_stencilop(const T& A) {
+  return TinyVector<typename T::T_numtype,2>(
     central22_stencilop(A,firstDim),
     central22_stencilop(A,secondDim));
 }
 
 template<typename T>
-inline TinyVector<_bz_typename T::T_numtype,2> gradSqr2D4_stencilop(const T& A) {
-  return TinyVector<_bz_typename T::T_numtype,2>(
+inline TinyVector<typename T::T_numtype,2> gradSqr2D4_stencilop(const T& A) {
+  return TinyVector<typename T::T_numtype,2>(
     central24_stencilop(A,firstDim),
     central24_stencilop(A,secondDim));
 }
 
 template<typename T>
-inline TinyVector<_bz_typename T::T_numtype,3> gradSqr3D_stencilop(const T& A) {
-  return TinyVector<_bz_typename T::T_numtype,3>(
+inline TinyVector<typename T::T_numtype,3> gradSqr3D_stencilop(const T& A) {
+  return TinyVector<typename T::T_numtype,3>(
     central22_stencilop(A,firstDim),
     central22_stencilop(A,secondDim),
     central22_stencilop(A,thirdDim));
 }
 
 template<typename T>
-inline TinyVector<_bz_typename T::T_numtype,3> gradSqr3D4_stencilop(const T& A) {
-  return TinyVector<_bz_typename T::T_numtype,3>(
+inline TinyVector<typename T::T_numtype,3> gradSqr3D4_stencilop(const T& A) {
+  return TinyVector<typename T::T_numtype,3>(
     central24_stencilop(A,firstDim),
     central24_stencilop(A,secondDim),
     central24_stencilop(A,thirdDim));
@@ -673,25 +673,25 @@ inline TinyVector<_bz_typename T::T_numtype,3> gradSqr3D4_stencilop(const T& A) 
  ****************************************************************************/
 
 template<typename T>
-inline TinyVector<_bz_typename T::T_numtype,2> gradSqr2Dn_stencilop(const T& A) {
+inline TinyVector<typename T::T_numtype,2> gradSqr2Dn_stencilop(const T& A) {
   return gradSqr2D_stencilop(A);
 }
 
 template<typename T>
-inline TinyVector<_bz_typename T::T_numtype,2> gradSqr2D4n_stencilop(const T& A) {
-  return TinyVector<_bz_typename T::T_numtype,2>(
+inline TinyVector<typename T::T_numtype,2> gradSqr2D4n_stencilop(const T& A) {
+  return TinyVector<typename T::T_numtype,2>(
     central24_stencilop(A,firstDim) * recip_12,
     central24_stencilop(A,secondDim) * recip_12);
 }
 
 template<typename T>
-inline TinyVector<_bz_typename T::T_numtype,3> gradSqr3Dn_stencilop(const T& A) {
+inline TinyVector<typename T::T_numtype,3> gradSqr3Dn_stencilop(const T& A) {
   return gradSqr3D_stencilop(A);(A);
 }
 
 template<typename T>
-inline TinyVector<_bz_typename T::T_numtype,3> gradSqr3D4n_stencilop(const T& A) {
-  return TinyVector<_bz_typename T::T_numtype,3>(
+inline TinyVector<typename T::T_numtype,3> gradSqr3D4n_stencilop(const T& A) {
+  return TinyVector<typename T::T_numtype,3>(
     central24_stencilop(A,firstDim) * recip_12,
     central24_stencilop(A,secondDim) * recip_12,
     central24_stencilop(A,thirdDim) * recip_12);
@@ -702,14 +702,14 @@ inline TinyVector<_bz_typename T::T_numtype,3> gradSqr3D4n_stencilop(const T& A)
  ****************************************************************************/
 
 template<typename T>
-inline TinyMatrix<_bz_typename multicomponent_traits<_bz_typename 
+inline TinyMatrix<typename multicomponent_traits<typename 
     T::T_numtype>::T_element, 3, 3>
 Jacobian3D_stencilop(const T& A)
 {
     const int x=0, y=1, z=2;
     const int u=0, v=1, w=2;
 
-    TinyMatrix<_bz_typename multicomponent_traits<_bz_typename 
+    TinyMatrix<typename multicomponent_traits<typename 
         T::T_numtype>::T_element, 3, 3> grad;
 
     grad(u,x) = central12_stencilop(A,u,x);
@@ -726,14 +726,14 @@ Jacobian3D_stencilop(const T& A)
 }
 
 template<typename T>
-inline TinyMatrix<_bz_typename multicomponent_traits<_bz_typename 
+inline TinyMatrix<typename multicomponent_traits<typename 
     T::T_numtype>::T_element, 3, 3>
 Jacobian3Dn_stencilop(const T& A)
 {
     const int x=0, y=1, z=2;
     const int u=0, v=1, w=2;
 
-    TinyMatrix<_bz_typename multicomponent_traits<_bz_typename 
+    TinyMatrix<typename multicomponent_traits<typename 
         T::T_numtype>::T_element, 3, 3> grad;
     
     grad(u,x) = central12n_stencilop(A,u,x);
@@ -750,14 +750,14 @@ Jacobian3Dn_stencilop(const T& A)
 }
 
 template<typename T>
-inline TinyMatrix<_bz_typename multicomponent_traits<_bz_typename
+inline TinyMatrix<typename multicomponent_traits<typename
     T::T_numtype>::T_element, 3, 3>
 Jacobian3D4_stencilop(const T& A)
 {
     const int x=0, y=1, z=2;
     const int u=0, v=1, w=2;
 
-    TinyMatrix<_bz_typename multicomponent_traits<_bz_typename 
+    TinyMatrix<typename multicomponent_traits<typename 
         T::T_numtype>::T_element, 3, 3> grad;
     
     grad(u,x) = central14_stencilop(A,u,x);
@@ -774,14 +774,14 @@ Jacobian3D4_stencilop(const T& A)
 }
 
 template<typename T>
-inline TinyMatrix<_bz_typename multicomponent_traits<_bz_typename
+inline TinyMatrix<typename multicomponent_traits<typename
     T::T_numtype>::T_element, 3, 3>
 Jacobian3D4n_stencilop(const T& A)
 {
     const int x=0, y=1, z=2;
     const int u=0, v=1, w=2;
 
-    TinyMatrix<_bz_typename multicomponent_traits<_bz_typename 
+    TinyMatrix<typename multicomponent_traits<typename 
         T::T_numtype>::T_element, 3, 3> grad;
     
     grad(u,x) = central14n_stencilop(A,u,x);
@@ -804,11 +804,11 @@ Jacobian3D4n_stencilop(const T& A)
 // O(h^2) curl, using central difference
 
 template<typename T>
-inline TinyVector<_bz_typename T::T_numtype,3> 
+inline TinyVector<typename T::T_numtype,3> 
 curl_stencilop(const T& vx, const T& vy, const T& vz) {
   const int x = firstDim, y = secondDim, z = thirdDim;
 
-  return TinyVector<_bz_typename T::T_numtype,3>(
+  return TinyVector<typename T::T_numtype,3>(
     central12_stencilop(vz,y)-central12_stencilop(vy,z),
     central12_stencilop(vx,z)-central12_stencilop(vz,x),
     central12_stencilop(vy,x)-central12_stencilop(vx,y));
@@ -816,11 +816,11 @@ curl_stencilop(const T& vx, const T& vy, const T& vz) {
 
 // Normalized O(h^2) curl, using central difference
 template<typename T>
-inline TinyVector<_bz_typename T::T_numtype,3>
+inline TinyVector<typename T::T_numtype,3>
 curln_stencilop(const T& vx, const T& vy, const T& vz) {
   const int x = firstDim, y = secondDim, z = thirdDim;
 
-  return TinyVector<_bz_typename T::T_numtype,3>(
+  return TinyVector<typename T::T_numtype,3>(
     (central12_stencilop(vz,y)-central12_stencilop(vy,z)) * recip_2,
     (central12_stencilop(vx,z)-central12_stencilop(vz,x)) * recip_2,
     (central12_stencilop(vy,x)-central12_stencilop(vx,y)) * recip_2);
@@ -828,10 +828,10 @@ curln_stencilop(const T& vx, const T& vy, const T& vz) {
 
 // Multicomponent curl
 template<typename T>
-inline _bz_typename T::T_numtype curl3D_stencilop(const T& A) {
+inline typename T::T_numtype curl3D_stencilop(const T& A) {
   const int x = firstDim, y = secondDim, z = thirdDim;
 
-  return _bz_typename T::T_numtype(
+  return typename T::T_numtype(
     central12_stencilop(A,z,y)-central12_stencilop(A,y,z),
     central12_stencilop(A,x,z)-central12_stencilop(A,z,x),
     central12_stencilop(A,y,x)-central12_stencilop(A,x,y));
@@ -839,10 +839,10 @@ inline _bz_typename T::T_numtype curl3D_stencilop(const T& A) {
 
 // Normalized multicomponent curl
 template<typename T>
-inline _bz_typename T::T_numtype curl3Dn_stencilop(const T& A) {
+inline typename T::T_numtype curl3Dn_stencilop(const T& A) {
   const int x = firstDim, y = secondDim, z = thirdDim;
 
-  return _bz_typename T::T_numtype(
+  return typename T::T_numtype(
     (central12_stencilop(A,z,y)-central12_stencilop(A,y,z)) * recip_2,
     (central12_stencilop(A,x,z)-central12_stencilop(A,z,x)) * recip_2,
     (central12_stencilop(A,y,x)-central12_stencilop(A,x,y)) * recip_2);
@@ -850,11 +850,11 @@ inline _bz_typename T::T_numtype curl3Dn_stencilop(const T& A) {
 
 // O(h^4) curl, using 4th order central difference
 template<typename T>
-inline TinyVector<_bz_typename T::T_numtype,3>
+inline TinyVector<typename T::T_numtype,3>
 curl4_stencilop(const T& vx, const T& vy, const T& vz) {
   const int x = firstDim, y = secondDim, z = thirdDim;
 
-  return TinyVector<_bz_typename T::T_numtype,3>(
+  return TinyVector<typename T::T_numtype,3>(
     central14_stencilop(vz,y)-central14_stencilop(vy,z),
     central14_stencilop(vx,z)-central14_stencilop(vz,x),
     central14_stencilop(vy,x)-central14_stencilop(vx,y));
@@ -862,11 +862,11 @@ curl4_stencilop(const T& vx, const T& vy, const T& vz) {
 
 // Normalized O(h^4) curl, using 4th order central difference
 template<typename T>
-inline TinyVector<_bz_typename T::T_numtype,3>
+inline TinyVector<typename T::T_numtype,3>
 curl4n_stencilop(const T& vx, const T& vy, const T& vz) {
   const int x = firstDim, y = secondDim, z = thirdDim;
 
-  return TinyVector<_bz_typename T::T_numtype,3>(
+  return TinyVector<typename T::T_numtype,3>(
     (central14_stencilop(vz,y)-central14_stencilop(vy,z)) * recip_2,
     (central14_stencilop(vx,z)-central14_stencilop(vz,x)) * recip_2,
     (central14_stencilop(vy,x)-central14_stencilop(vx,y)) * recip_2);
@@ -874,11 +874,11 @@ curl4n_stencilop(const T& vx, const T& vy, const T& vz) {
 
 // O(h^4) curl, using 4th order central difference (multicomponent version)
 template<typename T>
-inline _bz_typename T::T_numtype
+inline typename T::T_numtype
 curl3D4_stencilop(const T& A) {
   const int x = firstDim, y = secondDim, z = thirdDim;
 
-  return _bz_typename T::T_numtype(
+  return typename T::T_numtype(
     central14_stencilop(A,z,y)-central14_stencilop(A,y,z),
     central14_stencilop(A,x,z)-central14_stencilop(A,z,x),
     central14_stencilop(A,y,x)-central14_stencilop(A,x,y));
@@ -886,11 +886,11 @@ curl3D4_stencilop(const T& A) {
 
 // O(h^4) curl, using 4th order central difference (normalized multicomponent)
 template<typename T>
-inline _bz_typename T::T_numtype
+inline typename T::T_numtype
 curl3D4n_stencilop(const T& A) {
   const int x = firstDim, y = secondDim, z = thirdDim;
 
-  return _bz_typename T::T_numtype(
+  return typename T::T_numtype(
     (central14_stencilop(A,z,y)-central14_stencilop(A,y,z)) * recip_2,
     (central14_stencilop(A,x,z)-central14_stencilop(A,z,x)) * recip_2,
     (central14_stencilop(A,y,x)-central14_stencilop(A,x,y)) * recip_2);
@@ -901,7 +901,7 @@ curl3D4n_stencilop(const T& A) {
 // Two-dimensional curl
 
 template<typename T>
-inline _bz_typename T::T_numtype
+inline typename T::T_numtype
 curl_stencilop(const T& vx, const T& vy) {
   const int x = firstDim, y = secondDim;
 
@@ -909,7 +909,7 @@ curl_stencilop(const T& vx, const T& vy) {
 }
 
 template<typename T>
-inline _bz_typename T::T_numtype
+inline typename T::T_numtype
 curln_stencilop(const T& vx, const T& vy) {
   const int x = firstDim, y = secondDim;
 
@@ -918,13 +918,13 @@ curln_stencilop(const T& vx, const T& vy) {
 
 // Multicomponent curl
 template<typename T>
-inline _bz_typename T::T_numtype::T_numtype curl2D_stencilop(const T& A) {
+inline typename T::T_numtype::T_numtype curl2D_stencilop(const T& A) {
   const int x = firstDim, y = secondDim;
   return central12_stencilop(A,y,x)-central12_stencilop(A,x,y);
 }
 
 template<typename T>
-inline _bz_typename T::T_numtype::T_numtype curl2Dn_stencilop(const T& A) {
+inline typename T::T_numtype::T_numtype curl2Dn_stencilop(const T& A) {
   const int x = firstDim, y = secondDim;
   return (central12_stencilop(A,y,x)-central12_stencilop(A,x,y)) * recip_2;
 }
@@ -933,7 +933,7 @@ inline _bz_typename T::T_numtype::T_numtype curl2Dn_stencilop(const T& A) {
 // 4th order versions
 
 template<typename T>
-inline _bz_typename T::T_numtype
+inline typename T::T_numtype
 curl4_stencilop(const T& vx, const T& vy) {
   const int x = firstDim, y = secondDim;
 
@@ -941,7 +941,7 @@ curl4_stencilop(const T& vx, const T& vy) {
 }
 
 template<typename T>
-inline _bz_typename T::T_numtype
+inline typename T::T_numtype
 curl4n_stencilop(const T& vx, const T& vy) {
   const int x = firstDim, y = secondDim;
 
@@ -950,13 +950,13 @@ curl4n_stencilop(const T& vx, const T& vy) {
 
 // Multicomponent curl
 template<typename T>
-inline _bz_typename T::T_numtype::T_numtype curl2D4_stencilop(const T& A) {
+inline typename T::T_numtype::T_numtype curl2D4_stencilop(const T& A) {
   const int x = firstDim, y = secondDim;
   return central14_stencilop(A,y,x)-central14_stencilop(A,x,y);
 }
 
 template<typename T>
-inline _bz_typename T::T_numtype::T_numtype curl2D4n_stencilop(const T& A) {
+inline typename T::T_numtype::T_numtype curl2D4n_stencilop(const T& A) {
   const int x = firstDim, y = secondDim;
   return (central14_stencilop(A,y,x)-central14_stencilop(A,x,y)) * recip_12;
 }
@@ -1006,7 +1006,7 @@ BZ_END_STENCIL_OPERATOR
 
 // these return a scalar, which is T_numtype of T::T_result (which may be an ET)
 template<typename T>
-inline _bz_typename T::T_result::T_numtype
+inline typename T::T_result::T_numtype
 div2D_stencilop(const T& A)
 {
     const int x = firstDim, y = secondDim;
@@ -1014,7 +1014,7 @@ div2D_stencilop(const T& A)
 }
 
 template<typename T>
-inline _bz_typename T::T_result::T_numtype
+inline typename T::T_result::T_numtype
 div2Dn_stencilop(const T& A)
 {
     const int x = firstDim, y = secondDim;
@@ -1022,7 +1022,7 @@ div2Dn_stencilop(const T& A)
 }
 
 template<typename T>
-inline _bz_typename T::T_result::T_numtype
+inline typename T::T_result::T_numtype
 div2D4_stencilop(const T& A)
 {
     const int x = firstDim, y = secondDim;
@@ -1030,7 +1030,7 @@ div2D4_stencilop(const T& A)
 }
 
 template<typename T>
-inline _bz_typename T::T_result::T_numtype
+inline typename T::T_result::T_numtype
 div2D4n_stencilop(const T& A)
 {
     const int x = firstDim, y = secondDim;
@@ -1038,7 +1038,7 @@ div2D4n_stencilop(const T& A)
 }
 
 template<typename T>
-inline _bz_typename T::T_result::T_numtype
+inline typename T::T_result::T_numtype
 div3D_stencilop(const T& A)
 {
     const int x = firstDim, y = secondDim, z = thirdDim;
@@ -1046,7 +1046,7 @@ div3D_stencilop(const T& A)
 }
 
 template<typename T>
-inline _bz_typename T::T_result::T_numtype
+inline typename T::T_result::T_numtype
 div3Dn_stencilop(const T& A)
 {
     const int x = firstDim, y = secondDim, z = thirdDim;
@@ -1054,7 +1054,7 @@ div3Dn_stencilop(const T& A)
 }
 
 template<typename T>
-inline _bz_typename T::T_result::T_numtype
+inline typename T::T_result::T_numtype
 div3D4_stencilop(const T& A)
 {
     const int x = firstDim, y = secondDim, z = thirdDim;
@@ -1062,7 +1062,7 @@ div3D4_stencilop(const T& A)
 }
 
 template<typename T>
-inline _bz_typename T::T_result::T_numtype
+inline typename T::T_result::T_numtype
 div3D4n_stencilop(const T& A)
 {
     const int x = firstDim, y = secondDim, z = thirdDim;
@@ -1074,7 +1074,7 @@ div3D4n_stencilop(const T& A)
  ****************************************************************************/
 
 template<typename T>
-inline _bz_typename T::T_numtype
+inline typename T::T_numtype
 mixed22_stencilop(const T& A, int x, int y)
 {
     return A.shift(-1,x,-1,y) - A.shift(-1,x,1,y)
@@ -1082,14 +1082,14 @@ mixed22_stencilop(const T& A, int x, int y)
 }
 
 template<typename T>
-inline _bz_typename T::T_numtype
+inline typename T::T_numtype
 mixed22n_stencilop(const T& A, int x, int y)
 {
     return mixed22_stencilop(A,x,y) * recip_4;
 }
 
 template<typename T>
-inline _bz_typename T::T_numtype
+inline typename T::T_numtype
 mixed24_stencilop(const T& A, int x, int y)
 {
     return 64.0 * (A.shift(-1,x,-1,y) - A.shift(-1,x,1,y) -
@@ -1103,7 +1103,7 @@ mixed24_stencilop(const T& A, int x, int y)
 }
 
 template<typename T>
-inline _bz_typename T::T_numtype
+inline typename T::T_numtype
 mixed24n_stencilop(const T& A, int x, int y)
 {
     return mixed24_stencilop(A,x,y) * recip_144;
@@ -1123,7 +1123,7 @@ mixed24n_stencilop(const T& A, int x, int y)
  ****************************************************************************/
 
 template<typename T>
-inline _bz_typename multicomponent_traits<_bz_typename
+inline typename multicomponent_traits<typename
     T::T_numtype>::T_element div3DVec4_stencilop(const T& A, 
     const UniformCubicGeometry<3>& geom)
 {
@@ -1134,18 +1134,18 @@ inline _bz_typename multicomponent_traits<_bz_typename
 }
 
 template<typename T>
-inline _bz_typename T::T_numtype Laplacian3D4_stencilop(const T& A, 
+inline typename T::T_numtype Laplacian3D4_stencilop(const T& A, 
     const UniformCubicGeometry<3>& geom)
 {
     return Laplacian3D4n_stencilop(A) * geom.recipSpatialStepPow2();
 }
 
 template<typename T>
-inline _bz_typename T::T_numtype Laplacian3DVec4_stencilop(const T& A,
+inline typename T::T_numtype Laplacian3DVec4_stencilop(const T& A,
     const UniformCubicGeometry<3>& geom)
 {
-    typedef _bz_typename T::T_numtype vector3d;
-    typedef _bz_typename multicomponent_traits<vector3d>::T_element 
+    typedef typename T::T_numtype vector3d;
+    typedef typename multicomponent_traits<vector3d>::T_element 
         T_element;
     const int u = 0, v = 1, w = 2;
     const int x = 0, y = 1, z = 2;
@@ -1166,14 +1166,14 @@ inline _bz_typename T::T_numtype Laplacian3DVec4_stencilop(const T& A,
 }
 
 template<typename T>
-inline TinyMatrix<_bz_typename multicomponent_traits<_bz_typename
+inline TinyMatrix<typename multicomponent_traits<typename
     T::T_numtype>::T_element, 3, 3>
 grad3DVec4_stencilop(const T& A, const UniformCubicGeometry<3>& geom)
 {
     const int x=0, y=1, z=2;
     const int u=0, v=1, w=2;
 
-    TinyMatrix<_bz_typename multicomponent_traits<_bz_typename
+    TinyMatrix<typename multicomponent_traits<typename
         T::T_numtype>::T_element, 3, 3> grad;
 
     // This is a 9*4 = 36 point stencil
@@ -1191,9 +1191,9 @@ grad3DVec4_stencilop(const T& A, const UniformCubicGeometry<3>& geom)
 }
 
 template<typename T>
-inline TinyVector<_bz_typename T::T_numtype,3> grad3D4_stencilop(const T& A,
+inline TinyVector<typename T::T_numtype,3> grad3D4_stencilop(const T& A,
     const UniformCubicGeometry<3>& geom) {
-  return TinyVector<_bz_typename T::T_numtype,3>(
+  return TinyVector<typename T::T_numtype,3>(
     central14_stencilop(A,firstDim) * recip_12 * geom.recipSpatialStep(),
     central14_stencilop(A,secondDim) * recip_12 * geom.recipSpatialStep(),
     central14_stencilop(A,thirdDim) * recip_12 * geom.recipSpatialStep());

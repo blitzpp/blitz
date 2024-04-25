@@ -83,10 +83,10 @@ _bz_forceinline
 TinyVector<P_numtype,N_length>&
 TinyVector<P_numtype,N_length>::operator=(const ETBase<T_expr>& expr)
 {
-  _tv_evaluate(_bz_typename asExpr<T_expr>::T_expr(expr.unwrap()), 
+  _tv_evaluate(typename asExpr<T_expr>::T_expr(expr.unwrap()), 
 	       _bz_update<
 	       T_numtype, 
-	       _bz_typename asExpr<T_expr>::T_expr::T_result>());
+	       typename asExpr<T_expr>::T_expr::T_result>());
     return *this;
 }
 
@@ -97,9 +97,9 @@ TinyVector<P_numtype,N_length>::operator=(const ETBase<T_expr>& expr)
   TinyVector<P_numtype,N_length>&					\
   TinyVector<P_numtype,N_length>::operator op(const T& expr)		\
   {									\
-    _tv_evaluate(_bz_typename asExpr<T>::T_expr(expr),			\
+    _tv_evaluate(typename asExpr<T>::T_expr(expr),			\
 		 name<T_numtype,					\
-		 _bz_typename asExpr<T>::T_expr::T_result>());		\
+		 typename asExpr<T>::T_expr::T_result>());		\
     return *this;							\
   }
 

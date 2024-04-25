@@ -1,0 +1,3 @@
+#define BLITZ_GIT_SHA1 "@BLITZ_GIT_SHA1@"
+
+extern const char blitz_GIT_SHA1[] = BLITZ_GIT_SHA1;

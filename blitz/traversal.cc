@@ -42,7 +42,7 @@ namespace blitz {
 static set<TraversalOrder<2> > *_bz_intel_kludge;
 
 //template<int N_dimensions>
-//_bz_typename TraversalOrderCollection<N_dimensions>::T_set
+//typename TraversalOrderCollection<N_dimensions>::T_set
 //    TraversalOrderCollection<N_dimensions>::traversals_;
 
 template<int N>
