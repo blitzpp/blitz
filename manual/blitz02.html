@@ -1151,7 +1151,7 @@ allocated.  After resizing, the contents of the array are
 garbage.  See also <code>resizeAndPreserve()</code>.
 <p><!-- BZINDEX resizeAndPreserve() --><a name="index00174">
 <!-- BZINDEX Array!member functions!resizeAndPreserve() --><a name="index00175">
-<strong><pre>void                              resizeAndPreserve(int extent1, ...);
+<strong><pre>void                              resizeAndPreserve(int extent1, ..., bool zeroInitialize=false);
 void                              resizeAndPreserve(const TinyVector&lt;int,N_rank&gt;&amp;)</pre></strong>;
 These functions resize an array to the specified size.  If
 the array is already the size specified, then no change
@@ -1159,7 +1159,7 @@ occurs (the array is not reallocated and copied).
 The contents of the array are preserved whenever possible;
 if the new array size is smaller, then some data will be
 lost.  Any new elements created by resizing the array
-are left uninitialized.
+are left uninitialized unless zeroInitialize is set to true.
 <p><!-- BZINDEX reverse(), reverseSelf() --><a name="index00176">
 <!-- BZINDEX Array!member functions!reverse() --><a name="index00177">
 <!-- BZINDEX Array!member functions!reverseSelf() --><a name="index00178">

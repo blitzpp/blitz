@@ -567,7 +567,8 @@ void Array<T_numtype, N_rank>::resize(Range r0, Range r1, Range r2,
 
 
 template<typename T_numtype, int N_rank>
-void Array<T_numtype, N_rank>::resizeAndPreserve(int length0)
+void Array<T_numtype, N_rank>::resizeAndPreserve(int length0,
+    bool zeroInitialize)
 {
     BZPRECONDITION(length0 > 0);
     BZPRECONDITION(N_rank == 1);
@@ -595,6 +596,8 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0)
 #endif
         if (numElements())
         {
+            if (zeroInitialize)
+                B = 0;
             Range overlap0 = Range(fromStart, (extrema::min)(B.ubound(0), 
               ubound(0)));
             B(overlap0) = (*this)(overlap0);
@@ -604,7 +607,8 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0)
 }
 
 template<typename T_numtype, int N_rank>
-void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1)
+void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
+    bool zeroInitialize)
 {
     BZPRECONDITION((length0 > 0) && (length1 > 0));
     BZPRECONDITION(N_rank == 2);
@@ -615,6 +619,8 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1)
 
         if (numElements())
         {
+            if (zeroInitialize)
+                B = 0;
             Range overlap0 = Range(fromStart, (extrema::min)(B.ubound(0), 
                 ubound(0)));
             Range overlap1 = Range(fromStart, (extrema::min)(B.ubound(1), 
@@ -627,7 +633,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1)
 
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
-    int length2)
+    int length2, bool zeroInitialize)
 {
     BZPRECONDITION((length0 > 0) && (length1 > 0) && (length2 > 0));
     BZPRECONDITION(N_rank == 3);
@@ -639,6 +645,8 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
             storage_);
         if (numElements())
         {
+            if (zeroInitialize)
+                B = 0;
             Range overlap0 = Range(fromStart, (extrema::min)(B.ubound(0), 
                 ubound(0)));
             Range overlap1 = Range(fromStart, (extrema::min)(B.ubound(1), 
@@ -654,7 +662,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
-    int length2, int length3)
+    int length2, int length3, bool zeroInitialize)
 {
     BZPRECONDITION((length0 > 0) && (length1 > 0) && (length2 > 0)
         && (length3 > 0));
@@ -668,6 +676,8 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 
         if (numElements())
         {
+            if (zeroInitialize)
+                B = 0;
             Range overlap0 = Range(fromStart, (extrema::min)(B.ubound(0), ubound(0)));
             Range overlap1 = Range(fromStart, (extrema::min)(B.ubound(1), ubound(1)));
             Range overlap2 = Range(fromStart, (extrema::min)(B.ubound(2), ubound(2)));
@@ -681,7 +691,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
-    int length2, int length3, int length4)
+    int length2, int length3, int length4, bool zeroInitialize)
 {
     BZPRECONDITION((length0 > 0) && (length1 > 0) && (length2 > 0)
         && (length3 > 0) && (length4 > 0));
@@ -696,6 +706,8 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 
         if (numElements())
         {
+            if (zeroInitialize)
+                B = 0;
             Range overlap0 = Range(fromStart, (extrema::min)(B.ubound(0), ubound(0)));
             Range overlap1 = Range(fromStart, (extrema::min)(B.ubound(1), ubound(1)));
             Range overlap2 = Range(fromStart, (extrema::min)(B.ubound(2), ubound(2)));
@@ -710,7 +722,8 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
-    int length2, int length3, int length4, int length5)
+    int length2, int length3, int length4, int length5,
+    bool zeroInitialize)
 {
     BZPRECONDITION((length0 > 0) && (length1 > 0) && (length2 > 0)
         && (length3 > 0) && (length4 > 0) && (length5 > 0));
@@ -725,6 +738,8 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 
         if (numElements())
         {
+            if (zeroInitialize)
+                B = 0;
             Range overlap0 = Range(fromStart, (extrema::min)(B.ubound(0), ubound(0)));
             Range overlap1 = Range(fromStart, (extrema::min)(B.ubound(1), ubound(1)));
             Range overlap2 = Range(fromStart, (extrema::min)(B.ubound(2), ubound(2)));
@@ -742,7 +757,8 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 /* Added by Julian Cummings */
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
-    int length2, int length3, int length4, int length5, int length6)
+    int length2, int length3, int length4, int length5, int length6,
+    bool zeroInitialize)
 {
     BZPRECONDITION((length0 > 0) && (length1 > 0) && (length2 > 0)
         && (length3 > 0) && (length4 > 0) && (length5 > 0) && (length6 > 0));
@@ -758,6 +774,8 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 
         if (numElements())
         {
+            if (zeroInitialize)
+                B = 0;
             Range overlap0 = Range(fromStart, (extrema::min)(B.ubound(0), 
                ubound(0)));
             Range overlap1 = Range(fromStart, (extrema::min)(B.ubound(1), 
@@ -785,7 +803,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
     int length2, int length3, int length4, int length5, int length6,
-    int length7)
+    int length7, bool zeroInitialize)
 {
     BZPRECONDITION((length0 > 0) && (length1 > 0) && (length2 > 0)
         && (length3 > 0) && (length4 > 0) && (length5 > 0) && (length6 > 0)
@@ -802,6 +820,8 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 
         if (numElements())
         {
+            if (zeroInitialize)
+                B = 0;
             Range overlap0 = Range(fromStart, (extrema::min)(B.ubound(0), 
                ubound(0)));
             Range overlap1 = Range(fromStart, (extrema::min)(B.ubound(1), 
@@ -831,7 +851,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
     int length2, int length3, int length4, int length5, int length6,
-    int length7, int length8)
+    int length7, int length8, bool zeroInitialize)
 {
     BZPRECONDITION((length0 > 0) && (length1 > 0) && (length2 > 0)
         && (length3 > 0) && (length4 > 0) && (length5 > 0) && (length6 > 0)
@@ -849,6 +869,8 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 
         if (numElements())
         {
+            if (zeroInitialize)
+                B = 0;
             Range overlap0 = Range(fromStart, (extrema::min)(B.ubound(0), 
                ubound(0)));
             Range overlap1 = Range(fromStart, (extrema::min)(B.ubound(1), 
@@ -880,7 +902,7 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
     int length2, int length3, int length4, int length5, int length6,
-    int length7, int length8, int length9)
+    int length7, int length8, int length9, bool zeroInitialize)
 {
     BZPRECONDITION((length0 > 0) && (length1 > 0) && (length2 > 0)
         && (length3 > 0) && (length4 > 0) && (length5 > 0) && (length6 > 0)
@@ -899,6 +921,8 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 
         if (numElements())
         {
+            if (zeroInitialize)
+                B = 0;
             Range overlap0 = Range(fromStart, (extrema::min)(B.ubound(0), 
                ubound(0)));
             Range overlap1 = Range(fromStart, (extrema::min)(B.ubound(1), 
@@ -932,7 +956,8 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
     int length2, int length3, int length4, int length5, int length6,
-    int length7, int length8, int length9, int length10)
+    int length7, int length8, int length9, int length10,
+    bool zeroInitialize)
 {
     BZPRECONDITION((length0 > 0) && (length1 > 0) && (length2 > 0)
         && (length3 > 0) && (length4 > 0) && (length5 > 0) && (length6 > 0)
@@ -952,6 +977,8 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(int length0, int length1,
 
         if (numElements())
         {
+            if (zeroInitialize)
+                B = 0;
             Range overlap0 = Range(fromStart, (extrema::min)(B.ubound(0), 
                ubound(0)));
             Range overlap1 = Range(fromStart, (extrema::min)(B.ubound(1), 
@@ -998,7 +1025,7 @@ void Array<T_numtype, N_rank>::resize(const TinyVector<int,N_rank>& extent)
 /* Added by Julian Cummings */
 template<typename T_numtype, int N_rank>
 void Array<T_numtype, N_rank>::resizeAndPreserve(
-    const TinyVector<int,N_rank>& extent)
+    const TinyVector<int,N_rank>& extent, bool zeroInitialize)
 {
 // NEEDS_WORK -- don't resize if unnecessary
 //    BZPRECONDITION(all(extent > 0));
@@ -1008,6 +1035,8 @@ void Array<T_numtype, N_rank>::resizeAndPreserve(
 
         if (numElements())
         {
+          if (zeroInitialize)
+            B = 0;
           TinyVector<int,N_rank> ub;
           for (int d=0; d < N_rank; ++d)
             ub(d) = (extrema::min)(B.ubound(d),ubound(d));
