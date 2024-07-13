@@ -26,3 +26,9 @@
 *.exe
 *.out
 *.app
+
+# Internal Makefile
+Makefile
+
+# Build
+build
